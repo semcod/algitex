@@ -62,7 +62,6 @@ class AiderBackend:
         return [
             "aider",
             "--model", self.DEFAULT_MODEL,
-            "--openai-api-key", "dummy",
             "--no-git",
             "--no-commit",
             "--yes",

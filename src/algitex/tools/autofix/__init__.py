@@ -19,6 +19,7 @@ from algitex.tools.autofix.base import FixResult, Task
 from algitex.tools.autofix.ollama_backend import OllamaBackend
 from algitex.tools.autofix.aider_backend import AiderBackend
 from algitex.tools.autofix.proxy_backend import ProxyBackend
+from algitex.tools.autofix.fallback_backend import FallbackBackend
 from algitex.tools.todo_parser import TodoParser
 from algitex.tools.ollama import OllamaClient, OllamaService
 from algitex.tools.services import ServiceChecker

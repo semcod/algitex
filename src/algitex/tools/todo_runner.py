@@ -173,53 +173,9 @@ class TodoRunner:
             )
 
         try:
-            # Read the file content
-            content = file_path.read_text()
-            lines = content.split('\n')
+            prompt = self._build_ollama_prompt(task, file_path)
+            fixed_code = self._call_ollama_api(prompt)
 
-            if task.line_number and task.line_number <= len(lines):
-                # Get context around the line
-                start = max(0, task.line_number - 5)
-                end = min(len(lines), task.line_number + 5)
-                context = '\n'.join(lines[start:end])
-            else:
-                context = content[:1000]
-
-            # Build prompt for Ollama
-            prompt = f"""Fix this Python code issue:
-{task.description}
-
-File: {task.file_path}
-Line: {task.line_number}
-
-Context:
-```python
-{context}
-```
-
-Provide ONLY the fixed code, no explanations."""
-
-            # Call Ollama API with faster model
-            response = httpx.post(
-                "http://localhost:11434/api/generate",
-                json={
-                    "model": "llama3.2:latest",
-                    "prompt": prompt,
-                    "stream": False,
-                    "options": {
-                        "temperature": 0.1,
-                        "num_predict": 500,
-                    }
-                },
-                timeout=120.0,
-            )
-            response.raise_for_status()
-            result = response.json()
-
-            # Extract fixed code from response
-            fixed_code = result.get("response", "")
-
-            # Apply the fix (simplified - would need proper parsing)
             if fixed_code and len(fixed_code) > 10:
                 return TaskResult(
                     task=task,
@@ -245,6 +201,50 @@ Provide ONLY the fixed code, no explanations."""
                 error=f"Ollama API error: {str(e)}",
                 tool_used="ollama-mcp",
             )
+
+    def _build_ollama_prompt(self, task: Task, file_path: Path) -> str:
+        """Build a fix prompt with file context for Ollama."""
+        content = file_path.read_text()
+        lines = content.split('\n')
+
+        if task.line_number and task.line_number <= len(lines):
+            start = max(0, task.line_number - 5)
+            end = min(len(lines), task.line_number + 5)
+            context = '\n'.join(lines[start:end])
+        else:
+            context = content[:1000]
+
+        return f"""Fix this Python code issue:
+{task.description}
+
+File: {task.file_path}
+Line: {task.line_number}
+
+Context:
+```python
+{context}
+```
+
+Provide ONLY the fixed code, no explanations."""
+
+    def _call_ollama_api(self, prompt: str) -> str:
+        """Call Ollama generate API and return the response text."""
+        response = httpx.post(
+            "http://localhost:11434/api/generate",
+            json={
+                "model": "llama3.2:latest",
+                "prompt": prompt,
+                "stream": False,
+                "options": {
+                    "temperature": 0.1,
+                    "num_predict": 500,
+                }
+            },
+            timeout=120.0,
+        )
+        response.raise_for_status()
+        result = response.json()
+        return result.get("response", "")
 
     def _execute_task(
         self,

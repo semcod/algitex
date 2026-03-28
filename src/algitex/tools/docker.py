@@ -261,28 +261,32 @@ class DockerToolManager:
             return self._tools.get(tool_name, DockerTool("", "", "")).capabilities
 
         if rt.tool.transport == "mcp-stdio":
-            if not rt.process or not rt.process.stdin:
-                return []
-            request = {
-                "jsonrpc": "2.0", "id": 0,
-                "method": "tools/list", "params": {},
-            }
-            content = json.dumps(request)
-            message = f"Content-Length: {len(content)}\r\n\r\n{content}"
-            rt.process.stdin.write(message)
-            rt.process.stdin.flush()
-            
-            header_line = rt.process.stdout.readline()
-            if not header_line.startswith("Content-Length:"):
-                return []
-            
-            content_length = int(header_line.split(":")[1].strip())
-            rt.process.stdout.readline()  # Empty line
-            
-            response = rt.process.stdout.read(content_length)
-            data = json.loads(response)
-            return [t["name"] for t in data.get("result", {}).get("tools", [])]
+            return self._query_stdio_capabilities(rt)
         return self._tools[tool_name].capabilities
+
+    def _query_stdio_capabilities(self, rt: RunningTool) -> list[str]:
+        """Query MCP tool list via stdio JSON-RPC."""
+        if not rt.process or not rt.process.stdin:
+            return []
+        request = {
+            "jsonrpc": "2.0", "id": 0,
+            "method": "tools/list", "params": {},
+        }
+        content = json.dumps(request)
+        message = f"Content-Length: {len(content)}\r\n\r\n{content}"
+        rt.process.stdin.write(message)
+        rt.process.stdin.flush()
+
+        header_line = rt.process.stdout.readline()
+        if not header_line.startswith("Content-Length:"):
+            return []
+
+        content_length = int(header_line.split(":")[1].strip())
+        rt.process.stdout.readline()  # Empty line
+
+        response = rt.process.stdout.read(content_length)
+        data = json.loads(response)
+        return [t["name"] for t in data.get("result", {}).get("tools", [])]
 
 
 # Backward compatibility exports

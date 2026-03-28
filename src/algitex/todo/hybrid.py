@@ -274,60 +274,37 @@ class HybridAutofix:
         - aider: via AiderBackend (aider CLI)
         """
         try:
+            from algitex.tools.autofix.fallback_backend import FallbackBackend
+            from algitex.tools.autofix.base import Task
+
+            # Convert TodoTask to Task for backend
+            backend_task = Task(
+                id=f"{task.file}:{task.line}",
+                description=task.message,
+                file_path=str(path),
+                line_number=task.line,
+                status="pending"
+            )
+
+            # Determine fallbacks based on primary backend
             if self.backend == "litellm-proxy":
-                from algitex.tools.autofix.proxy_backend import ProxyBackend
-                from algitex.tools.autofix.base import Task
-
-                # Convert TodoTask to Task for backend
-                backend_task = Task(
-                    id=f"{task.file}:{task.line}",
-                    description=task.message,
-                    file_path=str(path),
-                    line_number=task.line,
-                    status="pending"
-                )
-
-                backend = ProxyBackend(
-                    proxy_url=self.proxy_url,
-                    dry_run=self.dry_run
-                )
-                result = backend.fix(backend_task)
-                return result.success
-
+                fallbacks = ["ollama", "aider"]
             elif self.backend == "ollama":
-                from algitex.tools.autofix.ollama_backend import OllamaBackend
-                from algitex.tools.autofix.base import Task
-
-                backend_task = Task(
-                    id=f"{task.file}:{task.line}",
-                    description=task.message,
-                    file_path=str(path),
-                    line_number=task.line,
-                    status="pending"
-                )
-
-                backend = OllamaBackend(dry_run=self.dry_run)
-                result = backend.fix(backend_task)
-                return result.success
-
+                fallbacks = ["aider"]
             elif self.backend == "aider":
-                from algitex.tools.autofix.aider_backend import AiderBackend
-                from algitex.tools.autofix.base import Task
-
-                backend_task = Task(
-                    id=f"{task.file}:{task.line}",
-                    description=task.message,
-                    file_path=str(path),
-                    line_number=task.line,
-                    status="pending"
-                )
-
-                backend = AiderBackend(dry_run=self.dry_run)
-                result = backend.fix(backend_task)
-                return result.success
-
+                fallbacks = ["ollama"]
             else:
-                raise ValueError(f"Unknown backend: {self.backend}")
+                fallbacks = ["litellm-proxy", "ollama", "aider"]
+
+            backend = FallbackBackend(
+                primary=self.backend,
+                fallbacks=fallbacks,
+                proxy_url=self.proxy_url,
+                dry_run=self.dry_run,
+                retry_attempts=self.retry_attempts
+            )
+            result = backend.fix(backend_task)
+            return result.success
 
         except ImportError as e:
             print(f"   ⚠️  Backend not available: {e}")

@@ -233,42 +233,44 @@ class Project(ServiceMixin, AutoFixMixin, OllamaMixin, BatchMixin, BenchmarkMixi
 
     def _status_infra(self) -> dict:
         """Get infrastructure status (proxy, docker, tools, costs)."""
+        proxy_info = self._check_proxy_status()
+        return {
+            "proxy": {"healthy": proxy_info["healthy"]},
+            "docker": self._check_docker_status(),
+            "tools": self._check_tools_status(),
+            "cost_ledger": self._compute_cost_ledger(proxy_info.get("budget")),
+        }
+
+    def _check_proxy_status(self) -> dict:
+        """Check proxy health and budget."""
         from algitex.tools.proxy import Proxy
-        from algitex.tools import discover_tools
-
-        # Proxy status
         proxy = Proxy(self.config.proxy)
+        healthy = proxy.health()
         budget = proxy.budget()
-        proxy_healthy = proxy.health()
         proxy.close()
+        return {"healthy": healthy, "budget": budget}
 
-        # Docker status
-        docker_status = {"available": [], "running": []}
+    def _check_docker_status(self) -> dict:
+        """Check Docker tool availability."""
         try:
             from algitex.tools.docker import DockerToolManager
             docker_mgr = DockerToolManager(self.config)
-            docker_status["available"] = docker_mgr.list_tools()
-            docker_status["running"] = docker_mgr.list_running()
+            return {"available": docker_mgr.list_tools(), "running": docker_mgr.list_running()}
         except Exception:
-            pass  # Docker tools not available
+            return {"available": [], "running": []}
 
-        # Tools status
+    def _check_tools_status(self) -> dict:
+        """Check installed tool status."""
+        from algitex.tools import discover_tools
         tools = discover_tools()
+        return {name: str(s) for name, s in tools.items()}
 
-        # Cost ledger
+    def _compute_cost_ledger(self, budget_remaining=None) -> dict:
+        """Compute cost ledger from ticket metadata."""
         total_cost = sum(
             t.meta.get("cost_usd", 0) for t in self._tickets.list() if t.meta
         )
-
-        return {
-            "proxy": {"healthy": proxy_healthy},
-            "docker": docker_status,
-            "tools": {name: str(s) for name, s in tools.items()},
-            "cost_ledger": {
-                "total_spent_usd": total_cost,
-                "budget_remaining": budget,
-            },
-        }
+        return {"total_spent_usd": total_cost, "budget_remaining": budget_remaining}
 
     def _status_algo(self) -> dict:
         """Get progressive algorithmization status."""

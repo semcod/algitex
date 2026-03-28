@@ -19959,3 +19959,120 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
+  - id: ticket-afb2e768
+    name: Fix llm-hallucinations issues
+    description: Resolve 1 llm-hallucinations issues in src/algitex/tools/autofix/base.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/autofix/base.py
+    rule_id: llm-hallucinations
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b60f73a5
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in src/algitex/tools/autofix/fallback_backend.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/autofix/fallback_backend.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-38283ad3
+    name: Fix string-concat issues
+    description: Resolve 4 string-concat issues in src/algitex/tools/autofix/fallback_backend.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - src/algitex/tools/autofix/fallback_backend.py
+    rule_id: string-concat
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-170debf3
+    name: Fix unused-imports issues
+    description: Resolve 6 unused-imports issues in src/algitex/tools/autofix/fallback_backend.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - src/algitex/tools/autofix/fallback_backend.py
+    rule_id: unused-imports
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-40ff670c
+    name: Fix magic-numbers issues
+    description: Resolve 2 magic-numbers issues in src/algitex/tools/autofix/fallback_backend.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/autofix/fallback_backend.py
+    rule_id: magic-numbers
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-688514cd
+    name: Fix smart-return-type issues
+    description: Resolve 5 smart-return-type issues in src/algitex/tools/logging.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - src/algitex/tools/logging.py
+    rule_id: smart-return-type
+    count: 5
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-bd876a70
+    name: Fix string-concat issues
+    description: Resolve 2 string-concat issues in src/algitex/tools/logging.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/logging.py
+    rule_id: string-concat
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-c8e1e684
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/algitex/tools/logging.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/logging.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-6ab3c964
+    name: Fix magic-numbers issues
+    description: Resolve 6 magic-numbers issues in src/algitex/tools/logging.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - src/algitex/tools/logging.py
+    rule_id: magic-numbers
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced

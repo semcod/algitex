@@ -6,15 +6,27 @@ import time
 from typing import Optional
 
 from algitex.tools.autofix.base import FixResult, Task
-from algitex.tools.ollama import OllamaService
+from algitex.tools.ollama import OllamaService, OllamaClient
 
 
 class OllamaBackend:
     """Fix issues using Ollama local models."""
 
-    def __init__(self, service: OllamaService, model: Optional[str] = None):
-        self.service = service
+    def __init__(
+        self,
+        service: Optional[OllamaService] = None,
+        model: Optional[str] = None,
+        base_url: str = "http://localhost:11434",
+        dry_run: bool = True
+    ):
+        if service:
+            self.service = service
+        else:
+            client = OllamaClient(host=base_url)
+            self.service = OllamaService(client=client)
         self.model = model
+        self.base_url = base_url
+        self.dry_run = dry_run
 
     def fix(self, task: Task) -> FixResult:
         """Fix a task using Ollama."""
@@ -28,8 +40,11 @@ class OllamaBackend:
             if not model:
                 return self._error_result(task, start_time, "No suitable model found")
 
+            if self.dry_run:
+                return self._success_result(task, start_time, True, method="ollama-dry-run")
+
             success = self._apply_fix(task, model)
-            return self._success_result(task, start_time, success)
+            return self._success_result(task, start_time, success, method="ollama")
 
         except Exception as e:
             return self._error_result(task, start_time, str(e))
@@ -54,27 +69,25 @@ class OllamaBackend:
             model
         )
 
-    def _success_result(self, task: Task, start_time: float, success: bool) -> FixResult:
-        """Build a success result."""
-        elapsed = (time.time() - start_time) * 1000
+    def _success_result(self, task: Task, start_time: float, success: bool, method: str = "ollama") -> FixResult:
+        """Create a success result."""
         return FixResult(
             task_id=task.id,
             task_description=task.description,
             success=success,
-            method="ollama",
-            time_ms=elapsed,
-            file_path=task.file_path,
-            error=None if success else "Failed to fix code"
+            method=method,
+            time_ms=(time.time() - start_time) * 1000,
+            file_path=task.file_path
         )
 
     def _error_result(self, task: Task, start_time: float, error: str) -> FixResult:
-        """Build an error result."""
+        """Create an error result."""
         return FixResult(
             task_id=task.id,
             task_description=task.description,
             success=False,
             method="ollama",
             time_ms=(time.time() - start_time) * 1000,
-            file_path=task.file_path,
-            error=error
+            error=error,
+            file_path=task.file_path
         )

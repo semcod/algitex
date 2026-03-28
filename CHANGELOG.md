@@ -8,6 +8,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.10] - 2026-03-28
 
 ### Fixed
+- Fix smart-return-type issues (ticket-688514cd)
+- Fix string-concat issues (ticket-bd876a70)
+- Fix unused-imports issues (ticket-c8e1e684)
+- Fix magic-numbers issues (ticket-6ab3c964)
+
+## [0.1.10] - 2026-03-28
+
+### Fixed
+- Fix llm-hallucinations issues (ticket-afb2e768)
+- Fix smart-return-type issues (ticket-b60f73a5)
+- Fix string-concat issues (ticket-38283ad3)
+- Fix unused-imports issues (ticket-170debf3)
+- Fix magic-numbers issues (ticket-40ff670c)
+
+## [0.1.10] - 2026-03-28
+
+### Fixed
 - Fix wildcard-imports issues (ticket-40aa2274)
 
 ## [0.1.10] - 2026-03-28
@@ -1616,6 +1633,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix llm-generated-code issues (ticket-06d0712f)
 
 ## [Unreleased]
+
+## [0.1.33] - 2026-03-28
+
+### Docs
+- Update CHANGELOG.md
+- Update TODO.md
+- Update docs/README.md
+- Update project/README.md
+- Update project/context.md
+
+### Other
+- Update planfile.yaml
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/compact_flow.mmd
+- Update project/compact_flow.png
+- Update project/duplication.toon.yaml
+- Update project/evolution.toon.yaml
+- Update project/flow.mmd
+- Update project/flow.png
+- ... and 5 more files
 
 ## [0.1.32] - 2026-03-28
 

@@ -1,7 +1,7 @@
-# vallm batch | 333f | 164✓ 4⚠ 15✗ | 2026-03-28
+# vallm batch | 335f | 166✓ 4⚠ 15✗ | 2026-03-28
 
 SUMMARY:
-  scanned: 333  passed: 164 (49.2%)  warnings: 4  errors: 15  unsupported: 154
+  scanned: 335  passed: 166 (49.6%)  warnings: 4  errors: 15  unsupported: 154
 
 WARNINGS[4]{path,score}:
   examples/32-workspace-coordination/main.py,0.93

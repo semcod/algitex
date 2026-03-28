@@ -169,10 +169,18 @@ def todo_hybrid(
     rate_limit: int = typer.Option(10, "--rate-limit", "-r", help="LLM calls per second"),
     proxy_url: str = typer.Option("http://localhost:4000", "--proxy-url", "-p", help="LiteLLM proxy URL"),
     hybrid: bool = typer.Option(False, "--hybrid", "-h", help="Add mechanical fixes (default: LLM only)"),
+    fallback: bool = typer.Option(True, "--fallback/--no-fallback", help="Enable automatic fallback to alternative backends"),
+    verbose: bool = typer.Option(False, "--verbose", "-v", help="Enable verbose logging for debugging"),
     dry_run: bool = typer.Option(True, "--dry-run/--execute", help="Preview or execute"),
 ):
     """Autofix: LLM-based code fixes (use --hybrid for mechanical + LLM)."""
     from algitex.todo import HybridAutofix
+    from algitex.tools.logging import set_verbose
+    
+    # Enable verbose logging if requested
+    if verbose:
+        set_verbose(True)
+        console.print(f"[dim][VERBOSE] Debug logging enabled[/]")
 
     fixer = HybridAutofix(
         backend=backend,
@@ -193,6 +201,14 @@ def todo_hybrid(
     else:
         console.print(f"[yellow]Mode: LLM ONLY[/] — Skipping mechanical fixes")
         console.print(f"   • LLM fixes via {backend} (rate={rate_limit}/sec)")
+    
+    if fallback:
+        console.print(f"   • Fallback: ENABLED (auto-switch to ollama/aider if {backend} fails)")
+    else:
+        console.print(f"   • Fallback: DISABLED")
+    
+    if verbose:
+        console.print(f"   • Verbose: ENABLED (detailed function call logging)")
     
     if dry_run:
         console.print(f"\n[dim]⚠️  DRY RUN — No changes will be made. Use --execute to apply fixes.[/]")

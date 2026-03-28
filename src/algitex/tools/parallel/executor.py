@@ -31,6 +31,18 @@ class ParallelExecutor:
         groups = partitioner.partition(tickets, self.max_agents)
 
         # 3. Create worktrees + execute in parallel
+        results = self._dispatch_agents(groups, tickets, tool)
+
+        # 4. Merge all worktrees back
+        merge_results = self._merge_all(results)
+
+        # 5. Cleanup worktrees
+        self._cleanup_worktrees()
+
+        return merge_results
+
+    def _dispatch_agents(self, groups: Dict, tickets: List[Dict], tool: str) -> List[Dict]:
+        """Create worktrees and run agents in parallel."""
         results = []
         with ThreadPoolExecutor(max_workers=len(groups)) as pool:
             futures = {}
@@ -53,14 +65,7 @@ class ParallelExecutor:
                         "status": "error",
                         "error": str(e),
                     })
-
-        # 4. Merge all worktrees back
-        merge_results = self._merge_all(results)
-
-        # 5. Cleanup worktrees
-        self._cleanup_worktrees()
-
-        return merge_results
+        return results
 
     def _create_worktree(self, agent_idx: int) -> str:
         """Create a git worktree for an agent."""

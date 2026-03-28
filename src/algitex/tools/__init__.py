@@ -13,6 +13,7 @@ from typing import Optional
 
 # Export new modules
 from algitex.tools import  batch, benchmark, ide, config, mcp, proxy
+from algitex.tools.logging import log_calls, log_time, verbose, set_verbose, VerboseContext
 from algitex.tools.parallel import (
     CodeRegion,
     MergeResult,
