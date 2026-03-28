@@ -4,12 +4,6 @@ flowchart TD
     classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
 
     subgraph Core
-        docker__planfile_mcp__planfile_mcp_server___save_tickets["_save_tickets"]
-        docker__planfile_mcp__planfile_mcp_server__planfile_create_ticket["planfile_create_ticket"]
-        docker__planfile_mcp__planfile_mcp_server__planfile_create_tickets_bulk["planfile_create_tickets_bulk"]
-        docker__planfile_mcp__planfile_mcp_server__planfile_sync["planfile_sync"]
-        docker__planfile_mcp__planfile_mcp_server__create_rest_api["create_rest_api"]
-        docker__planfile_mcp__planfile_mcp_server__run_rest_server["run_rest_server"]
         docker__aider_mcp__aider_mcp_server__run_rest_server["run_rest_server"]
         docker__vallm__vallm_server__VallmServer__create_fastapi_app["create_fastapi_app"]
         docker__vallm__vallm_server__VallmServer___validate_static["_validate_static"]
@@ -17,9 +11,15 @@ flowchart TD
         docker__vallm__vallm_server__VallmServer___validate_security["_validate_security"]
         docker__vallm__vallm_server__VallmServer___analyze_complexity["_analyze_complexity"]
         docker__vallm__vallm_server__VallmServer__run["run"]
+        docker__planfile_mcp__planfile_mcp_server___save_tickets["_save_tickets"]
+        docker__planfile_mcp__planfile_mcp_server__planfile_create_ticket["planfile_create_ticket"]
+        docker__planfile_mcp__planfile_mcp_server__planfile_create_tickets_bulk["planfile_create_tickets_bulk"]
+        docker__planfile_mcp__planfile_mcp_server__planfile_sync["planfile_sync"]
+        docker__planfile_mcp__planfile_mcp_server__create_rest_api["create_rest_api"]
+        docker__planfile_mcp__planfile_mcp_server__run_rest_server["run_rest_server"]
         src__algitex__tools__config__ConfigManager___ensure_dir["_ensure_dir"]
         src__algitex__tools__config__ConfigManager___backup_file["_backup_file"]
-        ...["+491 more"]
+        ...["+499 more"]
     end
 
-    class docker__planfile_mcp__planfile_mcp_server__planfile_create_tickets_bulk,docker__planfile_mcp__planfile_mcp_server__planfile_sync,docker__planfile_mcp__planfile_mcp_server__run_rest_server,docker__aider_mcp__aider_mcp_server__run_rest_server,docker__vallm__vallm_server__VallmServer__create_fastapi_app,docker__vallm__vallm_server__VallmServer___validate_static,docker__vallm__vallm_server__VallmServer___validate_runtime,docker__vallm__vallm_server__VallmServer___validate_security,docker__vallm__vallm_server__VallmServer___analyze_complexity,docker__vallm__vallm_server__VallmServer__run entry
+    class docker__aider_mcp__aider_mcp_server__run_rest_server,docker__vallm__vallm_server__VallmServer__create_fastapi_app,docker__vallm__vallm_server__VallmServer___validate_static,docker__vallm__vallm_server__VallmServer___validate_runtime,docker__vallm__vallm_server__VallmServer___validate_security,docker__vallm__vallm_server__VallmServer___analyze_complexity,docker__vallm__vallm_server__VallmServer__run,docker__planfile_mcp__planfile_mcp_server__planfile_create_tickets_bulk,docker__planfile_mcp__planfile_mcp_server__planfile_sync,docker__planfile_mcp__planfile_mcp_server__run_rest_server entry

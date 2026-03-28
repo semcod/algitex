@@ -125,6 +125,11 @@ class HybridAutofix:
         self.llm_calls = 0
         self.llm_errors = 0
         self.total_cost = 0.0
+        
+        # Progress tracking
+        self._total_llm_tasks = 0
+        self._completed_llm_tasks = 0
+        self._lock = threading.Lock()
 
     def fix_mechanical(self, todo_path: str | Path) -> dict:
         """Phase 1: Fast parallel mechanical fixes.
@@ -175,6 +180,10 @@ class HybridAutofix:
             return {"fixed": 0, "skipped": 0, "errors": 0}
 
         print(f"   📋 {len(llm_tasks)} tasks for LLM processing")
+        
+        # Initialize progress tracking
+        self._total_llm_tasks = len(llm_tasks)
+        self._completed_llm_tasks = 0
 
         # Group by file
         by_file: dict[str, list[TodoTask]] = {}
@@ -236,6 +245,15 @@ class HybridAutofix:
         errors = 0
 
         for task in sorted(tasks, key=lambda t: t.line, reverse=True):
+            # Update and show progress
+            with self._lock:
+                self._completed_llm_tasks += 1
+                current = self._completed_llm_tasks
+                total = self._total_llm_tasks
+            
+            print(f"\n   📌 [{current}/{total}] {task.file}:{task.line}")
+            print(f"      Issue: {task.message[:80]}...")
+            
             for attempt in range(self.retry_attempts):
                 try:
                     if self.dry_run:

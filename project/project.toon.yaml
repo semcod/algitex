@@ -1,29 +1,29 @@
-# algitex | 601 func | 62f | 17832L | python | 2026-03-28
+# algitex | 609 func | 62f | 17874L | python | 2026-03-28
 
 HEALTH:
   CC̄=3.3  critical=24 (limit:10)  dup=4  cycles=0
 
 ALERTS[20]:
-  !!  high_fan_out     init = 15 (limit:10)
   !   high_fan_out     VallmServer.create_fastapi_app = 14 (limit:10)
   !   high_fan_out     DockerToolManager._query_stdio_capabilities = 13 (limit:10)
-  !   high_fan_out     Workflow.parse = 13 (limit:10)
-  !   high_fan_out     Workflow._exec_rest = 13 (limit:10)
-  !   high_fan_out     Project.generate_todo = 13 (limit:10)
   !   high_fan_out     VallmServer._analyze_complexity = 12 (limit:10)
   !   high_fan_out     ConfigManager.list_configs = 12 (limit:10)
   !   high_fan_out     StdioTransport._read_with_timeout = 12 (limit:10)
   !   high_fan_out     DockerToolManager._load_tools = 12 (limit:10)
+  !   high_fan_out     parallel = 12 (limit:10)
+  !   high_fan_out     todo_hybrid = 12 (limit:10)
+  !   high_fan_out     parse_todo = 12 (limit:10)
+  !   high_fan_out     spawn_stdio = 11 (limit:10)
 
 MODULES[69] (top by size):
   M[src/algitex/tools/benchmark.py] 464L C:4 F:19 CC↑14 D:0 (python)
   M[src/algitex/tools/mcp.py] 448L C:2 F:18 CC↑11 D:0 (python)
-  M[src/algitex/project/__init__.py] 437L C:1 F:20 CC↑12 D:0 (python)
+  M[src/algitex/project/__init__.py] 439L C:1 F:22 CC↑6 D:0 (python)
   M[src/algitex/tools/ide.py] 430L C:6 F:22 CC↑8 D:0 (python)
   M[src/algitex/tools/batch.py] 421L C:4 F:20 CC↑7 D:0 (python)
-  M[src/algitex/propact/__init__.py] 413L C:3 F:15 CC↑10 D:1 (python)
+  M[src/algitex/propact/__init__.py] 419L C:3 F:18 CC↑10 D:1 (python)
   M[src/algitex/tools/services.py] 413L C:3 F:20 CC↑9 D:0 (python)
-  M[src/algitex/todo/fixer.py] 409L C:2 F:14 CC↑8 D:4 (python)
+  M[src/algitex/todo/fixer.py] 409L C:2 F:14 CC↑8 D:5 (python)
   M[src/algitex/tools/cicd.py] 403L C:1 F:11 CC↑5 D:1 (python)
   M[src/algitex/tools/config.py] 387L C:1 F:12 CC↑8 D:0 (python)
   M[src/algitex/tools/ollama.py] 382L C:4 F:16 CC↑11 D:0 (python)
@@ -34,14 +34,11 @@ MODULES[69] (top by size):
   LANGS: python:68/shell:1
 
 HOTSPOTS[10]:
-  ★ init fan=15  // Initialize algitex for a project.
   ★ VallmServer.create_fastapi_app fan=14  // Create FastAPI application.
   ★ DockerToolManager._query_stdio_capabilities fan=13  // Query MCP tool list via stdio JSON-RPC.
-  ★ Workflow.parse fan=13  // Parse Markdown into executable steps.
-  ★ Workflow._exec_rest fan=13  // Execute a REST API call.
-
-REFACTOR[1]:
-  [1] M/M Reduce init fan-out (currently 15)
+  ★ VallmServer._analyze_complexity fan=12  // Analysis pipeline, 12 stages
+  ★ ConfigManager.list_configs fan=12  // List available configuration files.
+  ★ StdioTransport._read_with_timeout fan=12  // Read response from stdout with timeout using select.
 
 EVOLUTION:
-  2026-03-28 CC̄=3.3 crit=24 17832L // Automated analysis
+  2026-03-28 CC̄=3.3 crit=24 17874L // Automated analysis

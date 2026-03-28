@@ -1640,6 +1640,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.36] - 2026-03-28
+
+### Docs
+- Update TODO.md
+- Update docs/README.md
+- Update project/README.md
+- Update project/context.md
+
+### Other
+- Update docker/aider-mcp/aider_mcp_server.py
+- Update docker/planfile-mcp/planfile_mcp_server.py
+- Update docker/vallm/vallm_mcp_server.py
+- Update docker/vallm/vallm_server.py
+- Update examples/01-quickstart/main.py
+- Update examples/02-algo-loop/main.py
+- Update examples/03-pipeline/main.py
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- ... and 10 more files
+
 ## [0.1.35] - 2026-03-28
 
 ### Docs
