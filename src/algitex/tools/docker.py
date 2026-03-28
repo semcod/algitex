@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import time
 from dataclasses import dataclass, field
@@ -46,6 +47,7 @@ class RunningTool:
     container_id: str
     process: Optional[subprocess.Popen] = None  # for stdio
     endpoint: Optional[str] = None               # for SSE/REST
+    pid: Optional[int] = None                    # for tracking
 
 
 # ─── DockerToolManager ───────────────────────────────────
@@ -58,7 +60,9 @@ class DockerToolManager:
         self._running: dict[str, RunningTool] = {}
         self._tools: dict[str, DockerTool] = {}
         self._http_client: Optional[httpx.Client] = None
+        self._state_file = Path(config.project_path) / ".algitex" / "docker-state.json"
         self._load_tools()
+        self._load_state()
 
     def __enter__(self):
         return self
@@ -73,9 +77,72 @@ class DockerToolManager:
         path = Path(self.config.project_path) / "docker-tools.yaml"
         if not path.exists():
             return
-        data = yaml.safe_load(path.read_text())
+        
+        # Read and expand environment variables
+        content = path.read_text()
+        content = os.path.expandvars(content)
+        
+        data = yaml.safe_load(content)
         for name, spec in data.get("tools", {}).items():
+            # Expand environment variables in tool configuration
+            if "env" in spec:
+                for k, v in spec["env"].items():
+                    if isinstance(v, str):
+                        spec["env"][k] = os.path.expandvars(v)
+            
+            # Expand environment variables in volumes
+            if "volumes" in spec:
+                expanded_volumes = []
+                for v in spec["volumes"]:
+                    # Set default PROJECT_DIR if not in environment
+                    if "${PROJECT_DIR}" in v and "PROJECT_DIR" not in os.environ:
+                        v = v.replace("${PROJECT_DIR}", os.getcwd())
+                    expanded_volumes.append(os.path.expandvars(v))
+                spec["volumes"] = expanded_volumes
+            
             self._tools[name] = DockerTool(name=name, **spec)
+
+    def _load_state(self):
+        """Load running container state from file."""
+        if not self._state_file.exists():
+            return
+        
+        try:
+            state = json.loads(self._state_file.read_text())
+            for name, data in state.get("running", {}).items():
+                # Check if container is still running
+                result = subprocess.run(
+                    ["docker", "inspect", "-f", "{{.State.Running}}", data["container_id"]],
+                    capture_output=True,
+                    text=True,
+                )
+                if result.returncode == 0 and result.stdout.strip() == "true":
+                    tool = self._tools.get(name)
+                    if tool:
+                        rt = RunningTool(
+                            tool=tool,
+                            container_id=data["container_id"],
+                            endpoint=data.get("endpoint"),
+                            pid=data.get("pid"),
+                        )
+                        self._running[name] = rt
+        except Exception:
+            pass  # Ignore state loading errors
+
+    def _save_state(self):
+        """Save running container state to file."""
+        self._state_file.parent.mkdir(parents=True, exist_ok=True)
+        state = {
+            "running": {
+                name: {
+                    "container_id": rt.container_id,
+                    "endpoint": rt.endpoint,
+                    "pid": rt.pid,
+                }
+                for name, rt in self._running.items()
+            }
+        }
+        self._state_file.write_text(json.dumps(state, indent=2))
 
     # ─── Lifecycle ────────────────────────────────────────
 
@@ -102,7 +169,7 @@ class DockerToolManager:
             raise ValueError(f"Unknown transport: {tool.transport}")
 
     def _spawn_stdio(self, tool: DockerTool, env: dict) -> RunningTool:
-        """docker run -i --rm → subprocess with stdin/stdout MCP."""
+        """docker run -i → persistent subprocess with stdin/stdout MCP."""
         cmd = ["docker", "run", "-i"]
         if tool.auto_remove:
             cmd.append("--rm")
@@ -110,7 +177,18 @@ class DockerToolManager:
             cmd.extend(["-e", f"{k}={v}"])
         for vol in tool.volumes:
             cmd.extend(["-v", vol])
-        cmd.append(tool.image)
+        
+        # Special handling for filesystem-mcp which needs directory argument
+        if tool.name == "filesystem-mcp":
+            # Extract the workspace directory from volumes
+            workspace_dir = "/workspace"
+            for vol in tool.volumes:
+                if ":/workspace" in vol:
+                    workspace_dir = "/workspace"
+                    break
+            cmd.extend([tool.image, workspace_dir])
+        else:
+            cmd.append(tool.image)
 
         proc = subprocess.Popen(
             cmd,
@@ -119,12 +197,18 @@ class DockerToolManager:
             stderr=subprocess.PIPE,
             text=True,
         )
+        
+        # Give the server a moment to start up
+        time.sleep(0.5)
+        
         rt = RunningTool(
             tool=tool,
             container_id=f"stdio-{tool.name}-{proc.pid}",
             process=proc,
+            pid=proc.pid,
         )
         self._running[tool.name] = rt
+        self._save_state()
         return rt
 
     def _spawn_sse(self, tool: DockerTool, env: dict) -> RunningTool:
@@ -146,6 +230,7 @@ class DockerToolManager:
             endpoint=f"http://localhost:{port}/mcp",
         )
         self._running[tool.name] = rt
+        self._save_state()
 
         # Wait for health
         if tool.health_check:
@@ -172,6 +257,7 @@ class DockerToolManager:
             endpoint=f"http://localhost:{port}",
         )
         self._running[tool.name] = rt
+        self._save_state()
         return rt
 
     def _spawn_cli(self, tool: DockerTool, env: dict) -> RunningTool:
@@ -188,6 +274,7 @@ class DockerToolManager:
 
         rt = RunningTool(tool=tool, container_id=container_id)
         self._running[tool.name] = rt
+        self._save_state()
         return rt
 
     def _wait_healthy(self, check: str, timeout: int = 30):
@@ -241,33 +328,40 @@ class DockerToolManager:
             "params": {"name": tool, "arguments": args},
         }
         
-        # MCP stdio uses Content-Length headers (like LSP protocol)
-        content = json.dumps(request)
-        message = f"Content-Length: {len(content)}\r\n\r\n{content}"
+        # Send raw JSON-RPC without Content-Length headers
+        message = json.dumps(request)
         
+        # Send the message
         rt.process.stdin.write(message)
         rt.process.stdin.flush()
         
-        # Read response with Content-Length header
-        header_data = b""
-        while b"\r\n\r\n" not in header_data:
-            chunk = rt.process.stdout.read(1)
-            if not chunk:
-                raise RuntimeError("Unexpected EOF while reading MCP headers")
-            header_data += chunk
-        
-        headers = header_data.decode().split("\r\n")
-        content_length = None
-        for header in headers:
-            if header.startswith("Content-Length:"):
-                content_length = int(header.split(":")[1].strip())
-                break
-        
-        if content_length is None:
-            raise RuntimeError("Missing Content-Length header in MCP response")
-        
-        response = rt.process.stdout.read(content_length)
-        return json.loads(response)
+        # Read response with timeout
+        try:
+            # Read the response line by line
+            response_lines = []
+            start_time = time.time()
+            timeout = 30
+            
+            while time.time() - start_time < timeout:
+                line = rt.process.stdout.readline()
+                if not line:
+                    break
+                response_lines.append(line.strip())
+                # If we got a complete JSON response, return it
+                if line.strip().startswith('{"jsonrpc"'):
+                    response = line.strip()
+                    return json.loads(response)
+            
+            # If no JSON response found, try to parse all output
+            output = ''.join(response_lines)
+            if output:
+                return json.loads(output)
+            else:
+                return {"error": "No response from MCP server"}
+        except json.JSONDecodeError as e:
+            return {"error": "Invalid JSON response", "raw": ''.join(response_lines)}
+        except Exception as e:
+            return {"error": f"Communication error: {str(e)}"}
 
     def _call_sse(self, rt: RunningTool, tool: str, args: dict) -> dict:
         """POST to SSE/HTTP MCP endpoint."""
@@ -320,6 +414,7 @@ class DockerToolManager:
                 ["docker", "rm", "-f", rt.container_id],
                 capture_output=True,
             )
+        self._save_state()
 
     def teardown_all(self):
         """Stop all running containers."""

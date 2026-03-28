@@ -1,12 +1,14 @@
-# code2llm | 15f 2332L | python:14,shell:1 | 2026-03-28
-# CC̄=3.0 | critical:0/109 | dups:0 | cycles:1
+# code2llm | 19f 3785L | python:18,shell:1 | 2026-03-28
+# CC̄=3.1 | critical:1/185 | dups:0 | cycles:1
 
-HEALTH[0]: ok
+HEALTH[1]:
+  🟡 CC    execute CC=16 (limit:15)
 
-REFACTOR[1]:
-  1. break 1 circular dependencies
+REFACTOR[2]:
+  1. split 1 high-CC methods  (CC>15)
+  2. break 1 circular dependencies
 
-PIPELINES[92]:
+PIPELINES[163]:
   [1] Src [init]: init → discover_tools
       PURITY: 100% pure
   [2] Src [analyze]: analyze
@@ -19,17 +21,21 @@ PIPELINES[92]:
       PURITY: 100% pure
 
 LAYERS:
-  src/                            CC̄=3.0    ←in:0  →out:0
+  src/                            CC̄=3.1    ←in:0  →out:0
+  │ docker                     462L  3C   23m  CC=10     ←0
+  │ cli                        452L  0C   22m  CC=5      ←0
+  │ !! __init__                   397L  3C   12m  CC=16     ←0
   │ __init__                   369L  5C   12m  CC=9      ←0
-  │ cli                        358L  0C   17m  CC=5      ←0
-  │ __init__                   317L  3C   10m  CC=13     ←0
-  │ project                    283L  1C   12m  CC=6      ←0
-  │ tickets                    246L  2C   11m  CC=5      ←0
+  │ __init__                   330L  3C   20m  CC=4      ←0
+  │ project                    294L  1C   12m  CC=6      ←0
+  │ tickets                    246L  2C   11m  CC=5      ←3
+  │ feedback                   219L  4C   12m  CC=8      ←0
+  │ context                    206L  3C   14m  CC=7      ←0
   │ analysis                   182L  3C    8m  CC=7      ←0
-  │ config                     169L  4C    7m  CC=10     ←4
+  │ config                     170L  4C    7m  CC=10     ←5
   │ proxy                      145L  2C    9m  CC=9      ←0
+  │ telemetry                  140L  2C    7m  CC=4      ←0
   │ __init__                   102L  1C    4m  CC=4      ←3
-  │ __init__                    90L  1C    7m  CC=3      ←0
   │ __init__                    36L  0C    0m  CC=0.0    ←0
   │ pipeline                     5L  0C    0m  CC=0.0    ←0
   │ loop                         4L  0C    0m  CC=0.0    ←0

@@ -359,42 +359,15 @@ class Workflow:
         config = Config.load()
         if docker_mgr is None:
             with DockerToolManager(config) as mgr:
-                return self._exec_docker_internal(step, mgr)
+                return self._execute_with_manager(tool_name, action, input_data, resolved_env, step, mgr)
         else:
-            return self._exec_docker_internal(step, docker_mgr)
+            return self._execute_with_manager(tool_name, action, input_data, resolved_env, step, docker_mgr)
     
-    def _exec_docker_internal(self, step: WorkflowStep, mgr: DockerToolManager) -> WorkflowStep:
-        """Internal method to execute Docker step with a given manager."""
-        from algitex.tools.docker import DockerToolManager
-        from algitex.config import Config
-        import json
-        import os
-
-        # Parse YAML content from step
-        try:
-            import yaml
-            params = yaml.safe_load(step.content)
-        except ImportError:
-            # Fallback to simple JSON parsing if yaml not available
-            params = json.loads(step.content)
-
-        tool_name = params["tool"]
-        action = params["action"]
-        input_data = params.get("input", {})
-        env_overrides = params.get("env", {})
-
-        # Resolve environment variables in env_overrides
-        resolved_env = {}
-        for k, v in env_overrides.items():
-            if isinstance(v, str) and v.startswith("$"):
-                env_var = v[2:-1] if v.startswith("${") else v[1:]
-                resolved_env[k] = os.getenv(env_var, v)
-            else:
-                resolved_env[k] = v
-
+    def _execute_with_manager(self, tool_name: str, action: str, input_data: dict, env: dict, step: WorkflowStep, mgr: DockerToolManager) -> WorkflowStep:
+        """Execute Docker step with given manager and parameters."""
         # Spawn if not running
         if tool_name not in mgr.list_running():
-            mgr.spawn(tool_name, env=resolved_env)
+            mgr.spawn(tool_name, env=env)
 
         # Call the tool
         result = mgr.call_tool(tool_name, action, input_data)

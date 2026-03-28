@@ -8,6 +8,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.10] - 2026-03-28
 
 ### Fixed
+- Fix smart-return-type issues (ticket-73222882)
+- Fix string-concat issues (ticket-5759fc4e)
+- Fix unused-imports issues (ticket-da8d593f)
+- Fix magic-numbers issues (ticket-6bcc74c3)
+- Fix smart-return-type issues (ticket-89f529a9)
+- Fix string-concat issues (ticket-a8e6284b)
+- Fix unused-imports issues (ticket-60c12a1c)
+- Fix string-concat issues (ticket-86b040a0)
+- Fix unused-imports issues (ticket-4689abb1)
+- Fix llm-generated-code issues (ticket-de4d3451)
+
+## [0.1.10] - 2026-03-28
+
+### Fixed
+- Fix smart-return-type issues (ticket-33da0533)
+- Fix string-concat issues (ticket-e74b5ead)
+- Fix unused-imports issues (ticket-e13c4396)
+- Fix magic-numbers issues (ticket-cccdcd7f)
+
+## [0.1.10] - 2026-03-28
+
+### Fixed
 - Fix smart-return-type issues (ticket-f6ffd00c)
 - Fix ai-boilerplate issues (ticket-5f6d2bb9)
 - Fix smart-return-type issues (ticket-edda477b)
@@ -54,6 +76,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix llm-generated-code issues (ticket-06d0712f)
 
 ## [Unreleased]
+
+## [0.1.7] - 2026-03-28
+
+### Docs
+- Update CHANGELOG.md
+- Update TODO.md
+- Update docs/README.md
+- Update examples/05-extended-features.md
+- Update project/README.md
+- Update project/context.md
+
+### Test
+- Update tests/test_context.py
+- Update tests/test_e2e_integration.py
+- Update tests/test_feedback.py
+- Update tests/test_integration_extended.py
+- Update tests/test_telemetry.py
+
+### Other
+- Update docker-tools.yaml
+- Update examples/context_example.py
+- Update examples/feedback_example.py
+- Update examples/telemetry_example.py
+- Update planfile.yaml
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/compact_flow.mmd
+- Update project/compact_flow.png
+- ... and 9 more files
 
 ## [0.1.6] - 2026-03-28
 

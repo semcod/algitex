@@ -1,31 +1,35 @@
-# algitex | 15f 2332L | python:14,shell:1 | 2026-03-28
-# stats: 97 func | 0 cls | 15 mod | CC̄=3.0 | critical:0 | cycles:0
-# alerts[5]: fan-out init=16; fan-out Project.status=15; fan-out Workflow._exec_rest=13; fan-out Workflow.parse=13; fan-out Loop.extract=10
-# hotspots[5]: init fan=16; Project.status fan=15; Workflow.parse fan=13; Workflow._exec_rest fan=13; go fan=10
-# evolution: CC̄ 3.0→3.0 (flat 0.0)
+# algitex | 19f 3785L | python:18,shell:1 | 2026-03-28
+# stats: 173 func | 0 cls | 19 mod | CC̄=3.1 | critical:1 | cycles:0
+# alerts[5]: fan-out Project.status=18; CC Workflow.execute=16; fan-out DockerToolManager.get_capabilities=16; fan-out init=16; fan-out Workflow.execute=14
+# hotspots[5]: Project.status fan=18; init fan=16; DockerToolManager.get_capabilities fan=16; Workflow.execute fan=14; Workflow.parse fan=13
+# evolution: CC̄ 3.2→3.1 (improved -0.1)
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[15]:
+M[19]:
   project.sh,24
   src/algitex/__init__.py,36
   src/algitex/algo/__init__.py,369
   src/algitex/algo/loop.py,4
-  src/algitex/cli.py,358
-  src/algitex/config.py,169
-  src/algitex/project.py,283
-  src/algitex/propact/__init__.py,317
+  src/algitex/cli.py,452
+  src/algitex/config.py,170
+  src/algitex/project.py,294
+  src/algitex/propact/__init__.py,397
   src/algitex/propact/workflow.py,2
   src/algitex/tools/__init__.py,102
   src/algitex/tools/analysis.py,182
+  src/algitex/tools/context.py,206
+  src/algitex/tools/docker.py,462
+  src/algitex/tools/feedback.py,219
   src/algitex/tools/proxy.py,145
+  src/algitex/tools/telemetry.py,140
   src/algitex/tools/tickets.py,246
-  src/algitex/workflows/__init__.py,90
+  src/algitex/workflows/__init__.py,330
   src/algitex/workflows/pipeline.py,5
 D:
   src/algitex/propact/__init__.py:
     e: WorkflowStep,WorkflowResult,Workflow
     WorkflowStep: to_dict(0)  # Single executable step in a Propact workflow...
     WorkflowResult:  # Result of workflow execution...
-    Workflow: __init__(1),parse(0),validate(0),execute(0),status(0),_exec_shell(1),_exec_rest(2),_exec_mcp(2),_exec_llm(2)  # Parse and execute Propact Markdown workflows...
+    Workflow: __init__(1),parse(0),validate(0),execute(0),status(0),_exec_shell(1),_exec_rest(2),_exec_mcp(2),_exec_docker(2),_execute_with_manager(6),_exec_llm(2)  # Parse and execute Propact Markdown workflows...
   src/algitex/config.py:
     e: ProxyConfig,TicketConfig,AnalysisConfig,Config,_find_config,_merge_yaml
     ProxyConfig: from_env(0)  # Proxym gateway settings...
@@ -34,6 +38,11 @@ D:
     Config: load(1),save(1)  # Unified config for the entire algitex stack...
     _find_config(explicit)
     _merge_yaml(cfg;path)
+  src/algitex/tools/docker.py:
+    e: DockerTool,RunningTool,DockerToolManager
+    DockerTool:  # Single Docker-based tool declaration from docker-tools.yaml...
+    RunningTool:  # A spawned Docker container with connection info...
+    DockerToolManager: __init__(1),__enter__(0),__exit__(3),_load_tools(0),_load_state(0),_save_state(0),spawn(1),_spawn_stdio(2),_spawn_sse(2),_spawn_rest(2),_spawn_cli(2),_wait_healthy(2),_get_http_client(0),call_tool(3),_call_stdio(3),_call_sse(3),_call_rest(3),_call_cli(3),teardown(1),teardown_all(0),list_tools(0),list_running(0),get_capabilities(1)  # Spawn Docker containers, connect via MCP/REST, call tools, t...
   src/algitex/tools/proxy.py:
     e: LLMResponse,Proxy
     LLMResponse: __str__(0)  # Simplified LLM response...
@@ -45,17 +54,28 @@ D:
     Rule:  # Deterministic replacement for an LLM pattern...
     LoopState:  # Current state of the progressive algorithmization loop...
     Loop: __init__(1),discover(1),add_trace(2),extract(1),generate_rules(1),_llm_generate_rule(2),route(1),optimize(0),report(0),_load(0),_save(0)  # The progressive algorithmization engine...
+  src/algitex/tools/feedback.py:
+    e: FailureStrategy,FeedbackPolicy,FeedbackController,FeedbackLoop
+    FailureStrategy(Enum):
+    FeedbackPolicy: __post_init__(0)  # Policy configuration for feedback handling...
+    FeedbackController: __init__(1),on_validation_failure(3),on_success(2),needs_approval(1),_extract_feedback(1)  # Orchestrate retry/replan/escalate decisions...
+    FeedbackLoop: __init__(3),execute_with_feedback(2),_execute_single(2),_validate_result(1),_mark_ticket_done(3),_mark_ticket_skipped(2)  # Integrates feedback controller into the pipeline execution...
   src/algitex/tools/analysis.py:
     e: HealthReport,Analyzer,CLIResult,_run_cli
     HealthReport: summary(0)  # Combined analysis result from all tools...
     Analyzer: __init__(1),health(0),full(0),_run_code2llm(1),_run_vallm(1),_run_redup(1)  # Unified interface for code analysis tools...
     CLIResult:
     _run_cli(cmd;cwd)
+  src/algitex/tools/context.py:
+    e: CodeContext,ContextBuilder,SemanticCache
+    CodeContext: to_prompt(1)  # Assembled context for an LLM coding task...
+    ContextBuilder: __init__(1),build(2),_load_toon_summary(0),_load_architecture(0),_resolve_targets(1),_find_related(1),_load_conventions(0),_git_recent(0),_format_ticket(1)  # Build rich context for LLM coding tasks from .toon files + g...
+    SemanticCache: __init__(2),_get_client(0),search_similar_context(2),store_context(3)  # Optional semantic caching using Qdrant for context retrieval...
   src/algitex/project.py:
     e: Project
     Project: __init__(2),analyze(1),plan(3),execute(1),status(0),run_workflow(1),ask(1),add_ticket(1),sync(0),_build_prompt(1),_select_tier(1),_generate_strategy(2)  # One project, all tools, zero boilerplate...
   src/algitex/cli.py:
-    e: init,analyze,plan,go,status,tools,ask,sync,ticket_add,ticket_list,ticket_board,algo_discover,algo_extract,algo_rules,algo_report,workflow_run,workflow_validate
+    e: init,analyze,plan,go,status,tools,ask,sync,ticket_add,ticket_list,ticket_board,algo_discover,algo_extract,algo_rules,algo_report,workflow_run,workflow_validate,docker_list,docker_spawn,docker_call,docker_teardown,docker_caps
     init(path)
     analyze(path;quick)
     plan(path;sprints;focus)
@@ -73,10 +93,19 @@ D:
     algo_report(path)
     workflow_run(path;dry_run)
     workflow_validate(path)
+    docker_list()
+    docker_spawn(tool_name)
+    docker_call(tool_name;action;input_json)
+    docker_teardown(tool_name)
+    docker_caps(tool_name)
   src/algitex/tools/tickets.py:
     e: Ticket,Tickets
     Ticket: to_dict(0)  # A single work item...
     Tickets: __init__(2),add(1),from_analysis(1),list(1),update(1),sync(0),board(0),_load(0),_save(0),_planfile_add(1)  # Manage project tickets via planfile or local YAML...
+  src/algitex/tools/telemetry.py:
+    e: TraceSpan,Telemetry
+    TraceSpan: finish(1)  # Single operation span...
+    Telemetry: __init__(2),span(2),summary(0),push_to_langfuse(0),save(1),report(0)  # Track costs, tokens, time across an algitex pipeline run...
   src/algitex/tools/__init__.py:
     e: ToolStatus,discover_tools,require_tool,get_tool_module
     ToolStatus: __str__(0)
@@ -84,10 +113,12 @@ D:
     require_tool(name)
     get_tool_module(name)
   src/algitex/workflows/__init__.py:
-    e: Pipeline
-    Pipeline: __init__(2),analyze(1),create_tickets(0),execute(1),validate(0),sync(1),report(0)  # Composable workflow: chain steps fluently...
-  src/algitex/algo/loop.py:
+    e: Pipeline,TicketExecutor,TicketValidator
+    Pipeline: __init__(2),analyze(1),create_tickets(0),execute(2),validate(0),sync(1),report(0),finish(0),_build_fix_prompt(1)  # Composable workflow: chain steps fluently...
+    TicketExecutor: __init__(5),execute_tickets(2),_get_open_tickets(1),_execute_single_ticket(2),_call_tool_with_context(3),_validate_with_vallm(2),_mark_ticket_done(3),_build_fix_prompt(1)  # Handles ticket execution with Docker tools, telemetry, conte...
+    TicketValidator: __init__(1),validate_all(0),_run_security_scan(0)  # Multi-level validation: static analysis, runtime tests, secu...
   src/algitex/__init__.py:
+  src/algitex/algo/loop.py:
   src/algitex/propact/workflow.py:
   src/algitex/workflows/pipeline.py:
   project.sh:

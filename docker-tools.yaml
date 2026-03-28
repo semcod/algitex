@@ -141,3 +141,111 @@ tools:
       - click
       - fill
       - evaluate
+
+  # ─── P1: Critical Infrastructure ─────────────────────
+  langfuse:
+    image: langfuse/langfuse:latest
+    transport: rest
+    port: 3000
+    auto_remove: false
+    env:
+      DATABASE_URL: ${LANGFUSE_DATABASE_URL:-postgresql://postgres:postgres@localhost:5432/langfuse}
+    health_check: "http://localhost:3000/api/public/health"
+    capabilities:
+      - telemetry
+      - observability
+
+  # ─── P2: Quality & Security Tools ────────────────────
+  semgrep:
+    image: semgrep/semgrep:latest
+    transport: cli
+    volumes:
+      - "${PROJECT_DIR}:/src"
+    capabilities:
+      - scan
+      - sast
+      - security-audit
+
+  pytest:
+    image: wronai/pytest-runner:latest
+    transport: cli
+    volumes:
+      - "${PROJECT_DIR}:/project"
+    capabilities:
+      - test-run
+      - coverage
+      - runtime-validation
+
+  promptfoo:
+    image: promptfoo/promptfoo:latest
+    transport: cli
+    volumes:
+      - "${PROJECT_DIR}:/project"
+    capabilities:
+      - eval
+      - redteam
+      - prompt-testing
+
+  code2docs:
+    image: wronai/code2docs:latest
+    transport: cli
+    volumes:
+      - "${PROJECT_DIR}:/project"
+    capabilities:
+      - generate-readme
+      - generate-api-docs
+      - generate-changelog
+
+  # ─── P3: Extended Infrastructure ─────────────────────
+  qdrant:
+    image: qdrant/qdrant:latest
+    transport: rest
+    port: 6333
+    auto_remove: false
+    health_check: "http://localhost:6333/healthz"
+    capabilities:
+      - vector-store
+      - semantic-search
+
+  grafana-mcp:
+    image: mcp/grafana:latest
+    transport: mcp-sse
+    port: 3001
+    env:
+      GRAFANA_API_KEY: ${GRAFANA_API_KEY}
+    capabilities:
+      - dashboard
+      - metrics
+      - visualization
+
+  slack-mcp:
+    image: mcp/slack:latest
+    transport: mcp-stdio
+    env:
+      SLACK_TOKEN: ${SLACK_TOKEN}
+    capabilities:
+      - notify
+      - message
+      - channel
+
+  firecrawl-mcp:
+    image: mcp/firecrawl:latest
+    transport: mcp-stdio
+    env:
+      FIRECRAWL_API_KEY: ${FIRECRAWL_API_KEY}
+    capabilities:
+      - scrape
+      - crawl
+      - extract
+
+  # ─── LLM Providers (extended) ───────────────────────
+  ollama:
+    image: ollama/ollama:latest
+    transport: rest
+    port: 11434
+    auto_remove: false
+    health_check: "http://localhost:11434/api/tags"
+    capabilities:
+      - chat-completions
+      - embeddings
+      - local-models

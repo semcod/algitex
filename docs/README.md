@@ -1,7 +1,7 @@
 <!-- code2docs:start --># algitex
 
-![version](https://img.shields.io/badge/version-0.1.0-blue) ![python](https://img.shields.io/badge/python-%3E%3D3.10-blue) ![coverage](https://img.shields.io/badge/coverage-unknown-lightgrey) ![functions](https://img.shields.io/badge/functions-109-green)
-> **109** functions | **22** classes | **25** files | CC̄ = 3.1
+![version](https://img.shields.io/badge/version-0.1.0-blue) ![python](https://img.shields.io/badge/python-%3E%3D3.10-blue) ![coverage](https://img.shields.io/badge/coverage-unknown-lightgrey) ![functions](https://img.shields.io/badge/functions-185-green)
+> **185** functions | **36** classes | **29** files | CC̄ = 3.1
 
 > Auto-generated project documentation from source code analysis.
 
@@ -151,7 +151,7 @@ Content outside the markers is preserved when regenerating. Enable this with `sy
 
 ```
 algitex/
-    ├── algitex/            ├── loop        ├── cli        ├── config        ├── project            ├── proxy            ├── tickets        ├── propact/            ├── workflow        ├── workflows/            ├── pipeline        ├── main        ├── main        ├── main        ├── main        ├── main├── project        ├── run        ├── run        ├── run        ├── run        ├── run        ├── tools/        ├── algo/            ├── analysis```
+    ├── algitex/            ├── loop        ├── cli        ├── config        ├── project            ├── proxy        ├── algo/            ├── telemetry            ├── context        ├── tools/            ├── analysis            ├── docker            ├── workflow            ├── tickets            ├── pipeline        ├── main        ├── main        ├── main        ├── workflows/        ├── propact/├── project        ├── run        ├── main        ├── run        ├── run        ├── run        ├── run        ├── main            ├── feedback```
 
 ## API Overview
 
@@ -164,21 +164,35 @@ algitex/
 - **`Project`** — One project, all tools, zero boilerplate.
 - **`LLMResponse`** — Simplified LLM response.
 - **`Proxy`** — Simple wrapper around proxym gateway.
-- **`Ticket`** — A single work item.
-- **`Tickets`** — Manage project tickets via planfile or local YAML.
-- **`WorkflowStep`** — Single executable step in a Propact workflow.
-- **`WorkflowResult`** — Result of workflow execution.
-- **`Workflow`** — Parse and execute Propact Markdown workflows.
-- **`Pipeline`** — Composable workflow: chain steps fluently.
-- **`ToolStatus`** — —
 - **`TraceEntry`** — Single LLM interaction trace.
 - **`Pattern`** — Extracted repeating pattern from traces.
 - **`Rule`** — Deterministic replacement for an LLM pattern.
 - **`LoopState`** — Current state of the progressive algorithmization loop.
 - **`Loop`** — The progressive algorithmization engine.
+- **`TraceSpan`** — Single operation span.
+- **`Telemetry`** — Track costs, tokens, time across an algitex pipeline run.
+- **`CodeContext`** — Assembled context for an LLM coding task.
+- **`ContextBuilder`** — Build rich context for LLM coding tasks from .toon files + git + planfile.
+- **`SemanticCache`** — Optional semantic caching using Qdrant for context retrieval.
+- **`ToolStatus`** — —
 - **`HealthReport`** — Combined analysis result from all tools.
 - **`Analyzer`** — Unified interface for code analysis tools.
 - **`CLIResult`** — —
+- **`DockerTool`** — Single Docker-based tool declaration from docker-tools.yaml.
+- **`RunningTool`** — A spawned Docker container with connection info.
+- **`DockerToolManager`** — Spawn Docker containers, connect via MCP/REST, call tools, teardown.
+- **`Ticket`** — A single work item.
+- **`Tickets`** — Manage project tickets via planfile or local YAML.
+- **`Pipeline`** — Composable workflow: chain steps fluently.
+- **`TicketExecutor`** — Handles ticket execution with Docker tools, telemetry, context, and feedback.
+- **`TicketValidator`** — Multi-level validation: static analysis, runtime tests, security scanning.
+- **`WorkflowStep`** — Single executable step in a Propact workflow.
+- **`WorkflowResult`** — Result of workflow execution.
+- **`Workflow`** — Parse and execute Propact Markdown workflows.
+- **`FailureStrategy`** — —
+- **`FeedbackPolicy`** — Policy configuration for feedback handling.
+- **`FeedbackController`** — Orchestrate retry/replan/escalate decisions.
+- **`FeedbackLoop`** — Integrates feedback controller into the pipeline execution.
 
 ### Functions
 
@@ -199,6 +213,14 @@ algitex/
 - `algo_report(path)` — Show algorithmization progress.
 - `workflow_run(path, dry_run)` — Execute a Propact Markdown workflow.
 - `workflow_validate(path)` — Check a Propact workflow for errors.
+- `docker_list()` — List available Docker tools from docker-tools.yaml.
+- `docker_spawn(tool_name)` — Start a Docker tool container.
+- `docker_call(tool_name, action, input_json)` — Call an MCP tool on a running Docker container.
+- `docker_teardown(tool_name)` — Stop Docker tool containers.
+- `docker_caps(tool_name)` — List MCP capabilities of a Docker tool.
+- `discover_tools()` — Check which tools are available.
+- `require_tool(name)` — Raise helpful error if a tool is missing.
+- `get_tool_module(name)` — Import and return a tool module, or None if unavailable.
 - `main()` — —
 - `main()` — —
 - `main()` — —
@@ -211,9 +233,6 @@ algitex/
 - `cursor_config()` — Settings for Cursor / Windsurf.
 - `claude_code_env()` — Environment variables for Claude Code.
 - `main()` — —
-- `discover_tools()` — Check which tools are available.
-- `require_tool(name)` — Raise helpful error if a tool is missing.
-- `get_tool_module(name)` — Import and return a tool module, or None if unavailable.
 
 
 ## Project Structure
@@ -232,16 +251,20 @@ algitex/
 📦 `src.algitex`
 📦 `src.algitex.algo` (12 functions, 5 classes)
 📄 `src.algitex.algo.loop`
-📄 `src.algitex.cli` (17 functions)
+📄 `src.algitex.cli` (22 functions)
 📄 `src.algitex.config` (7 functions, 4 classes)
 📄 `src.algitex.project` (12 functions, 1 classes)
-📦 `src.algitex.propact` (10 functions, 3 classes)
+📦 `src.algitex.propact` (12 functions, 3 classes)
 📄 `src.algitex.propact.workflow`
 📦 `src.algitex.tools` (4 functions, 1 classes)
 📄 `src.algitex.tools.analysis` (8 functions, 3 classes)
+📄 `src.algitex.tools.context` (14 functions, 3 classes)
+📄 `src.algitex.tools.docker` (23 functions, 3 classes)
+📄 `src.algitex.tools.feedback` (12 functions, 4 classes)
 📄 `src.algitex.tools.proxy` (9 functions, 2 classes)
+📄 `src.algitex.tools.telemetry` (7 functions, 2 classes)
 📄 `src.algitex.tools.tickets` (11 functions, 2 classes)
-📦 `src.algitex.workflows` (7 functions, 1 classes)
+📦 `src.algitex.workflows` (20 functions, 3 classes)
 📄 `src.algitex.workflows.pipeline`
 
 ## Requirements

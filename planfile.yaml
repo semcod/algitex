@@ -589,3 +589,185 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
+  - id: ticket-33da0533
+    name: Fix smart-return-type issues
+    description: Resolve 2 smart-return-type issues in src/algitex/tools/docker.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/docker.py
+    rule_id: smart-return-type
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-e74b5ead
+    name: Fix string-concat issues
+    description: Resolve 2 string-concat issues in src/algitex/tools/docker.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/docker.py
+    rule_id: string-concat
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-e13c4396
+    name: Fix unused-imports issues
+    description: Resolve 6 unused-imports issues in src/algitex/tools/docker.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - src/algitex/tools/docker.py
+    rule_id: unused-imports
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-cccdcd7f
+    name: Fix magic-numbers issues
+    description: Resolve 9 magic-numbers issues in src/algitex/tools/docker.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - src/algitex/tools/docker.py
+    rule_id: magic-numbers
+    count: 9
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-73222882
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in src/algitex/tools/context.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/context.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-5759fc4e
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in src/algitex/tools/context.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/context.py
+    rule_id: string-concat
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-da8d593f
+    name: Fix unused-imports issues
+    description: Resolve 6 unused-imports issues in src/algitex/tools/context.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - src/algitex/tools/context.py
+    rule_id: unused-imports
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-6bcc74c3
+    name: Fix magic-numbers issues
+    description: Resolve 4 magic-numbers issues in src/algitex/tools/context.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - src/algitex/tools/context.py
+    rule_id: magic-numbers
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-89f529a9
+    name: Fix smart-return-type issues
+    description: Resolve 3 smart-return-type issues in src/algitex/tools/telemetry.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/telemetry.py
+    rule_id: smart-return-type
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-a8e6284b
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in src/algitex/tools/telemetry.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/telemetry.py
+    rule_id: string-concat
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-60c12a1c
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/algitex/tools/telemetry.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/telemetry.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-86b040a0
+    name: Fix string-concat issues
+    description: Resolve 3 string-concat issues in src/algitex/tools/feedback.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/feedback.py
+    rule_id: string-concat
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-4689abb1
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/algitex/tools/feedback.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/feedback.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-de4d3451
+    name: Fix llm-generated-code issues
+    description: Resolve 1 llm-generated-code issues in src/algitex/tools/feedback.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/feedback.py
+    rule_id: llm-generated-code
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced

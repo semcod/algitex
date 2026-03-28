@@ -1,9 +1,23 @@
-# redup/duplication | 0 groups | 15f 2736L | 2026-03-28
+# redup/duplication | 1 groups | 19f 4179L | 2026-03-28
 
 SUMMARY:
-  files_scanned: 15
-  total_lines:   2736
-  dup_groups:    0
-  dup_fragments: 0
-  saved_lines:   0
-  scan_ms:       1450
+  files_scanned: 19
+  total_lines:   4179
+  dup_groups:    1
+  dup_fragments: 2
+  saved_lines:   4
+  scan_ms:       1460
+
+DUPLICATES[1] (ranked by impact):
+  [bb223416bc6021bb]   EXAC  __enter__  L=4 N=2 saved=4 sim=1.00
+      src/algitex/tools/proxy.py:0-3  (__enter__)
+      src/algitex/tools/docker.py:0-3  (__enter__)
+
+REFACTOR[1] (ranked by priority):
+  [1] ○ extract_function   → src/algitex/tools/utils/__enter__.py
+      WHY: 2 occurrences of 4-line block across 2 files — saves 4 lines
+      FILES: src/algitex/tools/docker.py, src/algitex/tools/proxy.py
+
+METRICS-TARGET:
+  dup_groups:  1 → 0
+  saved_lines: 4 lines recoverable

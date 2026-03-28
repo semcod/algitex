@@ -1,47 +1,51 @@
-# algitex | 97 func | 10f | 3115L | python | 2026-03-28
+# algitex | 173 func | 14f | 4568L | python | 2026-03-28
 
 HEALTH:
-  CC̄=3.0  critical=3 (limit:10)  dup=0  cycles=1
+  CC̄=3.1  critical=4 (limit:10)  dup=0  cycles=1
 
-ALERTS[8]:
+ALERTS[17]:
+  !!  high_fan_out     Project.status = 18 (limit:10)
   !!  high_fan_out     init = 16 (limit:10)
-  !!  high_fan_out     Project.status = 15 (limit:10)
+  !!  high_fan_out     DockerToolManager.get_capabilities = 16 (limit:10)
+  !   cc_exceeded      Workflow.execute = 16 (limit:15)
+  !   high_fan_out     Workflow.execute = 14 (limit:10)
   !   high_fan_out     Workflow.parse = 13 (limit:10)
   !   high_fan_out     Workflow._exec_rest = 13 (limit:10)
-  !   high_fan_out     go = 10 (limit:10)
-  !   high_fan_out     Project.execute = 10 (limit:10)
-  !   high_fan_out     Workflow.execute = 10 (limit:10)
-  !   high_fan_out     Loop.extract = 10 (limit:10)
+  !   high_fan_out     DockerToolManager._load_tools = 12 (limit:10)
+  !   high_fan_out     DockerToolManager._call_stdio = 12 (limit:10)
+  !   high_fan_out     ContextBuilder._find_related = 11 (limit:10)
 
-MODULES[15] (top by size):
+MODULES[19] (top by size):
+  M[src/algitex/tools/docker.py] 462L C:3 F:23 CC↑10 D:0 (python)
+  M[src/algitex/cli.py] 452L C:0 F:22 CC↑5 D:0 (python)
+  M[src/algitex/propact/__init__.py] 397L C:3 F:12 CC↑16 D:0 (python)
   M[src/algitex/algo/__init__.py] 369L C:5 F:12 CC↑9 D:0 (python)
-  M[src/algitex/cli.py] 358L C:0 F:17 CC↑5 D:0 (python)
-  M[src/algitex/propact/__init__.py] 317L C:3 F:10 CC↑13 D:0 (python)
-  M[src/algitex/project.py] 283L C:1 F:12 CC↑6 D:0 (python)
-  M[src/algitex/tools/tickets.py] 246L C:2 F:11 CC↑5 D:0 (python)
+  M[src/algitex/workflows/__init__.py] 330L C:3 F:20 CC↑4 D:0 (python)
+  M[src/algitex/project.py] 294L C:1 F:12 CC↑6 D:0 (python)
+  M[src/algitex/tools/tickets.py] 246L C:2 F:11 CC↑5 D:3 (python)
+  M[src/algitex/tools/feedback.py] 219L C:4 F:12 CC↑8 D:0 (python)
+  M[src/algitex/tools/context.py] 206L C:3 F:14 CC↑7 D:0 (python)
   M[src/algitex/tools/analysis.py] 182L C:3 F:8 CC↑7 D:0 (python)
-  M[src/algitex/config.py] 169L C:4 F:7 CC↑10 D:0 (python)
+  M[src/algitex/config.py] 170L C:4 F:7 CC↑10 D:0 (python)
   M[src/algitex/tools/proxy.py] 145L C:2 F:9 CC↑9 D:0 (python)
+  M[src/algitex/tools/telemetry.py] 140L C:2 F:7 CC↑4 D:0 (python)
   M[src/algitex/tools/__init__.py] 102L C:1 F:4 CC↑4 D:3 (python)
-  M[src/algitex/workflows/__init__.py] 90L C:1 F:7 CC↑3 D:0 (python)
   M[src/algitex/__init__.py] 36L C:0 F:0 CC↑0 D:0 (python)
-  M[project.sh] 24L C:0 F:0 CC↑0 D:0 (shell)
-  M[src/algitex/workflows/pipeline.py] 5L C:0 F:0 CC↑0 D:0 (python)
-  M[src/algitex/algo/loop.py] 4L C:0 F:0 CC↑0 D:0 (python)
-  M[src/algitex/propact/workflow.py] 2L C:0 F:0 CC↑0 D:0 (python)
-  LANGS: python:14/shell:1
+  LANGS: python:18/shell:1
 
-HOTSPOTS[8]:
+HOTSPOTS[10]:
+  ★ Project.status fan=18  // Full project status: health + tickets + budget + algo progress.
   ★ init fan=16  // Initialize algitex for a project.
-  ★ Project.status fan=15  // Full project status: health + tickets + budget + algo progress.
+  ★ DockerToolManager.get_capabilities fan=16  // List MCP tools available on a running container.
+  ★ Workflow.execute fan=14  // Execute all steps in the workflow.
   ★ Workflow.parse fan=13  // Parse Markdown into executable steps.
-  ★ Workflow._exec_rest fan=13  // Execute a REST API call.
-  ★ go fan=10  // Full pipeline: analyze → plan → execute → validate.
 
-REFACTOR[3]:
-  [1] M/L Break circular dependency: src.algitex.tools.tickets.Tickets.list
-  [2] M/M Reduce init fan-out (currently 16)
-  [3] M/M Reduce Project.status fan-out (currently 15)
+REFACTOR[5]:
+  [1] M/L Split Workflow.execute (CC=16 → target CC<10)
+  [2] M/L Break circular dependency: src.algitex.tools.tickets.Tickets.list
+  [3] M/M Reduce Project.status fan-out (currently 18)
+  [4] M/M Reduce init fan-out (currently 16)
+  [5] M/M Reduce DockerToolManager.get_capabilities fan-out (currently 16)
 
 EVOLUTION:
-  2026-03-28 CC̄=3.0 crit=3 3115L // Automated analysis
+  2026-03-28 CC̄=3.1 crit=4 4568L // Automated analysis
