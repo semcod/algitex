@@ -1,30 +1,30 @@
-# algitex | 67f 13475L | python:66,shell:1 | 2026-03-28
-# stats: 576 func | 0 cls | 67 mod | CC̄=3.4 | critical:0 | cycles:0
+# algitex | 67f 13288L | python:66,shell:1 | 2026-03-28
+# stats: 573 func | 0 cls | 67 mod | CC̄=3.4 | critical:0 | cycles:0
 # alerts[5]: fan-out DockerToolManager.get_capabilities=16; fan-out ParallelExecutor.execute=15; fan-out init=15; fan-out VallmServer.create_fastapi_app=14; fan-out Project._status_infra=13
 # hotspots[5]: DockerToolManager.get_capabilities fan=16; init fan=15; ParallelExecutor.execute fan=15; VallmServer.create_fastapi_app fan=14; TodoRunner._execute_ollama fan=13
-# evolution: CC̄ 3.2→3.4 (regressed +0.2)
+# evolution: CC̄ 3.4→3.4 (flat 0.0)
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
 M[67]:
   docker/aider-mcp/aider_mcp_server.py,156
-  docker/code2llm/code2llm_mcp_server.py,323
   docker/planfile-mcp/planfile_mcp_server.py,276
   docker/vallm/vallm_server.py,269
   project.sh,24
   src/algitex/__init__.py,36
-  src/algitex/algo/__init__.py,368
+  src/algitex/algo/__init__.py,367
   src/algitex/algo/loop.py,4
-  src/algitex/cli/__init__.py,113
+  src/algitex/cli/__init__.py,116
   src/algitex/cli/algo.py,63
   src/algitex/cli/core.py,177
   src/algitex/cli/docker.py,96
   src/algitex/cli/parallel.py,149
   src/algitex/cli/ticket.py,46
-  src/algitex/cli/todo.py,192
+  src/algitex/cli/todo.py,198
   src/algitex/cli/workflow.py,39
   src/algitex/config.py,170
   src/algitex/project/__init__.py,435
   src/algitex/project/autofix.py,52
   src/algitex/project/batch.py,60
+  src/algitex/project/benchmark.py,58
   src/algitex/project/config.py,36
   src/algitex/project/ide.py,47
   src/algitex/project/mcp.py,46
@@ -32,21 +32,21 @@ M[67]:
   src/algitex/project/services.py,28
   src/algitex/propact/__init__.py,413
   src/algitex/propact/workflow.py,2
-  src/algitex/todo/__init__.py,77
+  src/algitex/todo/__init__.py,86
   src/algitex/todo/benchmark.py,244
-  src/algitex/todo/fixer.py,344
-  src/algitex/todo/hybrid.py,393
+  src/algitex/todo/fixer.py,409
+  src/algitex/todo/hybrid.py,391
   src/algitex/todo/verifier.py,195
   src/algitex/tools/__init__.py,114
   src/algitex/tools/analysis.py,183
-  src/algitex/tools/autofix/__init__.py,306
+  src/algitex/tools/autofix/__init__.py,305
   src/algitex/tools/autofix/aider_backend.py,165
   src/algitex/tools/autofix/base.py,43
   src/algitex/tools/autofix/ollama_backend.py,80
   src/algitex/tools/autofix/proxy_backend.py,161
   src/algitex/tools/batch.py,421
   src/algitex/tools/benchmark.py,464
-  src/algitex/tools/cicd.py,404
+  src/algitex/tools/cicd.py,403
   src/algitex/tools/config.py,387
   src/algitex/tools/context.py,207
   src/algitex/tools/docker.py,289
@@ -79,6 +79,10 @@ D:
     TaskResult: to_dict(0)  # Result for a single model on a single task...
     BenchmarkResults: get_model_results(1),get_task_results(1),get_best_model(2),to_dict(0),get_summary(0)  # Complete benchmark results...
     ModelBenchmark: __init__(2),_add_default_tasks(0),add_task(1),add_custom_task(4),run_single_task(2),compare_models(3),print_results(2),_print_table(1),_print_summary(1),_print_detailed(1),save_results(2),load_results(1)  # Benchmark models on standardized tasks...
+  src/algitex/tools/todo_runner.py:
+    e: TaskResult,TodoRunner
+    TaskResult:  # Result of executing a single task...
+    TodoRunner: __init__(2),__enter__(0),__exit__(3),run_from_file(4),run(3),_execute_local(2),_execute_ollama(2),_execute_task(3),_format_output(1),get_summary(0)  # Execute todo tasks using Docker MCP tools with local fallbac...
   src/algitex/tools/todo_executor.py:
     e: TaskResult,TodoExecutor
     TaskResult:  # Result of executing a single task...
@@ -92,10 +96,6 @@ D:
     github_action(task)
     get_action_handler(tool)
     determine_action(task;tool)
-  src/algitex/tools/todo_runner.py:
-    e: TaskResult,TodoRunner
-    TaskResult:  # Result of executing a single task...
-    TodoRunner: __init__(2),__enter__(0),__exit__(3),run_from_file(4),run(3),_execute_local(2),_execute_ollama(2),_execute_task(3),_format_output(1),get_summary(0)  # Execute todo tasks using Docker MCP tools with local fallbac...
   src/algitex/cli/todo.py:
     e: todo_verify,todo_fix_parallel,todo_list,todo_run,todo_fix,todo_benchmark,todo_hybrid
     todo_verify(file)
@@ -104,7 +104,7 @@ D:
     todo_run(file;tool;dry_run;limit)
     todo_fix(file;tool;task_id;limit)
     todo_benchmark(limit;file;workers;compare)
-    todo_hybrid(file;backend;tool;workers;rate_limit;proxy_url;dry_run)
+    todo_hybrid(file;backend;tool;workers;rate_limit;proxy_url;llm_only;dry_run)
   src/algitex/project/__init__.py:
     e: Project
     Project(ServiceMixin,AutoFixMixin,OllamaMixin,BatchMixin,BenchmarkMixin,IDEMixin,ConfigMixin,MCPMixin): __init__(2),analyze(1),plan(3),execute(1),status(0),_status_health(0),_status_tickets(0),_status_infra(0),_status_algo(0),run_workflow(1),ask(1),add_ticket(1),generate_todo(1),_build_prompt(1),_select_tier(1),_generate_strategy(2)  # One project, all tools, zero boilerplate...
@@ -142,17 +142,6 @@ D:
     _execute_parallel(project_path;open_tickets;agents;tool)
     _display_results(results;verbose)
     parallel(path;agents;tool;dry_run;verbose)
-  docker/code2llm/code2llm_mcp_server.py:
-    e: _analyze_python_file,_calculate_complexity_metrics,_collect_project_metrics,analyze_project,generate_toon,generate_readme,evolution_export,create_rest_api,run_rest_server
-    _analyze_python_file(py_file;root)
-    _calculate_complexity_metrics(complexity_scores)
-    _collect_project_metrics(root)
-    analyze_project(path)
-    generate_toon(path)
-    generate_readme(path)
-    evolution_export(path)
-    create_rest_api()
-    run_rest_server()
   src/algitex/config.py:
     e: ProxyConfig,TicketConfig,AnalysisConfig,Config,_find_config,_merge_yaml
     ProxyConfig: from_env(0)  # Proxym gateway settings...
@@ -228,7 +217,7 @@ D:
     e: BatchMixin
     BatchMixin: __init__(2),batch_analyze(4),create_batch_processor(3)  # Batch processing functionality for Project...
   src/algitex/todo/fixer.py:
-    e: TodoTask,FixResult,parse_todo,_categorize,fix_unused_import,fix_fstring,fix_return_type,_group_tasks_by_file,_compute_category_stats,_print_pre_execution_summary,_execute_parallel_fixes,_print_execution_summary,fix_file,parallel_fix
+    e: TodoTask,FixResult,parse_todo,_categorize,fix_unused_import,fix_fstring,fix_return_type,_group_tasks_by_file,_compute_category_stats,_print_pre_execution_summary,_execute_parallel_fixes,_print_execution_summary,fix_file,parallel_fix,mark_tasks_completed,parallel_fix_and_update
     TodoTask:  # Single TODO task...
     FixResult:  # Result of fixing a file...
     parse_todo(todo_path)
@@ -243,6 +232,8 @@ D:
     _print_execution_summary(total_fixed;total_skipped;total_errors;dry_run)
     fix_file(file_path;tasks;dry_run)
     parallel_fix(todo_path;workers;dry_run;category_filter)
+    mark_tasks_completed(todo_path;completed_tasks)
+    parallel_fix_and_update(todo_path;workers;dry_run;category_filter)
   src/algitex/todo/hybrid.py:
     e: HybridResult,RateLimiter,LLMTask,HybridAutofix
     HybridResult:  # Result of hybrid fix operation...
@@ -333,14 +324,14 @@ D:
     ticket_add(title;priority;type)
     ticket_list(status)
     ticket_board()
+  src/algitex/tools/autofix/ollama_backend.py:
+    e: OllamaBackend
+    OllamaBackend: __init__(2),fix(1),_ensure_model(0),_apply_fix(2),_success_result(3),_error_result(3)  # Fix issues using Ollama local models...
   src/algitex/workflows/__init__.py:
     e: Pipeline,TicketExecutor,TicketValidator
     Pipeline: __init__(2),analyze(1),create_tickets(0),execute(2),validate(0),sync(1),report(0),finish(0)  # Composable workflow: chain steps fluently...
     TicketExecutor: __init__(5),execute_tickets(2),_get_open_tickets(1),_execute_single_ticket(2),_call_tool_with_context(3),_validate_with_vallm(2),_mark_ticket_done(3),_build_fix_prompt(1)  # Handles ticket execution with Docker tools, telemetry, conte...
     TicketValidator: __init__(1),validate_all(0),_run_security_scan(0)  # Multi-level validation: static analysis, runtime tests, secu...
-  src/algitex/tools/autofix/ollama_backend.py:
-    e: OllamaBackend
-    OllamaBackend: __init__(2),fix(1),_ensure_model(0),_apply_fix(2),_success_result(3),_error_result(3)  # Fix issues using Ollama local models...
   src/algitex/cli/docker.py:
     e: docker_list,docker_spawn,docker_call,docker_teardown,docker_caps
     docker_list()
@@ -348,16 +339,16 @@ D:
     docker_call(tool_name;action;input_json)
     docker_teardown(tool_name)
     docker_caps(tool_name)
-  src/algitex/cli/workflow.py:
-    e: workflow_run,workflow_validate
-    workflow_run(path;dry_run)
-    workflow_validate(path)
   src/algitex/cli/algo.py:
     e: algo_discover,algo_extract,algo_rules,algo_report
     algo_discover(path)
     algo_extract(path;min_freq)
     algo_rules(path;no_llm)
     algo_report(path)
+  src/algitex/cli/workflow.py:
+    e: workflow_run,workflow_validate
+    workflow_run(path;dry_run)
+    workflow_validate(path)
   src/algitex/tools/autofix/aider_backend.py:
     e: AiderBackend
     AiderBackend: __init__(1),fix(1),_validate_task(2),_ensure_git_repo(0),_build_command(1),_build_prompt(1),_execute_aider(2),_process_result(3),_dry_run_result(2),_timeout_result(2),_error_result(3)  # Fix issues using Aider CLI...
@@ -383,6 +374,9 @@ D:
   src/algitex/project/services.py:
     e: ServiceMixin
     ServiceMixin: __init__(0),check_services(1),print_service_status(1),ensure_service(2)  # Service management functionality for Project...
+  src/algitex/project/benchmark.py:
+    e: BenchmarkMixin
+    BenchmarkMixin: __init__(1),benchmark_models(2),add_benchmark_task(4),print_benchmark_results(2)  # Model benchmarking functionality for Project...
   src/algitex/project/ide.py:
     e: IDEMixin
     IDEMixin: __init__(0),setup_ide(1),fix_with_claude(3),fix_with_aider(3),detect_editor(0),get_ide_status(0)  # IDE integration functionality for Project...

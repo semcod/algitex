@@ -19946,3 +19946,16 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
+  - id: ticket-40aa2274
+    name: Fix wildcard-imports issues
+    description: Resolve 2 wildcard-imports issues in docker/code2llm/code2llm_mcp_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - docker/code2llm/code2llm_mcp_server.py
+    rule_id: wildcard-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced

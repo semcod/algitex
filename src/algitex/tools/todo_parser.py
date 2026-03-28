@@ -28,6 +28,7 @@ class Task:
     status: str = "pending"  # pending | completed | in_progress
     priority: Optional[str] = None
     source_file: Optional[str] = None
+    type: Optional[str] = None  # Task type/category
 
     def to_dict(self) -> dict:
         return {

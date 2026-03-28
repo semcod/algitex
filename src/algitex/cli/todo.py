@@ -168,10 +168,10 @@ def todo_hybrid(
     workers: int = typer.Option(4, "--workers", "-w", help="Parallel workers"),
     rate_limit: int = typer.Option(10, "--rate-limit", "-r", help="LLM calls per second"),
     proxy_url: str = typer.Option("http://localhost:4000", "--proxy-url", "-p", help="LiteLLM proxy URL"),
-    llm_only: bool = typer.Option(False, "--llm-only", help="Skip mechanical fixes, use LLM only"),
+    hybrid: bool = typer.Option(False, "--hybrid", "-h", help="Add mechanical fixes (default: LLM only)"),
     dry_run: bool = typer.Option(True, "--dry-run/--execute", help="Preview or execute"),
 ):
-    """Hybrid autofix: parallel mechanical + rate-limited LLM fixes via proxy/tool."""
+    """Autofix: LLM-based code fixes (use --hybrid for mechanical + LLM)."""
     from algitex.todo import HybridAutofix
 
     fixer = HybridAutofix(
@@ -183,16 +183,29 @@ def todo_hybrid(
         dry_run=dry_run
     )
 
-    console.print(f"[bold]Hybrid Autofix[/]: {file}")
-    if llm_only:
-        console.print(f"[yellow]Mode: LLM ONLY (skipping mechanical fixes)[/]")
-    console.print(f"Backend: {backend}, Tool: {tool}, Proxy: {proxy_url}")
+    console.print(f"[bold]AutoFix[/]: {file}")
+    
+    # Show what will be executed
+    if hybrid:
+        console.print(f"[green]Mode: HYBRID[/] — Phase 1 (mechanical) + Phase 2 (LLM)")
+        console.print(f"   • Phase 1: Parallel mechanical fixes (workers={workers})")
+        console.print(f"   • Phase 2: LLM-based fixes via {backend} (rate={rate_limit}/sec)")
+    else:
+        console.print(f"[yellow]Mode: LLM ONLY[/] — Skipping mechanical fixes")
+        console.print(f"   • LLM fixes via {backend} (rate={rate_limit}/sec)")
+    
+    if dry_run:
+        console.print(f"\n[dim]⚠️  DRY RUN — No changes will be made. Use --execute to apply fixes.[/]")
+    else:
+        console.print(f"\n[bold red]⚡ EXECUTE — Fixes will be applied to source files and TODO.md will be updated.[/]")
+    
+    console.print(f"\nBackend: {backend}, Tool: {tool}, Proxy: {proxy_url}")
     console.print(f"Workers: {workers}, Rate: {rate_limit}/sec\n")
 
-    if llm_only:
-        result = fixer.fix_complex(file)
-    else:
+    if hybrid:
         result = fixer.fix_all(file)
+    else:
+        result = fixer.fix_complex(file)
     fixer.print_summary(result)
 
 

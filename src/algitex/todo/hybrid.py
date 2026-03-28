@@ -359,33 +359,45 @@ class HybridAutofix:
             cost_estimate=self.total_cost
         )
 
-    def print_summary(self, result: HybridResult) -> None:
+    def print_summary(self, result: HybridResult | dict) -> None:
         """Print formatted summary of hybrid fix results."""
         print(f"\n{'═' * 70}")
         print("  HYBRID AUTOFIX SUMMARY")
         print(f"{'═' * 70}")
 
+        # Handle both HybridResult dataclass and plain dict
+        if isinstance(result, dict):
+            # LLM-only mode returns dict
+            m = {"fixed": 0, "skipped": 0, "errors": 0}
+            l = result
+            total_time = l.get("time", 0.0)
+            cost = 0.0
+        else:
+            # Full hybrid mode returns HybridResult
+            m = result.mechanical
+            l = result.llm
+            total_time = result.total_time_sec
+            cost = result.cost_estimate
+
         print(f"\n  🔧 Mechanical Fixes:")
-        m = result.mechanical
         print(f"     Fixed:   {m.get('fixed', 0)}")
         print(f"     Skipped: {m.get('skipped', 0)}")
         print(f"     Errors:  {m.get('errors', 0)}")
 
         print(f"\n  🤖 LLM Fixes:")
-        l = result.llm
         print(f"     Fixed:   {l.get('fixed', 0)}")
         print(f"     Skipped: {l.get('skipped', 0)}")
         print(f"     Errors:  {l.get('errors', 0)}")
         print(f"     Calls:   {self.llm_calls}")
         print(f"     Failed:  {self.llm_errors}")
 
-        print(f"\n  ⏱️  Total Time: {result.total_time_sec:.3f}s")
-        print(f"  💰 Est. Cost:  ${result.cost_estimate:.4f}")
+        print(f"\n  ⏱️  Total Time: {total_time:.3f}s")
+        print(f"  💰 Est. Cost:  ${cost:.4f}")
 
         total_tasks = (m.get('fixed', 0) + m.get('skipped', 0) +
                       l.get('fixed', 0) + l.get('skipped', 0))
-        if total_tasks > 0:
-            throughput = total_tasks / result.total_time_sec
+        if total_tasks > 0 and total_time > 0:
+            throughput = total_tasks / total_time
             print(f"  ⚡ Throughput: {throughput:.1f} tickets/sec")
 
         print(f"{'═' * 70}")

@@ -1,7 +1,7 @@
-# algitex | 576 func | 60f | 18572L | python | 2026-03-28
+# algitex | 573 func | 60f | 18650L | python | 2026-03-28
 
 HEALTH:
-  CC̄=3.4  critical=24 (limit:10)  dup=4  cycles=0
+  CC̄=3.4  critical=23 (limit:10)  dup=4  cycles=0
 
 ALERTS[20]:
   !!  high_fan_out     DockerToolManager.get_capabilities = 16 (limit:10)
@@ -23,14 +23,14 @@ MODULES[67] (top by size):
   M[src/algitex/tools/batch.py] 421L C:4 F:20 CC↑7 D:0 (python)
   M[src/algitex/propact/__init__.py] 413L C:3 F:15 CC↑10 D:1 (python)
   M[src/algitex/tools/services.py] 413L C:3 F:20 CC↑9 D:0 (python)
-  M[src/algitex/tools/cicd.py] 404L C:1 F:11 CC↑5 D:0 (python)
-  M[src/algitex/todo/hybrid.py] 393L C:4 F:10 CC↑8 D:0 (python)
+  M[src/algitex/todo/fixer.py] 409L C:2 F:14 CC↑8 D:4 (python)
+  M[src/algitex/tools/cicd.py] 403L C:1 F:11 CC↑5 D:1 (python)
+  M[src/algitex/todo/hybrid.py] 391L C:4 F:10 CC↑8 D:0 (python)
   M[src/algitex/tools/config.py] 387L C:1 F:12 CC↑8 D:0 (python)
   M[src/algitex/tools/ollama.py] 382L C:4 F:16 CC↑11 D:0 (python)
-  M[src/algitex/algo/__init__.py] 368L C:5 F:12 CC↑9 D:0 (python)
+  M[src/algitex/algo/__init__.py] 367L C:5 F:12 CC↑9 D:0 (python)
   M[src/algitex/tools/todo_runner.py] 363L C:2 F:10 CC↑13 D:0 (python)
-  M[src/algitex/todo/fixer.py] 344L C:2 F:12 CC↑8 D:4 (python)
-  M[src/algitex/tools/workspace.py] 338L C:2 F:17 CC↑6 D:0 (python)
+  M[src/algitex/tools/workspace.py] 338L C:2 F:17 CC↑6 D:1 (python)
   LANGS: python:66/shell:1
 
 HOTSPOTS[10]:
@@ -46,4 +46,4 @@ REFACTOR[3]:
   [3] M/M Reduce ParallelExecutor.execute fan-out (currently 15)
 
 EVOLUTION:
-  2026-03-28 CC̄=3.4 crit=24 18572L // Automated analysis
+  2026-03-28 CC̄=3.4 crit=23 18650L // Automated analysis
