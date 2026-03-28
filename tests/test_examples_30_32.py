@@ -44,23 +44,36 @@ class Test30ParallelExecution:
         except ImportError as e:
             pytest.fail(f"Failed to import parallel_real_world: {e}")
     
-    @patch('algitex.tools.parallel.ParallelExecutor')
+    @patch('algitex.tools.parallel.ParallelExecutor.execute')
+    @patch('algitex.tools.parallel.RegionExtractor')
+    @patch('algitex.tools.parallel.TaskPartitioner')
     @patch('algitex.Project')
-    def test_parallel_refactoring_main_logic(self, mock_project, mock_executor):
+    def test_parallel_refactoring_main_logic(self, mock_project, mock_partitioner, mock_extractor, mock_execute):
         """Test the main logic of parallel refactoring example."""
         from parallel_refactoring import main
         
         # Mock project health
         mock_health = Mock()
-        mock_health.cc = 3.3
+        mock_health.cc_avg = 3.3
         mock_health.criticals = 22
+        mock_health.god_functions = ["func1", "func2"]
         mock_project.return_value.analyze.return_value = mock_health
         
-        # Mock executor
-        mock_exec_instance = Mock()
-        mock_executor.return_value = mock_exec_instance
-        mock_exec_instance.execute.return_value = [
-            Mock(status="clean", agent_id="0", ticket_ids=["PLF-001"])
+        # Mock region extractor
+        mock_extract_instance = Mock()
+        mock_extractor.return_value = mock_extract_instance
+        mock_extract_instance.extract_all.return_value = [
+            Mock(file="test.py", name="func1", key="test.py::func1")
+        ]
+        
+        # Mock partitioner
+        mock_partition_instance = Mock()
+        mock_partitioner.return_value = mock_partition_instance
+        mock_partition_instance.partition.return_value = {0: ["PLF-001"]}
+        
+        # Mock executor execute method directly
+        mock_execute.return_value = [
+            Mock(status="clean", agent_id="0", ticket_id=["PLF-001"], conflicts=[])
         ]
         
         # Run main (should not crash)
@@ -100,8 +113,9 @@ class Test31ABPRWorkflow:
         
         # Mock project
         mock_health = Mock()
-        mock_health.cc = 3.3
+        mock_health.cc_avg = 3.3
         mock_health.criticals = 22
+        mock_health.god_functions = ["func1", "func2"]
         mock_project.return_value.analyze.return_value = mock_health
         
         # Mock loop
@@ -177,7 +191,7 @@ class Test32WorkspaceCoordination:
             assert "path" in repo
             assert "priority" in repo or "depends_on" in repo
     
-    @patch('algitex.tools.workspace.Workspace')
+    @patch('workspace_parallel.Workspace')
     def test_workspace_parallel_main_logic(self, mock_workspace):
         """Test the main logic of workspace parallel example."""
         from workspace_parallel import main
@@ -205,11 +219,11 @@ class Test32WorkspaceCoordination:
                 "vallm": [Mock()]
             }
             
-            # Mock go_all results
-            mock_ws.go_all.return_value = [
-                {"repo": "algitex", "status": "done", "tickets": 1, "cost": 2.5},
-                {"repo": "code2llm", "status": "done", "tickets": 2, "cost": 5.0},
-                {"repo": "vallm", "status": "done", "tickets": 1, "cost": 2.5}
+            # Mock execute_all results
+            mock_ws.execute_all.return_value = [
+                {"repo": "algitex", "status": "success", "executed": 1, "errors": [], "tickets": ["PLF-001"], "cost": 2.5},
+                {"repo": "code2llm", "status": "success", "executed": 2, "errors": [], "tickets": ["PLF-002", "PLF-003"], "cost": 5.0},
+                {"repo": "vallm", "status": "success", "executed": 1, "errors": [], "tickets": ["PLF-004"], "cost": 2.5}
             ]
             
             # Run main (should not crash)

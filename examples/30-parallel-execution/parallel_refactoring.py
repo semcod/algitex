@@ -25,7 +25,7 @@ def main():
     # ─── Step 1: Analyze and create tickets ───────────────
 
     health = p.analyze()
-    print(f"Project health: CC̄={health.cc_avg:.1f}, criticals={health.criticals}")
+    print(f"Project health: CC̄={health.cc_avg:.1f}, god_functions={len(health.god_functions)}")
 
     # Tickets from evolution.toon hotspots:
     tickets = [
@@ -86,7 +86,12 @@ def main():
     partitioner = TaskPartitioner(regions)
     groups = partitioner.partition(tickets, max_agents=3)
 
-    print("\n" + partitioner.explain_partition(tickets, groups))
+    print("\nPartition plan created successfully")
+    # Show partition details
+    for agent_idx, ticket_ids in groups.items():
+        print(f"  Agent {agent_idx}: {len(ticket_ids)} tickets")
+        for tid in ticket_ids:
+            print(f"    - {tid}")
 
     # Expected output:
     #
@@ -114,7 +119,7 @@ def main():
     print("\nResults:")
     for r in results:
         icon = "✓" if r.status == "clean" else "✗"
-        tids = ", ".join(r.ticket_ids) if r.ticket_ids else "?"
+        tids = ", ".join(r.ticket_id) if hasattr(r, 'ticket_id') and r.ticket_id else "?"
         print(f"  {icon} Agent {r.agent_id}: {r.status} [{tids}]")
         if r.conflicts:
             for c in r.conflicts:
@@ -123,7 +128,7 @@ def main():
     # ─── Step 5: Final validation ─────────────────────────
 
     post_health = p.analyze()
-    print(f"\nAfter refactoring: CC̄={post_health.cc} (was {health.cc})")
+    print(f"\nAfter refactoring: CC̄={post_health.cc_avg:.1f} (was {health.cc_avg:.1f})")
 
 
 if __name__ == "__main__":

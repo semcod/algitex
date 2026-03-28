@@ -35,6 +35,7 @@ class HealthReport:
     vallm_pass_rate: float = 0.0
     dup_groups: int = 0
     dup_lines: int = 0
+    criticals: int = 0
     errors: list[str] = field(default_factory=list)
     tools_used: list[str] = field(default_factory=list)
 

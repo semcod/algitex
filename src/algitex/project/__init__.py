@@ -193,12 +193,20 @@ class Project(ServiceMixin, AutoFixMixin, OllamaMixin, BatchMixin, BenchmarkMixi
 
     def status(self) -> dict:
         """Full project status: health + tickets + budget + algo progress."""
+        # Calculate cost ledger here for top-level access
+        total_cost = sum(
+            t.meta.get("cost_usd", 0) for t in self._tickets.list() if t.meta
+        )
         return {
             "project": str(self.path),
             "health": self._status_health(),
             "tickets": self._status_tickets(),
             "infra": self._status_infra(),
             "algo": self._status_algo(),
+            "cost_ledger": {
+                "total_spent_usd": total_cost,
+                "budget_remaining": None,  # Will be populated by _status_infra
+            },
         }
 
     def _status_health(self) -> dict:

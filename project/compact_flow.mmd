@@ -4,11 +4,11 @@ flowchart TD
     examples__01_quickstart["examples.01-quickstart<br/>1 funcs"]
     examples__09_workspace["examples.09-workspace<br/>11 funcs"]
     examples__10_cicd["examples.10-cicd<br/>8 funcs"]
-    examples__17_docker_workflow["examples.17-docker-workflow<br/>5 funcs"]
-    src__algitex["src.algitex<br/>460 funcs"]
+    my_app__my_app["my-app.my-app<br/>2181 funcs"]
+    src__algitex["src.algitex<br/>499 funcs"]
+    my_app__my_app ==>|99| src__algitex
     docker__planfile_mcp -->|3| src__algitex
     docker__vallm -->|1| src__algitex
     examples__01_quickstart -->|1| src__algitex
     examples__10_cicd -->|1| src__algitex
-    examples__17_docker_workflow -->|1| src__algitex
     examples__09_workspace -->|1| src__algitex

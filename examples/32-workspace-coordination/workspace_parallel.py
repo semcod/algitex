@@ -53,7 +53,7 @@ def main():
     # ─── Step 3: Execute — one agent per repo ─────────────
 
     print("\nExecuting (parallel — one agent per repo)...\n")
-    results = ws.go_all(tool="aider-mcp", parallel=True)
+    results = ws.execute_all(tool="aider-mcp", max_tickets=5)
 
     # Each repo runs on its own agent with its own git worktree.
     # Zero conflict risk because agents never touch the same files.
