@@ -113,8 +113,11 @@ class OllamaClient:
         max_tokens: Optional[int] = None,
         stream: bool = False,
         format: Optional[str] = None  # "json" for structured output
-    ) -> Union[OllamaResponse, List[OllamaResponse]]:
-        """Generate text using Ollama."""
+    ) -> Union[OllamaResponse, Iterable[OllamaResponse]]:
+        """Generate text using Ollama.
+        
+        If stream=True, returns a generator that yields OllamaResponse chunks.
+        """
         model = model or self.default_model
         
         if not model:
@@ -139,21 +142,22 @@ class OllamaClient:
             payload["format"] = format
         
         try:
-            response = self._client.post("/api/generate", json=payload)
-            response.raise_for_status()
-            
             if stream:
-                responses = []
-                for line in response.iter_lines():
-                    if line:
-                        data = json.loads(line)
-                        responses.append(OllamaResponse(
-                            content=data.get("response", ""),
-                            model=data.get("model", model),
-                            done=data.get("done", False)
-                        ))
-                return responses
+                def response_generator():
+                    with self._client.stream("POST", "/api/generate", json=payload) as response:
+                        response.raise_for_status()
+                        for line in response.iter_lines():
+                            if line:
+                                data = json.loads(line)
+                                yield OllamaResponse(
+                                    content=data.get("response", ""),
+                                    model=data.get("model", model),
+                                    done=data.get("done", False)
+                                )
+                return response_generator()
             else:
+                response = self._client.post("/api/generate", json=payload)
+                response.raise_for_status()
                 data = response.json()
                 return OllamaResponse(
                     content=data.get("response", ""),
@@ -165,7 +169,12 @@ class OllamaClient:
                     eval_count=data.get("eval_count")
                 )
         except (httpx.RequestError, json.JSONDecodeError) as e:
-            return OllamaResponse(content=f"[Ollama error: {e}]", model=model or "")
+            err_resp = OllamaResponse(content=f"[Ollama error: {e}]", model=model or "")
+            if stream:
+                def error_generator():
+                    yield err_resp
+                return error_generator()
+            return err_resp
     
     def chat(
         self,
@@ -175,8 +184,11 @@ class OllamaClient:
         max_tokens: Optional[int] = None,
         stream: bool = False,
         format: Optional[str] = None
-    ) -> Union[OllamaResponse, List[OllamaResponse]]:
-        """Chat with Ollama using message format."""
+    ) -> Union[OllamaResponse, Iterable[OllamaResponse]]:
+        """Chat with Ollama using message format.
+        
+        If stream=True, returns a generator that yields OllamaResponse chunks.
+        """
         model = model or self.default_model
         
         if not model:
@@ -198,22 +210,23 @@ class OllamaClient:
             payload["format"] = format
         
         try:
-            response = self._client.post("/api/chat", json=payload)
-            response.raise_for_status()
-            
             if stream:
-                responses = []
-                for line in response.iter_lines():
-                    if line:
-                        data = json.loads(line)
-                        msg = data.get("message", {})
-                        responses.append(OllamaResponse(
-                            content=msg.get("content", ""),
-                            model=data.get("model", model),
-                            done=data.get("done", False)
-                        ))
-                return responses
+                def response_generator():
+                    with self._client.stream("POST", "/api/chat", json=payload) as response:
+                        response.raise_for_status()
+                        for line in response.iter_lines():
+                            if line:
+                                data = json.loads(line)
+                                msg = data.get("message", {})
+                                yield OllamaResponse(
+                                    content=msg.get("content", ""),
+                                    model=data.get("model", model),
+                                    done=data.get("done", False)
+                                )
+                return response_generator()
             else:
+                response = self._client.post("/api/chat", json=payload)
+                response.raise_for_status()
                 data = response.json()
                 msg = data.get("message", {})
                 return OllamaResponse(
@@ -226,7 +239,12 @@ class OllamaClient:
                     eval_count=data.get("eval_count")
                 )
         except (httpx.RequestError, json.JSONDecodeError) as e:
-            return OllamaResponse(content=f"[Ollama error: {e}]", model=model or "")
+            err_resp = OllamaResponse(content=f"[Ollama error: {e}]", model=model or "")
+            if stream:
+                def error_generator():
+                    yield err_resp
+                return error_generator()
+            return err_resp
     
     def fix_code(
         self,

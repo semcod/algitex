@@ -246,6 +246,7 @@ def todo_batch(
     file: Path = typer.Option(Path("TODO.md"), "--file", "-f", help="TODO.md file path"),
     backend: str = typer.Option("ollama", "--backend", "-b", help="Backend: ollama, litellm-proxy"),
     batch_size: int = typer.Option(5, "--batch-size", "-s", help="Max files per batch"),
+    parallel: int = typer.Option(3, "--parallel", "-p", help="Parallel groups (default: 3)"),
     dry_run: bool = typer.Option(True, "--dry-run/--execute", help="Dry run or execute"),
     verbose: bool = typer.Option(False, "--verbose", "-v", help="Verbose logging"),
 ):
@@ -268,7 +269,7 @@ def todo_batch(
         console.print("[dim][VERBOSE] Debug logging enabled[/]")
     
     console.print(f"[bold]BatchFix[/]: {file}")
-    console.print(f"Backend: {backend}, Batch size: {batch_size}")
+    console.print(f"Backend: {backend}, Batch size: {batch_size}, Parallel: {parallel}")
     
     if dry_run:
         console.print(f"\n[dim]⚠️  DRY RUN — Symulacja bez zmian[/]")
@@ -303,8 +304,8 @@ def todo_batch(
     )
     backend_fixer.MAX_FILES_PER_BATCH = batch_size
     
-    # Execute batch fix
-    results = backend_fixer.fix_batch(tasks)
+    # Execute batch fix with parallel groups
+    results = backend_fixer.fix_batch(tasks, max_parallel=parallel)
     
     # Summary
     success = sum(1 for r in results if r.success)

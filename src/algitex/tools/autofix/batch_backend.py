@@ -11,8 +11,11 @@ Przykład:
 
 from __future__ import annotations
 
+import sys
+import threading
 import time
 from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
@@ -59,11 +62,12 @@ class BatchFixBackend:
             client = OllamaClient(host=base_url, timeout=timeout)
             self.service = OllamaService(client=client)
     
-    def fix_batch(self, tasks: list[Task]) -> list[FixResult]:
-        """Wykonaj wszystkie zadania w batch.
+    def fix_batch(self, tasks: list[Task], max_parallel: int = 3) -> list[FixResult]:
+        """Wykonaj wszystkie zadania w batch z równoległym przetwarzaniem.
         
         Args:
             tasks: Lista zadań do wykonania
+            max_parallel: Liczba równoległych grup (default: 3)
             
         Returns:
             Lista wyników dla każdego zadania
@@ -72,17 +76,43 @@ class BatchFixBackend:
         
         # Grupuj zadania według kategorii
         groups = self._group_tasks(tasks)
-        print(f"📦 BatchFix: {len(tasks)} zadań → {len(groups)} grup")
+        total_groups = len(groups)
+        print(f"📦 BatchFix: {len(tasks)} zadań → {total_groups} grup")
+        print(f"⚡ Równoległość: {max_parallel} grup na raz\n")
         
         results = []
-        for i, group in enumerate(groups, 1):
-            print(f"\n[{i}/{len(groups)}] Przetwarzam grupę {group.category}...")
-            group_results = self._process_group(group)
-            results.extend(group_results)
-            print(f"   ✓ Zakończono grupę {i}/{len(groups)} ({len(group_results)} wyników)")
+        completed = 0
+        lock = threading.Lock()
+        
+        def process_group_with_progress(group_idx: int, group: TaskGroup) -> list[FixResult]:
+            nonlocal completed
+            group_results = self._process_group(group, group_idx, total_groups)
+            with lock:
+                completed += 1
+                remaining = total_groups - completed
+                elapsed = time.time() - start_time
+                avg_time = elapsed / completed if completed > 0 else 0
+                eta = avg_time * remaining
+                print(f"\n📊 Postęp: {completed}/{total_groups} grup | ETA: {eta/60:.1f}min")
+            return group_results
+        
+        # Równoległe przetwarzanie grup
+        with ThreadPoolExecutor(max_workers=max_parallel) as executor:
+            futures = {
+                executor.submit(process_group_with_progress, i+1, group): group 
+                for i, group in enumerate(groups)
+            }
+            
+            for future in as_completed(futures):
+                try:
+                    group_results = future.result()
+                    results.extend(group_results)
+                except Exception as e:
+                    group = futures[future]
+                    print(f"\n   ✗ Grupa {group.category} failed: {e}")
         
         elapsed = time.time() - start_time
-        print(f"✓ BatchFix zakończony: {len(results)} wyników w {elapsed:.1f}s")
+        print(f"\n✓ BatchFix zakończony: {len(results)} wyników w {elapsed:.1f}s")
         return results
     
     def _group_tasks(self, tasks: list[Task]) -> list[TaskGroup]:
@@ -155,13 +185,19 @@ class BatchFixBackend:
         
         return result
     
-    def _process_group(self, group: TaskGroup) -> list[FixResult]:
+    def _process_group(self, group: TaskGroup, group_idx: int = 0, total_groups: int = 0) -> list[FixResult]:
         """Przetwórz grupę zadań."""
         start = time.time()
         
-        print(f"\n  🔧 {group.category}: {len(group.tasks)} plików")
+        if total_groups > 0:
+            print(f"  [{group_idx}/{total_groups}] 🔧 {group.category}: {len(group.tasks)} plików")
+        else:
+            print(f"  🔧 {group.category}: {len(group.tasks)} plików")
+        
         for f in group.files[:3]:
-            print(f"     • {Path(f).name}")
+            # Pokaż pełną ścieżkę dla łatwiejszego debugowania
+            rel_path = Path(f).relative_to(Path.cwd()) if str(f).startswith(str(Path.cwd())) else f
+            print(f"     • {rel_path}")
         if len(group.files) > 3:
             print(f"     ... i {len(group.files) - 3} więcej")
         
@@ -233,8 +269,9 @@ class BatchFixBackend:
         """Fix pojedynczych zadań których nie można batchować."""
         results = []
         for task in group.tasks:
-            # Fallback do standardowego fix
-            print(f"     • Individual fix: {Path(task.file_path).name}")
+            # Pokaż pełną ścieżkę dla łatwiejszego debugowania
+            rel_path = Path(task.file_path).relative_to(Path.cwd()) if str(task.file_path).startswith(str(Path.cwd())) else task.file_path
+            print(f"     • Individual fix: {rel_path}")
             result = self._fix_single(task)
             results.append(result)
         return results
@@ -297,17 +334,54 @@ Format:
 """
     
     def _call_llm(self, prompt: str, model: str) -> str:
-        """Wywołaj LLM."""
-        print(f"      🤖 LLM call: {model} (timeout={self.timeout}s)...")
+        """Wywołaj LLM z spinnerem pokazującym że pracuje."""
+        response_container = [None]
+        error_container = [None]
+        
+        def call_llm():
+            try:
+                response_container[0] = self.service.client.generate(
+                    prompt=prompt,
+                    model=model,
+                    temperature=0.3
+                )
+            except Exception as e:
+                error_container[0] = e
+        
+        # Start LLM call in thread
+        thread = threading.Thread(target=call_llm)
+        thread.start()
+        
+        # Spinner pokazujący postęp
+        spinner = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏']
+        i = 0
         start = time.time()
-        response = self.service.client.generate(
-            prompt=prompt,
-            model=model,
-            temperature=0.3
-        )
+        
+        sys.stdout.write(f"      🤖 LLM: {model} ")
+        sys.stdout.flush()
+        
+        while thread.is_alive():
+            elapsed = time.time() - start
+            sys.stdout.write(f"\r      🤖 LLM: {model} {spinner[i % len(spinner)]} {elapsed:.0f}s/{self.timeout:.0f}s")
+            sys.stdout.flush()
+            time.sleep(0.1)
+            i += 1
+            
+            if elapsed > self.timeout:
+                sys.stdout.write(f"\r      ✗ LLM timeout po {elapsed:.0f}s\n")
+                sys.stdout.flush()
+                raise TimeoutError(f"LLM call exceeded {self.timeout}s timeout")
+        
+        thread.join()
+        
+        if error_container[0]:
+            raise error_container[0]
+        
         elapsed = time.time() - start
-        print(f"      ✓ LLM response: {elapsed:.1f}s")
-        return response.content
+        sys.stdout.write(f"\r      ✓ LLM: {elapsed:.1f}s{' ' * 20}\n")
+        sys.stdout.flush()
+        
+        return response_container[0].content
     
     def _parse_batch_response(self, response: str, group: TaskGroup) -> dict[str, bool]:
         """Parsuj odpowiedź batch i zastosuj fixy."""
