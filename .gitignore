@@ -1,3 +1,4 @@
+examples/04-ide-integration/.env
 .env.example
 .idea/algitex.iml
 .idea/inspectionProfiles/Project_Default.xml

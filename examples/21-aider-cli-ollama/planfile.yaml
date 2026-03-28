@@ -1,0 +1,162 @@
+name: Code Quality Improvement
+project_name: ''
+project_type: prefactoring
+domain: dev-tools
+goal: Improve code quality using prefact
+goals:
+- Fix all prefact-detected issues
+- Improve code maintainability
+- Ensure consistent code style
+quality_gates:
+- metric: Prefact Issues
+  threshold: '0'
+sprints:
+- id: sprint-1
+  name: Code Quality Improvements
+  duration: 2 weeks
+  objectives:
+  - Fix code quality issues
+  task_patterns:
+  - id: ticket-6ebb860f
+    name: Fix smart-return-type issues
+    description: Resolve 2 smart-return-type issues in main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - main.py
+    rule_id: smart-return-type
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-be60737e
+    name: Fix magic-numbers issues
+    description: Resolve 2 magic-numbers issues in main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - main.py
+    rule_id: magic-numbers
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-09e26591
+    name: Fix ai-boilerplate issues
+    description: Resolve 2 ai-boilerplate issues in main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - main.py
+    rule_id: ai-boilerplate
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-e99c3ade
+    name: Fix smart-return-type issues
+    description: Resolve 9 smart-return-type issues in buggy_code.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - buggy_code.py
+    rule_id: smart-return-type
+    count: 9
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-2df599af
+    name: Fix string-concat issues
+    description: Resolve 5 string-concat issues in buggy_code.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - buggy_code.py
+    rule_id: string-concat
+    count: 5
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-431e47fc
+    name: Fix unused-imports issues
+    description: Resolve 12 unused-imports issues in buggy_code.py
+    task_type: prefactor
+    priority: high
+    estimate: 3d
+    files:
+    - buggy_code.py
+    rule_id: unused-imports
+    count: 12
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-98d6594f
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in buggy_code.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - buggy_code.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-f27e9379
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in auto_fix.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - auto_fix.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-a2a8be52
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in auto_fix.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - auto_fix.py
+    rule_id: string-concat
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-3596d555
+    name: Fix magic-numbers issues
+    description: Resolve 8 magic-numbers issues in auto_fix.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - auto_fix.py
+    rule_id: magic-numbers
+    count: 8
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-40be12b0
+    name: Fix ai-boilerplate issues
+    description: Resolve 2 ai-boilerplate issues in auto_fix.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - auto_fix.py
+    rule_id: ai-boilerplate
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced

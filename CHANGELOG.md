@@ -213,6 +213,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.14] - 2026-03-28
+
+### Docs
+- Update .aider.chat.history.md
+- Update README.md
+- Update examples/14-docker-mcp/sample_docker_project/TODO.md
+- Update examples/15-github-mcp/sample_github_project/README.md
+- Update examples/15-github-mcp/sample_github_project/TODO.md
+- Update examples/16-test-workflow/sample_test_project/TODO.md
+- Update examples/21-aider-cli-ollama/CHANGELOG.md
+- Update examples/21-aider-cli-ollama/README.md
+- Update examples/21-aider-cli-ollama/TODO.md
+- Update examples/22-claude-code-ollama/README.md
+- ... and 3 more files
+
+### Other
+- Update .aider.input.history
+- Update examples/04-ide-integration/.env
+- Update examples/14-docker-mcp/main.py
+- Update examples/14-docker-mcp/sample_docker_project/Dockerfile
+- Update examples/14-docker-mcp/sample_docker_project/app.py
+- Update examples/15-github-mcp/main.py
+- Update examples/15-github-mcp/sample_github_project/.gitignore
+- Update examples/15-github-mcp/sample_github_project/main.py
+- Update examples/16-test-workflow/main.py
+- Update examples/16-test-workflow/sample_test_project/requirements.txt
+- ... and 30 more files
+
 ## [0.1.13] - 2026-03-28
 
 ### Docs

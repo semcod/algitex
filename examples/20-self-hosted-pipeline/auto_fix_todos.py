@@ -215,3 +215,197 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+def analyze_buggy_code(file_path: str = "buggy_code.py") -> Dict[str, Any]:
+    """Analyze buggy_code.py using code2llm MCP and report issues."""
+    print(f"\n🔍 Analyzing {file_path} with code2llm-mcp...")
+    
+    if not os.path.exists(file_path):
+        print(f"❌ {file_path} not found")
+        return {}
+    
+    try:
+        import requests
+        # Use absolute path for local, /workspace for Docker MCP
+        abs_path = os.path.abspath(file_path)
+        docker_path = abs_path.replace("/home/tom/github/semcod/algitex", "/workspace")
+        
+        response = requests.post(
+            f"{CODE2LLM_URL}/analyze",
+            json={"path": os.path.dirname(docker_path), "format": "toon"},
+            timeout=30
+        )
+        
+        if response.status_code == 200:
+            data = response.json()
+            print(f"✅ Analysis complete")
+            print(f"   Files analyzed: {data.get('total_files', 0)}")
+            print(f"   Functions: {data.get('total_functions', 0)}")
+            print(f"   Average complexity: {data.get('average_cc', 'N/A')}")
+            
+            if data.get('hotspots'):
+                print(f"   ⚠️  Hotspots found: {len(data['hotspots'])}")
+                for hotspot in data['hotspots'][:3]:
+                    if isinstance(hotspot, str):
+                        # Format: "file.py: function() CC=X"
+                        print(f"      - {hotspot}")
+                    else:
+                        print(f"      - {hotspot.get('function', 'unknown')} (CC: {hotspot.get('cc', 'N/A')})")
+            
+            return data
+        else:
+            print(f"⚠️  Analysis returned: {response.status_code}")
+            return {}
+    except Exception as e:
+        print(f"❌ Analysis failed: {e}")
+        return {}
+
+
+def validate_buggy_code(file_path: str = "buggy_code.py") -> Dict[str, Any]:
+    """Validate buggy_code.py using vallm MCP."""
+    print(f"\n🔍 Validating {file_path} with vallm-mcp...")
+    
+    try:
+        import requests
+        # Use absolute path for local, /workspace for Docker MCP
+        abs_path = os.path.abspath(file_path)
+        docker_path = abs_path.replace("/home/tom/github/semcod/algitex", "/workspace")
+        
+        response = requests.post(
+            f"{VALLM_URL}/validate",
+            json={"path": os.path.dirname(docker_path)},
+            timeout=30
+        )
+        
+        if response.status_code == 200:
+            data = response.json()
+            print(f"✅ Validation complete")
+            print(f"   Static analysis: {'✅' if data.get('static_passed') else '❌'}")
+            print(f"   Runtime tests: {'✅' if data.get('runtime_passed') else '❌'}")
+            print(f"   Security check: {'✅' if data.get('security_passed') else '❌'}")
+            print(f"   Overall score: {data.get('score', 0):.1f}/10")
+            
+            if data.get('issues'):
+                print(f"   ⚠️  Issues found: {len(data['issues'])}")
+                for issue in data['issues'][:3]:
+                    print(f"      - {issue.get('message', 'unknown')}")
+            
+            return data
+        else:
+            print(f"⚠️  Validation returned: {response.status_code}")
+            return {}
+    except Exception as e:
+        print(f"❌ Validation failed: {e}")
+        return {}
+
+
+def create_tickets_for_buggy_code(analysis: Dict[str, Any], validation: Dict[str, Any]) -> int:
+    """Create tickets in planfile-mcp for issues found in buggy_code.py."""
+    print(f"\n🎫 Creating tickets for found issues...")
+    
+    tickets_created = 0
+    
+    # Create ticket for high complexity
+    if analysis.get('hotspots'):
+        try:
+            import requests
+            for hotspot in analysis['hotspots']:
+                if isinstance(hotspot, str):
+                    # Parse format: "file.py: function() CC=X"
+                    title = f"Fix complexity: {hotspot}"
+                    priority = "high" if "CC=" in hotspot and int(hotspot.split("CC=")[1]) > 10 else "normal"
+                else:
+                    title = f"Fix complexity in {hotspot.get('function', 'unknown')}"
+                    priority = "high" if hotspot.get('cc', 0) > 10 else "normal"
+                
+                response = requests.post(
+                    f"{PLANFILE_URL}/tickets",
+                    json={
+                        "title": title,
+                        "description": f"High complexity function detected: {hotspot}",
+                        "priority": priority,
+                        "tags": ["refactor", "complexity", "auto-detected"]
+                    },
+                    timeout=10
+                )
+                if response.status_code == 200:
+                    tickets_created += 1
+        except Exception as e:
+            print(f"⚠️  Failed to create complexity tickets: {e}")
+    
+    # Create ticket for validation issues
+    if validation.get('issues'):
+        try:
+            import requests
+            for issue in validation['issues'][:3]:  # Limit to 3 tickets
+                response = requests.post(
+                    f"{PLANFILE_URL}/tickets",
+                    json={
+                        "title": f"Fix: {issue.get('message', 'Issue')[:40]}",
+                        "description": f"Validation issue detected:\n{issue.get('message', 'unknown')}\nSeverity: {issue.get('severity', 'unknown')}",
+                        "priority": issue.get('severity', 'normal'),
+                        "tags": ["validation", "auto-detected"]
+                    },
+                    timeout=10
+                )
+                if response.status_code == 200:
+                    tickets_created += 1
+        except Exception as e:
+            print(f"⚠️  Failed to create validation tickets: {e}")
+    
+    print(f"✅ Created {tickets_created} tickets")
+    return tickets_created
+
+
+def demo_buggy_code_workflow():
+    """Run full workflow on buggy_code.py: analyze → validate → create tickets."""
+    print("\n" + "=" * 60)
+    print("Demo: Auto-fix workflow on buggy_code.py")
+    print("=" * 60)
+    
+    # Check services first
+    try:
+        import requests
+        code2llm_ok = requests.get(f"{CODE2LLM_URL}/health", timeout=2).status_code == 200
+        vallm_ok = requests.get(f"{VALLM_URL}/health", timeout=2).status_code == 200
+        planfile_ok = requests.get(f"{PLANFILE_URL}/health", timeout=2).status_code == 200
+    except:
+        print("❌ MCP services not available")
+        return 0
+    
+    if not all([code2llm_ok, vallm_ok, planfile_ok]):
+        print("❌ Some MCP services are not running")
+        print("   Start with: make up")
+        return 0
+    
+    print("✅ All MCP services ready")
+    
+    # Step 1: Analyze
+    analysis = analyze_buggy_code("buggy_code.py")
+    
+    # Step 2: Validate
+    validation = validate_buggy_code("buggy_code.py")
+    
+    # Step 3: Create tickets
+    tickets = create_tickets_for_buggy_code(analysis, validation)
+    
+    # Summary
+    print("\n" + "=" * 60)
+    print("Workflow Summary:")
+    print(f"  Analysis: {'✅' if analysis else '❌'}")
+    print(f"  Validation: {'✅' if validation else '❌'}")
+    print(f"  Tickets created: {tickets}")
+    print("=" * 60)
+    
+    return tickets
+
+
+if __name__ == "__main__":
+    import sys
+    
+    # Check for command line args
+    if len(sys.argv) > 1 and sys.argv[1] == "--demo":
+        demo_buggy_code_workflow()
+    else:
+        main()

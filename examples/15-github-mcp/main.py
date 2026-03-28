@@ -1,163 +1,138 @@
 #!/usr/bin/env python3
-"""Example 15: GitHub MCP - Repository Management Demo.
+"""Example 15: GitHub MCP - Real Repository Workflow.
 
-Demonstrates using github-mcp through algitex's Docker tool orchestration
-for GitHub repository operations.
+Creates sample project and demonstrates GitHub workflow.
 """
 
 import os
 from pathlib import Path
 
 
-def load_env():
-    """Load .env file if present."""
-    env_file = Path(__file__).parent / ".env"
-    if env_file.exists():
-        with open(env_file) as f:
-            for line in f:
-                line = line.strip()
-                if line and not line.startswith("#") and "=" in line:
-                    key, val = line.split("=", 1)
-                    if key not in os.environ:
-                        os.environ[key] = val
-
-
-def check_github_token():
-    """Check if GitHub PAT is set."""
-    token = os.getenv("GITHUB_PAT")
-    if not token:
-        print("⚠️  GITHUB_PAT not found!")
-        print("Set GITHUB_PAT in .env file")
-        return False
-    return True
-
-
-def demo_github_operations():
-    """Show example GitHub operations."""
+def create_sample_project():
+    """Create sample project for GitHub workflow."""
+    base_dir = Path(__file__).parent / "sample_github_project"
+    base_dir.mkdir(exist_ok=True)
     
-    examples = [
-        {
-            "title": "1. Creating an Issue",
-            "action": "create_issue",
-            "description": "Create issue with tasks and acceptance criteria",
-            "input": {
-                "owner": "myorg",
-                "repo": "myproject",
-                "title": "Refactor authentication module",
-                "labels": ["enhancement", "refactoring"]
-            }
-        },
-        {
-            "title": "2. Creating a Pull Request",
-            "action": "create_pull_request",
-            "description": "Create PR with detailed description",
-            "input": {
-                "owner": "myorg",
-                "repo": "myproject",
-                "title": "feat: Add OAuth2 authentication support",
-                "head": "feature/oauth2-auth",
-                "base": "main"
-            }
-        },
-        {
-            "title": "3. Searching Code",
-            "action": "search_code",
-            "description": "Search repository code",
-            "input": {
-                "query": "TODO: refactor",
-                "owner": "myorg",
-                "repo": "myproject"
-            }
-        },
-        {
-            "title": "4. Listing Commits",
-            "action": "list_commits",
-            "description": "Get recent commits",
-            "input": {
-                "owner": "myorg",
-                "repo": "myproject",
-                "branch": "main",
-                "per_page": 20
-            }
-        },
-        {
-            "title": "5. Getting File Contents",
-            "action": "get_file_contents",
-            "description": "Fetch file from repository",
-            "input": {
-                "owner": "myorg",
-                "repo": "myproject",
-                "path": "README.md",
-                "ref": "main"
-            }
-        },
-        {
-            "title": "6. Creating or Updating a File",
-            "action": "create_or_update_file",
-            "description": "Commit file changes",
-            "input": {
-                "owner": "myorg",
-                "repo": "myproject",
-                "path": "docs/changelog.md",
-                "message": "docs: Add changelog"
-            }
-        }
-    ]
+    # Create sample code
+    (base_dir / "main.py").write_text('''#!/usr/bin/env python3
+"""Sample application."""
+
+def calculate(x, y):
+    """Calculate sum."""
+    return x + y
+
+if __name__ == "__main__":
+    print(calculate(1, 2))
+''')
     
-    print("\n=== GitHub MCP Repository Management Examples ===\n")
+    # Create README
+    (base_dir / "README.md").write_text('''# Sample Project
+
+A sample project for GitHub MCP demonstration.
+
+## Features
+- Simple calculator
+- Clean code
+
+## TODO
+- Add more operations
+- Add tests
+''')
     
-    for ex in examples:
-        print(f"\n{ex['title']}")
-        print(f"   Description: {ex['description']}")
-        print(f"   Action: {ex['action']}")
+    # Create TODO file
+    (base_dir / "TODO.md").write_text('''# GitHub Workflow TODO
+
+- [ ] Initialize git repository
+- [ ] Create initial commit
+- [ ] Create GitHub repository
+- [ ] Push code to GitHub
+- [ ] Create issue for adding tests
+- [ ] Create PR with improvements
+''')
     
-    print("\n\n=== CLI Usage Examples ===\n")
-    print("Spawn github-mcp:")
-    print("  algitex docker spawn github-mcp")
-    print("\nCreate issue:")
-    print('  algitex docker call github-mcp create_issue -i \'{"owner": "myorg", "repo": "myproject", "title": "Bug: Fix auth", "labels": ["bug"]}\'')
-    print("\nSearch code:")
-    print('  algitex docker call github-mcp search_code -i \'{"query": "class Auth", "owner": "myorg", "repo": "myproject"}\'')
-    print("\nTeardown:")
-    print("  algitex docker teardown github-mcp")
+    # Create .gitignore
+    (base_dir / ".gitignore").write_text('''__pycache__/
+*.pyc
+*.pyo
+.env
+.venv/
+''')
+    
+    return base_dir
 
 
-def demo_with_docker_tools():
-    """Demonstrate Docker tool usage if available."""
-    try:
-        from algitex.tools.docker import DockerToolManager
-        from algitex.config import Config
-        
-        config = Config.load()
-        mgr = DockerToolManager(config)
-        
-        print("\n=== Docker Tools Status ===\n")
-        
-        tools = mgr.list_tools()
-        print(f"Available: {len(tools)} tools")
-        for tool in tools:
-            print(f"  - {tool}")
-        
-        if "github-mcp" in tools:
-            print("\n✅ github-mcp is available!")
-        else:
-            print("\n⚠️  github-mcp not found in docker-tools.yaml")
-            
-    except ImportError as e:
-        print(f"⚠️  Docker tools not available: {e}")
+def demo_github_workflow():
+    """Demonstrate GitHub workflow."""
+    print("=== GitHub MCP - Real Repository Workflow ===\n")
+    
+    # Create sample project
+    project_dir = create_sample_project()
+    print(f"1. Created sample project: {project_dir}")
+    
+    # Show files
+    print(f"\n2. Project files:")
+    for f in project_dir.iterdir():
+        print(f"   - {f.name}")
+    
+    # Show code
+    main_file = project_dir / "main.py"
+    print(f"\n3. Sample code ({main_file}):")
+    print("-" * 40)
+    print(main_file.read_text())
+    print("-" * 40)
+    
+    # Show README
+    readme = project_dir / "README.md"
+    print(f"\n4. README:")
+    print(readme.read_text())
+    
+    # Show TODO
+    todo_file = project_dir / "TODO.md"
+    print(f"\n5. TODO list:")
+    print(todo_file.read_text())
+    
+    # Check GitHub token
+    has_token = os.getenv("GITHUB_PAT")
+    
+    if has_token:
+        print("\n6. ✅ GITHUB_PAT configured")
+        print("   Can perform real GitHub operations")
+    else:
+        print("\n6. ⚠️  No GITHUB_PAT - showing workflow:")
+        print("""
+   Commands to run after 'git init' and 'git add .':
+   
+   algitex docker spawn github-mcp
+   
+   # Create issue
+   algitex docker call github-mcp create_issue -i '{
+     "owner": "myusername",
+     "repo": "sample-project",
+     "title": "Add unit tests",
+     "body": "Need pytest tests for calculate function"
+   }'
+   
+   # Create PR
+   algitex docker call github-mcp create_pull_request -i '{
+     "owner": "myusername",
+     "repo": "sample-project",
+     "title": "feat: Add subtract function",
+     "head": "feature/subtract",
+     "base": "main"
+   }'
+   
+   algitex docker teardown github-mcp
+        """)
+    
+    print(f"\n7. Files created:")
+    print(f"   - {project_dir}/main.py")
+    print(f"   - {project_dir}/README.md")
+    print(f"   - {project_dir}/TODO.md")
+    print(f"   - {project_dir}/.gitignore")
+    print(f"\n   Project ready for GitHub workflow.")
+    print(f"   Initialize with: cd {project_dir} && git init")
+    print(f"   Clean up: rm -rf {project_dir}")
 
 
 if __name__ == "__main__":
-    load_env()
-    
-    if check_github_token():
-        print("✅ GITHUB_PAT configured\n")
-    else:
-        print("⚠️  Running in demo mode\n")
-    
-    demo_github_operations()
-    
-    try:
-        demo_with_docker_tools()
-    except Exception as e:
-        print(f"\n⚠️  Could not load Docker tools: {e}")
+    demo_github_workflow()

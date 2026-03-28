@@ -209,6 +209,26 @@ make up && make run
 # Self-Hosted Pipeline — complete local CI/CD stack
 cd examples/20-self-hosted-pipeline
 make build && make up && make run
+
+# Aider CLI + Ollama — local refactoring with prefact TODO workflow
+cd examples/21-aider-cli-ollama
+make setup && make run
+
+# Claude Code + Ollama — AI assistant with local LLM
+cd examples/22-claude-code-ollama
+make setup && make run
+
+# Continue.dev + Ollama — VS Code extension setup
+cd examples/23-continue-dev-ollama
+make setup
+
+# Ollama Batch Processing — parallel code analysis
+cd examples/24-ollama-batch
+python batch_analyze.py --dir ./src
+
+# Local Model Comparison — benchmark Ollama models
+cd examples/25-local-model-comparison
+make benchmark
 ```
 
 Each example has:
@@ -232,6 +252,11 @@ Each example has:
 - [18-ollama-local/README.md](examples/18-ollama-local/README.md) — Local LLM with Ollama (100% offline)
 - [19-local-mcp-tools/README.md](examples/19-local-mcp-tools/README.md) — Self-hosted MCP tools (Docker)
 - [20-self-hosted-pipeline/README.md](examples/20-self-hosted-pipeline/README.md) — Complete local CI/CD pipeline
+- [21-aider-cli-ollama/README.md](examples/21-aider-cli-ollama/README.md) — Aider CLI + Ollama local refactoring
+- [22-claude-code-ollama/README.md](examples/22-claude-code-ollama/README.md) — Claude Code + Ollama AI assistant
+- [23-continue-dev-ollama/README.md](examples/23-continue-dev-ollama/README.md) — Continue.dev VS Code extension + Ollama
+- [24-ollama-batch/README.md](examples/24-ollama-batch/README.md) — Parallel batch processing with Ollama
+- [25-local-model-comparison/README.md](examples/25-local-model-comparison/README.md) — Benchmark Ollama models
 - `run.sh` — executable script
 - `Makefile` — `make run`, `make setup`, `make clean`
 - `.env.example` — configuration template (where applicable)
@@ -328,7 +353,13 @@ Licensed under Apache-2.0.
 
 Licensed under Apache-2.0.
 
+
+Licensed under Apache-2.0.
+
 ## Author
+
+Tom Sapletta
+
 
 Tom Sapletta
 
