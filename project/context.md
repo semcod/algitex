@@ -4,24 +4,24 @@
 
 - **Project**: /home/tom/github/semcod/algitex
 - **Primary Language**: python
-- **Languages**: python: 392, shell: 26
+- **Languages**: python: 404, shell: 26
 - **Analysis Mode**: static
-- **Total Functions**: 2726
-- **Total Classes**: 400
-- **Modules**: 418
-- **Entry Points**: 2397
+- **Total Functions**: 2841
+- **Total Classes**: 414
+- **Modules**: 430
+- **Entry Points**: 2470
 
 ## Architecture by Module
 
-### src.algitex.todo.fixer
-- **Functions**: 24
-- **Classes**: 2
-- **File**: `fixer.py`
-
 ### src.algitex.microtask.executor
-- **Functions**: 23
+- **Functions**: 29
 - **Classes**: 2
 - **File**: `executor.py`
+
+### src.algitex.dashboard
+- **Functions**: 24
+- **Classes**: 4
+- **File**: `dashboard.py`
 
 ### .algitex.backups.batch_20260328_142940.src.algitex.project
 - **Functions**: 22
@@ -53,15 +53,15 @@
 - **Classes**: 6
 - **File**: `ide.py`
 
-### .algitex.backups.batch_20260328_142940.src.algitex.tools.docker
-- **Functions**: 20
-- **Classes**: 3
-- **File**: `docker.py`
-
 ### .algitex.backups.batch_20260328_142940.src.algitex.tools.workspace
 - **Functions**: 20
 - **Classes**: 2
 - **File**: `workspace.py`
+
+### .algitex.backups.batch_20260328_142940.src.algitex.tools.docker
+- **Functions**: 20
+- **Classes**: 3
+- **File**: `docker.py`
 
 ### .algitex.backups.batch_20260328_142940.src.algitex.tools.services
 - **Functions**: 20
@@ -93,15 +93,15 @@
 - **Classes**: 4
 - **File**: `batch.py`
 
-### src.algitex.tools.docker
-- **Functions**: 20
-- **Classes**: 3
-- **File**: `docker.py`
-
 ### src.algitex.tools.workspace
 - **Functions**: 20
 - **Classes**: 2
 - **File**: `workspace.py`
+
+### src.algitex.tools.docker
+- **Functions**: 20
+- **Classes**: 3
+- **File**: `docker.py`
 
 ### src.algitex.tools.services
 - **Functions**: 20
@@ -128,10 +128,6 @@ Main execution flows into the system:
 ### examples.31-abpr-workflow.main.main
 > Demonstrate ABPR pipeline: Execute → Trace → Conflict → Rule → Validate → Repeat.
 - **Calls**: print, print, print, print, print, print, str, Project
-
-### src.algitex.cli.todo.todo_fix
-> Execute fix tasks (prefact-style) via Docker MCP.
-- **Calls**: typer.Argument, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option
 
 ### .algitex.backups.batch_20260328_142940.examples.30-parallel-execution.main.main
 > Demonstrate parallel execution with region-based coordination.
@@ -221,6 +217,10 @@ Zamiast wykonywać każde zadanie osobno, BatchFix grupuje podobne problemy
 ### examples.18-ollama-local.main.main
 - **Calls**: print, print, print, print, print, examples.18-ollama-local.main.list_models, examples.18-ollama-local.main.demo_code_generation, examples.18-ollama-local.main.demo_code_analysis
 
+### src.algitex.cli.todo.todo_hybrid
+> Autofix: LLM-based code fixes (use --hybrid for mechanical + LLM).
+- **Calls**: typer.Argument, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option
+
 ### .algitex.backups.batch_20260328_142940.examples.31-abpr-workflow.abpr_pipeline.abpr_pipeline
 > ABPR loop: Execute → Trace → Conflict → Rule → Validate → Repeat.
 - **Calls**: Project, Loop, print, loop.discover, print, p.analyze, print, print
@@ -246,33 +246,33 @@ Key execution flows identified:
 main [.algitex.backups.batch_20260328_142940.examples.31-abpr-workflow.main]
 ```
 
-### Flow 2: todo_fix
-```
-todo_fix [src.algitex.cli.todo]
-```
-
-### Flow 3: metrics_compare
+### Flow 2: metrics_compare
 ```
 metrics_compare [src.algitex.cli.metrics]
 ```
 
-### Flow 4: todo_batch
+### Flow 3: todo_batch
 ```
 todo_batch [src.algitex.cli.todo]
 ```
 
-### Flow 5: demo_docker_operations
+### Flow 4: demo_docker_operations
 ```
 demo_docker_operations [.algitex.backups.batch_20260328_142940.examples.14-docker-mcp.main]
   └─> create_sample_docker_project
 ```
 
-### Flow 6: _parse_batch_response
+### Flow 5: _parse_batch_response
 ```
 _parse_batch_response [src.algitex.tools.autofix.batch_backend.BatchFixBackend]
 ```
 
 ## Key Classes
+
+### src.algitex.microtask.executor.MicroTaskExecutor
+> Execute micro tasks in three tiers: algorithmic, small LLM, big LLM.
+- **Methods**: 28
+- **Key Methods**: src.algitex.microtask.executor.MicroTaskExecutor.__init__, src.algitex.microtask.executor.MicroTaskExecutor.execute, src.algitex.microtask.executor.MicroTaskExecutor.group_by_file, src.algitex.microtask.executor.MicroTaskExecutor._phase_algorithmic, src.algitex.microtask.executor.MicroTaskExecutor._process_algorithmic_batch, src.algitex.microtask.executor.MicroTaskExecutor._handle_unused_import, src.algitex.microtask.executor.MicroTaskExecutor._handle_return_type, src.algitex.microtask.executor.MicroTaskExecutor._handle_known_magic, src.algitex.microtask.executor.MicroTaskExecutor._handle_fstring, src.algitex.microtask.executor.MicroTaskExecutor._handle_sort_imports
 
 ### .algitex.backups.batch_20260328_142940.src.algitex.project.Project
 > One project, all tools, zero boilerplate.
@@ -291,11 +291,6 @@ _parse_batch_response [src.algitex.tools.autofix.batch_backend.BatchFixBackend]
 - **Methods**: 25
 - **Key Methods**: src.algitex.project.Project.__init__, src.algitex.project.Project._analyzer, src.algitex.project.Project._tickets, src.algitex.project.Project._ollama_service, src.algitex.project.Project.analyze, src.algitex.project.Project.plan, src.algitex.project.Project.execute, src.algitex.project.Project.status, src.algitex.project.Project._status_health, src.algitex.project.Project._status_tickets
 - **Inherits**: ServiceMixin, AutoFixMixin, OllamaMixin, BatchMixin, BenchmarkMixin, IDEMixin, ConfigMixin, MCPMixin
-
-### src.algitex.microtask.executor.MicroTaskExecutor
-> Execute micro tasks in three tiers: algorithmic, small LLM, big LLM.
-- **Methods**: 22
-- **Key Methods**: src.algitex.microtask.executor.MicroTaskExecutor.__init__, src.algitex.microtask.executor.MicroTaskExecutor.execute, src.algitex.microtask.executor.MicroTaskExecutor.group_by_file, src.algitex.microtask.executor.MicroTaskExecutor._phase_algorithmic, src.algitex.microtask.executor.MicroTaskExecutor._process_algorithmic_batch, src.algitex.microtask.executor.MicroTaskExecutor._phase_llm, src.algitex.microtask.executor.MicroTaskExecutor._process_llm_batch, src.algitex.microtask.executor.MicroTaskExecutor._supports_algorithmic, src.algitex.microtask.executor.MicroTaskExecutor._apply_line_fix, src.algitex.microtask.executor.MicroTaskExecutor._apply_fstring_fix
 
 ### .algitex.backups.batch_20260328_142940.src.algitex.tools.docker.DockerToolManager
 > Spawn Docker containers, connect via MCP/REST, call tools, teardown.
@@ -357,15 +352,15 @@ _parse_batch_response [src.algitex.tools.autofix.batch_backend.BatchFixBackend]
 - **Methods**: 17
 - **Key Methods**: .algitex.backups.batch_20260328_143434.src.algitex.propact.Workflow.__init__, .algitex.backups.batch_20260328_143434.src.algitex.propact.Workflow.parse, .algitex.backups.batch_20260328_143434.src.algitex.propact.Workflow._extract_steps_from_content, .algitex.backups.batch_20260328_143434.src.algitex.propact.Workflow.validate, .algitex.backups.batch_20260328_143434.src.algitex.propact.Workflow._execute_step, .algitex.backups.batch_20260328_143434.src.algitex.propact.Workflow._update_result, .algitex.backups.batch_20260328_143434.src.algitex.propact.Workflow._handle_step_failure, .algitex.backups.batch_20260328_143434.src.algitex.propact.Workflow.execute, .algitex.backups.batch_20260328_143434.src.algitex.propact.Workflow.status, .algitex.backups.batch_20260328_143434.src.algitex.propact.Workflow._exec_shell
 
-### src.algitex.tools.mcp.MCPOrchestrator
-> Orchestrates multiple MCP services.
-- **Methods**: 17
-- **Key Methods**: src.algitex.tools.mcp.MCPOrchestrator.__init__, src.algitex.tools.mcp.MCPOrchestrator._setup_signal_handlers, src.algitex.tools.mcp.MCPOrchestrator._register_default_services, src.algitex.tools.mcp.MCPOrchestrator.add_service, src.algitex.tools.mcp.MCPOrchestrator.add_custom_service, src.algitex.tools.mcp.MCPOrchestrator.start_service, src.algitex.tools.mcp.MCPOrchestrator.stop_service, src.algitex.tools.mcp.MCPOrchestrator.restart_service, src.algitex.tools.mcp.MCPOrchestrator.start_all, src.algitex.tools.mcp.MCPOrchestrator.stop_all
-
 ### src.algitex.tools.workspace.Workspace
 > Manage multiple repos as a single workspace.
 - **Methods**: 17
 - **Key Methods**: src.algitex.tools.workspace.Workspace.__init__, src.algitex.tools.workspace.Workspace._load_config, src.algitex.tools.workspace.Workspace._validate_dependencies, src.algitex.tools.workspace.Workspace._topo_sort, src.algitex.tools.workspace.Workspace.clone_all, src.algitex.tools.workspace.Workspace.pull_all, src.algitex.tools.workspace.Workspace.analyze_all, src.algitex.tools.workspace.Workspace.plan_all, src.algitex.tools.workspace.Workspace.execute_all, src.algitex.tools.workspace.Workspace.validate_all
+
+### src.algitex.tools.mcp.MCPOrchestrator
+> Orchestrates multiple MCP services.
+- **Methods**: 17
+- **Key Methods**: src.algitex.tools.mcp.MCPOrchestrator.__init__, src.algitex.tools.mcp.MCPOrchestrator._setup_signal_handlers, src.algitex.tools.mcp.MCPOrchestrator._register_default_services, src.algitex.tools.mcp.MCPOrchestrator.add_service, src.algitex.tools.mcp.MCPOrchestrator.add_custom_service, src.algitex.tools.mcp.MCPOrchestrator.start_service, src.algitex.tools.mcp.MCPOrchestrator.stop_service, src.algitex.tools.mcp.MCPOrchestrator.restart_service, src.algitex.tools.mcp.MCPOrchestrator.start_all, src.algitex.tools.mcp.MCPOrchestrator.stop_all
 
 ### src.algitex.propact.Workflow
 > Parse and execute Propact Markdown workflows.
@@ -413,6 +408,14 @@ Key functions that process and transform data:
 > Parse JSON response with error handling.
 - **Output to**: json.loads, RuntimeError, str
 
+### .algitex.backups.batch_20260328_142940.src.algitex.tools.workspace.Workspace._validate_dependencies
+> Validate that all dependencies exist.
+- **Output to**: src.algitex.tools.ollama_cache.LLMCache.set, self.repos.items, self.repos.keys, ValueError
+
+### .algitex.backups.batch_20260328_142940.src.algitex.tools.workspace.Workspace.validate_all
+> Run validation across all repositories.
+- **Output to**: self._topo_sort, print, Pipeline, pipeline.validate, pipeline._results.get
+
 ### .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_parser.TodoParser.parse
 > Parse file and return list of pending tasks.
 - **Output to**: self.file_path.read_text, tasks.extend, tasks.extend, tasks.extend, self.file_path.exists
@@ -432,14 +435,6 @@ Key functions that process and transform data:
 ### .algitex.backups.batch_20260328_142940.src.algitex.tools.context.ContextBuilder._format_ticket
 > Format ticket information.
 - **Output to**: ticket.get, ticket.get, ticket.get, ticket.get
-
-### .algitex.backups.batch_20260328_142940.src.algitex.tools.workspace.Workspace._validate_dependencies
-> Validate that all dependencies exist.
-- **Output to**: src.algitex.tools.ollama_cache.LLMCache.set, self.repos.items, self.repos.keys, ValueError
-
-### .algitex.backups.batch_20260328_142940.src.algitex.tools.workspace.Workspace.validate_all
-> Run validation across all repositories.
-- **Output to**: self._topo_sort, print, Pipeline, pipeline.validate, pipeline._results.get
 
 ### .algitex.backups.batch_20260328_142940.src.algitex.tools.services.ServiceChecker._format_status_line
 > Format a single status line.
@@ -564,7 +559,6 @@ Functions exposed as public API (no underscore prefix):
 - `.algitex.backups.batch_20260328_142940.examples.31-abpr-workflow.main.main` - 77 calls
 - `.algitex.backups.batch_20260328_143434.examples.31-abpr-workflow.main.main` - 77 calls
 - `examples.31-abpr-workflow.main.main` - 77 calls
-- `src.algitex.cli.todo.todo_fix` - 61 calls
 - `.algitex.backups.batch_20260328_142940.examples.30-parallel-execution.main.main` - 55 calls
 - `.algitex.backups.batch_20260328_143434.examples.30-parallel-execution.main.main` - 55 calls
 - `examples.30-parallel-execution.main.main` - 55 calls
@@ -577,7 +571,7 @@ Functions exposed as public API (no underscore prefix):
 - `.algitex.backups.batch_20260328_142940.examples.30-parallel-execution.parallel_real_world.main` - 43 calls
 - `.algitex.backups.batch_20260328_143434.examples.30-parallel-execution.parallel_real_world.main` - 43 calls
 - `examples.30-parallel-execution.parallel_real_world.main` - 43 calls
-- `src.algitex.cli.todo.todo_batch` - 41 calls
+- `src.algitex.cli.todo.todo_batch` - 42 calls
 - `.algitex.backups.batch_20260328_142940.examples.14-docker-mcp.main.demo_docker_operations` - 40 calls
 - `.algitex.backups.batch_20260328_142940.examples.05-cost-tracking.main.main` - 40 calls
 - `.algitex.backups.batch_20260328_143434.examples.14-docker-mcp.main.demo_docker_operations` - 40 calls
@@ -588,6 +582,7 @@ Functions exposed as public API (no underscore prefix):
 - `.algitex.backups.batch_20260328_143434.src.algitex.cli.todo.todo_batch` - 39 calls
 - `.algitex.backups.batch_20260328_143434.examples.18-ollama-local.main.main` - 39 calls
 - `examples.18-ollama-local.main.main` - 39 calls
+- `src.algitex.cli.todo.todo_hybrid` - 37 calls
 - `.algitex.backups.batch_20260328_142940.examples.31-abpr-workflow.abpr_pipeline.abpr_pipeline` - 36 calls
 - `.algitex.backups.batch_20260328_143434.examples.31-abpr-workflow.abpr_pipeline.abpr_pipeline` - 36 calls
 - `examples.31-abpr-workflow.abpr_pipeline.abpr_pipeline` - 36 calls
@@ -595,12 +590,12 @@ Functions exposed as public API (no underscore prefix):
 - `.algitex.backups.batch_20260328_142940.examples.13-vallm.main.demo_validation` - 35 calls
 - `.algitex.backups.batch_20260328_143434.src.algitex.cli.todo.todo_hybrid` - 35 calls
 - `.algitex.backups.batch_20260328_143434.examples.13-vallm.main.demo_validation` - 35 calls
-- `src.algitex.cli.todo.todo_hybrid` - 35 calls
 - `src.algitex.tools.autofix.batch_backend.BatchFixBackend.fix_batch` - 35 calls
 - `examples.13-vallm.main.demo_validation` - 35 calls
 - `.algitex.backups.batch_20260328_142940.examples.07-context.main.basic_context_example` - 34 calls
 - `.algitex.backups.batch_20260328_143434.examples.07-context.main.basic_context_example` - 34 calls
 - `examples.07-context.main.basic_context_example` - 34 calls
+- `.algitex.backups.batch_20260328_142940.examples.02-algo-loop.main.main` - 33 calls
 
 ## System Interactions
 
@@ -609,8 +604,6 @@ How components interact:
 ```mermaid
 graph TD
     main --> print
-    todo_fix --> Argument
-    todo_fix --> Option
     main --> str
     main --> Project
     metrics_compare --> Option
@@ -622,6 +615,9 @@ graph TD
     main --> Path
     main --> setup_sample_project
     todo_batch --> Option
+    demo_docker_operatio --> print
+    demo_docker_operatio --> create_sample_docker
+    demo_docker_operatio --> iterdir
 ```
 
 ## Reverse Engineering Guidelines

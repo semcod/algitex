@@ -219,6 +219,142 @@ def _run_with_dashboard(
         dashboard.stop()
 
 
+def _run_hybrid_with_dashboard(
+    file: str,
+    fixer,
+    hybrid: bool,
+    dry_run: bool,
+) -> None:
+    """Run hybrid autofix with live dashboard.
+    
+    CC: 4 (dashboard init + phase tracking + result handling)
+    """
+    from algitex.dashboard import LiveDashboard
+    from algitex.tools.ollama_cache import LLMCache
+    import threading
+    import time
+
+    # Initialize dashboard
+    dashboard = LiveDashboard(refresh_rate=1.0)
+    
+    # Initialize cache stats
+    cache = LLMCache(".algitex/cache")
+    cache_stats = cache.stats()
+    dashboard.update_cache_stats(
+        hits=cache_stats["hits"],
+        misses=cache_stats["misses"],
+        entries=cache_stats["entries"],
+        size_bytes=cache_stats["size_bytes"],
+    )
+
+    def run_fix():
+        """Run the fix operation with dashboard updates."""
+        if hybrid:
+            dashboard.update_tier_progress("algorithm", total=100, active=True)
+            dashboard.update_tier_progress("big", total=100, active=True)
+            
+            # Simulate progress for hybrid fix
+            for i in range(0, 100, 10):
+                dashboard.update_tier_progress("algorithm", current=i)
+                time.sleep(0.1)
+            
+            result = fixer.fix_all(file)
+            
+            dashboard.update_tier_progress("algorithm", current=100, active=False)
+            dashboard.update_tier_progress("big", current=100, active=False)
+        else:
+            dashboard.update_tier_progress("big", total=100, active=True)
+            
+            for i in range(0, 100, 20):
+                dashboard.update_tier_progress("big", current=i)
+                time.sleep(0.1)
+            
+            result = fixer.fix_complex(file)
+            
+            dashboard.update_tier_progress("big", current=100, active=False)
+        
+        return result
+
+    # Run with dashboard
+    try:
+        dashboard.start()
+        result = run_fix()
+        
+        # Show final summary
+        console.print("\n[bold]Fix Summary[/]")
+        fixer.print_summary(result)
+        
+        time.sleep(1)  # Let user see final state
+    except KeyboardInterrupt:
+        console.print("\n[yellow]Operation interrupted by user[/]")
+    finally:
+        dashboard.stop()
+
+
+def _run_batch_with_dashboard(
+    backend_fixer,
+    tasks: list,
+    parallel: int,
+    dry_run: bool,
+) -> None:
+    """Run batch fix with live dashboard.
+    
+    CC: 4 (dashboard init + progress tracking + result display)
+    """
+    from algitex.dashboard import LiveDashboard
+    from algitex.tools.ollama_cache import LLMCache
+    import threading
+    import time
+
+    # Initialize dashboard
+    dashboard = LiveDashboard(refresh_rate=1.0)
+    
+    # Initialize cache stats
+    cache = LLMCache(".algitex/cache")
+    cache_stats = cache.stats()
+    dashboard.update_cache_stats(
+        hits=cache_stats["hits"],
+        misses=cache_stats["misses"],
+        entries=cache_stats["entries"],
+        size_bytes=cache_stats["size_bytes"],
+    )
+
+    def run_batch():
+        """Run batch fix with dashboard updates."""
+        dashboard.update_tier_progress("batch", total=len(tasks), active=True)
+        
+        results = backend_fixer.fix_batch(tasks, max_parallel=parallel)
+        
+        dashboard.update_tier_progress("batch", current=len(tasks), active=False)
+        return results
+
+    # Run with dashboard
+    try:
+        dashboard.start()
+        results = run_batch()
+        
+        # Show summary
+        success = sum(1 for r in results if r.success)
+        failed = len(results) - success
+        
+        console.print(f"\n[bold]{'═' * 60}[/]")
+        console.print(f"  BATCH FIX SUMMARY")
+        console.print(f"[bold]{'═' * 60}[/]")
+        console.print(f"\n  ✅ Success: {success}")
+        console.print(f"  ❌ Failed:  {failed}")
+        console.print(f"  📊 Total:   {len(results)}")
+        console.print(f"[bold]{'═' * 60}[/]")
+        
+        if not dry_run and success > 0:
+            console.print(f"\n[green]✓ Zaktualizowano {success} plików[/]")
+        
+        time.sleep(1)  # Let user see final state
+    except KeyboardInterrupt:
+        console.print("\n[yellow]Operation interrupted by user[/]")
+    finally:
+        dashboard.stop()
+
+
 def todo_stats(
     file: str = typer.Argument("TODO.md", help="Path to todo file"),
 ):
@@ -754,6 +890,11 @@ def todo_batch(
         enable_logging=not no_log
     )
     backend_fixer.MAX_FILES_PER_BATCH = batch_size
+    
+    # Execute with dashboard if requested
+    if dashboard:
+        _run_batch_with_dashboard(backend_fixer, tasks, parallel, dry_run)
+        return
     
     # Execute batch fix with parallel groups
     results = backend_fixer.fix_batch(tasks, max_parallel=parallel)

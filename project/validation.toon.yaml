@@ -1,36 +1,31 @@
-# vallm batch | 367f | 192✓ 10⚠ 17✗ | 2026-03-28
+# vallm batch | 378f | 201✓ 8⚠ 17✗ | 2026-03-28
 
 SUMMARY:
-  scanned: 367  passed: 192 (52.3%)  warnings: 10  errors: 17  unsupported: 158
+  scanned: 378  passed: 201 (53.2%)  warnings: 8  errors: 17  unsupported: 160
 
-WARNINGS[10]{path,score}:
-  src/algitex/cli/todo.py,0.90
-    issues[5]{rule,severity,message,line}:
-      complexity.cyclomatic,warning,todo_fix has cyclomatic complexity 50 (max: 15),157
-      complexity.cyclomatic,warning,todo_verify_prefact has cyclomatic complexity 29 (max: 15),497
-      complexity.lizard_cc,warning,todo_fix: CC=50 exceeds limit 15,157
-      complexity.lizard_length,warning,todo_fix: 115 lines exceeds limit 100,157
-      complexity.lizard_cc,warning,todo_verify_prefact: CC=29 exceeds limit 15,497
-  src/algitex/microtask/executor.py,0.93
-    issues[5]{rule,severity,message,line}:
-      complexity.cyclomatic,warning,_process_algorithmic_batch has cyclomatic complexity 27 (max: 15),116
-      complexity.cyclomatic,warning,_apply_magic_name has cyclomatic complexity 16 (max: 15),295
-      complexity.maintainability,warning,Low maintainability index: 4.7 (threshold: 20),
-      complexity.lizard_cc,warning,_process_algorithmic_batch: CC=27 exceeds limit 15,116
-      complexity.lizard_cc,warning,_apply_magic_name: CC=16 exceeds limit 15,295
-  src/algitex/todo/fixer.py,0.96
+WARNINGS[8]{path,score}:
+  src/algitex/cli/todo.py,0.87
+    issues[7]{rule,severity,message,line}:
+      complexity.cyclomatic,warning,_tf_execute_phased has cyclomatic complexity 25 (max: 15),500
+      complexity.cyclomatic,warning,todo_verify_prefact has cyclomatic complexity 29 (max: 15),851
+      complexity.maintainability,warning,Low maintainability index: 16.6 (threshold: 20),
+      complexity.lizard_cc,warning,_run_with_dashboard.run_phases: CC=27 exceeds limit 15,101
+      complexity.lizard_cc,warning,_run_with_dashboard: CC=16 exceeds limit 15,45
+      complexity.lizard_cc,warning,_tf_execute_phased: CC=25 exceeds limit 15,500
+      complexity.lizard_cc,warning,todo_verify_prefact: CC=29 exceeds limit 15,851
+  src/algitex/microtask/executor.py,0.96
     issues[3]{rule,severity,message,line}:
-      complexity.cyclomatic,warning,fix_file has cyclomatic complexity 30 (max: 15),487
-      complexity.maintainability,warning,Low maintainability index: 14.2 (threshold: 20),
-      complexity.lizard_cc,warning,fix_file: CC=30 exceeds limit 15,487
+      complexity.cyclomatic,warning,_apply_magic_name has cyclomatic complexity 16 (max: 15),372
+      complexity.maintainability,warning,Low maintainability index: 8.3 (threshold: 20),
+      complexity.lizard_cc,warning,_apply_magic_name: CC=16 exceeds limit 15,372
   src/algitex/microtask/classifier.py,0.97
     issues[2]{rule,severity,message,line}:
       complexity.cyclomatic,warning,_classify_message has cyclomatic complexity 48 (max: 15),105
       complexity.lizard_cc,warning,_classify_message: CC=48 exceeds limit 15,105
-  src/algitex/todo/tiering.py,0.97
+  src/algitex/todo/fixer.py,0.97
     issues[2]{rule,severity,message,line}:
-      complexity.cyclomatic,warning,classify_message has cyclomatic complexity 50 (max: 15),161
-      complexity.lizard_cc,warning,classify_message: CC=50 exceeds limit 15,161
+      complexity.cyclomatic,warning,fix_file has cyclomatic complexity 24 (max: 15),164
+      complexity.lizard_cc,warning,fix_file: CC=24 exceeds limit 15,164
   tests/test_e2e_integration.py,0.97
     issues[2]{rule,severity,message,line}:
       complexity.cyclomatic,warning,test_complete_pipeline_flow has cyclomatic complexity 16 (max: 15),167
@@ -41,29 +36,11 @@ WARNINGS[10]{path,score}:
   src/algitex/tools/autofix/batch_backend.py,0.98
     issues[1]{rule,severity,message,line}:
       complexity.cyclomatic,warning,_parse_batch_response has cyclomatic complexity 16 (max: 15),642
-  src/algitex/tools/autofix/batch_logger.py,0.98
-    issues[1]{rule,severity,message,line}:
-      complexity.cyclomatic,warning,to_markdown has cyclomatic complexity 22 (max: 15),47
   tests/test_parallel.py,0.98
     issues[1]{rule,severity,message,line}:
       complexity.cyclomatic,warning,test_extract_functions_and_classes has cyclomatic complexity 19 (max: 15),14
 
 ERRORS[17]{path,score}:
-  docker/code2llm/code2llm_mcp_server.py,0.00
-    issues[1]{rule,severity,message,line}:
-      syntax.parse,error,SyntaxError: invalid syntax,9
-  docker/code2llm/code2llm_server.py,0.00
-    issues[1]{rule,severity,message,line}:
-      syntax.parse,error,SyntaxError: invalid syntax,9
-  docker/proxym/proxym_mcp_server.py,0.00
-    issues[1]{rule,severity,message,line}:
-      syntax.parse,error,SyntaxError: invalid syntax,9
-  docker/proxym/proxym_server.py,0.00
-    issues[1]{rule,severity,message,line}:
-      syntax.parse,error,SyntaxError: invalid syntax,9
-  docker/vallm/vallm_mcp_server.py,0.00
-    issues[1]{rule,severity,message,line}:
-      syntax.parse,error,SyntaxError: invalid syntax,12
   examples/19-local-mcp-tools/buggy_code.py,0.00
     issues[1]{rule,severity,message,line}:
       syntax.parse,error,SyntaxError: invalid syntax,6
@@ -87,7 +64,23 @@ ERRORS[17]{path,score}:
   examples/16-test-workflow/sample_test_project/tests/test_calculator.py,0.86
     issues[1]{rule,severity,message,line}:
       python.import.resolvable,error,Module 'calculator' not found,6
+  docker/proxym/proxym_mcp_server.py,0.87
+    issues[4]{rule,severity,message,line}:
+      python.import.resolvable,error,Module 'mcp.server.fastmcp' not found,14
+      python.import.resolvable,error,Module 'fastapi' not found,15
+      python.import.resolvable,error,Module 'fastapi.responses' not found,16
+      python.import.resolvable,error,Module 'uvicorn' not found,17
   docker/planfile-mcp/planfile_mcp_server.py,0.88
+    issues[3]{rule,severity,message,line}:
+      python.import.resolvable,error,Module 'mcp.server.fastmcp' not found,15
+      python.import.resolvable,error,Module 'fastapi' not found,16
+      python.import.resolvable,error,Module 'uvicorn' not found,17
+  docker/proxym/proxym_server.py,0.88
+    issues[3]{rule,severity,message,line}:
+      python.import.resolvable,error,Module 'fastapi' not found,14
+      python.import.resolvable,error,Module 'fastapi.responses' not found,15
+      python.import.resolvable,error,Module 'uvicorn' not found,16
+  docker/vallm/vallm_mcp_server.py,0.88
     issues[3]{rule,severity,message,line}:
       python.import.resolvable,error,Module 'mcp.server.fastmcp' not found,15
       python.import.resolvable,error,Module 'fastapi' not found,16
@@ -96,6 +89,15 @@ ERRORS[17]{path,score}:
     issues[2]{rule,severity,message,line}:
       python.import.resolvable,error,Module 'fastapi' not found,14
       python.import.resolvable,error,Module 'uvicorn' not found,15
+  docker/code2llm/code2llm_mcp_server.py,0.91
+    issues[3]{rule,severity,message,line}:
+      python.import.resolvable,error,Module 'mcp.server.fastmcp' not found,16
+      python.import.resolvable,error,Module 'fastapi' not found,17
+      python.import.resolvable,error,Module 'uvicorn' not found,18
+  docker/code2llm/code2llm_server.py,0.93
+    issues[2]{rule,severity,message,line}:
+      python.import.resolvable,error,Module 'fastapi' not found,16
+      python.import.resolvable,error,Module 'uvicorn' not found,17
   tests/test_shared_rules.py,0.93
     issues[1]{rule,severity,message,line}:
       python.import.resolvable,error,Module 'isort' not found,129
@@ -116,7 +118,7 @@ ERRORS[17]{path,score}:
       python.import.resolvable,error,Module 'tqdm' not found,34
 
 UNSUPPORTED[5]{bucket,count}:
-  *.md,80
+  *.md,82
   Dockerfile*,31
   *.txt,2
   *.yml,3
