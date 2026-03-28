@@ -1,39 +1,52 @@
-# code2llm | 24f 5426L | python:23,shell:1 | 2026-03-28
-# CC̄=3.4 | critical:1/302 | dups:0 | cycles:1
+# code2llm | 33f 8187L | python:32,shell:1 | 2026-03-28
+# CC̄=3.6 | critical:4/397 | dups:0 | cycles:0
 
-HEALTH[2]:
+HEALTH[5]:
+  🟡 CC    _analyze_project CC=17 (limit:15)
+  🟡 CC    analyze_project CC=17 (limit:15)
+  🟡 CC    execute CC=15 (limit:15)
   🟡 CC    execute CC=16 (limit:15)
   🟡 CC    advanced_workspace_features CC=15 (limit:15)
 
-REFACTOR[2]:
-  1. split 2 high-CC methods  (CC>15)
-  2. break 1 circular dependencies
+REFACTOR[1]:
+  1. split 5 high-CC methods  (CC>15)
 
-PIPELINES[272]:
-  [1] Src [init]: init → discover_tools
+PIPELINES[332]:
+  [1] Src [__init__]: __init__
       PURITY: 100% pure
-  [2] Src [analyze]: analyze
+  [2] Src [create_fastapi_app]: create_fastapi_app
       PURITY: 100% pure
-  [3] Src [plan]: plan
+  [3] Src [_call_anthropic]: _call_anthropic
       PURITY: 100% pure
-  [4] Src [go]: go
+  [4] Src [_call_openai]: _call_openai
       PURITY: 100% pure
-  [5] Src [status]: status
+  [5] Src [_mock_response]: _mock_response
       PURITY: 100% pure
 
 LAYERS:
-  src/                            CC̄=3.4    ←in:0  →out:0
-  │ !! cli                        567L  0C   25m  CC=12     ←0
-  │ docker                     462L  3C   23m  CC=10     ←0
+  docker/                         CC̄=3.6    ←in:0  →out:0
+  │ proxym_mcp_server          387L  0C   10m  CC=9      ←0
+  │ vallm_mcp_server           360L  0C    8m  CC=9      ←0
+  │ planfile_mcp_server        277L  0C   10m  CC=7      ←0
+  │ !! code2llm_mcp_server        276L  0C    6m  CC=17     ←0
+  │ vallm_server               271L  1C    7m  CC=9      ←0
+  │ proxym_server              257L  1C    7m  CC=6      ←0
+  │ !! code2llm_server            239L  1C    6m  CC=17     ←0
+  │ aider_mcp_server           157L  0C    5m  CC=2      ←0
+  │
+  src/                            CC̄=3.6    ←in:0  →out:0
+  │ !! cli                        571L  0C   25m  CC=13     ←0
+  │ !! todo_runner                526L  2C   16m  CC=13     ←0
+  │ !! docker                     504L  3C   23m  CC=12     ←0
   │ cicd                       405L  1C   11m  CC=5      ←1
-  │ !! __init__                   397L  3C   12m  CC=16     ←0
+  │ !! __init__                   397L  3C   12m  CC=16     ←1
   │ __init__                   369L  5C   12m  CC=9      ←0
   │ workspace                  338L  2C   17m  CC=6      ←1
   │ __init__                   320L  3C   19m  CC=4      ←0
-  │ todo_runner                302L  2C   13m  CC=13     ←0
   │ project                    294L  1C   12m  CC=6      ←0
+  │ !! todo_local                 267L  2C   10m  CC=15     ←0
   │ feedback                   252L  4C   12m  CC=8      ←0
-  │ tickets                    246L  2C   11m  CC=5      ←4
+  │ tickets                    246L  2C   11m  CC=5      ←5
   │ todo_executor              240L  2C   12m  CC=13     ←0
   │ todo_parser                206L  2C    8m  CC=7      ←0
   │ context                    206L  3C   14m  CC=7      ←0
@@ -51,7 +64,12 @@ LAYERS:
   │ project.sh                  24L  0C    0m  CC=0.0    ←0
   │
 
-COUPLING: no cross-package imports detected
+COUPLING:
+                               src.algitex  docker.planfile-mcp         docker.vallm
+          src.algitex                   ──                   ←3                   ←1
+  docker.planfile-mcp                    3                   ──                     
+         docker.vallm                    1                                        ──
+  CYCLES: none
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon

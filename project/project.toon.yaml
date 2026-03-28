@@ -1,51 +1,51 @@
-# algitex | 238 func | 19f | 8450L | python | 2026-03-28
+# algitex | 310 func | 28f | 11221L | python | 2026-03-28
 
 HEALTH:
-  CC̄=3.4  critical=9 (limit:10)  dup=1  cycles=1
+  CC̄=3.6  critical=15 (limit:10)  dup=1  cycles=0
 
 ALERTS[20]:
+  !!! high_fan_out     analyze_project = 24 (limit:10)
+  !!! high_fan_out     Code2LLMServer._analyze_project = 21 (limit:10)
   !!  high_fan_out     Project.status = 18 (limit:10)
+  !!  high_fan_out     DockerToolManager._call_stdio = 18 (limit:10)
   !!  high_fan_out     init = 16 (limit:10)
   !!  high_fan_out     DockerToolManager.get_capabilities = 16 (limit:10)
+  !!  high_fan_out     analyze_complexity = 15 (limit:10)
+  !   cc_exceeded      Code2LLMServer._analyze_project = 17 (limit:15)
+  !   cc_exceeded      analyze_project = 17 (limit:15)
   !   cc_exceeded      Workflow.execute = 16 (limit:15)
-  !   high_fan_out     Workflow.execute = 14 (limit:10)
-  !   high_fan_out     Workflow.parse = 13 (limit:10)
-  !   high_fan_out     Workflow._exec_rest = 13 (limit:10)
-  !   high_fan_out     DockerToolManager._load_tools = 12 (limit:10)
-  !   high_fan_out     DockerToolManager._call_stdio = 12 (limit:10)
-  !   high_fan_out     todo_run = 11 (limit:10)
 
-MODULES[24] (top by size):
-  M[src/algitex/cli.py] 567L C:0 F:25 CC↑12 D:0 (python)
-  M[src/algitex/tools/docker.py] 462L C:3 F:23 CC↑10 D:0 (python)
+MODULES[33] (top by size):
+  M[src/algitex/cli.py] 571L C:0 F:25 CC↑13 D:0 (python)
+  M[src/algitex/tools/todo_runner.py] 526L C:2 F:16 CC↑13 D:0 (python)
+  M[src/algitex/tools/docker.py] 504L C:3 F:23 CC↑12 D:0 (python)
   M[src/algitex/tools/cicd.py] 405L C:1 F:11 CC↑5 D:1 (python)
-  M[src/algitex/propact/__init__.py] 397L C:3 F:12 CC↑16 D:0 (python)
+  M[src/algitex/propact/__init__.py] 397L C:3 F:12 CC↑16 D:1 (python)
+  M[docker/proxym/proxym_mcp_server.py] 387L C:0 F:10 CC↑9 D:0 (python)
   M[src/algitex/algo/__init__.py] 369L C:5 F:12 CC↑9 D:0 (python)
+  M[docker/vallm/vallm_mcp_server.py] 360L C:0 F:8 CC↑9 D:0 (python)
   M[src/algitex/tools/workspace.py] 338L C:2 F:17 CC↑6 D:1 (python)
   M[src/algitex/workflows/__init__.py] 320L C:3 F:19 CC↑4 D:0 (python)
-  M[src/algitex/tools/todo_runner.py] 302L C:2 F:13 CC↑13 D:0 (python)
   M[src/algitex/project.py] 294L C:1 F:12 CC↑6 D:0 (python)
-  M[src/algitex/tools/feedback.py] 252L C:4 F:12 CC↑8 D:0 (python)
-  M[src/algitex/tools/tickets.py] 246L C:2 F:11 CC↑5 D:4 (python)
-  M[src/algitex/tools/todo_executor.py] 240L C:2 F:12 CC↑13 D:0 (python)
-  M[src/algitex/tools/context.py] 206L C:3 F:14 CC↑7 D:0 (python)
-  M[src/algitex/tools/todo_parser.py] 206L C:2 F:8 CC↑7 D:0 (python)
-  M[src/algitex/tools/analysis.py] 182L C:3 F:8 CC↑7 D:0 (python)
-  LANGS: python:23/shell:1
+  M[docker/planfile-mcp/planfile_mcp_server.py] 277L C:0 F:10 CC↑7 D:0 (python)
+  M[docker/code2llm/code2llm_mcp_server.py] 276L C:0 F:6 CC↑17 D:0 (python)
+  M[docker/vallm/vallm_server.py] 271L C:1 F:7 CC↑9 D:0 (python)
+  M[src/algitex/tools/todo_local.py] 267L C:2 F:10 CC↑15 D:0 (python)
+  LANGS: python:32/shell:1
 
 HOTSPOTS[10]:
+  ★ analyze_project fan=24  // Analysis pipeline, 24 stages
+  ★ Code2LLMServer._analyze_project fan=21  // Analysis pipeline, 21 stages
   ★ Project.status fan=18  // Full project status: health + tickets + budget + algo progress.
+  ★ DockerToolManager._call_stdio fan=18  // Send JSON-RPC over stdin, read from stdout with timeout.
   ★ init fan=16  // Initialize algitex for a project.
-  ★ DockerToolManager.get_capabilities fan=16  // List MCP tools available on a running container.
-  ★ Workflow.execute fan=14  // Execute all steps in the workflow.
-  ★ Workflow.parse fan=13  // Parse Markdown into executable steps.
 
-REFACTOR[6]:
-  [1] H/H Split god module src/algitex/cli.py (567L, 0 classes)
-  [2] M/L Split Workflow.execute (CC=16 → target CC<10)
-  [3] M/L Break circular dependency: src.algitex.tools.tickets.Tickets.list
-  [4] M/M Reduce Project.status fan-out (currently 18)
-  [5] M/M Reduce init fan-out (currently 16)
+REFACTOR[10]:
+  [1] H/H Split god module src/algitex/cli.py (571L, 0 classes)
+  [2] H/H Split god module src/algitex/tools/todo_runner.py (526L, 2 classes)
+  [3] H/H Split god module src/algitex/tools/docker.py (504L, 3 classes)
+  [4] M/L Split Code2LLMServer._analyze_project (CC=17 → target CC<10)
+  [5] M/L Split analyze_project (CC=17 → target CC<10)
 
 EVOLUTION:
-  2026-03-28 CC̄=3.4 crit=9 8450L // Automated analysis
+  2026-03-28 CC̄=3.6 crit=15 11221L // Automated analysis

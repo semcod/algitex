@@ -8,6 +8,66 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.10] - 2026-03-28
 
 ### Fixed
+- Fix string-concat issues (ticket-bc134358)
+- Fix unused-imports issues (ticket-accf717c)
+- Fix llm-generated-code issues (ticket-6131503f)
+- Fix ai-boilerplate issues (ticket-ab6718f5)
+- Fix unused-imports issues (ticket-ce89ecd5)
+- Fix magic-numbers issues (ticket-3c1944d0)
+- Fix llm-generated-code issues (ticket-eef167ae)
+- Fix ai-boilerplate issues (ticket-60b03d80)
+- Fix string-concat issues (ticket-165f2011)
+- Fix unused-imports issues (ticket-1e6791ca)
+- Fix magic-numbers issues (ticket-6ab1b709)
+- Fix llm-generated-code issues (ticket-6dbfecce)
+- Fix ai-boilerplate issues (ticket-58ee003d)
+- Fix string-concat issues (ticket-568b1bed)
+- Fix unused-imports issues (ticket-ffbf1c25)
+- Fix magic-numbers issues (ticket-9ceb3601)
+- Fix ai-boilerplate issues (ticket-2fb23deb)
+- Fix string-concat issues (ticket-b663f6a1)
+- Fix unused-imports issues (ticket-8caf7576)
+- Fix magic-numbers issues (ticket-8abcf2a9)
+- Fix llm-generated-code issues (ticket-bd3a5435)
+- Fix ai-boilerplate issues (ticket-aa79361e)
+- Fix string-concat issues (ticket-29c28e26)
+- Fix unused-imports issues (ticket-683e6654)
+- Fix magic-numbers issues (ticket-df7071ba)
+- Fix ai-boilerplate issues (ticket-65ccf5c3)
+- Fix string-concat issues (ticket-56145bc6)
+- Fix unused-imports issues (ticket-fa837f5a)
+- Fix magic-numbers issues (ticket-6f236023)
+- Fix llm-generated-code issues (ticket-86656f76)
+- Fix ai-boilerplate issues (ticket-6024e58d)
+- Fix string-concat issues (ticket-8b62a0b4)
+- Fix unused-imports issues (ticket-b1967c36)
+- Fix magic-numbers issues (ticket-1d3a9fbf)
+- Fix ai-boilerplate issues (ticket-0fa07740)
+- Fix smart-return-type issues (ticket-e48041c3)
+- Fix string-concat issues (ticket-684e381d)
+- Fix unused-imports issues (ticket-90797fcd)
+- Fix magic-numbers issues (ticket-e34de1bf)
+- Fix llm-generated-code issues (ticket-34909b75)
+- Fix ai-boilerplate issues (ticket-9f6f4ca5)
+- Fix smart-return-type issues (ticket-884ba8c6)
+- Fix string-concat issues (ticket-dcf96952)
+- Fix magic-numbers issues (ticket-1b9e0e03)
+- Fix llm-generated-code issues (ticket-21da4e18)
+- Fix ai-boilerplate issues (ticket-5204b930)
+- Fix smart-return-type issues (ticket-1f2bc318)
+- Fix string-concat issues (ticket-6f16a6e4)
+- Fix magic-numbers issues (ticket-0d3fd79e)
+- Fix llm-generated-code issues (ticket-14e7005f)
+- Fix ai-boilerplate issues (ticket-5726d378)
+- Fix duplicate-imports issues (ticket-df2da080)
+- Fix string-concat issues (ticket-38c7d234)
+- Fix unused-imports issues (ticket-bb96393e)
+- Fix ai-boilerplate issues (ticket-911acdb5)
+- Fix string-concat issues (ticket-dddfc162)
+
+## [0.1.10] - 2026-03-28
+
+### Fixed
 - Fix smart-return-type issues (ticket-b2f85770)
 - Fix llm-generated-code issues (ticket-222f0321)
 - Fix ai-boilerplate issues (ticket-32a4b0d6)
@@ -141,6 +201,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix llm-generated-code issues (ticket-06d0712f)
 
 ## [Unreleased]
+
+## [0.1.10] - 2026-03-28
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update TODO.md
+- Update docs/README.md
+- Update examples/18-ollama-local/README.md
+- Update examples/19-local-mcp-tools/README.md
+- Update examples/20-self-hosted-pipeline/README.md
+- Update project/README.md
+- Update project/context.md
+
+### Other
+- Update docker-compose.mcp.yml
+- Update docker-tools.yaml
+- Update docker/aider-mcp/aider_mcp_server.py
+- Update docker/code2llm/Dockerfile
+- Update docker/docker-compose.yml
+- Update docker/planfile-mcp/Dockerfile
+- Update docker/planfile-mcp/planfile_mcp_server.py
+- Update docker/vallm/Dockerfile
+- Update examples/18-ollama-local/Makefile
+- Update examples/18-ollama-local/main.py
+- ... and 22 more files
 
 ## [0.1.9] - 2026-03-28
 

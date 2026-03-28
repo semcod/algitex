@@ -83,10 +83,7 @@ services:
     environment:
       - TRANSPORT=stdio
       - MCP_TRANSPORT=stdio
-      - PORT=3000
       - EDITOR_MODEL=${AIDER_MODEL:-gemini/gemini-2.5-flash}
-    ports:
-      - "3000:3000"
     stdin_open: true
     tty: true
     volumes:
@@ -100,13 +97,10 @@ services:
     image: algitex/code2llm-mcp:latest
     profiles: ["tools", "full"]
     environment:
-      - TRANSPORT=stdio
-      - MCP_TRANSPORT=stdio
+      - TRANSPORT=http
       - PORT=8081
     ports:
       - "8081:8081"
-    stdin_open: true
-    tty: true
     volumes:
       - ./:/workspace:ro
     restart: unless-stopped
@@ -118,13 +112,10 @@ services:
     image: algitex/vallm-mcp:latest
     profiles: ["tools", "full"]
     environment:
-      - TRANSPORT=stdio
-      - MCP_TRANSPORT=stdio
+      - TRANSPORT=http
       - PORT=8080
     ports:
       - "8080:8080"
-    stdin_open: true
-    tty: true
     volumes:
       - ./:/workspace:ro
     restart: unless-stopped
@@ -138,175 +129,32 @@ services:
     environment:
       - TRANSPORT=stdio
       - MCP_TRANSPORT=stdio
-      - PORT=8201
       - DATA_DIR=/data
-    ports:
-      - "8201:8201"
     stdin_open: true
     tty: true
     volumes:
       - ./data/planfile:/data
     restart: unless-stopped
 
-  github-mcp:
-    image: ghcr.io/modelcontextprotocol/server-github:latest
-    profiles: ["tools", "full"]
-    environment:
-      - GITHUB_PERSONAL_ACCESS_TOKEN=${GITHUB_TOKEN:-}
-    restart: unless-stopped
+  # ── GitHub MCP (disabled - requires GHCR auth) ────
+  # github-mcp:
+  #   image: ghcr.io/modelcontextprotocol/server-github:latest
+  #   profiles: ["tools", "full"]
+  #   environment:
+  #     - GITHUB_PERSONAL_ACCESS_TOKEN=${GITHUB_TOKEN:-}
+  #   restart: unless-stopped
 
-  # ── Ready MCP Servers from Docker Hub ──────────────
-  mcp-wikipedia:
-    image: mcp/wikipedia-mcp:latest
-    profiles: ["tools", "full"]
-    restart: unless-stopped
-
-  mcp-time:
-    image: mcp/time:latest
-    profiles: ["tools", "full"]
-    restart: unless-stopped
-
-  mcp-fetch:
-    image: mcp/fetch:latest
-    profiles: ["tools", "full"]
-    restart: unless-stopped
-
-  mcp-git:
-    image: mcp/git:latest
-    profiles: ["tools", "full"]
-    volumes:
-      - ./:/workspace
-    restart: unless-stopped
-
-  mcp-postgres:
-    image: mcp/postgres:latest
-    profiles: ["tools", "full"]
-    environment:
-      - POSTGRES_URL=${POSTGRES_URL:-postgresql://postgres:postgres@localhost:5432/postgres}
-    restart: unless-stopped
-
-  mcp-sqlite:
-    image: mcp/sqlite:latest
-    profiles: ["tools", "full"]
-    volumes:
-      - ./:/workspace
-    restart: unless-stopped
-
-  mcp-duckduckgo:
-    image: mcp/duckduckgo:latest
-    profiles: ["tools", "full"]
-    restart: unless-stopped
-
-  mcp-brave-search:
-    image: mcp/brave-search:latest
-    profiles: ["tools", "full"]
-    environment:
-      - BRAVE_API_KEY=${BRAVE_API_KEY:-}
-    restart: unless-stopped
+  # ── Verified MCP Servers from Docker Hub ────────────
+  # NOTE: Most mcp/* images don't exist publicly.
+  # Only verified working images are enabled below.
 
   mcp-filesystem:
     image: mcp/filesystem:latest
     profiles: ["tools", "full"]
-    volumes:
-      - ./:/workspace:ro
-    environment:
-      - ALLOW_DIRS=/workspace
-    restart: unless-stopped
-
-  mcp-playwright:
-    image: mcp/playwright:latest
-    profiles: ["tools", "full"]
-    restart: unless-stopped
-
-  # ── Integration & Communication ────────────────────
-  mcp-slack:
-    image: mcp/slack:latest
-    profiles: ["tools", "full"]
-    environment:
-      - SLACK_TOKEN=${SLACK_TOKEN:-}
-      - SLACK_CHANNEL=${SLACK_CHANNEL:-}
-    restart: unless-stopped
-
-  mcp-mail:
-    image: mcp/mail:latest
-    profiles: ["tools", "full"]
-    environment:
-      - SMTP_HOST=${SMTP_HOST:-}
-      - SMTP_USER=${SMTP_USER:-}
-      - SMTP_PASSWORD=${SMTP_PASSWORD:-}
-    restart: unless-stopped
-
-  mcp-jira:
-    image: mcp/jira:latest
-    profiles: ["tools", "full"]
-    environment:
-      - JIRA_URL=${JIRA_URL:-}
-      - JIRA_USERNAME=${JIRA_USERNAME:-}
-      - JIRA_API_TOKEN=${JIRA_API_TOKEN:-}
-    restart: unless-stopped
-
-  # ── Infrastructure & DevOps ─────────────────────────
-  mcp-docker-ai:
-    image: mcp/docker-ai:latest
-    profiles: ["tools", "full"]
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    restart: unless-stopped
-
-  mcp-kubernetes:
-    image: mcp/kubernetes:latest
-    profiles: ["tools", "full"]
-    environment:
-      - KUBECONFIG=${KUBECONFIG:-~/.kube/config}
-    volumes:
-      - ~/.kube:/root/.kube:ro
-    restart: unless-stopped
-
-  # ── Media Processing ───────────────────────────────
-  mcp-pdf:
-    image: mcp/pdf:latest
-    profiles: ["tools", "full"]
-    restart: unless-stopped
-
-  mcp-image:
-    image: mcp/image:latest
-    profiles: ["tools", "full"]
-    restart: unless-stopped
-
-  mcp-audio:
-    image: mcp/audio:latest
-    profiles: ["tools", "full"]
-    restart: unless-stopped
-
-  mcp-video:
-    image: mcp/video:latest
-    profiles: ["tools", "full"]
-    restart: unless-stopped
-
-  # ── Security & Quality ────────────────────────────
-  mcp-security-lint:
-    image: mcp/security:latest
-    profiles: ["tools", "full"]
+    command: ["/workspace"]
     volumes:
       - ./:/workspace:ro
     restart: unless-stopped
-
-  # ── Additional Databases ─────────────────────────
-  mcp-mysql:
-    image: mcp/mysql:latest
-    profiles: ["tools", "full"]
-    environment:
-      - MYSQL_URL=${MYSQL_URL:-}
-    restart: unless-stopped
-
-  mcp-redis:
-    image: mcp/redis:latest
-    profiles: ["tools", "full"]
-    environment:
-      - REDIS_URL=${REDIS_URL:-redis://redis:6379}
-    restart: unless-stopped
-
-
 
   # ── Monitoring (profile: full) ─────────────────────
   langfuse:

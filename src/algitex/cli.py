@@ -529,7 +529,7 @@ def todo_run(
 @todo_app.command("fix")
 def todo_fix(
     file: str = typer.Argument("TODO.md", help="Path to todo file"),
-    tool: str = typer.Option("local", "--tool", "-t", help="Tool to use (local, ollama-mcp, filesystem-mcp, aider-mcp, nap)"),
+    tool: str = typer.Option("ollama-mcp", "--tool", "-t", help="Tool to use (local, ollama-mcp, filesystem-mcp, aider-mcp, nap)"),
     task_id: Optional[str] = typer.Option(None, "--task", help="Specific task ID to fix"),
     limit: int = typer.Option(0, "--limit", "-l", help="Limit number of tasks (0 = all)"),
 ):

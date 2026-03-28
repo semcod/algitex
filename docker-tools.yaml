@@ -84,6 +84,8 @@ tools:
     port: 8081
     volumes:
       - "${PROJECT_DIR}:/project:ro"
+    env:
+      TRANSPORT: http
     capabilities:
       - analyze
       - toon-export
@@ -96,6 +98,8 @@ tools:
     port: 8080
     volumes:
       - "${PROJECT_DIR}:/project:ro"
+    env:
+      TRANSPORT: http
     capabilities:
       - validate
       - batch

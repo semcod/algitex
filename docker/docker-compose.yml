@@ -32,7 +32,7 @@ services:
       - PORT=8201
       - DATA_DIR=/data
     ports:
-      - "8201:8201"
+      - "9001:8201"
     volumes:
       - ./data:/data
     networks:
@@ -45,23 +45,24 @@ services:
     image: algitex/proxym:latest
     container_name: algitex-proxym
     environment:
-      - PORT=4000
+      - PORT=4001
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - GEMINI_API_KEY=${GEMINI_API_KEY}
       - DAILY_BUDGET=10.0
     ports:
-      - "4000:4000"
+      - "9002:4001"
     networks:
       - algitex
 
-  vallm:
+  vallm-mcp:
     build:
       context: ./vallm
       dockerfile: Dockerfile
-    image: algitex/vallm:latest
-    container_name: algitex-vallm
+    image: algitex/vallm-mcp:latest
+    container_name: algitex-vallm-mcp
     environment:
+      - TRANSPORT=http
       - PORT=8080
     ports:
       - "8080:8080"
@@ -69,14 +70,18 @@ services:
       - ${PROJECT_DIR:-.}:/project:ro
     networks:
       - algitex
+    profiles:
+      - tools
+      - full
 
-  code2llm:
+  code2llm-mcp:
     build:
       context: ./code2llm
       dockerfile: Dockerfile
-    image: algitex/code2llm:latest
-    container_name: algitex-code2llm
+    image: algitex/code2llm-mcp:latest
+    container_name: algitex-code2llm-mcp
     environment:
+      - TRANSPORT=http
       - PORT=8081
     ports:
       - "8081:8081"
@@ -84,40 +89,26 @@ services:
       - ${PROJECT_DIR:-.}:/project:ro
     networks:
       - algitex
+    profiles:
+      - tools
+      - full
 
-  # ─── MCP Tools from Docker Hub ─────────────────────────
+  # ─── Community MCP Tools (Optional - requires Docker Hub auth) ─────
+  # NOTE: These images require authentication to ghcr.io or Docker Hub
+  # Run with: docker-compose --profile mcp up -d
 
   mcp-github:
-    image: mcp/github:latest
+    image: ghcr.io/github/github-mcp-server:latest
     container_name: algitex-mcp-github
     environment:
       - GITHUB_TOKEN=${GITHUB_TOKEN}
-      - GITHUB_PERSONAL_ACCESS_TOKEN=${GITHUB_PAT}
       - MCP_TRANSPORT=stdio
     stdin_open: true
     tty: true
     networks:
       - algitex
-
-  mcp-wikipedia:
-    image: mcp/wikipedia-mcp:latest
-    container_name: algitex-mcp-wikipedia
-    environment:
-      - MCP_TRANSPORT=stdio
-    stdin_open: true
-    tty: true
-    networks:
-      - algitex
-
-  mcp-time:
-    image: mcp/time:latest
-    container_name: algitex-mcp-time
-    environment:
-      - MCP_TRANSPORT=stdio
-    stdin_open: true
-    tty: true
-    networks:
-      - algitex
+    profiles:
+      - mcp
 
   mcp-fetch:
     image: mcp/fetch:latest
@@ -128,6 +119,8 @@ services:
     tty: true
     networks:
       - algitex
+    profiles:
+      - mcp
 
   mcp-filesystem:
     image: mcp/filesystem:latest
@@ -141,6 +134,8 @@ services:
     tty: true
     networks:
       - algitex
+    profiles:
+      - mcp
 
   mcp-git:
     image: mcp/git:latest
@@ -153,17 +148,8 @@ services:
     tty: true
     networks:
       - algitex
-
-  mcp-postgres:
-    image: mcp/postgres:latest
-    container_name: algitex-mcp-postgres
-    environment:
-      - MCP_TRANSPORT=stdio
-      - POSTGRES_URL=${POSTGRES_URL}
-    stdin_open: true
-    tty: true
-    networks:
-      - algitex
+    profiles:
+      - mcp
 
   mcp-sqlite:
     image: mcp/sqlite:latest
@@ -176,59 +162,20 @@ services:
     tty: true
     networks:
       - algitex
+    profiles:
+      - mcp
 
-  mcp-duckduckgo:
-    image: mcp/duckduckgo:latest
-    container_name: algitex-mcp-duckduckgo
+  mcp-time:
+    image: mcp/time:latest
+    container_name: algitex-mcp-time
     environment:
       - MCP_TRANSPORT=stdio
     stdin_open: true
     tty: true
     networks:
       - algitex
-
-  mcp-brave-search:
-    image: mcp/brave-search:latest
-    container_name: algitex-mcp-brave-search
-    environment:
-      - MCP_TRANSPORT=stdio
-      - BRAVE_API_KEY=${BRAVE_API_KEY}
-    stdin_open: true
-    tty: true
-    networks:
-      - algitex
-
-  mcp-browser:
-    image: mcp/browser:latest
-    container_name: algitex-mcp-browser
-    environment:
-      - MCP_TRANSPORT=stdio
-    stdin_open: true
-    tty: true
-    networks:
-      - algitex
-
-  mcp-playwright:
-    image: mcp/playwright:latest
-    container_name: algitex-mcp-playwright
-    environment:
-      - MCP_TRANSPORT=stdio
-    stdin_open: true
-    tty: true
-    networks:
-      - algitex
-
-  mcp-slack:
-    image: mcp/slack:latest
-    container_name: algitex-mcp-slack
-    environment:
-      - MCP_TRANSPORT=stdio
-      - SLACK_TOKEN=${SLACK_TOKEN}
-      - SLACK_CHANNEL=${SLACK_CHANNEL}
-    stdin_open: true
-    tty: true
-    networks:
-      - algitex
+    profiles:
+      - mcp
 
 networks:
   algitex:

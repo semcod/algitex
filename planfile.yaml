@@ -1512,3 +1512,731 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
+  - id: ticket-bc134358
+    name: Fix string-concat issues
+    description: Resolve 2 string-concat issues in docker/planfile-mcp/planfile_mcp_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - docker/planfile-mcp/planfile_mcp_server.py
+    rule_id: string-concat
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-accf717c
+    name: Fix unused-imports issues
+    description: Resolve 4 unused-imports issues in docker/planfile-mcp/planfile_mcp_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - docker/planfile-mcp/planfile_mcp_server.py
+    rule_id: unused-imports
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-6131503f
+    name: Fix llm-generated-code issues
+    description: Resolve 6 llm-generated-code issues in docker/planfile-mcp/planfile_mcp_server.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - docker/planfile-mcp/planfile_mcp_server.py
+    rule_id: llm-generated-code
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-ab6718f5
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in docker/planfile-mcp/planfile_mcp_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - docker/planfile-mcp/planfile_mcp_server.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-ce89ecd5
+    name: Fix unused-imports issues
+    description: Resolve 4 unused-imports issues in docker/aider-mcp/aider_mcp_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - docker/aider-mcp/aider_mcp_server.py
+    rule_id: unused-imports
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-3c1944d0
+    name: Fix magic-numbers issues
+    description: Resolve 3 magic-numbers issues in docker/aider-mcp/aider_mcp_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - docker/aider-mcp/aider_mcp_server.py
+    rule_id: magic-numbers
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-eef167ae
+    name: Fix llm-generated-code issues
+    description: Resolve 3 llm-generated-code issues in docker/aider-mcp/aider_mcp_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - docker/aider-mcp/aider_mcp_server.py
+    rule_id: llm-generated-code
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-60b03d80
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in docker/aider-mcp/aider_mcp_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - docker/aider-mcp/aider_mcp_server.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-165f2011
+    name: Fix string-concat issues
+    description: Resolve 2 string-concat issues in docker/code2llm/code2llm_mcp_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - docker/code2llm/code2llm_mcp_server.py
+    rule_id: string-concat
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-1e6791ca
+    name: Fix unused-imports issues
+    description: Resolve 16 unused-imports issues in docker/code2llm/code2llm_mcp_server.py
+    task_type: prefactor
+    priority: high
+    estimate: 3d
+    files:
+    - docker/code2llm/code2llm_mcp_server.py
+    rule_id: unused-imports
+    count: 16
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-6ab1b709
+    name: Fix magic-numbers issues
+    description: Resolve 3 magic-numbers issues in docker/code2llm/code2llm_mcp_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - docker/code2llm/code2llm_mcp_server.py
+    rule_id: magic-numbers
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-6dbfecce
+    name: Fix llm-generated-code issues
+    description: Resolve 4 llm-generated-code issues in docker/code2llm/code2llm_mcp_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - docker/code2llm/code2llm_mcp_server.py
+    rule_id: llm-generated-code
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-58ee003d
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in docker/code2llm/code2llm_mcp_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - docker/code2llm/code2llm_mcp_server.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-568b1bed
+    name: Fix string-concat issues
+    description: Resolve 2 string-concat issues in docker/code2llm/code2llm_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - docker/code2llm/code2llm_server.py
+    rule_id: string-concat
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-ffbf1c25
+    name: Fix unused-imports issues
+    description: Resolve 20 unused-imports issues in docker/code2llm/code2llm_server.py
+    task_type: prefactor
+    priority: high
+    estimate: 3d
+    files:
+    - docker/code2llm/code2llm_server.py
+    rule_id: unused-imports
+    count: 20
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-9ceb3601
+    name: Fix magic-numbers issues
+    description: Resolve 3 magic-numbers issues in docker/code2llm/code2llm_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - docker/code2llm/code2llm_server.py
+    rule_id: magic-numbers
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-2fb23deb
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in docker/code2llm/code2llm_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - docker/code2llm/code2llm_server.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b663f6a1
+    name: Fix string-concat issues
+    description: Resolve 2 string-concat issues in docker/proxym/proxym_mcp_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - docker/proxym/proxym_mcp_server.py
+    rule_id: string-concat
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-8caf7576
+    name: Fix unused-imports issues
+    description: Resolve 16 unused-imports issues in docker/proxym/proxym_mcp_server.py
+    task_type: prefactor
+    priority: high
+    estimate: 3d
+    files:
+    - docker/proxym/proxym_mcp_server.py
+    rule_id: unused-imports
+    count: 16
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-8abcf2a9
+    name: Fix magic-numbers issues
+    description: Resolve 14 magic-numbers issues in docker/proxym/proxym_mcp_server.py
+    task_type: prefactor
+    priority: high
+    estimate: 3d
+    files:
+    - docker/proxym/proxym_mcp_server.py
+    rule_id: magic-numbers
+    count: 14
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-bd3a5435
+    name: Fix llm-generated-code issues
+    description: Resolve 4 llm-generated-code issues in docker/proxym/proxym_mcp_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - docker/proxym/proxym_mcp_server.py
+    rule_id: llm-generated-code
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-aa79361e
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in docker/proxym/proxym_mcp_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - docker/proxym/proxym_mcp_server.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-29c28e26
+    name: Fix string-concat issues
+    description: Resolve 4 string-concat issues in docker/proxym/proxym_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - docker/proxym/proxym_server.py
+    rule_id: string-concat
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-683e6654
+    name: Fix unused-imports issues
+    description: Resolve 20 unused-imports issues in docker/proxym/proxym_server.py
+    task_type: prefactor
+    priority: high
+    estimate: 3d
+    files:
+    - docker/proxym/proxym_server.py
+    rule_id: unused-imports
+    count: 20
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-df7071ba
+    name: Fix magic-numbers issues
+    description: Resolve 2 magic-numbers issues in docker/proxym/proxym_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - docker/proxym/proxym_server.py
+    rule_id: magic-numbers
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-65ccf5c3
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in docker/proxym/proxym_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - docker/proxym/proxym_server.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-56145bc6
+    name: Fix string-concat issues
+    description: Resolve 3 string-concat issues in docker/vallm/vallm_mcp_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - docker/vallm/vallm_mcp_server.py
+    rule_id: string-concat
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-fa837f5a
+    name: Fix unused-imports issues
+    description: Resolve 8 unused-imports issues in docker/vallm/vallm_mcp_server.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - docker/vallm/vallm_mcp_server.py
+    rule_id: unused-imports
+    count: 8
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-6f236023
+    name: Fix magic-numbers issues
+    description: Resolve 1 magic-numbers issues in docker/vallm/vallm_mcp_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - docker/vallm/vallm_mcp_server.py
+    rule_id: magic-numbers
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-86656f76
+    name: Fix llm-generated-code issues
+    description: Resolve 6 llm-generated-code issues in docker/vallm/vallm_mcp_server.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - docker/vallm/vallm_mcp_server.py
+    rule_id: llm-generated-code
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-6024e58d
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in docker/vallm/vallm_mcp_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - docker/vallm/vallm_mcp_server.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-8b62a0b4
+    name: Fix string-concat issues
+    description: Resolve 2 string-concat issues in docker/vallm/vallm_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - docker/vallm/vallm_server.py
+    rule_id: string-concat
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b1967c36
+    name: Fix unused-imports issues
+    description: Resolve 16 unused-imports issues in docker/vallm/vallm_server.py
+    task_type: prefactor
+    priority: high
+    estimate: 3d
+    files:
+    - docker/vallm/vallm_server.py
+    rule_id: unused-imports
+    count: 16
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-1d3a9fbf
+    name: Fix magic-numbers issues
+    description: Resolve 1 magic-numbers issues in docker/vallm/vallm_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - docker/vallm/vallm_server.py
+    rule_id: magic-numbers
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-0fa07740
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in docker/vallm/vallm_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - docker/vallm/vallm_server.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-e48041c3
+    name: Fix smart-return-type issues
+    description: Resolve 8 smart-return-type issues in examples/18-ollama-local/main.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - examples/18-ollama-local/main.py
+    rule_id: smart-return-type
+    count: 8
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-684e381d
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in examples/18-ollama-local/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/18-ollama-local/main.py
+    rule_id: string-concat
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-90797fcd
+    name: Fix unused-imports issues
+    description: Resolve 4 unused-imports issues in examples/18-ollama-local/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - examples/18-ollama-local/main.py
+    rule_id: unused-imports
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-e34de1bf
+    name: Fix magic-numbers issues
+    description: Resolve 3 magic-numbers issues in examples/18-ollama-local/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/18-ollama-local/main.py
+    rule_id: magic-numbers
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-34909b75
+    name: Fix llm-generated-code issues
+    description: Resolve 4 llm-generated-code issues in examples/18-ollama-local/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - examples/18-ollama-local/main.py
+    rule_id: llm-generated-code
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-9f6f4ca5
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in examples/18-ollama-local/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/18-ollama-local/main.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-884ba8c6
+    name: Fix smart-return-type issues
+    description: Resolve 8 smart-return-type issues in examples/19-local-mcp-tools/main.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - examples/19-local-mcp-tools/main.py
+    rule_id: smart-return-type
+    count: 8
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-dcf96952
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in examples/19-local-mcp-tools/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/19-local-mcp-tools/main.py
+    rule_id: string-concat
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-1b9e0e03
+    name: Fix magic-numbers issues
+    description: Resolve 12 magic-numbers issues in examples/19-local-mcp-tools/main.py
+    task_type: prefactor
+    priority: high
+    estimate: 3d
+    files:
+    - examples/19-local-mcp-tools/main.py
+    rule_id: magic-numbers
+    count: 12
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-21da4e18
+    name: Fix llm-generated-code issues
+    description: Resolve 4 llm-generated-code issues in examples/19-local-mcp-tools/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - examples/19-local-mcp-tools/main.py
+    rule_id: llm-generated-code
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-5204b930
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in examples/19-local-mcp-tools/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/19-local-mcp-tools/main.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-1f2bc318
+    name: Fix smart-return-type issues
+    description: Resolve 7 smart-return-type issues in examples/20-self-hosted-pipeline/main.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - examples/20-self-hosted-pipeline/main.py
+    rule_id: smart-return-type
+    count: 7
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-6f16a6e4
+    name: Fix string-concat issues
+    description: Resolve 7 string-concat issues in examples/20-self-hosted-pipeline/main.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - examples/20-self-hosted-pipeline/main.py
+    rule_id: string-concat
+    count: 7
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-0d3fd79e
+    name: Fix magic-numbers issues
+    description: Resolve 23 magic-numbers issues in examples/20-self-hosted-pipeline/main.py
+    task_type: prefactor
+    priority: high
+    estimate: 3d
+    files:
+    - examples/20-self-hosted-pipeline/main.py
+    rule_id: magic-numbers
+    count: 23
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-14e7005f
+    name: Fix llm-generated-code issues
+    description: Resolve 3 llm-generated-code issues in examples/20-self-hosted-pipeline/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/20-self-hosted-pipeline/main.py
+    rule_id: llm-generated-code
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-5726d378
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in examples/20-self-hosted-pipeline/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/20-self-hosted-pipeline/main.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-df2da080
+    name: Fix duplicate-imports issues
+    description: Resolve 1 duplicate-imports issues in src/algitex/tools/docker.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/docker.py
+    rule_id: duplicate-imports
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-38c7d234
+    name: Fix string-concat issues
+    description: Resolve 12 string-concat issues in src/algitex/tools/todo_local.py
+    task_type: prefactor
+    priority: high
+    estimate: 3d
+    files:
+    - src/algitex/tools/todo_local.py
+    rule_id: string-concat
+    count: 12
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-bb96393e
+    name: Fix unused-imports issues
+    description: Resolve 4 unused-imports issues in src/algitex/tools/todo_local.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - src/algitex/tools/todo_local.py
+    rule_id: unused-imports
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-911acdb5
+    name: Fix ai-boilerplate issues
+    description: Resolve 3 ai-boilerplate issues in src/algitex/tools/todo_local.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/todo_local.py
+    rule_id: ai-boilerplate
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-dddfc162
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in src/algitex/tools/todo_runner.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/todo_runner.py
+    rule_id: string-concat
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced

@@ -4,12 +4,12 @@
 
 - **Project**: /home/tom/github/semcod/algitex
 - **Primary Language**: python
-- **Languages**: python: 39, shell: 17
+- **Languages**: python: 51, shell: 20
 - **Analysis Mode**: static
-- **Total Functions**: 302
-- **Total Classes**: 45
-- **Modules**: 56
-- **Entry Points**: 287
+- **Total Functions**: 397
+- **Total Classes**: 50
+- **Modules**: 71
+- **Entry Points**: 348
 
 ## Architecture by Module
 
@@ -32,15 +32,15 @@
 - **Classes**: 2
 - **File**: `workspace.py`
 
+### src.algitex.tools.todo_runner
+- **Functions**: 16
+- **Classes**: 2
+- **File**: `todo_runner.py`
+
 ### src.algitex.tools.context
 - **Functions**: 14
 - **Classes**: 3
 - **File**: `context.py`
-
-### src.algitex.tools.todo_runner
-- **Functions**: 13
-- **Classes**: 2
-- **File**: `todo_runner.py`
 
 ### src.algitex.project
 - **Functions**: 12
@@ -77,6 +77,19 @@
 - **Classes**: 2
 - **File**: `tickets.py`
 
+### docker.proxym.proxym_mcp_server
+- **Functions**: 10
+- **File**: `proxym_mcp_server.py`
+
+### docker.planfile-mcp.planfile_mcp_server
+- **Functions**: 10
+- **File**: `planfile_mcp_server.py`
+
+### src.algitex.tools.todo_local
+- **Functions**: 10
+- **Classes**: 2
+- **File**: `todo_local.py`
+
 ### src.algitex.tools.proxy
 - **Functions**: 9
 - **Classes**: 2
@@ -87,28 +100,14 @@
 - **Classes**: 2
 - **File**: `telemetry.py`
 
+### docker.vallm.vallm_mcp_server
+- **Functions**: 8
+- **File**: `vallm_mcp_server.py`
+
 ### src.algitex.tools.todo_parser
 - **Functions**: 8
 - **Classes**: 2
 - **File**: `todo_parser.py`
-
-### src.algitex.tools.analysis
-- **Functions**: 8
-- **Classes**: 3
-- **File**: `analysis.py`
-
-### examples.10-cicd.main
-- **Functions**: 8
-- **File**: `main.py`
-
-### examples.04-ide-integration.main
-- **Functions**: 8
-- **File**: `main.py`
-
-### src.algitex.config
-- **Functions**: 7
-- **Classes**: 4
-- **File**: `config.py`
 
 ## Key Entry Points
 
@@ -121,12 +120,12 @@ Main execution flows into the system:
 > Example of advanced workspace features.
 - **Calls**: print, examples.09-workspace.main.create_sample_workspace, Workspace, print, workspace.find_repos_by_tag, print, print, set
 
-### examples.02-algo-loop.main.main
-- **Calls**: print, Loop, print, loop.discover, loop.report, print, print, print
-
 ### examples.07-context.main.basic_context_example
 > Basic context building example.
-- **Calls**: print, Path, project_dir.mkdir, None.write_text, None.write_text, None.write_text, None.write_text, None.write_text
+- **Calls**: print, Path, project_dir.mkdir, None.write_text, None.write_text, None.mkdir, None.write_text, None.write_text
+
+### examples.02-algo-loop.main.main
+- **Calls**: print, Loop, print, loop.discover, loop.report, print, print, print
 
 ### examples.06-telemetry.main.basic_telemetry_example
 > Basic telemetry tracking example.
@@ -135,6 +134,10 @@ Main execution flows into the system:
 ### examples.10-cicd.main.complete_ci_cd_setup
 > Example of complete CI/CD setup.
 - **Calls**: print, Path, project_dir.mkdir, None.write_text, CICDGenerator, generator.generate_all, print, print
+
+### docker.code2llm.code2llm_server.Code2LLMServer._analyze_project
+> Analyze Python project.
+- **Calls**: Path, root.rglob, max, sorted, len, len, len, round
 
 ### src.algitex.project.Project.status
 > Full project status: health + tickets + budget + algo progress.
@@ -150,13 +153,33 @@ Main execution flows into the system:
 > Example of how context improves prompt engineering.
 - **Calls**: print, Path, project_dir.mkdir, None.write_text, None.write_text, None.write_text, ContextBuilder, builder.build
 
+### docker.vallm.vallm_server.VallmServer.create_fastapi_app
+> Create FastAPI application.
+- **Calls**: FastAPI, app.get, app.post, app.post, app.post, request.get, all, request.get
+
+### examples.07-context.main.context_optimization_example
+> Example of optimizing context for different use cases.
+- **Calls**: print, Path, project_dir.mkdir, None.mkdir, None.write_text, None.write_text, None.mkdir, None.write_text
+
+### docker.proxym.proxym_server.ProxymServer._call_anthropic
+> Call Anthropic Claude API.
+- **Calls**: resp.raise_for_status, resp.json, self._mock_response, self.http_client.post, data.get, logger.error, msg.get, msg.get
+
+### examples.08-feedback.main.feedback_loop_simulation
+> Simulate complete feedback loop with mock execution.
+- **Calls**: print, MockDockerManager, MockTickets, FeedbackController, FeedbackLoop, print, print, loop.execute_with_feedback
+
 ### src.algitex.cli.init
 > Initialize algitex for a project.
 - **Calls**: app.command, typer.Argument, None.resolve, project_path.mkdir, None.mkdir, Config.load, cfg.save, console.print
 
-### examples.07-context.main.context_optimization_example
-> Example of optimizing context for different use cases.
-- **Calls**: print, Path, project_dir.mkdir, None.write_text, None.write_text, None.write_text, None.write_text, None.write_text
+### src.algitex.tools.docker.DockerToolManager._call_stdio
+> Send JSON-RPC over stdin, read from stdout with timeout.
+- **Calls**: json.dumps, RuntimeError, rt.process.stdin.write, rt.process.stdin.flush, time.time, len, select.select, rt.process.stdout.readline
+
+### docker.code2llm.code2llm_server.Code2LLMServer.create_fastapi_app
+> Create FastAPI application.
+- **Calls**: FastAPI, app.get, app.post, app.post, app.post, app.post, request.get, self._analyze_project
 
 ### examples.08-feedback.main.basic_feedback_example
 > Basic feedback controller example.
@@ -168,6 +191,14 @@ Main execution flows into the system:
 ### src.algitex.tools.feedback.FeedbackLoop.execute_with_feedback
 > Execute a ticket with automatic retry/replan/escalate logic.
 - **Calls**: self.controller.needs_approval, self.tickets.add, self._execute_single, self._validate_result, validation.get, self.controller.on_validation_failure, ticket.get, ticket.get
+
+### src.algitex.tools.todo_runner.TodoRunner._execute_ollama
+> Execute task using Ollama local LLM API.
+- **Calls**: TaskResult, TaskResult, file_path.exists, TaskResult, file_path.read_text, content.split, httpx.post, response.raise_for_status
+
+### src.algitex.tools.todo_local.LocalExecutor.execute
+> Execute a single task locally.
+- **Calls**: LocalTaskResult, file_path.exists, LocalTaskResult, file_path.read_text, task.description.lower, file_path.write_text, LocalTaskResult, self._has_return_type
 
 ### src.algitex.cli.go
 > Full pipeline: analyze → plan → execute → validate.
@@ -193,41 +224,9 @@ Main execution flows into the system:
 > Example of semantic search for related code (placeholder).
 - **Calls**: print, Path, project_dir.mkdir, None.write_text, None.write_text, ContextBuilder, builder.build, print
 
-### examples.08-feedback.main.feedback_loop_simulation
-> Simulate complete feedback loop with mock execution.
-- **Calls**: print, MockDockerManager, MockTickets, FeedbackController, FeedbackLoop, print, print, loop.execute_with_feedback
-
 ### src.algitex.cli.plan
 > Generate sprint plan with auto-tickets.
 - **Calls**: app.command, typer.Option, typer.Option, typer.Option, console.print, console.print, console.print, console.status
-
-### src.algitex.tools.docker.DockerToolManager._call_stdio
-> Send JSON-RPC over stdin, read from stdout.
-- **Calls**: json.dumps, rt.process.stdin.write, rt.process.stdin.flush, RuntimeError, time.time, None.join, rt.process.stdout.readline, response_lines.append
-
-### src.algitex.tools.docker.DockerToolManager.get_capabilities
-> List MCP tools available on a running container.
-- **Calls**: self._running.get, json.dumps, rt.process.stdin.write, rt.process.stdin.flush, rt.process.stdout.readline, int, rt.process.stdout.readline, rt.process.stdout.read
-
-### src.algitex.propact.Workflow.execute
-> Execute all steps in the workflow.
-- **Calls**: WorkflowResult, self.parse, str, len, time.time, result.steps.append, docker_mgr.teardown_all, result.steps.append
-
-### examples.09-workspace.main.workspace_execution_example
-> Example of executing across the workspace.
-- **Calls**: print, examples.09-workspace.main.create_sample_workspace, Workspace, print, workspace.get_execution_plan, print, print, results.items
-
-### src.algitex.cli.todo_list
-> Parse and display todo tasks from a file.
-- **Calls**: todo_app.command, typer.Argument, TodoParser, parser.parse, Table, table.add_column, table.add_column, table.add_column
-
-### examples.10-cicd.main.basic_github_actions_example
-> Generate basic GitHub Actions workflow.
-- **Calls**: print, Path, project_dir.mkdir, None.write_text, CICDGenerator, generator.generate_github_actions, print, print
-
-### examples.08-feedback.main.escalation_scenarios
-> Different escalation scenarios.
-- **Calls**: print, print, print, print, FeedbackController, controller.needs_approval, range, FeedbackPolicy
 
 ## Process Flows
 
@@ -261,29 +260,29 @@ basic_telemetry_example [examples.06-telemetry.main]
 complete_ci_cd_setup [examples.10-cicd.main]
 ```
 
-### Flow 6: status
+### Flow 6: _analyze_project
+```
+_analyze_project [docker.code2llm.code2llm_server.Code2LLMServer]
+```
+
+### Flow 7: status
 ```
 status [src.algitex.project.Project]
 ```
 
-### Flow 7: prompt_engineering_example
+### Flow 8: prompt_engineering_example
 ```
 prompt_engineering_example [examples.07-context.main]
 ```
 
-### Flow 8: init
+### Flow 9: create_fastapi_app
 ```
-init [src.algitex.cli]
+create_fastapi_app [docker.vallm.vallm_server.VallmServer]
 ```
 
-### Flow 9: context_optimization_example
+### Flow 10: context_optimization_example
 ```
 context_optimization_example [examples.07-context.main]
-```
-
-### Flow 10: basic_feedback_example
-```
-basic_feedback_example [examples.08-feedback.main]
 ```
 
 ## Key Classes
@@ -293,15 +292,15 @@ basic_feedback_example [examples.08-feedback.main]
 - **Methods**: 23
 - **Key Methods**: src.algitex.tools.docker.DockerToolManager.__init__, src.algitex.tools.docker.DockerToolManager.__enter__, src.algitex.tools.docker.DockerToolManager.__exit__, src.algitex.tools.docker.DockerToolManager._load_tools, src.algitex.tools.docker.DockerToolManager._load_state, src.algitex.tools.docker.DockerToolManager._save_state, src.algitex.tools.docker.DockerToolManager.spawn, src.algitex.tools.docker.DockerToolManager._spawn_stdio, src.algitex.tools.docker.DockerToolManager._spawn_sse, src.algitex.tools.docker.DockerToolManager._spawn_rest
 
+### src.algitex.tools.todo_runner.TodoRunner
+> Execute todo tasks using Docker MCP tools with local fallback.
+- **Methods**: 16
+- **Key Methods**: src.algitex.tools.todo_runner.TodoRunner.__init__, src.algitex.tools.todo_runner.TodoRunner.__enter__, src.algitex.tools.todo_runner.TodoRunner.__exit__, src.algitex.tools.todo_runner.TodoRunner.run_from_file, src.algitex.tools.todo_runner.TodoRunner.run, src.algitex.tools.todo_runner.TodoRunner._execute_local, src.algitex.tools.todo_runner.TodoRunner._execute_ollama, src.algitex.tools.todo_runner.TodoRunner._execute_task, src.algitex.tools.todo_runner.TodoRunner._determine_action, src.algitex.tools.todo_runner.TodoRunner._nap_action
+
 ### src.algitex.tools.workspace.Workspace
 > Manage multiple repos as a single workspace.
 - **Methods**: 14
 - **Key Methods**: src.algitex.tools.workspace.Workspace.__init__, src.algitex.tools.workspace.Workspace._load_config, src.algitex.tools.workspace.Workspace._validate_dependencies, src.algitex.tools.workspace.Workspace._topo_sort, src.algitex.tools.workspace.Workspace.clone_all, src.algitex.tools.workspace.Workspace.pull_all, src.algitex.tools.workspace.Workspace.analyze_all, src.algitex.tools.workspace.Workspace.plan_all, src.algitex.tools.workspace.Workspace.execute_all, src.algitex.tools.workspace.Workspace.validate_all
-
-### src.algitex.tools.todo_runner.TodoRunner
-> Execute todo tasks using Docker MCP tools.
-- **Methods**: 13
-- **Key Methods**: src.algitex.tools.todo_runner.TodoRunner.__init__, src.algitex.tools.todo_runner.TodoRunner.__enter__, src.algitex.tools.todo_runner.TodoRunner.__exit__, src.algitex.tools.todo_runner.TodoRunner.run_from_file, src.algitex.tools.todo_runner.TodoRunner.run, src.algitex.tools.todo_runner.TodoRunner._execute_task, src.algitex.tools.todo_runner.TodoRunner._determine_action, src.algitex.tools.todo_runner.TodoRunner._nap_action, src.algitex.tools.todo_runner.TodoRunner._aider_action, src.algitex.tools.todo_runner.TodoRunner._filesystem_action
 
 ### src.algitex.project.Project
 > One project, all tools, zero boilerplate.
@@ -333,6 +332,11 @@ basic_feedback_example [examples.08-feedback.main]
 - **Methods**: 10
 - **Key Methods**: src.algitex.tools.tickets.Tickets.__init__, src.algitex.tools.tickets.Tickets.add, src.algitex.tools.tickets.Tickets.from_analysis, src.algitex.tools.tickets.Tickets.list, src.algitex.tools.tickets.Tickets.update, src.algitex.tools.tickets.Tickets.sync, src.algitex.tools.tickets.Tickets.board, src.algitex.tools.tickets.Tickets._load, src.algitex.tools.tickets.Tickets._save, src.algitex.tools.tickets.Tickets._planfile_add
 
+### src.algitex.tools.todo_local.LocalExecutor
+> Execute simple code fixes locally without Docker.
+- **Methods**: 10
+- **Key Methods**: src.algitex.tools.todo_local.LocalExecutor.__init__, src.algitex.tools.todo_local.LocalExecutor.can_execute, src.algitex.tools.todo_local.LocalExecutor.execute, src.algitex.tools.todo_local.LocalExecutor._fix_return_type, src.algitex.tools.todo_local.LocalExecutor._has_return_type, src.algitex.tools.todo_local.LocalExecutor._import_exists, src.algitex.tools.todo_local.LocalExecutor._fix_unused_import, src.algitex.tools.todo_local.LocalExecutor._fix_fstring, src.algitex.tools.todo_local.LocalExecutor._fix_standalone_main, src.algitex.tools.todo_local.LocalExecutor._add_main_block
+
 ### src.algitex.tools.cicd.CICDGenerator
 > Generate CI/CD pipelines for algitex projects.
 - **Methods**: 9
@@ -358,39 +362,81 @@ basic_feedback_example [examples.08-feedback.main]
 - **Methods**: 8
 - **Key Methods**: src.algitex.workflows.TicketExecutor.__init__, src.algitex.workflows.TicketExecutor.execute_tickets, src.algitex.workflows.TicketExecutor._get_open_tickets, src.algitex.workflows.TicketExecutor._execute_single_ticket, src.algitex.workflows.TicketExecutor._call_tool_with_context, src.algitex.workflows.TicketExecutor._validate_with_vallm, src.algitex.workflows.TicketExecutor._mark_ticket_done, src.algitex.workflows.TicketExecutor._build_fix_prompt
 
+### docker.proxym.proxym_server.ProxymServer
+> LLM proxy with budget tracking.
+- **Methods**: 7
+- **Key Methods**: docker.proxym.proxym_server.ProxymServer.__init__, docker.proxym.proxym_server.ProxymServer.create_fastapi_app, docker.proxym.proxym_server.ProxymServer._call_anthropic, docker.proxym.proxym_server.ProxymServer._call_openai, docker.proxym.proxym_server.ProxymServer._mock_response, docker.proxym.proxym_server.ProxymServer._track_cost, docker.proxym.proxym_server.ProxymServer.run
+
+### docker.vallm.vallm_server.VallmServer
+> Validation server with multiple validation levels.
+- **Methods**: 7
+- **Key Methods**: docker.vallm.vallm_server.VallmServer.__init__, docker.vallm.vallm_server.VallmServer.create_fastapi_app, docker.vallm.vallm_server.VallmServer._validate_static, docker.vallm.vallm_server.VallmServer._validate_runtime, docker.vallm.vallm_server.VallmServer._validate_security, docker.vallm.vallm_server.VallmServer._analyze_complexity, docker.vallm.vallm_server.VallmServer.run
+
 ### src.algitex.tools.todo_parser.TodoParser
 > Parse todo lists from Markdown and text files.
 - **Methods**: 7
 - **Key Methods**: src.algitex.tools.todo_parser.TodoParser.__init__, src.algitex.tools.todo_parser.TodoParser.parse, src.algitex.tools.todo_parser.TodoParser._parse_prefact, src.algitex.tools.todo_parser.TodoParser._parse_github, src.algitex.tools.todo_parser.TodoParser._parse_generic, src.algitex.tools.todo_parser.TodoParser._extract_location, src.algitex.tools.todo_parser.TodoParser.get_stats
+
+### docker.code2llm.code2llm_server.Code2LLMServer
+> Code analysis server for LLM context generation.
+- **Methods**: 6
+- **Key Methods**: docker.code2llm.code2llm_server.Code2LLMServer.__init__, docker.code2llm.code2llm_server.Code2LLMServer.create_fastapi_app, docker.code2llm.code2llm_server.Code2LLMServer._analyze_project, docker.code2llm.code2llm_server.Code2LLMServer._generate_toon, docker.code2llm.code2llm_server.Code2LLMServer._generate_readme, docker.code2llm.code2llm_server.Code2LLMServer.run
 
 ### src.algitex.tools.analysis.Analyzer
 > Unified interface for code analysis tools.
 - **Methods**: 6
 - **Key Methods**: src.algitex.tools.analysis.Analyzer.__init__, src.algitex.tools.analysis.Analyzer.health, src.algitex.tools.analysis.Analyzer.full, src.algitex.tools.analysis.Analyzer._run_code2llm, src.algitex.tools.analysis.Analyzer._run_vallm, src.algitex.tools.analysis.Analyzer._run_redup
 
-### src.algitex.tools.feedback.FeedbackLoop
-> Integrates feedback controller into the pipeline execution.
-- **Methods**: 6
-- **Key Methods**: src.algitex.tools.feedback.FeedbackLoop.__init__, src.algitex.tools.feedback.FeedbackLoop.execute_with_feedback, src.algitex.tools.feedback.FeedbackLoop._execute_single, src.algitex.tools.feedback.FeedbackLoop._validate_result, src.algitex.tools.feedback.FeedbackLoop._mark_ticket_done, src.algitex.tools.feedback.FeedbackLoop._mark_ticket_skipped
-
-### src.algitex.tools.feedback.FeedbackController
-> Orchestrate retry/replan/escalate decisions.
-- **Methods**: 5
-- **Key Methods**: src.algitex.tools.feedback.FeedbackController.__init__, src.algitex.tools.feedback.FeedbackController.on_validation_failure, src.algitex.tools.feedback.FeedbackController.on_success, src.algitex.tools.feedback.FeedbackController.needs_approval, src.algitex.tools.feedback.FeedbackController._extract_feedback
-
-### src.algitex.tools.telemetry.TraceSpan
-> Single operation span.
-- **Methods**: 4
-- **Key Methods**: src.algitex.tools.telemetry.TraceSpan.duration_s, src.algitex.tools.telemetry.TraceSpan.finish, src.algitex.tools.telemetry.TraceSpan.__enter__, src.algitex.tools.telemetry.TraceSpan.__exit__
-
-### src.algitex.tools.context.SemanticCache
-> Optional semantic caching using Qdrant for context retrieval.
-- **Methods**: 4
-- **Key Methods**: src.algitex.tools.context.SemanticCache.__init__, src.algitex.tools.context.SemanticCache._get_client, src.algitex.tools.context.SemanticCache.search_similar_context, src.algitex.tools.context.SemanticCache.store_context
-
 ## Data Transformation Functions
 
 Key functions that process and transform data:
+
+### docker.vallm.vallm_mcp_server.validate_static
+> Run static analysis with ruff, mypy on the project.
+
+Args:
+    path: Path to the project directory
+ 
+- **Output to**: mcp.tool, subprocess.run, subprocess.run, max, None.isoformat
+
+### docker.vallm.vallm_mcp_server.validate_runtime
+> Run runtime tests with pytest.
+
+Args:
+    path: Path to the project directory
+    
+Returns:
+    Dict
+- **Output to**: mcp.tool, subprocess.run, result.stdout.split, None.isoformat, line.split
+
+### docker.vallm.vallm_mcp_server.validate_security
+> Run security scan with bandit.
+
+Args:
+    path: Path to the project directory
+    
+Returns:
+    Dict
+- **Output to**: mcp.tool, subprocess.run, max, len, None.isoformat
+
+### docker.vallm.vallm_mcp_server.validate_all
+> Run all validation levels: static, runtime, and security.
+
+Args:
+    path: Path to the project direc
+- **Output to**: mcp.tool, docker.vallm.vallm_mcp_server.validate_static, docker.vallm.vallm_mcp_server.validate_runtime, docker.vallm.vallm_mcp_server.validate_security, all
+
+### docker.vallm.vallm_server.VallmServer._validate_static
+> Static analysis with pylint, mypy, ruff.
+- **Output to**: subprocess.run, subprocess.run, max, json.loads, errors.extend
+
+### docker.vallm.vallm_server.VallmServer._validate_runtime
+> Run tests with pytest.
+- **Output to**: subprocess.run, result.stdout.split, line.split, str, int
+
+### docker.vallm.vallm_server.VallmServer._validate_security
+> Security scan with bandit.
+- **Output to**: subprocess.run, max, len, logger.warning, json.loads
 
 ### src.algitex.cli.workflow_validate
 > Check a Propact workflow for errors.
@@ -456,10 +502,6 @@ Key functions that process and transform data:
 > Check workflow for errors without executing.
 - **Output to**: self.parse, None.split, errors.append, step.content.strip, None.strip
 
-### src.algitex.tools.feedback.FeedbackLoop._validate_result
-> Validate the execution result.
-- **Output to**: self.docker_mgr.list_tools, self.docker_mgr.call_tool
-
 ### src.algitex.workflows.Pipeline.validate
 > Step: multi-level validation (static + runtime + security).
 - **Output to**: TicketValidator, validator.validate_all, self._steps.append, DockerToolManager, validation_results.get
@@ -467,10 +509,6 @@ Key functions that process and transform data:
 ### src.algitex.workflows.TicketExecutor._validate_with_vallm
 > Validate ticket execution with vallm.
 - **Output to**: self.docker_mgr.call_tool, validation.get, self._mark_ticket_done
-
-### src.algitex.workflows.TicketValidator.validate_all
-> Run all validation levels.
-- **Output to**: all, self.docker_mgr.list_tools, self.docker_mgr.call_tool, static.get, self.docker_mgr.list_tools
 
 ## Behavioral Patterns
 
@@ -494,6 +532,11 @@ Key functions that process and transform data:
 - **Confidence**: 0.70
 - **Functions**: src.algitex.tools.telemetry.TraceSpan.duration_s, src.algitex.tools.telemetry.TraceSpan.finish, src.algitex.tools.telemetry.TraceSpan.__enter__, src.algitex.tools.telemetry.TraceSpan.__exit__
 
+### state_machine_DockerToolManager
+- **Type**: state_machine
+- **Confidence**: 0.70
+- **Functions**: src.algitex.tools.docker.DockerToolManager.__init__, src.algitex.tools.docker.DockerToolManager.__enter__, src.algitex.tools.docker.DockerToolManager.__exit__, src.algitex.tools.docker.DockerToolManager._load_tools, src.algitex.tools.docker.DockerToolManager._load_state
+
 ### state_machine_TodoExecutor
 - **Type**: state_machine
 - **Confidence**: 0.70
@@ -504,55 +547,50 @@ Key functions that process and transform data:
 - **Confidence**: 0.70
 - **Functions**: src.algitex.tools.todo_runner.TodoRunner.__init__, src.algitex.tools.todo_runner.TodoRunner.__enter__, src.algitex.tools.todo_runner.TodoRunner.__exit__, src.algitex.tools.todo_runner.TodoRunner.run_from_file, src.algitex.tools.todo_runner.TodoRunner.run
 
-### state_machine_DockerToolManager
-- **Type**: state_machine
-- **Confidence**: 0.70
-- **Functions**: src.algitex.tools.docker.DockerToolManager.__init__, src.algitex.tools.docker.DockerToolManager.__enter__, src.algitex.tools.docker.DockerToolManager.__exit__, src.algitex.tools.docker.DockerToolManager._load_tools, src.algitex.tools.docker.DockerToolManager._load_state
-
 ## Public API Surface
 
 Functions exposed as public API (no underscore prefix):
 
 - `examples.05-cost-tracking.main.main` - 40 calls
 - `examples.09-workspace.main.advanced_workspace_features` - 37 calls
+- `examples.07-context.main.basic_context_example` - 34 calls
 - `examples.02-algo-loop.main.main` - 33 calls
-- `examples.07-context.main.basic_context_example` - 33 calls
+- `docker.code2llm.code2llm_mcp_server.analyze_project` - 31 calls
 - `examples.06-telemetry.main.basic_telemetry_example` - 30 calls
 - `examples.10-cicd.main.complete_ci_cd_setup` - 29 calls
 - `src.algitex.project.Project.status` - 27 calls
 - `examples.03-pipeline.main.main` - 27 calls
 - `examples.04-ide-integration.main.main` - 26 calls
 - `examples.07-context.main.prompt_engineering_example` - 26 calls
+- `docker.vallm.vallm_server.VallmServer.create_fastapi_app` - 25 calls
+- `examples.07-context.main.context_optimization_example` - 25 calls
+- `examples.08-feedback.main.feedback_loop_simulation` - 24 calls
 - `src.algitex.cli.init` - 23 calls
-- `examples.07-context.main.context_optimization_example` - 22 calls
+- `docker.code2llm.code2llm_server.Code2LLMServer.create_fastapi_app` - 22 calls
 - `examples.08-feedback.main.basic_feedback_example` - 22 calls
 - `examples.01-quickstart.main.main` - 21 calls
 - `src.algitex.tools.feedback.FeedbackLoop.execute_with_feedback` - 21 calls
+- `src.algitex.tools.todo_local.LocalExecutor.execute` - 20 calls
 - `src.algitex.cli.go` - 19 calls
 - `src.algitex.cli.todo_run` - 19 calls
 - `examples.08-feedback.main.cost_optimization_example` - 19 calls
 - `examples.09-workspace.main.workspace_management_example` - 19 calls
 - `examples.09-workspace.main.cross_repo_planning_example` - 19 calls
 - `examples.07-context.main.semantic_search_example` - 18 calls
-- `examples.08-feedback.main.feedback_loop_simulation` - 18 calls
+- `docker.vallm.vallm_mcp_server.create_rest_api` - 17 calls
 - `src.algitex.cli.plan` - 17 calls
 - `src.algitex.tools.docker.DockerToolManager.get_capabilities` - 17 calls
 - `src.algitex.propact.Workflow.execute` - 17 calls
+- `examples.18-ollama-local.main.demo_integration` - 17 calls
 - `examples.09-workspace.main.create_sample_workspace` - 17 calls
 - `examples.09-workspace.main.workspace_execution_example` - 17 calls
+- `docker.vallm.vallm_mcp_server.validate_all` - 16 calls
+- `docker.vallm.vallm_mcp_server.analyze_complexity` - 16 calls
+- `docker.proxym.proxym_mcp_server.create_rest_api` - 16 calls
+- `docker.planfile-mcp.planfile_mcp_server.create_rest_api` - 16 calls
 - `src.algitex.cli.todo_list` - 16 calls
+- `src.algitex.cli.todo_fix` - 16 calls
 - `examples.10-cicd.main.basic_github_actions_example` - 16 calls
-- `examples.08-feedback.main.escalation_scenarios` - 16 calls
-- `examples.09-workspace.main.cross_repo_analysis_example` - 16 calls
-- `src.algitex.cli.todo_fix` - 15 calls
-- `src.algitex.tools.proxy.Proxy.ask` - 15 calls
-- `examples.10-cicd.main.quality_gates_example` - 15 calls
-- `examples.10-cicd.main.precommit_hooks_example` - 15 calls
-- `examples.10-cicd.main.multi_platform_ci_example` - 15 calls
-- `src.algitex.cli.algo_extract` - 14 calls
-- `src.algitex.project.Project.execute` - 14 calls
-- `src.algitex.algo.Loop.extract` - 14 calls
-- `src.algitex.propact.Workflow.parse` - 14 calls
 
 ## System Interactions
 
@@ -566,13 +604,13 @@ graph TD
     advanced_workspace_f --> create_sample_worksp
     advanced_workspace_f --> Workspace
     advanced_workspace_f --> find_repos_by_tag
-    main --> Loop
-    main --> discover
-    main --> report
     basic_context_exampl --> print
     basic_context_exampl --> Path
     basic_context_exampl --> mkdir
     basic_context_exampl --> write_text
+    main --> Loop
+    main --> discover
+    main --> report
     basic_telemetry_exam --> print
     basic_telemetry_exam --> Telemetry
     basic_telemetry_exam --> span
@@ -582,14 +620,14 @@ graph TD
     complete_ci_cd_setup --> mkdir
     complete_ci_cd_setup --> write_text
     complete_ci_cd_setup --> CICDGenerator
+    _analyze_project --> Path
+    _analyze_project --> rglob
+    _analyze_project --> max
+    _analyze_project --> sorted
+    _analyze_project --> len
     status --> board
     status --> Proxy
     status --> budget
-    status --> health
-    status --> close
-    main --> items
-    prompt_engineering_e --> print
-    prompt_engineering_e --> Path
 ```
 
 ## Reverse Engineering Guidelines

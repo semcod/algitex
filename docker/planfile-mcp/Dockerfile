@@ -6,6 +6,11 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
+# Install system dependencies including curl for healthcheck
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
 # Install dependencies with MCP SDK
 RUN pip install --no-cache-dir \
     "mcp[fastmcp]>=1.0.0" \

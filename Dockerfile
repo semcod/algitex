@@ -12,10 +12,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Python deps first (cache layer)
 COPY pyproject.toml README.md ./
+COPY src/ src/
 RUN pip install --no-cache-dir -e .
 
-# Source
-COPY src/ src/
+# Additional files
 COPY examples/ examples/
 
 # Data volume

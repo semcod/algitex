@@ -71,7 +71,7 @@ services:
     environment:
       - TRANSPORT=stdio
       - MCP_TRANSPORT=stdio
-      - PORT=4000
+      - PORT=4001
       - LOG_LEVEL=info
       - PYTHONUNBUFFERED=1
       # API keys (set in .env file or override at runtime)
@@ -80,14 +80,14 @@ services:
       - GEMINI_API_KEY=${GEMINI_API_KEY:-}
       - DEFAULT_MODEL=${DEFAULT_MODEL:-claude-sonnet-4}
     ports:
-      - "4000:4000"
+      - "4001:4001"
     stdin_open: true
     tty: true
     restart: unless-stopped
     networks:
       - algitex-mcp
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:4000/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:4001/health"]
       interval: 30s
       timeout: 10s
       retries: 3

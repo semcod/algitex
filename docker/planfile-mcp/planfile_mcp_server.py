@@ -1,19 +1,18 @@
 #!/usr/bin/env python3
 """
-Planfile MCP Server - Ticket management hub for Algitex
+Planfile MCP Server - Ticket management hub with FastMCP support
 Multi-protocol: MCP stdio, MCP SSE, REST API
 """
 
 import os
 import sys
-import json
-import asyncio
 import logging
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 from datetime import datetime
 
 import yaml
+from mcp.server.fastmcp import FastMCP
 from fastapi import FastAPI
 import uvicorn
 
@@ -24,313 +23,254 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# Initialize FastMCP server
+mcp = FastMCP("planfile-mcp")
 
-class PlanfileMCPServer:
-    """Planfile MCP Server for ticket management."""
-    
-    def __init__(self):
-        self.transport = os.getenv("TRANSPORT", "stdio")
-        self.port = int(os.getenv("PORT", "8201"))
-        self.data_dir = Path(os.getenv("DATA_DIR", "/data"))
-        self.name = "planfile-mcp"
-        self.version = "0.1.0"
-        self._tickets: Dict[str, Dict] = {}
-        self._load_tickets()
-    
-    def _load_tickets(self):
-        """Load tickets from data directory."""
-        planfile_path = self.data_dir / "planfile.yaml"
-        if planfile_path.exists():
-            try:
-                with open(planfile_path) as f:
-                    data = yaml.safe_load(f)
-                    if data and "tickets" in data:
-                        for ticket in data["tickets"]:
-                            self._tickets[ticket.get("id", str(len(self._tickets)))] = ticket
-            except Exception as e:
-                logger.error(f"Error loading tickets: {e}")
-    
-    def _save_tickets(self):
-        """Save tickets to data directory."""
-        planfile_path = self.data_dir / "planfile.yaml"
+# Data storage
+DATA_DIR = Path(os.getenv("DATA_DIR", "/data"))
+_tickets: Dict[str, Dict] = {}
+
+
+def _load_tickets():
+    """Load tickets from data directory."""
+    global _tickets
+    planfile_path = DATA_DIR / "planfile.yaml"
+    if planfile_path.exists():
         try:
-            self.data_dir.mkdir(parents=True, exist_ok=True)
-            data = {
-                "tickets": list(self._tickets.values()),
-                "updated_at": datetime.now().isoformat()
-            }
-            with open(planfile_path, "w") as f:
-                yaml.dump(data, f, default_flow_style=False)
+            with open(planfile_path) as f:
+                data = yaml.safe_load(f)
+                if data and "tickets" in data:
+                    for ticket in data["tickets"]:
+                        _tickets[ticket.get("id", str(len(_tickets)))] = ticket
         except Exception as e:
-            logger.error(f"Error saving tickets: {e}")
-    
-    def get_capabilities(self) -> List[Dict[str, Any]]:
-        """Return available tools."""
-        return [
-            {
-                "name": "planfile_create_ticket",
-                "description": "Create a new ticket",
-                "inputSchema": {
-                    "type": "object",
-                    "properties": {
-                        "title": {"type": "string"},
-                        "description": {"type": "string"},
-                        "priority": {"type": "string", "enum": ["low", "normal", "high", "critical"]},
-                        "tags": {"type": "array", "items": {"type": "string"}}
-                    },
-                    "required": ["title"]
-                }
-            },
-            {
-                "name": "planfile_list_tickets",
-                "description": "List all tickets",
-                "inputSchema": {
-                    "type": "object",
-                    "properties": {
-                        "status": {"type": "string"},
-                        "priority": {"type": "string"}
-                    }
-                }
-            },
-            {
-                "name": "planfile_update_ticket",
-                "description": "Update ticket status or properties",
-                "inputSchema": {
-                    "type": "object",
-                    "properties": {
-                        "ticket_id": {"type": "string"},
-                        "status": {"type": "string", "enum": ["open", "in_progress", "done", "skipped"]},
-                        "resolution": {"type": "object"}
-                    },
-                    "required": ["ticket_id"]
-                }
-            },
-            {
-                "name": "planfile_create_tickets_bulk",
-                "description": "Create multiple tickets at once",
-                "inputSchema": {
-                    "type": "object",
-                    "properties": {
-                        "tickets": {"type": "array", "items": {"type": "object"}}
-                    },
-                    "required": ["tickets"]
-                }
-            },
-            {
-                "name": "planfile_sprint_status",
-                "description": "Get sprint status overview",
-                "inputSchema": {"type": "object", "properties": {}}
-            },
-            {
-                "name": "planfile_sync",
-                "description": "Sync tickets with storage",
-                "inputSchema": {"type": "object", "properties": {}}
-            }
-        ]
-    
-    async def handle_create_ticket(self, params: Dict[str, Any]) -> Dict[str, Any]:
-        """Create a new ticket."""
-        ticket_id = str(len(self._tickets) + 1)
-        ticket = {
-            "id": ticket_id,
-            "title": params.get("title", "Untitled"),
-            "description": params.get("description", ""),
-            "priority": params.get("priority", "normal"),
-            "status": "open",
-            "tags": params.get("tags", []),
-            "created_at": datetime.now().isoformat(),
+            logger.error(f"Error loading tickets: {e}")
+
+
+def _save_tickets():
+    """Save tickets to data directory."""
+    planfile_path = DATA_DIR / "planfile.yaml"
+    try:
+        DATA_DIR.mkdir(parents=True, exist_ok=True)
+        data = {
+            "tickets": list(_tickets.values()),
             "updated_at": datetime.now().isoformat()
         }
-        self._tickets[ticket_id] = ticket
-        self._save_tickets()
-        logger.info(f"Created ticket {ticket_id}: {ticket['title']}")
-        return {"ticket_id": ticket_id, "status": "created", "ticket": ticket}
+        with open(planfile_path, "w") as f:
+            yaml.dump(data, f, default_flow_style=False)
+    except Exception as e:
+        logger.error(f"Error saving tickets: {e}")
+
+
+@mcp.tool()
+def planfile_create_ticket(
+    title: str,
+    description: str = "",
+    priority: str = "normal",
+    tags: List[str] = None
+) -> Dict[str, Any]:
+    """
+    Create a new ticket.
     
-    async def handle_list_tickets(self, params: Dict[str, Any]) -> Dict[str, Any]:
-        """List tickets with optional filtering."""
-        tickets = list(self._tickets.values())
+    Args:
+        title: Ticket title
+        description: Ticket description
+        priority: Ticket priority (low, normal, high, critical)
+        tags: List of tags
         
-        if params.get("status"):
-            tickets = [t for t in tickets if t.get("status") == params["status"]]
-        if params.get("priority"):
-            tickets = [t for t in tickets if t.get("priority") == params["priority"]]
-        
-        return {"tickets": tickets, "count": len(tickets)}
+    Returns:
+        Dictionary with created ticket info
+    """
+    _load_tickets()
+    ticket_id = str(len(_tickets) + 1)
+    ticket = {
+        "id": ticket_id,
+        "title": title,
+        "description": description,
+        "priority": priority,
+        "status": "open",
+        "tags": tags or [],
+        "created_at": datetime.now().isoformat(),
+        "updated_at": datetime.now().isoformat()
+    }
+    _tickets[ticket_id] = ticket
+    _save_tickets()
+    logger.info(f"Created ticket {ticket_id}: {ticket['title']}")
+    return {"ticket_id": ticket_id, "status": "created", "ticket": ticket}
+
+
+@mcp.tool()
+def planfile_list_tickets(
+    status: Optional[str] = None,
+    priority: Optional[str] = None
+) -> Dict[str, Any]:
+    """
+    List all tickets with optional filtering.
     
-    async def handle_update_ticket(self, params: Dict[str, Any]) -> Dict[str, Any]:
-        """Update a ticket."""
-        ticket_id = params.get("ticket_id")
-        if ticket_id not in self._tickets:
-            return {"error": f"Ticket {ticket_id} not found"}
+    Args:
+        status: Filter by status (open, in_progress, done, skipped)
+        priority: Filter by priority (low, normal, high, critical)
         
-        ticket = self._tickets[ticket_id]
-        
-        if "status" in params:
-            ticket["status"] = params["status"]
-        if "resolution" in params:
-            ticket["resolution"] = params["resolution"]
-        
-        ticket["updated_at"] = datetime.now().isoformat()
-        self._save_tickets()
-        logger.info(f"Updated ticket {ticket_id}")
-        return {"ticket_id": ticket_id, "status": "updated", "ticket": ticket}
+    Returns:
+        Dictionary with tickets list and count
+    """
+    _load_tickets()
+    tickets = list(_tickets.values())
     
-    async def handle_create_tickets_bulk(self, params: Dict[str, Any]) -> Dict[str, Any]:
-        """Create multiple tickets."""
-        created = []
-        for ticket_data in params.get("tickets", []):
-            result = await self.handle_create_ticket(ticket_data)
-            if "ticket_id" in result:
-                created.append(result["ticket_id"])
-        return {"created": created, "count": len(created)}
+    if status:
+        tickets = [t for t in tickets if t.get("status") == status]
+    if priority:
+        tickets = [t for t in tickets if t.get("priority") == priority]
     
-    async def handle_sprint_status(self, params: Dict[str, Any]) -> Dict[str, Any]:
-        """Get sprint status."""
-        tickets = list(self._tickets.values())
-        by_status = {}
-        for t in tickets:
-            status = t.get("status", "unknown")
-            by_status[status] = by_status.get(status, 0) + 1
-        
-        return {
-            "total": len(tickets),
-            "by_status": by_status,
-            "completion_rate": by_status.get("done", 0) / len(tickets) if tickets else 0
-        }
+    return {"tickets": tickets, "count": len(tickets)}
+
+
+@mcp.tool()
+def planfile_update_ticket(
+    ticket_id: str,
+    status: Optional[str] = None,
+    resolution: Optional[Dict] = None
+) -> Dict[str, Any]:
+    """
+    Update ticket status or properties.
     
-    async def handle_sync(self, params: Dict[str, Any]) -> Dict[str, Any]:
-        """Sync tickets to storage."""
-        self._save_tickets()
-        return {"synced": len(self._tickets), "status": "success"}
+    Args:
+        ticket_id: ID of the ticket to update
+        status: New status (open, in_progress, done, skipped)
+        resolution: Resolution details
+        
+    Returns:
+        Dictionary with updated ticket info
+    """
+    _load_tickets()
+    if ticket_id not in _tickets:
+        return {"error": f"Ticket {ticket_id} not found"}
     
-    async def _handle_jsonrpc(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle JSON-RPC request."""
-        method = request.get("method", "")
-        params = request.get("params", {})
-        req_id = request.get("id", 0)
-        
-        try:
-            if method == "initialize":
-                return {
-                    "jsonrpc": "2.0",
-                    "id": req_id,
-                    "result": {
-                        "protocolVersion": "2024-11-05",
-                        "capabilities": {},
-                        "serverInfo": {"name": self.name, "version": self.version}
-                    }
-                }
-            elif method == "tools/list":
-                return {
-                    "jsonrpc": "2.0",
-                    "id": req_id,
-                    "result": {"tools": self.get_capabilities()}
-                }
-            elif method == "tools/call":
-                tool_name = params.get("name", "")
-                tool_params = params.get("arguments", {})
-                
-                handlers = {
-                    "planfile_create_ticket": self.handle_create_ticket,
-                    "planfile_list_tickets": self.handle_list_tickets,
-                    "planfile_update_ticket": self.handle_update_ticket,
-                    "planfile_create_tickets_bulk": self.handle_create_tickets_bulk,
-                    "planfile_sprint_status": self.handle_sprint_status,
-                    "planfile_sync": self.handle_sync,
-                }
-                
-                handler = handlers.get(tool_name)
-                if handler:
-                    result = await handler(tool_params)
-                else:
-                    result = {"error": f"Unknown tool: {tool_name}"}
-                
-                return {
-                    "jsonrpc": "2.0",
-                    "id": req_id,
-                    "result": {
-                        "content": [{"type": "text", "text": json.dumps(result)}]
-                    }
-                }
-            else:
-                return {
-                    "jsonrpc": "2.0",
-                    "id": req_id,
-                    "error": {"code": -32601, "message": f"Method not found: {method}"}
-                }
-        except Exception as e:
-            logger.error(f"Error: {e}")
-            return {
-                "jsonrpc": "2.0",
-                "id": req_id,
-                "error": {"code": -32603, "message": str(e)}
-            }
+    ticket = _tickets[ticket_id]
     
-    async def run_stdio(self):
-        """Run as MCP stdio server."""
-        logger.info("Starting Planfile MCP stdio server")
-        while True:
-            try:
-                header = await asyncio.get_event_loop().run_in_executor(None, sys.stdin.readline)
-                if not header:
-                    break
-                header = header.strip()
-                if not header.startswith("Content-Length:"):
-                    continue
-                content_length = int(header.split(":")[1].strip())
-                await asyncio.get_event_loop().run_in_executor(None, sys.stdin.readline)
-                content = await asyncio.get_event_loop().run_in_executor(None, lambda: sys.stdin.read(content_length))
-                request = json.loads(content)
-                response = await self._handle_jsonrpc(request)
-                response_json = json.dumps(response)
-                message = f"Content-Length: {len(response_json)}\r\n\r\n{response_json}"
-                sys.stdout.write(message)
-                sys.stdout.flush()
-            except Exception as e:
-                logger.error(f"Error: {e}")
+    if status:
+        ticket["status"] = status
+    if resolution:
+        ticket["resolution"] = resolution
     
-    def create_fastapi_app(self) -> FastAPI:
-        """Create FastAPI app for REST mode."""
-        app = FastAPI(title="Planfile MCP Server", version=self.version)
-        
-        @app.get("/health")
-        async def health():
-            return {"status": "healthy"}
-        
-        @app.get("/tickets")
-        async def list_tickets():
-            return await self.handle_list_tickets({})
-        
-        @app.post("/tickets")
-        async def create_ticket(params: Dict[str, Any]):
-            return await self.handle_create_ticket(params)
-        
-        @app.patch("/tickets/{ticket_id}")
-        async def update_ticket(ticket_id: str, params: Dict[str, Any]):
-            params["ticket_id"] = ticket_id
-            return await self.handle_update_ticket(params)
-        
-        @app.post("/mcp")
-        async def mcp_endpoint(request: Dict[str, Any]):
-            return await self._handle_jsonrpc(request)
-        
-        return app
+    ticket["updated_at"] = datetime.now().isoformat()
+    _save_tickets()
+    logger.info(f"Updated ticket {ticket_id}")
+    return {"ticket_id": ticket_id, "status": "updated", "ticket": ticket}
+
+
+@mcp.tool()
+def planfile_create_tickets_bulk(tickets: List[Dict]) -> Dict[str, Any]:
+    """
+    Create multiple tickets at once.
     
-    async def run_rest(self):
-        """Run as REST server."""
-        logger.info(f"Starting REST server on port {self.port}")
-        app = self.create_fastapi_app()
-        config = uvicorn.Config(app, host="0.0.0.0", port=self.port, log_level="info")
-        server = uvicorn.Server(config)
-        await server.serve()
+    Args:
+        tickets: List of ticket data dictionaries
+        
+    Returns:
+        Dictionary with created ticket IDs
+    """
+    created = []
+    for ticket_data in tickets:
+        result = planfile_create_ticket(
+            title=ticket_data.get("title", "Untitled"),
+            description=ticket_data.get("description", ""),
+            priority=ticket_data.get("priority", "normal"),
+            tags=ticket_data.get("tags", [])
+        )
+        if "ticket_id" in result:
+            created.append(result["ticket_id"])
+    return {"created": created, "count": len(created)}
+
+
+@mcp.tool()
+def planfile_sprint_status() -> Dict[str, Any]:
+    """
+    Get sprint status overview.
     
-    async def run(self):
-        if self.transport == "stdio":
-            await self.run_stdio()
-        else:
-            await self.run_rest()
+    Returns:
+        Dictionary with sprint statistics
+    """
+    _load_tickets()
+    tickets = list(_tickets.values())
+    by_status = {}
+    for t in tickets:
+        status = t.get("status", "unknown")
+        by_status[status] = by_status.get(status, 0) + 1
+    
+    return {
+        "total": len(tickets),
+        "by_status": by_status,
+        "completion_rate": by_status.get("done", 0) / len(tickets) if tickets else 0
+    }
+
+
+@mcp.tool()
+def planfile_sync() -> Dict[str, Any]:
+    """
+    Sync tickets with storage.
+    
+    Returns:
+        Dictionary with sync status
+    """
+    _save_tickets()
+    return {"synced": len(_tickets), "status": "success"}
+
+
+def create_rest_api() -> FastAPI:
+    """Create FastAPI application for REST mode."""
+    app = FastAPI(title="Planfile MCP", version="0.2.0")
+    
+    @app.get("/health")
+    async def health():
+        return {"status": "healthy", "server": "planfile-mcp"}
+    
+    @app.get("/tickets")
+    async def list_tickets():
+        return planfile_list_tickets()
+    
+    @app.post("/tickets")
+    async def create_ticket(request: Dict[str, Any]):
+        return planfile_create_ticket(
+            title=request.get("title", "Untitled"),
+            description=request.get("description", ""),
+            priority=request.get("priority", "normal"),
+            tags=request.get("tags", [])
+        )
+    
+    @app.patch("/tickets/{ticket_id}")
+    async def update_ticket(ticket_id: str, request: Dict[str, Any]):
+        return planfile_update_ticket(
+            ticket_id=ticket_id,
+            status=request.get("status"),
+            resolution=request.get("resolution")
+        )
+    
+    @app.get("/sprint")
+    async def sprint():
+        return planfile_sprint_status()
+    
+    return app
+
+
+async def run_rest_server():
+    """Run as REST API server."""
+    port = int(os.getenv("PORT", "8201"))
+    logger.info(f"Starting Planfile REST server on port {port}")
+    app = create_rest_api()
+    config = uvicorn.Config(app, host="0.0.0.0", port=port, log_level="info")
+    server = uvicorn.Server(config)
+    await server.serve()
 
 
 if __name__ == "__main__":
-    server = PlanfileMCPServer()
-    asyncio.run(server.run())
+    transport = os.getenv("TRANSPORT", "stdio")
+    
+    if transport == "stdio":
+        logger.info("Starting Planfile MCP stdio server")
+        mcp.run(transport="stdio")
+    elif transport in ("rest", "sse", "http"):
+        import asyncio
+        asyncio.run(run_rest_server())
+    else:
+        logger.error(f"Unknown transport: {transport}")
+        sys.exit(1)
