@@ -26,7 +26,7 @@ class FeedbackPolicy:
     def __post_init__(self):
         if self.retry_escalation is None:
             self.retry_escalation = [
-                "ollama/qwen2.5-coder:7b",
+                "ollama/qwen3-coder:latest",
                 "gemini/gemini-2.5-pro",
                 "claude-sonnet-4-20250514",
             ]

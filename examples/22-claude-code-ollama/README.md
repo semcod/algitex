@@ -10,7 +10,7 @@ Użycie **Claude Code** z **lokalnym Ollama** - refactoring kodu bez API keys.
 
 - **Claude Code** (anthropic-curl): `pip install anthropic-curl`
 - **Ollama** uruchomiony: `ollama serve`
-- **Model**: `qwen2.5-coder:7b` lub inny
+- **Model**: `qwen3-coder:latest` lub inny
 
 ## Konfiguracja
 
@@ -30,7 +30,7 @@ make setup
 make run
 
 # 3. Ręczne użycie
-anthropic-curl --model ollama/qwen2.5-coder:7b \
+anthropic-curl --model ollama/qwen3-coder:latest \
   --message "Refactor this function to use type hints" \
   buggy_code.py
 ```
@@ -48,10 +48,10 @@ anthropic-curl --model ollama/qwen2.5-coder:7b \
 
 ```bash
 # Spawn interactive session
-anthropic-curl --model ollama/qwen2.5-coder:7b
+anthropic-curl --model ollama/qwen3-coder:latest
 
 # One-shot fix
-anthropic-curl --model ollama/qwen2.5-coder:7b \
+anthropic-curl --model ollama/qwen3-coder:latest \
   --message "Add error handling" \
   --file buggy_code.py
 
@@ -76,4 +76,4 @@ python -m pytest                        # 3. Test
 **Fix**: `ollama serve` w osobnym terminalu
 
 **Błąd**: `Model not found`
-**Fix**: `ollama pull qwen2.5-coder:7b`
+**Fix**: `ollama pull qwen3-coder:latest`

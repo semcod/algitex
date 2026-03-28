@@ -39,7 +39,7 @@ Stwórz lub edytuj `~/.continue/config.json`:
     {
       "title": "Qwen Coder 7B",
       "provider": "ollama",
-      "model": "qwen2.5-coder:7b",
+      "model": "qwen3-coder:latest",
       "apiBase": "http://localhost:11434"
     },
     {
@@ -52,7 +52,7 @@ Stwórz lub edytuj `~/.continue/config.json`:
   "tabAutocompleteModel": {
     "title": "Qwen Local",
     "provider": "ollama",
-    "model": "qwen2.5-coder:7b",
+    "model": "qwen3-coder:latest",
     "apiBase": "http://localhost:11434"
   },
   "customCommands": [
@@ -137,7 +137,7 @@ continue --help
 **Fix**: Sprawdź czy `ollama serve` działa
 
 **Problem**: `Model not found`
-**Fix**: `ollama pull qwen2.5-coder:7b`
+**Fix**: `ollama pull qwen3-coder:latest`
 
 **Problem**: Autocomplete nie działa
 **Fix**: Sprawdź czy `tabAutocompleteModel` jest skonfigurowany

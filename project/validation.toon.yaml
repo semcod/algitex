@@ -1,18 +1,18 @@
-# vallm batch | 378f | 201✓ 8⚠ 17✗ | 2026-03-28
+# vallm batch | 379f | 201✓ 8⚠ 17✗ | 2026-03-28
 
 SUMMARY:
-  scanned: 378  passed: 201 (53.2%)  warnings: 8  errors: 17  unsupported: 160
+  scanned: 379  passed: 201 (53.0%)  warnings: 8  errors: 17  unsupported: 161
 
 WARNINGS[8]{path,score}:
   src/algitex/cli/todo.py,0.87
     issues[7]{rule,severity,message,line}:
-      complexity.cyclomatic,warning,_tf_execute_phased has cyclomatic complexity 25 (max: 15),500
-      complexity.cyclomatic,warning,todo_verify_prefact has cyclomatic complexity 29 (max: 15),851
-      complexity.maintainability,warning,Low maintainability index: 16.6 (threshold: 20),
+      complexity.cyclomatic,warning,_tf_execute_phased has cyclomatic complexity 25 (max: 15),564
+      complexity.cyclomatic,warning,todo_verify_prefact has cyclomatic complexity 29 (max: 15),920
+      complexity.maintainability,warning,Low maintainability index: 15.0 (threshold: 20),
       complexity.lizard_cc,warning,_run_with_dashboard.run_phases: CC=27 exceeds limit 15,101
       complexity.lizard_cc,warning,_run_with_dashboard: CC=16 exceeds limit 15,45
-      complexity.lizard_cc,warning,_tf_execute_phased: CC=25 exceeds limit 15,500
-      complexity.lizard_cc,warning,todo_verify_prefact: CC=29 exceeds limit 15,851
+      complexity.lizard_cc,warning,_tf_execute_phased: CC=25 exceeds limit 15,564
+      complexity.lizard_cc,warning,todo_verify_prefact: CC=29 exceeds limit 15,920
   src/algitex/microtask/executor.py,0.96
     issues[3]{rule,severity,message,line}:
       complexity.cyclomatic,warning,_apply_magic_name has cyclomatic complexity 16 (max: 15),372
@@ -118,7 +118,7 @@ ERRORS[17]{path,score}:
       python.import.resolvable,error,Module 'tqdm' not found,34
 
 UNSUPPORTED[5]{bucket,count}:
-  *.md,82
+  *.md,83
   Dockerfile*,31
   *.txt,2
   *.yml,3

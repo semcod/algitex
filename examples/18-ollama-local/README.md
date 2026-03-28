@@ -10,7 +10,7 @@ Lokalne modele LLM przez Ollama - 100% offline, zero kosztów API.
 
 - Ollama zainstalowany: https://ollama.com
 - Minimum 8GB RAM (16GB rekomendowane)
-- Model `qwen2.5-coder:7b` pobrany
+- Model `qwen3-coder:latest` pobrany
 
 ## Szybki Start
 
@@ -26,20 +26,20 @@ make run      # Uruchom przykład
 curl -fsSL https://ollama.com/install.sh | sh
 
 # Pobierz model
-dollama pull qwen2.5-coder:7b
+ollama pull qwen3-coder:latest
 ```
 
 ## Użycie z przykładowym kodem
 
 ```bash
 # 1. Napraw przykładowy kod z błędami
-algitex fix buggy_code.py --model ollama/qwen2.5-coder:7b
+algitex fix buggy_code.py --model ollama/qwen3-coder:latest
 
 # 2. Analiza kodu
-algitex analyze buggy_code.py --model ollama/qwen2.5-coder:7b
+algitex analyze buggy_code.py --model ollama/qwen3-coder:latest
 
 # 3. Wygeneruj testy dla naprawionego kodu
-algitex test buggy_code.py --model ollama/qwen2.5-coder:7b
+algitex test buggy_code.py --model ollama/qwen3-coder:latest
 ```
 
 ### Przykładowe błędy do naprawy w `buggy_code.py`:
@@ -55,10 +55,10 @@ algitex test buggy_code.py --model ollama/qwen2.5-coder:7b
 
 ```python
 # Użyj lokalnego modelu z Algitex
-export DEFAULT_MODEL=ollama/qwen2.5-coder:7b
+export DEFAULT_MODEL=ollama/qwen3-coder:latest
 
-algitex analyze --model ollama/qwen2.5-coder:7b
-algitex ask "Refactor this function" --model ollama/qwen2.5-coder:7b
+algitex analyze --model ollama/qwen3-coder:latest
+algitex ask "Refactor this function" --model ollama/qwen3-coder:latest
 ```
 
 ## Zalety

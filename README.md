@@ -585,12 +585,15 @@ src/algitex/
 ├── propact/              # Markdown workflow engine
 │   ├── __init__.py       # Workflow, WorkflowStep, WorkflowResult
 │   └── workflow.py       # Re-export
-├── todo/                 # TODO fixing system
+├── todo/                 # TODO fixing system (Sprint 3: CC reduced)
 │   ├── __init__.py       # Public API exports
-│   ├── fixer.py          # Algorithmic fixes
+│   ├── fixer.py          # Orchestrator (was 724L, now ~450L)
+│   ├── classify.py       # Task classification (CC: 50→4)
+│   ├── repair.py         # Repair strategies (CC: 30→6)
+│   ├── verify.py         # Verification pipeline (CC: 29→5)
 │   ├── micro.py          # Small LLM fixes
 │   ├── hybrid.py         # Big LLM fixes
-│   ├── tiering.py        # Task classification
+│   ├── tiering.py        # Task classification helpers
 │   └── benchmark.py      # Performance benchmarking
 ├── microtask/            # Atomic tasks for small LLMs
 │   ├── __init__.py       # MicroTask, TaskType, MicroTaskBatch
@@ -663,28 +666,12 @@ Licensed under Apache-2.0.
 
 Licensed under Apache-2.0.
 
-
-Licensed under Apache-2.0.
-
-
-Licensed under Apache-2.0.
-
-
-Licensed under Apache-2.0.
-
 ## Author
 
 Tom Sapletta
 
 
 Tom Sapletta
-
-
-Tom Sapletta
-
-
-Tom Sapletta
-
 
 Created by **Tom Sapletta** — [tom@sapletta.com](mailto:tom@sapletta.com).
 

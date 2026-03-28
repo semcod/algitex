@@ -147,7 +147,7 @@ class ClaudeCodeHelper(IDEHelper):
         self,
         file_path: Union[str, Path],
         instruction: str,
-        model: str = "qwen2.5-coder:7b",
+        model: str = "qwen3-coder:latest",
         dry_run: bool = False
     ) -> bool:
         """Fix a file using Claude Code."""
@@ -191,7 +191,7 @@ class ClaudeCodeHelper(IDEHelper):
     def chat(
         self,
         message: str,
-        model: str = "qwen2.5-coder:7b",
+        model: str = "qwen3-coder:latest",
         files: List[Union[str, Path]] = None
     ) -> Optional[str]:
         """Chat with Claude Code."""
@@ -224,7 +224,7 @@ class ClaudeCodeHelper(IDEHelper):
     def batch_fix(
         self,
         issues: List[Dict[str, Any]],
-        model: str = "qwen2.5-coder:7b",
+        model: str = "qwen3-coder:latest",
         dry_run: bool = False
     ) -> Dict[str, bool]:
         """Fix multiple issues."""
@@ -262,7 +262,7 @@ class AiderHelper(IDEHelper):
         self,
         file_path: Union[str, Path],
         instruction: str,
-        model: str = "qwen2.5-coder:7b",
+        model: str = "qwen3-coder:latest",
         dry_run: bool = False
     ) -> bool:
         """Fix a file using Aider."""
@@ -415,12 +415,12 @@ class EditorIntegration:
         
         if editor == "claude-code":
             tool = self.claude.tools["claude-code"]
-            model = tool.model_prefix + "qwen2.5-coder:7b"
+            model = tool.model_prefix + "qwen3-coder:latest"
             return f"anthropic-curl --model {model} --message '{instruction}' --file {file_path}"
         
         elif editor == "aider":
             tool = self.aider.tools["aider"]
-            model = tool.model_prefix + "qwen2.5-coder:7b"
+            model = tool.model_prefix + "qwen3-coder:latest"
             return f"aider --model {model} --message '{instruction}' --no-git --yes {file_path}"
         
         elif editor == "vscode":

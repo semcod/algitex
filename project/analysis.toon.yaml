@@ -1,5 +1,5 @@
-# code2llm | 240f 53190L | python:239,shell:1 | 2026-03-28
-# CC̄=3.4 | critical:9/2841 | dups:183 | cycles:0
+# code2llm | 240f 53331L | python:239,shell:1 | 2026-03-28
+# CC̄=3.4 | critical:9/2843 | dups:183 | cycles:0
 
 HEALTH[11]:
   🔴 DUP   183 classes duplicated
@@ -22,18 +22,18 @@ REFACTOR[3]:
 PIPELINES[2218]:
   [1] Src [fix_readme]: fix_readme
       PURITY: 100% pure
-  [2] Src [run_rest_server]: run_rest_server → create_rest_api → aider_ai_code
+  [2] Src [__init__]: __init__
       PURITY: 100% pure
-  [3] Src [__init__]: __init__
+  [3] Src [create_fastapi_app]: create_fastapi_app
       PURITY: 100% pure
-  [4] Src [create_fastapi_app]: create_fastapi_app
+  [4] Src [_run_validate]: _run_validate
       PURITY: 100% pure
-  [5] Src [_run_validate]: _run_validate
+  [5] Src [_validate_static]: _validate_static
       PURITY: 100% pure
 
 LAYERS:
   src/                            CC̄=3.6    ←in:0  →out:0  ×DUP
-  │ !! todo                       911L  0C   18m  CC=29     ←0
+  │ !! todo                      1052L  0C   20m  CC=29     ←0
   │ !! batch_backend              778L  2C   16m  CC=16     ←0  ×DUP
   │ !! micro                      605L  5C   19m  CC=12     ←0
   │ !! executor                   498L  2C   29m  CC=16     ←0
@@ -290,10 +290,10 @@ COUPLING:
   docker.planfile-mcp                    3                                        ──                     
       docker.code2llm                                         2                                        ──
   CYCLES: none
-  HUB: src.algitex/ (fan-in=37)
   HUB: .algitex/ (fan-in=74)
-  SMELL: src.algitex/ fan-out=71 → split needed
+  HUB: src.algitex/ (fan-in=37)
   SMELL: .algitex/ fan-out=35 → split needed
+  SMELL: src.algitex/ fan-out=71 → split needed
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon

@@ -24,7 +24,7 @@ class IDEMixin:
         self,
         file_path: str,
         instruction: str,
-        model: str = "qwen2.5-coder:7b"
+        model: str = "qwen3-coder:latest"
     ) -> bool:
         """Fix file using Claude Code."""
         return self.claude.fix_file(file_path, instruction, model)
@@ -33,7 +33,7 @@ class IDEMixin:
         self,
         file_path: str,
         instruction: str,
-        model: str = "qwen2.5-coder:7b"
+        model: str = "qwen3-coder:latest"
     ) -> bool:
         """Fix file using Aider."""
         return self.aider.fix_file(file_path, instruction, model)

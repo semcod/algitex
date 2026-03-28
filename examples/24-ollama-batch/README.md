@@ -40,7 +40,7 @@ python batch_document.py --dir ./src --output ./docs
 ```bash
 # Ustawienia w .env
 OLLAMA_URL=http://localhost:11434
-OLLAMA_MODEL=qwen2.5-coder:7b
+OLLAMA_MODEL=qwen3-coder:latest
 BATCH_PARALLELISM=4      # Ile równoległych requestów
 BATCH_RATE_LIMIT=2         # Requesty na sekundę
 BATCH_RETRY_ATTEMPTS=3     # Ile retry przed failure

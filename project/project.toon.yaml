@@ -1,4 +1,4 @@
-# algitex | 2289 func | 221f | 69205L | python | 2026-03-28
+# algitex | 2291 func | 221f | 69346L | python | 2026-03-28
 
 HEALTH:
   CC̄=3.4  critical=114 (limit:10)  dup=107  cycles=0
@@ -16,7 +16,7 @@ ALERTS[20]:
   !!  cc_exceeded      fix_file = 24 (limit:15)
 
 MODULES[240] (top by size):
-  M[src/algitex/cli/todo.py] 911L C:0 F:18 CC↑29 D:0 (python)
+  M[src/algitex/cli/todo.py] 1052L C:0 F:20 CC↑29 D:0 (python)
   M[src/algitex/tools/autofix/batch_backend.py] 778L C:2 F:16 CC↑16 D:0 (python)
   M[.algitex/backups/batch_20260328_143434/src/algitex/tools/autofix/batch_backend.py] 667L C:2 F:16 CC↑11 D:0 (python)
   M[.algitex/backups/batch_20260328_142940/src/algitex/tools/autofix/batch_backend.py] 631L C:2 F:15 CC↑11 D:0 (python)
@@ -52,7 +52,7 @@ REFACTOR[15]:
   [2] H/L Split _tf_execute_phased (CC=25 → target CC<10)
   [3] H/L Split todo_verify_prefact (CC=29 → target CC<10)
   [4] H/L Split _classify_message (CC=48 → target CC<10)
-  [5] H/H Split god module src/algitex/cli/todo.py (911L, 0 classes)
+  [5] H/H Split god module src/algitex/cli/todo.py (1052L, 0 classes)
 
 EVOLUTION:
-  2026-03-28 CC̄=3.4 crit=114 69205L // Automated analysis
+  2026-03-28 CC̄=3.4 crit=114 69346L // Automated analysis

@@ -48,7 +48,7 @@ class FallbackBackend(AutoFixBackend):
         fallbacks: List[str] = None,
         proxy_url: str = "http://localhost:4000",
         ollama_url: str = "http://localhost:11434",
-        model: str = "qwen2.5-coder:7b",
+        model: str = "qwen3-coder:latest",
         timeout: float = 30.0,
         retry_attempts: int = 2,
         dry_run: bool = True

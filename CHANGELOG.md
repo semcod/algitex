@@ -8,6 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased] - 2026-03-28
 
 ### Added
+- **Sprint 3: Cyclomatic Complexity Reduction**
+  - New module `algitex.todo.classify` - dict dispatch pattern for task classification (CC: 50→4)
+  - New module `algitex.todo.repair` - Strategy pattern for repair functions (CC: 30→6)
+  - New module `algitex.todo.verify` - Pipeline pattern for TODO verification (CC: 29→5)
+  - Refactored `fixer.py` from 724L to ~450L (orchestrator-only pattern)
+  - Refactored `_process_algorithmic_batch` in `executor.py` with dispatch table (CC: 27→5)
+  - Refactored `to_markdown` in `batch_logger.py` into 4 functions (CC: 22→2)
+  - Refactored `todo_fix` in `cli/todo.py` into 5-step pipeline (CC: 50→8)
+  - Updated `todo/__init__.py` exports for new module structure
+  - Fixed imports in `microtask/executor.py` for new repair module
+
 - **Sprint 7: Real-time Dashboard TUI**
   - `algitex dashboard` CLI with live, monitor, export commands
   - `LiveDashboard` class with Rich TUI components
@@ -63,6 +74,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - All 34 examples in `examples/` directory tested and verified working
 - Examples 01-34 (except 29) all execute without errors
 - BatchFix, Hybrid AutoFix, and Parallel Execution examples fully functional
+
+## [0.1.52] - 2026-03-28
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update docs/ALGITEX.md
+- Update docs/README.md
+- Update docs/SPRINT6.md
+- Update docs/SPRINT7.md
+- Update examples/08-feedback/README.md
+- Update examples/18-ollama-local/README.md
+- Update examples/20-self-hosted-pipeline/README.md
+- Update examples/21-aider-cli-ollama/README.md
+- ... and 14 more files
+
+### Other
+- Update examples/06-telemetry/main.py
+- Update examples/08-feedback/main.py
+- Update examples/10-cicd/main.py
+- Update examples/18-ollama-local/main.py
+- Update examples/20-self-hosted-pipeline/main.py
+- Update examples/21-aider-cli-ollama/run.sh
+- Update examples/22-claude-code-ollama/main.py
+- Update examples/26-litellm-proxy-ollama/litellm_config.yaml
+- Update examples/30-parallel-execution/parallel_multi_tool.py
+- Update examples/35-sprint3-patterns/Makefile
+- ... and 24 more files
 
 ## [0.1.51] - 2026-03-28
 

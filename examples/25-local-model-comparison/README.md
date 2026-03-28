@@ -9,7 +9,7 @@ Porównanie różnych modeli **Ollama** na tym samym zadaniu.
 ## Problem
 
 Masz do wyboru wiele modeli lokalnych:
-- qwen2.5-coder:7b
+- qwen3-coder:latest
 - qwen2.5-coder:3b
 - llama3:8b
 - codellama:7b
@@ -42,8 +42,8 @@ make results
 
 ```bash
 # Pobierz modele (zajmie ~20GB)
-ollama pull qwen2.5-coder:3b
-ollama pull qwen2.5-coder:7b
+ollama pull qwen3-coder:latest
+ollama pull qwen3-coder:latest
 ollama pull llama3:8b
 ollama pull codellama:7b
 ollama pull gemma2:9b
@@ -70,7 +70,7 @@ Results:
 │ Model               │ Time     │ Tokens    │ Quality │ Tok/sec    │
 ├─────────────────────┼──────────┼───────────┼─────────┼────────────┤
 │ qwen2.5-coder:3b    │ 2.3s     │ 45        │ ⭐⭐⭐    │ 19.6       │
-│ qwen2.5-coder:7b    │ 4.1s     │ 52        │ ⭐⭐⭐⭐   │ 12.7       │
+│ qwen3-coder:latest    │ 4.1s     │ 52        │ ⭐⭐⭐⭐   │ 12.7       │
 │ llama3:8b           │ 5.2s     │ 48        │ ⭐⭐⭐⭐   │ 9.2        │
 │ codellama:7b        │ 4.8s     │ 55        │ ⭐⭐⭐⭐⭐  │ 11.5       │
 │ gemma2:9b           │ 6.1s     │ 50        │ ⭐⭐⭐⭐   │ 8.2        │
@@ -79,7 +79,7 @@ Results:
 Recommendation:
   Speed: qwen2.5-coder:3b (19.6 tok/s)
   Quality: codellama:7b (⭐⭐⭐⭐⭐)
-  Balanced: qwen2.5-coder:7b (good quality, decent speed)
+  Balanced: qwen3-coder:latest (good quality, decent speed)
 ```
 
 ## Wnioski
@@ -87,7 +87,7 @@ Recommendation:
 | Model | Best For | Avoid For |
 |-------|----------|-------------|
 | qwen2.5-coder:3b | Fast autocomplete, prototyping | Complex logic |
-| qwen2.5-coder:7b | Daily coding, balance | Large batch jobs |
+| qwen3-coder:latest | Daily coding, balance | Large batch jobs |
 | codellama:7b | Complex refactoring | Quick queries |
 | llama3:8b | General purpose | Code-specific tasks |
 | gemma2:9b | Documentation | Speed-critical tasks |
@@ -98,13 +98,13 @@ Recommendation:
 # W algitex CLI możesz wybrać model per-task
 
 # Szybki autocomplete
-export DEFAULT_MODEL=ollama/qwen2.5-coder:3b
+export DEFAULT_MODEL=ollama/qwen3-coder:latest
 
 # Dokładny refactor
 export DEFAULT_MODEL=ollama/codellama:7b
 
 # Codzienna praca
-export DEFAULT_MODEL=ollama/qwen2.5-coder:7b
+export DEFAULT_MODEL=ollama/qwen3-coder:latest
 ```
 
 ## Generowanie własnych benchmarków
@@ -114,7 +114,7 @@ export DEFAULT_MODEL=ollama/qwen2.5-coder:7b
 python benchmark.py --custom-task ./my_task.py
 
 # Porównaj tylko wybrane modele
-python benchmark.py --models qwen2.5-coder:3b,qwen2.5-coder:7b
+python benchmark.py --models qwen3-coder:latest
 
 # Zapisz wyniki do CSV
 python benchmark.py --output-format csv

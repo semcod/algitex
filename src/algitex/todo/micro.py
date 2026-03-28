@@ -175,7 +175,7 @@ class MicroFixer:
     def __init__(
         self,
         ollama_url: str = "http://localhost:11434",
-        model: str = "qwen2.5-coder:7b",
+        model: str = "qwen3-coder:latest",
         workers: int = 4,
         dry_run: bool = True,
     ):

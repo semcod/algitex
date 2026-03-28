@@ -125,7 +125,7 @@ def multi_model_comparison() -> Any:
         ("gpt-4-turbo", 0.03, 2000, 1000),
         ("claude-sonnet-4", 0.015, 1500, 800),
         ("gemini-1.5-pro", 0.0025, 1800, 900),
-        ("qwen2.5-coder:7b", 0.0005, 1200, 600),
+        ("qwen3-coder:latest", 0.0005, 1200, 600),
     ]
     
     print("Testing same task across different models:")
@@ -142,7 +142,7 @@ def multi_model_comparison() -> Any:
         print(f"{model:20} | Cost: ${cost:6.4f} | Tokens: {tokens_in + tokens_out:5d}")
     
     print("-" * 60)
-    print(f"\nBest value: qwen2.5-coder:7b at $0.0005 per task")
+    print(f"\nBest value: qwen3-coder:latest at $0.0005 per task")
     print(f"Best quality: gpt-4-turbo at $0.03 per task")
     
     return tel

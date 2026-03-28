@@ -45,7 +45,7 @@ class TaskType(str, Enum):
         """Return a rough model hint for the current tier."""
         return {
             0: "none",
-            1: "qwen2.5-coder:7b",
+            1: "qwen3-coder:latest",
             2: "qwen2.5-coder:14b",
             3: "qwen2.5-coder:70b",
         }[self.tier]

@@ -9,7 +9,7 @@ import requests
 import json
 
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
-DEFAULT_MODEL = os.getenv("DEFAULT_MODEL", "qwen2.5-coder:7b")
+DEFAULT_MODEL = os.getenv("DEFAULT_MODEL", "qwen3-coder:latest")
 
 
 def check_ollama() -> Any:
@@ -211,7 +211,7 @@ def main():
             print(f"   Pull with: ollama pull {DEFAULT_MODEL}")
     else:
         print("\n⚠️  No models found. Pull one with:")
-        print("   ollama pull qwen2.5-coder:7b")
+        print("   ollama pull qwen3-coder:latest")
         return 1
     
     demo_code_generation()
@@ -228,8 +228,8 @@ def main():
     print()
     print("Next steps:")
     print("  1. Use with Algitex CLI:")
-    print("     export DEFAULT_MODEL=ollama/qwen2.5-coder:7b")
-    print("     algitex analyze --model ollama/qwen2.5-coder:7b")
+    print("     export DEFAULT_MODEL=ollama/qwen3-coder:latest")
+    print("     algitex analyze --model ollama/qwen3-coder:latest")
     print()
     print("  2. Try local MCP pipeline:")
     print("     cd ../19-local-mcp-tools && make run")

@@ -192,7 +192,7 @@ def feedback_loop_simulation():
             self.last_model = params.get("model", "default")
             
             # Simulate different success rates by model
-            if self.last_model == "ollama/qwen2.5-coder:7b":
+            if self.last_model == "ollama/qwen3-coder:latest":
                 return {"status": "error", "error": "Model too simple for task"}
             elif self.last_model == "gemini/gemini-2.5-pro":
                 return {"status": "error", "error": "Missing context"}
@@ -326,7 +326,7 @@ def cost_optimization_example():
     
     # Model costs (per 1M tokens)
     model_costs = {
-        "ollama/qwen2.5-coder:7b": 0.000,  # Free (local)
+        "ollama/qwen3-coder:latest": 0.000,  # Free (local)
         "gemini/gemini-2.5-pro": 2.50,
         "claude-sonnet-4-20250514": 15.00,
         "gpt-4-turbo": 10.00,
@@ -336,7 +336,7 @@ def cost_optimization_example():
         ("Cost-optimized", FeedbackPolicy(
             max_retries=2,
             retry_escalation=[
-                "ollama/qwen2.5-coder:7b",
+                "ollama/qwen3-coder:latest",
                 "gemini/gemini-2.5-pro",
                 "claude-sonnet-4-20250514"
             ]
@@ -352,7 +352,7 @@ def cost_optimization_example():
         ("Balanced", FeedbackPolicy(
             max_retries=3,
             retry_escalation=[
-                "ollama/qwen2.5-coder:7b",
+                "ollama/qwen3-coder:latest",
                 "claude-sonnet-4-20250514",
                 "gemini/gemini-2.5-pro"
             ]
@@ -383,7 +383,7 @@ def cost_optimization_example():
                 
                 # Simulate success (higher quality models have higher success rate)
                 model_success_rate = {
-                    "ollama/qwen2.5-coder:7b": 0.5,
+                    "ollama/qwen3-coder:latest": 0.5,
                     "gemini/gemini-2.5-pro": 0.7,
                     "claude-sonnet-4-20250514": 0.9,
                     "gpt-4-turbo": 0.8,

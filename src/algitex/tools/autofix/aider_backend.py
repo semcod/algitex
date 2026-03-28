@@ -14,7 +14,7 @@ class AiderBackend:
     """Fix issues using Aider CLI."""
 
     DEFAULT_TIMEOUT = 300  # 5 minutes
-    DEFAULT_MODEL = "ollama/qwen2.5-coder:7b"
+    DEFAULT_MODEL = "ollama/qwen3-coder:latest"
 
     def __init__(self, dry_run: bool = False):
         self.dry_run = dry_run

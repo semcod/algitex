@@ -110,6 +110,43 @@ make run
    - Dependency-aware scheduling
    - Natural parallelism
 
+### Sprint 3: CC Reduction & Dashboard (35-40)
+
+4. **Sprint 3 Patterns** (35)
+   - Dict dispatch pattern (CC: 50→4)
+   - Strategy pattern (CC: 30→6)
+   - Pipeline pattern (CC: 29→5)
+   - Orchestrator pattern
+
+5. **Live Dashboard** (36)
+   - Real-time TUI monitoring
+   - Cache metrics panel
+   - Tier progress tracking
+   - Export to JSON/Prometheus
+
+6. **Performance Benchmarks** (37)
+   - Cache hit rate testing
+   - Tier throughput comparison
+   - Memory profiling
+   - CI/CD integration
+
+7. **New Modules** (38)
+   - Using classify.py directly
+   - Using repair.py directly
+   - Using verify.py directly
+   - Combined workflows
+
+8. **Microtask Pipeline** (39)
+   - Task decomposition
+   - Context estimation
+   - Three-phase execution
+
+9. **Three-Tier Autofix** (40)
+   - Algorithm tier (deterministic)
+   - Micro tier (small LLM)
+   - Big tier (large LLM)
+   - Dashboard integration
+
 ## Running Examples
 
 Most examples can be run directly:
@@ -138,7 +175,7 @@ Each numbered example follows a consistent structure:
 ## Contributing
 
 When adding new examples:
-1. Use the next available number (33, 34, etc.)
+1. Use the next available number (41, 42, etc.)
 2. Follow the established structure
 3. Include a comprehensive README
 4. Add a Makefile with standard targets

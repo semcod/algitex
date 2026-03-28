@@ -5,7 +5,7 @@ Usage:
     
     client = OllamaClient()
     models = client.list_models()
-    response = client.generate("Explain this code", model="qwen2.5-coder:7b")
+    response = client.generate("Explain this code", model="qwen3-coder:latest")
 """
 
 from __future__ import annotations
@@ -361,7 +361,7 @@ class OllamaService:
         model_names = [m.name for m in models]
         
         recommended = [
-            "qwen2.5-coder:7b",
+            "qwen3-coder:latest",
             "qwen2.5-coder:3b",
             "codellama:7b",
             "deepseek-coder:6.7b",

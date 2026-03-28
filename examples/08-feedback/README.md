@@ -48,7 +48,7 @@ Feedback policies can be configured in `algitex.yaml`:
 feedback_policy:
   max_retries: 3
   retry_escalation:
-    - "ollama/qwen2.5-coder:7b"
+    - "ollama/qwen3-coder:latest"
     - "claude-sonnet-4-20250514"
   auto_replan: true
   require_approval_for:

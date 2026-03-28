@@ -6,7 +6,7 @@
 - **Primary Language**: python
 - **Languages**: python: 404, shell: 26
 - **Analysis Mode**: static
-- **Total Functions**: 2841
+- **Total Functions**: 2843
 - **Total Classes**: 414
 - **Modules**: 430
 - **Entry Points**: 2470
@@ -165,16 +165,16 @@ Main execution flows into the system:
 > Demonstrate parallel refactoring of a real-world project.
 - **Calls**: tempfile.TemporaryDirectory, Path, print, .algitex.backups.batch_20260328_143434.examples.30-parallel-execution.parallel_real_world.setup_sample_project, Project, print, p.analyze, print
 
-### examples.30-parallel-execution.parallel_real_world.main
-> Demonstrate parallel refactoring of a real-world project.
-- **Calls**: tempfile.TemporaryDirectory, Path, print, examples.30-parallel-execution.parallel_real_world.setup_sample_project, Project, print, p.analyze, print
-
 ### src.algitex.cli.todo.todo_batch
 > BatchFix: grupowanie i optymalizacja podobnych zadań.
 
 Zamiast wykonywać każde zadanie osobno, BatchFix grupuje podobne problemy
 (np. "f-string", "mag
 - **Calls**: typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option
+
+### examples.30-parallel-execution.parallel_real_world.main
+> Demonstrate parallel refactoring of a real-world project.
+- **Calls**: tempfile.TemporaryDirectory, Path, print, examples.30-parallel-execution.parallel_real_world.setup_sample_project, Project, print, p.analyze, print
 
 ### .algitex.backups.batch_20260328_142940.examples.14-docker-mcp.main.demo_docker_operations
 > Demonstrate real Docker operations.
@@ -408,14 +408,6 @@ Key functions that process and transform data:
 > Parse JSON response with error handling.
 - **Output to**: json.loads, RuntimeError, str
 
-### .algitex.backups.batch_20260328_142940.src.algitex.tools.workspace.Workspace._validate_dependencies
-> Validate that all dependencies exist.
-- **Output to**: src.algitex.tools.ollama_cache.LLMCache.set, self.repos.items, self.repos.keys, ValueError
-
-### .algitex.backups.batch_20260328_142940.src.algitex.tools.workspace.Workspace.validate_all
-> Run validation across all repositories.
-- **Output to**: self._topo_sort, print, Pipeline, pipeline.validate, pipeline._results.get
-
 ### .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_parser.TodoParser.parse
 > Parse file and return list of pending tasks.
 - **Output to**: self.file_path.read_text, tasks.extend, tasks.extend, tasks.extend, self.file_path.exists
@@ -431,6 +423,14 @@ Key functions that process and transform data:
 ### .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_parser.TodoParser._parse_generic
 > Parse generic list items.
 - **Output to**: src.algitex.tools.ollama_cache.LLMCache.set, self.GENERIC_PATTERN.finditer, match.group, None.strip, seen.add
+
+### .algitex.backups.batch_20260328_142940.src.algitex.tools.workspace.Workspace._validate_dependencies
+> Validate that all dependencies exist.
+- **Output to**: src.algitex.tools.ollama_cache.LLMCache.set, self.repos.items, self.repos.keys, ValueError
+
+### .algitex.backups.batch_20260328_142940.src.algitex.tools.workspace.Workspace.validate_all
+> Run validation across all repositories.
+- **Output to**: self._topo_sort, print, Pipeline, pipeline.validate, pipeline._results.get
 
 ### .algitex.backups.batch_20260328_142940.src.algitex.tools.context.ContextBuilder._format_ticket
 > Format ticket information.
@@ -517,25 +517,25 @@ Key functions that process and transform data:
 - **Confidence**: 0.70
 - **Functions**: .algitex.backups.batch_20260328_142940.src.algitex.tools.proxy.Proxy.__init__, .algitex.backups.batch_20260328_142940.src.algitex.tools.proxy.Proxy.ask, .algitex.backups.batch_20260328_142940.src.algitex.tools.proxy.Proxy.budget, .algitex.backups.batch_20260328_142940.src.algitex.tools.proxy.Proxy.models, .algitex.backups.batch_20260328_142940.src.algitex.tools.proxy.Proxy.health
 
-### state_machine_LoopState
-- **Type**: state_machine
-- **Confidence**: 0.70
-- **Functions**: .algitex.backups.batch_20260328_142940.src.algitex.algo.LoopState.deterministic_ratio, .algitex.backups.batch_20260328_142940.src.algitex.algo.LoopState.stage_name
-
 ### state_machine_DockerToolManager
 - **Type**: state_machine
 - **Confidence**: 0.70
 - **Functions**: .algitex.backups.batch_20260328_142940.src.algitex.tools.docker.DockerToolManager.__init__, .algitex.backups.batch_20260328_142940.src.algitex.tools.docker.DockerToolManager.__enter__, .algitex.backups.batch_20260328_142940.src.algitex.tools.docker.DockerToolManager.__exit__, .algitex.backups.batch_20260328_142940.src.algitex.tools.docker.DockerToolManager._load_tools, .algitex.backups.batch_20260328_142940.src.algitex.tools.docker.DockerToolManager._read_yaml_with_expansion
 
-### state_machine_OllamaClient
+### state_machine_LoopState
 - **Type**: state_machine
 - **Confidence**: 0.70
-- **Functions**: .algitex.backups.batch_20260328_142940.src.algitex.tools.ollama.OllamaClient.__init__, .algitex.backups.batch_20260328_142940.src.algitex.tools.ollama.OllamaClient.health, .algitex.backups.batch_20260328_142940.src.algitex.tools.ollama.OllamaClient.list_models, .algitex.backups.batch_20260328_142940.src.algitex.tools.ollama.OllamaClient.pull_model, .algitex.backups.batch_20260328_142940.src.algitex.tools.ollama.OllamaClient.generate
+- **Functions**: .algitex.backups.batch_20260328_142940.src.algitex.algo.LoopState.deterministic_ratio, .algitex.backups.batch_20260328_142940.src.algitex.algo.LoopState.stage_name
 
 ### state_machine_TraceSpan
 - **Type**: state_machine
 - **Confidence**: 0.70
 - **Functions**: .algitex.backups.batch_20260328_142940.src.algitex.tools.telemetry.TraceSpan.duration_s, .algitex.backups.batch_20260328_142940.src.algitex.tools.telemetry.TraceSpan.finish, .algitex.backups.batch_20260328_142940.src.algitex.tools.telemetry.TraceSpan.__enter__, .algitex.backups.batch_20260328_142940.src.algitex.tools.telemetry.TraceSpan.__exit__
+
+### state_machine_OllamaClient
+- **Type**: state_machine
+- **Confidence**: 0.70
+- **Functions**: .algitex.backups.batch_20260328_142940.src.algitex.tools.ollama.OllamaClient.__init__, .algitex.backups.batch_20260328_142940.src.algitex.tools.ollama.OllamaClient.health, .algitex.backups.batch_20260328_142940.src.algitex.tools.ollama.OllamaClient.list_models, .algitex.backups.batch_20260328_142940.src.algitex.tools.ollama.OllamaClient.pull_model, .algitex.backups.batch_20260328_142940.src.algitex.tools.ollama.OllamaClient.generate
 
 ### state_machine_ServiceChecker
 - **Type**: state_machine
@@ -570,8 +570,8 @@ Functions exposed as public API (no underscore prefix):
 - `examples.20-self-hosted-pipeline.main.main` - 49 calls
 - `.algitex.backups.batch_20260328_142940.examples.30-parallel-execution.parallel_real_world.main` - 43 calls
 - `.algitex.backups.batch_20260328_143434.examples.30-parallel-execution.parallel_real_world.main` - 43 calls
+- `src.algitex.cli.todo.todo_batch` - 43 calls
 - `examples.30-parallel-execution.parallel_real_world.main` - 43 calls
-- `src.algitex.cli.todo.todo_batch` - 42 calls
 - `.algitex.backups.batch_20260328_142940.examples.14-docker-mcp.main.demo_docker_operations` - 40 calls
 - `.algitex.backups.batch_20260328_142940.examples.05-cost-tracking.main.main` - 40 calls
 - `.algitex.backups.batch_20260328_143434.examples.14-docker-mcp.main.demo_docker_operations` - 40 calls

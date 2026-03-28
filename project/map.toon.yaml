@@ -1,8 +1,8 @@
-# algitex | 240f 53190L | python:239,shell:1 | 2026-03-28
-# stats: 2289 func | 0 cls | 240 mod | CC̄=3.4 | critical:9 | cycles:0
+# algitex | 240f 53331L | python:239,shell:1 | 2026-03-28
+# stats: 2291 func | 0 cls | 240 mod | CC̄=3.4 | critical:9 | cycles:0
 # alerts[5]: CC _classify_message=48; CC todo_verify_prefact=29; CC todo_verify_prefact=29; fan-out _run_with_dashboard=29; CC _tf_execute_phased=25
 # hotspots[5]: _run_with_dashboard fan=29; todo_verify_prefact fan=21; DocstringShortener.fix_file fan=21; todo_verify_prefact fan=21; BatchFixBackend.fix_batch fan=20
-# evolution: CC̄ 3.5→3.4 (improved -0.1)
+# evolution: CC̄ 3.4→3.4 (flat 0.0)
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
 M[240]:
   .algitex/backups/batch_20260328_142940/docker/aider-mcp/aider_mcp_server.py,156
@@ -170,7 +170,7 @@ M[240]:
   src/algitex/cli/nlp.py,143
   src/algitex/cli/parallel.py,149
   src/algitex/cli/ticket.py,46
-  src/algitex/cli/todo.py,911
+  src/algitex/cli/todo.py,1052
   src/algitex/cli/workflow.py,39
   src/algitex/config.py,170
   src/algitex/dashboard.py,416
@@ -268,9 +268,11 @@ D:
     todo_batch(file;backend;batch_size;parallel;dry_run;verbose;prune;limit)
     todo_verify_prefact(file;prune)
   src/algitex/cli/todo.py:
-    e: _render_todo_stats,_run_with_dashboard,todo_stats,todo_verify,todo_fix_parallel,todo_list,todo_run,todo_fix,_tf_parse_and_filter,_tf_classify_tasks,_tf_execute_phased,_tf_validate_results,_tf_print_report,_tf_run_legacy,todo_benchmark,todo_hybrid,todo_batch,todo_verify_prefact
+    e: _render_todo_stats,_run_with_dashboard,_run_hybrid_with_dashboard,_run_batch_with_dashboard,todo_stats,todo_verify,todo_fix_parallel,todo_list,todo_run,todo_fix,_tf_parse_and_filter,_tf_classify_tasks,_tf_execute_phased,_tf_validate_results,_tf_print_report,_tf_run_legacy,todo_benchmark,todo_hybrid,todo_batch,todo_verify_prefact
     _render_todo_stats(file;tasks)
     _run_with_dashboard(file;tasks;algo;micro;all_phases;workers;micro_workers;model;backend;rate_limit;proxy_url;dry_run)
+    _run_hybrid_with_dashboard(file;fixer;hybrid;dry_run)
+    _run_batch_with_dashboard(backend_fixer;tasks;parallel;dry_run)
     todo_stats(file)
     todo_verify(file)
     todo_fix_parallel(file;workers;dry_run;category)
@@ -378,14 +380,14 @@ Args:
     github_action(task)
     get_action_handler(tool)
     determine_action(task;tool)
-  .algitex/backups/batch_20260328_143434/src/algitex/tools/todo_runner.py:
-    e: TaskResult,TodoRunner
-    TaskResult:  # Result of executing a single task...
-    TodoRunner: __init__(2),__enter__(0),__exit__(3),run_from_file(4),run(3),_execute_local(2),_execute_ollama(2),_build_ollama_prompt(2),_call_ollama_api(1),_execute_task(3),_format_output(1),get_summary(0)  # Execute todo tasks using Docker MCP tools with local fallbac...
   .algitex/backups/batch_20260328_143434/src/algitex/tools/todo_executor.py:
     e: TaskResult,TodoExecutor
     TaskResult:  # Result of executing a single task...
     TodoExecutor: __init__(2),__enter__(0),__exit__(3),run(3),_execute_task(3),_parse_action(1),_parse_fix_action(1),_parse_create_action(1),_parse_delete_action(1),_parse_read_action(1),_extract_output(1),get_summary(0)  # Execute todo tasks using Docker MCP tools...
+  .algitex/backups/batch_20260328_143434/src/algitex/tools/todo_runner.py:
+    e: TaskResult,TodoRunner
+    TaskResult:  # Result of executing a single task...
+    TodoRunner: __init__(2),__enter__(0),__exit__(3),run_from_file(4),run(3),_execute_local(2),_execute_ollama(2),_build_ollama_prompt(2),_call_ollama_api(1),_execute_task(3),_format_output(1),get_summary(0)  # Execute todo tasks using Docker MCP tools with local fallbac...
   .algitex/backups/batch_20260328_143434/src/algitex/tools/todo_actions.py:
     e: nap_action,aider_action,ollama_action,filesystem_action,github_action,get_action_handler,determine_action
     nap_action(task)
@@ -617,6 +619,9 @@ Usage:
   .algitex/backups/batch_20260328_143434/src/algitex/tools/parallel/partitioner.py:
     e: TaskPartitioner
     TaskPartitioner: __init__(1),partition(2),_compute_footprints(1),_build_conflict_graph(2),_greedy_coloring(4),_group_by_color(1),_regions_by_symbol(2)  # Partition tickets into non-conflicting groups for parallel e...
+  docker/code2llm/code2llm_server.py:
+    e: Code2LLMServer
+    Code2LLMServer: __init__(0),create_fastapi_app(0),_analyze_python_file(2),_calculate_complexity_metrics(1),_collect_project_metrics(1),_analyze_project(1),_generate_toon(1),_generate_readme(1),run(0)  # Code analysis server for LLM context generation...
   docker/code2llm/code2llm_mcp_server.py:
     e: _analyze_python_file,_calculate_complexity_metrics,_collect_project_metrics,analyze_project,generate_toon,generate_readme,evolution_export,create_rest_api,run_rest_server
     _analyze_python_file(py_file;root)
@@ -628,9 +633,6 @@ Usage:
     evolution_export(path)
     create_rest_api()
     run_rest_server()
-  docker/code2llm/code2llm_server.py:
-    e: Code2LLMServer
-    Code2LLMServer: __init__(0),create_fastapi_app(0),_analyze_python_file(2),_calculate_complexity_metrics(1),_collect_project_metrics(1),_analyze_project(1),_generate_toon(1),_generate_readme(1),run(0)  # Code analysis server for LLM context generation...
   src/algitex/config.py:
     e: ProxyConfig,TicketConfig,AnalysisConfig,Config,_find_config,_merge_yaml
     ProxyConfig: from_env(0)  # Proxym gateway settings...
@@ -679,6 +681,9 @@ Usage:
     e: BackendStatus,FallbackBackend
     BackendStatus:  # Status of a backend...
     FallbackBackend(AutoFixBackend): __init__(8),_get_backend(1),_mark_success(1),_mark_failure(2),_try_backend(2),fix(1),print_status(0)  # Backend with automatic failover to alternative LLM services...
+  src/algitex/tools/parallel/partitioner.py:
+    e: TaskPartitioner
+    TaskPartitioner: __init__(1),partition(2),_compute_footprints(1),_build_conflict_graph(2),_greedy_coloring(4),_group_by_color(1),_regions_by_symbol(2)  # Partition tickets into non-conflicting groups for parallel e...
   src/algitex/tools/autofix/batch_logger.py:
     e: BatchLogEntry,BatchSessionLog,BatchLogger,get_logger,start_session,end_session
     BatchLogEntry:  # Single entry in batch log...
@@ -687,9 +692,6 @@ Usage:
     get_logger()
     start_session(backend;batch_size;parallel)
     end_session()
-  src/algitex/tools/parallel/partitioner.py:
-    e: TaskPartitioner
-    TaskPartitioner: __init__(1),partition(2),_compute_footprints(1),_build_conflict_graph(2),_greedy_coloring(4),_group_by_color(1),_regions_by_symbol(2)  # Partition tickets into non-conflicting groups for parallel e...
   .algitex/backups/batch_20260328_142940/docker/vallm/vallm_server.py:
     e: VallmServer
     VallmServer: __init__(0),create_fastapi_app(0),_run_validate(1),_validate_static(1),_validate_runtime(1),_validate_security(1),_analyze_complexity(1),_parse_radon_complexities(1),run(0)  # Validation server with multiple validation levels...
@@ -1046,13 +1048,13 @@ Usage:
     planfile_sync()
     create_rest_api()
     run_rest_server()
-  src/algitex/tools/config.py:
-    e: ConfigManager
-    ConfigManager: __init__(1),_ensure_dir(1),_backup_file(1),install_config(3),generate_continue_config(3),install_continue_config(2),generate_vscode_settings(2),install_vscode_settings(2),generate_env_file(2),generate_docker_compose(2),setup_project_configs(2),list_configs(1),_list_continue_configs(1),_list_vscode_configs(1),_list_env_configs(0),_list_docker_configs(0)  # Manages configuration files for various IDEs and tools...
   src/algitex/tools/todo_parser.py:
     e: Task,TodoParser
     Task: to_dict(0)  # Single todo task extracted from file...
     TodoParser: __init__(1),parse(0),_parse_prefact(1),_parse_github(1),_parse_generic(1),_extract_location(1),get_stats(0)  # Parse todo lists from Markdown and text files...
+  src/algitex/tools/config.py:
+    e: ConfigManager
+    ConfigManager: __init__(1),_ensure_dir(1),_backup_file(1),install_config(3),generate_continue_config(3),install_continue_config(2),generate_vscode_settings(2),install_vscode_settings(2),generate_env_file(2),generate_docker_compose(2),setup_project_configs(2),list_configs(1),_list_continue_configs(1),_list_vscode_configs(1),_list_env_configs(0),_list_docker_configs(0)  # Manages configuration files for various IDEs and tools...
   src/algitex/tools/analysis.py:
     e: HealthReport,Analyzer,CLIResult,_run_cli
     HealthReport: summary(0)  # Combined analysis result from all tools...
@@ -1084,7 +1086,7 @@ Usage:
     _shorten_path(path;max_len)
   src/algitex/microtask/prompts.py:
     e: _SafeDict,PromptBuilder
-    _SafeDict(<ast.Subscript object at 0x7407ddd49650>): __missing__(1)
+    _SafeDict(<ast.Subscript object at 0x7c35fd33f4d0>): __missing__(1)
     PromptBuilder: __init__(1),build(1),_select_model(1),_build_instruction(1),_build_user_prompt(2)  # Build compact chat prompts for local LLMs...
   .algitex/backups/batch_20260328_142940/src/algitex/project/__init__.py:
     e: Project
@@ -1216,11 +1218,6 @@ Usage:
     tools()
     ask(prompt;tier)
     sync()
-  src/algitex/tools/cicd.py:
-    e: CICDGenerator,init_ci_cd,create_quality_gate_config
-    CICDGenerator: __init__(1),_load_config(0),generate_github_actions(1),generate_gitlab_ci(1),_get_complexity_check(0),generate_dockerfile(1),generate_precommit_config(1),generate_all(4),update_config(1)  # Generate CI/CD pipelines for algitex projects...
-    init_ci_cd(project_path;platform)
-    create_quality_gate_config(max_cc;require_tests;security_scan)
   src/algitex/benchmark.py:
     e: BenchmarkResult,BenchmarkSuite,BenchmarkRunner,CacheBenchmark,TierBenchmark,MemoryBenchmark,run_quick_benchmark
     BenchmarkResult: to_dict(0)  # Single benchmark run result...
@@ -1230,6 +1227,11 @@ Usage:
     TierBenchmark: bench_algorithmic_fix(-1),bench_micro_llm_simulated(-1),compare_tiers(-1)  # Benchmarks for three-tier performance comparison...
     MemoryBenchmark: profile_large_file_parsing(0)  # Memory profiling benchmarks...
     run_quick_benchmark()
+  src/algitex/tools/cicd.py:
+    e: CICDGenerator,init_ci_cd,create_quality_gate_config
+    CICDGenerator: __init__(1),_load_config(0),generate_github_actions(1),generate_gitlab_ci(1),_get_complexity_check(0),generate_dockerfile(1),generate_precommit_config(1),generate_all(4),update_config(1)  # Generate CI/CD pipelines for algitex projects...
+    init_ci_cd(project_path;platform)
+    create_quality_gate_config(max_cc;require_tests;security_scan)
   src/algitex/tools/workspace.py:
     e: RepoConfig,Workspace,create_workspace_template,init_workspace
     RepoConfig: __post_init__(0)  # Configuration for a single repository in the workspace...
@@ -1552,8 +1554,8 @@ Usage:
     TaskAssignment:  # A ticket assigned to a specific agent with locked regions...
     MergeResult:  # Result of merging agent worktrees back to main...
   .algitex/backups/batch_20260328_142940/src/algitex/cli/__init__.py:
-  .algitex/backups/batch_20260328_142940/src/algitex/__init__.py:
   .algitex/backups/batch_20260328_142940/src/algitex/algo/loop.py:
+  .algitex/backups/batch_20260328_142940/src/algitex/__init__.py:
   .algitex/backups/batch_20260328_142940/src/algitex/tools/parallel/__init__.py:
   .algitex/backups/batch_20260328_142940/src/algitex/propact/workflow.py:
   .algitex/backups/batch_20260328_142940/src/algitex/workflows/pipeline.py:

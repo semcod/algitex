@@ -5,7 +5,7 @@ Usage:
     
     # Generate Continue.dev config
     manager = ConfigManager()
-    config = manager.generate_continue_config(models=["qwen2.5-coder:7b"])
+    config = manager.generate_continue_config(models=["qwen3-coder:latest"])
     manager.install_config(config, "~/.continue/config.json")
 """
 
@@ -83,7 +83,7 @@ class ConfigManager:
     ) -> Dict[str, Any]:
         """Generate Continue.dev configuration for Ollama."""
         if models is None:
-            models = ["qwen2.5-coder:7b", "llama3:8b", "codellama:7b"]
+            models = ["qwen3-coder:latest", "llama3:8b", "codellama:7b"]
         
         # Model configurations
         config_models = []
@@ -156,7 +156,7 @@ class ConfigManager:
     def generate_vscode_settings(
         self,
         ollama_url: str = "http://localhost:11434",
-        model: str = "qwen2.5-coder:7b"
+        model: str = "qwen3-coder:latest"
     ) -> Dict[str, Any]:
         """Generate VS Code settings for local LLM integration."""
         settings = {

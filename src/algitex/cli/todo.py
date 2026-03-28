@@ -479,7 +479,7 @@ def todo_fix(
     dashboard: bool = typer.Option(False, "--dashboard", "-d", help="Show live dashboard during execution"),
     workers: int = typer.Option(8, "--workers", "-w", help="Workers for algorithmic and big LLM phases"),
     micro_workers: int = typer.Option(4, "--micro-workers", help="Workers for the small LLM phase"),
-    model: str = typer.Option("qwen2.5-coder:7b", "--model", help="Ollama model for the small LLM phase"),
+    model: str = typer.Option("qwen3-coder:latest", "--model", help="Ollama model for the small LLM phase"),
     backend: str = typer.Option("ollama", "--backend", "-b", help="Backend for the big LLM phase"),
     rate_limit: int = typer.Option(10, "--rate-limit", "-r", help="LLM calls per second for the big LLM phase"),
     proxy_url: str = typer.Option("http://localhost:4000", "--proxy-url", "-p", help="LiteLLM proxy URL"),
@@ -810,7 +810,7 @@ def todo_hybrid(
 def todo_batch(
     file: Path = typer.Option(Path("TODO.md"), "--file", "-f", help="TODO.md file path"),
     backend: str = typer.Option("ollama", "--backend", "-b", help="Backend: ollama, litellm-proxy"),
-    model: str = typer.Option("qwen3:8b", "--model", "-m", help="Ollama model name (e.g., qwen3:8b, qwen2.5-coder:7b)"),
+    model: str = typer.Option("qwen3-coder:latest", "--model", "-m", help="Ollama model name (e.g., qwen3-coder:latest, qwen3-coder:latest)"),
     batch_size: int = typer.Option(5, "--batch-size", "-s", help="Max files per batch"),
     parallel: int = typer.Option(3, "--parallel", "-p", help="Parallel groups (default: 3)"),
     dry_run: bool = typer.Option(True, "--dry-run/--execute", help="Dry run or execute"),

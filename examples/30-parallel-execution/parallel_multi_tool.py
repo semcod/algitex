@@ -54,10 +54,10 @@ def main() -> None:
     results = executor.execute(tickets)
 
     # Tool selection per agent based on model_tier:
-    # Agent 0 (PLF-010): ollama/qwen2.5-coder:7b (cheap, local)
+    # Agent 0 (PLF-010): ollama/qwen3-coder:latest (cheap, local)
     # Agent 1 (PLF-011): claude-sonnet-4 (premium, complex task)
     # Agent 2 (PLF-012): gemini-2.5-pro (balanced)
-    # Agent 3 (PLF-013): ollama/qwen2.5-coder:7b (cheap, local)
+    # Agent 3 (PLF-013): ollama/qwen3-coder:latest (cheap, local)
 
     for r in results:
         print(f"  {r.status}: {r.ticket_id}")

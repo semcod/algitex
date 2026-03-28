@@ -198,7 +198,7 @@ class CacheBenchmark:
         for i in range(entries):
             cache.set(
                 prompt=f"Prompt {i % 100}",  # 100 unique prompts, 10x each
-                model="qwen2.5-coder:7b",
+                model="qwen3-coder:latest",
                 response=f"Response {i}",
                 tokens_prompt=100,
                 tokens_response=50,
@@ -210,7 +210,7 @@ class CacheBenchmark:
         
         start = time.perf_counter()
         for i in range(lookups):
-            result = cache.get(f"Prompt {i % 100}", "qwen2.5-coder:7b")
+            result = cache.get(f"Prompt {i % 100}", "qwen3-coder:latest")
             if result:
                 hits += 1
             else:
@@ -237,7 +237,7 @@ class CacheBenchmark:
         cache = LLMCache(cache_dir=cache_dir)
         
         identical_prompt = "Fix this Python code: def foo(): pass"
-        model = "qwen2.5-coder:7b"
+        model = "qwen3-coder:latest"
         
         # Store same prompt multiple times (should overwrite)
         start = time.perf_counter()

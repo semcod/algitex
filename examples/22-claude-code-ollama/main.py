@@ -26,7 +26,7 @@ def main() -> int:
     if ollama_status["healthy"]:
         models = ollama_status["details"]["models"]
         print(f"✅ Ollama running with {len(models)} models")
-        target = "qwen2.5-coder:7b"
+        target = "qwen3-coder:latest"
         if any(target in m for m in models):
             print(f"✅ Model {target} available")
 

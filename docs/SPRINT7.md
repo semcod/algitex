@@ -134,6 +134,10 @@ class CacheState:
 
 ### Podczas `todo fix --all`
 
+```bash
+algitex todo fix --all --dashboard
+```
+
 ```python
 from algitex.dashboard import LiveDashboard
 from algitex.todo import parallel_fix_and_update, MicroFixer
@@ -158,6 +162,60 @@ try:
     
 finally:
     dashboard.stop()
+```
+
+### Podczas `todo hybrid --dashboard`
+
+```bash
+algitex todo hybrid --execute --dashboard
+```
+
+Funkcja `_run_hybrid_with_dashboard()` obsługuje:
+- **Phase 1 (Algorithm)** – dla `hybrid=True`, pokazuje progress dla tierów algorithm + big
+- **Phase 2 (Big LLM)** – dla `hybrid=False`, pokazuje progress tylko dla tieru big
+- Live cache stats z `LLMCache`
+- Auto-refresh co 1 sekundę
+- Podsumowanie wyników na końcu
+
+### Podczas `todo batch --dashboard`
+
+```bash
+algitex todo batch --execute --dashboard
+```
+
+Funkcja `_run_batch_with_dashboard()` obsługuje:
+- **Batch tier** – pokazuje progress dla grupowych operacji batch fix
+- Progress tracking: `current/total` tasks
+- Podsumowanie: success/failed/total na końcu
+
+### Użycie programistyczne
+
+```python
+from algitex.dashboard import LiveDashboard
+
+# Inicjalizacja
+dashboard = LiveDashboard(refresh_rate=1.0)
+dashboard.start()
+
+# Aktualizacja statystyk cache
+dashboard.update_cache_stats(
+    hits=100,
+    misses=10, 
+    entries=50,
+    size_bytes=1572864
+)
+
+# Aktualizacja progressu tieru
+dashboard.update_tier_progress(
+    tier_name="algorithm",  # algorithm | micro | big | batch
+    current=50,
+    total=100,
+    active=True,
+    throughput=23.5
+)
+
+# Zatrzymanie
+dashboard.stop()
 ```
 
 ## Test Coverage

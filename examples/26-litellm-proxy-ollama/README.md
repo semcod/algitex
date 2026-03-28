@@ -62,7 +62,7 @@ python auto_fix.py --limit 5
 model_list:
   - model_name: qwen-coder
     litellm_params:
-      model: ollama/qwen2.5-coder:7b
+      model: ollama/qwen3-coder:latest
       api_base: http://localhost:11434
       
   - model_name: llama3

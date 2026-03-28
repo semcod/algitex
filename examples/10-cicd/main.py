@@ -27,7 +27,7 @@ def basic_github_actions_example() -> Any:
 feedback_policy:
   max_retries: 3
   retry_escalation:
-    - "ollama/qwen2.5-coder:7b"
+    - "ollama/qwen3-coder:latest"
     - "claude-sonnet-4-20250514"
 
 ci_cd:
@@ -213,7 +213,7 @@ project:
 feedback_policy:
   max_retries: 3
   retry_escalation:
-    - "ollama/qwen2.5-coder:7b"
+    - "ollama/qwen3-coder:latest"
     - "claude-sonnet-4-20250514"
   require_approval_for:
     - "critical"

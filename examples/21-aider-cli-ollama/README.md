@@ -19,7 +19,7 @@ algitex todo run              # Wykonaj wszystkie zadania z TODO.md
 ## Wymagania
 
 - **Ollama** zainstalowany i uruchomiony: `ollama serve`
-- **Model** `qwen2.5-coder:7b` pobrany: `ollama pull qwen2.5-coder:7b`
+- **Model** `qwen3-coder:latest` pobrany: `ollama pull qwen3-coder:latest`
 - **aider**: `pip install aider-chat`
 - **algitex**: `pip install -e ../../`
 - **git** (wymagane przez aider): `sudo apt-get install git` lub `brew install git`
@@ -62,7 +62,7 @@ python -c "from algitex import Project; p = Project('.'); p.fix_issues()"
 
 ```bash
 # Bezpośrednie użycie aider CLI
-aider --model ollama/qwen2.5-coder:7b \
+aider --model ollama/qwen3-coder:latest \
       --message "Add type hints to this function" \
       buggy_code.py
 ```
@@ -108,7 +108,7 @@ aider --model ollama/qwen2.5-coder:7b \
 **Rozwiązanie**: `ollama serve` w osobnym terminalu
 
 **Problem**: `Model not found`
-**Rozwiązanie**: `ollama pull qwen2.5-coder:7b`
+**Rozwiązanie**: `ollama pull qwen3-coder:latest`
 
 **Problem**: Timeout przy naprawie
 **Rozwiązanie**: Użyj mniejszego modelu (3B zamiast 7B) lub zmniejsz limit w `p.fix_issues(limit=3)`

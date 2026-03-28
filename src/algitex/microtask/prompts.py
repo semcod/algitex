@@ -43,7 +43,7 @@ class PromptBuilder:
             model_map
             or {
                 0: "none",
-                1: "qwen2.5-coder:7b",
+                1: "qwen3-coder:latest",
                 2: "qwen2.5-coder:14b",
                 3: "qwen2.5-coder:70b",
             }

@@ -74,7 +74,7 @@ curl -X POST http://localhost:8080/validate \
 python auto_fix_todos.py
 
 # 4. Naprawa konkretnego pliku
-algitex fix buggy_code.py --model ollama/qwen2.5-coder:7b
+algitex fix buggy_code.py --model ollama/qwen3-coder:latest
 ```
 
 ### Przykładowe błędy bezpieczeństwa w `buggy_code.py`:
