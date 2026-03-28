@@ -1,7 +1,7 @@
-# algitex | 71f 14554L | python:70,shell:1 | 2026-03-28
-# stats: 640 func | 0 cls | 71 mod | CC̄=3.3 | critical:0 | cycles:0
-# alerts[5]: fan-out AuditLogger.rollback_operation=12; fan-out DockerToolManager._load_tools=12; fan-out StdioTransport._read_with_timeout=12; fan-out parallel=12; fan-out parse_todo=12
-# hotspots[5]: StdioTransport._read_with_timeout fan=12; DockerToolManager._load_tools fan=12; parallel fan=12; todo_hybrid fan=12; parse_todo fan=12
+# algitex | 71f 14672L | python:70,shell:1 | 2026-03-28
+# stats: 650 func | 0 cls | 71 mod | CC̄=3.3 | critical:0 | cycles:0
+# alerts[5]: fan-out AuditLogger.rollback_operation=12; fan-out BatchFixBackend.fix_batch=12; fan-out OllamaClient.chat=12; fan-out parallel=12; fan-out parse_todo=12
+# hotspots[5]: OllamaClient.chat fan=12; parallel fan=12; todo_hybrid fan=12; parse_todo fan=12; AuditLogger.rollback_operation fan=12
 # evolution: CC̄ 3.3→3.3 (flat 0.0)
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
 M[71]:
@@ -18,7 +18,7 @@ M[71]:
   src/algitex/cli/docker.py,96
   src/algitex/cli/parallel.py,149
   src/algitex/cli/ticket.py,46
-  src/algitex/cli/todo.py,326
+  src/algitex/cli/todo.py,327
   src/algitex/cli/workflow.py,39
   src/algitex/config.py,170
   src/algitex/project/__init__.py,439
@@ -43,7 +43,7 @@ M[71]:
   src/algitex/tools/autofix/__init__.py,306
   src/algitex/tools/autofix/aider_backend.py,164
   src/algitex/tools/autofix/base.py,52
-  src/algitex/tools/autofix/batch_backend.py,339
+  src/algitex/tools/autofix/batch_backend.py,419
   src/algitex/tools/autofix/fallback_backend.py,191
   src/algitex/tools/autofix/ollama_backend.py,126
   src/algitex/tools/autofix/proxy_backend.py,161
@@ -52,13 +52,13 @@ M[71]:
   src/algitex/tools/cicd.py,403
   src/algitex/tools/config.py,388
   src/algitex/tools/context.py,207
-  src/algitex/tools/docker.py,288
-  src/algitex/tools/docker_transport.py,291
+  src/algitex/tools/docker.py,298
+  src/algitex/tools/docker_transport.py,294
   src/algitex/tools/feedback.py,252
   src/algitex/tools/ide.py,430
   src/algitex/tools/logging.py,157
   src/algitex/tools/mcp.py,448
-  src/algitex/tools/ollama.py,382
+  src/algitex/tools/ollama.py,400
   src/algitex/tools/parallel/__init__.py,38
   src/algitex/tools/parallel/executor.py,260
   src/algitex/tools/parallel/extractor.py,156
@@ -73,7 +73,7 @@ M[71]:
   src/algitex/tools/todo_local.py,283
   src/algitex/tools/todo_parser.py,207
   src/algitex/tools/todo_runner.py,363
-  src/algitex/tools/workspace.py,338
+  src/algitex/tools/workspace.py,344
   src/algitex/workflows/__init__.py,320
   src/algitex/workflows/pipeline.py,5
 D:
@@ -92,7 +92,7 @@ D:
     todo_fix(file;tool;task_id;limit)
     todo_benchmark(limit;file;workers;compare)
     todo_hybrid(file;backend;tool;workers;rate_limit;proxy_url;hybrid;fallback;verbose;dry_run)
-    todo_batch(file;backend;batch_size;dry_run;verbose)
+    todo_batch(file;backend;batch_size;parallel;dry_run;verbose)
   src/algitex/tools/todo_executor.py:
     e: TaskResult,TodoExecutor
     TaskResult:  # Result of executing a single task...
@@ -126,12 +126,6 @@ D:
     e: MCPService,MCPOrchestrator
     MCPService: __post_init__(0)  # Definition of an MCP service...
     MCPOrchestrator: __init__(0),_setup_signal_handlers(0),_register_default_services(0),add_service(1),add_custom_service(3),start_service(1),stop_service(2),restart_service(1),start_all(1),stop_all(1),wait_for_ready(2),check_health(0),get_logs(2),list_services(0),get_service_info(1),print_status(0),generate_mcp_config(1)  # Orchestrates multiple MCP services...
-  src/algitex/tools/ollama.py:
-    e: OllamaModel,OllamaResponse,OllamaClient,OllamaService
-    OllamaModel:  # Information about an Ollama model...
-    OllamaResponse: __str__(0)  # Response from Ollama API...
-    OllamaClient: __init__(3),health(0),list_models(0),pull_model(1),generate(7),chat(6),fix_code(4),analyze_code(3),close(0),__enter__(0),__exit__(0)  # Client for interacting with Ollama API...
-    OllamaService: __init__(1),ensure_model(1),get_recommended_models(0),auto_fix_file(4)  # High-level service for Ollama operations...
   src/algitex/tools/todo_local.py:
     e: LocalTaskResult,LocalExecutor
     LocalTaskResult:  # Result of executing a single task locally...
@@ -147,7 +141,7 @@ D:
   src/algitex/tools/autofix/batch_backend.py:
     e: TaskGroup,BatchFixBackend
     TaskGroup:  # Grupa podobnych zadań do batch fix...
-    BatchFixBackend: __init__(4),fix_batch(1),_group_tasks(1),_process_group(1),_fix_batch_group(1),_fix_individual(1),_fix_single(1),_build_batch_prompt(1),_call_llm(2),_parse_batch_response(2),_ensure_model(0)  # Backend do optymalizacji fixów przez grupowanie.
+    BatchFixBackend: __init__(4),fix_batch(2),_group_tasks(1),_process_group(3),_fix_batch_group(1),_fix_individual(1),_fix_single(1),_build_batch_prompt(1),_call_llm(2),_parse_batch_response(2),_ensure_model(0)  # Backend do optymalizacji fixów przez grupowanie.
 
 Args:
     ...
@@ -159,11 +153,12 @@ Args:
     Config: load(1),save(1)  # Unified config for the entire algitex stack...
     _find_config(explicit)
     _merge_yaml(cfg;path)
-  src/algitex/tools/docker.py:
-    e: DockerTool,RunningTool,DockerToolManager
-    DockerTool:  # Single Docker-based tool declaration from docker-tools.yaml...
-    RunningTool:  # A spawned Docker container with connection info...
-    DockerToolManager: __init__(1),__enter__(0),__exit__(3),_load_tools(0),_load_state(0),_save_state(0),spawn(1),_wait_healthy(2),_get_http_client(0),call_tool(3),teardown(1),teardown_all(0),list_tools(0),list_running(0),get_capabilities(1),_query_stdio_capabilities(1)  # Spawn Docker containers, connect via MCP/REST, call tools, t...
+  src/algitex/tools/ollama.py:
+    e: OllamaModel,OllamaResponse,OllamaClient,OllamaService
+    OllamaModel:  # Information about an Ollama model...
+    OllamaResponse: __str__(0)  # Response from Ollama API...
+    OllamaClient: __init__(3),health(0),list_models(0),pull_model(1),generate(7),chat(6),fix_code(4),analyze_code(3),close(0),__enter__(0),__exit__(0)  # Client for interacting with Ollama API...
+    OllamaService: __init__(1),ensure_model(1),get_recommended_models(0),auto_fix_file(4)  # High-level service for Ollama operations...
   src/algitex/propact/__init__.py:
     e: WorkflowStep,WorkflowResult,Workflow
     WorkflowStep: to_dict(0)  # Single executable step in a Propact workflow...
@@ -191,17 +186,6 @@ Usage:
     e: LLMResponse,Proxy
     LLMResponse: __str__(0)  # Simplified LLM response...
     Proxy: __init__(1),ask(1),budget(0),models(0),health(0),close(0),__enter__(0),__exit__(0)  # Simple wrapper around proxym gateway...
-  src/algitex/tools/docker_transport.py:
-    e: StdioTransport,spawn_stdio,spawn_sse,spawn_rest,spawn_cli,call_stdio,call_sse,call_rest,call_cli
-    StdioTransport: __init__(1),send(2),_serialize(1),_write(2),_read_with_timeout(1),_parse(1)  # Transport layer for JSON-RPC over stdin/stdout communication...
-    spawn_stdio(tool;env;running;save_state)
-    spawn_sse(tool;env;running;save_state;wait_healthy)
-    spawn_rest(tool;env;running;save_state)
-    spawn_cli(tool;env;running;save_state)
-    call_stdio(rt;tool;args;get_client)
-    call_sse(rt;tool;args;get_client)
-    call_rest(rt;tool;args;get_client)
-    call_cli(rt;cmd;args;get_client)
   src/algitex/algo/__init__.py:
     e: TraceEntry,Pattern,Rule,LoopState,Loop
     TraceEntry: to_dict(0)  # Single LLM interaction trace...
@@ -214,6 +198,22 @@ Usage:
     ServiceStatus: to_dict(0)  # Status of a single service...
     ServiceChecker: __init__(1),check_http_service(4),check_ollama(1),check_litellm_proxy(1),check_mcp_service(2),check_command_exists(2),check_file_exists(2),check_all(1),_format_status_line(1),_print_status_details(1),print_status(2),get_unhealthy(1),wait_for_services(3),close(0),__enter__(0),__exit__(0)  # Checker for various services used by algitex...
     ServiceDependency: __init__(1),get_startup_order(1),check_with_dependencies(1)  # Manage service dependencies and startup order...
+  src/algitex/tools/docker_transport.py:
+    e: StdioTransport,spawn_stdio,spawn_sse,spawn_rest,spawn_cli,call_stdio,call_sse,call_rest,call_cli
+    StdioTransport: __init__(1),send(2),_serialize(1),_write(2),_read_with_timeout(1),_wait_for_ready(2),_check_process_alive(1),_extract_length(1),_parse(1)  # Transport layer for JSON-RPC over stdin/stdout communication...
+    spawn_stdio(tool;env;running;save_state)
+    spawn_sse(tool;env;running;save_state;wait_healthy)
+    spawn_rest(tool;env;running;save_state)
+    spawn_cli(tool;env;running;save_state)
+    call_stdio(rt;tool;args;get_client)
+    call_sse(rt;tool;args;get_client)
+    call_rest(rt;tool;args;get_client)
+    call_cli(rt;cmd;args;get_client)
+  src/algitex/tools/docker.py:
+    e: DockerTool,RunningTool,DockerToolManager
+    DockerTool:  # Single Docker-based tool declaration from docker-tools.yaml...
+    RunningTool:  # A spawned Docker container with connection info...
+    DockerToolManager: __init__(1),__enter__(0),__exit__(3),_load_tools(0),_read_yaml_with_expansion(1),_expand_tool_spec(1),_expand_env_vars(1),_expand_volumes(1),_load_state(0),_save_state(0),spawn(1),_wait_healthy(2),_get_http_client(0),call_tool(3),teardown(1),teardown_all(0),list_tools(0),list_running(0),get_capabilities(1),_query_stdio_capabilities(1)  # Spawn Docker containers, connect via MCP/REST, call tools, t...
   src/algitex/tools/ide.py:
     e: IDETool,IDEHelper,ClaudeCodeHelper,AiderHelper,VSCodeHelper,EditorIntegration
     IDETool: __post_init__(0)  # IDE tool configuration...
@@ -297,12 +297,6 @@ Usage:
   src/algitex/project/__init__.py:
     e: Project
     Project(ServiceMixin,AutoFixMixin,OllamaMixin,BatchMixin,BenchmarkMixin,IDEMixin,ConfigMixin,MCPMixin): __init__(2),analyze(1),plan(3),execute(1),status(0),_status_health(0),_status_tickets(0),_status_infra(0),_check_proxy_status(0),_check_docker_status(0),_check_tools_status(0),_compute_cost_ledger(1),_status_algo(0),run_workflow(1),ask(1),add_ticket(1),generate_todo(1),_collect_hotspot_issues(1),_write_todo_file(3),_build_prompt(1),_select_tier(1),_generate_strategy(2)  # One project, all tools, zero boilerplate...
-  src/algitex/tools/workspace.py:
-    e: RepoConfig,Workspace,create_workspace_template,init_workspace
-    RepoConfig: __post_init__(0)  # Configuration for a single repository in the workspace...
-    Workspace: __init__(1),_load_config(0),_validate_dependencies(0),_topo_sort(0),clone_all(1),pull_all(0),analyze_all(1),plan_all(1),execute_all(2),validate_all(0),status(0),get_dependency_graph(0),find_repos_by_tag(1),get_execution_plan(0)  # Manage multiple repos as a single workspace...
-    create_workspace_template(name;repos)
-    init_workspace(name;config_path)
   src/algitex/todo/benchmark.py:
     e: BenchmarkResult,_benchmark_single,benchmark_sequential,benchmark_parallel,benchmark_fix,compare_modes
     BenchmarkResult: print_report(1)  # Benchmark results for fix operations...
@@ -322,6 +316,12 @@ Usage:
     CICDGenerator: __init__(1),_load_config(0),generate_github_actions(1),generate_gitlab_ci(1),_get_complexity_check(0),generate_dockerfile(1),generate_precommit_config(1),generate_all(4),update_config(1)  # Generate CI/CD pipelines for algitex projects...
     init_ci_cd(project_path;platform)
     create_quality_gate_config(max_cc;require_tests;security_scan)
+  src/algitex/tools/workspace.py:
+    e: RepoConfig,Workspace,create_workspace_template,init_workspace
+    RepoConfig: __post_init__(0)  # Configuration for a single repository in the workspace...
+    Workspace: __init__(1),_load_config(0),_validate_dependencies(0),_topo_sort(0),clone_all(1),pull_all(0),analyze_all(1),plan_all(1),execute_all(2),validate_all(0),status(0),_get_repo_status(1),_get_git_status(1),_check_algitex_files(1),get_dependency_graph(0),find_repos_by_tag(1),get_execution_plan(0)  # Manage multiple repos as a single workspace...
+    create_workspace_template(name;repos)
+    init_workspace(name;config_path)
   src/algitex/tools/tickets.py:
     e: Ticket,Tickets
     Ticket: to_dict(0)  # A single work item...
@@ -433,8 +433,8 @@ Usage:
     TaskAssignment:  # A ticket assigned to a specific agent with locked regions...
     MergeResult:  # Result of merging agent worktrees back to main...
   src/algitex/cli/__init__.py:
-  src/algitex/algo/loop.py:
   src/algitex/__init__.py:
+  src/algitex/algo/loop.py:
   src/algitex/tools/parallel/__init__.py:
   src/algitex/propact/workflow.py:
   src/algitex/workflows/pipeline.py:

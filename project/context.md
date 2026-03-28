@@ -4,12 +4,12 @@
 
 - **Project**: /home/tom/github/semcod/algitex
 - **Primary Language**: python
-- **Languages**: python: 124, shell: 26
+- **Languages**: python: 125, shell: 26
 - **Analysis Mode**: static
-- **Total Functions**: 812
+- **Total Functions**: 834
 - **Total Classes**: 120
-- **Modules**: 150
-- **Entry Points**: 723
+- **Modules**: 151
+- **Entry Points**: 734
 
 ## Architecture by Module
 
@@ -22,6 +22,16 @@
 - **Functions**: 22
 - **Classes**: 6
 - **File**: `ide.py`
+
+### src.algitex.tools.workspace
+- **Functions**: 20
+- **Classes**: 2
+- **File**: `workspace.py`
+
+### src.algitex.tools.docker
+- **Functions**: 20
+- **Classes**: 3
+- **File**: `docker.py`
 
 ### src.algitex.tools.services
 - **Functions**: 20
@@ -53,20 +63,15 @@
 - **Classes**: 3
 - **File**: `__init__.py`
 
-### src.algitex.tools.workspace
+### src.algitex.tools.docker_transport
 - **Functions**: 17
-- **Classes**: 2
-- **File**: `workspace.py`
+- **Classes**: 1
+- **File**: `docker_transport.py`
 
 ### src.algitex.tools.config
 - **Functions**: 16
 - **Classes**: 1
 - **File**: `config.py`
-
-### src.algitex.tools.docker
-- **Functions**: 16
-- **Classes**: 3
-- **File**: `docker.py`
 
 ### src.algitex.tools.ollama
 - **Functions**: 16
@@ -77,11 +82,6 @@
 - **Functions**: 14
 - **Classes**: 1
 - **File**: `__init__.py`
-
-### src.algitex.tools.docker_transport
-- **Functions**: 14
-- **Classes**: 1
-- **File**: `docker_transport.py`
 
 ### src.algitex.tools.context
 - **Functions**: 14
@@ -117,10 +117,6 @@
 
 Main execution flows into the system:
 
-### examples.32-workspace-coordination.main.main
-> Demonstrate workspace coordination across multiple repositories.
-- **Calls**: print, print, print, examples.32-workspace-coordination.main.load_workspace_config, print, print, print, print
-
 ### examples.31-abpr-workflow.main.main
 > Demonstrate ABPR pipeline: Execute → Trace → Conflict → Rule → Validate → Repeat.
 - **Calls**: print, print, print, print, print, print, str, Project
@@ -129,12 +125,13 @@ Main execution flows into the system:
 > Demonstrate parallel execution with region-based coordination.
 - **Calls**: print, print, print, str, Project, print, p.analyze, print
 
-### examples.33-hybrid-autofix.main.main
-- **Calls**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_argument
-
 ### examples.20-self-hosted-pipeline.main.main
 > Main demo function.
 - **Calls**: print, print, print, print, print, print, print, print
+
+### examples.30-parallel-execution.parallel_real_world.main
+> Demonstrate parallel refactoring of a real-world project.
+- **Calls**: tempfile.TemporaryDirectory, Path, print, examples.30-parallel-execution.parallel_real_world.setup_sample_project, Project, print, p.analyze, print
 
 ### examples.14-docker-mcp.main.demo_docker_operations
 > Demonstrate real Docker operations.
@@ -173,7 +170,7 @@ Main execution flows into the system:
 
 Zamiast wykonywać każde zadanie osobno, BatchFix grupuje podobne problemy
 (np. "f-string", "mag
-- **Calls**: typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, console.print, console.print, src.algitex.todo.fixer.parse_todo
+- **Calls**: typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, console.print, console.print
 
 ### src.algitex.todo.hybrid.HybridAutofix.fix_all
 > Run both phases with full transparency and audit logging.
@@ -218,6 +215,12 @@ Returns:
 > Example of how context improves prompt engineering.
 - **Calls**: print, Path, project_dir.mkdir, None.write_text, None.write_text, None.write_text, ContextBuilder, builder.build
 
+### src.algitex.tools.ollama.OllamaClient.chat
+> Chat with Ollama using message format.
+
+If stream=True, returns a generator that yields OllamaResponse chunks.
+- **Calls**: ValueError, response_generator, self._client.post, response.raise_for_status, response.json, data.get, OllamaResponse, OllamaResponse
+
 ### examples.07-context.main.context_optimization_example
 > Example of optimizing context for different use cases.
 - **Calls**: print, Path, project_dir.mkdir, None.mkdir, None.write_text, None.write_text, None.mkdir, None.write_text
@@ -229,8 +232,11 @@ Returns:
 > Simulate complete feedback loop with mock execution.
 - **Calls**: print, MockDockerManager, MockTickets, FeedbackController, FeedbackLoop, print, print, loop.execute_with_feedback
 
-### examples.23-continue-dev-ollama.main.main
-- **Calls**: print, print, print, print, Project, p.check_ollama, print, print
+### src.algitex.tools.ollama.OllamaClient.generate
+> Generate text using Ollama.
+
+If stream=True, returns a generator that yields OllamaResponse chunks.
+- **Calls**: ValueError, response_generator, self._client.post, response.raise_for_status, response.json, OllamaResponse, OllamaResponse, error_generator
 
 ## Process Flows
 
@@ -238,8 +244,7 @@ Key execution flows identified:
 
 ### Flow 1: main
 ```
-main [examples.32-workspace-coordination.main]
-  └─> load_workspace_config
+main [examples.31-abpr-workflow.main]
 ```
 
 ### Flow 2: demo_docker_operations
@@ -298,6 +303,11 @@ basic_telemetry_example [examples.06-telemetry.main]
 - **Key Methods**: src.algitex.project.Project.__init__, src.algitex.project.Project._analyzer, src.algitex.project.Project._tickets, src.algitex.project.Project._ollama_service, src.algitex.project.Project.analyze, src.algitex.project.Project.plan, src.algitex.project.Project.execute, src.algitex.project.Project.status, src.algitex.project.Project._status_health, src.algitex.project.Project._status_tickets
 - **Inherits**: ServiceMixin, AutoFixMixin, OllamaMixin, BatchMixin, BenchmarkMixin, IDEMixin, ConfigMixin, MCPMixin
 
+### src.algitex.tools.docker.DockerToolManager
+> Spawn Docker containers, connect via MCP/REST, call tools, teardown.
+- **Methods**: 20
+- **Key Methods**: src.algitex.tools.docker.DockerToolManager.__init__, src.algitex.tools.docker.DockerToolManager.__enter__, src.algitex.tools.docker.DockerToolManager.__exit__, src.algitex.tools.docker.DockerToolManager._load_tools, src.algitex.tools.docker.DockerToolManager._read_yaml_with_expansion, src.algitex.tools.docker.DockerToolManager._expand_tool_spec, src.algitex.tools.docker.DockerToolManager._expand_env_vars, src.algitex.tools.docker.DockerToolManager._expand_volumes, src.algitex.tools.docker.DockerToolManager._load_state, src.algitex.tools.docker.DockerToolManager._save_state
+
 ### src.algitex.tools.autofix.AutoFix
 > Automated code fixing using various backends.
 - **Methods**: 18
@@ -307,6 +317,11 @@ basic_telemetry_example [examples.06-telemetry.main]
 > Orchestrates multiple MCP services.
 - **Methods**: 17
 - **Key Methods**: src.algitex.tools.mcp.MCPOrchestrator.__init__, src.algitex.tools.mcp.MCPOrchestrator._setup_signal_handlers, src.algitex.tools.mcp.MCPOrchestrator._register_default_services, src.algitex.tools.mcp.MCPOrchestrator.add_service, src.algitex.tools.mcp.MCPOrchestrator.add_custom_service, src.algitex.tools.mcp.MCPOrchestrator.start_service, src.algitex.tools.mcp.MCPOrchestrator.stop_service, src.algitex.tools.mcp.MCPOrchestrator.restart_service, src.algitex.tools.mcp.MCPOrchestrator.start_all, src.algitex.tools.mcp.MCPOrchestrator.stop_all
+
+### src.algitex.tools.workspace.Workspace
+> Manage multiple repos as a single workspace.
+- **Methods**: 17
+- **Key Methods**: src.algitex.tools.workspace.Workspace.__init__, src.algitex.tools.workspace.Workspace._load_config, src.algitex.tools.workspace.Workspace._validate_dependencies, src.algitex.tools.workspace.Workspace._topo_sort, src.algitex.tools.workspace.Workspace.clone_all, src.algitex.tools.workspace.Workspace.pull_all, src.algitex.tools.workspace.Workspace.analyze_all, src.algitex.tools.workspace.Workspace.plan_all, src.algitex.tools.workspace.Workspace.execute_all, src.algitex.tools.workspace.Workspace.validate_all
 
 ### src.algitex.propact.Workflow
 > Parse and execute Propact Markdown workflows.
@@ -318,11 +333,6 @@ basic_telemetry_example [examples.06-telemetry.main]
 - **Methods**: 16
 - **Key Methods**: src.algitex.tools.config.ConfigManager.__init__, src.algitex.tools.config.ConfigManager._ensure_dir, src.algitex.tools.config.ConfigManager._backup_file, src.algitex.tools.config.ConfigManager.install_config, src.algitex.tools.config.ConfigManager.generate_continue_config, src.algitex.tools.config.ConfigManager.install_continue_config, src.algitex.tools.config.ConfigManager.generate_vscode_settings, src.algitex.tools.config.ConfigManager.install_vscode_settings, src.algitex.tools.config.ConfigManager.generate_env_file, src.algitex.tools.config.ConfigManager.generate_docker_compose
 
-### src.algitex.tools.docker.DockerToolManager
-> Spawn Docker containers, connect via MCP/REST, call tools, teardown.
-- **Methods**: 16
-- **Key Methods**: src.algitex.tools.docker.DockerToolManager.__init__, src.algitex.tools.docker.DockerToolManager.__enter__, src.algitex.tools.docker.DockerToolManager.__exit__, src.algitex.tools.docker.DockerToolManager._load_tools, src.algitex.tools.docker.DockerToolManager._load_state, src.algitex.tools.docker.DockerToolManager._save_state, src.algitex.tools.docker.DockerToolManager.spawn, src.algitex.tools.docker.DockerToolManager._wait_healthy, src.algitex.tools.docker.DockerToolManager._get_http_client, src.algitex.tools.docker.DockerToolManager.call_tool
-
 ### src.algitex.tools.services.ServiceChecker
 > Checker for various services used by algitex.
 - **Methods**: 16
@@ -332,11 +342,6 @@ basic_telemetry_example [examples.06-telemetry.main]
 > Generic batch processor with rate limiting and retries.
 - **Methods**: 15
 - **Key Methods**: src.algitex.tools.batch.BatchProcessor.__init__, src.algitex.tools.batch.BatchProcessor._rate_limit, src.algitex.tools.batch.BatchProcessor._process_item, src.algitex.tools.batch.BatchProcessor.process, src.algitex.tools.batch.BatchProcessor._prepare, src.algitex.tools.batch.BatchProcessor._execute, src.algitex.tools.batch.BatchProcessor._collect, src.algitex.tools.batch.BatchProcessor._setup_progress_bar, src.algitex.tools.batch.BatchProcessor._collect_results, src.algitex.tools.batch.BatchProcessor._get_start_time
-
-### src.algitex.tools.workspace.Workspace
-> Manage multiple repos as a single workspace.
-- **Methods**: 14
-- **Key Methods**: src.algitex.tools.workspace.Workspace.__init__, src.algitex.tools.workspace.Workspace._load_config, src.algitex.tools.workspace.Workspace._validate_dependencies, src.algitex.tools.workspace.Workspace._topo_sort, src.algitex.tools.workspace.Workspace.clone_all, src.algitex.tools.workspace.Workspace.pull_all, src.algitex.tools.workspace.Workspace.analyze_all, src.algitex.tools.workspace.Workspace.plan_all, src.algitex.tools.workspace.Workspace.execute_all, src.algitex.tools.workspace.Workspace.validate_all
 
 ### src.algitex.todo.audit.AuditLogger
 > Comprehensive audit logging with rollback support.
@@ -386,6 +391,11 @@ Usage:
 - **Methods**: 11
 - **Key Methods**: src.algitex.tools.autofix.aider_backend.AiderBackend.__init__, src.algitex.tools.autofix.aider_backend.AiderBackend.fix, src.algitex.tools.autofix.aider_backend.AiderBackend._validate_task, src.algitex.tools.autofix.aider_backend.AiderBackend._ensure_git_repo, src.algitex.tools.autofix.aider_backend.AiderBackend._build_command, src.algitex.tools.autofix.aider_backend.AiderBackend._build_prompt, src.algitex.tools.autofix.aider_backend.AiderBackend._execute_aider, src.algitex.tools.autofix.aider_backend.AiderBackend._process_result, src.algitex.tools.autofix.aider_backend.AiderBackend._dry_run_result, src.algitex.tools.autofix.aider_backend.AiderBackend._timeout_result
 
+### src.algitex.tools.parallel.executor.ParallelExecutor
+> Execute tickets in parallel using git worktrees + region locking.
+- **Methods**: 11
+- **Key Methods**: src.algitex.tools.parallel.executor.ParallelExecutor.__init__, src.algitex.tools.parallel.executor.ParallelExecutor.execute, src.algitex.tools.parallel.executor.ParallelExecutor._dispatch_agents, src.algitex.tools.parallel.executor.ParallelExecutor._create_worktree, src.algitex.tools.parallel.executor.ParallelExecutor._run_agent, src.algitex.tools.parallel.executor.ParallelExecutor._merge_all, src.algitex.tools.parallel.executor.ParallelExecutor._detect_line_drift, src.algitex.tools.parallel.executor.ParallelExecutor._resolve_conflict, src.algitex.tools.parallel.executor.ParallelExecutor._changes_are_disjoint, src.algitex.tools.parallel.executor.ParallelExecutor._parse_diff_ranges
+
 ### src.algitex.tools.autofix.batch_backend.BatchFixBackend
 > Backend do optymalizacji fixów przez grupowanie.
 
@@ -393,11 +403,6 @@ Args:
     base_url: URL do Ollama (domyślnie local
 - **Methods**: 11
 - **Key Methods**: src.algitex.tools.autofix.batch_backend.BatchFixBackend.__init__, src.algitex.tools.autofix.batch_backend.BatchFixBackend.fix_batch, src.algitex.tools.autofix.batch_backend.BatchFixBackend._group_tasks, src.algitex.tools.autofix.batch_backend.BatchFixBackend._process_group, src.algitex.tools.autofix.batch_backend.BatchFixBackend._fix_batch_group, src.algitex.tools.autofix.batch_backend.BatchFixBackend._fix_individual, src.algitex.tools.autofix.batch_backend.BatchFixBackend._fix_single, src.algitex.tools.autofix.batch_backend.BatchFixBackend._build_batch_prompt, src.algitex.tools.autofix.batch_backend.BatchFixBackend._call_llm, src.algitex.tools.autofix.batch_backend.BatchFixBackend._parse_batch_response
-
-### src.algitex.tools.parallel.executor.ParallelExecutor
-> Execute tickets in parallel using git worktrees + region locking.
-- **Methods**: 11
-- **Key Methods**: src.algitex.tools.parallel.executor.ParallelExecutor.__init__, src.algitex.tools.parallel.executor.ParallelExecutor.execute, src.algitex.tools.parallel.executor.ParallelExecutor._dispatch_agents, src.algitex.tools.parallel.executor.ParallelExecutor._create_worktree, src.algitex.tools.parallel.executor.ParallelExecutor._run_agent, src.algitex.tools.parallel.executor.ParallelExecutor._merge_all, src.algitex.tools.parallel.executor.ParallelExecutor._detect_line_drift, src.algitex.tools.parallel.executor.ParallelExecutor._resolve_conflict, src.algitex.tools.parallel.executor.ParallelExecutor._changes_are_disjoint, src.algitex.tools.parallel.executor.ParallelExecutor._parse_diff_ranges
 
 ## Data Transformation Functions
 
@@ -427,9 +432,21 @@ Key functions that process and transform data:
 > Serialize JSON-RPC request with MCP protocol headers.
 - **Output to**: json.dumps, len
 
+### src.algitex.tools.docker_transport.StdioTransport._check_process_alive
+> Raise RuntimeError if the process associated with stdout has exited.
+- **Output to**: hasattr, RuntimeError, stdout._proc.poll, stdout._proc.poll
+
 ### src.algitex.tools.docker_transport.StdioTransport._parse
 > Parse JSON response with error handling.
 - **Output to**: json.loads, RuntimeError, str
+
+### src.algitex.tools.workspace.Workspace._validate_dependencies
+> Validate that all dependencies exist.
+- **Output to**: set, self.repos.items, self.repos.keys, ValueError
+
+### src.algitex.tools.workspace.Workspace.validate_all
+> Run validation across all repositories.
+- **Output to**: self._topo_sort, print, Pipeline, pipeline.validate, pipeline._results.get
 
 ### src.algitex.tools.todo_parser.TodoParser.parse
 > Parse file and return list of pending tasks.
@@ -447,32 +464,12 @@ Key functions that process and transform data:
 > Parse generic list items.
 - **Output to**: set, self.GENERIC_PATTERN.finditer, match.group, None.strip, seen.add
 
-### src.algitex.tools.workspace.Workspace._validate_dependencies
-> Validate that all dependencies exist.
-- **Output to**: set, self.repos.items, self.repos.keys, ValueError
-
-### src.algitex.tools.workspace.Workspace.validate_all
-> Run validation across all repositories.
-- **Output to**: self._topo_sort, print, Pipeline, pipeline.validate, pipeline._results.get
-
 ### src.algitex.tools.context.ContextBuilder._format_ticket
 > Format ticket information.
 - **Output to**: ticket.get, ticket.get, ticket.get, ticket.get
 
 ### src.algitex.tools.services.ServiceChecker._format_status_line
 > Format a single status line.
-
-### src.algitex.tools.logging.format_args
-> Format arguments for display.
-- **Output to**: kwargs.items, None.join, parts.append, parts.append, src.algitex.tools.logging.format_value
-
-### src.algitex.tools.logging.format_value
-> Format a value for display.
-- **Output to**: repr, len
-
-### src.algitex.tools.logging.format_result
-> Format a result for display.
-- **Output to**: repr, len
 
 ### src.algitex.tools.todo_executor.TodoExecutor._parse_action
 > Parse task description to determine MCP action and arguments.
@@ -494,13 +491,21 @@ Key functions that process and transform data:
 > Parse a read/view task.
 - **Output to**: str, str
 
+### src.algitex.tools.logging.format_args
+> Format arguments for display.
+- **Output to**: kwargs.items, None.join, parts.append, parts.append, src.algitex.tools.logging.format_value
+
+### src.algitex.tools.logging.format_value
+> Format a value for display.
+- **Output to**: repr, len
+
+### src.algitex.tools.logging.format_result
+> Format a result for display.
+- **Output to**: repr, len
+
 ### src.algitex.tools.todo_runner.TodoRunner._format_output
 > Extract meaningful output from MCP result.
 - **Output to**: isinstance, isinstance, json.dumps, str, str
-
-### src.algitex.tools.batch.BatchProcessor._process_item
-> Process single item with retry logic.
-- **Output to**: time.time, self._rate_limit, self.worker_func, BatchResult, BatchResult
 
 ## Behavioral Patterns
 
@@ -532,7 +537,7 @@ Key functions that process and transform data:
 ### state_machine_DockerToolManager
 - **Type**: state_machine
 - **Confidence**: 0.70
-- **Functions**: src.algitex.tools.docker.DockerToolManager.__init__, src.algitex.tools.docker.DockerToolManager.__enter__, src.algitex.tools.docker.DockerToolManager.__exit__, src.algitex.tools.docker.DockerToolManager._load_tools, src.algitex.tools.docker.DockerToolManager._load_state
+- **Functions**: src.algitex.tools.docker.DockerToolManager.__init__, src.algitex.tools.docker.DockerToolManager.__enter__, src.algitex.tools.docker.DockerToolManager.__exit__, src.algitex.tools.docker.DockerToolManager._load_tools, src.algitex.tools.docker.DockerToolManager._read_yaml_with_expansion
 
 ### state_machine_OllamaClient
 - **Type**: state_machine
@@ -549,15 +554,15 @@ Key functions that process and transform data:
 - **Confidence**: 0.70
 - **Functions**: src.algitex.tools.services.ServiceChecker.__init__, src.algitex.tools.services.ServiceChecker.check_http_service, src.algitex.tools.services.ServiceChecker.check_ollama, src.algitex.tools.services.ServiceChecker.check_litellm_proxy, src.algitex.tools.services.ServiceChecker.check_mcp_service
 
-### state_machine_VerboseContext
-- **Type**: state_machine
-- **Confidence**: 0.70
-- **Functions**: src.algitex.tools.logging.VerboseContext.__init__, src.algitex.tools.logging.VerboseContext.__enter__, src.algitex.tools.logging.VerboseContext.__exit__
-
 ### state_machine_TodoExecutor
 - **Type**: state_machine
 - **Confidence**: 0.70
 - **Functions**: src.algitex.tools.todo_executor.TodoExecutor.__init__, src.algitex.tools.todo_executor.TodoExecutor.__enter__, src.algitex.tools.todo_executor.TodoExecutor.__exit__, src.algitex.tools.todo_executor.TodoExecutor.run, src.algitex.tools.todo_executor.TodoExecutor._execute_task
+
+### state_machine_VerboseContext
+- **Type**: state_machine
+- **Confidence**: 0.70
+- **Functions**: src.algitex.tools.logging.VerboseContext.__init__, src.algitex.tools.logging.VerboseContext.__enter__, src.algitex.tools.logging.VerboseContext.__exit__
 
 ### state_machine_TodoRunner
 - **Type**: state_machine
@@ -568,11 +573,10 @@ Key functions that process and transform data:
 
 Functions exposed as public API (no underscore prefix):
 
-- `examples.32-workspace-coordination.main.main` - 94 calls
 - `examples.31-abpr-workflow.main.main` - 77 calls
 - `examples.30-parallel-execution.main.main` - 55 calls
-- `examples.33-hybrid-autofix.main.main` - 50 calls
 - `examples.20-self-hosted-pipeline.main.main` - 49 calls
+- `examples.30-parallel-execution.parallel_real_world.main` - 43 calls
 - `examples.14-docker-mcp.main.demo_docker_operations` - 40 calls
 - `examples.05-cost-tracking.main.main` - 40 calls
 - `examples.18-ollama-local.main.main` - 39 calls
@@ -582,7 +586,7 @@ Functions exposed as public API (no underscore prefix):
 - `examples.07-context.main.basic_context_example` - 34 calls
 - `examples.02-algo-loop.main.main` - 33 calls
 - `examples.27-unified-autofix.main.main` - 33 calls
-- `src.algitex.cli.todo.todo_batch` - 31 calls
+- `src.algitex.cli.todo.todo_batch` - 32 calls
 - `src.algitex.todo.hybrid.HybridAutofix.fix_all` - 31 calls
 - `examples.15-github-mcp.main.demo_github_workflow` - 30 calls
 - `examples.06-telemetry.main.basic_telemetry_example` - 30 calls
@@ -594,12 +598,13 @@ Functions exposed as public API (no underscore prefix):
 - `examples.03-pipeline.main.main` - 27 calls
 - `examples.04-ide-integration.main.main` - 26 calls
 - `examples.07-context.main.prompt_engineering_example` - 26 calls
+- `src.algitex.tools.ollama.OllamaClient.chat` - 25 calls
 - `examples.07-context.main.context_optimization_example` - 25 calls
 - `examples.32-workspace-coordination.workspace_parallel.main` - 24 calls
 - `examples.08-feedback.main.feedback_loop_simulation` - 24 calls
+- `src.algitex.tools.ollama.OllamaClient.generate` - 23 calls
 - `examples.23-continue-dev-ollama.main.main` - 23 calls
 - `examples.25-local-model-comparison.main.main` - 23 calls
-- `src.algitex.tools.ollama.OllamaClient.chat` - 22 calls
 - `src.algitex.cli.parallel.parallel` - 22 calls
 - `examples.11-aider-mcp.main.demo_refactoring` - 22 calls
 - `examples.34-batch-fix.main.main` - 22 calls
@@ -616,11 +621,11 @@ How components interact:
 ```mermaid
 graph TD
     main --> print
-    main --> load_workspace_confi
     main --> str
     main --> Project
-    main --> ArgumentParser
-    main --> add_argument
+    main --> TemporaryDirectory
+    main --> Path
+    main --> setup_sample_project
     demo_docker_operatio --> print
     demo_docker_operatio --> create_sample_docker
     demo_docker_operatio --> iterdir
@@ -640,8 +645,11 @@ graph TD
     main --> Loop
     main --> discover
     main --> report
+    main --> ArgumentParser
+    main --> add_argument
     main --> parse_args
     todo_batch --> Option
+    fix_all --> start_operation
 ```
 
 ## Reverse Engineering Guidelines

@@ -21,6 +21,7 @@ from pathlib import Path
 from typing import Optional
 
 from algitex.tools.autofix.base import FixResult, Task
+from algitex.todo.fixer import mark_tasks_completed
 from algitex.tools.ollama import OllamaService, OllamaClient
 
 
@@ -43,7 +44,7 @@ class BatchFixBackend:
         timeout: Timeout w sekundach
     """
     
-    DEFAULT_TIMEOUT = 120.0
+    DEFAULT_TIMEOUT = 300.0  # 5 minut - większe pliki potrzebują więcej czasu
     MAX_FILES_PER_BATCH = 5
     
     def __init__(
@@ -74,11 +75,28 @@ class BatchFixBackend:
         """
         start_time = time.time()
         
+        # Auto-backup przed rozpoczęciem (jeśli nie dry_run)
+        if not self.dry_run:
+            backup_dir = self._create_backup()
+            print(f"💾 Backup utworzony: {backup_dir}")
+        
+        # Pre-flight: sprawdź składnię wszystkich plików Python
+        if not self.dry_run:
+            self._preflight_syntax_check(tasks)
+        
         # Grupuj zadania według kategorii
         groups = self._group_tasks(tasks)
         total_groups = len(groups)
         print(f"📦 BatchFix: {len(tasks)} zadań → {total_groups} grup")
         print(f"⚡ Równoległość: {max_parallel} grup na raz\n")
+        
+        # Weryfikacja: sprawdź które zadania są nadal aktualne
+        print("🔍 Weryfikacja TODO: Sprawdzam które problemy nadal istnieją...")
+        tasks = self._verify_tasks_exist(tasks)
+        if not tasks:
+            print("   ✓ Wszystkie problemy zostały już naprawione!")
+            return []
+        print(f"   📋 Pozostało {len(tasks)} aktualnych zadań\n")
         
         results = []
         completed = 0
@@ -113,7 +131,157 @@ class BatchFixBackend:
         
         elapsed = time.time() - start_time
         print(f"\n✓ BatchFix zakończony: {len(results)} wyników w {elapsed:.1f}s")
+        
+        # Aktualizacja TODO.md - oznacz naprawione zadania jako zrobione
+        if not self.dry_run:
+            self._update_todo_mark_completed(tasks, results, elapsed)
+        
         return results
+    
+    def _update_todo_mark_completed(self, tasks: list[Task], results: list[FixResult], elapsed: float) -> None:
+        """Oznacz naprawione zadania jako zrobione w TODO.md."""
+        from algitex.todo.fixer import TodoTask, parse_todo
+        
+        # Znajdź zadania które zostały naprawione (success=True)
+        completed_task_ids = set()
+        for r in results:
+            if r.success:
+                # Dodaj ID zadania do listy ukończonych
+                completed_task_ids.add(r.task_id)
+        
+        if not completed_task_ids:
+            print("\n⚠️  Żadne zadania nie zostały naprawione - TODO.md nie zostanie zaktualizowane")
+            return
+        
+        # Konwertuj Task (z autofix) na TodoTask (z fixer)
+        todo_tasks = parse_todo("TODO.md")
+        completed_todo_tasks = []
+        
+        for task in todo_tasks:
+            task_id = f"{task.file}:{task.line}"
+            if task_id in completed_task_ids:
+                completed_todo_tasks.append(task)
+        
+        if completed_todo_tasks:
+            marked = mark_tasks_completed("TODO.md", completed_todo_tasks)
+            print(f"\n📝 Zaktualizowano TODO.md: {marked}/{len(completed_task_ids)} zadań oznaczonych jako ukończone")
+        else:
+            print(f"\n⚠️  Nie znaleziono zadań w TODO.md do oznaczenia (może format jest inny)")
+    
+    def _create_backup(self) -> str:
+        """Utwórz backup wszystkich plików Python przed batch."""
+        from datetime import datetime
+        import shutil
+        
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        backup_dir = Path(f".algitex/backups/batch_{timestamp}")
+        backup_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Znajdź wszystkie pliki .py w projekcie
+        py_files = list(Path(".").rglob("*.py"))
+        py_files = [f for f in py_files if not str(f).startswith(".")]
+        
+        for py_file in py_files:
+            try:
+                dest = backup_dir / py_file
+                dest.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(py_file, dest)
+            except Exception:
+                pass  # Pomijamy pliki których nie można skopiować
+        
+        return str(backup_dir)
+    
+    def _preflight_syntax_check(self, tasks: list[Task]) -> None:
+        """Sprawdź składnię wszystkich plików Python przed batch."""
+        print("🔍 Pre-flight: Sprawdzanie składni plików...")
+        
+        # Znajdź unikalne pliki Python
+        py_files = set()
+        for task in tasks:
+            if task.file_path.endswith('.py'):
+                py_files.add(task.file_path)
+        
+        if not py_files:
+            print("   ℹ️  Brak plików Python do sprawdzenia")
+            return
+        
+        errors = []
+        for filepath in sorted(py_files):
+            try:
+                path = Path(filepath)
+                if not path.exists():
+                    continue
+                    
+                # Sprawdź składnię przez py_compile
+                import py_compile
+                import tempfile
+                import os
+                
+                # Kopiuj do temp i sprawdź
+                with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as tmp:
+                    tmp.write(path.read_text())
+                    tmp_path = tmp.name
+                
+                try:
+                    py_compile.compile(tmp_path, doraise=True)
+                finally:
+                    os.unlink(tmp_path)
+                    
+            except py_compile.PyCompileError as e:
+                errors.append(f"   ✗ {filepath}: {e}")
+            except Exception as e:
+                errors.append(f"   WARN {filepath}: {e}")
+        
+        if errors:
+            print("\n".join(errors[:5]))  # Pokaż max 5 błędów
+            if len(errors) > 5:
+                print(f"   ... i {len(errors) - 5} wiecej bledow")
+            print("\n⚠️  Znaleziono błędy składniowe! Napraw je przed batch fix.")
+            # Nie przerywamy
+        else:
+            print(f"   ✓ Sprawdzono {len(py_files)} plików - brak błędów składniowych")
+    
+    def _verify_tasks_exist(self, tasks: list[Task]) -> list[Task]:
+        """Sprawdź które zadania nadal istnieją w kodzie (nie są już naprawione)."""
+        import py_compile
+        import tempfile
+        import os
+        
+        verified = []
+        for task in tasks:
+            filepath = task.file_path
+            try:
+                path = Path(filepath)
+                if not path.exists():
+                    continue  # Plik nie istnieje - zadanie nieaktualne
+                
+                # Sprawdź czy problem nadal występuje
+                content = path.read_text()
+                
+                # Dla unused_import - sprawdź czy import wciąż jest unused
+                if "unused" in task.description.lower() or "unused_import" in str(task.id):
+                    # Prosta heurystyka: sprawdź czy linia wciąż zawiera "import"
+                    lines = content.split('\n')
+                    line_no = task.line_number - 1 if task.line_number else 0
+                    if 0 <= line_no < len(lines):
+                        line = lines[line_no]
+                        if "import" in line and not line.strip().startswith("#"):
+                            verified.append(task)
+                        else:
+                            print(f"   ✓ Już naprawione: {filepath}:{task.line_number}")
+                    else:
+                        # Linia nie istnieje - prawdopodobnie naprawione
+                        print(f"   ✓ Już naprawione: {filepath}:{task.line_number}")
+                else:
+                    # Dla innych typów - zakładamy że problem istnieje
+                    verified.append(task)
+                    
+            except Exception as e:
+                # Błąd odczytu - pomijamy zadanie
+                print(f"   ⚠️  Błąd weryfikacji {filepath}: {e}")
+                continue
+        
+        return verified
     
     def _group_tasks(self, tasks: list[Task]) -> list[TaskGroup]:
         """Grupuj zadania według podobieństwa."""
@@ -333,59 +501,77 @@ Format:
 <fixed content>
 """
     
-    def _call_llm(self, prompt: str, model: str) -> str:
-        """Wywołaj LLM z spinnerem pokazującym że pracuje."""
-        response_container = [None]
-        error_container = [None]
+    def _call_llm(self, prompt: str, model: str, max_retries: int = 2) -> str:
+        """Wywołaj LLM z spinnerem i retry dla timeoutów."""
         
-        def call_llm():
-            try:
-                response_container[0] = self.service.client.generate(
-                    prompt=prompt,
-                    model=model,
-                    temperature=0.3
-                )
-            except Exception as e:
-                error_container[0] = e
-        
-        # Start LLM call in thread
-        thread = threading.Thread(target=call_llm)
-        thread.start()
-        
-        # Spinner pokazujący postęp
-        spinner = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏']
-        i = 0
-        start = time.time()
-        
-        sys.stdout.write(f"      🤖 LLM: {model} ")
-        sys.stdout.flush()
-        
-        while thread.is_alive():
-            elapsed = time.time() - start
-            sys.stdout.write(f"\r      🤖 LLM: {model} {spinner[i % len(spinner)]} {elapsed:.0f}s/{self.timeout:.0f}s")
-            sys.stdout.flush()
-            time.sleep(0.1)
-            i += 1
+        for attempt in range(max_retries + 1):
+            response_container = [None]
+            error_container = [None]
             
-            if elapsed > self.timeout:
-                sys.stdout.write(f"\r      ✗ LLM timeout po {elapsed:.0f}s\n")
+            def call_llm():
+                try:
+                    response_container[0] = self.service.client.generate(
+                        prompt=prompt,
+                        model=model,
+                        temperature=0.3
+                    )
+                except Exception as e:
+                    error_container[0] = e
+            
+            # Start LLM call in thread
+            thread = threading.Thread(target=call_llm)
+            thread.start()
+            
+            # Spinner pokazujący postęp
+            spinner = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏']
+            i = 0
+            start = time.time()
+            
+            if attempt == 0:
+                sys.stdout.write(f"      🤖 LLM: {model} ")
+            else:
+                sys.stdout.write(f"      🔄 Retry {attempt}/{max_retries}: {model} ")
+            sys.stdout.flush()
+            
+            while thread.is_alive():
+                elapsed = time.time() - start
+                sys.stdout.write(f"\r      🤖 LLM: {model} {spinner[i % len(spinner)]} {elapsed:.0f}s/{self.timeout:.0f}s")
                 sys.stdout.flush()
-                raise TimeoutError(f"LLM call exceeded {self.timeout}s timeout")
+                time.sleep(0.1)
+                i += 1
+                
+                if elapsed > self.timeout:
+                    sys.stdout.write(f"\r      ✗ LLM timeout po {elapsed:.0f}s\n")
+                    sys.stdout.flush()
+                    break
+            
+            thread.join(timeout=1.0)  # Daj czas na zakończenie
+            
+            # Jeśli timeout i mamy retry, spróbuj ponownie z większym timeout
+            if not response_container[0] and attempt < max_retries:
+                print(f"\n      ⏱️  Timeout - retry {attempt + 1}/{max_retries} z timeout={self.timeout * 1.5:.0f}s")
+                self.timeout *= 1.5  # Zwiększ timeout dla retry
+                continue
+            
+            if error_container[0]:
+                if attempt < max_retries:
+                    print(f"\n      ⚠️  Błąd: {error_container[0]} - retry {attempt + 1}/{max_retries}")
+                    time.sleep(2 ** attempt)  # Exponential backoff
+                    continue
+                raise error_container[0]
+            
+            elapsed = time.time() - start
+            sys.stdout.write(f"\r      ✓ LLM: {elapsed:.1f}s{' ' * 20}\n")
+            sys.stdout.flush()
+            
+            return response_container[0].content
         
-        thread.join()
-        
-        if error_container[0]:
-            raise error_container[0]
-        
-        elapsed = time.time() - start
-        sys.stdout.write(f"\r      ✓ LLM: {elapsed:.1f}s{' ' * 20}\n")
-        sys.stdout.flush()
-        
-        return response_container[0].content
+        raise TimeoutError(f"LLM call exceeded timeout after {max_retries} retries")
     
     def _parse_batch_response(self, response: str, group: TaskGroup) -> dict[str, bool]:
         """Parsuj odpowiedź batch i zastosuj fixy."""
         results = {}
+        backups = {}  # filepath -> original content
         
         # Parsuj sekcje === FIXED: path ===
         import re
@@ -394,10 +580,20 @@ Format:
         
         for filepath, fixed_content in matches:
             filepath = filepath.strip()
+            fixed_content = fixed_content.strip()
             try:
-                Path(filepath).write_text(fixed_content.strip())
+                path = Path(filepath)
+                # Backup przed zapisem
+                if path.exists():
+                    backups[filepath] = path.read_text()
+                else:
+                    backups[filepath] = None  # Nowy plik
+                
+                path.write_text(fixed_content)
                 results[filepath] = True
-            except Exception:
+                print(f"     ✓ Zapisano: {filepath}")
+            except Exception as e:
+                print(f"     ✗ Błąd zapisu {filepath}: {e}")
                 results[filepath] = False
         
         # Oznacz pliki bez odpowiedzi jako failed
@@ -405,7 +601,59 @@ Format:
             if task.file_path not in results:
                 results[task.file_path] = False
         
+        
+        # Walidacja i rollback jeśli potrzeba
+        if results and any(results.values()):
+            self._validate_and_rollback(results, backups)
         return results
+    
+    def _validate_and_rollback(self, results: dict, backups: dict) -> None:
+        """Waliduj pliki przez vallm i rollbackuj jeśli błędy."""
+        try:
+            import importlib
+            vallm = importlib.import_module("vallm")
+        except ImportError:
+            print("     ⚠️  vallm nie jest zainstalowany - pominięto walidację")
+            return
+        
+        for filepath, success in list(results.items()):
+            if not success:
+                continue
+            
+            try:
+                # Waliduj plik
+                validation = vallm.validate_file(filepath)
+                
+                if not validation.is_valid:
+                    print(f"     ⚠️  Walidacja nie przeszła dla {filepath}:")
+                    for error in validation.errors[:3]:  # Pokaż max 3 błędy
+                        print(f"        - {error}")
+                    
+                    # Rollback - przywróć oryginalną zawartość
+                    original = backups.get(filepath)
+                    if original is not None:
+                        Path(filepath).write_text(original)
+                        print(f"     ↩️  Rollback: {filepath}")
+                    else:
+                        # Nowy plik - usuń
+                        Path(filepath).unlink(missing_ok=True)
+                        print(f"     🗑️  Usunięto nowy plik: {filepath}")
+                    
+                    results[filepath] = False
+                else:
+                    print(f"     ✓ Walidacja OK: {filepath}")
+                    
+            except Exception as e:
+                print(f"     ⚠️  Błąd walidacji {filepath}: {e}")
+                # W przypadku błędu walidacji robimy rollback dla bezpieczeństwa
+                original = backups.get(filepath)
+                if original is not None:
+                    try:
+                        Path(filepath).write_text(original)
+                        print(f"     ↩️  Rollback (bezpieczeństwo): {filepath}")
+                        results[filepath] = False
+                    except Exception:
+                        pass
     
     def _ensure_model(self) -> Optional[str]:
         """Wybierz model."""
