@@ -17,7 +17,7 @@ import os
 from pathlib import Path
 
 
-def load_env():
+def load_env() -> None:
     """Load .env file if present."""
     env_file = Path(__file__).parent / ".env"
     if env_file.exists():
@@ -37,7 +37,7 @@ PROXY_URL = os.getenv("PROXY_URL", "http://localhost:4000")
 API_KEY = os.getenv("API_KEY", "sk-proxy-local-dev")
 
 
-def roo_code_config():
+def roo_code_config() -> None:
     """Settings for Roo Code (VS Code extension)."""
     return {
         "roo-code.provider": "openai-compatible",

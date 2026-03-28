@@ -11,7 +11,7 @@ Run:
 from algitex import Pipeline
 
 
-def main():
+def main() -> None:
     print("=== Pipeline Demo ===\n")
 
     # Pattern A: Full pipeline

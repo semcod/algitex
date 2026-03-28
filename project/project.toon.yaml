@@ -1,9 +1,9 @@
-# algitex | 173 func | 14f | 4568L | python | 2026-03-28
+# algitex | 238 func | 19f | 8450L | python | 2026-03-28
 
 HEALTH:
-  CC̄=3.1  critical=4 (limit:10)  dup=0  cycles=1
+  CC̄=3.4  critical=9 (limit:10)  dup=1  cycles=1
 
-ALERTS[17]:
+ALERTS[20]:
   !!  high_fan_out     Project.status = 18 (limit:10)
   !!  high_fan_out     init = 16 (limit:10)
   !!  high_fan_out     DockerToolManager.get_capabilities = 16 (limit:10)
@@ -13,25 +13,25 @@ ALERTS[17]:
   !   high_fan_out     Workflow._exec_rest = 13 (limit:10)
   !   high_fan_out     DockerToolManager._load_tools = 12 (limit:10)
   !   high_fan_out     DockerToolManager._call_stdio = 12 (limit:10)
-  !   high_fan_out     ContextBuilder._find_related = 11 (limit:10)
+  !   high_fan_out     todo_run = 11 (limit:10)
 
-MODULES[19] (top by size):
+MODULES[24] (top by size):
+  M[src/algitex/cli.py] 567L C:0 F:25 CC↑12 D:0 (python)
   M[src/algitex/tools/docker.py] 462L C:3 F:23 CC↑10 D:0 (python)
-  M[src/algitex/cli.py] 452L C:0 F:22 CC↑5 D:0 (python)
+  M[src/algitex/tools/cicd.py] 405L C:1 F:11 CC↑5 D:1 (python)
   M[src/algitex/propact/__init__.py] 397L C:3 F:12 CC↑16 D:0 (python)
   M[src/algitex/algo/__init__.py] 369L C:5 F:12 CC↑9 D:0 (python)
-  M[src/algitex/workflows/__init__.py] 330L C:3 F:20 CC↑4 D:0 (python)
+  M[src/algitex/tools/workspace.py] 338L C:2 F:17 CC↑6 D:1 (python)
+  M[src/algitex/workflows/__init__.py] 320L C:3 F:19 CC↑4 D:0 (python)
+  M[src/algitex/tools/todo_runner.py] 302L C:2 F:13 CC↑13 D:0 (python)
   M[src/algitex/project.py] 294L C:1 F:12 CC↑6 D:0 (python)
-  M[src/algitex/tools/tickets.py] 246L C:2 F:11 CC↑5 D:3 (python)
-  M[src/algitex/tools/feedback.py] 219L C:4 F:12 CC↑8 D:0 (python)
+  M[src/algitex/tools/feedback.py] 252L C:4 F:12 CC↑8 D:0 (python)
+  M[src/algitex/tools/tickets.py] 246L C:2 F:11 CC↑5 D:4 (python)
+  M[src/algitex/tools/todo_executor.py] 240L C:2 F:12 CC↑13 D:0 (python)
   M[src/algitex/tools/context.py] 206L C:3 F:14 CC↑7 D:0 (python)
+  M[src/algitex/tools/todo_parser.py] 206L C:2 F:8 CC↑7 D:0 (python)
   M[src/algitex/tools/analysis.py] 182L C:3 F:8 CC↑7 D:0 (python)
-  M[src/algitex/config.py] 170L C:4 F:7 CC↑10 D:0 (python)
-  M[src/algitex/tools/proxy.py] 145L C:2 F:9 CC↑9 D:0 (python)
-  M[src/algitex/tools/telemetry.py] 140L C:2 F:7 CC↑4 D:0 (python)
-  M[src/algitex/tools/__init__.py] 102L C:1 F:4 CC↑4 D:3 (python)
-  M[src/algitex/__init__.py] 36L C:0 F:0 CC↑0 D:0 (python)
-  LANGS: python:18/shell:1
+  LANGS: python:23/shell:1
 
 HOTSPOTS[10]:
   ★ Project.status fan=18  // Full project status: health + tickets + budget + algo progress.
@@ -40,12 +40,12 @@ HOTSPOTS[10]:
   ★ Workflow.execute fan=14  // Execute all steps in the workflow.
   ★ Workflow.parse fan=13  // Parse Markdown into executable steps.
 
-REFACTOR[5]:
-  [1] M/L Split Workflow.execute (CC=16 → target CC<10)
-  [2] M/L Break circular dependency: src.algitex.tools.tickets.Tickets.list
-  [3] M/M Reduce Project.status fan-out (currently 18)
-  [4] M/M Reduce init fan-out (currently 16)
-  [5] M/M Reduce DockerToolManager.get_capabilities fan-out (currently 16)
+REFACTOR[6]:
+  [1] H/H Split god module src/algitex/cli.py (567L, 0 classes)
+  [2] M/L Split Workflow.execute (CC=16 → target CC<10)
+  [3] M/L Break circular dependency: src.algitex.tools.tickets.Tickets.list
+  [4] M/M Reduce Project.status fan-out (currently 18)
+  [5] M/M Reduce init fan-out (currently 16)
 
 EVOLUTION:
-  2026-03-28 CC̄=3.1 crit=4 4568L // Automated analysis
+  2026-03-28 CC̄=3.4 crit=9 8450L // Automated analysis

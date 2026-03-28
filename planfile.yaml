@@ -771,3 +771,744 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
+  - id: ticket-b13ac26d
+    name: Fix smart-return-type issues
+    description: Resolve 4 smart-return-type issues in examples/06-telemetry/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - examples/06-telemetry/main.py
+    rule_id: smart-return-type
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b6154bd8
+    name: Fix string-concat issues
+    description: Resolve 3 string-concat issues in examples/06-telemetry/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/06-telemetry/main.py
+    rule_id: string-concat
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-c01d9d96
+    name: Fix unused-imports issues
+    description: Resolve 4 unused-imports issues in examples/06-telemetry/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - examples/06-telemetry/main.py
+    rule_id: unused-imports
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-e7b01c91
+    name: Fix magic-numbers issues
+    description: Resolve 15 magic-numbers issues in examples/06-telemetry/main.py
+    task_type: prefactor
+    priority: high
+    estimate: 3d
+    files:
+    - examples/06-telemetry/main.py
+    rule_id: magic-numbers
+    count: 15
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-3101b058
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in examples/06-telemetry/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/06-telemetry/main.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-5009f61c
+    name: Fix smart-return-type issues
+    description: Resolve 5 smart-return-type issues in examples/07-context/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - examples/07-context/main.py
+    rule_id: smart-return-type
+    count: 5
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-f5dddb92
+    name: Fix string-concat issues
+    description: Resolve 2 string-concat issues in examples/07-context/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/07-context/main.py
+    rule_id: string-concat
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-ca6c0459
+    name: Fix unused-imports issues
+    description: Resolve 4 unused-imports issues in examples/07-context/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - examples/07-context/main.py
+    rule_id: unused-imports
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-de4e9765
+    name: Fix magic-numbers issues
+    description: Resolve 6 magic-numbers issues in examples/07-context/main.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - examples/07-context/main.py
+    rule_id: magic-numbers
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-469fb49c
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in examples/07-context/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/07-context/main.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-92a69211
+    name: Fix smart-return-type issues
+    description: Resolve 9 smart-return-type issues in examples/08-feedback/main.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - examples/08-feedback/main.py
+    rule_id: smart-return-type
+    count: 9
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-15573678
+    name: Fix string-concat issues
+    description: Resolve 4 string-concat issues in examples/08-feedback/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - examples/08-feedback/main.py
+    rule_id: string-concat
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-2a2a5dcf
+    name: Fix magic-numbers issues
+    description: Resolve 7 magic-numbers issues in examples/08-feedback/main.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - examples/08-feedback/main.py
+    rule_id: magic-numbers
+    count: 7
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b6355432
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in examples/08-feedback/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/08-feedback/main.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-a4b57606
+    name: Fix smart-return-type issues
+    description: Resolve 7 smart-return-type issues in examples/09-workspace/main.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - examples/09-workspace/main.py
+    rule_id: smart-return-type
+    count: 7
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-f5222ab8
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in examples/09-workspace/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/09-workspace/main.py
+    rule_id: string-concat
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-4e97a4c7
+    name: Fix unused-imports issues
+    description: Resolve 8 unused-imports issues in examples/09-workspace/main.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - examples/09-workspace/main.py
+    rule_id: unused-imports
+    count: 8
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-dc4797ed
+    name: Fix magic-numbers issues
+    description: Resolve 4 magic-numbers issues in examples/09-workspace/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - examples/09-workspace/main.py
+    rule_id: magic-numbers
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-f317f5d7
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in examples/09-workspace/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/09-workspace/main.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-302e1d76
+    name: Fix smart-return-type issues
+    description: Resolve 8 smart-return-type issues in examples/10-cicd/main.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - examples/10-cicd/main.py
+    rule_id: smart-return-type
+    count: 8
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-cb71e097
+    name: Fix string-concat issues
+    description: Resolve 3 string-concat issues in examples/10-cicd/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/10-cicd/main.py
+    rule_id: string-concat
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-33b88bc8
+    name: Fix unused-imports issues
+    description: Resolve 8 unused-imports issues in examples/10-cicd/main.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - examples/10-cicd/main.py
+    rule_id: unused-imports
+    count: 8
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-30938831
+    name: Fix duplicate-imports issues
+    description: Resolve 1 duplicate-imports issues in examples/10-cicd/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/10-cicd/main.py
+    rule_id: duplicate-imports
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-f745ddc2
+    name: Fix magic-numbers issues
+    description: Resolve 13 magic-numbers issues in examples/10-cicd/main.py
+    task_type: prefactor
+    priority: high
+    estimate: 3d
+    files:
+    - examples/10-cicd/main.py
+    rule_id: magic-numbers
+    count: 13
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-544b55ab
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in examples/10-cicd/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/10-cicd/main.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-56afc39a
+    name: Fix smart-return-type issues
+    description: Resolve 2 smart-return-type issues in src/algitex/tools/cicd.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/cicd.py
+    rule_id: smart-return-type
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-23e7f828
+    name: Fix unused-imports issues
+    description: Resolve 14 unused-imports issues in src/algitex/tools/cicd.py
+    task_type: prefactor
+    priority: high
+    estimate: 3d
+    files:
+    - src/algitex/tools/cicd.py
+    rule_id: unused-imports
+    count: 14
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-13a728e8
+    name: Fix smart-return-type issues
+    description: Resolve 3 smart-return-type issues in src/algitex/tools/workspace.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/workspace.py
+    rule_id: smart-return-type
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-ffeeac6c
+    name: Fix unused-imports issues
+    description: Resolve 10 unused-imports issues in src/algitex/tools/workspace.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - src/algitex/tools/workspace.py
+    rule_id: unused-imports
+    count: 10
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b2f85770
+    name: Fix smart-return-type issues
+    description: Resolve 4 smart-return-type issues in examples/11-aider-mcp/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - examples/11-aider-mcp/main.py
+    rule_id: smart-return-type
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-222f0321
+    name: Fix llm-generated-code issues
+    description: Resolve 2 llm-generated-code issues in examples/11-aider-mcp/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/11-aider-mcp/main.py
+    rule_id: llm-generated-code
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-32a4b0d6
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in examples/11-aider-mcp/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/11-aider-mcp/main.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-90f71cf0
+    name: Fix smart-return-type issues
+    description: Resolve 3 smart-return-type issues in examples/12-filesystem-mcp/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/12-filesystem-mcp/main.py
+    rule_id: smart-return-type
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-33aa44cf
+    name: Fix llm-generated-code issues
+    description: Resolve 2 llm-generated-code issues in examples/12-filesystem-mcp/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/12-filesystem-mcp/main.py
+    rule_id: llm-generated-code
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-3c2f8268
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in examples/12-filesystem-mcp/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/12-filesystem-mcp/main.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-38cf6894
+    name: Fix smart-return-type issues
+    description: Resolve 3 smart-return-type issues in examples/13-vallm/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/13-vallm/main.py
+    rule_id: smart-return-type
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-72bda1ed
+    name: Fix llm-generated-code issues
+    description: Resolve 2 llm-generated-code issues in examples/13-vallm/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/13-vallm/main.py
+    rule_id: llm-generated-code
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-7c89be77
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in examples/13-vallm/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/13-vallm/main.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-875e2047
+    name: Fix smart-return-type issues
+    description: Resolve 3 smart-return-type issues in examples/14-docker-mcp/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/14-docker-mcp/main.py
+    rule_id: smart-return-type
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-c26c99db
+    name: Fix llm-generated-code issues
+    description: Resolve 2 llm-generated-code issues in examples/14-docker-mcp/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/14-docker-mcp/main.py
+    rule_id: llm-generated-code
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-ed183e4f
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in examples/14-docker-mcp/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/14-docker-mcp/main.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-345bf1dc
+    name: Fix smart-return-type issues
+    description: Resolve 4 smart-return-type issues in examples/15-github-mcp/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - examples/15-github-mcp/main.py
+    rule_id: smart-return-type
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-4082c7d5
+    name: Fix magic-numbers issues
+    description: Resolve 1 magic-numbers issues in examples/15-github-mcp/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/15-github-mcp/main.py
+    rule_id: magic-numbers
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-79c618ca
+    name: Fix llm-generated-code issues
+    description: Resolve 2 llm-generated-code issues in examples/15-github-mcp/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/15-github-mcp/main.py
+    rule_id: llm-generated-code
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-c87a22f8
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in examples/15-github-mcp/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/15-github-mcp/main.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-ce0ee8de
+    name: Fix smart-return-type issues
+    description: Resolve 5 smart-return-type issues in examples/16-test-workflow/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - examples/16-test-workflow/main.py
+    rule_id: smart-return-type
+    count: 5
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-21d3d406
+    name: Fix llm-generated-code issues
+    description: Resolve 1 llm-generated-code issues in examples/16-test-workflow/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/16-test-workflow/main.py
+    rule_id: llm-generated-code
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-0508a86e
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in examples/16-test-workflow/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/16-test-workflow/main.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-adef90dd
+    name: Fix smart-return-type issues
+    description: Resolve 5 smart-return-type issues in examples/17-docker-workflow/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - examples/17-docker-workflow/main.py
+    rule_id: smart-return-type
+    count: 5
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-75c3b9b5
+    name: Fix llm-generated-code issues
+    description: Resolve 1 llm-generated-code issues in examples/17-docker-workflow/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/17-docker-workflow/main.py
+    rule_id: llm-generated-code
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b94a4047
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in examples/17-docker-workflow/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/17-docker-workflow/main.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-276cd26f
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in src/algitex/cli.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/cli.py
+    rule_id: string-concat
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-2121708b
+    name: Fix magic-numbers issues
+    description: Resolve 1 magic-numbers issues in src/algitex/tools/cicd.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/cicd.py
+    rule_id: magic-numbers
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-41436d23
+    name: Fix unused-imports issues
+    description: Resolve 4 unused-imports issues in src/algitex/tools/todo_executor.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - src/algitex/tools/todo_executor.py
+    rule_id: unused-imports
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-e5f4404e
+    name: Fix magic-numbers issues
+    description: Resolve 1 magic-numbers issues in src/algitex/tools/todo_executor.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/todo_executor.py
+    rule_id: magic-numbers
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-05998dfb
+    name: Fix unused-imports issues
+    description: Resolve 8 unused-imports issues in src/algitex/tools/todo_runner.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - src/algitex/tools/todo_runner.py
+    rule_id: unused-imports
+    count: 8
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-e71467ad
+    name: Fix magic-numbers issues
+    description: Resolve 6 magic-numbers issues in src/algitex/tools/todo_runner.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - src/algitex/tools/todo_runner.py
+    rule_id: magic-numbers
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced

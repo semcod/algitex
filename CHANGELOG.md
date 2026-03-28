@@ -8,6 +8,71 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.10] - 2026-03-28
 
 ### Fixed
+- Fix smart-return-type issues (ticket-b2f85770)
+- Fix llm-generated-code issues (ticket-222f0321)
+- Fix ai-boilerplate issues (ticket-32a4b0d6)
+- Fix smart-return-type issues (ticket-90f71cf0)
+- Fix llm-generated-code issues (ticket-33aa44cf)
+- Fix ai-boilerplate issues (ticket-3c2f8268)
+- Fix smart-return-type issues (ticket-38cf6894)
+- Fix llm-generated-code issues (ticket-72bda1ed)
+- Fix ai-boilerplate issues (ticket-7c89be77)
+- Fix smart-return-type issues (ticket-875e2047)
+- Fix llm-generated-code issues (ticket-c26c99db)
+- Fix ai-boilerplate issues (ticket-ed183e4f)
+- Fix smart-return-type issues (ticket-345bf1dc)
+- Fix magic-numbers issues (ticket-4082c7d5)
+- Fix llm-generated-code issues (ticket-79c618ca)
+- Fix ai-boilerplate issues (ticket-c87a22f8)
+- Fix smart-return-type issues (ticket-ce0ee8de)
+- Fix llm-generated-code issues (ticket-21d3d406)
+- Fix ai-boilerplate issues (ticket-0508a86e)
+- Fix smart-return-type issues (ticket-adef90dd)
+- Fix llm-generated-code issues (ticket-75c3b9b5)
+- Fix ai-boilerplate issues (ticket-b94a4047)
+- Fix string-concat issues (ticket-276cd26f)
+- Fix magic-numbers issues (ticket-2121708b)
+- Fix unused-imports issues (ticket-41436d23)
+- Fix magic-numbers issues (ticket-e5f4404e)
+- Fix unused-imports issues (ticket-05998dfb)
+- Fix magic-numbers issues (ticket-e71467ad)
+
+## [0.1.10] - 2026-03-28
+
+### Fixed
+- Fix smart-return-type issues (ticket-b13ac26d)
+- Fix string-concat issues (ticket-b6154bd8)
+- Fix unused-imports issues (ticket-c01d9d96)
+- Fix magic-numbers issues (ticket-e7b01c91)
+- Fix ai-boilerplate issues (ticket-3101b058)
+- Fix smart-return-type issues (ticket-5009f61c)
+- Fix string-concat issues (ticket-f5dddb92)
+- Fix unused-imports issues (ticket-ca6c0459)
+- Fix magic-numbers issues (ticket-de4e9765)
+- Fix ai-boilerplate issues (ticket-469fb49c)
+- Fix smart-return-type issues (ticket-92a69211)
+- Fix string-concat issues (ticket-15573678)
+- Fix magic-numbers issues (ticket-2a2a5dcf)
+- Fix ai-boilerplate issues (ticket-b6355432)
+- Fix smart-return-type issues (ticket-a4b57606)
+- Fix string-concat issues (ticket-f5222ab8)
+- Fix unused-imports issues (ticket-4e97a4c7)
+- Fix magic-numbers issues (ticket-dc4797ed)
+- Fix ai-boilerplate issues (ticket-f317f5d7)
+- Fix smart-return-type issues (ticket-302e1d76)
+- Fix string-concat issues (ticket-cb71e097)
+- Fix unused-imports issues (ticket-33b88bc8)
+- Fix duplicate-imports issues (ticket-30938831)
+- Fix magic-numbers issues (ticket-f745ddc2)
+- Fix ai-boilerplate issues (ticket-544b55ab)
+- Fix smart-return-type issues (ticket-56afc39a)
+- Fix unused-imports issues (ticket-23e7f828)
+- Fix smart-return-type issues (ticket-13a728e8)
+- Fix unused-imports issues (ticket-ffeeac6c)
+
+## [0.1.10] - 2026-03-28
+
+### Fixed
 - Fix smart-return-type issues (ticket-73222882)
 - Fix string-concat issues (ticket-5759fc4e)
 - Fix unused-imports issues (ticket-da8d593f)
@@ -76,6 +141,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix llm-generated-code issues (ticket-06d0712f)
 
 ## [Unreleased]
+
+## [0.1.9] - 2026-03-28
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update TODO.md
+- Update docker/README.md
+- Update docs/README.md
+- Update docs/todo.md
+- Update examples/01-aider-mcp-example.md
+- Update examples/02-filesystem-mcp-example.md
+- Update examples/03-vallm-example.md
+- Update examples/04-docker-mcp-example.md
+- ... and 13 more files
+
+### Test
+- Update tests/test_context.py
+- Update tests/test_e2e_integration.py
+- Update tests/test_feedback.py
+- Update tests/test_integration_extended.py
+
+### Other
+- Update docker-compose.mcp.yml
+- Update docker-tools.yaml
+- Update docker/aider-mcp/Dockerfile
+- Update docker/aider-mcp/aider_mcp_server.py
+- Update docker/code2llm/Dockerfile
+- Update docker/code2llm/code2llm_mcp_server.py
+- Update docker/code2llm/code2llm_server.py
+- Update docker/docker-compose.yml
+- Update docker/mcp/audio/Dockerfile
+- Update docker/mcp/brave-search/Dockerfile
+- ... and 73 more files
 
 ## [0.1.8] - 2026-03-28
 

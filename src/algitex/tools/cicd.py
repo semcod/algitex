@@ -167,6 +167,15 @@ class CICDGenerator:
                     "reports": {"junit": "test-results.xml", "coverage_report": {"coverage_format": "cobertura", "path": "coverage.xml"}}
                 }
             },
+            "coverage_check": {
+                "stage": "test",
+                "image": "python:$PYTHON_VERSION",
+                "script": [
+                    f"pip install pytest-cov",
+                    f"python -m pytest --cov=. --cov-fail-under={self.config.get('ci_cd', {}).get('coverage_threshold', 80)}"
+                ],
+                "allow_failure": True
+            },
             "security": {
                 "stage": "security",
                 "image": "semgrep/semgrep:latest",
@@ -208,10 +217,10 @@ class CICDGenerator:
         return f"""
 CC=$(grep 'CC̄=' analysis.toon.yaml 2>/dev/null | head -1 | awk -F= '{{print $2}}' || echo "0")
 if (( $(echo "$CC > {max_cc}" | bc -l) )); then
-  echo "❌ Complexity too high: $CC > {max_cc}"
+  echo "complexity too high: $CC > {max_cc}"
   exit 1
 else
-  echo "✅ Complexity OK: $CC ≤ {max_cc}"
+  echo "complexity OK: $CC ≤ {max_cc}"
 fi
         """.strip()
     

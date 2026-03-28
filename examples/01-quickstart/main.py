@@ -12,7 +12,7 @@ from algitex import Project
 from algitex.tools import discover_tools
 
 
-def main():
+def main() -> None:
     print("=== algitex quickstart ===\n")
 
     # 1. Check what tools are available

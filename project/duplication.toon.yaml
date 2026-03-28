@@ -1,23 +1,50 @@
-# redup/duplication | 1 groups | 19f 4179L | 2026-03-28
+# redup/duplication | 4 groups | 35f 8453L | 2026-03-28
 
 SUMMARY:
-  files_scanned: 19
-  total_lines:   4179
-  dup_groups:    1
-  dup_fragments: 2
-  saved_lines:   4
-  scan_ms:       1460
+  files_scanned: 35
+  total_lines:   8453
+  dup_groups:    4
+  dup_fragments: 17
+  saved_lines:   159
+  scan_ms:       1935
 
-DUPLICATES[1] (ranked by impact):
-  [bb223416bc6021bb]   EXAC  __enter__  L=4 N=2 saved=4 sim=1.00
+DUPLICATES[4] (ranked by impact):
+  [f0266f94ca105535] ! EXAC  load_env  L=14 N=7 saved=84 sim=1.00
+      examples/11-aider-mcp/main.py:0-13  (load_env)
+      examples/14-docker-mcp/main.py:0-13  (load_env)
+      examples/13-vallm/main.py:0-13  (load_env)
+      examples/17-docker-workflow/main.py:0-13  (load_env)
+      examples/04-ide-integration/main.py:0-13  (load_env)
+      examples/15-github-mcp/main.py:0-13  (load_env)
+      examples/12-filesystem-mcp/main.py:0-13  (load_env)
+  [88c63ada733e10ed] ! STRU  demo_with_docker_tools  L=26 N=3 saved=52 sim=1.00
+      examples/14-docker-mcp/main.py:0-25  (demo_with_docker_tools)
+      examples/13-vallm/main.py:0-25  (demo_with_docker_tools)
+      examples/15-github-mcp/main.py:0-25  (demo_with_docker_tools)
+  [bb223416bc6021bb]   EXAC  __enter__  L=4 N=5 saved=16 sim=1.00
       src/algitex/tools/proxy.py:0-3  (__enter__)
+      src/algitex/tools/telemetry.py:0-3  (__enter__)
+      src/algitex/tools/todo_runner.py:0-3  (__enter__)
+      src/algitex/tools/todo_executor.py:0-3  (__enter__)
       src/algitex/tools/docker.py:0-3  (__enter__)
+  [f5bfb2e5ad715231]   EXAC  __init__  L=7 N=2 saved=7 sim=1.00
+      src/algitex/tools/todo_runner.py:0-6  (__init__)
+      src/algitex/tools/todo_executor.py:0-6  (__init__)
 
-REFACTOR[1] (ranked by priority):
-  [1] ○ extract_function   → src/algitex/tools/utils/__enter__.py
-      WHY: 2 occurrences of 4-line block across 2 files — saves 4 lines
-      FILES: src/algitex/tools/docker.py, src/algitex/tools/proxy.py
+REFACTOR[4] (ranked by priority):
+  [1] ○ extract_function   → examples/utils/load_env.py
+      WHY: 7 occurrences of 14-line block across 7 files — saves 84 lines
+      FILES: examples/04-ide-integration/main.py, examples/11-aider-mcp/main.py, examples/12-filesystem-mcp/main.py, examples/13-vallm/main.py, examples/14-docker-mcp/main.py +2 more
+  [2] ○ extract_function   → examples/utils/demo_with_docker_tools.py
+      WHY: 3 occurrences of 26-line block across 3 files — saves 52 lines
+      FILES: examples/13-vallm/main.py, examples/14-docker-mcp/main.py, examples/15-github-mcp/main.py
+  [3] ○ extract_function   → src/algitex/tools/utils/__enter__.py
+      WHY: 5 occurrences of 4-line block across 5 files — saves 16 lines
+      FILES: src/algitex/tools/docker.py, src/algitex/tools/proxy.py, src/algitex/tools/telemetry.py, src/algitex/tools/todo_executor.py, src/algitex/tools/todo_runner.py
+  [4] ○ extract_function   → src/algitex/tools/utils/__init__.py
+      WHY: 2 occurrences of 7-line block across 2 files — saves 7 lines
+      FILES: src/algitex/tools/todo_executor.py, src/algitex/tools/todo_runner.py
 
 METRICS-TARGET:
-  dup_groups:  1 → 0
-  saved_lines: 4 lines recoverable
+  dup_groups:  4 → 0
+  saved_lines: 159 lines recoverable

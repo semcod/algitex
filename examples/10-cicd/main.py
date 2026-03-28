@@ -86,19 +86,19 @@ def quality_gates_example():
     # Create different quality gate configurations
     configs = {
         "strict": {
-            "max_complexity": 2.5,
+            "max_cc": 2.5,
             "require_tests": True,
             "security_scan": True,
             "coverage_threshold": 90
         },
         "standard": {
-            "max_complexity": 3.5,
+            "max_cc": 3.5,
             "require_tests": True,
             "security_scan": True,
             "coverage_threshold": 80
         },
         "lenient": {
-            "max_complexity": 5.0,
+            "max_cc": 5.0,
             "require_tests": False,
             "security_scan": True,
             "coverage_threshold": 70
@@ -110,13 +110,16 @@ def quality_gates_example():
     
     for level, config in configs.items():
         print(f"\n{level.capitalize()} Quality Gate:")
-        print(f"  Max Complexity: {config['max_complexity']}")
+        print(f"  Max Complexity: {config['max_cc']}")
         print(f"  Tests Required: {config['require_tests']}")
         print(f"  Security Scan: {config['security_scan']}")
         print(f"  Coverage Threshold: {config['coverage_threshold']}%")
     
     # Generate quality gate for GitHub Actions
-    quality_config = create_quality_gate_config(**configs["standard"])
+    # Remove unsupported parameter
+    standard_config = configs["standard"].copy()
+    del standard_config["coverage_threshold"]
+    quality_config = create_quality_gate_config(**standard_config)
     
     print("\nGenerated Quality Gate Configuration:")
     print("-" * 60)

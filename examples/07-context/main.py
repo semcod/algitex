@@ -43,6 +43,7 @@ def validate(data):
     return bool(data and len(data) > 0)
 """)
     
+    (project_dir / "api").mkdir(exist_ok=True)
     (project_dir / "api" / "__init__.py").write_text("")
     (project_dir / "api" / "client.py").write_text("""
 class APIClient:
@@ -136,6 +137,7 @@ def context_optimization_example():
     project_dir.mkdir(exist_ok=True)
     
     # Create a more complex project
+    (project_dir / "core").mkdir(exist_ok=True)
     (project_dir / "core" / "__init__.py").write_text("")
     (project_dir / "core" / "engine.py").write_text("""
 class Engine:
@@ -151,6 +153,7 @@ class Engine:
         return data.upper()
 """)
     
+    (project_dir / "services").mkdir(exist_ok=True)
     (project_dir / "services" / "__init__.py").write_text("")
     (project_dir / "services" / "processor.py").write_text("""
 from core.engine import Engine
@@ -168,6 +171,7 @@ class Processor:
         return result
 """)
     
+    (project_dir / "tests").mkdir(exist_ok=True)
     (project_dir / "tests" / "test_engine.py").write_text("""
 import pytest
 from core.engine import Engine

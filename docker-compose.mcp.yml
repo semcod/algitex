@@ -1,0 +1,156 @@
+# Docker Compose for Algitex MCP Ecosystem
+# Unified orchestration of all MCP-compatible tools
+# Supports: stdio (MCP), SSE (MCP), and REST API transports
+
+version: "3.8"
+
+services:
+  # Code2LLM - Code analysis and LLM context generation
+  code2llm-mcp:
+    build:
+      context: ./docker/code2llm
+      dockerfile: Dockerfile
+    image: algitex/code2llm-mcp:latest
+    container_name: code2llm-mcp
+    environment:
+      - TRANSPORT=stdio
+      - MCP_TRANSPORT=stdio
+      - PORT=8081
+      - PYTHONUNBUFFERED=1
+    ports:
+      - "8081:8081"
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./projects:/project:ro
+    restart: unless-stopped
+    networks:
+      - algitex-mcp
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # Vallm - Multi-level validation (static, runtime, security)
+  vallm-mcp:
+    build:
+      context: ./docker/vallm
+      dockerfile: Dockerfile
+    image: algitex/vallm-mcp:latest
+    container_name: vallm-mcp
+    environment:
+      - TRANSPORT=stdio
+      - MCP_TRANSPORT=stdio
+      - PORT=8080
+      - PYTHONUNBUFFERED=1
+    ports:
+      - "8080:8080"
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./projects:/project:ro
+    restart: unless-stopped
+    networks:
+      - algitex-mcp
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # Proxym - LLM proxy with multi-provider routing
+  proxym-mcp:
+    build:
+      context: ./docker/proxym
+      dockerfile: Dockerfile
+    image: algitex/proxym-mcp:latest
+    container_name: proxym-mcp
+    environment:
+      - TRANSPORT=stdio
+      - MCP_TRANSPORT=stdio
+      - PORT=4000
+      - LOG_LEVEL=info
+      - PYTHONUNBUFFERED=1
+      # API keys (set in .env file or override at runtime)
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - DEFAULT_MODEL=${DEFAULT_MODEL:-claude-sonnet-4}
+    ports:
+      - "4000:4000"
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    networks:
+      - algitex-mcp
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # Aider MCP - AI coding assistant
+  aider-mcp:
+    build:
+      context: ./docker/aider-mcp
+      dockerfile: Dockerfile
+    image: algitex/aider-mcp:latest
+    container_name: aider-mcp
+    environment:
+      - TRANSPORT=stdio
+      - MCP_TRANSPORT=stdio
+      - PORT=3000
+      - PYTHONUNBUFFERED=1
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./projects:/project
+    restart: unless-stopped
+    networks:
+      - algitex-mcp
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # Planfile MCP - Ticket/plan management hub
+  planfile-mcp:
+    build:
+      context: ./docker/planfile-mcp
+      dockerfile: Dockerfile
+    image: algitex/planfile-mcp:latest
+    container_name: planfile-mcp
+    environment:
+      - TRANSPORT=stdio
+      - MCP_TRANSPORT=stdio
+      - PORT=8201
+      - DATA_DIR=/data
+      - PYTHONUNBUFFERED=1
+    ports:
+      - "8201:8201"
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./data/planfile:/data
+    restart: unless-stopped
+    networks:
+      - algitex-mcp
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8201/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+networks:
+  algitex-mcp:
+    driver: bridge
+    name: algitex-mcp-network

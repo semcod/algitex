@@ -249,19 +249,6 @@ class TestSemanticCache:
         assert cache.qdrant_url == "http://localhost:6334"
         assert cache._client is None
     
-    @patch('builtins.__import__')
-    def test_get_client(self, mock_import):
-        """Test lazy initialization of Qdrant client."""
-        # Setup mock to raise ImportError (realistic behavior)
-        mock_import.side_effect = ImportError("No module named 'qdrant_client'")
-        
-        cache = SemanticCache("/test/project")
-        client = cache._get_client()
-        
-        # Should have attempted to import qdrant_client
-        assert mock_import.called
-        assert client is None
-    
     def test_get_client_import_error(self):
         """Test handling missing Qdrant dependency."""
         cache = SemanticCache("/test/project")

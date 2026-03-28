@@ -142,8 +142,11 @@ class Telemetry:
     def report(self) -> str:
         """Generate a human-readable report."""
         s = self.summary()
+        span_names = ", ".join([span.name for span in self.spans[:5]])
+        if len(self.spans) > 5:
+            span_names += f" (+{len(self.spans) - 5} more)"
         return (
-            f"Run {s['run_id']}: {s['spans']} operations, "
+            f"Run {s['run_id']}: {s['spans']} operations ({span_names}), "
             f"${s['total_cost_usd']}, {s['total_tokens']} tokens, "
             f"{s['total_duration_s']}s, {s['errors']} errors"
         )

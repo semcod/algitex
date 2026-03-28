@@ -5,6 +5,7 @@ from unittest.mock import MagicMock, patch
 from pathlib import Path
 
 from algitex import Pipeline
+from algitex.tools.feedback import FeedbackController, FeedbackPolicy
 
 
 class TestPipelineIntegration:

@@ -205,6 +205,18 @@ Each example has:
 - [03-pipeline/README.md](examples/03-pipeline/README.md) — Composable fluent API
 - [04-ide-integration/README.md](examples/04-ide-integration/README.md) — IDE configs
 - [05-cost-tracking/README.md](examples/05-cost-tracking/README.md) — Cost tracking
+- [06-telemetry/README.md](examples/06-telemetry/README.md) — Telemetry & observability
+- [07-context/README.md](examples/07-context/README.md) — Context building
+- [08-feedback/README.md](examples/08-feedback/README.md) — Feedback loops
+- [09-workspace/README.md](examples/09-workspace/README.md) — Workspace management
+- [10-cicd/README.md](examples/10-cicd/README.md) — CI/CD pipelines
+- [11-aider-mcp/README.md](examples/11-aider-mcp/README.md) — Aider MCP code refactoring
+- [12-filesystem-mcp/README.md](examples/12-filesystem-mcp/README.md) — Filesystem operations
+- [13-vallm/README.md](examples/13-vallm/README.md) — Vallm validation
+- [14-docker-mcp/README.md](examples/14-docker-mcp/README.md) — Docker container management
+- [15-github-mcp/README.md](examples/15-github-mcp/README.md) — GitHub repository operations
+- [16-test-workflow/README.md](examples/16-test-workflow/README.md) — Comprehensive test pipeline
+- [17-docker-workflow/README.md](examples/17-docker-workflow/README.md) — Refactoring workflow
 - `run.sh` — executable script
 - `Makefile` — `make run`, `make setup`, `make clean`
 - `.env.example` — configuration template (where applicable)
@@ -289,7 +301,13 @@ Licensed under Apache-2.0.
 
 Licensed under Apache-2.0.
 
+
+Licensed under Apache-2.0.
+
 ## Author
+
+Tom Sapletta
+
 
 Tom Sapletta
 

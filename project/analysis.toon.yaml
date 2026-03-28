@@ -1,14 +1,15 @@
-# code2llm | 19f 3785L | python:18,shell:1 | 2026-03-28
-# CC̄=3.1 | critical:1/185 | dups:0 | cycles:1
+# code2llm | 24f 5426L | python:23,shell:1 | 2026-03-28
+# CC̄=3.4 | critical:1/302 | dups:0 | cycles:1
 
-HEALTH[1]:
+HEALTH[2]:
   🟡 CC    execute CC=16 (limit:15)
+  🟡 CC    advanced_workspace_features CC=15 (limit:15)
 
 REFACTOR[2]:
-  1. split 1 high-CC methods  (CC>15)
+  1. split 2 high-CC methods  (CC>15)
   2. break 1 circular dependencies
 
-PIPELINES[163]:
+PIPELINES[272]:
   [1] Src [init]: init → discover_tools
       PURITY: 100% pure
   [2] Src [analyze]: analyze
@@ -21,20 +22,25 @@ PIPELINES[163]:
       PURITY: 100% pure
 
 LAYERS:
-  src/                            CC̄=3.1    ←in:0  →out:0
+  src/                            CC̄=3.4    ←in:0  →out:0
+  │ !! cli                        567L  0C   25m  CC=12     ←0
   │ docker                     462L  3C   23m  CC=10     ←0
-  │ cli                        452L  0C   22m  CC=5      ←0
+  │ cicd                       405L  1C   11m  CC=5      ←1
   │ !! __init__                   397L  3C   12m  CC=16     ←0
   │ __init__                   369L  5C   12m  CC=9      ←0
-  │ __init__                   330L  3C   20m  CC=4      ←0
+  │ workspace                  338L  2C   17m  CC=6      ←1
+  │ __init__                   320L  3C   19m  CC=4      ←0
+  │ todo_runner                302L  2C   13m  CC=13     ←0
   │ project                    294L  1C   12m  CC=6      ←0
-  │ tickets                    246L  2C   11m  CC=5      ←3
-  │ feedback                   219L  4C   12m  CC=8      ←0
+  │ feedback                   252L  4C   12m  CC=8      ←0
+  │ tickets                    246L  2C   11m  CC=5      ←4
+  │ todo_executor              240L  2C   12m  CC=13     ←0
+  │ todo_parser                206L  2C    8m  CC=7      ←0
   │ context                    206L  3C   14m  CC=7      ←0
   │ analysis                   182L  3C    8m  CC=7      ←0
-  │ config                     170L  4C    7m  CC=10     ←5
+  │ config                     170L  4C    7m  CC=10     ←13
+  │ telemetry                  152L  2C    9m  CC=4      ←0
   │ proxy                      145L  2C    9m  CC=9      ←0
-  │ telemetry                  140L  2C    7m  CC=4      ←0
   │ __init__                   102L  1C    4m  CC=4      ←3
   │ __init__                    36L  0C    0m  CC=0.0    ←0
   │ pipeline                     5L  0C    0m  CC=0.0    ←0

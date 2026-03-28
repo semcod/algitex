@@ -11,11 +11,10 @@ Run:
     python examples/02_algo_loop.py
 """
 
-import time
 from algitex.algo import Loop
 
 
-def main():
+def main() -> None:
     print("=== Progressive Algorithmization Demo ===\n")
 
     loop = Loop(".")

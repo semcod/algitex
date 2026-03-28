@@ -2,16 +2,30 @@
 # Algitex Pipeline czyta ten plik i uruchamia kontenery na żądanie.
 
 tools:
+  # ─── Code Fixing (nap - automated repair) ───────────
+  nap:
+    image: wronai/nap:latest
+    transport: mcp-stdio
+    volumes:
+      - "${PROJECT_DIR}:/workspace"
+    capabilities:
+      - fix_issue
+      - fix_imports
+      - fix_types
+      - fix_style
+      - apply_patch
+      - validate_fix
+
   # ─── Code Editing ────────────────────────────────────
   aider-mcp:
-    image: danielscholl/aider-mcp-server:latest
+    image: algitex/aider-mcp:latest
     transport: mcp-stdio
     env:
       TRANSPORT: stdio
-      GEMINI_API_KEY: ${GEMINI_API_KEY}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
     volumes:
-      - "${PROJECT_DIR}:/app"
+      - "${PROJECT_DIR}:/workspace"
     capabilities:
       - aider_ai_code
       - aider_list_models
@@ -65,20 +79,23 @@ tools:
 
   # ─── Analysis (wronai ecosystem) ────────────────────
   code2llm:
-    image: wronai/code2llm:latest
-    transport: cli
+    image: algitex/code2llm:latest
+    transport: rest
+    port: 8081
     volumes:
-      - "${PROJECT_DIR}:/project"
+      - "${PROJECT_DIR}:/project:ro"
     capabilities:
       - analyze
       - toon-export
       - evolution-export
+      - generate-readme
 
   vallm:
-    image: wronai/vallm:latest
-    transport: cli
+    image: algitex/vallm:latest
+    transport: rest
+    port: 8080
     volumes:
-      - "${PROJECT_DIR}:/project"
+      - "${PROJECT_DIR}:/project:ro"
     capabilities:
       - validate
       - batch
@@ -95,12 +112,18 @@ tools:
 
   # ─── LLM Providers ──────────────────────────────────
   proxym:
-    image: wronai/proxym:latest
+    image: algitex/proxym-mcp:latest
     transport: rest
-    port: 4000
+    port: 4001
+    auto_remove: false
     env:
+      TRANSPORT: http
+      PORT: "4001"
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
-    health_check: "http://localhost:4000/health"
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      DAILY_BUDGET: "10.0"
+    health_check: "http://localhost:4001/health"
     capabilities:
       - chat-completions
       - model-selection
@@ -108,9 +131,10 @@ tools:
 
   # ─── Ecosystem MCP servers ──────────────────────────
   planfile-mcp:
-    image: wronai/planfile-mcp:latest
+    image: algitex/planfile-mcp:latest
     transport: mcp-sse
     port: 8201
+    auto_remove: false
     volumes:
       - "${PROJECT_DIR}/.planfile:/data"
     capabilities:
@@ -238,14 +262,224 @@ tools:
       - crawl
       - extract
 
-  # ─── LLM Providers (extended) ───────────────────────
-  ollama:
-    image: ollama/ollama:latest
-    transport: rest
-    port: 11434
-    auto_remove: false
-    health_check: "http://localhost:11434/api/tags"
+  # ─── Ready MCP Servers from Docker Hub ──────────────
+  mcp-wikipedia:
+    image: mcp/wikipedia-mcp:latest
+    transport: mcp-stdio
     capabilities:
-      - chat-completions
-      - embeddings
-      - local-models
+      - search_wikipedia
+      - get_summary
+      - get_content
+
+  mcp-time:
+    image: mcp/time:latest
+    transport: mcp-stdio
+    capabilities:
+      - get_current_time
+      - convert_timezone
+      - parse_date
+
+  mcp-fetch:
+    image: mcp/fetch:latest
+    transport: mcp-stdio
+    capabilities:
+      - fetch_url
+      - extract_content
+      - fetch_metadata
+
+  mcp-git:
+    image: mcp/git:latest
+    transport: mcp-stdio
+    volumes:
+      - "${PROJECT_DIR}:/workspace"
+    capabilities:
+      - git_status
+      - git_log
+      - git_diff
+      - git_clone
+
+  mcp-postgres:
+    image: mcp/postgres:latest
+    transport: mcp-stdio
+    env:
+      POSTGRES_URL: ${POSTGRES_URL}
+    capabilities:
+      - query
+      - execute
+      - schema_inspection
+
+  mcp-sqlite:
+    image: mcp/sqlite:latest
+    transport: mcp-stdio
+    volumes:
+      - "${PROJECT_DIR}:/workspace"
+    capabilities:
+      - query
+      - execute
+      - schema_inspection
+
+  mcp-duckduckgo:
+    image: mcp/duckduckgo:latest
+    transport: mcp-stdio
+    capabilities:
+      - search
+      - instant_answer
+
+  mcp-brave-search:
+    image: mcp/brave-search:latest
+    transport: mcp-stdio
+    env:
+      BRAVE_API_KEY: ${BRAVE_API_KEY}
+    capabilities:
+      - web_search
+      - image_search
+      - news_search
+
+  mcp-browser:
+    image: mcp/browser:latest
+    transport: mcp-stdio
+    capabilities:
+      - navigate
+      - screenshot
+      - get_content
+      - click
+      - fill
+
+  # ─── Integration & Communication ──────────────────────
+  mcp-slack:
+    image: mcp/slack:latest
+    transport: mcp-stdio
+    env:
+      SLACK_TOKEN: ${SLACK_TOKEN}
+      SLACK_CHANNEL: ${SLACK_CHANNEL}
+    capabilities:
+      - send_message
+      - notify
+      - channel_info
+
+  mcp-mail:
+    image: mcp/mail:latest
+    transport: mcp-stdio
+    env:
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_USER: ${SMTP_USER}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
+    capabilities:
+      - send_email
+      - send_notification
+
+  mcp-jira:
+    image: mcp/jira:latest
+    transport: mcp-stdio
+    env:
+      JIRA_URL: ${JIRA_URL}
+      JIRA_USERNAME: ${JIRA_USERNAME}
+      JIRA_API_TOKEN: ${JIRA_API_TOKEN}
+    capabilities:
+      - create_ticket
+      - update_ticket
+      - list_tickets
+      - sync_with_planfile
+
+  # ─── Infrastructure & DevOps ────────────────────────
+  mcp-docker-ai:
+    image: mcp/docker-ai:latest
+    transport: mcp-stdio
+    capabilities:
+      - docker_orchestration
+      - container_management
+      - ai_docker_ops
+
+  mcp-kubernetes:
+    image: mcp/kubernetes:latest
+    transport: mcp-stdio
+    env:
+      KUBECONFIG: ${KUBECONFIG}
+    capabilities:
+      - list_pods
+      - deploy
+      - rollback
+      - debug_pod
+      - get_logs
+
+  # ─── Media Processing ───────────────────────────────
+  mcp-pdf:
+    image: mcp/pdf:latest
+    transport: mcp-stdio
+    capabilities:
+      - parse_pdf
+      - extract_text
+      - ocr
+
+  mcp-image:
+    image: mcp/image:latest
+    transport: mcp-stdio
+    capabilities:
+      - resize
+      - crop
+      - caption
+      - analyze
+
+  mcp-audio:
+    image: mcp/audio:latest
+    transport: mcp-stdio
+    capabilities:
+      - speech_to_text
+      - text_to_speech
+      - analyze_audio
+
+  mcp-video:
+    image: mcp/video:latest
+    transport: mcp-stdio
+    capabilities:
+      - process_video
+      - slice
+      - caption
+      - summarize
+
+  # ─── Security & Quality ─────────────────────────────
+  mcp-security-lint:
+    image: mcp/security:latest
+    transport: mcp-stdio
+    capabilities:
+      - check_dependencies
+      - scan_vulnerabilities
+      - lint_code
+      - security_audit
+
+  # ─── Additional Databases ───────────────────────────
+  mcp-mysql:
+    image: mcp/mysql:latest
+    transport: mcp-stdio
+    env:
+      MYSQL_URL: ${MYSQL_URL}
+    capabilities:
+      - query
+      - execute
+      - schema_inspection
+
+  mcp-redis:
+    image: mcp/redis:latest
+    transport: mcp-stdio
+    env:
+      REDIS_URL: ${REDIS_URL}
+    capabilities:
+      - get
+      - set
+      - list_keys
+      - execute_command
+
+  # ─── Local LLM (Ollama) ─────────────────────────────
+  ollama-mcp:
+    image: alpine/curl:latest
+    transport: cli
+    env:
+      OLLAMA_HOST: ${OLLAMA_HOST:-http://host.docker.internal:11434}
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen2.5-coder:7b}
+    volumes:
+      - "${PROJECT_DIR}:/workspace"
+    capabilities:
+      - fix_code
+      - refactor_code
+      - add_types
+      - remove_unused_imports

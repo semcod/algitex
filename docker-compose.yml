@@ -11,8 +11,6 @@
 #   docker compose --profile tools up -d     # + aider, github MCP
 #   docker compose --profile full up -d      # everything
 
-version: "3.8"
-
 services:
   # ── Core: algitex CLI ───────────────────────────────
   algitex:
@@ -33,19 +31,23 @@ services:
 
   # ── LLM Gateway ────────────────────────────────────
   proxym:
-    image: wronai/proxym:latest
     build:
-      context: https://github.com/wronai/proxym.git
+      context: ./docker/proxym
       dockerfile: Dockerfile
+    image: algitex/proxym-mcp:latest
     ports:
       - "${PROXYM_PORT:-4000}:4000"
     environment:
+      - TRANSPORT=http
+      - MCP_TRANSPORT=http
+      - PORT=4000
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
       - OPENAI_API_KEY=${OPENAI_API_KEY:-}
-      - GOOGLE_API_KEY=${GOOGLE_API_KEY:-}
+      - GEMINI_API_KEY=${GOOGLE_API_KEY:-}
       - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY:-}
-      - PROXYM_DAILY_BUDGET=${PROXYM_DAILY_BUDGET:-3.0}
-      - PROXYM_MONTHLY_BUDGET=${PROXYM_MONTHLY_BUDGET:-60.0}
+      - DEFAULT_MODEL=${DEFAULT_MODEL:-claude-sonnet-4}
+      - DAILY_BUDGET=${PROXYM_DAILY_BUDGET:-3.0}
+      - MONTHLY_BUDGET=${PROXYM_MONTHLY_BUDGET:-60.0}
       - REDIS_HOST=redis
     volumes:
       - proxym-data:/app/data
@@ -61,8 +63,6 @@ services:
   # ── Cache ───────────────────────────────────────────
   redis:
     image: redis:7-alpine
-    ports:
-      - "${REDIS_PORT:-6379}:6379"
     volumes:
       - redis-data:/data
     healthcheck:
@@ -73,16 +73,79 @@ services:
     restart: unless-stopped
 
   # ── MCP Tools (profile: tools) ─────────────────────
+  # Using our standardized MCP images with FastMCP SDK
   aider-mcp:
-    image: danielscholl/aider-mcp-server:latest
+    build:
+      context: ./docker/aider-mcp
+      dockerfile: Dockerfile
+    image: algitex/aider-mcp:latest
     profiles: ["tools", "full"]
     environment:
       - TRANSPORT=stdio
+      - MCP_TRANSPORT=stdio
+      - PORT=3000
       - EDITOR_MODEL=${AIDER_MODEL:-gemini/gemini-2.5-flash}
-      - GEMINI_API_KEY=${GOOGLE_API_KEY:-}
-      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+    ports:
+      - "3000:3000"
     stdin_open: true
     tty: true
+    volumes:
+      - ./:/workspace
+    restart: unless-stopped
+
+  code2llm-mcp:
+    build:
+      context: ./docker/code2llm
+      dockerfile: Dockerfile
+    image: algitex/code2llm-mcp:latest
+    profiles: ["tools", "full"]
+    environment:
+      - TRANSPORT=stdio
+      - MCP_TRANSPORT=stdio
+      - PORT=8081
+    ports:
+      - "8081:8081"
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./:/workspace:ro
+    restart: unless-stopped
+
+  vallm-mcp:
+    build:
+      context: ./docker/vallm
+      dockerfile: Dockerfile
+    image: algitex/vallm-mcp:latest
+    profiles: ["tools", "full"]
+    environment:
+      - TRANSPORT=stdio
+      - MCP_TRANSPORT=stdio
+      - PORT=8080
+    ports:
+      - "8080:8080"
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./:/workspace:ro
+    restart: unless-stopped
+
+  planfile-mcp:
+    build:
+      context: ./docker/planfile-mcp
+      dockerfile: Dockerfile
+    image: algitex/planfile-mcp:latest
+    profiles: ["tools", "full"]
+    environment:
+      - TRANSPORT=stdio
+      - MCP_TRANSPORT=stdio
+      - PORT=8201
+      - DATA_DIR=/data
+    ports:
+      - "8201:8201"
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./data/planfile:/data
     restart: unless-stopped
 
   github-mcp:
@@ -91,6 +154,159 @@ services:
     environment:
       - GITHUB_PERSONAL_ACCESS_TOKEN=${GITHUB_TOKEN:-}
     restart: unless-stopped
+
+  # ── Ready MCP Servers from Docker Hub ──────────────
+  mcp-wikipedia:
+    image: mcp/wikipedia-mcp:latest
+    profiles: ["tools", "full"]
+    restart: unless-stopped
+
+  mcp-time:
+    image: mcp/time:latest
+    profiles: ["tools", "full"]
+    restart: unless-stopped
+
+  mcp-fetch:
+    image: mcp/fetch:latest
+    profiles: ["tools", "full"]
+    restart: unless-stopped
+
+  mcp-git:
+    image: mcp/git:latest
+    profiles: ["tools", "full"]
+    volumes:
+      - ./:/workspace
+    restart: unless-stopped
+
+  mcp-postgres:
+    image: mcp/postgres:latest
+    profiles: ["tools", "full"]
+    environment:
+      - POSTGRES_URL=${POSTGRES_URL:-postgresql://postgres:postgres@localhost:5432/postgres}
+    restart: unless-stopped
+
+  mcp-sqlite:
+    image: mcp/sqlite:latest
+    profiles: ["tools", "full"]
+    volumes:
+      - ./:/workspace
+    restart: unless-stopped
+
+  mcp-duckduckgo:
+    image: mcp/duckduckgo:latest
+    profiles: ["tools", "full"]
+    restart: unless-stopped
+
+  mcp-brave-search:
+    image: mcp/brave-search:latest
+    profiles: ["tools", "full"]
+    environment:
+      - BRAVE_API_KEY=${BRAVE_API_KEY:-}
+    restart: unless-stopped
+
+  mcp-filesystem:
+    image: mcp/filesystem:latest
+    profiles: ["tools", "full"]
+    volumes:
+      - ./:/workspace:ro
+    environment:
+      - ALLOW_DIRS=/workspace
+    restart: unless-stopped
+
+  mcp-playwright:
+    image: mcp/playwright:latest
+    profiles: ["tools", "full"]
+    restart: unless-stopped
+
+  # ── Integration & Communication ────────────────────
+  mcp-slack:
+    image: mcp/slack:latest
+    profiles: ["tools", "full"]
+    environment:
+      - SLACK_TOKEN=${SLACK_TOKEN:-}
+      - SLACK_CHANNEL=${SLACK_CHANNEL:-}
+    restart: unless-stopped
+
+  mcp-mail:
+    image: mcp/mail:latest
+    profiles: ["tools", "full"]
+    environment:
+      - SMTP_HOST=${SMTP_HOST:-}
+      - SMTP_USER=${SMTP_USER:-}
+      - SMTP_PASSWORD=${SMTP_PASSWORD:-}
+    restart: unless-stopped
+
+  mcp-jira:
+    image: mcp/jira:latest
+    profiles: ["tools", "full"]
+    environment:
+      - JIRA_URL=${JIRA_URL:-}
+      - JIRA_USERNAME=${JIRA_USERNAME:-}
+      - JIRA_API_TOKEN=${JIRA_API_TOKEN:-}
+    restart: unless-stopped
+
+  # ── Infrastructure & DevOps ─────────────────────────
+  mcp-docker-ai:
+    image: mcp/docker-ai:latest
+    profiles: ["tools", "full"]
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+
+  mcp-kubernetes:
+    image: mcp/kubernetes:latest
+    profiles: ["tools", "full"]
+    environment:
+      - KUBECONFIG=${KUBECONFIG:-~/.kube/config}
+    volumes:
+      - ~/.kube:/root/.kube:ro
+    restart: unless-stopped
+
+  # ── Media Processing ───────────────────────────────
+  mcp-pdf:
+    image: mcp/pdf:latest
+    profiles: ["tools", "full"]
+    restart: unless-stopped
+
+  mcp-image:
+    image: mcp/image:latest
+    profiles: ["tools", "full"]
+    restart: unless-stopped
+
+  mcp-audio:
+    image: mcp/audio:latest
+    profiles: ["tools", "full"]
+    restart: unless-stopped
+
+  mcp-video:
+    image: mcp/video:latest
+    profiles: ["tools", "full"]
+    restart: unless-stopped
+
+  # ── Security & Quality ────────────────────────────
+  mcp-security-lint:
+    image: mcp/security:latest
+    profiles: ["tools", "full"]
+    volumes:
+      - ./:/workspace:ro
+    restart: unless-stopped
+
+  # ── Additional Databases ─────────────────────────
+  mcp-mysql:
+    image: mcp/mysql:latest
+    profiles: ["tools", "full"]
+    environment:
+      - MYSQL_URL=${MYSQL_URL:-}
+    restart: unless-stopped
+
+  mcp-redis:
+    image: mcp/redis:latest
+    profiles: ["tools", "full"]
+    environment:
+      - REDIS_URL=${REDIS_URL:-redis://redis:6379}
+    restart: unless-stopped
+
+
 
   # ── Monitoring (profile: full) ─────────────────────
   langfuse:

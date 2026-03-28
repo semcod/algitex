@@ -172,9 +172,19 @@ def feedback_loop_simulation():
         def __init__(self):
             self.call_count = 0
             self.last_model = None
+            # Mock RunningTool objects
+            from types import SimpleNamespace
+            self._running = {
+                "aider-mcp": SimpleNamespace(tool=SimpleNamespace(is_mcp=True)),
+                "filesystem-mcp": SimpleNamespace(tool=SimpleNamespace(is_mcp=True)),
+                "vallm": SimpleNamespace(tool=SimpleNamespace(is_mcp=False))
+            }
         
-        def list_running(self, tool):
-            return True
+        def list_running(self):
+            return ["aider-mcp", "filesystem-mcp", "vallm"]
+        
+        def list_tools(self):
+            return ["aider-mcp", "filesystem-mcp", "vallm", "planfile-mcp"]
         
         def call_tool(self, tool, method, params):
             self.call_count += 1

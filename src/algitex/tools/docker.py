@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import os
+import select
 import subprocess
 import time
 from dataclasses import dataclass, field
@@ -199,7 +200,18 @@ class DockerToolManager:
         )
         
         # Give the server a moment to start up
-        time.sleep(0.5)
+        time.sleep(1.0)
+        
+        # Check if process crashed immediately
+        if proc.poll() is not None:
+            stderr_output = proc.stderr.read() if proc.stderr else ""
+            stdout_output = proc.stdout.read() if proc.stdout else ""
+            raise RuntimeError(
+                f"MCP container '{tool.name}' exited immediately with code {proc.poll()}. "
+                f"Image: {tool.image}. "
+                f"Stderr: {stderr_output[:1000]}. "
+                f"Stdout: {stdout_output[:500]}"
+            )
         
         rt = RunningTool(
             tool=tool,
@@ -317,7 +329,7 @@ class DockerToolManager:
             raise ValueError(f"Cannot call tool on transport: {rt.tool.transport}")
 
     def _call_stdio(self, rt: RunningTool, tool: str, args: dict) -> dict:
-        """Send JSON-RPC over stdin, read from stdout."""
+        """Send JSON-RPC over stdin, read from stdout with timeout."""
         if not rt.process or not rt.process.stdin:
             raise RuntimeError("stdio process not available")
 
@@ -328,36 +340,53 @@ class DockerToolManager:
             "params": {"name": tool, "arguments": args},
         }
         
-        # Send raw JSON-RPC without Content-Length headers
-        message = json.dumps(request)
+        # Send JSON-RPC with Content-Length header (MCP protocol)
+        content = json.dumps(request)
+        message = f"Content-Length: {len(content)}\r\n\r\n{content}"
         
         # Send the message
-        rt.process.stdin.write(message)
-        rt.process.stdin.flush()
-        
-        # Read response with timeout
         try:
-            # Read the response line by line
-            response_lines = []
-            start_time = time.time()
+            rt.process.stdin.write(message)
+            rt.process.stdin.flush()
+        except BrokenPipeError:
+            return {"error": "MCP server process crashed or closed connection"}
+        
+        # Read response with timeout using select
+        import select
+        try:
             timeout = 30
+            start_time = time.time()
+            response_lines = []
             
             while time.time() - start_time < timeout:
+                # Use select to check if stdout has data with timeout
+                ready, _, _ = select.select([rt.process.stdout], [], [], 1.0)
+                if not ready:
+                    # Check if process died
+                    if rt.process.poll() is not None:
+                        return {"error": f"MCP server exited with code {rt.process.poll()}"}
+                    continue
+                
                 line = rt.process.stdout.readline()
                 if not line:
+                    if rt.process.poll() is not None:
+                        return {"error": f"MCP server exited with code {rt.process.poll()}"}
                     break
-                response_lines.append(line.strip())
-                # If we got a complete JSON response, return it
-                if line.strip().startswith('{"jsonrpc"'):
-                    response = line.strip()
-                    return json.loads(response)
+                
+                response_lines.append(line)
+                
+                # Parse Content-Length header
+                if line.startswith("Content-Length:"):
+                    content_length = int(line.split(":")[1].strip())
+                    # Read empty line
+                    rt.process.stdout.readline()
+                    # Read the JSON response
+                    response_data = rt.process.stdout.read(content_length)
+                    return json.loads(response_data)
             
-            # If no JSON response found, try to parse all output
-            output = ''.join(response_lines)
-            if output:
-                return json.loads(output)
-            else:
-                return {"error": "No response from MCP server"}
+            # Timeout reached
+            return {"error": f"MCP server timeout after {timeout}s"}
+            
         except json.JSONDecodeError as e:
             return {"error": "Invalid JSON response", "raw": ''.join(response_lines)}
         except Exception as e:
@@ -379,12 +408,15 @@ class DockerToolManager:
         return response.json()
 
     def _call_rest(self, rt: RunningTool, tool: str, args: dict) -> dict:
-        """Call REST endpoint (OpenAI-compatible or custom)."""
+        """Call REST endpoint using action name as path."""
         client = self._get_http_client()
-        response = client.post(
-            f"{rt.endpoint}/v1/chat/completions",
-            json=args,
-        )
+        # Use the action name as the endpoint path
+        endpoint = f"{rt.endpoint}/{tool}"
+        # Use GET for endpoints without arguments, POST otherwise
+        if args:
+            response = client.post(endpoint, json=args)
+        else:
+            response = client.get(endpoint)
         response.raise_for_status()
         return response.json()
 
@@ -403,12 +435,22 @@ class DockerToolManager:
         if not rt:
             return
         if rt.process:
-            rt.process.terminate()
             try:
-                rt.process.wait(timeout=10)
-            except subprocess.TimeoutExpired:
-                rt.process.kill()
-                rt.process.wait()
+                if rt.process.poll() is None:  # Still running
+                    rt.process.terminate()
+                    try:
+                        rt.process.wait(timeout=10)
+                    except subprocess.TimeoutExpired:
+                        rt.process.kill()
+                        rt.process.wait()
+                # Close pipes to avoid BrokenPipeError
+                if rt.process.stdin:
+                    try:
+                        rt.process.stdin.close()
+                    except (BrokenPipeError, OSError):
+                        pass
+            except (BrokenPipeError, OSError):
+                pass  # Process already dead
         else:
             subprocess.run(
                 ["docker", "rm", "-f", rt.container_id],
