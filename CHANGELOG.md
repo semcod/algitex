@@ -487,6 +487,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update examples/31-abpr-workflow/workflows/refactor-plan.md
 
 ### Test
+- Update tests/test_parallel.py
+
+### Other
+- Update TODO/parallel.py
+- Update examples/30-parallel-execution/Makefile
+- Update examples/30-parallel-execution/main.py
+- Update examples/30-parallel-execution/parallel_multi_tool.py
+- Update examples/30-parallel-execution/parallel_real_world.py
+- Update examples/30-parallel-execution/parallel_refactoring.py
+- Update examples/31-abpr-workflow/Makefile
+- Update examples/31-abpr-workflow/abpr_pipeline.py
+- Update examples/31-abpr-workflow/main.py
+- Update examples/32-workspace-coordination/Makefile
+- ... and 6 more files
+
+## [0.1.24] - 2026-03-28
+
+### Docs
+- Update docs/NEW_FEATURES.md
+- Update docs/algitex-parallel-coordination.md
+- Update examples/21-aider-cli-ollama/README.md
+- Update examples/21-aider-cli-ollama/TODO.md
+- Update examples/31-abpr-workflow/workflows/ci-pipeline.md
+- Update examples/31-abpr-workflow/workflows/fix-auth.md
+- Update examples/31-abpr-workflow/workflows/health-check.md
+- Update examples/31-abpr-workflow/workflows/refactor-plan.md
+
+### Test
 - Update tests/test_examples_30_32.py
 - Update tests/test_parallel.py
 
