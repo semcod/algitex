@@ -1,0 +1,93 @@
+# workspace.yaml — Multi-repo configuration for algitex workspace
+#
+# Defines all repos in the wronai ecosystem with dependency order.
+# algitex uses this to:
+#   1. Analyze all repos (parallel — no conflicts)
+#   2. Plan cross-repo refactoring (respecting deps)
+#   3. Execute fixes (parallel per repo, sequential within dep chain)
+#
+# Usage:
+#   algitex workspace analyze
+#   algitex workspace plan --sprints 2
+#   algitex workspace go --parallel --tool aider-mcp
+
+workspace:
+  name: wronai-ecosystem
+  description: "Python developer toolchain for LLM-assisted code analysis"
+  organization: semcod
+
+repos:
+  # ─── Tier 1: No dependencies (can all run in parallel) ─────
+  - name: code2llm
+    path: ../code2llm
+    git_url: github.com/semcod/code2llm
+    priority: 1
+    role: "Static analysis → .toon diagnostics"
+
+  - name: vallm
+    path: ../vallm
+    git_url: github.com/semcod/vallm
+    priority: 1
+    role: "LLM-generated code validator"
+
+  - name: redup
+    path: ../redup
+    git_url: github.com/semcod/redup
+    priority: 1
+    role: "Code duplication analyzer"
+
+  - name: code2docs
+    path: ../code2docs
+    git_url: github.com/semcod/code2docs
+    priority: 1
+    role: "Automatic documentation generator"
+
+  # ─── Tier 2: Depends on analysis tools ─────────────────────
+  - name: planfile
+    path: ../planfile
+    git_url: github.com/semcod/planfile
+    depends_on: [code2llm, vallm]
+    priority: 2
+    role: "Local-first ticket management"
+
+  # ─── Tier 3: Depends on planfile ───────────────────────────
+  - name: llx
+    path: ../llx
+    git_url: github.com/semcod/llx
+    depends_on: [planfile]
+    priority: 3
+    role: "LLM routing and orchestration"
+
+  # ─── Tier 4: Depends on llx + planfile ─────────────────────
+  - name: proxym
+    path: ../proxym
+    git_url: github.com/semcod/proxym
+    depends_on: [llx, planfile]
+    priority: 4
+    role: "Dashboard UI + MCP-LLM gateway"
+
+  # ─── Tier 5: Meta-tool (depends on everything) ────────────
+  - name: algitex
+    path: ../algitex
+    git_url: github.com/semcod/algitex
+    depends_on: [code2llm, vallm, planfile, llx, proxym]
+    priority: 5
+    role: "Pipeline orchestrator — this tool"
+
+# Quality gates applied to all repos
+gates:
+  - metric: avg_cc
+    operator: "<="
+    threshold: 3.5
+  - metric: vallm_pass_rate
+    operator: ">="
+    threshold: 0.90
+  - metric: import_errors
+    operator: "=="
+    threshold: 0
+
+# Default tools for parallel execution
+defaults:
+  tool: aider-mcp
+  max_agents: 4
+  feedback_strategy: "retry-up-to=3"
