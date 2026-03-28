@@ -401,6 +401,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.19] - 2026-03-28
+
+### Docs
+- Update docs/README.md
+- Update project/README.md
+
+### Other
+- Update examples/22-claude-code-ollama/batch_fix.py
+- Update examples/22-claude-code-ollama/batch_fix_simplified.py
+- Update examples/22-claude-code-ollama/main_simplified.py
+- Update examples/24-ollama-batch/batch_analyze.py
+- Update examples/24-ollama-batch/batch_simplified.py
+- Update examples/24-ollama-batch/main_simplified.py
+- Update examples/25-local-model-comparison/benchmark.py
+- Update examples/25-local-model-comparison/benchmark_simplified.py
+- Update examples/25-local-model-comparison/main_simplified.py
+- Update examples/26-litellm-proxy-ollama/auto_fix.py
+- ... and 12 more files
+
 ## [0.1.18] - 2026-03-28
 
 ### Docs

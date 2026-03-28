@@ -1,13 +1,13 @@
-# code2llm/evolution | 475 func | 35f | 2026-03-28
+# code2llm/evolution | 536 func | 52f | 2026-03-28
 
 NEXT[3] (ranked by impact):
-  [1] !! SPLIT           src/algitex/cli.py
-      WHY: 571L, 0 classes, max CC=13
-      EFFORT: ~4h  IMPACT: 7423
+  [1] !! SPLIT           src/algitex/tools/todo_runner.py
+      WHY: 526L, 2 classes, max CC=13
+      EFFORT: ~4h  IMPACT: 6838
 
-  [2] !! SPLIT           src/algitex/tools/autofix.py
-      WHY: 565L, 2 classes, max CC=12
-      EFFORT: ~4h  IMPACT: 6780
+  [2] !! SPLIT           src/algitex/tools/docker.py
+      WHY: 504L, 3 classes, max CC=12
+      EFFORT: ~4h  IMPACT: 6048
 
   [3] !! SPLIT           src/algitex/project.py
       WHY: 581L, 1 classes, max CC=8
@@ -16,13 +16,13 @@ NEXT[3] (ranked by impact):
 
 RISKS[3]:
   ⚠ Splitting src/algitex/project.py may break 43 import paths
-  ⚠ Splitting src/algitex/cli.py may break 25 import paths
-  ⚠ Splitting src/algitex/tools/autofix.py may break 23 import paths
+  ⚠ Splitting src/algitex/tools/todo_runner.py may break 16 import paths
+  ⚠ Splitting src/algitex/tools/docker.py may break 23 import paths
 
 METRICS-TARGET:
-  CC̄:          3.4 → ≤2.4
+  CC̄:          3.2 → ≤2.2
   max-CC:      14 → ≤7
-  god-modules: 5 → 0
+  god-modules: 3 → 0
   high-CC(≥15): 0 → ≤0
   hub-types:   0 → ≤0
 
@@ -51,4 +51,4 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=3.4 → now CC̄=3.4
+  prev CC̄=3.4 → now CC̄=3.2
