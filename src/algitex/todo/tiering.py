@@ -32,7 +32,7 @@ ALGO_CATEGORIES = frozenset(
         "return_type",
         "fstring",
         "module_block",
-        "magic",
+        "magic_known",
     }
 )
 
@@ -192,7 +192,7 @@ def classify_message(message: str) -> TaskTriage:
     if "magic number" in lowered or "named constant" in lowered or (number is not None and "constant" in lowered):
         if number is not None and number in KNOWN_MAGIC_CONSTANTS:
             return TaskTriage(
-                category="magic",
+                category="magic_known",
                 tier="algorithm",
                 reason=f"known constant {number} -> {KNOWN_MAGIC_CONSTANTS[number]}",
                 number=number,

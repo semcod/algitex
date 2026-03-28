@@ -6,7 +6,7 @@
 - **Primary Language**: python
 - **Languages**: python: 378, shell: 26
 - **Analysis Mode**: static
-- **Total Functions**: 2568
+- **Total Functions**: 2571
 - **Total Classes**: 370
 - **Modules**: 404
 - **Entry Points**: 2275
@@ -429,6 +429,18 @@ Key functions that process and transform data:
 ### .algitex.backups.batch_20260328_142940.src.algitex.tools.services.ServiceChecker._format_status_line
 > Format a single status line.
 
+### .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.format_args
+> Format arguments for display.
+- **Output to**: kwargs.items, None.join, parts.append, parts.append, .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.format_value
+
+### .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.format_value
+> Format a value for display.
+- **Output to**: repr, len
+
+### .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.format_result
+> Format a result for display.
+- **Output to**: repr, len
+
 ### .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_executor.TodoExecutor._parse_action
 > Parse task description to determine MCP action and arguments.
 - **Output to**: task.description.lower, any, any, any, any
@@ -448,18 +460,6 @@ Key functions that process and transform data:
 ### .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_executor.TodoExecutor._parse_read_action
 > Parse a read/view task.
 - **Output to**: str, str
-
-### .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.format_args
-> Format arguments for display.
-- **Output to**: kwargs.items, None.join, parts.append, parts.append, .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.format_value
-
-### .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.format_value
-> Format a value for display.
-- **Output to**: repr, len
-
-### .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.format_result
-> Format a result for display.
-- **Output to**: repr, len
 
 ### .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_runner.TodoRunner._format_output
 > Extract meaningful output from MCP result.
@@ -532,15 +532,15 @@ Key functions that process and transform data:
 - **Confidence**: 0.70
 - **Functions**: .algitex.backups.batch_20260328_142940.src.algitex.tools.services.ServiceChecker.__init__, .algitex.backups.batch_20260328_142940.src.algitex.tools.services.ServiceChecker.check_http_service, .algitex.backups.batch_20260328_142940.src.algitex.tools.services.ServiceChecker.check_ollama, .algitex.backups.batch_20260328_142940.src.algitex.tools.services.ServiceChecker.check_litellm_proxy, .algitex.backups.batch_20260328_142940.src.algitex.tools.services.ServiceChecker.check_mcp_service
 
-### state_machine_TodoExecutor
-- **Type**: state_machine
-- **Confidence**: 0.70
-- **Functions**: .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_executor.TodoExecutor.__init__, .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_executor.TodoExecutor.__enter__, .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_executor.TodoExecutor.__exit__, .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_executor.TodoExecutor.run, .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_executor.TodoExecutor._execute_task
-
 ### state_machine_VerboseContext
 - **Type**: state_machine
 - **Confidence**: 0.70
 - **Functions**: .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.VerboseContext.__init__, .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.VerboseContext.__enter__, .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.VerboseContext.__exit__
+
+### state_machine_TodoExecutor
+- **Type**: state_machine
+- **Confidence**: 0.70
+- **Functions**: .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_executor.TodoExecutor.__init__, .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_executor.TodoExecutor.__enter__, .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_executor.TodoExecutor.__exit__, .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_executor.TodoExecutor.run, .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_executor.TodoExecutor._execute_task
 
 ## Public API Surface
 

@@ -34,7 +34,11 @@ algitex todo batch -b ollama -s 5 --execute
 |-------|------|-----------|
 | `-b, --backend` | Backend: ollama, litellm-proxy | ollama |
 | `-s, --batch-size` | Max plików w batchu | 5 |
+| `-p, --parallel` | Równoległe grupy (workers) | 3 |
 | `--execute` | Wykonaj naprawdę (domyślnie dry-run) | False |
+| `--prune` | Usuń nieaktualne zadania przed batch | False |
+| `-l, --limit` | Limit liczby zadań (0 = wszystkie) | 0 |
+| `--no-log` | Wyłącz generowanie logów markdown | False |
 | `-v, --verbose` | Szczegółowe logi | False |
 | `-f, --file` | Ścieżka do TODO.md | TODO.md |
 
@@ -57,17 +61,60 @@ BatchFix automatycznie grupuje zadania według typu:
 # 1. Wygeneruj TODO.md
 prefact generate
 
-# 2. Zobacz co zostanie zbatchowane
+# 2. Weryfikacja - sprawdź które zadania są nadal aktualne
+algitex todo verify-prefact
+
+# 3. Wyczyść nieaktualne zadania z TODO.md
+algitex todo verify-prefact --prune
+
+# 4. Zobacz co zostanie zbatchowane
 algitex todo batch --dry-run
 
-# 3. Wykonaj fixy
-algitex todo batch --execute
+# 5. Wykonaj fixy (dry-run z limitem i równoległością)
+algitex todo batch --limit 10 --parallel 2
 
-# 4. Sprawdź wynik
+# 6. Wykonaj naprawdę z czyszczeniem nieaktualnych zadań
+algitex todo batch --execute --prune
+
+# 7. Sprawdź wynik
 cat TODO.md  # Zadania oznaczone jako [x]
 ```
 
-## Wynik
+## Logi Markdown
+
+BatchFix automatycznie generuje logi w formacie markdown:
+
+```bash
+# Logi zapisywane domyślnie w .algitex/logs/
+algitex todo batch --dry-run
+# Log zapisany: .algitex/logs/batch_YYYYMMDD_HHMMSS.md
+
+# Wyłączenie logowania
+algitex todo batch --execute --no-log
+```
+
+### Format logu
+
+```markdown
+# BatchFix Session Log
+
+**Started:** 2026-03-28 14:46:36
+**Ended:** 2026-03-28 14:46:36
+
+## Configuration
+| Parameter | Value |
+|-----------|-------|
+| Backend | ollama |
+| Batch Size | 2 |
+
+## Summary
+| Metric | Count |
+|--------|-------|
+| Total Entries | 3 |
+| Successful | 0 |
+| Failed | 0 |
+| Dry Run | 3 |
+```
 
 ```
 📦 BatchFix: 50 zadań → 12 grup

@@ -1,7 +1,7 @@
-# algitex | 2016 func | 195f | 62495L | python | 2026-03-28
+# algitex | 2019 func | 195f | 62642L | python | 2026-03-28
 
 HEALTH:
-  CC̄=3.4  critical=97 (limit:10)  dup=107  cycles=0
+  CC̄=3.4  critical=99 (limit:10)  dup=107  cycles=0
 
 ALERTS[20]:
   !!! cc_exceeded      classify_message = 50 (limit:15)
@@ -16,13 +16,13 @@ ALERTS[20]:
   !!  high_fan_out     fix_file = 18 (limit:10)
 
 MODULES[214] (top by size):
+  M[src/algitex/todo/fixer.py] 704L C:2 F:23 CC↑30 D:0 (python)
   M[src/algitex/tools/autofix/batch_backend.py] 699L C:2 F:16 CC↑11 D:0 (python)
-  M[src/algitex/todo/fixer.py] 697L C:2 F:23 CC↑30 D:1 (python)
   M[.algitex/backups/batch_20260328_143434/src/algitex/tools/autofix/batch_backend.py] 667L C:2 F:16 CC↑11 D:0 (python)
   M[.algitex/backups/batch_20260328_142940/src/algitex/tools/autofix/batch_backend.py] 631L C:2 F:15 CC↑11 D:0 (python)
-  M[src/algitex/todo/micro.py] 560L C:5 F:17 CC↑19 D:0 (python)
-  M[src/algitex/cli/todo.py] 479L C:0 F:9 CC↑29 D:0 (python)
-  M[src/algitex/todo/hybrid.py] 478L C:4 F:10 CC↑11 D:0 (python)
+  M[src/algitex/cli/todo.py] 601L C:0 F:11 CC↑29 D:0 (python)
+  M[src/algitex/todo/micro.py] 581L C:5 F:18 CC↑19 D:0 (python)
+  M[src/algitex/todo/hybrid.py] 479L C:4 F:10 CC↑12 D:0 (python)
   M[.algitex/backups/batch_20260328_143434/src/algitex/cli/todo.py] 476L C:0 F:9 CC↑29 D:0 (python)
   M[.algitex/backups/batch_20260328_142940/src/algitex/todo/hybrid.py] 467L C:4 F:10 CC↑8 D:0 (python)
   M[.algitex/backups/batch_20260328_143434/src/algitex/todo/hybrid.py] 467L C:4 F:10 CC↑8 D:0 (python)
@@ -47,12 +47,12 @@ Args:
   ★ _apply_magic_number_fixes fan=18  // Apply known magic-number replacements in one pass.
   ★ fix_file fan=18  // Fix all tasks in a single file. Safe to run in parallel per-file.
 
-REFACTOR[14]:
+REFACTOR[15]:
   [1] H/L Split todo_verify_prefact (CC=29 → target CC<10)
   [2] H/L Split todo_verify_prefact (CC=29 → target CC<10)
-  [3] H/L Split fix_file (CC=30 → target CC<10)
-  [4] H/L Split classify_message (CC=50 → target CC<10)
-  [5] H/H Split god module src/algitex/todo/fixer.py (697L, 2 classes)
+  [3] H/L Split classify_message (CC=50 → target CC<10)
+  [4] H/L Split fix_file (CC=30 → target CC<10)
+  [5] H/H Split god module src/algitex/todo/fixer.py (704L, 2 classes)
 
 EVOLUTION:
-  2026-03-28 CC̄=3.4 crit=97 62495L // Automated analysis
+  2026-03-28 CC̄=3.4 crit=99 62642L // Automated analysis

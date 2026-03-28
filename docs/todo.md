@@ -23,7 +23,95 @@ algitex todo run --tool aider-mcp
 algitex todo run --tool filesystem-mcp
 ```
 
-## Formaty obsługiwanych plików todo
+## BatchFix - grupowanie i optymalizacja
+
+```bash
+# Weryfikacja - sprawdź które zadania są nadal aktualne
+algitex todo verify-prefact
+
+# Wyczyść nieaktualne zadania z TODO.md
+algitex todo verify-prefact --prune
+
+# BatchFix - symulacja (dry-run)
+algitex todo batch --dry-run
+
+# BatchFix - wykonaj z limitem i równoległością
+algitex todo batch --execute --limit 10 --parallel 2
+
+# BatchFix z czyszczeniem nieaktualnych zadań
+algitex todo batch --execute --prune
+
+# Wyłączenie logowania markdown
+algitex todo batch --execute --no-log
+```
+
+## Komendy CLI
+
+| Komenda | Opis | Przykład |
+|---------|------|----------|
+| `list` | Wyświetl zadania z TODO.md | `algitex todo list` |
+| `run` | Wykonaj zadania przez MCP | `algitex todo run --limit 5` |
+| `fix` | Wykonaj tylko zadania naprawy | `algitex todo fix --dry-run` |
+| `batch` | BatchFix - grupowanie zadań | `algitex todo batch --execute` |
+| `verify-prefact` | Weryfikacja z prefact | `algitex todo verify-prefact --prune` |
+
+## Opcje BatchFix
+
+| Flaga | Opis | Domyślnie |
+|-------|------|-----------|
+| `--dry-run/--execute` | Symulacja lub wykonanie | dry-run |
+| `-b, --backend` | Backend: ollama, litellm-proxy | ollama |
+| `-s, --batch-size` | Max plików w batchu | 5 |
+| `-p, --parallel` | Równoległe grupy | 3 |
+| `--prune` | Usuń nieaktualne zadania | False |
+| `-l, --limit` | Limit liczby zadań | 0 (wszystkie) |
+| `--no-log` | Wyłącz logi markdown | False |
+
+## Logi Markdown
+
+BatchFix automatycznie generuje logi w formacie markdown w katalogu `.algitex/logs/`:
+
+```bash
+# Log zapisywany automatycznie
+algitex todo batch --execute
+# Log zapisany: .algitex/logs/batch_YYYYMMDD_HHMMSS.md
+
+# Wyłączenie logowania
+algitex todo batch --execute --no-log
+```
+
+### Struktura logu
+
+```markdown
+# BatchFix Session Log
+
+**Started:** 2026-03-28 14:46:36
+**Ended:** 2026-03-28 14:46:36
+
+## Configuration
+| Parameter | Value |
+|-----------|-------|
+| Backend | ollama |
+| Batch Size | 2 |
+| Parallel Groups | 3 |
+
+## Summary
+| Metric | Count |
+|--------|-------|
+| Total Entries | 3 |
+| Successful | 2 |
+| Failed | 0 |
+| Dry Run | 1 |
+| Total Duration | 45.2s |
+
+## Details
+### [1/3] unused_import
+**Status:** ✅ `success`
+**Duration:** 15.3s
+**Files:**
+- `src/main.py`
+- `src/utils.py`
+```
 
 ### 1. GitHub-style (checkbox)
 ```markdown

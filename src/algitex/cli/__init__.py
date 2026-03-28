@@ -34,7 +34,9 @@ from algitex.cli.ticket import ticket_add, ticket_list, ticket_board
 from algitex.cli.algo import algo_discover, algo_extract, algo_rules, algo_report
 from algitex.cli.workflow import workflow_run, workflow_validate
 from algitex.cli.docker import docker_list, docker_spawn, docker_call, docker_teardown, docker_caps
-from algitex.cli.todo import todo_list, todo_run, todo_fix, todo_verify, todo_fix_parallel, todo_benchmark, todo_hybrid, todo_batch, todo_verify_prefact
+from algitex.cli.todo import todo_list, todo_run, todo_stats, todo_fix, todo_verify, todo_fix_parallel, todo_benchmark, todo_hybrid, todo_batch, todo_verify_prefact
+from algitex.cli.microtask import microtask_app, microtask_classify, microtask_plan, microtask_run
+from algitex.cli.nlp import nlp_app, nlp_dead_code, nlp_docstrings, nlp_duplicates, nlp_imports
 from algitex.cli.parallel import parallel
 
 # Main app
@@ -50,12 +52,16 @@ algo_app = typer.Typer(help="Progressive algorithmization.")
 workflow_app = typer.Typer(help="Propact Markdown workflows.")
 docker_app = typer.Typer(help="Manage Docker-based development tools.")
 todo_app = typer.Typer(help="Execute todo lists via Docker MCP.")
+microtask_app = typer.Typer(help="Atomic MicroTask pipeline for small LLMs.")
+nlp_app = typer.Typer(help="Deterministic NLP refactor helpers.")
 
 app.add_typer(ticket_app, name="ticket")
 app.add_typer(algo_app, name="algo")
 app.add_typer(workflow_app, name="workflow")
 app.add_typer(docker_app, name="docker")
 app.add_typer(todo_app, name="todo")
+app.add_typer(microtask_app, name="microtask")
+app.add_typer(nlp_app, name="nlp")
 
 console = Console()
 
@@ -95,6 +101,7 @@ docker_app.command("caps")(docker_caps)
 # Register todo subcommands
 todo_app.command("list")(todo_list)
 todo_app.command("run")(todo_run)
+todo_app.command("stats")(todo_stats)
 todo_app.command("fix")(todo_fix)
 todo_app.command("verify")(todo_verify)
 todo_app.command("fix-auto")(todo_fix_parallel)
@@ -105,6 +112,17 @@ todo_app.command("batch")(todo_batch)
 todo_app.command("verify-prefact")(todo_verify_prefact)
 app.command("fix", help="Quick hybrid autofix (alias for 'todo hybrid')")(todo_hybrid)
 
+# Register microtask subcommands
+microtask_app.command("classify")(microtask_classify)
+microtask_app.command("plan")(microtask_plan)
+microtask_app.command("run")(microtask_run)
+
+# Register nlp subcommands
+nlp_app.command("docstrings")(nlp_docstrings)
+nlp_app.command("imports")(nlp_imports)
+nlp_app.command("dead-code")(nlp_dead_code)
+nlp_app.command("duplicates")(nlp_duplicates)
+
 # Backward compatibility
 __all__ = [
     "app", "console",
@@ -113,5 +131,7 @@ __all__ = [
     "algo_discover", "algo_extract", "algo_rules", "algo_report",
     "workflow_run", "workflow_validate",
     "docker_list", "docker_spawn", "docker_call", "docker_teardown", "docker_caps",
-    "todo_list", "todo_run", "todo_fix", "todo_verify", "todo_fix_parallel", "todo_benchmark", "todo_hybrid",
+    "todo_list", "todo_run", "todo_stats", "todo_fix", "todo_verify", "todo_fix_parallel", "todo_benchmark", "todo_hybrid",
+    "microtask_app", "microtask_classify", "microtask_plan", "microtask_run",
+    "nlp_app", "nlp_docstrings", "nlp_imports", "nlp_dead_code", "nlp_duplicates",
 ]

@@ -81,17 +81,15 @@ def _categorize(message: str) -> str:
 def _simple_fstring_rewrite(line: str) -> str:
     """Rewrite one simple string concatenation into an f-string."""
     pattern = re.compile(
-        r'(?P<quote>["\'])'
-        r'(?P<prefix>[^"\']*)'
-        r'(?P=quote)\s*\+\s*'
+        r'(?P<left>["\'])(?P<prefix>[^"\']*)\1\s*\+\s*'
         r'(?P<expr>[A-Za-z_][A-Za-z0-9_\.]*)\s*\+\s*'
-        r'(?P<suffix>["\'])(?P<tail>[^"\']*)\4'
+        r'(?P<right>["\'])(?P<tail>[^"\']*)\4'
     )
 
     def _replace(match: re.Match[str]) -> str:
-        prefix = match.group("prefix")
+        prefix = match.group("prefix").replace("\\", "\\\\").replace("\"", "\\\"").replace("{", "{{").replace("}", "}}")
         expr = match.group("expr")
-        tail = match.group("tail")
+        tail = match.group("tail").replace("\\", "\\\\").replace("\"", "\\\"").replace("{", "{{").replace("}", "}}")
         return f'f"{prefix}{{{expr}}}{tail}"'
 
     return pattern.sub(_replace, line, count=1)
@@ -131,13 +129,32 @@ def _extract_magic_number(task: TodoTask) -> int | None:
     return None
 
 
+def _locate_magic_line(lines: list[str], task: TodoTask, number: int) -> int | None:
+    """Locate the most likely current line for a magic-number task."""
+    if not lines:
+        return None
+
+    original_index = max(0, min(len(lines) - 1, task.line - 1))
+    window_start = max(0, original_index - 4)
+    window_end = min(len(lines), original_index + 5)
+
+    for index in range(window_start, window_end):
+        if re.search(rf"\b{number}\b", lines[index]):
+            return index
+
+    for index, line in enumerate(lines):
+        if re.search(rf"\b{number}\b", line):
+            return index
+
+    return None
+
+
 def _apply_magic_number_fixes(path: Path, tasks: list[TodoTask]) -> tuple[int, int]:
     """Apply known magic-number replacements in one pass."""
     if not tasks:
         return 0, 0
 
     lines = path.read_text().splitlines()
-    replacements: list[tuple[int, int, str]] = []
     constants_needed: dict[str, int] = {}
     fixed = 0
     skipped = 0
@@ -151,11 +168,12 @@ def _apply_magic_number_fixes(path: Path, tasks: list[TodoTask]) -> tuple[int, i
         const_name = KNOWN_MAGIC_CONSTANTS[number]
         constants_needed[const_name] = number
 
-        if task.line - 1 >= len(lines):
+        line_index = _locate_magic_line(lines, task, number)
+        if line_index is None:
             skipped += 1
             continue
 
-        line = lines[task.line - 1]
+        line = lines[line_index]
         new_line = re.sub(
             rf'(?<!["\'])\b{number}\b(?!["\'])',
             const_name,
@@ -166,7 +184,7 @@ def _apply_magic_number_fixes(path: Path, tasks: list[TodoTask]) -> tuple[int, i
             skipped += 1
             continue
 
-        lines[task.line - 1] = new_line
+        lines[line_index] = new_line
         fixed += 1
 
     if fixed == 0:
@@ -337,6 +355,7 @@ FIXERS: dict[str, Callable[[Path, TodoTask], bool]] = {
     "return_type": fix_return_type,
     "fstring": fix_fstring,
     "magic": fix_magic_number,
+    "magic_known": fix_magic_number,
     "exec_block": fix_module_block,
     "module_block": fix_module_block,
 }
@@ -393,7 +412,7 @@ def _print_pre_execution_summary(
         }.get(tier, tier.title())
         print(f"  {count:>4} {label:<20}")
 
-    auto_fixable = sum(1 for t in tasks if t.category in FIXERS)
+    auto_fixable = sum(1 for t in tasks if classify_message(t.message).tier == "algorithm")
     if tasks:
         pct = auto_fixable * 100 // len(tasks)
         print(f"\nAuto-fixable: {auto_fixable}/{len(tasks)} ({pct}%)")
@@ -486,7 +505,7 @@ def fix_file(file_path: str, tasks: list[TodoTask], dry_run: bool = True) -> Fix
     for task in sorted_tasks:
         if task.category in {"unused_import", "return_type"}:
             line_tasks.append(task)
-        elif task.category in {"magic"}:
+        elif task.category in {"magic", "magic_known"}:
             magic_tasks.append(task)
         elif task.category in {"fstring"}:
             fstring_tasks.append(task)
@@ -689,14 +708,15 @@ def parallel_fix_and_update(
     # If not dry run and we fixed something, mark tasks as completed
     if not dry_run and result["fixed"] > 0:
         # Get the list of tasks that were fixed
-        tasks = parse_todo(todo_path)
+        if tasks is None:
+            tasks = parse_todo(todo_path)
         if category_filter:
             tasks = [t for t in tasks if t.category == category_filter]
         if categories:
             tasks = [t for t in tasks if t.category in categories]
         
-        # Filter to only FIXERS categories (mechanical fixes)
-        fixable_tasks = [t for t in tasks if t.category in FIXERS]
+        # Filter to only deterministic tasks (algorithm tier)
+        fixable_tasks = [t for t in tasks if classify_message(t.message).tier == "algorithm"]
         
         # Mark them as completed
         mark_tasks_completed(todo_path, fixable_tasks[:result["fixed"]])

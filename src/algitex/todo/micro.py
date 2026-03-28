@@ -79,7 +79,17 @@ class FunctionExtractor:
                 candidates.append(node)
 
         if not candidates:
-            return None
+            start = max(1, line_number - 5)
+            end = min(len(lines), line_number + 5)
+            snippet_source = "\n".join(lines[start - 1 : end])
+            return FunctionSnippet(
+                file_path=str(path),
+                name="<module>",
+                kind="module",
+                start_line=start,
+                end_line=end,
+                source=snippet_source,
+            )
 
         node = min(
             candidates,
@@ -194,7 +204,15 @@ class MicroFixer:
             ]
 
         results: list[MicroFixResult] = []
-        for task in sorted((_coerce_task(item) for item in tasks), key=lambda item: item.line_number or 0, reverse=True):
+
+        coerced_tasks = [_coerce_task(item) for item in tasks]
+        rewrite_tasks = [task for task in coerced_tasks if classify_task(task).category != "magic"]
+        magic_tasks = [task for task in coerced_tasks if classify_task(task).category == "magic"]
+
+        for task in sorted(rewrite_tasks, key=lambda item: item.line_number or 0, reverse=True):
+            results.append(self.fix_task(task))
+
+        for task in sorted(magic_tasks, key=lambda item: item.line_number or 0, reverse=True):
             results.append(self.fix_task(task))
         return results
 
@@ -282,15 +300,14 @@ class MicroFixer:
 
         return self.fix_tasks(tasks, categories=categories)
 
-    def fix_tasks(self, tasks: list[Task], categories: set[str] | None = None) -> dict[str, int]:
-        """Run micro fixes on an already-parsed task list."""
+    def fix_tasks_detailed(self, tasks: list[Task], categories: set[str] | None = None) -> list[MicroFixResult]:
+        """Run micro fixes on an already-parsed task list and return per-task results."""
         micro_tasks = [_coerce_task(task) for task in tasks if classify_task(task).tier == "micro"]
         if categories:
             micro_tasks = [task for task in micro_tasks if classify_task(task).category in categories]
 
         if not micro_tasks:
-            print("No micro-LLM tasks found.")
-            return {"fixed": 0, "skipped": 0, "errors": 0}
+            return []
 
         by_file_map: dict[str, list[Task]] = {}
         for task in micro_tasks:
@@ -298,9 +315,7 @@ class MicroFixer:
                 continue
             by_file_map.setdefault(task.file_path, []).append(task)
 
-        fixed = 0
-        skipped = 0
-        errors = 0
+        results: list[MicroFixResult] = []
         with ThreadPoolExecutor(max_workers=self.workers) as pool:
             futures = {
                 pool.submit(self.fix_file, Path(file_path), file_tasks): file_path
@@ -308,13 +323,22 @@ class MicroFixer:
             }
             for future in as_completed(futures):
                 try:
-                    results = future.result()
-                    fixed += sum(1 for item in results if item.success)
-                    skipped += sum(1 for item in results if not item.success and not item.error)
-                    errors += sum(1 for item in results if item.error)
+                    results.extend(future.result())
                 except Exception as exc:
-                    errors += 1
                     print(f"  ✗ Micro fix failed: {exc}")
+
+        return results
+
+    def fix_tasks(self, tasks: list[Task], categories: set[str] | None = None) -> dict[str, int]:
+        """Run micro fixes on an already-parsed task list."""
+        micro_results = self.fix_tasks_detailed(tasks, categories=categories)
+        if not micro_results:
+            print("No micro-LLM tasks found.")
+            return {"fixed": 0, "skipped": 0, "errors": 0}
+
+        fixed = sum(1 for item in micro_results if item.success)
+        skipped = sum(1 for item in micro_results if not item.success and not item.error)
+        errors = sum(1 for item in micro_results if item.error)
 
         print(f"Micro LLM: fixed={fixed}, skipped={skipped}, errors={errors}")
         return {"fixed": fixed, "skipped": skipped, "errors": errors}

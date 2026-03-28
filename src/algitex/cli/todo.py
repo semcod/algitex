@@ -48,7 +48,12 @@ def todo_stats(
     """Show tier and category stats for a TODO file."""
     from algitex.todo import parse_todo
 
-    tasks = parse_todo(file)
+    try:
+        tasks = parse_todo(file)
+    except FileNotFoundError:
+        console.print(f"[red]TODO file not found:[/] {file}")
+        return
+
     if not tasks:
         console.print(f"[yellow]No pending tasks found in {file}[/]")
         return
@@ -154,10 +159,109 @@ def todo_fix(
     tool: str = typer.Option("ollama-mcp", "--tool", "-t", help="Tool to use (local, ollama-mcp, filesystem-mcp, aider-mcp, nap)"),
     task_id: Optional[str] = typer.Option(None, "--task", help="Specific task ID to fix"),
     limit: int = typer.Option(0, "--limit", "-l", help="Limit number of tasks (0 = all)"),
+    dry_run: bool = typer.Option(False, "--dry-run/--execute", help="Preview without executing"),
+    algo: bool = typer.Option(False, "--algo", help="Run only algorithmic fixes"),
+    micro: bool = typer.Option(False, "--micro", "--small-llm", help="Run only small LLM micro-fixes"),
+    all_phases: bool = typer.Option(False, "--all", help="Run algorithmic, small LLM, and big LLM phases"),
+    workers: int = typer.Option(8, "--workers", "-w", help="Workers for algorithmic and big LLM phases"),
+    micro_workers: int = typer.Option(4, "--micro-workers", help="Workers for the small LLM phase"),
+    model: str = typer.Option("qwen2.5-coder:7b", "--model", help="Ollama model for the small LLM phase"),
+    backend: str = typer.Option("ollama", "--backend", "-b", help="Backend for the big LLM phase"),
+    rate_limit: int = typer.Option(10, "--rate-limit", "-r", help="LLM calls per second for the big LLM phase"),
+    proxy_url: str = typer.Option("http://localhost:4000", "--proxy-url", "-p", help="LiteLLM proxy URL"),
 ):
     """Execute fix tasks (prefact-style) via Docker MCP."""
     from algitex.tools.todo_parser import TodoParser
     from algitex.tools.todo_runner import TodoRunner
+
+    if algo or micro or all_phases:
+        from algitex.todo import (
+            BIG_CATEGORIES,
+            HybridAutofix,
+            MicroFixer,
+            classify_task,
+            mark_tasks_completed,
+            parallel_fix_and_update,
+            parse_todo,
+        )
+
+        try:
+            tasks = parse_todo(file)
+        except FileNotFoundError:
+            console.print(f"[red]TODO file not found:[/] {file}")
+            return
+        if task_id:
+            tasks = [t for t in tasks if f"{t.file}:{t.line}" == task_id]
+        if limit > 0:
+            tasks = tasks[:limit]
+
+        if not tasks:
+            console.print("[yellow]No fix tasks found[/]")
+            return
+
+        console.print(f"[bold]Tiered AutoFix[/]: {file}")
+        _render_todo_stats(file, tasks)
+
+        if all_phases:
+            algo = True
+            micro = True
+
+        phase_results: list[tuple[str, dict]] = []
+
+        if algo:
+            algo_tasks = [t for t in tasks if classify_task(t).tier == "algorithm"]
+            console.print(f"\n[green]Phase 1: Algorithm[/] — {len(algo_tasks)} tasks")
+            result = parallel_fix_and_update(file, workers=workers, dry_run=dry_run, tasks=algo_tasks)
+            phase_results.append(("Algorithm", result))
+
+        if micro:
+            micro_tasks = [t for t in tasks if classify_task(t).tier == "micro"]
+            console.print(f"\n[cyan]Phase 2: Small LLM[/] — {len(micro_tasks)} tasks")
+            micro_fixer = MicroFixer(
+                ollama_url="http://localhost:11434",
+                model=model,
+                workers=micro_workers,
+                dry_run=dry_run,
+            )
+            micro_results = micro_fixer.fix_tasks_detailed(micro_tasks)
+            result = {
+                "fixed": sum(1 for item in micro_results if item.success),
+                "skipped": sum(1 for item in micro_results if not item.success and not item.error),
+                "errors": sum(1 for item in micro_results if item.error),
+            }
+            phase_results.append(("Small LLM", result))
+
+            if not dry_run and result.get("fixed", 0) > 0:
+                completed_ids = {item.task_id for item in micro_results if item.success}
+                completed_tasks = [
+                    task for task in micro_tasks if f"{task.file}:{task.line}" in completed_ids
+                ]
+                if completed_tasks:
+                    mark_tasks_completed(file, completed_tasks)
+
+        if all_phases:
+            big_tasks = [t for t in tasks if classify_task(t).tier == "big"]
+            console.print(f"\n[magenta]Phase 3: Big LLM[/] — {len(big_tasks)} tasks")
+            fixer = HybridAutofix(
+                backend=backend,
+                tool=tool,
+                proxy_url=proxy_url,
+                workers=workers,
+                rate_limit=rate_limit,
+                dry_run=dry_run,
+            )
+            result = fixer.fix_complex(file, include_categories=set(BIG_CATEGORIES), tasks=big_tasks)
+            phase_results.append(("Big LLM", result))
+
+            if not dry_run and result.get("fixed", 0) == len(big_tasks) and big_tasks:
+                mark_tasks_completed(file, big_tasks)
+
+        console.print(f"\n[bold]Tiered Summary[/]")
+        for phase, result in phase_results:
+            console.print(
+                f"  • {phase}: fixed={result.get('fixed', 0)}, skipped={result.get('skipped', 0)}, errors={result.get('errors', 0)}"
+            )
+        return
 
     parser = TodoParser(file)
     all_tasks = parser.parse()
@@ -179,7 +283,7 @@ def todo_fix(
     console.print(f"[bold]Found {len(fix_tasks)} fix tasks[/]\n")
 
     with TodoRunner(".") as runner:
-        results = runner.run(fix_tasks, tool=tool)
+        results = runner.run(fix_tasks, tool=tool, dry_run=dry_run)
 
         for r in results:
             icon = "\u2713" if r.success else "\u2717"

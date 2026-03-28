@@ -120,21 +120,57 @@ Execute TODO tasks from prefact analysis in parallel with automatic categorizati
 
 ```bash
 # Verify which TODO tasks are still valid vs already fixed
-algitex todo verify
+algitex todo verify-prefact
+
+# Remove outdated tasks from TODO.md
+algitex todo verify-prefact --prune
+
+# BatchFix: grupowanie i optymalizacja podobnych zadań
+algitex todo batch --dry-run              # Symulacja
+algitex todo batch --execute              # Wykonaj fixy
+algitex todo batch --limit 10 --parallel 2  # Limit i równoległość
+algitex todo batch --execute --prune      # Wykonaj + wyczyść nieaktualne
+algitex todo batch --execute --no-log    # Wyłącz logowanie markdown
 
 # Auto-fix mechanical issues in parallel (dry-run)
 algitex todo fix-auto --workers 8
 
 # Actually apply fixes
 algitex todo fix-auto --execute
+```
 
-# Fix only specific category
-algitex todo fix-auto --category unused_import --execute
-algitex todo fix-auto --category return_type --execute
+## MicroTask — Atomic Tasks for Small LLMs
 
-# Benchmark performance
-algitex todo benchmark 100 --workers 8
-algitex todo benchmark 50 --compare  # parallel vs sequential
+Pipeline for breaking down and executing atomic micro-tasks optimized for small LLMs:
+
+```bash
+# Classify tasks by complexity
+algitex microtask classify
+
+# Generate execution plan
+algitex microtask plan
+
+# Execute micro-tasks
+algitex microtask run --workers 4
+```
+
+## NLP — Deterministic Refactor Helpers
+
+Deterministic NLP-based refactoring without LLM calls:
+
+```bash
+# Fix docstrings
+algitex nlp docstrings --dry-run
+algitex nlp docstrings --execute
+
+# Optimize imports
+algitex nlp imports --execute
+
+# Remove dead code
+algitex nlp dead-code --execute
+
+# Find and refactor duplicates
+algitex nlp duplicates --execute
 ```
 
 ### Python API
@@ -405,6 +441,11 @@ cd examples/33-hybrid-autofix
 make dry-run              # Preview
 make hybrid               # Execute with LiteLLM proxy
 make ollama               # Execute with Ollama (100% offline)
+
+# BatchFix — grupowanie i optymalizacja podobnych zadań
+cd examples/34-batch-fix
+algitex todo batch --dry-run   # Symulacja
+algitex todo batch --execute   # Wykonaj fixy
 ```
 
 Each example has:
@@ -434,12 +475,17 @@ Each example has:
 - [24-ollama-batch/README.md](examples/24-ollama-batch/README.md) — Parallel batch processing with Ollama
 - [25-local-model-comparison/README.md](examples/25-local-model-comparison/README.md) — Benchmark Ollama models
 - [26-litellm-proxy-ollama/README.md](examples/26-litellm-proxy-ollama/README.md) — LiteLLM Proxy + Ollama (native algitex)
+- [28-mcp-orchestration/README.md](examples/28-mcp-orchestration/README.md) — MCP Service Orchestration
+- [30-parallel-execution/README.md](examples/30-parallel-execution/README.md) — Parallel Execution with Region-Based Coordination
+- [31-abpr-workflow/README.md](examples/31-abpr-workflow/README.md) — ABPR Workflow
+- [32-workspace-coordination/README.md](examples/32-workspace-coordination/README.md) — Multi-Repo Workspace Coordination
 - [33-hybrid-autofix/README.md](examples/33-hybrid-autofix/README.md) — Fast parallel + LLM with rate limiting
+- [34-batch-fix/README.md](examples/34-batch-fix/README.md) — BatchFix: grupowanie i optymalizacja fixów
 - `run.sh` — executable script
 - `Makefile` — `make run`, `make setup`, `make clean`
 - `.env.example` — configuration template (where applicable)
 
-> ✅ **All 33 examples tested and verified working** (2026-03-28). Examples 01-34 (except 29) execute without errors.
+> ✅ **All 34 examples tested and verified working** (2026-03-28). Examples 01-34 (except 29) execute without errors.
 
 ## Additional Documentation
 
@@ -510,8 +556,6 @@ src/algitex/
 Licensed under Apache-2.0.
 
 
-
-
 Licensed under Apache-2.0.
 
 ## Author
@@ -521,8 +565,6 @@ Tom Sapletta
 
 Tom Sapletta
 
-
-
-Created by **Tom Sapletta** — [tom@sapletta.com](mailto:tom@sapletta.com)
+Created by **Tom Sapletta** — [tom@sapletta.com](mailto:tom@sapletta.com).
 
 Part of the [semcod](https://github.com/semcod) / [wronai](https://github.com/wronai) ecosystem.

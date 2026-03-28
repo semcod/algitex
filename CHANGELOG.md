@@ -18,6 +18,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Examples 01-34 (except 29) all execute without errors
 - BatchFix, Hybrid AutoFix, and Parallel Execution examples fully functional
 
+## [0.1.44] - 2026-03-28
+
+### Docs
+- Update README.md
+- Update docs/BATCHFIX.md
+- Update docs/README.md
+- Update docs/todo.md
+- Update project/README.md
+- Update project/context.md
+
+### Other
+- Update .code2llmignore
+- Update .prefactignore
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/compact_flow.mmd
+- Update project/compact_flow.png
+- Update project/duplication.toon.yaml
+- Update project/evolution.toon.yaml
+- Update project/flow.mmd
+- ... and 6 more files
+
 ## [0.1.43] - 2026-03-28
 
 ### Docs
