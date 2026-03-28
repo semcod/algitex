@@ -4,8 +4,8 @@ run: status
 	@echo ""
 	@echo "=== Full Aider + Ollama Workflow Demo ==="
 	@echo ""
-	@echo "Step 1: Creating TODO.md with prefact -a..."
-	prefact -a || echo "⚠️  prefact failed, using sample TODO.md"
+	@echo "Step 1: Analyzing and creating TODO.md..."
+	python -c "from algitex.tools.analysis import Analyzer; from algitex.tools.todo_parser import TodoParser; import os; a = Analyzer('.'); r = a.full(); t = TodoParser('TODO.md'); t.from_analysis(r)" 2>/dev/null || echo "⚠️  Using sample TODO.md"; python generate_todo.py 2>/dev/null || true
 	@echo ""
 	@echo "Step 2: Reviewing TODO.md..."
 	@head -30 TODO.md || echo "No TODO.md found"
@@ -24,8 +24,8 @@ setup:
 	@python main.py
 
 todo:
-	@echo "Running: prefact -a"
-	prefact -a
+	@echo "Running: algitex analyze && generate TODO"
+	algitex analyze || python generate_todo.py
 
 fix:
 	@echo "Running: python auto_fix.py"

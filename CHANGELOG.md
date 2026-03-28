@@ -8,6 +8,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.10] - 2026-03-28
 
 ### Fixed
+- Fix unused-imports issues (ticket-85d535bc)
+- Fix magic-numbers issues (ticket-79ce8321)
+- Fix unused-imports issues (ticket-db7b0350)
+- Fix unused-imports issues (ticket-1e033069)
+
+## [0.1.10] - 2026-03-28
+
+### Fixed
+- Fix smart-return-type issues (ticket-13d50dd2)
+- Fix ai-boilerplate issues (ticket-c08d4a5a)
+
+## [0.1.10] - 2026-03-28
+
+### Fixed
 - Fix smart-return-type issues (ticket-f6f27861)
 - Fix string-concat issues (ticket-a3075308)
 - Fix magic-numbers issues (ticket-a5b3e5d1)
@@ -386,6 +400,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix llm-generated-code issues (ticket-06d0712f)
 
 ## [Unreleased]
+
+## [0.1.18] - 2026-03-28
+
+### Docs
+- Update CHANGELOG.md
+- Update TODO.md
+- Update docs/README.md
+- Update examples/23-continue-dev-ollama/README.md
+- Update examples/26-litellm-proxy-ollama/README.md
+- Update examples/28-mcp-orchestration/README.md
+- Update project/README.md
+- Update project/context.md
+
+### Other
+- Update examples/20-self-hosted-pipeline/Makefile
+- Update examples/21-aider-cli-ollama/Makefile
+- Update examples/21-aider-cli-ollama/auto_fix.py
+- Update examples/21-aider-cli-ollama/generate_todo.py
+- Update examples/21-aider-cli-ollama/main.py
+- Update examples/22-claude-code-ollama/main.py
+- Update examples/26-litellm-proxy-ollama/Makefile
+- Update examples/26-litellm-proxy-ollama/run.sh
+- Update examples/28-mcp-orchestration/Makefile
+- Update examples/28-mcp-orchestration/main.py
+- ... and 13 more files
 
 ## [0.1.17] - 2026-03-28
 

@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 """
-Auto-fix script: Reads TODO.md created by prefact -a and fixes code using aider CLI with Ollama.
+Auto-fix script: Reads TODO.md and fixes code using aider CLI with Ollama.
 
 This demonstrates the complete workflow:
-1. prefact -a → creates TODO.md with issues
-2. This script → parses TODO.md and runs aider --model ollama/... for each issue
-3. Aider with local LLM → fixes the code
+1. algitex analyze → creates analysis
+2. generate_todo.py → creates TODO.md with issues
+3. This script → parses TODO.md and runs aider --model ollama/... for each issue
+4. Aider with local LLM → fixes the code
 
 Usage:
-    prefact -a                    # Create TODO.md
+    algitex analyze               # Analyze code
+    python generate_todo.py       # Create TODO.md
     python auto_fix.py            # Fix all issues with aider + ollama
     python auto_fix.py --limit 5  # Fix only first 5 issues
 """

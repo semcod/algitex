@@ -18,7 +18,7 @@
 │                    Algitex CLI                              │
 ├─────────────────────────────────────────────────────────────┤
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐       │
-│  │ prefact -a   │→ │ litellm      │→ │ ollama       │       │
+│  │ algitex analyze│→ │ litellm      │→ │ ollama       │       │
 │  │ (analiza)    │  │ proxy        │  │ (local LLM)  │       │
 │  └──────────────┘  └──────────────┘  └──────────────┘       │
 │         ↓                                                    │
@@ -46,7 +46,7 @@ make setup
 make proxy
 
 # 4. W drugim terminalu - analiza i naprawa
-prefact -a
+algitex analyze
 python auto_fix.py --limit 5
 ```
 
@@ -111,7 +111,7 @@ response = client.chat.completions.create(
 
 ```bash
 # Analiza
-prefact -a
+algitex analyze
 
 # Naprawa przez proxy
 python auto_fix.py
@@ -202,6 +202,6 @@ make stop      # Zatrzymaj proxy
 
 1. Uruchom `make setup`
 2. Sprawdź `make test`
-3. Uruchom `prefact -a && make fix`
+3. Uruchom `algitex analyze && make fix`
 
 Więcej: https://docs.litellm.ai/docs/

@@ -4489,3 +4489,81 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
+  - id: ticket-13d50dd2
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in examples/28-mcp-orchestration/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/28-mcp-orchestration/main.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-c08d4a5a
+    name: Fix ai-boilerplate issues
+    description: Resolve 2 ai-boilerplate issues in examples/28-mcp-orchestration/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/28-mcp-orchestration/main.py
+    rule_id: ai-boilerplate
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-85d535bc
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/algitex/tools/autofix/aider_backend.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/autofix/aider_backend.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-79ce8321
+    name: Fix magic-numbers issues
+    description: Resolve 2 magic-numbers issues in src/algitex/tools/autofix/aider_backend.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/autofix/aider_backend.py
+    rule_id: magic-numbers
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-db7b0350
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/algitex/tools/autofix/ollama_backend.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/autofix/ollama_backend.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-1e033069
+    name: Fix unused-imports issues
+    description: Resolve 18 unused-imports issues in src/algitex/tools/autofix/base.py
+    task_type: prefactor
+    priority: high
+    estimate: 3d
+    files:
+    - src/algitex/tools/autofix/base.py
+    rule_id: unused-imports
+    count: 18
+    model_hints:
+      planning: balanced
+      implementation: balanced

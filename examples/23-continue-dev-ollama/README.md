@@ -81,11 +81,11 @@ Ctrl+I          # Inline edit (zaznacz kod, potem Ctrl+I)
 Tab             # Autocomplete (jeśli włączone)
 ```
 
-## Workflow z prefact
+## Workflow z algitex
 
 ```bash
 # 1. Analiza kodu
-prefact -a
+algitex analyze
 
 # 2. Otwórz VS Code z Continue
 # Ctrl+L → wybierz model "Qwen Coder 7B"

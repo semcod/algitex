@@ -15,14 +15,14 @@ def check_prerequisites() -> int:
     
     issues = []
     
-    # Check prefact
+    # Check algitex
     try:
-        import prefact
-        print("✅ prefact installed")
+        import algitex
+        print("✅ algitex installed")
     except ImportError:
-        print("❌ prefact not found")
-        print("   Install: pip install prefact")
-        issues.append("prefact")
+        print("❌ algitex not found")
+        print("   Install: pip install -e ../../")
+        issues.append("algitex")
     
     # Check aider
     import subprocess
@@ -67,7 +67,7 @@ def check_prerequisites() -> int:
             print(f"✅ TODO.md found ({current_issues} open, {completed} completed)")
     else:
         print("⚠️  TODO.md not found")
-        print("   Create: prefact -a")
+        print("   Create: python generate_todo.py")
     
     print()
     
@@ -82,9 +82,9 @@ def check_prerequisites() -> int:
     print("✅ All prerequisites satisfied!")
     print()
     print("Next steps:")
-    print("  1. prefact -a              # Create TODO.md")
-    print("  2. python auto_fix.py      # Fix all issues")
-    print("  3. python auto_fix.py -l 3 # Fix first 3 issues")
+    print("  1. python generate_todo.py   # Create TODO.md")
+    print("  2. python auto_fix.py        # Fix all issues")
+    print("  3. python auto_fix.py -l 3   # Fix first 3 issues")
     print()
     print("Or run full demo:")
     print("  make run")

@@ -1,0 +1,44 @@
+"""Base classes and utilities for AutoFix."""
+
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Union
+
+
+@dataclass
+class FixResult:
+    """Result of fixing an issue."""
+    task_id: str
+    task_description: str
+    success: bool
+    method: str  # "ollama", "aider", "litellm-proxy"
+    time_ms: Optional[float] = None
+    error: Optional[str] = None
+    file_path: Optional[str] = None
+    diff: Optional[str] = None
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert to dictionary."""
+        return {
+            "task_id": self.task_id,
+            "task_description": self.task_description,
+            "success": self.success,
+            "method": self.method,
+            "time_ms": self.time_ms,
+            "error": self.error,
+            "file_path": self.file_path
+        }
+
+
+@dataclass
+class Task:
+    """Minimal task representation for backends."""
+    id: str
+    description: str
+    file_path: Optional[str] = None
+    line_number: Optional[int] = None
+    status: str = "pending"
+    priority: str = "normal"
+    type: str = "task"

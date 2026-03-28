@@ -4,12 +4,12 @@
 
 - **Project**: /home/tom/github/semcod/algitex
 - **Primary Language**: python
-- **Languages**: python: 99, shell: 26
+- **Languages**: python: 118, shell: 26
 - **Analysis Mode**: static
-- **Total Functions**: 702
-- **Total Classes**: 81
-- **Modules**: 125
-- **Entry Points**: 577
+- **Total Functions**: 760
+- **Total Classes**: 93
+- **Modules**: 144
+- **Entry Points**: 639
 
 ## Architecture by Module
 
@@ -17,15 +17,6 @@
 - **Functions**: 43
 - **Classes**: 1
 - **File**: `project.py`
-
-### src.algitex.cli
-- **Functions**: 25
-- **File**: `cli.py`
-
-### src.algitex.tools.autofix
-- **Functions**: 23
-- **Classes**: 2
-- **File**: `autofix.py`
 
 ### src.algitex.tools.docker
 - **Functions**: 23
@@ -72,6 +63,11 @@
 - **Classes**: 3
 - **File**: `__init__.py`
 
+### src.algitex.tools.autofix
+- **Functions**: 14
+- **Classes**: 1
+- **File**: `__init__.py`
+
 ### src.algitex.tools.context
 - **Functions**: 14
 - **Classes**: 3
@@ -101,6 +97,11 @@
 - **Functions**: 12
 - **Classes**: 4
 - **File**: `feedback.py`
+
+### src.algitex.tools.autofix.proxy_backend
+- **Functions**: 12
+- **Classes**: 1
+- **File**: `proxy_backend.py`
 
 ### examples.20-self-hosted-pipeline.buggy_code
 - **Functions**: 12
@@ -134,9 +135,6 @@ Main execution flows into the system:
 
 ### examples.18-ollama-local.main.main
 - **Calls**: print, print, print, print, print, examples.18-ollama-local.main.list_models, examples.18-ollama-local.main.demo_code_generation, examples.18-ollama-local.main.demo_code_analysis
-
-### examples.23-continue-dev-ollama.main.main
-- **Calls**: print, print, print, print, examples.23-continue-dev-ollama.main.check_ollama, print, print, examples.23-continue-dev-ollama.main.install_config
 
 ### examples.25-local-model-comparison.benchmark.main
 - **Calls**: print, print, print, print, examples.25-local-model-comparison.benchmark.check_ollama, print, print, examples.25-local-model-comparison.benchmark.check_models_available
@@ -219,6 +217,10 @@ Main execution flows into the system:
 ### examples.03-pipeline.main.main
 - **Calls**: print, print, None.report, print, None.report, None.get, hasattr, print
 
+### examples.24-ollama-batch.batch_analyze.BatchProcessor.process_files
+> Process multiple files in parallel.
+- **Calls**: print, print, print, time.time, print, print, print, print
+
 ## Process Flows
 
 Key execution flows identified:
@@ -255,6 +257,12 @@ process [src.algitex.tools.batch.BatchProcessor]
 basic_telemetry_example [examples.06-telemetry.main]
 ```
 
+### Flow 7: demo_github_workflow
+```
+demo_github_workflow [examples.15-github-mcp.main]
+  └─> create_sample_project
+```
+
 ## Key Classes
 
 ### src.algitex.project.Project
@@ -262,15 +270,15 @@ basic_telemetry_example [examples.06-telemetry.main]
 - **Methods**: 43
 - **Key Methods**: src.algitex.project.Project.__init__, src.algitex.project.Project.analyze, src.algitex.project.Project.plan, src.algitex.project.Project.execute, src.algitex.project.Project.status, src.algitex.project.Project.run_workflow, src.algitex.project.Project.ask, src.algitex.project.Project.add_ticket, src.algitex.project.Project.sync, src.algitex.project.Project.check_services
 
-### src.algitex.tools.autofix.AutoFix
-> Automated code fixing using various backends.
-- **Methods**: 24
-- **Key Methods**: src.algitex.tools.autofix.AutoFix.__init__, src.algitex.tools.autofix.AutoFix.ollama_service, src.algitex.tools.autofix.AutoFix.proxy, src.algitex.tools.autofix.AutoFix.check_backends, src.algitex.tools.autofix.AutoFix.choose_backend, src.algitex.tools.autofix.AutoFix.mark_task_done, src.algitex.tools.autofix.AutoFix.fix_with_ollama, src.algitex.tools.autofix.AutoFix._ensure_git_repo, src.algitex.tools.autofix.AutoFix._build_aider_prompt, src.algitex.tools.autofix.AutoFix._build_aider_command
-
 ### src.algitex.tools.docker.DockerToolManager
 > Spawn Docker containers, connect via MCP/REST, call tools, teardown.
 - **Methods**: 23
 - **Key Methods**: src.algitex.tools.docker.DockerToolManager.__init__, src.algitex.tools.docker.DockerToolManager.__enter__, src.algitex.tools.docker.DockerToolManager.__exit__, src.algitex.tools.docker.DockerToolManager._load_tools, src.algitex.tools.docker.DockerToolManager._load_state, src.algitex.tools.docker.DockerToolManager._save_state, src.algitex.tools.docker.DockerToolManager.spawn, src.algitex.tools.docker.DockerToolManager._spawn_stdio, src.algitex.tools.docker.DockerToolManager._spawn_sse, src.algitex.tools.docker.DockerToolManager._spawn_rest
+
+### src.algitex.tools.autofix.AutoFix
+> Automated code fixing using various backends.
+- **Methods**: 18
+- **Key Methods**: src.algitex.tools.autofix.AutoFix.__init__, src.algitex.tools.autofix.AutoFix.ollama_service, src.algitex.tools.autofix.AutoFix.ollama_backend, src.algitex.tools.autofix.AutoFix.aider_backend, src.algitex.tools.autofix.AutoFix.proxy_backend, src.algitex.tools.autofix.AutoFix.check_backends, src.algitex.tools.autofix.AutoFix.choose_backend, src.algitex.tools.autofix.AutoFix._convert_task, src.algitex.tools.autofix.AutoFix.mark_task_done, src.algitex.tools.autofix.AutoFix.fix_with_ollama
 
 ### src.algitex.tools.mcp.MCPOrchestrator
 > Orchestrates multiple MCP services.
@@ -307,6 +315,11 @@ basic_telemetry_example [examples.06-telemetry.main]
 - **Methods**: 12
 - **Key Methods**: src.algitex.tools.todo_executor.TodoExecutor.__init__, src.algitex.tools.todo_executor.TodoExecutor.__enter__, src.algitex.tools.todo_executor.TodoExecutor.__exit__, src.algitex.tools.todo_executor.TodoExecutor.run, src.algitex.tools.todo_executor.TodoExecutor._execute_task, src.algitex.tools.todo_executor.TodoExecutor._parse_action, src.algitex.tools.todo_executor.TodoExecutor._parse_fix_action, src.algitex.tools.todo_executor.TodoExecutor._parse_create_action, src.algitex.tools.todo_executor.TodoExecutor._parse_delete_action, src.algitex.tools.todo_executor.TodoExecutor._parse_read_action
 
+### src.algitex.tools.autofix.proxy_backend.ProxyBackend
+> Fix issues using LiteLLM proxy.
+- **Methods**: 12
+- **Key Methods**: src.algitex.tools.autofix.proxy_backend.ProxyBackend.__init__, src.algitex.tools.autofix.proxy_backend.ProxyBackend.fix, src.algitex.tools.autofix.proxy_backend.ProxyBackend._validate, src.algitex.tools.autofix.proxy_backend.ProxyBackend._execute_fix, src.algitex.tools.autofix.proxy_backend.ProxyBackend._read_file, src.algitex.tools.autofix.proxy_backend.ProxyBackend._build_prompt, src.algitex.tools.autofix.proxy_backend.ProxyBackend._call_api, src.algitex.tools.autofix.proxy_backend.ProxyBackend._extract_code, src.algitex.tools.autofix.proxy_backend.ProxyBackend._write_file, src.algitex.tools.autofix.proxy_backend.ProxyBackend._success_result
+
 ### src.algitex.algo.Loop
 > The progressive algorithmization engine.
 - **Methods**: 11
@@ -321,6 +334,11 @@ basic_telemetry_example [examples.06-telemetry.main]
 > Execute simple code fixes locally without Docker.
 - **Methods**: 11
 - **Key Methods**: src.algitex.tools.todo_local.LocalExecutor.__init__, src.algitex.tools.todo_local.LocalExecutor.can_execute, src.algitex.tools.todo_local.LocalExecutor._determine_fix_and_apply, src.algitex.tools.todo_local.LocalExecutor.execute, src.algitex.tools.todo_local.LocalExecutor._fix_return_type, src.algitex.tools.todo_local.LocalExecutor._has_return_type, src.algitex.tools.todo_local.LocalExecutor._import_exists, src.algitex.tools.todo_local.LocalExecutor._fix_unused_import, src.algitex.tools.todo_local.LocalExecutor._fix_fstring, src.algitex.tools.todo_local.LocalExecutor._fix_standalone_main
+
+### src.algitex.tools.autofix.aider_backend.AiderBackend
+> Fix issues using Aider CLI.
+- **Methods**: 11
+- **Key Methods**: src.algitex.tools.autofix.aider_backend.AiderBackend.__init__, src.algitex.tools.autofix.aider_backend.AiderBackend.fix, src.algitex.tools.autofix.aider_backend.AiderBackend._validate_task, src.algitex.tools.autofix.aider_backend.AiderBackend._ensure_git_repo, src.algitex.tools.autofix.aider_backend.AiderBackend._build_command, src.algitex.tools.autofix.aider_backend.AiderBackend._build_prompt, src.algitex.tools.autofix.aider_backend.AiderBackend._execute_aider, src.algitex.tools.autofix.aider_backend.AiderBackend._process_result, src.algitex.tools.autofix.aider_backend.AiderBackend._dry_run_result, src.algitex.tools.autofix.aider_backend.AiderBackend._timeout_result
 
 ### src.algitex.tools.telemetry.Telemetry
 > Track costs, tokens, time across an algitex pipeline run.
@@ -347,19 +365,21 @@ basic_telemetry_example [examples.06-telemetry.main]
 - **Methods**: 9
 - **Key Methods**: src.algitex.tools.context.ContextBuilder.__init__, src.algitex.tools.context.ContextBuilder.build, src.algitex.tools.context.ContextBuilder._load_toon_summary, src.algitex.tools.context.ContextBuilder._load_architecture, src.algitex.tools.context.ContextBuilder._resolve_targets, src.algitex.tools.context.ContextBuilder._find_related, src.algitex.tools.context.ContextBuilder._load_conventions, src.algitex.tools.context.ContextBuilder._git_recent, src.algitex.tools.context.ContextBuilder._format_ticket
 
-### src.algitex.tools.proxy.Proxy
-> Simple wrapper around proxym gateway.
-- **Methods**: 8
-- **Key Methods**: src.algitex.tools.proxy.Proxy.__init__, src.algitex.tools.proxy.Proxy.ask, src.algitex.tools.proxy.Proxy.budget, src.algitex.tools.proxy.Proxy.models, src.algitex.tools.proxy.Proxy.health, src.algitex.tools.proxy.Proxy.close, src.algitex.tools.proxy.Proxy.__enter__, src.algitex.tools.proxy.Proxy.__exit__
-
-### src.algitex.tools.batch.BatchProcessor
-> Generic batch processor with rate limiting and retries.
-- **Methods**: 8
-- **Key Methods**: src.algitex.tools.batch.BatchProcessor.__init__, src.algitex.tools.batch.BatchProcessor._rate_limit, src.algitex.tools.batch.BatchProcessor._process_item, src.algitex.tools.batch.BatchProcessor.process, src.algitex.tools.batch.BatchProcessor._save_results, src.algitex.tools.batch.BatchProcessor.get_successful, src.algitex.tools.batch.BatchProcessor.get_failed, src.algitex.tools.batch.BatchProcessor.filter_by_error
-
 ## Data Transformation Functions
 
 Key functions that process and transform data:
+
+### docker.vallm.vallm_server.VallmServer._validate_static
+> Static analysis with pylint, mypy, ruff.
+- **Output to**: subprocess.run, subprocess.run, max, json.loads, errors.extend
+
+### docker.vallm.vallm_server.VallmServer._validate_runtime
+> Run tests with pytest.
+- **Output to**: subprocess.run, result.stdout.split, line.split, str, int
+
+### docker.vallm.vallm_server.VallmServer._validate_security
+> Security scan with bandit.
+- **Output to**: subprocess.run, max, len, logger.warning, json.loads
 
 ### docker.vallm.vallm_mcp_server.validate_static
 > Run static analysis with ruff, mypy on the project.
@@ -396,38 +416,6 @@ Args:
     path: Path to the project direc
 - **Output to**: mcp.tool, docker.vallm.vallm_mcp_server.validate_static, docker.vallm.vallm_mcp_server.validate_runtime, docker.vallm.vallm_mcp_server.validate_security, all
 
-### docker.vallm.vallm_server.VallmServer._validate_static
-> Static analysis with pylint, mypy, ruff.
-- **Output to**: subprocess.run, subprocess.run, max, json.loads, errors.extend
-
-### docker.vallm.vallm_server.VallmServer._validate_runtime
-> Run tests with pytest.
-- **Output to**: subprocess.run, result.stdout.split, line.split, str, int
-
-### docker.vallm.vallm_server.VallmServer._validate_security
-> Security scan with bandit.
-- **Output to**: subprocess.run, max, len, logger.warning, json.loads
-
-### src.algitex.cli.workflow_validate
-> Check a Propact workflow for errors.
-- **Output to**: workflow_app.command, typer.Argument, Workflow, wf.validate, console.print
-
-### src.algitex.tools.autofix.AutoFix._run_aider_subprocess
-> Run aider subprocess and handle all error cases.
-- **Output to**: subprocess.run, FixResult, FixResult, FixResult, FixResult
-
-### src.algitex.tools.workspace.Workspace._validate_dependencies
-> Validate that all dependencies exist.
-- **Output to**: set, self.repos.items, self.repos.keys, ValueError
-
-### src.algitex.tools.workspace.Workspace.validate_all
-> Run validation across all repositories.
-- **Output to**: self._topo_sort, print, Pipeline, pipeline.validate, pipeline._results.get
-
-### src.algitex.project.Project.create_batch_processor
-> Create a custom batch processor.
-- **Output to**: BatchProcessor, str
-
 ### src.algitex.tools.todo_parser.TodoParser.parse
 > Parse file and return list of pending tasks.
 - **Output to**: self.file_path.read_text, tasks.extend, tasks.extend, tasks.extend, self.file_path.exists
@@ -443,6 +431,18 @@ Args:
 ### src.algitex.tools.todo_parser.TodoParser._parse_generic
 > Parse generic list items.
 - **Output to**: set, self.GENERIC_PATTERN.finditer, match.group, None.strip, seen.add
+
+### src.algitex.tools.workspace.Workspace._validate_dependencies
+> Validate that all dependencies exist.
+- **Output to**: set, self.repos.items, self.repos.keys, ValueError
+
+### src.algitex.tools.workspace.Workspace.validate_all
+> Run validation across all repositories.
+- **Output to**: self._topo_sort, print, Pipeline, pipeline.validate, pipeline._results.get
+
+### src.algitex.project.Project.create_batch_processor
+> Create a custom batch processor.
+- **Output to**: BatchProcessor, str
 
 ### src.algitex.tools.context.ContextBuilder._format_ticket
 > Format ticket information.
@@ -471,6 +471,10 @@ Args:
 > Parse a read/view task.
 - **Output to**: str, str
 
+### src.algitex.tools.todo_runner.TodoRunner._format_output
+> Extract meaningful output from MCP result.
+- **Output to**: isinstance, isinstance, json.dumps, str, str
+
 ### src.algitex.tools.batch.BatchProcessor._process_item
 > Process single item with retry logic.
 - **Output to**: time.time, self._rate_limit, self.worker_func, BatchResult, BatchResult
@@ -478,6 +482,10 @@ Args:
 ### src.algitex.tools.batch.BatchProcessor.process
 > Process items in parallel.
 - **Output to**: print, print, print, time.time, self.stats.update
+
+### src.algitex.tools.batch.FileBatchProcessor.process_directory
+> Process all files in directory.
+- **Output to**: self.find_files, self.process
 
 ## Behavioral Patterns
 
@@ -511,15 +519,15 @@ Args:
 - **Confidence**: 0.70
 - **Functions**: src.algitex.tools.ollama.OllamaClient.__init__, src.algitex.tools.ollama.OllamaClient.health, src.algitex.tools.ollama.OllamaClient.list_models, src.algitex.tools.ollama.OllamaClient.pull_model, src.algitex.tools.ollama.OllamaClient.generate
 
-### state_machine_TraceSpan
-- **Type**: state_machine
-- **Confidence**: 0.70
-- **Functions**: src.algitex.tools.telemetry.TraceSpan.duration_s, src.algitex.tools.telemetry.TraceSpan.finish, src.algitex.tools.telemetry.TraceSpan.__enter__, src.algitex.tools.telemetry.TraceSpan.__exit__
-
 ### state_machine_DockerToolManager
 - **Type**: state_machine
 - **Confidence**: 0.70
 - **Functions**: src.algitex.tools.docker.DockerToolManager.__init__, src.algitex.tools.docker.DockerToolManager.__enter__, src.algitex.tools.docker.DockerToolManager.__exit__, src.algitex.tools.docker.DockerToolManager._load_tools, src.algitex.tools.docker.DockerToolManager._load_state
+
+### state_machine_TraceSpan
+- **Type**: state_machine
+- **Confidence**: 0.70
+- **Functions**: src.algitex.tools.telemetry.TraceSpan.duration_s, src.algitex.tools.telemetry.TraceSpan.finish, src.algitex.tools.telemetry.TraceSpan.__enter__, src.algitex.tools.telemetry.TraceSpan.__exit__
 
 ### state_machine_ServiceChecker
 - **Type**: state_machine
@@ -547,7 +555,6 @@ Functions exposed as public API (no underscore prefix):
 - `examples.05-cost-tracking.main.main` - 40 calls
 - `examples.26-litellm-proxy-ollama.auto_fix.main` - 40 calls
 - `examples.18-ollama-local.main.main` - 39 calls
-- `examples.23-continue-dev-ollama.main.main` - 39 calls
 - `examples.25-local-model-comparison.benchmark.main` - 39 calls
 - `examples.21-aider-cli-ollama.auto_fix.main` - 38 calls
 - `examples.22-claude-code-ollama.main.main` - 36 calls
@@ -573,13 +580,14 @@ Functions exposed as public API (no underscore prefix):
 - `examples.03-pipeline.main.main` - 27 calls
 - `examples.24-ollama-batch.batch_analyze.BatchProcessor.process_files` - 27 calls
 - `examples.25-local-model-comparison.main_simplified.main` - 27 calls
-- `examples.26-litellm-proxy-ollama.install.main` - 26 calls
 - `examples.04-ide-integration.main.main` - 26 calls
+- `examples.26-litellm-proxy-ollama.install.main` - 26 calls
 - `examples.07-context.main.prompt_engineering_example` - 26 calls
 - `docker.vallm.vallm_server.VallmServer.create_fastapi_app` - 25 calls
 - `examples.20-self-hosted-pipeline.auto_fix_todos.analyze_buggy_code` - 25 calls
 - `examples.21-aider-cli-ollama.main_simplified.main` - 25 calls
 - `examples.21-aider-cli-ollama.auto_fix.fix_with_aider` - 25 calls
+- `examples.07-context.main.context_optimization_example` - 25 calls
 
 ## System Interactions
 

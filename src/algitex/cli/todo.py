@@ -1,0 +1,120 @@
+"""Todo subcommands for algitex CLI."""
+
+from __future__ import annotations
+
+from typing import Optional
+
+import typer
+from rich.console import Console
+from rich.table import Table
+
+console = Console()
+
+
+def todo_list(
+    file: str = typer.Argument("TODO.md", help="Path to todo file"),
+):
+    """Parse and display todo tasks from a file."""
+    from algitex.tools.todo_parser import TodoParser
+
+    parser = TodoParser(file)
+    tasks = parser.parse()
+
+    if not tasks:
+        console.print(f"[yellow]No pending tasks found in {file}[/]")
+        return
+
+    table = Table(title=f"Todo Tasks: {file}")
+    table.add_column("ID", style="bold")
+    table.add_column("Status", style="dim")
+    table.add_column("File", style="cyan")
+    table.add_column("Line", style="dim")
+    table.add_column("Description")
+
+    for t in tasks:
+        status = "\u23f3" if t.status == "pending" else "\u2705"
+        file_disp = t.file_path or "-"
+        line_disp = str(t.line_number) if t.line_number else "-"
+        table.add_row(t.id, status, file_disp, line_disp, t.description[:60])
+
+    console.print(table)
+    console.print(f"\n[bold]{len(tasks)}[/] pending tasks")
+
+
+def todo_run(
+    file: str = typer.Argument("TODO.md", help="Path to todo file"),
+    tool: str = typer.Option("local", "--tool", "-t", help="Tool to use (local, filesystem-mcp, aider-mcp)"),
+    dry_run: bool = typer.Option(False, "--dry-run", help="Preview without executing"),
+    limit: int = typer.Option(0, "--limit", "-l", help="Limit number of tasks (0 = all)"),
+):
+    """Execute todo tasks via Docker MCP."""
+    from algitex.tools.todo_runner import TodoRunner
+
+    runner = TodoRunner(".")
+    results = runner.run_from_file(file, tool=tool, dry_run=dry_run, limit=limit)
+
+    if not results:
+        console.print(f"[yellow]No pending tasks in {file}[/]")
+        return
+
+    # Display results
+    table = Table(title=f"Execution Results ({tool})")
+    table.add_column("Task", style="bold")
+    table.add_column("Status")
+    table.add_column("Action")
+    table.add_column("Output", max_width=50)
+
+    for r in results:
+        status = "[green]\u2713[/]" if r.success else "[red]\u2717[/]"
+        output = r.output[:100] + "..." if len(r.output) > 100 else r.output
+        if r.error:
+            output = f"[red]{r.error[:50]}[/]"
+        table.add_row(r.task.id, status, r.action, output or "-")
+
+    console.print(table)
+
+    # Summary
+    summary = runner.get_summary()
+    console.print(f"\n[bold]Summary:[/] {summary['success']}/{summary['total']} tasks completed")
+    if summary['failed'] > 0:
+        console.print(f"[red]{summary['failed']} tasks failed[/]")
+
+
+def todo_fix(
+    file: str = typer.Argument("TODO.md", help="Path to todo file"),
+    tool: str = typer.Option("ollama-mcp", "--tool", "-t", help="Tool to use (local, ollama-mcp, filesystem-mcp, aider-mcp, nap)"),
+    task_id: Optional[str] = typer.Option(None, "--task", help="Specific task ID to fix"),
+    limit: int = typer.Option(0, "--limit", "-l", help="Limit number of tasks (0 = all)"),
+):
+    """Execute fix tasks (prefact-style) via Docker MCP."""
+    from algitex.tools.todo_parser import TodoParser
+    from algitex.tools.todo_runner import TodoRunner
+
+    parser = TodoParser(file)
+    all_tasks = parser.parse()
+
+    # Filter to fix-related tasks
+    fix_keywords = ["fix", "repair", "correct", "missing", "unused", "magic number", "return type"]
+    fix_tasks = [t for t in all_tasks if any(kw in t.description.lower() for kw in fix_keywords)]
+
+    if task_id:
+        fix_tasks = [t for t in fix_tasks if t.id == task_id]
+
+    if not fix_tasks:
+        console.print("[yellow]No fix tasks found[/]")
+        return
+
+    if limit > 0:
+        fix_tasks = fix_tasks[:limit]
+
+    console.print(f"[bold]Found {len(fix_tasks)} fix tasks[/]\n")
+
+    with TodoRunner(".") as runner:
+        results = runner.run(fix_tasks, tool=tool)
+
+        for r in results:
+            icon = "\u2713" if r.success else "\u2717"
+            color = "green" if r.success else "red"
+            console.print(f"[{color}]{icon}[/] {r.task.description[:60]}")
+            if r.error:
+                console.print(f"   [red]Error: {r.error}[/]")

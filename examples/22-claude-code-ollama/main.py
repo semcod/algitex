@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Claude Code + Ollama integration example.
-Demonstrates using anthropic-curl with local Ollama backend.
+Demonstrates using algitex's ClaudeCodeHelper with local Ollama backend.
 """
 
 import os
@@ -10,10 +10,10 @@ import subprocess
 
 
 def check_claude_code():
-    """Check if Claude Code (anthropic-curl) is installed."""
+    """Check if Claude Code CLI (claude) is installed."""
     try:
         result = subprocess.run(
-            ["which", "anthropic-curl"],
+            ["which", "claude"],
             capture_output=True,
             text=True
         )
@@ -45,7 +45,7 @@ def list_ollama_models():
     return []
 
 
-def demo_claude_code_fix(file_path: str, instruction: str, model: str = "ollama/qwen2.5-coder:7b"):
+def demo_claude_code_fix(file_path: str, instruction: str, model: str = "qwen2.5-coder:7b"):
     """Demo: Fix file using Claude Code with Ollama."""
     print(f"\n🤖 Claude Code + Ollama Demo")
     print(f"   File: {file_path}")
@@ -53,21 +53,15 @@ def demo_claude_code_fix(file_path: str, instruction: str, model: str = "ollama/
     print(f"   Instruction: {instruction}")
     print()
     
-    # Build command
-    cmd = [
-        "anthropic-curl",
-        "--model", model,
-        "--message", instruction,
-        "--file", file_path
-    ]
-    
-    print(f"   Command: {' '.join(cmd)}")
+    # Build command using algitex's helper approach
+    print(f"   This would use: algitex Project().fix_with_claude()")
+    print(f"   Or direct CLI: claude --model {model}")
     print()
     
     # Check if we can run it
     if not check_claude_code():
-        print("   ⚠️  anthropic-curl not installed")
-        print("      Install: pip install anthropic-curl")
+        print("   ⚠️  claude CLI not installed")
+        print("      Install: npm install -g @anthropic-ai/claude-code")
         return False
     
     if not check_ollama():
@@ -76,6 +70,11 @@ def demo_claude_code_fix(file_path: str, instruction: str, model: str = "ollama/
         return False
     
     print("   ✅ Ready to execute (dry-run mode)")
+    print()
+    print("   Example Python usage:")
+    print("   from algitex import Project")
+    print("   p = Project('.')")
+    print(f"   p.fix_with_claude('{file_path}', '{instruction}', '{model}')")
     return True
 
 
@@ -121,10 +120,10 @@ def main():
     ollama_ok = check_ollama()
     
     if claude_ok:
-        print("✅ anthropic-curl installed")
+        print("✅ claude CLI installed")
     else:
-        print("❌ anthropic-curl not found")
-        print("   Install: pip install anthropic-curl")
+        print("❌ claude not found")
+        print("   Install: npm install -g @anthropic-ai/claude-code")
     
     if ollama_ok:
         models = list_ollama_models()
@@ -155,7 +154,7 @@ def main():
     demo_claude_code_fix(
         "buggy_code.py",
         "Add type hints and docstrings to all functions",
-        "ollama/qwen2.5-coder:7b"
+        "qwen2.5-coder:7b"
     )
     
     # Demo 2: Batch processing
@@ -164,13 +163,13 @@ def main():
     print()
     print("=" * 60)
     print("Next steps:")
-    print("  1. prefact -a                                    # Create TODO.md")
-    print("  2. anthropic-curl --model ollama/qwen2.5-coder:7b # Interactive")
-    print("  3. python batch_fix.py                           # Batch fix")
+    print("  1. python -c \"from algitex import Project; p = Project('.'); p.plan()\"")
+    print("  2. python batch_fix.py                              # Batch fix")
     print()
-    print("Environment:")
-    print("  export ANTHROPIC_BASE_URL=http://localhost:11434/v1")
-    print("  export ANTHROPIC_API_KEY=ollama")
+    print("Or use algitex directly:")
+    print("  from algitex import Project")
+    print("  p = Project('.')")
+    print("  p.fix_with_claude('buggy_code.py', 'Fix type hints', 'qwen2.5-coder:7b')")
     print()
     
     return 0

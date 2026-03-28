@@ -19,12 +19,18 @@ run: setup
 setup:
 	@echo "Checking prerequisites..."
 	@echo "Checking litellm installation..."
-	@litellm --version 2>/dev/null || (echo "❌ litellm not found. Install with:" && echo "   pip install 'litellm[proxy]'")
+	@litellm --version 2>/dev/null || (echo "⚠️  litellm not found, installing..." && pip install 'litellm[proxy]' --break-system-packages 2>/dev/null || pip install 'litellm[proxy]')
 	@python3 main.py || true
+
+install:
+	@echo "Installing litellm[proxy]..."
+	@pip install 'litellm[proxy]' --break-system-packages 2>/dev/null || pip install 'litellm[proxy]'
+	@echo "✅ litellm installed"
 
 proxy:
 	@echo "Starting LiteLLM proxy on port 4000..."
 	@echo "Press Ctrl+C to stop"
+	@litellm --version 2>/dev/null || (echo "❌ litellm not found. Run: make install" && exit 1)
 	litellm --config litellm_config.yaml --port 4000
 
 test:

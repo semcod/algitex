@@ -1,7 +1,7 @@
-# vallm batch | 282f | 135✓ 2⚠ 13✗ | 2026-03-28
+# vallm batch | 282f | 136✓ 2⚠ 13✗ | 2026-03-28
 
 SUMMARY:
-  scanned: 282  passed: 135 (47.9%)  warnings: 2  errors: 13  unsupported: 134
+  scanned: 282  passed: 136 (48.2%)  warnings: 2  errors: 13  unsupported: 133
 
 WARNINGS[2]{path,score}:
   examples/21-aider-cli-ollama/auto_fix.py,0.97
@@ -75,4 +75,4 @@ UNSUPPORTED[5]{bucket,count}:
   Dockerfile*,31
   *.txt,2
   *.yml,3
-  other,35
+  other,34

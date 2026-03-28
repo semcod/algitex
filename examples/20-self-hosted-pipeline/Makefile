@@ -32,7 +32,7 @@ status: ## Check stack status
 	@docker compose ps 2>/dev/null || echo "Stack not running. Run: make up"
 
 up: ## Start the MCP stack
-	cd ../.. && docker compose up -d code2llm-mcp vallm-mcp planfile-mcp proxym
+	cd ../.. && docker compose --profile tools up -d code2llm-mcp vallm-mcp planfile-mcp proxym
 
 down: ## Stop the MCP stack
 	cd ../.. && docker compose down
