@@ -10,6 +10,15 @@ Generuje fragmenty konfiguracji dla:
 - Cursor / Windsurf
 - Claude Code
 
+## Konfiguracja
+
+Skopiuj i edytuj plik .env:
+
+```bash
+cp .env.example .env
+# Edytuj .env z Twoimi wartościami
+```
+
 ## Uruchomienie
 
 ```bash

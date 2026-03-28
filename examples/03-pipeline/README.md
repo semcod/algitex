@@ -3,6 +3,14 @@
 Łączenie kroków fluentnie: analyze → tickets → execute → validate → sync.
 Każdy krok jest opcjonalny — pomijaj to, czego nie potrzebujesz.
 
+## Konfiguracja (opcjonalna)
+
+Jeśli masz proxym, skopiuj `.env.example` do `.env`:
+
+```bash
+cp .env.example .env
+```
+
 ## Uruchomienie
 
 ```bash

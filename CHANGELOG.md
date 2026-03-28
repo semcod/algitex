@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.4] - 2026-03-28
+
+### Docs
+- Update examples/01-quickstart/README.md
+- Update examples/02-algo-loop/README.md
+- Update examples/03-pipeline/README.md
+- Update examples/04-ide-integration/README.md
+- Update examples/05-cost-tracking/README.md
+
+### Other
+- Update examples/01-quickstart/Makefile
+- Update examples/02-algo-loop/Makefile
+- Update examples/03-pipeline/Makefile
+- Update examples/04-ide-integration/Makefile
+- Update examples/04-ide-integration/main.py
+- Update examples/05-cost-tracking/Makefile
+
 ## [0.1.3] - 2026-03-28
 
 ### Docs

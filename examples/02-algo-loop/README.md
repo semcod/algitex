@@ -4,6 +4,14 @@ Demonstruje 5-etapową podróż od "LLM obsługuje wszystko" do "większość ru
 
 Ten przykład symuluje zbieranie trace'ów i ekstrakcję wzorców bez potrzeby posiadania live proxym.
 
+## Konfiguracja (opcjonalna)
+
+Jeśli masz proxym, skopiuj `.env.example` do `.env`:
+
+```bash
+cp .env.example .env
+```
+
 ## Uruchomienie
 
 ```bash

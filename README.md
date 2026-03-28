@@ -152,6 +152,36 @@ pip install algitex[tickets]       # + planfile
 pip install algitex[routing]       # + llx
 ```
 
+## Examples
+
+```bash
+# Quickstart — three main objects (Project, Loop, Workflow)
+cd examples/01-quickstart
+make run
+
+# Progressive Algorithmization — 5-stage loop
+cd examples/02-algo-loop
+make run
+
+# Composable Pipeline — fluent API
+cd examples/03-pipeline
+make run
+
+# IDE Integration — generate configs for Roo Code, Cline, etc.
+cd examples/04-ide-integration
+make setup && make run
+
+# Cost Tracking — per-ticket cost ledger
+cd examples/05-cost-tracking
+make run
+```
+
+Each example has:
+- `README.md` — what it demonstrates
+- `run.sh` — executable script
+- `Makefile` — `make run`, `make setup`, `make clean`
+- `.env.example` — configuration template (where applicable)
+
 ## Architecture
 
 ```
@@ -219,19 +249,7 @@ Licensed under Apache-2.0.
 
 Licensed under Apache-2.0.
 
-
-Licensed under Apache-2.0.
-
-
-Apache License 2.0
-
 ## Author
-
-Tom Sapletta
-
-
-Tom Sapletta
-
 
 Tom Sapletta
 

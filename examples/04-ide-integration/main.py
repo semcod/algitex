@@ -4,15 +4,37 @@
 Shows how to configure popular IDEs/agents to work with algitex + proxym.
 Generates config snippets for Roo Code, Cline, Continue.dev, Aider, Cursor.
 
+Setup:
+    cp .env.example .env
+    # Edit .env with your actual values
+
 Run:
-    python examples/04_ide_integration.py
+    python main.py
 """
 
 import json
+import os
+from pathlib import Path
 
 
-PROXY_URL = "http://localhost:4000"
-API_KEY = "sk-proxy-local-dev"
+def load_env():
+    """Load .env file if present."""
+    env_file = Path(__file__).parent / ".env"
+    if env_file.exists():
+        with open(env_file) as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith("#") and "=" in line:
+                    key, val = line.split("=", 1)
+                    if key not in os.environ:
+                        os.environ[key] = val
+
+
+# Load .env before setting defaults
+load_env()
+
+PROXY_URL = os.getenv("PROXY_URL", "http://localhost:4000")
+API_KEY = os.getenv("API_KEY", "sk-proxy-local-dev")
 
 
 def roo_code_config():

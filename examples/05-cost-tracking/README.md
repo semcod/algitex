@@ -3,6 +3,14 @@
 Pokazuje jak algitex śledzi koszty LLM per-ticket
 i jak algo loop redukuje wydatki w czasie.
 
+## Konfiguracja (opcjonalna)
+
+Jeśli masz proxym, skopiuj `.env.example` do `.env`:
+
+```bash
+cp .env.example .env
+```
+
 ## Uruchomienie
 
 ```bash

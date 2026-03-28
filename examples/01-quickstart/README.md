@@ -3,6 +3,14 @@
 Pokazuje trzy główne obiekty: Project, Loop, Workflow.
 Działa nawet bez zainstalowanych narzędzi — gracefully degrades.
 
+## Konfiguracja (opcjonalna)
+
+Jeśli masz proxym, skopiuj `.env.example` do `.env`:
+
+```bash
+cp .env.example .env
+```
+
 ## Uruchomienie
 
 ```bash
