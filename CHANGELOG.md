@@ -18,6 +18,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Examples 01-34 (except 29) all execute without errors
 - BatchFix, Hybrid AutoFix, and Parallel Execution examples fully functional
 
+## [0.1.46] - 2026-03-28
+
+### Docs
+- Update README.md
+- Update docs/NEW_FEATURES.md
+- Update docs/todo.md
+
 ## [0.1.45] - 2026-03-28
 
 ### Docs

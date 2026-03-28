@@ -512,7 +512,7 @@ class BatchFixBackend:
         except Exception as e:
             return FixResult(
                 task_id=task.id,
-                task_description=t.description,
+                task_description=task.description,
                 success=False,
                 method="individual",
                 time_ms=(time.time() - start) * 1000,
@@ -710,6 +710,10 @@ IMPORTANT:
         try:
             import importlib
             vallm = importlib.import_module("vallm")
+            # Sprawdź czy vallm ma funkcję validate_file
+            if not hasattr(vallm, 'validate_file'):
+                print("     ⚠️  vallm.validate_file nie jest dostępne - pominięto walidację")
+                return
         except ImportError:
             print("     ⚠️  vallm nie jest zainstalowany - pominięto walidację")
             return

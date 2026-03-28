@@ -393,6 +393,7 @@ def todo_hybrid(
 def todo_batch(
     file: Path = typer.Option(Path("TODO.md"), "--file", "-f", help="TODO.md file path"),
     backend: str = typer.Option("ollama", "--backend", "-b", help="Backend: ollama, litellm-proxy"),
+    model: str = typer.Option("qwen3:8b", "--model", "-m", help="Ollama model name (e.g., qwen3:8b, qwen2.5-coder:7b)"),
     batch_size: int = typer.Option(5, "--batch-size", "-s", help="Max files per batch"),
     parallel: int = typer.Option(3, "--parallel", "-p", help="Parallel groups (default: 3)"),
     dry_run: bool = typer.Option(True, "--dry-run/--execute", help="Dry run or execute"),
@@ -466,6 +467,7 @@ def todo_batch(
     # Initialize backend
     backend_fixer = BatchFixBackend(
         base_url="http://localhost:11434",
+        model=model,
         dry_run=dry_run,
         enable_logging=not no_log
     )

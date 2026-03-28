@@ -23,6 +23,57 @@ algitex todo run --tool aider-mcp
 algitex todo run --tool filesystem-mcp
 ```
 
+## Trój-tierowy System Micro-Fixów
+
+Algitex implementuje inteligentny system klasyfikacji trój-tierowej, który kieruje zadania do najbardziej opłacalnej strategii naprawy:
+
+```
+Tier 0: Algorytmiczne (90%)  → Deterministyczne, bez LLM
+Tier 1: Małe LLM (9%)        → Ollama 7B, minimalny kontekst  
+Tier 2: Duże LLM (1%)        → Claude/GPT-4o, tylko złożone
+```
+
+### Klasyfikacja tierów
+
+| Tier | Nazwa | Kategorie | Backend | Przepustowość |
+|------|-------|-----------|---------|---------------|
+| **0** | Algorytm | `unused_import`, `return_type`, `fstring`, `magic_known`, `module_block` | Deterministyczny | ~1500/s |
+| **1** | Małe LLM | `magic`, `docstring`, `rename`, `guard_clause`, `dispatch` | Ollama 7B | ~50-100/s |
+| **2** | Duże LLM | `split_function`, `dependency_cycle`, `architecture`, `other` | Claude/GPT-4o | ~5-10/s |
+
+### CLI - Komendy trój-tierowe
+
+```bash
+# Statystyki tierów i kategorii
+algitex todo stats TODO.md
+
+# Tier 0: Tylko naprawy algorytmiczne (deterministyczne, najszybsze)
+algitex todo fix --algo --dry-run
+algitex todo fix --algo --execute --workers 8
+
+# Tier 1: Małe LLM (Ollama, lokalne)
+algitex todo fix --micro --dry-run
+algitex todo fix --micro --execute --model qwen2.5-coder:7b --micro-workers 4
+
+# Wszystkie tiery: Pełny workflow
+algitex todo fix --all --dry-run
+algitex todo fix --all --execute --workers 4 --micro-workers 2
+
+# Z rate limiting i custom backend
+algitex todo fix --all --execute \
+  --backend litellm-proxy \
+  --proxy-url http://localhost:4000 \
+  --rate-limit 10 \
+  --workers 4
+```
+
+### Inteligentne routowanie magic numbers
+
+System inteligentnie kieruje naprawy magic numbers na podstawie znanych stałych:
+
+- **Znane stałe** (200 → `HTTP_OK`, 404 → `HTTP_NOT_FOUND`): Tier 0, natychmiastowa zamiana
+- **Nieznane stałe** (42, 7, 86400): Tier 1, małe LLM sugeruje nazwę
+
 ## BatchFix - grupowanie i optymalizacja
 
 ```bash
@@ -52,8 +103,22 @@ algitex todo batch --execute --no-log
 | `list` | Wyświetl zadania z TODO.md | `algitex todo list` |
 | `run` | Wykonaj zadania przez MCP | `algitex todo run --limit 5` |
 | `fix` | Wykonaj tylko zadania naprawy | `algitex todo fix --dry-run` |
+| `stats` | Statystyki tierów i kategorii | `algitex todo stats TODO.md` |
 | `batch` | BatchFix - grupowanie zadań | `algitex todo batch --execute` |
 | `verify-prefact` | Weryfikacja z prefact | `algitex todo verify-prefact --prune` |
+
+### Opcje trój-tierowe (fix)
+
+| Flaga | Opis | Domyślnie |
+|-------|------|-----------|
+| `--algo` | Tylko Tier 0 (algorytmiczne) | False |
+| `--micro` | Tylko Tier 1 (małe LLM) | False |
+| `--all` | Wszystkie tiery w sekwencji | False |
+| `--model` | Model Ollama (dla Tier 1) | qwen2.5-coder:7b |
+| `--micro-workers` | Workerów dla Tier 1 | 4 |
+| `--workers` | Workerów dla Tier 0 i 2 | 8 |
+| `--rate-limit` | Limit zapytań LLM/sek | 10 |
+| `--dry-run/--execute` | Symulacja lub wykonanie | dry-run |
 
 ## Opcje BatchFix
 
