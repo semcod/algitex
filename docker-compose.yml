@@ -1,0 +1,153 @@
+# devloop — full local stack
+#
+# Usage:
+#   cp .env.example .env       # configure API keys
+#   docker compose up -d       # start everything
+#   docker compose exec devloop devloop status
+#   docker compose logs -f proxym
+#
+# Profiles:
+#   docker compose up -d                     # core only (proxym + ollama + redis)
+#   docker compose --profile tools up -d     # + aider, github MCP
+#   docker compose --profile full up -d      # everything
+
+version: "3.8"
+
+services:
+  # ── Core: devloop CLI ───────────────────────────────
+  devloop:
+    build: .
+    volumes:
+      - devloop-data:/app/data
+      - ./examples:/app/examples:ro
+      - ./.devloop:/app/.devloop
+    environment:
+      - PROXYM_URL=http://proxym:4000
+      - PROXYM_API_KEY=${PROXYM_API_KEY:-sk-proxy-local-dev}
+      - DEVLOOP_VERBOSE=${DEVLOOP_VERBOSE:-false}
+    depends_on:
+      proxym:
+        condition: service_healthy
+    entrypoint: ["sleep", "infinity"]
+    restart: unless-stopped
+
+  # ── LLM Gateway ────────────────────────────────────
+  proxym:
+    image: wronai/proxym:latest
+    build:
+      context: https://github.com/wronai/proxym.git
+      dockerfile: Dockerfile
+    ports:
+      - "${PROXYM_PORT:-4000}:4000"
+    environment:
+      - PROXYM_API_BASE=http://ollama:11434
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY:-}
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY:-}
+      - PROXYM_DAILY_BUDGET=${PROXYM_DAILY_BUDGET:-3.0}
+      - PROXYM_MONTHLY_BUDGET=${PROXYM_MONTHLY_BUDGET:-60.0}
+      - REDIS_HOST=redis
+    volumes:
+      - proxym-data:/app/data
+    depends_on:
+      - redis
+      - ollama
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:4000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # ── Local LLM ──────────────────────────────────────
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "${OLLAMA_PORT:-11434}:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:11434/api/tags"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+    # Uncomment for GPU:
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+
+  # ── Cache ───────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    restart: unless-stopped
+
+  # ── MCP Tools (profile: tools) ─────────────────────
+  aider-mcp:
+    image: danielscholl/aider-mcp-server:latest
+    profiles: ["tools", "full"]
+    environment:
+      - TRANSPORT=stdio
+      - EDITOR_MODEL=${AIDER_MODEL:-gemini/gemini-2.5-flash}
+      - GEMINI_API_KEY=${GOOGLE_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+
+  github-mcp:
+    image: ghcr.io/modelcontextprotocol/server-github:latest
+    profiles: ["tools", "full"]
+    environment:
+      - GITHUB_PERSONAL_ACCESS_TOKEN=${GITHUB_TOKEN:-}
+    restart: unless-stopped
+
+  # ── Monitoring (profile: full) ─────────────────────
+  langfuse:
+    image: langfuse/langfuse:latest
+    profiles: ["full"]
+    ports:
+      - "${LANGFUSE_PORT:-3000}:3000"
+    environment:
+      - DATABASE_URL=postgresql://langfuse:langfuse@langfuse-db:5432/langfuse
+      - NEXTAUTH_SECRET=${LANGFUSE_SECRET:-devloop-secret-change-me}
+      - NEXTAUTH_URL=http://localhost:3000
+    depends_on:
+      - langfuse-db
+    restart: unless-stopped
+
+  langfuse-db:
+    image: postgres:16-alpine
+    profiles: ["full"]
+    environment:
+      - POSTGRES_USER=langfuse
+      - POSTGRES_PASSWORD=langfuse
+      - POSTGRES_DB=langfuse
+    volumes:
+      - langfuse-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  devloop-data:
+  proxym-data:
+  ollama-data:
+  redis-data:
+  langfuse-data:
+
+networks:
+  default:
+    name: devloop-net
