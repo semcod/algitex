@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.10] - 2026-03-28
 
 ### Fixed
+- Fix string-concat issues (ticket-afbf6239)
+- Fix magic-numbers issues (ticket-338c15bd)
+
+## [0.1.10] - 2026-03-28
+
+### Fixed
 - Fix smart-return-type issues (ticket-688514cd)
 - Fix string-concat issues (ticket-bd876a70)
 - Fix unused-imports issues (ticket-c8e1e684)
@@ -1633,6 +1639,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix llm-generated-code issues (ticket-06d0712f)
 
 ## [Unreleased]
+
+## [0.1.34] - 2026-03-28
+
+### Docs
+- Update CHANGELOG.md
+- Update TODO.md
+- Update docs/README.md
+- Update project/README.md
+- Update project/context.md
+
+### Other
+- Update docker/code2llm/code2llm_mcp_server.py
+- Update docker/code2llm/code2llm_server.py
+- Update docker/proxym/proxym_mcp_server.py
+- Update docker/proxym/proxym_server.py
+- Update planfile.yaml
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/compact_flow.mmd
+- Update project/compact_flow.png
+- ... and 7 more files
 
 ## [0.1.33] - 2026-03-28
 

@@ -1,25 +1,24 @@
-# algitex | 592 func | 62f | 19064L | python | 2026-03-28
+# algitex | 600 func | 62f | 19077L | python | 2026-03-28
 
 HEALTH:
-  CC̄=3.4  critical=24 (limit:10)  dup=4  cycles=0
+  CC̄=3.3  critical=24 (limit:10)  dup=4  cycles=0
 
 ALERTS[20]:
-  !!  high_fan_out     DockerToolManager.get_capabilities = 16 (limit:10)
   !!  high_fan_out     init = 15 (limit:10)
-  !!  high_fan_out     ParallelExecutor.execute = 15 (limit:10)
   !   high_fan_out     VallmServer.create_fastapi_app = 14 (limit:10)
-  !   high_fan_out     TodoRunner._execute_ollama = 13 (limit:10)
+  !   high_fan_out     DockerToolManager._query_stdio_capabilities = 13 (limit:10)
   !   high_fan_out     Workflow.parse = 13 (limit:10)
   !   high_fan_out     Workflow._exec_rest = 13 (limit:10)
-  !   high_fan_out     Project._status_infra = 13 (limit:10)
   !   high_fan_out     Project.generate_todo = 13 (limit:10)
   !   high_fan_out     VallmServer._analyze_complexity = 12 (limit:10)
+  !   high_fan_out     ConfigManager.list_configs = 12 (limit:10)
+  !   high_fan_out     StdioTransport._read_with_timeout = 12 (limit:10)
+  !   high_fan_out     DockerToolManager._load_tools = 12 (limit:10)
 
 MODULES[69] (top by size):
   M[src/algitex/tools/benchmark.py] 464L C:4 F:19 CC↑14 D:0 (python)
   M[src/algitex/tools/mcp.py] 448L C:2 F:18 CC↑11 D:0 (python)
-  M[src/algitex/project/__init__.py] 435L C:1 F:16 CC↑12 D:0 (python)
-  M[src/algitex/todo/hybrid.py] 431L C:4 F:10 CC↑8 D:0 (python)
+  M[src/algitex/project/__init__.py] 437L C:1 F:20 CC↑12 D:0 (python)
   M[src/algitex/tools/ide.py] 430L C:6 F:22 CC↑8 D:0 (python)
   M[src/algitex/tools/batch.py] 421L C:4 F:20 CC↑7 D:0 (python)
   M[src/algitex/propact/__init__.py] 413L C:3 F:15 CC↑10 D:1 (python)
@@ -28,22 +27,21 @@ MODULES[69] (top by size):
   M[src/algitex/tools/cicd.py] 403L C:1 F:11 CC↑5 D:1 (python)
   M[src/algitex/tools/config.py] 387L C:1 F:12 CC↑8 D:0 (python)
   M[src/algitex/tools/ollama.py] 382L C:4 F:16 CC↑11 D:0 (python)
+  M[src/algitex/todo/hybrid.py] 380L C:4 F:10 CC↑8 D:0 (python)
   M[src/algitex/algo/__init__.py] 367L C:5 F:12 CC↑9 D:0 (python)
-  M[src/algitex/tools/todo_runner.py] 363L C:2 F:10 CC↑13 D:0 (python)
+  M[src/algitex/tools/todo_runner.py] 363L C:2 F:12 CC↑13 D:0 (python)
   M[src/algitex/tools/workspace.py] 338L C:2 F:17 CC↑6 D:1 (python)
   LANGS: python:68/shell:1
 
 HOTSPOTS[10]:
-  ★ DockerToolManager.get_capabilities fan=16  // List MCP tools available on a running container.
   ★ init fan=15  // Initialize algitex for a project.
-  ★ ParallelExecutor.execute fan=15  // Full parallel execution pipeline.
   ★ VallmServer.create_fastapi_app fan=14  // Create FastAPI application.
-  ★ TodoRunner._execute_ollama fan=13  // Execute task using Ollama local LLM API.
+  ★ DockerToolManager._query_stdio_capabilities fan=13  // Query MCP tool list via stdio JSON-RPC.
+  ★ Workflow.parse fan=13  // Parse Markdown into executable steps.
+  ★ Workflow._exec_rest fan=13  // Execute a REST API call.
 
-REFACTOR[3]:
-  [1] M/M Reduce DockerToolManager.get_capabilities fan-out (currently 16)
-  [2] M/M Reduce init fan-out (currently 15)
-  [3] M/M Reduce ParallelExecutor.execute fan-out (currently 15)
+REFACTOR[1]:
+  [1] M/M Reduce init fan-out (currently 15)
 
 EVOLUTION:
-  2026-03-28 CC̄=3.4 crit=24 19064L // Automated analysis
+  2026-03-28 CC̄=3.3 crit=24 19077L // Automated analysis

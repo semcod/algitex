@@ -20076,3 +20076,29 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
+  - id: ticket-afbf6239
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in src/algitex/tools/autofix/ollama_backend.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/autofix/ollama_backend.py
+    rule_id: string-concat
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-338c15bd
+    name: Fix magic-numbers issues
+    description: Resolve 2 magic-numbers issues in src/algitex/tools/autofix/ollama_backend.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/autofix/ollama_backend.py
+    rule_id: magic-numbers
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced

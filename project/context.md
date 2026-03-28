@@ -6,10 +6,10 @@
 - **Primary Language**: python
 - **Languages**: python: 118, shell: 26
 - **Analysis Mode**: static
-- **Total Functions**: 752
+- **Total Functions**: 760
 - **Total Classes**: 115
 - **Modules**: 144
-- **Entry Points**: 670
+- **Entry Points**: 677
 
 ## Architecture by Module
 
@@ -17,6 +17,11 @@
 - **Functions**: 22
 - **Classes**: 6
 - **File**: `ide.py`
+
+### src.algitex.project
+- **Functions**: 20
+- **Classes**: 1
+- **File**: `__init__.py`
 
 ### src.algitex.tools.services
 - **Functions**: 20
@@ -48,20 +53,15 @@
 - **Classes**: 2
 - **File**: `workspace.py`
 
-### src.algitex.project
+### src.algitex.tools.docker
 - **Functions**: 16
-- **Classes**: 1
-- **File**: `__init__.py`
+- **Classes**: 3
+- **File**: `docker.py`
 
 ### src.algitex.tools.ollama
 - **Functions**: 16
 - **Classes**: 4
 - **File**: `ollama.py`
-
-### src.algitex.tools.docker
-- **Functions**: 15
-- **Classes**: 3
-- **File**: `docker.py`
 
 ### src.algitex.propact
 - **Functions**: 15
@@ -103,15 +103,15 @@
 - **Classes**: 2
 - **File**: `todo_executor.py`
 
+### src.algitex.tools.todo_runner
+- **Functions**: 12
+- **Classes**: 2
+- **File**: `todo_runner.py`
+
 ### src.algitex.tools.feedback
 - **Functions**: 12
 - **Classes**: 4
 - **File**: `feedback.py`
-
-### src.algitex.tools.autofix.proxy_backend
-- **Functions**: 12
-- **Classes**: 1
-- **File**: `proxy_backend.py`
 
 ## Key Entry Points
 
@@ -292,7 +292,7 @@ print_summary [src.algitex.todo.hybrid.HybridAutofix]
 
 ### src.algitex.project.Project
 > One project, all tools, zero boilerplate.
-- **Methods**: 19
+- **Methods**: 23
 - **Key Methods**: src.algitex.project.Project.__init__, src.algitex.project.Project._analyzer, src.algitex.project.Project._tickets, src.algitex.project.Project._ollama_service, src.algitex.project.Project.analyze, src.algitex.project.Project.plan, src.algitex.project.Project.execute, src.algitex.project.Project.status, src.algitex.project.Project._status_health, src.algitex.project.Project._status_tickets
 - **Inherits**: ServiceMixin, AutoFixMixin, OllamaMixin, BatchMixin, BenchmarkMixin, IDEMixin, ConfigMixin, MCPMixin
 
@@ -306,15 +306,15 @@ print_summary [src.algitex.todo.hybrid.HybridAutofix]
 - **Methods**: 17
 - **Key Methods**: src.algitex.tools.mcp.MCPOrchestrator.__init__, src.algitex.tools.mcp.MCPOrchestrator._setup_signal_handlers, src.algitex.tools.mcp.MCPOrchestrator._register_default_services, src.algitex.tools.mcp.MCPOrchestrator.add_service, src.algitex.tools.mcp.MCPOrchestrator.add_custom_service, src.algitex.tools.mcp.MCPOrchestrator.start_service, src.algitex.tools.mcp.MCPOrchestrator.stop_service, src.algitex.tools.mcp.MCPOrchestrator.restart_service, src.algitex.tools.mcp.MCPOrchestrator.start_all, src.algitex.tools.mcp.MCPOrchestrator.stop_all
 
+### src.algitex.tools.docker.DockerToolManager
+> Spawn Docker containers, connect via MCP/REST, call tools, teardown.
+- **Methods**: 16
+- **Key Methods**: src.algitex.tools.docker.DockerToolManager.__init__, src.algitex.tools.docker.DockerToolManager.__enter__, src.algitex.tools.docker.DockerToolManager.__exit__, src.algitex.tools.docker.DockerToolManager._load_tools, src.algitex.tools.docker.DockerToolManager._load_state, src.algitex.tools.docker.DockerToolManager._save_state, src.algitex.tools.docker.DockerToolManager.spawn, src.algitex.tools.docker.DockerToolManager._wait_healthy, src.algitex.tools.docker.DockerToolManager._get_http_client, src.algitex.tools.docker.DockerToolManager.call_tool
+
 ### src.algitex.tools.services.ServiceChecker
 > Checker for various services used by algitex.
 - **Methods**: 16
 - **Key Methods**: src.algitex.tools.services.ServiceChecker.__init__, src.algitex.tools.services.ServiceChecker.check_http_service, src.algitex.tools.services.ServiceChecker.check_ollama, src.algitex.tools.services.ServiceChecker.check_litellm_proxy, src.algitex.tools.services.ServiceChecker.check_mcp_service, src.algitex.tools.services.ServiceChecker.check_command_exists, src.algitex.tools.services.ServiceChecker.check_file_exists, src.algitex.tools.services.ServiceChecker.check_all, src.algitex.tools.services.ServiceChecker._format_status_line, src.algitex.tools.services.ServiceChecker._print_status_details
-
-### src.algitex.tools.docker.DockerToolManager
-> Spawn Docker containers, connect via MCP/REST, call tools, teardown.
-- **Methods**: 15
-- **Key Methods**: src.algitex.tools.docker.DockerToolManager.__init__, src.algitex.tools.docker.DockerToolManager.__enter__, src.algitex.tools.docker.DockerToolManager.__exit__, src.algitex.tools.docker.DockerToolManager._load_tools, src.algitex.tools.docker.DockerToolManager._load_state, src.algitex.tools.docker.DockerToolManager._save_state, src.algitex.tools.docker.DockerToolManager.spawn, src.algitex.tools.docker.DockerToolManager._wait_healthy, src.algitex.tools.docker.DockerToolManager._get_http_client, src.algitex.tools.docker.DockerToolManager.call_tool
 
 ### src.algitex.tools.batch.BatchProcessor
 > Generic batch processor with rate limiting and retries.
@@ -340,6 +340,11 @@ print_summary [src.algitex.todo.hybrid.HybridAutofix]
 > Execute todo tasks using Docker MCP tools.
 - **Methods**: 12
 - **Key Methods**: src.algitex.tools.todo_executor.TodoExecutor.__init__, src.algitex.tools.todo_executor.TodoExecutor.__enter__, src.algitex.tools.todo_executor.TodoExecutor.__exit__, src.algitex.tools.todo_executor.TodoExecutor.run, src.algitex.tools.todo_executor.TodoExecutor._execute_task, src.algitex.tools.todo_executor.TodoExecutor._parse_action, src.algitex.tools.todo_executor.TodoExecutor._parse_fix_action, src.algitex.tools.todo_executor.TodoExecutor._parse_create_action, src.algitex.tools.todo_executor.TodoExecutor._parse_delete_action, src.algitex.tools.todo_executor.TodoExecutor._parse_read_action
+
+### src.algitex.tools.todo_runner.TodoRunner
+> Execute todo tasks using Docker MCP tools with local fallback.
+- **Methods**: 12
+- **Key Methods**: src.algitex.tools.todo_runner.TodoRunner.__init__, src.algitex.tools.todo_runner.TodoRunner.__enter__, src.algitex.tools.todo_runner.TodoRunner.__exit__, src.algitex.tools.todo_runner.TodoRunner.run_from_file, src.algitex.tools.todo_runner.TodoRunner.run, src.algitex.tools.todo_runner.TodoRunner._execute_local, src.algitex.tools.todo_runner.TodoRunner._execute_ollama, src.algitex.tools.todo_runner.TodoRunner._build_ollama_prompt, src.algitex.tools.todo_runner.TodoRunner._call_ollama_api, src.algitex.tools.todo_runner.TodoRunner._execute_task
 
 ### src.algitex.tools.benchmark.ModelBenchmark
 > Benchmark models on standardized tasks.
@@ -371,6 +376,11 @@ print_summary [src.algitex.todo.hybrid.HybridAutofix]
 - **Methods**: 11
 - **Key Methods**: src.algitex.tools.autofix.aider_backend.AiderBackend.__init__, src.algitex.tools.autofix.aider_backend.AiderBackend.fix, src.algitex.tools.autofix.aider_backend.AiderBackend._validate_task, src.algitex.tools.autofix.aider_backend.AiderBackend._ensure_git_repo, src.algitex.tools.autofix.aider_backend.AiderBackend._build_command, src.algitex.tools.autofix.aider_backend.AiderBackend._build_prompt, src.algitex.tools.autofix.aider_backend.AiderBackend._execute_aider, src.algitex.tools.autofix.aider_backend.AiderBackend._process_result, src.algitex.tools.autofix.aider_backend.AiderBackend._dry_run_result, src.algitex.tools.autofix.aider_backend.AiderBackend._timeout_result
 
+### src.algitex.tools.parallel.executor.ParallelExecutor
+> Execute tickets in parallel using git worktrees + region locking.
+- **Methods**: 11
+- **Key Methods**: src.algitex.tools.parallel.executor.ParallelExecutor.__init__, src.algitex.tools.parallel.executor.ParallelExecutor.execute, src.algitex.tools.parallel.executor.ParallelExecutor._dispatch_agents, src.algitex.tools.parallel.executor.ParallelExecutor._create_worktree, src.algitex.tools.parallel.executor.ParallelExecutor._run_agent, src.algitex.tools.parallel.executor.ParallelExecutor._merge_all, src.algitex.tools.parallel.executor.ParallelExecutor._detect_line_drift, src.algitex.tools.parallel.executor.ParallelExecutor._resolve_conflict, src.algitex.tools.parallel.executor.ParallelExecutor._changes_are_disjoint, src.algitex.tools.parallel.executor.ParallelExecutor._parse_diff_ranges
+
 ### src.algitex.tools.telemetry.Telemetry
 > Track costs, tokens, time across an algitex pipeline run.
 - **Methods**: 10
@@ -380,16 +390,6 @@ print_summary [src.algitex.todo.hybrid.HybridAutofix]
 > Manage project tickets via planfile or local YAML.
 - **Methods**: 10
 - **Key Methods**: src.algitex.tools.tickets.Tickets.__init__, src.algitex.tools.tickets.Tickets.add, src.algitex.tools.tickets.Tickets.from_analysis, src.algitex.tools.tickets.Tickets.list, src.algitex.tools.tickets.Tickets.update, src.algitex.tools.tickets.Tickets.sync, src.algitex.tools.tickets.Tickets.board, src.algitex.tools.tickets.Tickets._load, src.algitex.tools.tickets.Tickets._save, src.algitex.tools.tickets.Tickets._planfile_add
-
-### src.algitex.tools.todo_runner.TodoRunner
-> Execute todo tasks using Docker MCP tools with local fallback.
-- **Methods**: 10
-- **Key Methods**: src.algitex.tools.todo_runner.TodoRunner.__init__, src.algitex.tools.todo_runner.TodoRunner.__enter__, src.algitex.tools.todo_runner.TodoRunner.__exit__, src.algitex.tools.todo_runner.TodoRunner.run_from_file, src.algitex.tools.todo_runner.TodoRunner.run, src.algitex.tools.todo_runner.TodoRunner._execute_local, src.algitex.tools.todo_runner.TodoRunner._execute_ollama, src.algitex.tools.todo_runner.TodoRunner._execute_task, src.algitex.tools.todo_runner.TodoRunner._format_output, src.algitex.tools.todo_runner.TodoRunner.get_summary
-
-### src.algitex.tools.parallel.executor.ParallelExecutor
-> Execute tickets in parallel using git worktrees + region locking.
-- **Methods**: 10
-- **Key Methods**: src.algitex.tools.parallel.executor.ParallelExecutor.__init__, src.algitex.tools.parallel.executor.ParallelExecutor.execute, src.algitex.tools.parallel.executor.ParallelExecutor._create_worktree, src.algitex.tools.parallel.executor.ParallelExecutor._run_agent, src.algitex.tools.parallel.executor.ParallelExecutor._merge_all, src.algitex.tools.parallel.executor.ParallelExecutor._detect_line_drift, src.algitex.tools.parallel.executor.ParallelExecutor._resolve_conflict, src.algitex.tools.parallel.executor.ParallelExecutor._changes_are_disjoint, src.algitex.tools.parallel.executor.ParallelExecutor._parse_diff_ranges, src.algitex.tools.parallel.executor.ParallelExecutor._cleanup_worktrees
 
 ## Data Transformation Functions
 
@@ -431,6 +431,10 @@ Key functions that process and transform data:
 > Parse generic list items.
 - **Output to**: set, self.GENERIC_PATTERN.finditer, match.group, None.strip, seen.add
 
+### src.algitex.tools.context.ContextBuilder._format_ticket
+> Format ticket information.
+- **Output to**: ticket.get, ticket.get, ticket.get, ticket.get
+
 ### src.algitex.tools.workspace.Workspace._validate_dependencies
 > Validate that all dependencies exist.
 - **Output to**: set, self.repos.items, self.repos.keys, ValueError
@@ -438,10 +442,6 @@ Key functions that process and transform data:
 ### src.algitex.tools.workspace.Workspace.validate_all
 > Run validation across all repositories.
 - **Output to**: self._topo_sort, print, Pipeline, pipeline.validate, pipeline._results.get
-
-### src.algitex.tools.context.ContextBuilder._format_ticket
-> Format ticket information.
-- **Output to**: ticket.get, ticket.get, ticket.get, ticket.get
 
 ### src.algitex.tools.services.ServiceChecker._format_status_line
 > Format a single status line.
@@ -516,15 +516,15 @@ Key functions that process and transform data:
 - **Confidence**: 0.70
 - **Functions**: src.algitex.algo.LoopState.deterministic_ratio, src.algitex.algo.LoopState.stage_name
 
-### state_machine_OllamaClient
-- **Type**: state_machine
-- **Confidence**: 0.70
-- **Functions**: src.algitex.tools.ollama.OllamaClient.__init__, src.algitex.tools.ollama.OllamaClient.health, src.algitex.tools.ollama.OllamaClient.list_models, src.algitex.tools.ollama.OllamaClient.pull_model, src.algitex.tools.ollama.OllamaClient.generate
-
 ### state_machine_DockerToolManager
 - **Type**: state_machine
 - **Confidence**: 0.70
 - **Functions**: src.algitex.tools.docker.DockerToolManager.__init__, src.algitex.tools.docker.DockerToolManager.__enter__, src.algitex.tools.docker.DockerToolManager.__exit__, src.algitex.tools.docker.DockerToolManager._load_tools, src.algitex.tools.docker.DockerToolManager._load_state
+
+### state_machine_OllamaClient
+- **Type**: state_machine
+- **Confidence**: 0.70
+- **Functions**: src.algitex.tools.ollama.OllamaClient.__init__, src.algitex.tools.ollama.OllamaClient.health, src.algitex.tools.ollama.OllamaClient.list_models, src.algitex.tools.ollama.OllamaClient.pull_model, src.algitex.tools.ollama.OllamaClient.generate
 
 ### state_machine_TraceSpan
 - **Type**: state_machine

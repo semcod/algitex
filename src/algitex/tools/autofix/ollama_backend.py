@@ -12,21 +12,25 @@ from algitex.tools.ollama import OllamaService, OllamaClient
 class OllamaBackend:
     """Fix issues using Ollama local models."""
 
+    DEFAULT_TIMEOUT = 30.0  # seconds
+
     def __init__(
         self,
         service: Optional[OllamaService] = None,
         model: Optional[str] = None,
         base_url: str = "http://localhost:11434",
-        dry_run: bool = True
+        dry_run: bool = True,
+        timeout: float = DEFAULT_TIMEOUT
     ):
         if service:
             self.service = service
         else:
-            client = OllamaClient(host=base_url)
+            client = OllamaClient(host=base_url, timeout=timeout)
             self.service = OllamaService(client=client)
         self.model = model
         self.base_url = base_url
         self.dry_run = dry_run
+        self.timeout = timeout
 
     def fix(self, task: Task) -> FixResult:
         """Fix a task using Ollama."""
@@ -34,6 +38,10 @@ class OllamaBackend:
 
         if not task.file_path:
             return self._error_result(task, start_time, "No file path specified")
+
+        # Quick health check
+        if not self._is_healthy():
+            return self._error_result(task, start_time, "Ollama not available at " + self.base_url)
 
         try:
             model = self._ensure_model()
@@ -48,6 +56,24 @@ class OllamaBackend:
 
         except Exception as e:
             return self._error_result(task, start_time, str(e))
+
+    def _is_healthy(self) -> bool:
+        """Quick health check to avoid hanging."""
+        try:
+            import socket
+            host = self.base_url.replace("http://", "").replace("https://", "").split(":")[0]
+            port = 11434
+            if ":" in self.base_url.replace("http://", "").replace("https://", ""):
+                port_str = self.base_url.replace("http://", "").replace("https://", "").split(":")[1]
+                port = int(port_str.split("/")[0])
+            
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.settimeout(2.0)
+            result = sock.connect_ex((host, port))
+            sock.close()
+            return result == 0
+        except Exception:
+            return False
 
     def _ensure_model(self) -> Optional[str]:
         """Ensure we have a model to use."""
