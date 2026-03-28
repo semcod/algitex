@@ -172,21 +172,45 @@ class BatchProcessor:
         items: List[Any],
         progress_callback: Optional[Callable[[BatchResult], None]] = None
     ) -> List[BatchResult]:
-        """Process items in parallel."""
+        """Process items in parallel using 3-stage pipeline."""
+        # Stage 1: Prepare items
+        prepared_items = self._prepare(items)
+        
+        # Stage 2: Execute processing
+        results = self._execute(prepared_items, progress_callback)
+        
+        # Stage 3: Collect and finalize
+        return self._collect(results)
+    
+    def _prepare(self, items: List[Any]) -> List[Any]:
+        """Stage 1: Validate, filter, and group items for processing."""
         print(f"Processing {len(items)} items with {self.parallelism} workers")
         print(f"Rate limit: {self.rate_limit} req/s, Max retries: {self.max_retries}")
         print()
         
+        # Basic validation
+        if not items:
+            print("No items to process.")
+            return []
+        
+        # Filter items (can be extended with custom filters)
+        valid_items = [item for item in items if item is not None]
+        if len(valid_items) != len(items):
+            print(f"Filtered out {len(items) - len(valid_items)} invalid items")
+        
+        return valid_items
+    
+    def _execute(
+        self, 
+        items: List[Any], 
+        progress_callback: Optional[Callable[[BatchResult], None]] = None
+    ) -> List[BatchResult]:
+        """Stage 2: Execute processing with rate limiting, retries, and progress tracking."""
         self.results = []
         start_time = time.time()
         
-        # Progress bar
-        pbar = None
-        if self.progress and HAS_TQDM:
-            pbar = tqdm.tqdm(total=len(items), desc="Processing")
-        elif self.progress and not HAS_TQDM:
-            print("Install tqdm for progress bars: pip install tqdm")
-            self.progress = False
+        # Setup progress bar
+        pbar = self._setup_progress_bar(len(items))
         
         # Process in parallel
         with ThreadPoolExecutor(max_workers=self.parallelism) as executor:
@@ -197,52 +221,85 @@ class BatchProcessor:
             }
             
             # Collect results
-            for future in as_completed(future_to_item):
-                try:
-                    result = future.result()
-                    self.results.append(result)
-                    
-                    # Update progress
-                    if pbar:
-                        pbar.update(1)
-                        status = "✅" if result.success else "❌"
-                        pbar.set_postfix_str(f"{status} {self.results[-1].successful}/{len(self.results)}")
-                    
-                    # Custom callback
-                    if progress_callback:
-                        progress_callback(result)
-                        
-                except Exception as e:
-                    item = future_to_item[future]
-                    error_result = BatchResult(
-                        item=item,
-                        success=False,
-                        error=str(e),
-                        time_ms=0
-                    )
-                    self.results.append(error_result)
-                    if pbar:
-                        pbar.update(1)
+            self._collect_results(future_to_item, pbar, progress_callback)
         
         if pbar:
             pbar.close()
         
-        # Update stats
-        self.stats.update(self.results)
-        total_time = (time.time() - start_time) * 1000
+        return self.results
+    
+    def _collect(self, results: List[BatchResult]) -> List[BatchResult]:
+        """Stage 3: Aggregate results, update stats, report, and save."""
+        # Update statistics
+        self.stats.update(results)
+        total_time = (time.time() - self._get_start_time()) * 1000
         
         # Print summary
+        self._print_summary(total_time)
+        
+        # Save results if enabled
+        if self.save_results:
+            self._save_results()
+        
+        return results
+    
+    def _setup_progress_bar(self, total_items: int):
+        """Setup progress bar if enabled."""
+        if self.progress and HAS_TQDM:
+            return tqdm.tqdm(total=total_items, desc="Processing")
+        elif self.progress and not HAS_TQDM:
+            print("Install tqdm for progress bars: pip install tqdm")
+            self.progress = False
+        return None
+    
+    def _collect_results(
+        self, 
+        future_to_item: dict, 
+        pbar, 
+        progress_callback: Optional[Callable[[BatchResult], None]]
+    ):
+        """Collect results from futures with progress tracking."""
+        for future in as_completed(future_to_item):
+            try:
+                result = future.result()
+                self.results.append(result)
+                
+                # Update progress
+                if pbar:
+                    pbar.update(1)
+                    status = "✅" if result.success else "❌"
+                    pbar.set_postfix_str(f"{status} {self.stats.successful}/{len(self.results)}")
+                
+                # Custom callback
+                if progress_callback:
+                    progress_callback(result)
+                    
+            except Exception as e:
+                item = future_to_item[future]
+                error_result = BatchResult(
+                    item=item,
+                    success=False,
+                    error=str(e),
+                    time_ms=0
+                )
+                self.results.append(error_result)
+                if pbar:
+                    pbar.update(1)
+    
+    def _get_start_time(self) -> float:
+        """Get start time for timing calculations."""
+        # Store start time in a thread-safe way
+        if not hasattr(self, '_start_time'):
+            self._start_time = time.time()
+        return self._start_time
+    
+    def _print_summary(self, total_time: float):
+        """Print processing summary."""
         print()
         print(f"Completed in {total_time/1000:.1f}s")
         print(f"✅ Successful: {self.stats.successful}")
         print(f"❌ Failed: {self.stats.failed}")
         print(f"Throughput: {self.stats.throughput:.2f} items/s")
-        
-        # Save results
-        if self.save_results:
-            self._save_results()
-        
-        return self.results
     
     def _save_results(self):
         """Save results to JSON file."""

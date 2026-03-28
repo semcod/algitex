@@ -13,7 +13,7 @@ Czyta zadania z `TODO.md` (stworzone przez `algitex analyze`) i naprawia kod aut
 ```
 algitex analyze               # Analiza kodu + tworzenie TODO.md
 python main.py                # Sprawdź status i wygeneruj TODO
-algitex todo fix              # Naprawa wszystkich zadań
+algitex todo run              # Wykonaj wszystkie zadania z TODO.md
 ```
 
 ## Wymagania
@@ -42,14 +42,17 @@ python -c "from algitex import Project; p = Project('.'); p.generate_todo()"
 
 To stworzy `TODO.md` z listą problemów (unused imports, complex functions, etc.).
 
-### Krok 2: Auto-fix przez algitex
+### Krok 2: Wykonaj zadania z TODO.md
 
 ```bash
-# Napraw wszystko
-algitex todo fix
+# Wykonaj wszystkie zadania
+algitex todo run
 
-# Napraw tylko pierwsze 5 zadań
-algitex todo fix --limit 5
+# Wykonaj tylko pierwsze 3 zadań
+algitex todo run --limit 3
+
+# Tylko zadania "fix" (filtruje po słowach kluczowych: fix, repair, missing, itp.)
+algitex todo fix
 
 # Użyj Python API
 python -c "from algitex import Project; p = Project('.'); p.fix_issues()"
@@ -68,7 +71,7 @@ aider --model ollama/qwen2.5-coder:7b \
 
 1. `main.py` używa `algitex.Project` do sprawdzenia usług
 2. `p.generate_todo()` tworzy `TODO.md` z wyników analizy
-3. `p.fix_issues()` lub `algitex todo fix` naprawiają automatycznie
+3. `p.fix_issues()` lub `algitex todo run` naprawiają automatycznie
 4. Algitex wybiera najlepszy backend (Ollama, Aider, lub LiteLLM)
 
 ## Przykładowe błędy w `buggy_code.py`
@@ -93,7 +96,7 @@ aider --model ollama/qwen2.5-coder:7b \
 | `make run` | Sprawdź status usług |
 | `make setup` | Sprawdź zależności |
 | `make todo` | Wygeneruj TODO.md |
-| `make fix` | Napraw przez algitex |
+| `make fix` | Wykonaj zadania z TODO.md |
 | `make clean` | Wyczyść zmiany |
 
 ## Troubleshooting

@@ -35,6 +35,7 @@ from algitex.cli.algo import algo_discover, algo_extract, algo_rules, algo_repor
 from algitex.cli.workflow import workflow_run, workflow_validate
 from algitex.cli.docker import docker_list, docker_spawn, docker_call, docker_teardown, docker_caps
 from algitex.cli.todo import todo_list, todo_run, todo_fix
+from algitex.cli.parallel import parallel
 
 # Main app
 app = typer.Typer(
@@ -67,6 +68,7 @@ app.command()(status)
 app.command()(tools)
 app.command()(ask)
 app.command()(sync)
+app.command()(parallel)
 
 # Register ticket subcommands
 ticket_app.command("add")(ticket_add)

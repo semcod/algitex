@@ -51,27 +51,48 @@ class Project(ServiceMixin, AutoFixMixin, OllamaMixin, BatchMixin, BenchmarkMixi
         self.config = config or Config.load()
         self.config.project_path = str(self.path)
 
-        self._analyzer = Analyzer(str(self.path))
-        self._tickets = Tickets(str(self.path), self.config.tickets)
+        # Lazy initialization cache
+        self._components = {}
         self._last_report: Optional[HealthReport] = None
 
-        # New: progressive algorithmization loop
+        # Initialize only essential components
         self.algo = Loop(str(self.path))
-
-        # Initialize mixins
+        
+        # Initialize mixins that don't require heavy setup
         ServiceMixin.__init__(self)
         AutoFixMixin.__init__(self, str(self.path / "TODO.md"))
-
-        # Initialize Ollama-related mixins
-        self._ollama_service = OllamaService()
-        OllamaMixin.__init__(self)
-        BatchMixin.__init__(self, str(self.path), self._ollama_service.client)
-        BenchmarkMixin.__init__(self, self._ollama_service.client)
-
-        # Initialize remaining mixins
+        
+        # Defer heavy initialization to properties
         IDEMixin.__init__(self)
         ConfigMixin.__init__(self)
         MCPMixin.__init__(self)
+
+    # ── Lazy properties ─────────────────────────────────────
+
+    @property
+    def _analyzer(self) -> Analyzer:
+        """Lazy initialize Analyzer."""
+        if "analyzer" not in self._components:
+            self._components["analyzer"] = Analyzer(str(self.path))
+        return self._components["analyzer"]
+    
+    @property
+    def _tickets(self) -> Tickets:
+        """Lazy initialize Tickets."""
+        if "tickets" not in self._components:
+            self._components["tickets"] = Tickets(str(self.path), self.config.tickets)
+        return self._components["tickets"]
+    
+    @property
+    def _ollama_service(self) -> OllamaService:
+        """Lazy initialize OllamaService."""
+        if "ollama_service" not in self._components:
+            self._components["ollama_service"] = OllamaService()
+            # Initialize dependent mixins when service is created
+            OllamaMixin.__init__(self)
+            BatchMixin.__init__(self, str(self.path), self._components["ollama_service"].client)
+            BenchmarkMixin.__init__(self, self._components["ollama_service"].client)
+        return self._components["ollama_service"]
 
     # ── Core workflow ─────────────────────────────────────
 
@@ -172,21 +193,48 @@ class Project(ServiceMixin, AutoFixMixin, OllamaMixin, BatchMixin, BenchmarkMixi
 
     def status(self) -> dict:
         """Full project status: health + tickets + budget + algo progress."""
+        return {
+            "project": str(self.path),
+            "health": self._status_health(),
+            "tickets": self._status_tickets(),
+            "infra": self._status_infra(),
+            "algo": self._status_algo(),
+        }
+
+    def _status_health(self) -> dict:
+        """Get project health metrics."""
+        report = self._last_report or self.analyze(full=False)
+        return {
+            "grade": report.grade,
+            "cc_avg": report.cc_avg,
+            "vallm_pass_rate": report.vallm_pass_rate,
+            "files": report.files,
+            "lines": report.lines,
+        }
+
+    def _status_tickets(self) -> dict:
+        """Get ticket board status."""
+        board = self._tickets.board()
+        return {
+            "open": len(board.get("open", [])),
+            "in_progress": len(board.get("in_progress", [])),
+            "review": len(board.get("review", [])),
+            "done": len(board.get("done", [])),
+            "blocked": len(board.get("blocked", [])),
+        }
+
+    def _status_infra(self) -> dict:
+        """Get infrastructure status (proxy, docker, tools, costs)."""
         from algitex.tools.proxy import Proxy
         from algitex.tools import discover_tools
 
-        report = self._last_report or self.analyze(full=False)
-        board = self._tickets.board()
-
+        # Proxy status
         proxy = Proxy(self.config.proxy)
         budget = proxy.budget()
         proxy_healthy = proxy.health()
         proxy.close()
 
-        tools = discover_tools()
-        algo_report = self.algo.report()
-
-        # Docker tools status
+        # Docker status
         docker_status = {"available": [], "running": []}
         try:
             from algitex.tools.docker import DockerToolManager
@@ -196,36 +244,27 @@ class Project(ServiceMixin, AutoFixMixin, OllamaMixin, BatchMixin, BenchmarkMixi
         except Exception:
             pass  # Docker tools not available
 
+        # Tools status
+        tools = discover_tools()
+
         # Cost ledger
         total_cost = sum(
             t.meta.get("cost_usd", 0) for t in self._tickets.list() if t.meta
         )
 
         return {
-            "project": str(self.path),
-            "health": {
-                "grade": report.grade,
-                "cc_avg": report.cc_avg,
-                "vallm_pass_rate": report.vallm_pass_rate,
-                "files": report.files,
-                "lines": report.lines,
-            },
-            "tickets": {
-                "open": len(board.get("open", [])),
-                "in_progress": len(board.get("in_progress", [])),
-                "review": len(board.get("review", [])),
-                "done": len(board.get("done", [])),
-                "blocked": len(board.get("blocked", [])),
-            },
+            "proxy": {"healthy": proxy_healthy},
+            "docker": docker_status,
+            "tools": {name: str(s) for name, s in tools.items()},
             "cost_ledger": {
                 "total_spent_usd": total_cost,
                 "budget_remaining": budget,
             },
-            "algo": algo_report,
-            "proxy": {"healthy": proxy_healthy},
-            "tools": {name: str(s) for name, s in tools.items()},
-            "docker": docker_status,
         }
+
+    def _status_algo(self) -> dict:
+        """Get progressive algorithmization status."""
+        return self.algo.report()
 
     def run_workflow(self, workflow_path: str, *, dry_run: bool = False) -> dict:
         """Execute a Propact Markdown workflow."""
@@ -298,14 +337,24 @@ class Project(ServiceMixin, AutoFixMixin, OllamaMixin, BatchMixin, BenchmarkMixi
         report = self._last_report
         issues = []
         
-        # Add issues from complexity hotspots
-        for hotspot in report.complexity_hotspots[:5]:
-            issues.append({
-                "description": f"Refactor high complexity function {hotspot['function']} (CC={hotspot['complexity']})",
-                "file": hotspot["file"],
-                "line": hotspot.get("line", 1),
-                "priority": "high" if hotspot["complexity"] > 10 else "normal"
-            })
+        # Add issues from complexity hotspots (use god_functions if available)
+        hotspots = getattr(report, 'complexity_hotspots', None) or getattr(report, 'god_functions', [])
+        for hotspot in hotspots[:5]:
+            if isinstance(hotspot, dict):
+                issues.append({
+                    "description": f"Refactor high complexity function {hotspot.get('function', 'unknown')} (CC={hotspot.get('complexity', 0)})",
+                    "file": hotspot.get("file", ""),
+                    "line": hotspot.get("line", 1),
+                    "priority": "high" if hotspot.get("complexity", 0) > 10 else "normal"
+                })
+            else:
+                # hotspot is a string (god_functions format)
+                issues.append({
+                    "description": f"Refactor complex function: {hotspot}",
+                    "file": str(hotspot).split(":")[0] if ":" in str(hotspot) else "",
+                    "line": 1,
+                    "priority": "normal"
+                })
         
         # Add generic code quality issues
         generic_issues = [

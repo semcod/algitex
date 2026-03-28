@@ -25,7 +25,7 @@ def main():
     # ─── Step 1: Analyze and create tickets ───────────────
 
     health = p.analyze()
-    print(f"Project health: CC̄={health.cc}, criticals={health.criticals}")
+    print(f"Project health: CC̄={health.cc_avg:.1f}, criticals={health.criticals}")
 
     # Tickets from evolution.toon hotspots:
     tickets = [

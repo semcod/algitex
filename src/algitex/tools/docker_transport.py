@@ -147,50 +147,59 @@ def spawn_cli(tool: DockerTool, env: dict, running: dict, save_state: callable) 
     return rt
 
 
-def call_stdio(rt: "RunningTool", tool: str, args: dict, get_client: callable) -> dict:
-    """Send JSON-RPC over stdin, read from stdout with timeout."""
-    import select
+class StdioTransport:
+    """Transport layer for JSON-RPC over stdin/stdout communication."""
     
-    if not rt.process or not rt.process.stdin:
-        return {"error": "stdio process not available"}
-
-    request = {
-        "jsonrpc": "2.0",
-        "id": 1,
-        "method": "tools/call",
-        "params": {"name": tool, "arguments": args},
-    }
+    def __init__(self, timeout: int = 30):
+        self.timeout = timeout
     
-    # Send JSON-RPC with Content-Length header (MCP protocol)
-    content = json.dumps(request)
-    message = f"Content-Length: {len(content)}\r\n\r\n{content}"
+    def send(self, process: subprocess.Popen, request: dict) -> dict:
+        """Send JSON-RPC request and return parsed response."""
+        # Serialize request
+        message = self._serialize(request)
+        
+        # Send to process
+        self._write(process.stdin, message)
+        
+        # Read response
+        response_data = self._read_with_timeout(process.stdout)
+        
+        # Parse and return
+        return self._parse(response_data)
     
-    # Send the message
-    try:
-        rt.process.stdin.write(message)
-        rt.process.stdin.flush()
-    except BrokenPipeError:
-        return {"error": "MCP server process crashed or closed connection"}
+    def _serialize(self, request: dict) -> str:
+        """Serialize JSON-RPC request with MCP protocol headers."""
+        content = json.dumps(request)
+        return f"Content-Length: {len(content)}\r\n\r\n{content}"
     
-    # Read response with timeout using select
-    try:
-        timeout = 30
+    def _write(self, stdin, message: str):
+        """Write message to stdin with error handling."""
+        try:
+            stdin.write(message)
+            stdin.flush()
+        except BrokenPipeError:
+            raise RuntimeError("MCP server process crashed or closed connection")
+    
+    def _read_with_timeout(self, stdout) -> str:
+        """Read response from stdout with timeout using select."""
+        import select
+        
         start_time = time.time()
         response_lines = []
         
-        while time.time() - start_time < timeout:
-            # Use select to check if stdout has data with timeout
-            ready, _, _ = select.select([rt.process.stdout], [], [], 1.0)
+        while time.time() - start_time < self.timeout:
+            # Check if stdout has data
+            ready, _, _ = select.select([stdout], [], [], 1.0)
             if not ready:
                 # Check if process died
-                if rt.process.poll() is not None:
-                    return {"error": f"MCP server exited with code {rt.process.poll()}"}
+                if hasattr(stdout, '_proc') and stdout._proc.poll() is not None:
+                    raise RuntimeError(f"MCP server exited with code {stdout._proc.poll()}")
                 continue
             
-            line = rt.process.stdout.readline()
+            line = stdout.readline()
             if not line:
-                if rt.process.poll() is not None:
-                    return {"error": f"MCP server exited with code {rt.process.poll()}"}
+                if hasattr(stdout, '_proc') and stdout._proc.poll() is not None:
+                    raise RuntimeError(f"MCP server exited with code {stdout._proc.poll()}")
                 break
             
             response_lines.append(line)
@@ -199,16 +208,46 @@ def call_stdio(rt: "RunningTool", tool: str, args: dict, get_client: callable) -
             if line.startswith("Content-Length:"):
                 content_length = int(line.split(":")[1].strip())
                 # Read empty line
-                rt.process.stdout.readline()
+                stdout.readline()
                 # Read the JSON response
-                response_data = rt.process.stdout.read(content_length)
-                return json.loads(response_data)
+                response_data = stdout.read(content_length)
+                return response_data
         
-        # Timeout reached
-        return {"error": f"MCP server timeout after {timeout}s"}
-        
-    except json.JSONDecodeError as e:
-        return {"error": "Invalid JSON response", "raw": ''.join(response_lines)}
+        raise RuntimeError(f"MCP server timeout after {self.timeout}s")
+    
+    def _parse(self, raw_response: str) -> dict:
+        """Parse JSON response with error handling."""
+        try:
+            return json.loads(raw_response)
+        except json.JSONDecodeError as e:
+            raise RuntimeError(f"Invalid JSON response: {str(e)}")
+
+
+def call_stdio(rt: "RunningTool", tool: str, args: dict, get_client: callable) -> dict:
+    """Send JSON-RPC over stdin, read from stdout with timeout."""
+    if not rt.process or not rt.process.stdin:
+        return {"error": "stdio process not available"}
+    
+    # Create transport
+    transport = StdioTransport(timeout=30)
+    
+    # Attach process reference for timeout handling
+    rt.process.stdout._proc = rt.process
+    
+    # Build request
+    request = {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "method": "tools/call",
+        "params": {"name": tool, "arguments": args},
+    }
+    
+    # Send and receive
+    try:
+        response = transport.send(rt.process, request)
+        return response
+    except RuntimeError as e:
+        return {"error": str(e)}
     except Exception as e:
         return {"error": f"Communication error: {str(e)}"}
 

@@ -27,7 +27,7 @@ def abpr_pipeline(project_path: str = "./my-app"):
 
     print("Stage 2: Analyzing codebase structure...")
     health = p.analyze()
-    print(f"  CC̄={health.cc}, criticals={health.criticals}")
+    print(f"  CC̄={health.cc_avg:.1f}, criticals={health.criticals}")
 
     # ─── Stage 3: Find conflict — pattern extraction ──────
 
