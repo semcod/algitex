@@ -14,7 +14,14 @@ from algitex.microtask import MicroTask, MicroTaskBatch, TaskType, group_tasks_b
 from algitex.microtask.prompts import PromptBuilder
 from algitex.microtask.slicer import ContextSlicer
 from algitex.nlp import sort_imports_in_path
-from algitex.todo.fixer import TodoTask, fix_fstring, fix_magic_number, fix_module_block, fix_return_type, fix_unused_import
+from algitex.todo.fixer import TodoTask
+from algitex.todo.repair import (
+    repair_fstring as fix_fstring,
+    repair_magic_number as fix_magic_number,
+    repair_module_block as fix_module_block,
+    repair_return_type as fix_return_type,
+    repair_unused_import as fix_unused_import,
+)
 from algitex.todo.hybrid import RateLimiter
 from algitex.tools.ollama import OllamaClient
 
@@ -113,7 +120,23 @@ class MicroTaskExecutor:
         result.duration_ms = (time.perf_counter() - started) * 1000
         return result
 
+    # ─── Algorithmic task handlers ───────────────────────
+    # Dispatch table: TaskType → handler method name
+    _ALGO_HANDLERS: dict[TaskType, str] = {
+        TaskType.UNUSED_IMPORT: "_handle_unused_import",
+        TaskType.RETURN_TYPE: "_handle_return_type",
+        TaskType.KNOWN_MAGIC: "_handle_known_magic",
+        TaskType.FSTRING: "_handle_fstring",
+        TaskType.SORT_IMPORTS: "_handle_sort_imports",
+        TaskType.TRAILING_WHITESPACE: "_handle_trailing_whitespace",
+    }
+
     def _process_algorithmic_batch(self, batch: MicroTaskBatch, dry_run: bool) -> tuple[int, int, int, str]:
+        """Process all tier-0 tasks in one file using dispatch table.
+        
+        CC: 5 (dispatcher + per-type handlers)
+        Was: CC 27 (multiple nested if/else blocks)
+        """
         path = self._resolve_path(batch.file)
         if not path.exists():
             return 0, len(batch.tasks), 1, f"missing file: {batch.file}"
@@ -128,57 +151,111 @@ class MicroTaskExecutor:
         errors = 0
         note = ""
 
-        line_tasks = [task for task in batch.tasks if task.type in {TaskType.UNUSED_IMPORT, TaskType.RETURN_TYPE, TaskType.KNOWN_MAGIC}]
-        line_tasks.sort(key=lambda task: (task.context_start or task.line_start, task.context_end or task.line_end, task.line_start), reverse=True)
+        # Group tasks by type for batch processing
+        by_type: dict[TaskType, list[MicroTask]] = {}
+        for task in batch.tasks:
+            if task.type not in self._ALGO_HANDLERS:
+                skipped += 1
+                continue
+            by_type.setdefault(task.type, []).append(task)
 
-        for task in line_tasks:
-            try:
-                ok = self._apply_line_fix(path, task)
-                if ok:
-                    fixed += 1
-                else:
-                    skipped += 1
-            except Exception as exc:
-                errors += 1
-                note = str(exc)
+        # Dispatch to handlers
+        for task_type, tasks in by_type.items():
+            handler_name = self._ALGO_HANDLERS.get(task_type)
+            if not handler_name:
+                skipped += len(tasks)
+                continue
 
-        fstring_tasks = [task for task in batch.tasks if task.type == TaskType.FSTRING]
-        if fstring_tasks:
-            try:
-                ok = self._apply_fstring_fix(path, fstring_tasks)
-                if ok:
-                    fixed += len(fstring_tasks)
-                else:
-                    skipped += len(fstring_tasks)
-            except Exception as exc:
-                errors += len(fstring_tasks)
-                note = str(exc)
+            handler = getattr(self, handler_name, None)
+            if not handler:
+                skipped += len(tasks)
+                continue
 
-        sort_tasks = [task for task in batch.tasks if task.type == TaskType.SORT_IMPORTS]
-        if sort_tasks:
             try:
-                stats = sort_imports_in_path(path, apply=True)
-                if stats.get("changed", 0):
-                    fixed += len(sort_tasks)
-                else:
-                    skipped += len(sort_tasks)
+                f, s = handler(path, tasks)
+                fixed += f
+                skipped += s
             except Exception as exc:
-                errors += len(sort_tasks)
-                note = str(exc)
-
-        whitespace_tasks = [task for task in batch.tasks if task.type == TaskType.TRAILING_WHITESPACE]
-        if whitespace_tasks:
-            try:
-                changed = self._strip_trailing_whitespace(path)
-                if changed:
-                    fixed += len(whitespace_tasks)
-                else:
-                    skipped += len(whitespace_tasks)
-            except Exception as exc:
-                errors += len(whitespace_tasks)
+                errors += len(tasks)
                 note = str(exc)
 
         return fixed, skipped, errors, note
+
+    def _handle_unused_import(self, path: Path, tasks: list[MicroTask]) -> tuple[int, int]:
+        """Handle UNUSED_IMPORT tasks."""
+        fixed = 0
+        for task in sorted(tasks, key=lambda t: t.line_start, reverse=True):
+            todo_task = TodoTask(
+                file=str(path),
+                line=task.line_start,
+                message=task.prefact_message or task.instruction or task.context,
+                category="unused_import",
+            )
+            if fix_unused_import(path, todo_task):
+                fixed += 1
+        return fixed, len(tasks) - fixed
+
+    def _handle_return_type(self, path: Path, tasks: list[MicroTask]) -> tuple[int, int]:
+        """Handle RETURN_TYPE tasks."""
+        fixed = 0
+        for task in sorted(tasks, key=lambda t: t.line_start, reverse=True):
+            todo_task = TodoTask(
+                file=str(path),
+                line=task.line_start,
+                message=task.prefact_message or task.instruction or task.context,
+                category="return_type",
+            )
+            if fix_return_type(path, todo_task):
+                fixed += 1
+        return fixed, len(tasks) - fixed
+
+    def _handle_known_magic(self, path: Path, tasks: list[MicroTask]) -> tuple[int, int]:
+        """Handle KNOWN_MAGIC tasks."""
+        fixed = 0
+        for task in sorted(tasks, key=lambda t: t.line_start, reverse=True):
+            todo_task = TodoTask(
+                file=str(path),
+                line=task.line_start,
+                message=task.prefact_message or task.instruction or task.context,
+                category="magic",
+            )
+            if fix_magic_number(path, todo_task):
+                fixed += 1
+        return fixed, len(tasks) - fixed
+
+    def _handle_fstring(self, path: Path, tasks: list[MicroTask]) -> tuple[int, int]:
+        """Handle FSTRING tasks."""
+        if not tasks:
+            return 0, 0
+        todo_task = TodoTask(
+            file=str(path),
+            line=tasks[0].line_start,
+            message=tasks[0].prefact_message or "fstring",
+            category="fstring",
+        )
+        if fix_fstring(path, todo_task):
+            return len(tasks), 0
+        return 0, len(tasks)
+
+    def _handle_sort_imports(self, path: Path, tasks: list[MicroTask]) -> tuple[int, int]:
+        """Handle SORT_IMPORTS tasks."""
+        if not tasks:
+            return 0, 0
+        try:
+            stats = sort_imports_in_path(path, apply=True)
+            if stats.get("changed", 0):
+                return len(tasks), 0
+            return 0, len(tasks)
+        except Exception:
+            return 0, len(tasks)
+
+    def _handle_trailing_whitespace(self, path: Path, tasks: list[MicroTask]) -> tuple[int, int]:
+        """Handle TRAILING_WHITESPACE tasks."""
+        if not tasks:
+            return 0, 0
+        if self._strip_trailing_whitespace(path):
+            return len(tasks), 0
+        return 0, len(tasks)
 
     def _phase_llm(self, tasks: list[MicroTask], dry_run: bool, name: str, workers: int) -> PhaseResult:
         result = PhaseResult(name=name, total=len(tasks))

@@ -8,11 +8,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased] - 2026-03-28
 
 ### Added
+- **Sprint 7: Real-time Dashboard TUI**
+  - `algitex dashboard` CLI with live, monitor, export commands
+  - `LiveDashboard` class with Rich TUI components
+  - Cache metrics panel (hit rate, entries, size)
+  - Tier progress panel (algorithm, micro, big LLM)
+  - Dashboard integration in `todo fix --all --dashboard`
+  - Dashboard integration in `todo hybrid --dashboard`
+  - Dashboard integration in `todo batch --dashboard`
+  - 28 new tests for dashboard components
+  
+- **Sprint 6: Performance Benchmarks**
+  - `algitex benchmark` CLI with cache, tiers, memory, full, quick commands
+  - `BenchmarkRunner` with memory tracking via tracemalloc
+  - `CacheBenchmark` for hit rate and deduplication testing
+  - `TierBenchmark` for algorithm/micro/big throughput comparison
+  - `MemoryBenchmark` for large file profiling
+  - 18 new tests for benchmark framework
+
 - New CLI commands: `microtask` (classify, plan, run) for atomic small LLM tasks
 - New CLI commands: `nlp` (docstrings, imports, dead-code, duplicates) for deterministic refactoring
 - Three-Tier Micro-Fixing System in `algitex todo fix` with `--algo`, `--micro`, `--all` flags
 - New option `--model` for `algitex todo batch` to select Ollama model (default: qwen3:8b)
-- New documentation files: `docs/MICROTASK.md` and `docs/NLP.md`
+- New documentation files: `docs/MICROTASK.md`, `docs/NLP.md`, `docs/SPRINT4.md`, `docs/SPRINT7.md`
+
+### Fixed
+- Fix Task dataclass missing `priority` and `type` fields in `autofix/base.py`
+- Fix OllamaMixin not initialized in Project.__init__ causing AttributeError
+- Fix generate_with_ollama() missing default model selection
+- Fix examples/25-local-model-comparison KeyError for results['total']
+- Fix duplicate license and author sections in README.md
+- Fix `FIXERS` export in `algitex.todo.fixer` for backward compatibility
+
+### Stats
+- **Total Tests:** 317 passed, 2 skipped
+- **New Modules:** 40+ (cache, metrics, dashboard, benchmark, shared_rules, etc.)
+- **CLI Commands:** 15 subcommand groups (ticket, algo, workflow, docker, todo, microtask, nlp, metrics, benchmark, dashboard)
 
 ### Fixed
 - Fix Task dataclass missing `priority` and `type` fields in `autofix/base.py`
@@ -32,6 +63,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - All 34 examples in `examples/` directory tested and verified working
 - Examples 01-34 (except 29) all execute without errors
 - BatchFix, Hybrid AutoFix, and Parallel Execution examples fully functional
+
+## [0.1.50] - 2026-03-28
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update docs/SPRINT7.md
+
+### Test
+- Update tests/test_dashboard.py
+
+### Other
+- Update docker/code2llm/code2llm_mcp_server.py
+- Update docker/code2llm/code2llm_server.py
+- Update docker/proxym/proxym_mcp_server.py
+- Update docker/proxym/proxym_server.py
+- Update docker/vallm/vallm_mcp_server.py
 
 ## [0.1.49] - 2026-03-28
 

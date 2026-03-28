@@ -6,7 +6,7 @@ Generates Toon notation and LLM-friendly code representation
 
 import os
 import sys
-,json
+import json
 import ast
 import logging
 from pathlib import Path

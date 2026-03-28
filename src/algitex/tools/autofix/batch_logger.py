@@ -45,44 +45,68 @@ class BatchSessionLog:
         self.end_time = datetime.now().isoformat()
     
     def to_markdown(self) -> str:
-        """Generate markdown report."""
-        # Format dates nicely
+        """Generate markdown report.
+        
+        CC: 2 (delegates to 3 render functions)
+        Was: CC 22 (complex inline formatting)
+        """
+        header = self._render_header()
+        config = self._render_config()
+        summary = self._render_summary()
+        details = self._render_details()
+        
+        return f"""# BatchFix Session Log
+
+{header}
+
+## Configuration
+
+{config}
+
+## Summary
+
+{summary}
+
+## Details
+
+{details}
+"""
+
+    def _render_header(self) -> str:
+        """Render header section with timestamps."""
         start_dt = datetime.fromisoformat(self.start_time) if isinstance(self.start_time, str) else self.start_time
         end_dt = datetime.fromisoformat(self.end_time) if isinstance(self.end_time, str) and self.end_time else None
         
         start_fmt = start_dt.strftime("%Y-%m-%d %H:%M:%S") if isinstance(start_dt, datetime) else str(start_dt)
         end_fmt = end_dt.strftime("%Y-%m-%d %H:%M:%S") if end_dt else "In progress..."
         
-        md = f"""# BatchFix Session Log
+        return f"""**Started:** {start_fmt}
+**Ended:** {end_fmt}"""
 
-**Started:** {start_fmt}
-**Ended:** {end_fmt}
-
-## Configuration
-
-| Parameter | Value |
+    def _render_config(self) -> str:
+        """Render configuration table."""
+        return f"""| Parameter | Value |
 |-----------|-------|
 | Backend | {self.backend} |
 | Batch Size | {self.batch_size} |
 | Parallel Groups | {self.parallel} |
 | Total Tasks | {self.total_tasks} |
-| Total Groups | {self.total_groups} |
+| Total Groups | {self.total_groups} |"""
 
-## Summary
-
-| Metric | Count |
+    def _render_summary(self) -> str:
+        """Render summary statistics table."""
+        return f"""| Metric | Count |
 |--------|-------|
 | Total Entries | {len(self.entries)} |
 | Successful | {sum(1 for e in self.entries if e.status == "success")} |
 | Failed | {sum(1 for e in self.entries if e.status == "failed")} |
 | Timeout | {sum(1 for e in self.entries if e.status == "timeout")} |
 | Dry Run | {sum(1 for e in self.entries if e.status == "dry-run")} |
-| Total Duration | {sum(e.duration_sec for e in self.entries):.1f}s |
+| Total Duration | {sum(e.duration_sec for e in self.entries):.1f}s |"""
 
-## Details
-
-"""
-        
+    def _render_details(self) -> str:
+        """Render details section with all entries."""
+        md = ""
         for entry in self.entries:
             status_icon = "✅" if entry.status == "success" else "❌" if entry.status == "failed" else "⏱️" if entry.status == "dry-run" else "⚠️"
             md += f"""### [{entry.group_idx}/{entry.total_groups}] {entry.category}
@@ -92,7 +116,6 @@ class BatchSessionLog:
 **Files:**
 """
             for f in entry.files:
-                # Create a relative path for cleaner display
                 try:
                     rel_path = Path(f).relative_to(Path.cwd())
                     md += f"- `{rel_path}`\n"
@@ -106,7 +129,6 @@ class BatchSessionLog:
 {entry.error}
 ```
 """
-            
             md += "\n---\n\n"
         
         return md

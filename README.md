@@ -174,6 +174,61 @@ algitex nlp dead-code --execute
 algitex nlp duplicates --execute
 ```
 
+## Benchmark — Performance Testing
+
+Measure and compare performance across cache, tiers, and memory usage:
+
+```bash
+# Quick benchmark (30 seconds)
+algitex benchmark quick
+
+# Test cache performance
+algitex benchmark cache --entries 100 --lookups 500
+
+# Compare tier throughput
+algitex benchmark tiers
+
+# Memory profiling for large files
+algitex benchmark memory --lines 1000
+
+# Full benchmark suite with export
+algitex benchmark full --export results.json
+```
+
+## Dashboard — Real-time Monitoring
+
+Live TUI dashboard for monitoring algitex operations:
+
+```bash
+# Live dashboard with auto-refresh
+algitex dashboard live
+
+# Dashboard for 60 seconds
+algitex dashboard live --duration 60
+
+# Monitor existing cache/metrics
+algitex dashboard monitor --cache .algitex/cache --metrics .algitex/metrics.json
+
+# Export metrics to JSON
+algitex dashboard export --format json --output metrics.json --duration 60
+
+# Export to Prometheus format
+algitex dashboard export --format prometheus --output metrics.prom
+```
+
+### Dashboard Integration with TODO Commands
+
+```bash
+# Live dashboard during 3-tier fix
+algitex todo fix --all --dashboard
+
+# Dashboard for hybrid autofix
+algitex todo hybrid --execute --dashboard
+
+# Dashboard for batch operations
+algitex todo batch --execute --dashboard
+```
+
 ### Python API
 
 ```python
@@ -520,7 +575,10 @@ src/algitex/
 │   ├── docker.py         # Docker MCP tools
 │   ├── todo.py           # TODO processing
 │   ├── microtask.py      # Atomic micro-task pipeline
-│   └── nlp.py            # Deterministic NLP helpers
+│   ├── nlp.py            # Deterministic NLP helpers
+│   ├── metrics.py        # Metrics and observability
+│   ├── benchmark.py      # Performance benchmarks
+│   └── dashboard.py      # Real-time monitoring
 ├── algo/                 # Progressive algorithmization
 │   ├── __init__.py       # Loop, TraceEntry, Pattern, Rule, LoopState
 │   └── loop.py           # Re-export
@@ -608,7 +666,13 @@ Licensed under Apache-2.0.
 
 Licensed under Apache-2.0.
 
+
+Licensed under Apache-2.0.
+
 ## Author
+
+Tom Sapletta
+
 
 Tom Sapletta
 

@@ -27,23 +27,26 @@ CLI via algitex:
     algitex todo fix --category unused_import
 """
 from algitex.todo.verifier import TodoVerifier, verify_todos, VerificationResult
+from algitex.todo.classify import (
+    KNOWN_MAGIC_CONSTANTS,
+    TaskTriage,
+    classify_message,
+    classify_task,
+)
+from algitex.todo.repair import REPAIRERS
 from algitex.todo.fixer import (
     parallel_fix,
     parse_todo,
     TodoTask,
-    FIXERS,
     mark_tasks_completed,
     parallel_fix_and_update,
+    FIXERS,
 )
 from algitex.todo.tiering import (
     ALGO_CATEGORIES,
     BIG_CATEGORIES,
     MICRO_CATEGORIES,
-    KNOWN_MAGIC_CONSTANTS,
-    TaskTriage,
     TierSummary,
-    classify_message,
-    classify_task,
     filter_tasks,
     load_todo_tasks,
     partition_tasks,
@@ -68,6 +71,7 @@ __all__ = [
     "fix_todos",
     "parse_todo",
     "TodoTask",
+    "REPAIRERS",
     "FIXERS",
     "mark_tasks_completed",
     "parallel_fix_and_update",
