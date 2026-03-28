@@ -1,21 +1,22 @@
-# algitex | 595 func | 59f | 17466L | python | 2026-03-28
+# algitex | 640 func | 64f | 19918L | python | 2026-03-28
 
 HEALTH:
-  CC̄=3.3  critical=25 (limit:10)  dup=4  cycles=0
+  CC̄=3.3  critical=26 (limit:10)  dup=4  cycles=0
 
 ALERTS[20]:
-  !   high_fan_out     ConfigManager.list_configs = 12 (limit:10)
   !   high_fan_out     StdioTransport._read_with_timeout = 12 (limit:10)
   !   high_fan_out     DockerToolManager._load_tools = 12 (limit:10)
   !   high_fan_out     parallel = 12 (limit:10)
   !   high_fan_out     todo_hybrid = 12 (limit:10)
-  !   high_fan_out     todo_batch = 12 (limit:10)
   !   high_fan_out     parse_todo = 12 (limit:10)
+  !   high_fan_out     AuditLogger.rollback_operation = 12 (limit:10)
   !   high_fan_out     spawn_stdio = 11 (limit:10)
   !   high_fan_out     MCPOrchestrator.wait_for_ready = 11 (limit:10)
   !   high_fan_out     Workspace.status = 11 (limit:10)
+  !   high_fan_out     ContextBuilder._find_related = 11 (limit:10)
 
-MODULES[66] (top by size):
+MODULES[71] (top by size):
+  M[src/algitex/todo/hybrid.py] 467L C:4 F:10 CC↑8 D:0 (python)
   M[src/algitex/tools/benchmark.py] 464L C:4 F:19 CC↑14 D:0 (python)
   M[src/algitex/tools/mcp.py] 448L C:2 F:18 CC↑11 D:0 (python)
   M[src/algitex/project/__init__.py] 439L C:1 F:22 CC↑6 D:0 (python)
@@ -25,20 +26,21 @@ MODULES[66] (top by size):
   M[src/algitex/tools/services.py] 413L C:3 F:20 CC↑9 D:0 (python)
   M[src/algitex/todo/fixer.py] 409L C:2 F:14 CC↑8 D:5 (python)
   M[src/algitex/tools/cicd.py] 403L C:1 F:11 CC↑5 D:1 (python)
-  M[src/algitex/todo/hybrid.py] 398L C:4 F:10 CC↑8 D:0 (python)
-  M[src/algitex/tools/config.py] 387L C:1 F:12 CC↑8 D:0 (python)
+  M[src/algitex/tools/config.py] 388L C:1 F:16 CC↑7 D:0 (python)
   M[src/algitex/tools/ollama.py] 382L C:4 F:16 CC↑11 D:0 (python)
   M[src/algitex/algo/__init__.py] 367L C:5 F:12 CC↑9 D:0 (python)
   M[src/algitex/tools/todo_runner.py] 363L C:2 F:12 CC↑13 D:0 (python)
-  M[src/algitex/tools/autofix/batch_backend.py] 339L C:2 F:11 CC↑11 D:0 (python)
-  LANGS: python:65/shell:1
+  M[src/algitex/tools/autofix/batch_backend.py] 341L C:2 F:11 CC↑11 D:0 (python)
+  LANGS: python:70/shell:1
 
 HOTSPOTS[10]:
-  ★ ConfigManager.list_configs fan=12  // List available configuration files.
   ★ StdioTransport._read_with_timeout fan=12  // Read response from stdout with timeout using select.
   ★ DockerToolManager._load_tools fan=12  // Load tool declarations from docker-tools.yaml.
   ★ parallel fan=12  // Execute tickets in parallel with conflict-free coordination.
   ★ todo_hybrid fan=12  // Autofix: LLM-based code fixes (use --hybrid for mechanical + LLM).
+  ★ parse_todo fan=12  // Parse TODO.md → list of tasks, filtering out worktree duplicates.
+
+File paths in
 
 EVOLUTION:
-  2026-03-28 CC̄=3.3 crit=25 17466L // Automated analysis
+  2026-03-28 CC̄=3.3 crit=26 19918L // Automated analysis

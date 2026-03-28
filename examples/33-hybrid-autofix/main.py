@@ -123,6 +123,27 @@ def demo_ollama_local(todo_file=DEFAULT_TODO):
 
 
 def main():
+    """Main entry point for Hybrid AutoFix example."""
+    args = _parse_args()
+
+    if not _validate_env(args):
+        return 1
+
+    print("=" * 70)
+    print("Example 33: Hybrid AutoFix")
+    print("Fast Parallel Mechanical + Rate-Limited LLM")
+    print("=" * 70)
+
+    _run_demos(args)
+
+    print("\n" + "=" * 70)
+    print("Done! Check the TODO.md for remaining tasks.")
+    print("=" * 70)
+
+    return 0
+
+def _parse_args():
+    """Parse CLI arguments."""
     parser = argparse.ArgumentParser(
         description="Hybrid AutoFix - Parallel + LLM with Rate Limiting"
     )
@@ -142,29 +163,26 @@ def main():
                         help="LiteLLM proxy URL")
     parser.add_argument("--todo-file", "-f", type=Path, default=Path(__file__).parent / "TODO.md",
                         help="Path to TODO.md file (default: ./TODO.md)")
+    return parser.parse_args()
 
-    args = parser.parse_args()
-
-    # Validate TODO file exists
+def _validate_env(args) -> bool:
+    """Validate that the environment and TODO file are ready for the demo."""
     if not args.todo_file.exists():
         print(f"\n❌ Error: TODO file not found: {args.todo_file}")
         print(f"\n💡 Suggestions:")
         print(f"   1. Run from project root: cd /home/tom/github/semcod/algitex")
         print(f"   2. Use absolute path: -f /home/tom/github/semcod/algitex/TODO.md")
-        print(f"   3. Create TODO.md first: algitex todo verify")
-        return 1
+        return False
 
-    # Validate at least some source files exist
     from algitex.todo import parse_todo
     tasks = parse_todo(args.todo_file)
     if not tasks:
         print(f"\n❌ Error: No tasks found in {args.todo_file}")
-        return 1
+        return False
     
-    # Check if files are resolvable
     import os
     missing_files = []
-    for task in tasks[:10]:  # Check first 10
+    for task in tasks[:10]:
         if not os.path.exists(task.file):
             missing_files.append(task.file)
     
@@ -173,24 +191,16 @@ def main():
         print(f"\n💡 This usually means:")
         print(f"   - TODO.md paths are relative to project root")
         print(f"   - You're running from a subdirectory")
-        print(f"\n💡 Solutions:")
-        print(f"   1. Run from project root:")
-        print(f"      cd /home/tom/github/semcod/algitex")
-        print(f"      python examples/33-hybrid-autofix/main.py --demo hybrid")
-        print(f"   2. Or use absolute path to TODO.md:")
-        print(f"      python main.py --demo hybrid -f /home/tom/github/semcod/algitex/TODO.md")
         print(f"\n   Current TODO.md: {args.todo_file}")
         print(f"   Current directory: {os.getcwd()}")
         
         response = input("\nContinue anyway? [y/N]: ")
         if response.lower() != 'y':
-            return 1
+            return False
+    return True
 
-    print("=" * 70)
-    print("Example 33: Hybrid AutoFix")
-    print("Fast Parallel Mechanical + Rate-Limited LLM")
-    print("=" * 70)
-
+def _run_demos(args):
+    """Run the selected demo(s)."""
     if args.demo == "dry-run" or args.demo == "all":
         demo_dry_run(args.todo_file)
 
@@ -208,12 +218,6 @@ def main():
 
     if args.demo == "ollama":
         demo_ollama_local(args.todo_file)
-
-    print("\n" + "=" * 70)
-    print("Done! Check the TODO.md for remaining tasks.")
-    print("=" * 70)
-
-    return 0
 
 
 if __name__ == "__main__":

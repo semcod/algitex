@@ -233,44 +233,50 @@ class Workspace:
         }
         
         for repo in self.repos.values():
-            repo_path = Path(repo.path)
-            
-            # Get git status
-            git_status = "not_cloned"
-            if repo_path.exists():
-                try:
-                    result = subprocess.run(
-                        ["git", "status", "--porcelain"],
-                        cwd=repo_path,
-                        capture_output=True,
-                        text=True
-                    )
-                    if result.returncode == 0:
-                        if result.stdout.strip():
-                            git_status = "dirty"
-                        else:
-                            git_status = "clean"
-                except:
-                    git_status = "error"
-            
-            # Check for algitex files
-            has_algitex = any([
-                (repo_path / "algitex.yaml").exists(),
-                (repo_path / "analysis.toon.yaml").exists(),
-                (repo_path / "planfile.yaml").exists()
-            ])
-            
-            status["repositories"][repo.name] = {
-                "path": repo.path,
-                "git_url": repo.git_url,
-                "priority": repo.priority,
-                "dependencies": repo.depends_on,
-                "git_status": git_status,
-                "has_algitex": has_algitex,
-                "tags": repo.tags
-            }
+            status["repositories"][repo.name] = self._get_repo_status(repo)
         
         return status
+
+    def _get_repo_status(self, repo: RepoConfig) -> dict:
+        """Get detailed status for a single repository."""
+        repo_path = Path(repo.path)
+        git_status = self._get_git_status(repo_path)
+        has_algitex = self._check_algitex_files(repo_path)
+        
+        return {
+            "path": repo.path,
+            "git_url": repo.git_url,
+            "priority": repo.priority,
+            "dependencies": repo.depends_on,
+            "git_status": git_status,
+            "has_algitex": has_algitex,
+            "tags": repo.tags
+        }
+
+    def _get_git_status(self, repo_path: Path) -> str:
+        """Query git status of the repository."""
+        if not repo_path.exists():
+            return "not_cloned"
+        try:
+            result = subprocess.run(
+                ["git", "status", "--porcelain"],
+                cwd=repo_path,
+                capture_output=True,
+                text=True
+            )
+            if result.returncode == 0:
+                return "dirty" if result.stdout.strip() else "clean"
+        except Exception:
+            pass
+        return "error"
+
+    def _check_algitex_files(self, repo_path: Path) -> bool:
+        """Check for existence of common algitex-related files."""
+        return any([
+            (repo_path / "algitex.yaml").exists(),
+            (repo_path / "analysis.toon.yaml").exists(),
+            (repo_path / "planfile.yaml").exists()
+        ])
     
     def get_dependency_graph(self) -> Dict[str, List[str]]:
         """Get the dependency graph for visualization."""

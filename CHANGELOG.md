@@ -1661,6 +1661,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.40] - 2026-03-28
+
+### Docs
+- Update docs/README.md
+- Update project/README.md
+- Update project/context.md
+
+### Other
+- Update examples/16-test-workflow/sample_test_project/tests/test_calculator.py
+- Update examples/30-parallel-execution/parallel_real_world.py
+- Update examples/32-workspace-coordination/main.py
+- Update examples/33-hybrid-autofix/main.py
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/compact_flow.mmd
+- Update project/compact_flow.png
+- Update project/duplication.toon.yaml
+- ... and 8 more files
+
 ## [0.1.39] - 2026-03-28
 
 ### Other

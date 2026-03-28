@@ -1,15 +1,19 @@
-# algitex | 66f 13428L | python:65,shell:1 | 2026-03-28
-# stats: 595 func | 0 cls | 66 mod | CC̄=3.3 | critical:0 | cycles:0
-# alerts[5]: fan-out ConfigManager.list_configs=12; fan-out DockerToolManager._load_tools=12; fan-out StdioTransport._read_with_timeout=12; fan-out parallel=12; fan-out parse_todo=12
-# hotspots[5]: ConfigManager.list_configs fan=12; StdioTransport._read_with_timeout fan=12; DockerToolManager._load_tools fan=12; parallel fan=12; todo_hybrid fan=12
+# algitex | 71f 14554L | python:70,shell:1 | 2026-03-28
+# stats: 640 func | 0 cls | 71 mod | CC̄=3.3 | critical:0 | cycles:0
+# alerts[5]: fan-out AuditLogger.rollback_operation=12; fan-out DockerToolManager._load_tools=12; fan-out StdioTransport._read_with_timeout=12; fan-out parallel=12; fan-out parse_todo=12
+# hotspots[5]: StdioTransport._read_with_timeout fan=12; DockerToolManager._load_tools fan=12; parallel fan=12; todo_hybrid fan=12; parse_todo fan=12
 # evolution: CC̄ 3.3→3.3 (flat 0.0)
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[66]:
+M[71]:
+  docker/aider-mcp/aider_mcp_server.py,156
+  docker/planfile-mcp/planfile_mcp_server.py,276
+  docker/vallm/vallm_server.py,274
   project.sh,24
   src/algitex/__init__.py,36
   src/algitex/algo/__init__.py,367
   src/algitex/algo/loop.py,4
-  src/algitex/cli/__init__.py,116
+  src/algitex/cli/__init__.py,117
+  src/algitex/cli/algo.py,63
   src/algitex/cli/core.py,188
   src/algitex/cli/docker.py,96
   src/algitex/cli/parallel.py,149
@@ -29,9 +33,10 @@ M[66]:
   src/algitex/propact/__init__.py,419
   src/algitex/propact/workflow.py,2
   src/algitex/todo/__init__.py,86
+  src/algitex/todo/audit.py,286
   src/algitex/todo/benchmark.py,244
   src/algitex/todo/fixer.py,409
-  src/algitex/todo/hybrid.py,398
+  src/algitex/todo/hybrid.py,467
   src/algitex/todo/verifier.py,195
   src/algitex/tools/__init__.py,115
   src/algitex/tools/analysis.py,183
@@ -45,7 +50,7 @@ M[66]:
   src/algitex/tools/batch.py,421
   src/algitex/tools/benchmark.py,464
   src/algitex/tools/cicd.py,403
-  src/algitex/tools/config.py,387
+  src/algitex/tools/config.py,388
   src/algitex/tools/context.py,207
   src/algitex/tools/docker.py,288
   src/algitex/tools/docker_transport.py,291
@@ -164,6 +169,14 @@ Args:
     WorkflowStep: to_dict(0)  # Single executable step in a Propact workflow...
     WorkflowResult:  # Result of workflow execution...
     Workflow: __init__(1),parse(0),_extract_steps_from_content(1),validate(0),_execute_step(3),_update_result(3),_handle_step_failure(2),execute(0),status(0),_exec_shell(1),_exec_rest(2),_parse_rest_block(2),_extract_proxy_cost(1),_exec_mcp(2),_exec_docker(2),_execute_with_manager(6),_exec_llm(2)  # Parse and execute Propact Markdown workflows...
+  src/algitex/todo/audit.py:
+    e: AuditEntry,ChangeRecord,AuditLogger
+    AuditEntry:  # Single audit entry for an operation...
+    ChangeRecord:  # Record of a single file change for rollback...
+    AuditLogger: __init__(1),_get_user(0),_hash_content(1),_generate_op_id(0),start_operation(4),log_change(4),complete_operation(4),_write_entry(2),get_history(3),get_last_operation(0),rollback_operation(1),rollback_last(0),print_summary(1)  # Comprehensive audit logging with rollback support.
+
+Usage:
+ ...
   src/algitex/tools/autofix/fallback_backend.py:
     e: BackendStatus,FallbackBackend
     BackendStatus:  # Status of a backend...
@@ -171,6 +184,9 @@ Args:
   src/algitex/tools/parallel/partitioner.py:
     e: TaskPartitioner
     TaskPartitioner: __init__(1),partition(2),_compute_footprints(1),_build_conflict_graph(2),_greedy_coloring(4),_group_by_color(1),_regions_by_symbol(2)  # Partition tickets into non-conflicting groups for parallel e...
+  docker/vallm/vallm_server.py:
+    e: VallmServer
+    VallmServer: __init__(0),create_fastapi_app(0),_run_validate(1),_validate_static(1),_validate_runtime(1),_validate_security(1),_analyze_complexity(1),_parse_radon_complexities(1),run(0)  # Validation server with multiple validation levels...
   src/algitex/tools/proxy.py:
     e: LLMResponse,Proxy
     LLMResponse: __str__(0)  # Simplified LLM response...
@@ -198,9 +214,6 @@ Args:
     ServiceStatus: to_dict(0)  # Status of a single service...
     ServiceChecker: __init__(1),check_http_service(4),check_ollama(1),check_litellm_proxy(1),check_mcp_service(2),check_command_exists(2),check_file_exists(2),check_all(1),_format_status_line(1),_print_status_details(1),print_status(2),get_unhealthy(1),wait_for_services(3),close(0),__enter__(0),__exit__(0)  # Checker for various services used by algitex...
     ServiceDependency: __init__(1),get_startup_order(1),check_with_dependencies(1)  # Manage service dependencies and startup order...
-  src/algitex/tools/config.py:
-    e: ConfigManager
-    ConfigManager: __init__(1),_ensure_dir(1),_backup_file(1),install_config(3),generate_continue_config(3),install_continue_config(2),generate_vscode_settings(2),install_vscode_settings(2),generate_env_file(2),generate_docker_compose(2),setup_project_configs(2),list_configs(1)  # Manages configuration files for various IDEs and tools...
   src/algitex/tools/ide.py:
     e: IDETool,IDEHelper,ClaudeCodeHelper,AiderHelper,VSCodeHelper,EditorIntegration
     IDETool: __post_init__(0)  # IDE tool configuration...
@@ -244,7 +257,22 @@ Args:
     HybridResult:  # Result of hybrid fix operation...
     RateLimiter: __init__(2),acquire(0)  # Token bucket rate limiter for LLM calls...
     LLMTask:  # Task for LLM-based fixing...
-    HybridAutofix: __init__(8),fix_mechanical(1),fix_complex(1),_process_llm_parallel(1),_fix_file_llm(2),_call_llm_backend(2),fix_all(1),print_summary(1)  # Hybrid autofix: parallel mechanical + rate-limited parallel ...
+    HybridAutofix: __init__(9),fix_mechanical(1),fix_complex(1),_process_llm_parallel(1),_fix_file_llm(2),_call_llm_backend(2),fix_all(1),print_summary(1)  # Hybrid autofix: parallel mechanical + rate-limited parallel ...
+  docker/planfile-mcp/planfile_mcp_server.py:
+    e: _load_tickets,_save_tickets,planfile_create_ticket,planfile_list_tickets,planfile_update_ticket,planfile_create_tickets_bulk,planfile_sprint_status,planfile_sync,create_rest_api,run_rest_server
+    _load_tickets()
+    _save_tickets()
+    planfile_create_ticket(title;description;priority;tags)
+    planfile_list_tickets(status;priority)
+    planfile_update_ticket(ticket_id;status;resolution)
+    planfile_create_tickets_bulk(tickets)
+    planfile_sprint_status()
+    planfile_sync()
+    create_rest_api()
+    run_rest_server()
+  src/algitex/tools/config.py:
+    e: ConfigManager
+    ConfigManager: __init__(1),_ensure_dir(1),_backup_file(1),install_config(3),generate_continue_config(3),install_continue_config(2),generate_vscode_settings(2),install_vscode_settings(2),generate_env_file(2),generate_docker_compose(2),setup_project_configs(2),list_configs(1),_list_continue_configs(1),_list_vscode_configs(1),_list_env_configs(0),_list_docker_configs(0)  # Manages configuration files for various IDEs and tools...
   src/algitex/tools/todo_parser.py:
     e: Task,TodoParser
     Task: to_dict(0)  # Single todo task extracted from file...
@@ -349,6 +377,12 @@ Args:
     docker_call(tool_name;action;input_json)
     docker_teardown(tool_name)
     docker_caps(tool_name)
+  src/algitex/cli/algo.py:
+    e: algo_discover,algo_extract,algo_rules,algo_report
+    algo_discover(path)
+    algo_extract(path;min_freq)
+    algo_rules(path;no_llm)
+    algo_report(path)
   src/algitex/cli/workflow.py:
     e: workflow_run,workflow_validate
     workflow_run(path;dry_run)
@@ -359,6 +393,13 @@ Args:
   src/algitex/tools/autofix/proxy_backend.py:
     e: ProxyBackend
     ProxyBackend: __init__(2),fix(1),_validate(2),_execute_fix(2),_read_file(1),_build_prompt(2),_call_api(1),_extract_code(1),_write_file(2),_success_result(2),_dry_run_result(2),_error_result(3)  # Fix issues using LiteLLM proxy...
+  docker/aider-mcp/aider_mcp_server.py:
+    e: aider_ai_code,aider_list_models,aider_chat,create_rest_api,run_rest_server
+    aider_ai_code(prompt;relative_editable_files;model)
+    aider_list_models()
+    aider_chat(message;context)
+    create_rest_api()
+    run_rest_server()
   src/algitex/project/config.py:
     e: ConfigMixin
     ConfigMixin: __init__(0),setup_configs(1),install_continue_config(1),install_vscode_settings(0),generate_env_file(1)  # Configuration management functionality for Project...
@@ -391,9 +432,9 @@ Args:
     CodeRegion: compute_signature_hash(1)  # An AST-level lockable region within a file...
     TaskAssignment:  # A ticket assigned to a specific agent with locked regions...
     MergeResult:  # Result of merging agent worktrees back to main...
+  src/algitex/cli/__init__.py:
   src/algitex/algo/loop.py:
   src/algitex/__init__.py:
-  src/algitex/cli/__init__.py:
   src/algitex/tools/parallel/__init__.py:
   src/algitex/propact/workflow.py:
   src/algitex/workflows/pipeline.py:

@@ -79,29 +79,39 @@ class DockerToolManager:
         if not path.exists():
             return
         
-        # Read and expand environment variables
-        content = path.read_text()
-        content = os.path.expandvars(content)
-        
-        data = yaml.safe_load(content)
+        data = self._read_yaml_with_expansion(path)
         for name, spec in data.get("tools", {}).items():
-            # Expand environment variables in tool configuration
-            if "env" in spec:
-                for k, v in spec["env"].items():
-                    if isinstance(v, str):
-                        spec["env"][k] = os.path.expandvars(v)
-            
-            # Expand environment variables in volumes
-            if "volumes" in spec:
-                expanded_volumes = []
-                for v in spec["volumes"]:
-                    # Set default PROJECT_DIR if not in environment
-                    if "${PROJECT_DIR}" in v and "PROJECT_DIR" not in os.environ:
-                        v = v.replace("${PROJECT_DIR}", os.getcwd())
-                    expanded_volumes.append(os.path.expandvars(v))
-                spec["volumes"] = expanded_volumes
-            
+            self._expand_tool_spec(spec)
             self._tools[name] = DockerTool(name=name, **spec)
+
+    def _read_yaml_with_expansion(self, path: Path) -> dict:
+        """Read YAML file and expand environment variables in the raw content."""
+        content = os.path.expandvars(path.read_text())
+        return yaml.safe_load(content)
+
+    def _expand_tool_spec(self, spec: dict):
+        """Expand environment variables in tool environment and volumes."""
+        if "env" in spec:
+            self._expand_env_vars(spec["env"])
+        
+        if "volumes" in spec:
+            spec["volumes"] = self._expand_volumes(spec["volumes"])
+
+    def _expand_env_vars(self, env_dict: dict):
+        """Expand environment variables in values of the environment dictionary."""
+        for k, v in env_dict.items():
+            if isinstance(v, str):
+                env_dict[k] = os.path.expandvars(v)
+
+    def _expand_volumes(self, volumes: list) -> list:
+        """Expand environment variables in list of volume strings with PROJECT_DIR fallback."""
+        expanded = []
+        project_dir = os.getcwd()
+        for v in volumes:
+            if "${PROJECT_DIR}" in v and "PROJECT_DIR" not in os.environ:
+                v = v.replace("${PROJECT_DIR}", project_dir)
+            expanded.append(os.path.expandvars(v))
+        return expanded
 
     def _load_state(self):
         """Load running container state from file."""

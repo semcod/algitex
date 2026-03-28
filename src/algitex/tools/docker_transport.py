@@ -183,38 +183,41 @@ class StdioTransport:
     
     def _read_with_timeout(self, stdout) -> str:
         """Read response from stdout with timeout using select."""
-        import select
-        
         start_time = time.time()
-        response_lines = []
         
         while time.time() - start_time < self.timeout:
-            # Check if stdout has data
-            ready, _, _ = select.select([stdout], [], [], 1.0)
-            if not ready:
-                # Check if process died
-                if hasattr(stdout, '_proc') and stdout._proc.poll() is not None:
-                    raise RuntimeError(f"MCP server exited with code {stdout._proc.poll()}")
+            if not self._wait_for_ready(stdout, 1.0):
                 continue
             
             line = stdout.readline()
             if not line:
-                if hasattr(stdout, '_proc') and stdout._proc.poll() is not None:
-                    raise RuntimeError(f"MCP server exited with code {stdout._proc.poll()}")
+                self._check_process_alive(stdout)
                 break
             
-            response_lines.append(line)
-            
-            # Parse Content-Length header
             if line.startswith("Content-Length:"):
-                content_length = int(line.split(":")[1].strip())
-                # Read empty line
-                stdout.readline()
-                # Read the JSON response
-                response_data = stdout.read(content_length)
-                return response_data
+                length = self._extract_length(line)
+                stdout.readline()  # Empty line
+                return stdout.read(length)
         
         raise RuntimeError(f"MCP server timeout after {self.timeout}s")
+
+    def _wait_for_ready(self, stdout, timeout: float) -> bool:
+        """Wait for stdout to become ready for reading."""
+        import select
+        ready, _, _ = select.select([stdout], [], [], timeout)
+        if not ready:
+            self._check_process_alive(stdout)
+            return False
+        return True
+
+    def _check_process_alive(self, stdout):
+        """Raise RuntimeError if the process associated with stdout has exited."""
+        if hasattr(stdout, '_proc') and stdout._proc.poll() is not None:
+            raise RuntimeError(f"MCP server exited with code {stdout._proc.poll()}")
+
+    def _extract_length(self, line: str) -> int:
+        """Extract Content-Length value from header line."""
+        return int(line.split(":")[1].strip())
     
     def _parse(self, raw_response: str) -> dict:
         """Parse JSON response with error handling."""

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "algitex"
-version = "0.1.39"
+version = "0.1.40"
 description = "Progressive algorithmization toolchain — from LLM to deterministic code, from proxy to tickets"
 readme = "README.md"
 license = "Apache-2.0"

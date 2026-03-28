@@ -6,7 +6,7 @@ teams need to work simultaneously without conflicts.
 """
 from pathlib import Path
 from algitex import Project
-from algitex.tools.parallel,RegionExtractor, TaskPartitioner
+from algitex.tools.parallel import RegionExtractor, TaskPartitioner
 
 def setup_sample_project(base_dir: Path) -> None:
     """Create a sample project structure for demonstration."""

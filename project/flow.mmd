@@ -4,22 +4,22 @@ flowchart TD
     classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
 
     subgraph Core
-        src__algitex__tools__config__ConfigManager___ensure_dir["_ensure_dir"]
-        src__algitex__tools__config__ConfigManager___backup_file["_backup_file"]
-        src__algitex__tools__config__ConfigManager__install_config["install_config"]
-        src__algitex__tools__config__ConfigManager__generate_continue_config["generate_continue_config"]
-        src__algitex__tools__config__ConfigManager__install_continue_config["install_continue_config"]
-        src__algitex__tools__config__ConfigManager__generate_vscode_settings["generate_vscode_settings"]
-        src__algitex__tools__config__ConfigManager__install_vscode_settings["install_vscode_settings"]
-        src__algitex__tools__config__ConfigManager__generate_env_file["generate_env_file"]
-        src__algitex__tools__config__ConfigManager__generate_docker_compose["generate_docker_compose"]
-        src__algitex__tools__config__ConfigManager__setup_project_configs["setup_project_configs"]
-        src__algitex__tools__config__ConfigManager__list_configs["list_configs"]
-        src__algitex__tools__cicd__CICDGenerator___load_config["_load_config"]
-        src__algitex__tools__cicd__CICDGenerator__generate_github_actions["generate_github_actions"]
-        src__algitex__tools__cicd__CICDGenerator__generate_gitlab_ci["generate_gitlab_ci"]
-        src__algitex__tools__cicd__CICDGenerator___get_complexity_check["_get_complexity_check"]
-        ...["+497 more"]
+        docker__aider_mcp__aider_mcp_server__run_rest_server["run_rest_server"]
+        docker__vallm__vallm_server__VallmServer__create_fastapi_app["create_fastapi_app"]
+        docker__vallm__vallm_server__VallmServer___run_validate["_run_validate"]
+        docker__vallm__vallm_server__VallmServer___validate_static["_validate_static"]
+        docker__vallm__vallm_server__VallmServer___validate_runtime["_validate_runtime"]
+        docker__vallm__vallm_server__VallmServer___validate_security["_validate_security"]
+        docker__vallm__vallm_server__VallmServer___analyze_complexity["_analyze_complexity"]
+        docker__vallm__vallm_server__VallmServer___parse_radon_complexities["_parse_radon_complexities"]
+        docker__vallm__vallm_server__VallmServer__run["run"]
+        docker__planfile_mcp__planfile_mcp_server___save_tickets["_save_tickets"]
+        docker__planfile_mcp__planfile_mcp_server__planfile_create_ticket["planfile_create_ticket"]
+        docker__planfile_mcp__planfile_mcp_server__planfile_create_tickets_bulk["planfile_create_tickets_bulk"]
+        docker__planfile_mcp__planfile_mcp_server__planfile_sync["planfile_sync"]
+        docker__planfile_mcp__planfile_mcp_server__create_rest_api["create_rest_api"]
+        docker__planfile_mcp__planfile_mcp_server__run_rest_server["run_rest_server"]
+        ...["+529 more"]
     end
 
-    class src__algitex__tools__config__ConfigManager___ensure_dir,src__algitex__tools__config__ConfigManager___backup_file,src__algitex__tools__config__ConfigManager__install_config,src__algitex__tools__config__ConfigManager__generate_continue_config,src__algitex__tools__config__ConfigManager__install_continue_config,src__algitex__tools__config__ConfigManager__generate_vscode_settings,src__algitex__tools__config__ConfigManager__install_vscode_settings,src__algitex__tools__config__ConfigManager__generate_env_file,src__algitex__tools__config__ConfigManager__generate_docker_compose,src__algitex__tools__config__ConfigManager__setup_project_configs entry
+    class docker__aider_mcp__aider_mcp_server__run_rest_server,docker__vallm__vallm_server__VallmServer__create_fastapi_app,docker__vallm__vallm_server__VallmServer___run_validate,docker__vallm__vallm_server__VallmServer___validate_static,docker__vallm__vallm_server__VallmServer___validate_runtime,docker__vallm__vallm_server__VallmServer___validate_security,docker__vallm__vallm_server__VallmServer___analyze_complexity,docker__vallm__vallm_server__VallmServer___parse_radon_complexities,docker__vallm__vallm_server__VallmServer__run,docker__planfile_mcp__planfile_mcp_server__planfile_create_tickets_bulk entry

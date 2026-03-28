@@ -75,9 +75,11 @@ class BatchFixBackend:
         print(f"📦 BatchFix: {len(tasks)} zadań → {len(groups)} grup")
         
         results = []
-        for group in groups:
+        for i, group in enumerate(groups, 1):
+            print(f"\n[{i}/{len(groups)}] Przetwarzam grupę {group.category}...")
             group_results = self._process_group(group)
             results.extend(group_results)
+            print(f"   ✓ Zakończono grupę {i}/{len(groups)} ({len(group_results)} wyników)")
         
         elapsed = time.time() - start_time
         print(f"✓ BatchFix zakończony: {len(results)} wyników w {elapsed:.1f}s")
@@ -296,11 +298,15 @@ Format:
     
     def _call_llm(self, prompt: str, model: str) -> str:
         """Wywołaj LLM."""
+        print(f"      🤖 LLM call: {model} (timeout={self.timeout}s)...")
+        start = time.time()
         response = self.service.client.generate(
             prompt=prompt,
             model=model,
             temperature=0.3
         )
+        elapsed = time.time() - start
+        print(f"      ✓ LLM response: {elapsed:.1f}s")
         return response.content
     
     def _parse_batch_response(self, response: str, group: TaskGroup) -> dict[str, bool]:
