@@ -36,8 +36,8 @@
 ## Szybki Start
 
 ```bash
-# 1. Instalacja
-pip install litellm
+# 1. Instalacja (WAŻNE: użyj [proxy] dla pełnej funkcjonalności)
+pip install 'litellm[proxy]'
 
 # 2. Konfiguracja proxy
 make setup
@@ -178,7 +178,10 @@ make stop      # Zatrzymaj proxy
 ## Troubleshooting
 
 **Błąd**: `litellm: command not found`
-**Fix**: `pip install litellm`
+**Fix**: `pip install 'litellm[proxy]'`
+
+**Błąd**: `No module named 'apscheduler'` lub `ImportError: Missing dependency`
+**Fix**: `pip install 'litellm[proxy]'` (ważne: z nawiasami kwadratowymi!)
 
 **Błąd**: `Connection refused`
 **Fix**: Uruchom proxy: `make proxy`

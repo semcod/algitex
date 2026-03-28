@@ -18,7 +18,9 @@ run: setup
 
 setup:
 	@echo "Checking prerequisites..."
-	@python main.py || true
+	@echo "Checking litellm installation..."
+	@litellm --version 2>/dev/null || (echo "❌ litellm not found. Install with:" && echo "   pip install 'litellm[proxy]'")
+	@python3 main.py || true
 
 proxy:
 	@echo "Starting LiteLLM proxy on port 4000..."

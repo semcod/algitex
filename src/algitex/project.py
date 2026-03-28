@@ -28,6 +28,9 @@ from algitex.config import Config
 from algitex.tools.analysis import Analyzer, HealthReport
 from algitex.tools.tickets import Tickets, Ticket
 from algitex.algo import Loop
+from algitex.tools.ollama import OllamaClient, OllamaService
+from algitex.tools.services import ServiceChecker
+from algitex.tools.autofix import AutoFix
 
 
 class Project:
@@ -44,6 +47,11 @@ class Project:
 
         # New: progressive algorithmization loop
         self.algo = Loop(str(self.path))
+        
+        # New: service management and autofix
+        self.services = ServiceChecker()
+        self.ollama = OllamaService()
+        self.autofix = AutoFix(str(self.path / "TODO.md"))
 
     # ── Core workflow ─────────────────────────────────────
 
@@ -255,6 +263,83 @@ class Project:
 
     def sync(self) -> dict:
         return self._tickets.sync()
+
+    # ── Service Management ────────────────────────────────
+
+    def check_services(self, services: Optional[dict] = None) -> dict:
+        """Check status of all services."""
+        statuses = self.services.check_all(services)
+        return {s.name: s.to_dict() for s in statuses}
+    
+    def print_service_status(self, show_details: bool = False):
+        """Print service status in a formatted way."""
+        statuses = self.services.check_all()
+        self.services.print_status(statuses, show_details)
+    
+    def ensure_service(self, service: str, timeout_seconds: int = 60) -> bool:
+        """Wait for a service to become healthy."""
+        return self.services.wait_for_services([service], timeout_seconds)
+    
+    # ── AutoFix ───────────────────────────────────────────
+
+    def fix_issues(
+        self,
+        limit: Optional[int] = None,
+        backend: str = "auto",
+        filter_file: Optional[str] = None
+    ) -> dict:
+        """Fix issues from TODO.md."""
+        results = self.autofix.fix_all(limit=limit, backend=backend, filter_file=filter_file)
+        
+        # Sync with tickets system if any fixes were made
+        if any(r.success for r in results):
+            self.sync()
+        
+        return {
+            "total": len(results),
+            "fixed": sum(1 for r in results if r.success),
+            "failed": sum(1 for r in results if not r.success),
+            "results": [r.to_dict() for r in results]
+        }
+    
+    def fix_issue(self, task_id: str, backend: str = "auto") -> Optional[dict]:
+        """Fix a specific issue by task ID."""
+        result = self.autofix.fix_issue(task_id, backend)
+        if result and result.success:
+            self.sync()
+            return result.to_dict()
+        return None
+    
+    def list_todo_tasks(self) -> list:
+        """List all pending TODO tasks."""
+        tasks = self.autofix.list_tasks()
+        return [t.to_dict() for t in tasks]
+    
+    # ── Ollama Integration ─────────────────────────────────
+
+    def check_ollama(self) -> dict:
+        """Check Ollama status and available models."""
+        status = self.services.check_ollama()
+        return status.to_dict()
+    
+    def list_ollama_models(self) -> list:
+        """List available Ollama models."""
+        models = self.ollama.client.list_models()
+        return [{"name": m.name, "size": m.size, "modified_at": m.modified_at} for m in models]
+    
+    def pull_ollama_model(self, model: str) -> bool:
+        """Pull an Ollama model."""
+        return self.ollama.ensure_model(model)
+    
+    def generate_with_ollama(
+        self,
+        prompt: str,
+        model: Optional[str] = None,
+        system: Optional[str] = None
+    ) -> str:
+        """Generate text using Ollama."""
+        response = self.ollama.client.generate(prompt, model=model, system=system)
+        return str(response)
 
     # ── Private helpers ───────────────────────────────────
 

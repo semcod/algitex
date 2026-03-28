@@ -213,6 +213,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.16] - 2026-03-28
+
+### Docs
+- Update docs/README.md
+- Update examples/26-litellm-proxy-ollama/README.md
+- Update examples/NEW_FEATURES.md
+- Update project/README.md
+- Update project/context.md
+
+### Other
+- Update examples/21-aider-cli-ollama/auto_fix_simplified.py
+- Update examples/21-aider-cli-ollama/main_simplified.py
+- Update examples/26-litellm-proxy-ollama/Makefile
+- Update examples/26-litellm-proxy-ollama/auto_fix_simplified.py
+- Update examples/26-litellm-proxy-ollama/main_simplified.py
+- Update examples/27-unified-autofix/main.py
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/compact_flow.mmd
+- ... and 10 more files
+
 ## [0.1.15] - 2026-03-28
 
 ### Docs

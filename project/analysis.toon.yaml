@@ -1,17 +1,19 @@
-# code2llm | 33f 8185L | python:32,shell:1 | 2026-03-28
-# CC̄=3.6 | critical:4/397 | dups:0 | cycles:0
+# code2llm | 35f 8969L | python:34,shell:1 | 2026-03-28
+# CC̄=3.6 | critical:5/547 | dups:0 | cycles:0
 
-HEALTH[5]:
+HEALTH[7]:
   🟡 CC    _analyze_project CC=17 (limit:15)
   🟡 CC    analyze_project CC=17 (limit:15)
+  🟡 CC    print_status CC=15 (limit:15)
   🟡 CC    execute CC=15 (limit:15)
   🟡 CC    execute CC=16 (limit:15)
+  🟡 CC    fix_with_aider CC=18 (limit:15)
   🟡 CC    advanced_workspace_features CC=15 (limit:15)
 
 REFACTOR[1]:
-  1. split 5 high-CC methods  (CC>15)
+  1. split 7 high-CC methods  (CC>15)
 
-PIPELINES[314]:
+PIPELINES[384]:
   [1] Src [__init__]: __init__
       PURITY: 100% pure
   [2] Src [create_fastapi_app]: create_fastapi_app
@@ -39,19 +41,21 @@ LAYERS:
   │ !! todo_runner                526L  2C   16m  CC=13     ←0
   │ !! docker                     504L  3C   23m  CC=12     ←0
   │ cicd                       405L  1C   11m  CC=5      ←1
+  │ !! services                   401L  3C   18m  CC=15     ←0
   │ !! __init__                   397L  3C   12m  CC=16     ←1
+  │ ollama                     383L  4C   16m  CC=11     ←0
   │ __init__                   369L  5C   12m  CC=9      ←0
   │ workspace                  338L  2C   17m  CC=6      ←1
   │ __init__                   320L  3C   19m  CC=4      ←0
   │ project                    294L  1C   12m  CC=6      ←0
   │ !! todo_local                 267L  2C   10m  CC=15     ←0
   │ feedback                   252L  4C   12m  CC=8      ←0
-  │ tickets                    246L  2C   11m  CC=5      ←5
+  │ tickets                    246L  2C   11m  CC=5      ←6
   │ todo_executor              240L  2C   12m  CC=13     ←0
   │ todo_parser                206L  2C    8m  CC=7      ←0
   │ context                    206L  3C   14m  CC=7      ←0
   │ analysis                   182L  3C    8m  CC=7      ←0
-  │ config                     170L  4C    7m  CC=10     ←13
+  │ config                     170L  4C    7m  CC=10     ←8
   │ telemetry                  152L  2C    9m  CC=4      ←0
   │ proxy                      145L  2C    9m  CC=9      ←0
   │ __init__                   102L  1C    4m  CC=4      ←3

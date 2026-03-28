@@ -11,6 +11,9 @@ import shutil
 from dataclasses import dataclass
 from typing import Optional
 
+# Export new modules
+from algitex.tools import ollama, services, autofix
+
 
 @dataclass
 class ToolStatus:

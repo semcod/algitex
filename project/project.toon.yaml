@@ -1,7 +1,7 @@
-# algitex | 310 func | 28f | 11219L | python | 2026-03-28
+# algitex | 344 func | 30f | 12610L | python | 2026-03-28
 
 HEALTH:
-  CC̄=3.6  critical=15 (limit:10)  dup=1  cycles=0
+  CC̄=3.6  critical=18 (limit:10)  dup=1  cycles=0
 
 ALERTS[20]:
   !!! high_fan_out     analyze_project = 24 (limit:10)
@@ -15,23 +15,23 @@ ALERTS[20]:
   !   cc_exceeded      analyze_project = 17 (limit:15)
   !   cc_exceeded      Workflow.execute = 16 (limit:15)
 
-MODULES[33] (top by size):
+MODULES[35] (top by size):
   M[src/algitex/cli.py] 571L C:0 F:25 CC↑13 D:0 (python)
   M[src/algitex/tools/todo_runner.py] 526L C:2 F:16 CC↑13 D:0 (python)
   M[src/algitex/tools/docker.py] 504L C:3 F:23 CC↑12 D:0 (python)
   M[src/algitex/tools/cicd.py] 405L C:1 F:11 CC↑5 D:1 (python)
+  M[src/algitex/tools/services.py] 401L C:3 F:18 CC↑15 D:0 (python)
   M[src/algitex/propact/__init__.py] 397L C:3 F:12 CC↑16 D:1 (python)
   M[docker/proxym/proxym_mcp_server.py] 387L C:0 F:10 CC↑9 D:0 (python)
+  M[src/algitex/tools/ollama.py] 383L C:4 F:16 CC↑11 D:0 (python)
+  M[src/algitex/project.py] 379L C:1 F:12 CC↑6 D:0 (python)
   M[src/algitex/algo/__init__.py] 369L C:5 F:12 CC↑9 D:0 (python)
   M[docker/vallm/vallm_mcp_server.py] 360L C:0 F:8 CC↑9 D:0 (python)
   M[src/algitex/tools/workspace.py] 338L C:2 F:17 CC↑6 D:1 (python)
   M[src/algitex/workflows/__init__.py] 320L C:3 F:19 CC↑4 D:0 (python)
-  M[src/algitex/project.py] 294L C:1 F:12 CC↑6 D:0 (python)
   M[docker/code2llm/code2llm_mcp_server.py] 276L C:0 F:6 CC↑17 D:0 (python)
   M[docker/planfile-mcp/planfile_mcp_server.py] 276L C:0 F:10 CC↑7 D:0 (python)
-  M[docker/vallm/vallm_server.py] 271L C:1 F:7 CC↑9 D:0 (python)
-  M[src/algitex/tools/todo_local.py] 267L C:2 F:10 CC↑15 D:0 (python)
-  LANGS: python:32/shell:1
+  LANGS: python:34/shell:1
 
 HOTSPOTS[10]:
   ★ analyze_project fan=24  // Analysis pipeline, 24 stages
@@ -40,7 +40,7 @@ HOTSPOTS[10]:
   ★ DockerToolManager._call_stdio fan=18  // Send JSON-RPC over stdin, read from stdout with timeout.
   ★ init fan=16  // Initialize algitex for a project.
 
-REFACTOR[10]:
+REFACTOR[11]:
   [1] H/H Split god module src/algitex/cli.py (571L, 0 classes)
   [2] H/H Split god module src/algitex/tools/todo_runner.py (526L, 2 classes)
   [3] H/H Split god module src/algitex/tools/docker.py (504L, 3 classes)
@@ -48,4 +48,4 @@ REFACTOR[10]:
   [5] M/L Split analyze_project (CC=17 → target CC<10)
 
 EVOLUTION:
-  2026-03-28 CC̄=3.6 crit=15 11219L // Automated analysis
+  2026-03-28 CC̄=3.6 crit=18 12610L // Automated analysis
