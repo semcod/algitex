@@ -162,38 +162,40 @@ def _print_execution_summary(
 # ─── Core fixer ─────────────────────────────────────
 
 def _validate_file_with_vallm(path: Path, original_content: str) -> tuple[bool, str]:
-    """Validate file with vallm after fix. Restore original if invalid.
+    """Validate file with syntax check first, then vallm. Restore original if invalid.
     
     Returns:
         (is_valid, message)
     """
+    # ALWAYS check syntax first - this is the most reliable check
     try:
-        # Try to import and use vallm
+        import ast
+        ast.parse(path.read_text())
+    except SyntaxError as se:
+        # Restore original content immediately
+        path.write_text(original_content)
+        return False, f"syntax error: {se}"
+    except Exception as e:
+        path.write_text(original_content)
+        return False, f"parse error: {e}"
+    
+    # If syntax is OK, try vallm for deeper validation
+    try:
         from algitex.tools.analysis import Analyzer
-        
         analyzer = Analyzer(str(path.parent))
         report = analyzer.health()
         
-        # Check if file is syntactically valid (vallm_pass_rate > 0)
-        if report.vallm_pass_rate >= 0:
+        # vallm_pass_rate should be > 0 for valid code
+        if report.vallm_pass_rate > 0:
             return True, "valid"
         else:
             # Restore original content
             path.write_text(original_content)
-            return False, f"validation failed (pass_rate: {report.vallm_pass_rate:.2f})"
+            return False, f"vallm failed (pass_rate: {report.vallm_pass_rate:.2f})"
             
-    except Exception as e:
-        # If vallm not available, try basic syntax check
-        try:
-            import ast
-            ast.parse(path.read_text())
-            return True, "syntax OK"
-        except SyntaxError as se:
-            # Restore original content
-            path.write_text(original_content)
-            return False, f"syntax error: {se}"
-        except Exception:
-            return True, "vallm unavailable, skipped"
+    except Exception:
+        # If vallm unavailable, syntax check is sufficient
+        return True, "syntax OK"
 
 
 def fix_file(file_path: str, tasks: list[TodoTask], dry_run: bool = True) -> FixResult:
@@ -255,7 +257,10 @@ def fix_file(file_path: str, tasks: list[TodoTask], dry_run: bool = True) -> Fix
                 else:
                     result.errors.append(f"L{task.line}: fix invalid - {msg}")
                     result.skipped += 1
-                    # Restore original content
+                    print(f"    ✗ L{task.line}: fix broke file - {msg}")
+                    print(f"      ↺ ROLLBACK: file restored to original state")
+                    print(f"      ⊘ SKIPPED: task abandoned")
+                    # Update original_content to the restored state
                     original_content = path.read_text()
             else:
                 result.skipped += 1
@@ -322,10 +327,13 @@ def _process_magic_batch(path: Path, tasks: list[TodoTask], result: FixResult, d
                 is_valid, msg = _validate_file_with_vallm(path, original_content)
                 if is_valid:
                     result.fixed += 1
-                    print(f"    ✓ magic validated: {msg}")
+                    print(f"    ✓ magic L{task.line}: validated: {msg}")
                 else:
                     result.errors.append(f"magic L{task.line}: invalid - {msg}")
                     result.skipped += 1
+                    print(f"    ✗ magic L{task.line}: fix broke file - {msg}")
+                    print(f"      ↺ ROLLBACK: file restored to original state")
+                    print(f"      ⊘ SKIPPED: task abandoned")
                     original_content = path.read_text()
             else:
                 result.skipped += 1
@@ -347,10 +355,13 @@ def _process_fstring_batch(path: Path, tasks: list[TodoTask], result: FixResult,
             is_valid, msg = _validate_file_with_vallm(path, original_content)
             if is_valid:
                 result.fixed += len(tasks)
-                print(f"    ✓ fstring validated: {msg}")
+                print(f"    ✓ fstring: validated: {msg}")
             else:
                 result.errors.append(f"fstring: invalid - {msg}")
                 result.skipped += len(tasks)
+                print(f"    ✗ fstring: fix broke file - {msg}")
+                print(f"      ↺ ROLLBACK: file restored to original state")
+                print(f"      ⊘ SKIPPED: {len(tasks)} task(s) abandoned")
                 path.write_text(original_content)
         else:
             result.skipped += len(tasks)
@@ -372,10 +383,13 @@ def _process_exec_batch(path: Path, tasks: list[TodoTask], result: FixResult, dr
             is_valid, msg = _validate_file_with_vallm(path, original_content)
             if is_valid:
                 result.fixed += len(tasks)
-                print(f"    ✓ exec_block validated: {msg}")
+                print(f"    ✓ exec_block: validated: {msg}")
             else:
                 result.errors.append(f"exec_block: invalid - {msg}")
                 result.skipped += len(tasks)
+                print(f"    ✗ exec_block: fix broke file - {msg}")
+                print(f"      ↺ ROLLBACK: file restored to original state")
+                print(f"      ⊘ SKIPPED: {len(tasks)} task(s) abandoned")
                 path.write_text(original_content)
         else:
             result.skipped += len(tasks)

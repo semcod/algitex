@@ -145,6 +145,13 @@ def repair_fstring(path: Path, _unused: str = "", _unused2: int = 0) -> bool:
     lines = path.read_text().splitlines()
     changed = False
     for i, line in enumerate(lines):
+        # Skip lines that can't be string concatenations
+        if not line.strip() or line.strip().startswith(("#", "import", "from")):
+            continue
+        if '"' not in line and "'" not in line:
+            continue
+        if "+" not in line:
+            continue
         new_line = _simple_fstring_rewrite(line)
         if new_line != line:
             lines[i] = new_line
