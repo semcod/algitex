@@ -140,71 +140,7 @@ algitex todo fix-auto --workers 8
 algitex todo fix-auto --execute
 ```
 
-## Three-Tier Micro-Fixing System
-
-Algitex implements an intelligent three-tier classification system that routes tasks to the most cost-effective fix strategy:
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│              Three-Tier Micro-Fixing System                 │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  Tier 0: Algorithm (90%)    → Deterministic, no LLM         │
-│  Tier 1: Small LLM (9%)     → Ollama 7B, minimal context    │
-│  Tier 2: Big LLM (1%)       → Claude/GPT-4o, complex only   │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
-
-### Tier Classification
-
-| Tier | Categories | Fix Method | Example |
-|------|------------|------------|---------|
-| **0 - Algorithm** | `unused_import`, `return_type`, `fstring`, `magic_known`, `module_block` | Regex/AST manipulation | `import os` → remove |
-| **1 - Small LLM** | `magic` (unknown), `docstring`, `rename`, `guard_clause`, `dispatch` | Ollama 7B, function snippet | `42` → `MAX_RETRIES = 42` |
-| **2 - Big LLM** | `split_function`, `dependency_cycle`, `architecture`, `other` | Claude/GPT-4o | Refactor 200-line function |
-
-### Three-Tier CLI Commands
-
-```bash
-# Show tier and category statistics
-algitex todo stats TODO.md
-
-# Tier 0: Algorithmic fixes only (deterministic, fastest)
-algitex todo fix --algo --dry-run
-algitex todo fix --algo --execute --workers 8
-
-# Tier 1: Small LLM fixes (Ollama, local)
-algitex todo fix --micro --dry-run
-algitex todo fix --micro --execute --model qwen2.5-coder:7b --micro-workers 4
-
-# All tiers: Complete workflow
-algitex todo fix --all --dry-run
-algitex todo fix --all --execute --workers 4 --micro-workers 2
-
-# With rate limiting and custom backend
-algitex todo fix --all --execute \
-  --backend litellm-proxy \
-  --proxy-url http://localhost:4000 \
-  --rate-limit 10 \
-  --workers 4
-```
-
-### Task Routing Examples
-
-**Magic Numbers (Intelligent Routing):**
-- Known constants (200 → `HTTP_OK`): Tier 0, algorithmic
-- Unknown constants (42 → `?`): Tier 1, small LLM suggests name
-
-```python
-# Tier 0 (known): Immediate replacement
-response.status_code == 200  →  response.status_code == HTTP_OK
-
-# Tier 1 (unknown): LLM suggests constant name
-timeout = 42  →  timeout = MAX_TIMEOUT  # suggested by 7B model
-```
-
-### MicroTask — Atomic Tasks for Small LLMs
+## MicroTask — Atomic Tasks for Small LLMs
 
 Pipeline for breaking down and executing atomic micro-tasks optimized for small LLMs:
 
@@ -251,44 +187,6 @@ print(f"Still open: {result.still_open}, Fixed: {result.already_fixed}")
 stats = fix_todos("TODO.md", workers=8, dry_run=False)
 print(f"Fixed: {stats['fixed']}, Skipped: {stats['skipped']}")
 
-# Three-tier micro-fixing API
-from algitex.todo import (
-    classify_task,
-    partition_tasks,
-    MicroFixer,
-    HybridAutofix,
-    parallel_fix_and_update,
-    BIG_CATEGORIES,
-)
-
-# Classify and partition tasks
-tasks = parse_todo("TODO.md")
-buckets = partition_tasks(tasks)
-print(f"Algorithm: {len(buckets['algorithm'])}")
-print(f"Micro: {len(buckets['micro'])}")
-print(f"Big: {len(buckets['big'])}")
-
-# Tier 0: Algorithmic fixes
-result = parallel_fix_and_update("TODO.md", workers=8, dry_run=False)
-
-# Tier 1: Small LLM fixes (Ollama)
-micro_fixer = MicroFixer(
-    ollama_url="http://localhost:11434",
-    model="qwen2.5-coder:7b",
-    workers=4,
-    dry_run=False,
-)
-result = micro_fixer.fix_tasks(micro_tasks)
-
-# Tier 2: Big LLM fixes (Claude/GPT-4o)
-fixer = HybridAutofix(
-    backend="litellm-proxy",
-    workers=4,
-    rate_limit=10,
-    dry_run=False,
-)
-result = fixer.fix_complex("TODO.md", include_categories=BIG_CATEGORIES)
-
 # Benchmark performance
 result = benchmark_fix("TODO.md", limit=100, workers=8, mode="parallel")
 result.print_report()
@@ -300,39 +198,35 @@ comparison = compare_modes("TODO.md", limit=50, workers=8)
 
 ### Auto-fix Categories
 
-| Category | Tier | Auto-fixable | Description |
-|----------|------|--------------|-------------|
-| `unused_import` | 0 - Algorithm | ✅ Yes | Remove unused imports (import X, from Y import X) |
-| `return_type` | 0 - Algorithm | ✅ Yes | Add missing return type annotations |
-| `fstring` | 0 - Algorithm | ⚠️ Partial | Convert concatenations to f-strings |
-| `magic_known` | 0 - Algorithm | ✅ Yes | Replace known magic numbers (200 → HTTP_OK) |
-| `module_block` | 0 - Algorithm | ✅ Yes | Add `if __name__ == "__main__":` guards |
-| `magic` | 1 - Small LLM | ✅ Yes | Suggest names for unknown magic numbers (Ollama 7B) |
-| `docstring` | 1 - Small LLM | ✅ Yes | Rewrite verbose docstrings (Ollama 7B) |
-| `rename` | 1 - Small LLM | ✅ Yes | Improve variable names (Ollama 7B) |
-| `guard_clause` | 1 - Small LLM | ✅ Yes | Flatten nested ifs (Ollama 7B) |
-| `dispatch` | 1 - Small LLM | ✅ Yes | Convert if-elif chains to dict dispatch |
-| `split_function` | 2 - Big LLM | ✅ Yes | Extract methods from large functions (Claude/GPT-4o) |
-| `dependency_cycle` | 2 - Big LLM | ✅ Yes | Break import cycles (Claude/GPT-4o) |
-| `architecture` | 2 - Big LLM | ✅ Yes | Reorganize module structure (Claude/GPT-4o) |
-| `other` | 2 - Big LLM | ⚠️ Varies | Complex issues requiring reasoning (Claude/GPT-4o) |
+| Category | Auto-fixable | Description |
+|----------|--------------|-------------|
+| `unused_import` | ✅ Yes | Remove unused imports (import X, from Y import X) |
+| `return_type` | ✅ Yes | Add missing return type annotations |
+| `fstring` | ⚠️ Partial | Convert concatenations to f-strings |
+| `magic` | ✅ Yes | Suggest names for magic numbers |
+| `docstring` | ✅ Yes | Rewrite verbose docstrings |
+| `rename` | ✅ Yes | Improve variable names |
+| `split_function` | ✅ Yes | Extract methods from large functions |
+| `dependency_cycle` | ✅ Yes | Break import cycles |
+| `architecture` | ✅ Yes | Reorganize module structure |
+| `other` | ⚠️ Varies | Complex issues requiring reasoning |
 
 ### How Parallel Processing Works
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│              Parallel TODO Processing                    │
+│              Parallel TODO Processing                   │
 ├─────────────────────────────────────────────────────────┤
 │                                                         │
 │  1. Parse TODO.md → filter worktree duplicates          │
 │  2. Categorize tasks (unused_import, return_type...)    │
 │  3. Group by file (1 worker per file, zero conflicts)   │
-│  4. Sort tasks bottom-up (line DESC) → preserve numbers│
-│  5. Execute in ThreadPoolExecutor (8 workers default)  │
-│  6. Collect results: fixed, skipped, errors            │
+│  4. Sort tasks bottom-up (line DESC) → preserve numbers │
+│  5. Execute in ThreadPoolExecutor (8 workers default)   │
+│  6. Collect results: fixed, skipped, errors             │
 │                                                         │
-│  Safety: Each worker touches different file.           │
-│  Within file: bottom-up prevents line number shifts.   │
+│  Safety: Each worker touches different file.            │
+│  Within file: bottom-up prevents line number shifts.    │
 │                                                         │
 └─────────────────────────────────────────────────────────┘
 ```
@@ -341,9 +235,6 @@ comparison = compare_modes("TODO.md", limit=50, workers=8)
 
 | Path | LLM? | Parallel? | Throughput | Use Case |
 |------|------|-----------|------------|----------|
-| `todo fix --algo` | ❌ No | ✅ Yes (8 workers) | ~1500 tickets/sec | Tier 0: Mechanical fixes |
-| `todo fix --micro` | ✅ Small (7B) | ✅ Yes (4 workers) | ~50-100 tickets/sec | Tier 1: Ollama local fixes |
-| `todo fix --all` | ✅ Hybrid | ✅ Yes (multi-phase) | Varies by tier | All 3 tiers in sequence |
 | `todo fix-auto` | ❌ No | ✅ Yes (8 workers) | ~1500 tickets/sec | Mechanical fixes: unused imports, return types |
 | `todo run --tool ollama-mcp` | ✅ Yes | ❌ Sequential (queue) | ~1-10 tickets/sec | Complex fixes requiring reasoning |
 | `autofix via proxy` | ✅ Yes | ⚠️ Batch | ~5-50 tickets/sec | Intelligent fixes via litellm-proxy |
@@ -604,6 +495,13 @@ Each example has:
 ## Additional Documentation
 
 - [README2.md](./README2.md) — Detailed conceptual overview of Algitex as intelligence compilation engine
+- [docs/todo.md](./docs/todo.md) — TODO task processing and BatchFix
+- [docs/BATCHFIX.md](./docs/BATCHFIX.md) — BatchFix: grupowanie i optymalizacja fixów
+- [docs/MICROTASK.md](./docs/MICROTASK.md) — Atomic micro-tasks for small LLMs
+- [docs/NLP.md](./docs/NLP.md) — Deterministic NLP refactor helpers
+- [docs/NEW_FEATURES.md](./docs/NEW_FEATURES.md) — Overview of new modules and features
+- [docs/autofix.md](./docs/autofix.md) — AutoFix module documentation
+- [docs/REFACTORING_SUMMARY.md](./docs/REFACTORING_SUMMARY.md) — Codebase refactoring summary
 
 ## Architecture
 
@@ -620,7 +518,7 @@ src/algitex/
 │   ├── algo.py           # Progressive algorithmization
 │   ├── workflow.py       # Propact workflows
 │   ├── docker.py         # Docker MCP tools
-│   ├── todo.py           # TODO processing (three-tier fixes)
+│   ├── todo.py           # TODO processing
 │   ├── microtask.py      # Atomic micro-task pipeline
 │   └── nlp.py            # Deterministic NLP helpers
 ├── algo/                 # Progressive algorithmization
@@ -629,11 +527,11 @@ src/algitex/
 ├── propact/              # Markdown workflow engine
 │   ├── __init__.py       # Workflow, WorkflowStep, WorkflowResult
 │   └── workflow.py       # Re-export
-├── todo/                 # Three-tier TODO fixing system
+├── todo/                 # TODO fixing system
 │   ├── __init__.py       # Public API exports
-│   ├── fixer.py          # Tier 0: Algorithmic fixes
-│   ├── micro.py          # Tier 1: Small LLM fixes
-│   ├── hybrid.py         # Tier 2: Big LLM fixes
+│   ├── fixer.py          # Algorithmic fixes
+│   ├── micro.py          # Small LLM fixes
+│   ├── hybrid.py         # Big LLM fixes
 │   ├── tiering.py        # Task classification
 │   └── benchmark.py      # Performance benchmarking
 ├── microtask/            # Atomic tasks for small LLMs
@@ -709,7 +607,13 @@ src/algitex/
 
 Licensed under Apache-2.0.
 
+
+Licensed under Apache-2.0.
+
 ## Author
+
+Tom Sapletta
+
 
 Created by **Tom Sapletta** — [tom@sapletta.com](mailto:tom@sapletta.com).
 

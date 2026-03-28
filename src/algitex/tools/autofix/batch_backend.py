@@ -656,7 +656,15 @@ IMPORTANT:
         
         for idx, (filepath, fixed_content) in enumerate(matches):
             filepath = filepath.strip()
+            # Strip markdown code blocks if present
             fixed_content = fixed_content.strip()
+            if fixed_content.startswith('```python'):
+                fixed_content = fixed_content[9:].strip()
+            elif fixed_content.startswith('```'):
+                fixed_content = fixed_content[3:].strip()
+            if fixed_content.endswith('```'):
+                fixed_content = fixed_content[:-3].strip()
+            
             print(f"     [{idx+1}] Parsowanie: {filepath}")
             print(f"         Content length: {len(fixed_content)} chars")
             print(f"         Content preview: {fixed_content[:200]}...")

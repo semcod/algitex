@@ -7,16 +7,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - 2026-03-28
 
+### Added
+- New CLI commands: `microtask` (classify, plan, run) for atomic small LLM tasks
+- New CLI commands: `nlp` (docstrings, imports, dead-code, duplicates) for deterministic refactoring
+- Three-Tier Micro-Fixing System in `algitex todo fix` with `--algo`, `--micro`, `--all` flags
+- New option `--model` for `algitex todo batch` to select Ollama model (default: qwen3:8b)
+- New documentation files: `docs/MICROTASK.md` and `docs/NLP.md`
+
 ### Fixed
 - Fix Task dataclass missing `priority` and `type` fields in `autofix/base.py`
 - Fix OllamaMixin not initialized in Project.__init__ causing AttributeError
 - Fix generate_with_ollama() missing default model selection
 - Fix examples/25-local-model-comparison KeyError for results['total']
+- Fix duplicate license and author sections in README.md
+
+### Docs
+- Update README.md with Three-Tier system, microtask, nlp documentation
+- Update docs/todo.md with three-tier CLI commands and API examples
+- Update docs/BATCHFIX.md with --model option
+- Update docs/NEW_FEATURES.md with Three-Tier Micro-Fixing System
+- Expand Additional Documentation section in README.md with all docs links
 
 ### Tested
-- All 33 examples in `examples/` directory tested and verified working
+- All 34 examples in `examples/` directory tested and verified working
 - Examples 01-34 (except 29) all execute without errors
 - BatchFix, Hybrid AutoFix, and Parallel Execution examples fully functional
+
+## [0.1.47] - 2026-03-28
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update docs/MICROTASK.md
+- Update docs/NEW_FEATURES.md
+- Update docs/NLP.md
+- Update docs/todo.md
 
 ## [0.1.46] - 2026-03-28
 

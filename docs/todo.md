@@ -246,67 +246,6 @@ algitex todo list TODO.md
 
 ## API Python
 
-### Trój-tierowy system micro-fixów
-
-```python
-from algitex.todo import (
-    parse_todo,
-    classify_task,
-    partition_tasks,
-    MicroFixer,
-    HybridAutofix,
-    parallel_fix_and_update,
-    BIG_CATEGORIES,
-)
-
-# Parsowanie i klasyfikacja zadań
-tasks = parse_todo("TODO.md")
-for task in tasks:
-    triage = classify_task(task)
-    print(f"{task.description}: Tier {triage.tier} - {triage.category}")
-
-# Podział na tiery
-buckets = partition_tasks(tasks)
-print(f"Algorytmiczne: {len(buckets['algorithm'])}")
-print(f"Małe LLM: {len(buckets['micro'])}")
-print(f"Duże LLM: {len(buckets['big'])}")
-
-# Tier 0: Naprawy algorytmiczne (deterministyczne)
-result = parallel_fix_and_update(
-    "TODO.md",
-    workers=8,
-    dry_run=False,
-    tasks=buckets["algorithm"]
-)
-print(f"Fixed: {result['fixed']}, Skipped: {result['skipped']}")
-
-# Tier 1: Małe LLM (Ollama)
-micro_fixer = MicroFixer(
-    ollama_url="http://localhost:11434",
-    model="qwen2.5-coder:7b",
-    workers=4,
-    dry_run=False,
-)
-result = micro_fixer.fix_tasks(buckets["micro"])
-print(f"Fixed: {result['fixed']}, Skipped: {result['skipped']}")
-
-# Tier 2: Duże LLM (Claude/GPT-4o)
-hybrid = HybridAutofix(
-    backend="litellm-proxy",
-    workers=4,
-    rate_limit=10,
-    dry_run=False,
-)
-result = hybrid.fix_complex(
-    "TODO.md",
-    include_categories=BIG_CATEGORIES,
-    tasks=buckets["big"]
-)
-print(f"Fixed: {result.get('fixed', 0)}")
-```
-
-### Tradycyjne API (TodoRunner)
-
 ```python
 from algitex.tools.todo_runner import TodoRunner
 
