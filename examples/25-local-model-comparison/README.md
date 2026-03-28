@@ -10,7 +10,7 @@ Porównanie różnych modeli **Ollama** na tym samym zadaniu.
 
 Masz do wyboru wiele modeli lokalnych:
 - qwen3-coder:latest
-- qwen2.5-coder:3b
+- qwen3-coder:3b
 - llama3:8b
 - codellama:7b
 - gemma2:9b
@@ -43,7 +43,6 @@ make results
 ```bash
 # Pobierz modele (zajmie ~20GB)
 ollama pull qwen3-coder:latest
-ollama pull qwen3-coder:latest
 ollama pull llama3:8b
 ollama pull codellama:7b
 ollama pull gemma2:9b
@@ -69,7 +68,7 @@ Results:
 ┌─────────────────────┬──────────┬───────────┬─────────┬────────────┐
 │ Model               │ Time     │ Tokens    │ Quality │ Tok/sec    │
 ├─────────────────────┼──────────┼───────────┼─────────┼────────────┤
-│ qwen2.5-coder:3b    │ 2.3s     │ 45        │ ⭐⭐⭐    │ 19.6       │
+│ qwen3-coder:3b      │ 2.3s     │ 45        │ ⭐⭐⭐    │ 19.6       │
 │ qwen3-coder:latest    │ 4.1s     │ 52        │ ⭐⭐⭐⭐   │ 12.7       │
 │ llama3:8b           │ 5.2s     │ 48        │ ⭐⭐⭐⭐   │ 9.2        │
 │ codellama:7b        │ 4.8s     │ 55        │ ⭐⭐⭐⭐⭐  │ 11.5       │
@@ -77,7 +76,7 @@ Results:
 └─────────────────────┴──────────┴───────────┴─────────┴────────────┘
 
 Recommendation:
-  Speed: qwen2.5-coder:3b (19.6 tok/s)
+  Speed: qwen3-coder:3b (19.6 tok/s)
   Quality: codellama:7b (⭐⭐⭐⭐⭐)
   Balanced: qwen3-coder:latest (good quality, decent speed)
 ```
@@ -86,7 +85,7 @@ Recommendation:
 
 | Model | Best For | Avoid For |
 |-------|----------|-------------|
-| qwen2.5-coder:3b | Fast autocomplete, prototyping | Complex logic |
+| qwen3-coder:3b | Fast autocomplete, prototyping | Complex logic |
 | qwen3-coder:latest | Daily coding, balance | Large batch jobs |
 | codellama:7b | Complex refactoring | Quick queries |
 | llama3:8b | General purpose | Code-specific tasks |

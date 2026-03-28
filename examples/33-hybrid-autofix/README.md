@@ -71,6 +71,7 @@ algitex todo hybrid --dry-run                    # Preview
 algitex todo hybrid --execute                     # Execute
 algitex todo hybrid -w 4 -r 10 --execute         # 4 workers, 10 req/sec
 algitex todo hybrid --backend ollama --execute    # Local Ollama
+algitex todo hybrid --execute --dashboard         # With live dashboard
 ```
 
 ## Backend Options

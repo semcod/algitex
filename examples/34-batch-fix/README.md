@@ -37,7 +37,10 @@ algitex todo batch --dry-run
 # 3. Wykonaj fixy
 algitex todo batch --execute
 
-# 4. Sprawdź wynik
+# 4. Wykonaj z dashboardem
+algitex todo batch --execute --dashboard
+
+# 5. Sprawdź wynik
 algitex todo list
 ```
 

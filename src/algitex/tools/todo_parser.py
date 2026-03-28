@@ -73,15 +73,31 @@ class TodoParser:
 
         content = self.file_path.read_text(encoding='utf-8')
         tasks = []
+        seen_locations = set()  # Track (file_path, line_number) to avoid duplicates
 
         # Try prefact format first (most specific)
-        tasks.extend(self._parse_prefact(content))
+        prefact_tasks = self._parse_prefact(content)
+        for t in prefact_tasks:
+            loc_key = (t.file_path, t.line_number)
+            if loc_key not in seen_locations:
+                tasks.append(t)
+                seen_locations.add(loc_key)
 
-        # Then GitHub checkbox format
-        tasks.extend(self._parse_github(content))
+        # Then GitHub checkbox format (skip if location already parsed)
+        github_tasks = self._parse_github(content)
+        for t in github_tasks:
+            loc_key = (t.file_path, t.line_number)
+            if loc_key not in seen_locations:
+                tasks.append(t)
+                seen_locations.add(loc_key)
 
-        # Fallback to generic format
-        tasks.extend(self._parse_generic(content))
+        # Fallback to generic format (skip if location already parsed)
+        generic_tasks = self._parse_generic(content)
+        for t in generic_tasks:
+            loc_key = (t.file_path, t.line_number)
+            if loc_key not in seen_locations:
+                tasks.append(t)
+                seen_locations.add(loc_key)
 
         # Set source file on all tasks
         for t in tasks:
