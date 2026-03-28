@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections import Counter
 from pathlib import Path
 
-import typer
+from clickmd import command, option, argument
 from rich.console import Console
 from rich.table import Table
 
@@ -16,32 +16,33 @@ from algitex.microtask.slicer import ContextSlicer
 
 
 console = Console()
-microtask_app = typer.Typer(help="Atomic MicroTask pipeline for small LLMs.")
 
 
-@microtask_app.command("classify")
+@command(help="Classify TODO items into atomic MicroTasks.")
+@argument("todo_path", default="TODO.md")
 def microtask_classify(
-    todo_path: str = typer.Argument("TODO.md", help="Path to a prefact-style TODO file."),
+    todo_path: str,
 ) -> None:
     """Classify TODO items into atomic MicroTasks."""
     tasks = classify_todo_file(todo_path)
     if not tasks:
         console.print("[yellow]No open microtasks found.[/yellow]")
-        raise typer.Exit()
+        return
 
     _print_summary(tasks, title="MicroTask classification")
     _print_task_table(tasks)
 
 
-@microtask_app.command("plan")
+@command(help="Show execution plan, tiers, and model hints.")
+@argument("todo_path", default="TODO.md")
 def microtask_plan(
-    todo_path: str = typer.Argument("TODO.md", help="Path to a prefact-style TODO file."),
+    todo_path: str,
 ) -> None:
     """Show execution plan, tiers, and model hints."""
     tasks = classify_todo_file(todo_path)
     if not tasks:
         console.print("[yellow]No open microtasks found.[/yellow]")
-        raise typer.Exit()
+        return
 
     slicer = ContextSlicer(Path(todo_path).resolve().parent)
     for task in tasks:
@@ -52,15 +53,22 @@ def microtask_plan(
     _print_file_batches(tasks)
 
 
-@microtask_app.command("run")
+@command(help="Execute the three-phase microtask pipeline.")
+@argument("todo_path", default="TODO.md")
+@option("--algo-only", default=False, help="Run only deterministic tasks.")
+@option("--tier", default=None, help="Run only tasks from a single tier.")
+@option("--dry-run/--execute", default=True, help="Preview changes without writing files.")
+@option("--workers", default=8, help="Parallel workers for deterministic tasks.")
+@option("--llm-workers", default=4, help="Parallel workers for small LLM tasks.")
+@option("--rate-limit", default=10.0, help="LLM requests per second.")
 def microtask_run(
-    todo_path: str = typer.Argument("TODO.md", help="Path to a prefact-style TODO file."),
-    algo_only: bool = typer.Option(False, "--algo-only", help="Run only deterministic tasks."),
-    tier: int | None = typer.Option(None, "--tier", min=0, max=3, help="Run only tasks from a single tier."),
-    dry_run: bool = typer.Option(True, "--dry-run/--execute", help="Preview changes without writing files."),
-    workers: int = typer.Option(8, "--workers", min=1, help="Parallel workers for deterministic tasks."),
-    llm_workers: int = typer.Option(4, "--llm-workers", min=1, help="Parallel workers for small LLM tasks."),
-    rate_limit: float = typer.Option(10.0, "--rate-limit", min=0.1, help="LLM requests per second."),
+    todo_path: str,
+    algo_only: bool,
+    tier: int | None,
+    dry_run: bool,
+    workers: int,
+    llm_workers: int,
+    rate_limit: float,
 ) -> None:
     """Execute the three-phase microtask pipeline."""
     tasks = classify_todo_file(todo_path)
@@ -68,7 +76,7 @@ def microtask_run(
 
     if not tasks:
         console.print("[yellow]No tasks matched the selected filters.[/yellow]")
-        raise typer.Exit()
+        return
 
     executor = MicroTaskExecutor(
         project_path=Path(todo_path).resolve().parent,
@@ -187,4 +195,4 @@ def _shorten_path(path: str, max_len: int = 72) -> str:
     return f"…{path[-(max_len - 1):]}"
 
 
-__all__ = ["microtask_app", "microtask_classify", "microtask_plan", "microtask_run"]
+__all__ = ["microtask_classify", "microtask_plan", "microtask_run"]

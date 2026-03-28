@@ -1,12 +1,14 @@
-# Example 39: Microtask Pipeline
+.PHONY: help run test clean
 
-.PHONY: run test clean
+help: ## Show this help
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | \
+		awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
 
-run:
+run: ## Run the microtask pipeline demo
 	python main.py
 
-test:
+test: ## Run tests (none for this example)
 	@echo "No tests for this example"
 
-clean:
+clean: ## Clean up generated files
 	@echo "Nothing to clean"

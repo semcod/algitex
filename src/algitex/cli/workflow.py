@@ -2,16 +2,17 @@
 
 from __future__ import annotations
 
-import typer
+import clickmd
+from clickmd import command, option, argument
 from rich.console import Console
 
 console = Console()
 
 
-def workflow_run(
-    path: str = typer.Argument(..., help="Path to .md workflow"),
-    dry_run: bool = typer.Option(False, "--dry-run"),
-):
+@command()
+@argument("path")
+@option("--dry-run", is_flag=True)
+def workflow_run(path: str, dry_run: bool):
     """Execute a Propact Markdown workflow."""
     from algitex.project import Project
     p = Project(".")
@@ -25,7 +26,9 @@ def workflow_run(
             console.print(f"  {err}")
 
 
-def workflow_validate(path: str = typer.Argument(...)) -> None:
+@command()
+@argument("path")
+def workflow_validate(path: str) -> None:
     """Check a Propact workflow for errors."""
     from algitex.propact import Workflow
     wf = Workflow(path)

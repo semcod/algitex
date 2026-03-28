@@ -75,6 +75,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Examples 01-34 (except 29) all execute without errors
 - BatchFix, Hybrid AutoFix, and Parallel Execution examples fully functional
 
+## [0.1.54] - 2026-03-28
+
+### Docs
+- Update docs/README.md
+- Update docs/api/algo/index.md
+- Update docs/api/algo/loop.md
+- Update docs/api/benchmark.md
+- Update docs/api/cli.md
+- Update docs/api/cli/algo.md
+- Update docs/api/cli/benchmark.md
+- Update docs/api/cli/core.md
+- Update docs/api/cli/dashboard.md
+- Update docs/api/cli/docker.md
+- ... and 86 more files
+
+### Other
+- Update examples/35-sprint3-patterns/Makefile
+- Update examples/36-dashboard/Makefile
+- Update examples/37-benchmarks/Makefile
+- Update examples/38-new-modules/Makefile
+- Update examples/39-microtask-pipeline/Makefile
+- Update examples/40-three-tier-autofix/Makefile
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/compact_flow.mmd
+- ... and 10 more files
+
 ## [0.1.53] - 2026-03-28
 
 ### Docs

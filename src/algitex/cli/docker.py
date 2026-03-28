@@ -4,13 +4,15 @@ from __future__ import annotations
 
 from typing import Optional
 
-import typer
+import clickmd
+from clickmd import command, option, argument
 from rich.console import Console
 from rich.table import Table
 
 console = Console()
 
 
+@command()
 def docker_list() -> None:
     """List available Docker tools from docker-tools.yaml."""
     from algitex.tools.docker import DockerToolManager
@@ -32,7 +34,9 @@ def docker_list() -> None:
     console.print(table)
 
 
-def docker_spawn(tool_name: str = typer.Argument(...)) -> None:
+@command()
+@argument("tool_name")
+def docker_spawn(tool_name: str) -> None:
     """Start a Docker tool container."""
     from algitex.tools.docker import DockerToolManager
     from algitex.config import Config
@@ -47,18 +51,18 @@ def docker_spawn(tool_name: str = typer.Argument(...)) -> None:
         console.print(f"\u274c Failed to spawn {tool_name}: {e}")
 
 
-def docker_call(
-    tool_name: str = typer.Argument(...),
-    action: str = typer.Argument(...),
-    input_json: Optional[str] = typer.Option(None, "--input", "-i", help="JSON input")
-):
+@command()
+@argument("tool_name")
+@argument("action")
+@option("--input", "-i", help="JSON input")
+def docker_call(tool_name: str, action: str, input: Optional[str]):
     """Call an MCP tool on a running Docker container."""
     from algitex.tools.docker import DockerToolManager
     from algitex.config import Config
     import json
 
     mgr = DockerToolManager(Config.load())
-    args = json.loads(input_json) if input_json else {}
+    args = json.loads(input) if input else {}
 
     try:
         result = mgr.call_tool(tool_name, action, args)
@@ -67,7 +71,9 @@ def docker_call(
         console.print(f"\u274c Failed to call {tool_name}.{action}: {e}")
 
 
-def docker_teardown(tool_name: Optional[str] = typer.Argument(None)):
+@command()
+@argument("tool_name", required=False)
+def docker_teardown(tool_name: Optional[str]):
     """Stop Docker tool containers."""
     from algitex.tools.docker import DockerToolManager
     from algitex.config import Config
@@ -81,7 +87,9 @@ def docker_teardown(tool_name: Optional[str] = typer.Argument(None)):
         console.print("  \u25cb All tools stopped")
 
 
-def docker_caps(tool_name: str = typer.Argument(...)):
+@command()
+@argument("tool_name")
+def docker_caps(tool_name: str):
     """List MCP capabilities of a Docker tool."""
     from algitex.tools.docker import DockerToolManager
     from algitex.config import Config

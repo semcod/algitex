@@ -5,7 +5,8 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Optional
 
-import typer
+import clickmd
+from clickmd import command, option, argument
 from rich.console import Console
 from rich.table import Table
 from rich.panel import Panel
@@ -14,10 +15,10 @@ from rich.tree import Tree
 console = Console()
 
 
-def metrics_show(
-    storage: str = typer.Option(".algitex/metrics.json", "--storage", help="Metrics storage path"),
-    export: Optional[str] = typer.Option(None, "--export", help="Export to CSV file"),
-):
+@command()
+@option("--storage", default=".algitex/metrics.json", help="Metrics storage path")
+@option("--export", help="Export to CSV file")
+def metrics_show(storage: str, export: Optional[str]):
     """Show metrics dashboard."""
     from algitex.metrics import MetricsCollector, MetricsReporter
     
@@ -32,10 +33,10 @@ def metrics_show(
         console.print(f"\n[green]✓ Exported to {export}[/]")
 
 
-def metrics_clear(
-    storage: str = typer.Option(".algitex/metrics.json", "--storage", help="Metrics storage path"),
-    cache_dir: str = typer.Option(".algitex/cache", "--cache", help="LLM cache directory"),
-):
+@command()
+@option("--storage", default=".algitex/metrics.json", help="Metrics storage path")
+@option("--cache", default=".algitex/cache", help="LLM cache directory")
+def metrics_clear(storage: str, cache: str):
     """Clear all metrics and cache."""
     from algitex.metrics import MetricsCollector
     from algitex.tools.ollama_cache import LLMCache
@@ -49,23 +50,23 @@ def metrics_clear(
     console.print(f"[green]✓ Cleared metrics: {storage}[/]")
     
     # Clear cache
-    cache = LLMCache(cache_dir)
-    count = cache.clear()
-    console.print(f"[green]✓ Cleared {count} cache entries from {cache_dir}[/]")
+    cache_obj = LLMCache(cache)
+    count = cache_obj.clear()
+    console.print(f"[green]✓ Cleared {count} cache entries from {cache}[/]")
 
 
-def metrics_cache(
-    cache_dir: str = typer.Option(".algitex/cache", "--dir", help="Cache directory"),
-    list_entries: bool = typer.Option(False, "--list", "-l", help="List all cache entries"),
-    clear: bool = typer.Option(False, "--clear", "-c", help="Clear cache"),
-):
+@command()
+@option("--dir", default=".algitex/cache", help="Cache directory")
+@option("--list", "-l", "list_entries", is_flag=True, help="List all cache entries")
+@option("--clear", "-c", "clear_cache", is_flag=True, help="Clear cache")
+def metrics_cache(dir: str, list_entries: bool, clear_cache: bool):
     """Manage LLM response cache."""
     from algitex.tools.ollama_cache import LLMCache
     
-    cache = LLMCache(cache_dir)
+    cache = LLMCache(dir)
     stats = cache.stats()
     
-    if clear:
+    if clear_cache:
         count = cache.clear()
         console.print(f"[green]✓ Cleared {count} cache entries[/]")
         return
@@ -102,9 +103,9 @@ def metrics_cache(
     ))
 
 
-def metrics_compare(
-    storage: str = typer.Option(".algitex/metrics.json", "--storage", help="Metrics storage path"),
-):
+@command()
+@option("--storage", default=".algitex/metrics.json", help="Metrics storage path")
+def metrics_compare(storage: str):
     """Compare tier performance (algorithm vs micro vs big LLM)."""
     from algitex.metrics import MetricsCollector
     

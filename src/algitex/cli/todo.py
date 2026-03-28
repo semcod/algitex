@@ -5,7 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Optional
 
-import typer
+from clickmd import command, option, argument
 from rich.console import Console
 from rich.table import Table
 
@@ -355,8 +355,10 @@ def _run_batch_with_dashboard(
         dashboard.stop()
 
 
+@command()
+@argument("file", default="TODO.md")
 def todo_stats(
-    file: str = typer.Argument("TODO.md", help="Path to todo file"),
+    file: str,
 ):
     """Show tier and category stats for a TODO file."""
     from algitex.todo import parse_todo
@@ -374,8 +376,10 @@ def todo_stats(
     _render_todo_stats(file, tasks)
 
 
+@command()
+@argument("file", default="TODO.md")
 def todo_verify(
-    file: str = typer.Argument("TODO.md", help="Path to todo file"),
+    file: str,
 ):
     """Verify which TODO tasks are still valid vs already fixed."""
     from algitex.todo import TodoVerifier
@@ -385,11 +389,16 @@ def todo_verify(
     verifier.print_report()
 
 
+@command()
+@argument("file", default="TODO.md")
+@option("--workers", "-w", default=8, help="Number of parallel workers")
+@option("--dry-run/--execute", default=True, help="Dry run or actually apply")
+@option("--category", "-c", default=None, help="Filter to specific category")
 def todo_fix_parallel(
-    file: str = typer.Argument("TODO.md", help="Path to todo file"),
-    workers: int = typer.Option(8, "--workers", "-w", help="Number of parallel workers"),
-    dry_run: bool = typer.Option(True, "--dry-run/--execute", help="Dry run or actually apply"),
-    category: Optional[str] = typer.Option(None, "--category", "-c", help="Filter to specific category"),
+    file: str,
+    workers: int,
+    dry_run: bool,
+    category: Optional[str],
 ):
     """Auto-fix mechanical TODO tasks in parallel."""
     from algitex.todo import fix_todos
@@ -398,8 +407,10 @@ def todo_fix_parallel(
     console.print(f"\n[bold]Results:[/] Fixed: {result['fixed']}, Skipped: {result['skipped']}, Errors: {result['errors']}")
 
 
+@command()
+@argument("file", default="TODO.md")
 def todo_list(
-    file: str = typer.Argument("TODO.md", help="Path to todo file"),
+    file: str,
 ):
     """Parse and display todo tasks from a file."""
     from algitex.tools.todo_parser import TodoParser
@@ -428,11 +439,16 @@ def todo_list(
     console.print(f"\n[bold]{len(tasks)}[/] pending tasks")
 
 
+@command()
+@argument("file", default="TODO.md")
+@option("--tool", "-t", default="local", help="Tool to use")
+@option("--dry-run", default=False, help="Preview without executing")
+@option("--limit", "-l", default=0, help="Limit number of tasks")
 def todo_run(
-    file: str = typer.Argument("TODO.md", help="Path to todo file"),
-    tool: str = typer.Option("local", "--tool", "-t", help="Tool to use (local, filesystem-mcp, aider-mcp)"),
-    dry_run: bool = typer.Option(False, "--dry-run", help="Preview without executing"),
-    limit: int = typer.Option(0, "--limit", "-l", help="Limit number of tasks (0 = all)"),
+    file: str,
+    tool: str,
+    dry_run: bool,
+    limit: int,
 ):
     """Execute todo tasks via Docker MCP."""
     from algitex.tools.todo_runner import TodoRunner
@@ -467,22 +483,60 @@ def todo_run(
         console.print(f"[red]{summary['failed']} tasks failed[/]")
 
 
+def _format_todo_help():
+    """Format help for todo fix command."""
+    return """# Tiered AutoFix
+
+Execute fix tasks via 3-tier pipeline:
+- Algorithm - deterministic fixes (fast, no LLM)
+- Micro - small LLM fixes (qwen3-coder:latest)
+- Big - large LLM fixes (complex refactoring)
+
+## Examples
+
+Algorithm only (fastest):
+  $ algitex todo fix --algo --execute
+
+All tiers with dashboard:
+  $ algitex todo fix --all --dashboard --execute
+
+Limited tasks with workers:
+  $ algitex todo fix --limit 10 --workers 4 --execute
+"""
+
+
+@command()
+@argument("file", default="TODO.md")
+@option("--tool", "-t", default="ollama-mcp")
+@option("--task-id", default=None)
+@option("--limit", "-l", default=0)
+@option("--dry-run/--execute", default=False)
+@option("--algo", default=False)
+@option("--micro", default=False)
+@option("--all-phases", "--all", default=False)
+@option("--dashboard", "-d", default=False)
+@option("--workers", "-w", default=8)
+@option("--micro-workers", default=4)
+@option("--model", default="qwen3-coder:latest")
+@option("--backend", "-b", default="ollama")
+@option("--rate-limit", "-r", default=10)
+@option("--proxy-url", "-p", default="http://localhost:4000")
 def todo_fix(
-    file: str = typer.Argument("TODO.md", help="Path to todo file"),
-    tool: str = typer.Option("ollama-mcp", "--tool", "-t", help="Tool to use (local, ollama-mcp, filesystem-mcp, aider-mcp, nap)"),
-    task_id: Optional[str] = typer.Option(None, "--task", help="Specific task ID to fix"),
-    limit: int = typer.Option(0, "--limit", "-l", help="Limit number of tasks (0 = all)"),
-    dry_run: bool = typer.Option(False, "--dry-run/--execute", help="Preview without executing"),
-    algo: bool = typer.Option(False, "--algo", help="Run only algorithmic fixes"),
-    micro: bool = typer.Option(False, "--micro", "--small-llm", help="Run only small LLM micro-fixes"),
-    all_phases: bool = typer.Option(False, "--all", help="Run algorithmic, small LLM, and big LLM phases"),
-    dashboard: bool = typer.Option(False, "--dashboard", "-d", help="Show live dashboard during execution"),
-    workers: int = typer.Option(8, "--workers", "-w", help="Workers for algorithmic and big LLM phases"),
-    micro_workers: int = typer.Option(4, "--micro-workers", help="Workers for the small LLM phase"),
-    model: str = typer.Option("qwen3-coder:latest", "--model", help="Ollama model for the small LLM phase"),
-    backend: str = typer.Option("ollama", "--backend", "-b", help="Backend for the big LLM phase"),
-    rate_limit: int = typer.Option(10, "--rate-limit", "-r", help="LLM calls per second for the big LLM phase"),
-    proxy_url: str = typer.Option("http://localhost:4000", "--proxy-url", "-p", help="LiteLLM proxy URL"),
+    file: str,
+    tool: str,
+    task_id: Optional[str],
+    limit: int,
+    dry_run: bool,
+    algo: bool,
+    micro: bool,
+    all_phases: bool,
+    dashboard: bool,
+    workers: int,
+    micro_workers: int,
+    model: str,
+    backend: str,
+    rate_limit: int,
+    proxy_url: str,
 ):
     """Execute fix tasks (prefact-style) via Docker MCP.
     
@@ -677,24 +731,37 @@ def _tf_run_legacy(file: str, tasks: list, tool: str, dry_run: bool) -> None:
     
     Kept for backward compatibility.
     """
-    from algitex.tools.todo_parser import TodoParser
     from algitex.tools.todo_runner import TodoRunner
+    from algitex.tools.todo_parser import Task as RunnerTask
 
-    parser = TodoParser(file)
-    all_tasks = parser.parse()
+    if not tasks:
+        console.print("[yellow]No fix tasks found[/]")
+        return
 
     # Filter to fix-related tasks
     fix_keywords = ["fix", "repair", "correct", "missing", "unused", "magic number", "return type"]
-    fix_tasks = [t for t in all_tasks if any(kw in t.description.lower() for kw in fix_keywords)]
+    fix_tasks = [t for t in tasks if any(kw in t.message.lower() for kw in fix_keywords)]
 
     if not fix_tasks:
         console.print("[yellow]No fix tasks found[/]")
         return
 
-    console.print(f"[bold]Found {len(fix_tasks)} fix tasks[/]\n")
+    # Convert TodoTask objects to Task objects expected by TodoRunner
+    runner_tasks = [
+        RunnerTask(
+            id=f"{t.file}:{t.line}",
+            description=t.message,
+            file_path=str(t.file),
+            line_number=t.line,
+            status="pending"
+        )
+        for t in fix_tasks
+    ]
+
+    console.print(f"[bold]Found {len(runner_tasks)} fix tasks[/]\n")
 
     with TodoRunner(".") as runner:
-        results = runner.run(fix_tasks, tool=tool, dry_run=dry_run)
+        results = runner.run(runner_tasks, tool=tool, dry_run=dry_run)
 
         for r in results:
             icon = "\u2713" if r.success else "\u2717"
@@ -704,11 +771,16 @@ def _tf_run_legacy(file: str, tasks: list, tool: str, dry_run: bool) -> None:
                 console.print(f"   [red]Error: {r.error}[/]")
 
 
+@command()
+@argument("limit", default=10)
+@option("--file", "-f", default="TODO.md")
+@option("--workers", "-w", default=8)
+@option("--compare", "-c", default=False)
 def todo_benchmark(
-    limit: int = typer.Argument(10, help="Number of tasks to benchmark"),
-    file: str = typer.Option("TODO.md", "--file", "-f", help="Path to todo file"),
-    workers: int = typer.Option(8, "--workers", "-w", help="Number of parallel workers"),
-    compare: bool = typer.Option(False, "--compare", "-c", help="Compare parallel vs sequential"),
+    limit: int,
+    file: str,
+    workers: int,
+    compare: bool,
 ):
     """Benchmark TODO fix performance."""
     from algitex.todo import benchmark_fix, compare_modes
@@ -721,18 +793,30 @@ def todo_benchmark(
         console.print(f"\n[dim]Tip: Use --compare to see parallel vs sequential comparison[/]")
 
 
+@command()
+@argument("file", default="TODO.md")
+@option("--backend", "-b", default="litellm-proxy")
+@option("--tool", "-t", default="aider")
+@option("--workers", "-w", default=4)
+@option("--rate-limit", "-r", default=10)
+@option("--proxy-url", "-p", default="http://localhost:4000")
+@option("--hybrid", "-h", default=False)
+@option("--dashboard", "-d", default=False)
+@option("--fallback/--no-fallback", default=True)
+@option("--verbose", "-v", default=False)
+@option("--dry-run/--execute", default=True)
 def todo_hybrid(
-    file: str = typer.Argument("TODO.md", help="Path to todo file"),
-    backend: str = typer.Option("litellm-proxy", "--backend", "-b", help="LLM backend: litellm-proxy, ollama, aider"),
-    tool: str = typer.Option("aider", "--tool", "-t", help="Tool for LLM fixes: aider, ollama, direct"),
-    workers: int = typer.Option(4, "--workers", "-w", help="Parallel workers"),
-    rate_limit: int = typer.Option(10, "--rate-limit", "-r", help="LLM calls per second"),
-    proxy_url: str = typer.Option("http://localhost:4000", "--proxy-url", "-p", help="LiteLLM proxy URL"),
-    hybrid: bool = typer.Option(False, "--hybrid", "-h", help="Add mechanical fixes (default: LLM only)"),
-    dashboard: bool = typer.Option(False, "--dashboard", "-d", help="Show live dashboard during execution"),
-    fallback: bool = typer.Option(True, "--fallback/--no-fallback", help="Enable automatic fallback to alternative backends"),
-    verbose: bool = typer.Option(False, "--verbose", "-v", help="Enable verbose logging for debugging"),
-    dry_run: bool = typer.Option(True, "--dry-run/--execute", help="Preview or execute"),
+    file: str,
+    backend: str,
+    tool: str,
+    workers: int,
+    rate_limit: int,
+    proxy_url: str,
+    hybrid: bool,
+    dashboard: bool,
+    fallback: bool,
+    verbose: bool,
+    dry_run: bool,
 ):
     """Autofix: LLM-based code fixes (use --hybrid for mechanical + LLM)."""
     from algitex.todo import HybridAutofix
@@ -807,18 +891,30 @@ def todo_hybrid(
     fixer.print_summary(result)
 
 
+@command()
+@option("--file", "-f", default="TODO.md")
+@option("--backend", "-b", default="ollama")
+@option("--model", "-m", default="qwen3-coder:latest")
+@option("--batch-size", "-s", default=5)
+@option("--parallel", "-p", default=3)
+@option("--dry-run/--execute", default=True)
+@option("--verbose", "-v", default=False)
+@option("--prune", default=False)
+@option("--limit", "-l", default=0)
+@option("--no-log", default=False)
+@option("--dashboard", "-d", default=False)
 def todo_batch(
-    file: Path = typer.Option(Path("TODO.md"), "--file", "-f", help="TODO.md file path"),
-    backend: str = typer.Option("ollama", "--backend", "-b", help="Backend: ollama, litellm-proxy"),
-    model: str = typer.Option("qwen3-coder:latest", "--model", "-m", help="Ollama model name (e.g., qwen3-coder:latest, qwen3-coder:latest)"),
-    batch_size: int = typer.Option(5, "--batch-size", "-s", help="Max files per batch"),
-    parallel: int = typer.Option(3, "--parallel", "-p", help="Parallel groups (default: 3)"),
-    dry_run: bool = typer.Option(True, "--dry-run/--execute", help="Dry run or execute"),
-    verbose: bool = typer.Option(False, "--verbose", "-v", help="Verbose logging"),
-    prune: bool = typer.Option(False, "--prune", help="Remove outdated tasks from TODO.md before batch"),
-    limit: int = typer.Option(0, "--limit", "-l", help="Limit number of tasks (0 = all)"),
-    no_log: bool = typer.Option(False, "--no-log", help="Disable markdown logging"),
-    dashboard: bool = typer.Option(False, "--dashboard", "-d", help="Show live dashboard during execution"),
+    file: Path,
+    backend: str,
+    model: str,
+    batch_size: int,
+    parallel: int,
+    dry_run: bool,
+    verbose: bool,
+    prune: bool,
+    limit: int,
+    no_log: bool,
+    dashboard: bool,
 ):
     """BatchFix: grupowanie i optymalizacja podobnych zadań.
     
@@ -917,9 +1013,12 @@ def todo_batch(
     console.print(f"[bold]{'═' * 60}[/]")
 
 
+@command()
+@option("--file", "-f", default="TODO.md")
+@option("--prune", "-p", default=False)
 def todo_verify_prefact(
-    file: str = typer.Option("TODO.md", "--file", "-f", help="Path to TODO.md"),
-    prune: bool = typer.Option(False, "--prune", "-p", help="Remove outdated tasks from TODO.md"),
+    file: str,
+    prune: bool,
 ):
     """Verify TODO.md against actual code using prefact.
     

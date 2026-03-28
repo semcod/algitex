@@ -4,12 +4,12 @@
 
 - **Project**: /home/tom/github/semcod/algitex
 - **Primary Language**: python
-- **Languages**: python: 404, shell: 26
+- **Languages**: python: 411, shell: 26
 - **Analysis Mode**: static
-- **Total Functions**: 2843
+- **Total Functions**: 2885
 - **Total Classes**: 414
-- **Modules**: 430
-- **Entry Points**: 2470
+- **Modules**: 437
+- **Entry Points**: 2479
 
 ## Architecture by Module
 
@@ -53,15 +53,19 @@
 - **Classes**: 6
 - **File**: `ide.py`
 
-### .algitex.backups.batch_20260328_142940.src.algitex.tools.workspace
-- **Functions**: 20
-- **Classes**: 2
-- **File**: `workspace.py`
+### src.algitex.cli.todo
+- **Functions**: 21
+- **File**: `todo.py`
 
 ### .algitex.backups.batch_20260328_142940.src.algitex.tools.docker
 - **Functions**: 20
 - **Classes**: 3
 - **File**: `docker.py`
+
+### .algitex.backups.batch_20260328_142940.src.algitex.tools.workspace
+- **Functions**: 20
+- **Classes**: 2
+- **File**: `workspace.py`
 
 ### .algitex.backups.batch_20260328_142940.src.algitex.tools.services
 - **Functions**: 20
@@ -107,11 +111,6 @@
 - **Functions**: 20
 - **Classes**: 3
 - **File**: `services.py`
-
-### src.algitex.tools.batch
-- **Functions**: 20
-- **Classes**: 4
-- **File**: `batch.py`
 
 ## Key Entry Points
 
@@ -352,15 +351,15 @@ _parse_batch_response [src.algitex.tools.autofix.batch_backend.BatchFixBackend]
 - **Methods**: 17
 - **Key Methods**: .algitex.backups.batch_20260328_143434.src.algitex.propact.Workflow.__init__, .algitex.backups.batch_20260328_143434.src.algitex.propact.Workflow.parse, .algitex.backups.batch_20260328_143434.src.algitex.propact.Workflow._extract_steps_from_content, .algitex.backups.batch_20260328_143434.src.algitex.propact.Workflow.validate, .algitex.backups.batch_20260328_143434.src.algitex.propact.Workflow._execute_step, .algitex.backups.batch_20260328_143434.src.algitex.propact.Workflow._update_result, .algitex.backups.batch_20260328_143434.src.algitex.propact.Workflow._handle_step_failure, .algitex.backups.batch_20260328_143434.src.algitex.propact.Workflow.execute, .algitex.backups.batch_20260328_143434.src.algitex.propact.Workflow.status, .algitex.backups.batch_20260328_143434.src.algitex.propact.Workflow._exec_shell
 
-### src.algitex.tools.workspace.Workspace
-> Manage multiple repos as a single workspace.
-- **Methods**: 17
-- **Key Methods**: src.algitex.tools.workspace.Workspace.__init__, src.algitex.tools.workspace.Workspace._load_config, src.algitex.tools.workspace.Workspace._validate_dependencies, src.algitex.tools.workspace.Workspace._topo_sort, src.algitex.tools.workspace.Workspace.clone_all, src.algitex.tools.workspace.Workspace.pull_all, src.algitex.tools.workspace.Workspace.analyze_all, src.algitex.tools.workspace.Workspace.plan_all, src.algitex.tools.workspace.Workspace.execute_all, src.algitex.tools.workspace.Workspace.validate_all
-
 ### src.algitex.tools.mcp.MCPOrchestrator
 > Orchestrates multiple MCP services.
 - **Methods**: 17
 - **Key Methods**: src.algitex.tools.mcp.MCPOrchestrator.__init__, src.algitex.tools.mcp.MCPOrchestrator._setup_signal_handlers, src.algitex.tools.mcp.MCPOrchestrator._register_default_services, src.algitex.tools.mcp.MCPOrchestrator.add_service, src.algitex.tools.mcp.MCPOrchestrator.add_custom_service, src.algitex.tools.mcp.MCPOrchestrator.start_service, src.algitex.tools.mcp.MCPOrchestrator.stop_service, src.algitex.tools.mcp.MCPOrchestrator.restart_service, src.algitex.tools.mcp.MCPOrchestrator.start_all, src.algitex.tools.mcp.MCPOrchestrator.stop_all
+
+### src.algitex.tools.workspace.Workspace
+> Manage multiple repos as a single workspace.
+- **Methods**: 17
+- **Key Methods**: src.algitex.tools.workspace.Workspace.__init__, src.algitex.tools.workspace.Workspace._load_config, src.algitex.tools.workspace.Workspace._validate_dependencies, src.algitex.tools.workspace.Workspace._topo_sort, src.algitex.tools.workspace.Workspace.clone_all, src.algitex.tools.workspace.Workspace.pull_all, src.algitex.tools.workspace.Workspace.analyze_all, src.algitex.tools.workspace.Workspace.plan_all, src.algitex.tools.workspace.Workspace.execute_all, src.algitex.tools.workspace.Workspace.validate_all
 
 ### src.algitex.propact.Workflow
 > Parse and execute Propact Markdown workflows.
@@ -375,6 +374,10 @@ _parse_batch_response [src.algitex.tools.autofix.batch_backend.BatchFixBackend]
 ## Data Transformation Functions
 
 Key functions that process and transform data:
+
+### scripts.generate_lib_docs.parse_file
+> Parse Python file and extract documentation.
+- **Output to**: scripts.generate_lib_docs.extract_docstring, ast.iter_child_nodes, filepath.read_text, ast.parse, isinstance
 
 ### .algitex.backups.batch_20260328_142940.docker.vallm.vallm_server.VallmServer._run_validate
 > Core logic to run static, runtime, and security validations.
@@ -439,6 +442,22 @@ Key functions that process and transform data:
 ### .algitex.backups.batch_20260328_142940.src.algitex.tools.services.ServiceChecker._format_status_line
 > Format a single status line.
 
+### .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_runner.TodoRunner._format_output
+> Extract meaningful output from MCP result.
+- **Output to**: isinstance, isinstance, json.dumps, str, str
+
+### .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.format_args
+> Format arguments for display.
+- **Output to**: kwargs.items, None.join, parts.append, parts.append, .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.format_value
+
+### .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.format_value
+> Format a value for display.
+- **Output to**: repr, len
+
+### .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.format_result
+> Format a result for display.
+- **Output to**: repr, len
+
 ### .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_executor.TodoExecutor._parse_action
 > Parse task description to determine MCP action and arguments.
 - **Output to**: task.description.lower, any, any, any, any
@@ -454,26 +473,6 @@ Key functions that process and transform data:
 ### .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_executor.TodoExecutor._parse_delete_action
 > Parse a remove/delete task.
 - **Output to**: str, str
-
-### .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_executor.TodoExecutor._parse_read_action
-> Parse a read/view task.
-- **Output to**: str, str
-
-### .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.format_args
-> Format arguments for display.
-- **Output to**: kwargs.items, None.join, parts.append, parts.append, .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.format_value
-
-### .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.format_value
-> Format a value for display.
-- **Output to**: repr, len
-
-### .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.format_result
-> Format a result for display.
-- **Output to**: repr, len
-
-### .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_runner.TodoRunner._format_output
-> Extract meaningful output from MCP result.
-- **Output to**: isinstance, isinstance, json.dumps, str, str
 
 ## Behavioral Patterns
 
@@ -517,35 +516,35 @@ Key functions that process and transform data:
 - **Confidence**: 0.70
 - **Functions**: .algitex.backups.batch_20260328_142940.src.algitex.tools.proxy.Proxy.__init__, .algitex.backups.batch_20260328_142940.src.algitex.tools.proxy.Proxy.ask, .algitex.backups.batch_20260328_142940.src.algitex.tools.proxy.Proxy.budget, .algitex.backups.batch_20260328_142940.src.algitex.tools.proxy.Proxy.models, .algitex.backups.batch_20260328_142940.src.algitex.tools.proxy.Proxy.health
 
-### state_machine_DockerToolManager
-- **Type**: state_machine
-- **Confidence**: 0.70
-- **Functions**: .algitex.backups.batch_20260328_142940.src.algitex.tools.docker.DockerToolManager.__init__, .algitex.backups.batch_20260328_142940.src.algitex.tools.docker.DockerToolManager.__enter__, .algitex.backups.batch_20260328_142940.src.algitex.tools.docker.DockerToolManager.__exit__, .algitex.backups.batch_20260328_142940.src.algitex.tools.docker.DockerToolManager._load_tools, .algitex.backups.batch_20260328_142940.src.algitex.tools.docker.DockerToolManager._read_yaml_with_expansion
-
 ### state_machine_LoopState
 - **Type**: state_machine
 - **Confidence**: 0.70
 - **Functions**: .algitex.backups.batch_20260328_142940.src.algitex.algo.LoopState.deterministic_ratio, .algitex.backups.batch_20260328_142940.src.algitex.algo.LoopState.stage_name
 
-### state_machine_TraceSpan
+### state_machine_DockerToolManager
 - **Type**: state_machine
 - **Confidence**: 0.70
-- **Functions**: .algitex.backups.batch_20260328_142940.src.algitex.tools.telemetry.TraceSpan.duration_s, .algitex.backups.batch_20260328_142940.src.algitex.tools.telemetry.TraceSpan.finish, .algitex.backups.batch_20260328_142940.src.algitex.tools.telemetry.TraceSpan.__enter__, .algitex.backups.batch_20260328_142940.src.algitex.tools.telemetry.TraceSpan.__exit__
+- **Functions**: .algitex.backups.batch_20260328_142940.src.algitex.tools.docker.DockerToolManager.__init__, .algitex.backups.batch_20260328_142940.src.algitex.tools.docker.DockerToolManager.__enter__, .algitex.backups.batch_20260328_142940.src.algitex.tools.docker.DockerToolManager.__exit__, .algitex.backups.batch_20260328_142940.src.algitex.tools.docker.DockerToolManager._load_tools, .algitex.backups.batch_20260328_142940.src.algitex.tools.docker.DockerToolManager._read_yaml_with_expansion
 
 ### state_machine_OllamaClient
 - **Type**: state_machine
 - **Confidence**: 0.70
 - **Functions**: .algitex.backups.batch_20260328_142940.src.algitex.tools.ollama.OllamaClient.__init__, .algitex.backups.batch_20260328_142940.src.algitex.tools.ollama.OllamaClient.health, .algitex.backups.batch_20260328_142940.src.algitex.tools.ollama.OllamaClient.list_models, .algitex.backups.batch_20260328_142940.src.algitex.tools.ollama.OllamaClient.pull_model, .algitex.backups.batch_20260328_142940.src.algitex.tools.ollama.OllamaClient.generate
 
+### state_machine_TraceSpan
+- **Type**: state_machine
+- **Confidence**: 0.70
+- **Functions**: .algitex.backups.batch_20260328_142940.src.algitex.tools.telemetry.TraceSpan.duration_s, .algitex.backups.batch_20260328_142940.src.algitex.tools.telemetry.TraceSpan.finish, .algitex.backups.batch_20260328_142940.src.algitex.tools.telemetry.TraceSpan.__enter__, .algitex.backups.batch_20260328_142940.src.algitex.tools.telemetry.TraceSpan.__exit__
+
 ### state_machine_ServiceChecker
 - **Type**: state_machine
 - **Confidence**: 0.70
 - **Functions**: .algitex.backups.batch_20260328_142940.src.algitex.tools.services.ServiceChecker.__init__, .algitex.backups.batch_20260328_142940.src.algitex.tools.services.ServiceChecker.check_http_service, .algitex.backups.batch_20260328_142940.src.algitex.tools.services.ServiceChecker.check_ollama, .algitex.backups.batch_20260328_142940.src.algitex.tools.services.ServiceChecker.check_litellm_proxy, .algitex.backups.batch_20260328_142940.src.algitex.tools.services.ServiceChecker.check_mcp_service
 
-### state_machine_TodoExecutor
+### state_machine_TodoRunner
 - **Type**: state_machine
 - **Confidence**: 0.70
-- **Functions**: .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_executor.TodoExecutor.__init__, .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_executor.TodoExecutor.__enter__, .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_executor.TodoExecutor.__exit__, .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_executor.TodoExecutor.run, .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_executor.TodoExecutor._execute_task
+- **Functions**: .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_runner.TodoRunner.__init__, .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_runner.TodoRunner.__enter__, .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_runner.TodoRunner.__exit__, .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_runner.TodoRunner.run_from_file, .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_runner.TodoRunner.run
 
 ### state_machine_VerboseContext
 - **Type**: state_machine
@@ -568,6 +567,7 @@ Functions exposed as public API (no underscore prefix):
 - `.algitex.backups.batch_20260328_143434.examples.20-self-hosted-pipeline.main.main` - 49 calls
 - `src.algitex.cli.todo.todo_verify_prefact` - 49 calls
 - `examples.20-self-hosted-pipeline.main.main` - 49 calls
+- `scripts.generate_lib_docs.generate_module_doc` - 48 calls
 - `.algitex.backups.batch_20260328_142940.examples.30-parallel-execution.parallel_real_world.main` - 43 calls
 - `.algitex.backups.batch_20260328_143434.examples.30-parallel-execution.parallel_real_world.main` - 43 calls
 - `src.algitex.cli.todo.todo_batch` - 43 calls
@@ -595,7 +595,6 @@ Functions exposed as public API (no underscore prefix):
 - `.algitex.backups.batch_20260328_142940.examples.07-context.main.basic_context_example` - 34 calls
 - `.algitex.backups.batch_20260328_143434.examples.07-context.main.basic_context_example` - 34 calls
 - `examples.07-context.main.basic_context_example` - 34 calls
-- `.algitex.backups.batch_20260328_142940.examples.02-algo-loop.main.main` - 33 calls
 
 ## System Interactions
 

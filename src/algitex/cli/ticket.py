@@ -4,25 +4,28 @@ from __future__ import annotations
 
 from typing import Optional
 
-import typer
+import clickmd
+from clickmd import command, option, argument
 from rich.console import Console
 from rich.table import Table
 
 console = Console()
 
 
-def ticket_add(
-    title: str = typer.Argument(...),
-    priority: str = typer.Option("normal", "--priority", "-p"),
-    type: str = typer.Option("task", "--type", "-t"),
-):
+@command()
+@argument("title")
+@option("--priority", "-p", default="normal")
+@option("--type", "-t", default="task")
+def ticket_add(title: str, priority: str, type: str):
     """Add a new ticket."""
     from algitex.tools.tickets import Tickets
     ticket = Tickets().add(title, priority=priority, type=type)
     console.print(f"\u2705 Created: [bold]{ticket.id}[/] \u2014 {ticket.title}")
 
 
-def ticket_list(status: Optional[str] = typer.Option(None, "--status", "-s")) -> None:
+@command()
+@option("--status", "-s")
+def ticket_list(status: Optional[str]) -> None:
     """List tickets."""
     from algitex.tools.tickets import Tickets
     tickets = Tickets().list(status=status)
@@ -36,6 +39,7 @@ def ticket_list(status: Optional[str] = typer.Option(None, "--status", "-s")) ->
     console.print(table)
 
 
+@command()
 def ticket_board() -> None:
     """Kanban board view."""
     from algitex.tools.tickets import Tickets

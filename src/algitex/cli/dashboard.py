@@ -2,19 +2,26 @@
 
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Optional
 
-import typer
+import clickmd
+from clickmd import command, option, argument
 from rich.console import Console
 from rich.panel import Panel
+from rich.table import Table
 
 console = Console()
 
 
+@command(name="live")
+@option("--duration", "-d", default=None, help="Duration in seconds (default: run until Ctrl+C)")
+@option("--refresh", "-r", default=1.0, help="Refresh rate in seconds")
+@option("--demo", default=False, help="Run in demo mode with simulated data")
 def dashboard_live(
-    duration: Optional[int] = typer.Option(None, "--duration", "-d", help="Duration in seconds (default: run until Ctrl+C)"),
-    refresh: float = typer.Option(1.0, "--refresh", "-r", help="Refresh rate in seconds"),
-    demo: bool = typer.Option(False, "--demo", help="Run in demo mode with simulated data"),
+    duration: Optional[int],
+    refresh: float,
+    demo: bool,
 ):
     """Launch live TUI dashboard for real-time monitoring.
     
@@ -61,26 +68,25 @@ def dashboard_live(
         dashboard.stop()
 
 
-def dashboard_monitor(
-    cache_dir: str = typer.Option(".algitex/cache", "--cache", help="Cache directory to monitor"),
-    metrics_file: str = typer.Option(".algitex/metrics.json", "--metrics", help="Metrics file to monitor"),
-):
+@command()
+@option("--cache", default=".algitex/cache", help="Cache directory to monitor")
+@option("--metrics", default=".algitex/metrics.json", help="Metrics file to monitor")
+def dashboard_monitor(cache: str, metrics: str):
     """Monitor existing cache and metrics files.
     
     Reads from existing cache/metrics and displays current state.
     """
     from algitex.tools.ollama_cache import LLMCache
     from algitex.metrics import MetricsCollector
-    from rich.table import Table
     
     # Cache stats
-    cache = LLMCache(cache_dir)
-    cache_stats = cache.stats()
+    cache_obj = LLMCache(cache)
+    cache_stats = cache_obj.stats()
     
     # Metrics
-    metrics = MetricsCollector(metrics_file)
-    metrics.load()
-    summary = metrics.get_summary()
+    metrics_collector = MetricsCollector(metrics)
+    metrics_collector.load()
+    summary = metrics_collector.get_summary()
     
     # Display
     console.print("\n[bold]Cache Status[/]")
@@ -108,11 +114,11 @@ def dashboard_monitor(
     console.print("\n[dim]Use 'dashboard live' for real-time monitoring[/]")
 
 
-def dashboard_export(
-    format: str = typer.Option("json", "--format", "-f", help="Export format: json, prometheus"),
-    output: str = typer.Option("dashboard.json", "--output", "-o", help="Output file"),
-    duration: int = typer.Option(60, "--duration", "-d", help="Collection duration in seconds"),
-):
+@command()
+@option("--format", "-f", default="json", help="Export format: json, prometheus")
+@option("--output", "-o", default="dashboard.json", help="Output file")
+@option("--duration", "-d", default=60, help="Collection duration in seconds")
+def dashboard_export(format: str, output: str, duration: int):
     """Export dashboard data to file (JSON or Prometheus format).
     
     Collects metrics for specified duration and exports to file.
@@ -161,7 +167,3 @@ def dashboard_export(
     
     else:
         console.print(f"[red]Unknown format: {format}[/]")
-
-
-# Import at the end to avoid circular dependency
-from pathlib import Path

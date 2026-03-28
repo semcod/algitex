@@ -2,14 +2,17 @@
 
 from __future__ import annotations
 
-import typer
+import clickmd
+from clickmd import command, option, argument
 from rich.console import Console
 from rich.table import Table
 
 console = Console()
 
 
-def algo_discover(path: str = typer.Option(".", "--path", "-p")) -> None:
+@command()
+@option("--path", "-p", default=".")
+def algo_discover(path: str) -> None:
     """Stage 1: Start trace collection from proxym."""
     from algitex.algo import Loop
     loop = Loop(path)
@@ -18,10 +21,10 @@ def algo_discover(path: str = typer.Option(".", "--path", "-p")) -> None:
     console.print("Use your IDE normally \u2014 algitex records every LLM interaction.")
 
 
-def algo_extract(
-    path: str = typer.Option(".", "--path", "-p"),
-    min_freq: int = typer.Option(3, "--min-freq"),
-):
+@command()
+@option("--path", "-p", default=".")
+@option("--min-freq", default=3, type=int)
+def algo_extract(path: str, min_freq: int):
     """Stage 2: Extract repeating patterns from traces."""
     from algitex.algo import Loop
     loop = Loop(path)
@@ -37,10 +40,10 @@ def algo_extract(
     console.print(table)
 
 
-def algo_rules(
-    path: str = typer.Option(".", "--path", "-p"),
-    no_llm: bool = typer.Option(False, "--no-llm"),
-):
+@command()
+@option("--path", "-p", default=".")
+@option("--no-llm", is_flag=True)
+def algo_rules(path: str, no_llm: bool):
     """Stage 3: Generate deterministic rules for top patterns."""
     from algitex.algo import Loop
     loop = Loop(path)
@@ -51,7 +54,9 @@ def algo_rules(
         console.print(f"  {r.pattern_id}: {r.name} ({r.type})")
 
 
-def algo_report(path: str = typer.Option(".", "--path", "-p")):
+@command()
+@option("--path", "-p", default=".")
+def algo_report(path: str):
     """Show algorithmization progress."""
     from algitex.algo import Loop
     report = Loop(path).report()

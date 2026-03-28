@@ -5,14 +5,17 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Optional
 
-import typer
+import clickmd
+from clickmd import command, option, argument, Path as ClickPath
 from rich.console import Console
 from rich.table import Table
 
 console = Console()
 
 
-def init(path: str = typer.Argument(".", help="Project directory")) -> None:
+@command()
+@argument("path", default=".", type=ClickPath(exists=False))
+def init(path: str) -> None:
     """Initialize algitex for a project."""
     project_path = _init_project_dir(path)
     cfg_path = _init_config(project_path)
@@ -53,10 +56,10 @@ def _print_tools_status():
         console.print(f"\n[yellow]Install missing:[/] pip install {' '.join(missing)}")
 
 
-def analyze(
-    path: str = typer.Option(".", "--path", "-p"),
-    quick: bool = typer.Option(False, "--quick", "-q"),
-):
+@command()
+@option("--path", "-p", default=".")
+@option("--quick", "-q", is_flag=True)
+def analyze(path: str, quick: bool):
     """Analyze project health."""
     from algitex.project import Project
     with console.status("Analyzing..."):
@@ -70,11 +73,11 @@ def analyze(
         console.print(f"[bold yellow]Grade {report.grade}[/] — run [bold]algitex plan[/] for improvements.")
 
 
-def plan(
-    path: str = typer.Option(".", "--path", "-p"),
-    sprints: int = typer.Option(2, "--sprints", "-s"),
-    focus: str = typer.Option("complexity", "--focus", "-f"),
-):
+@command()
+@option("--path", "-p", default=".")
+@option("--sprints", "-s", default=2, type=int)
+@option("--focus", "-f", default="complexity")
+def plan(path: str, sprints: int, focus: str):
     """Generate sprint plan with auto-tickets."""
     from algitex.project import Project
     with console.status("Planning..."):
@@ -92,11 +95,11 @@ def plan(
         console.print(table)
 
 
-def go(
-    path: str = typer.Option(".", "--path", "-p"),
-    dry_run: bool = typer.Option(False, "--dry-run"),
-):
-    """Full pipeline: analyze \u2192 plan \u2192 execute \u2192 validate."""
+@command()
+@option("--path", "-p", default=".")
+@option("--dry-run", is_flag=True)
+def go(path: str, dry_run: bool):
+    """Full pipeline: analyze -> plan -> execute -> validate."""
     from algitex.workflows import Pipeline
     console.print("[bold]Starting full pipeline...[/]\n")
     pipeline = Pipeline(path)
@@ -118,7 +121,9 @@ def go(
         console.print(f"  {step}")
 
 
-def status(path: str = typer.Option(".", "--path", "-p")):
+@command()
+@option("--path", "-p", default=".")
+def status(path: str):
     """Show project status dashboard."""
     from algitex.project import Project
     with console.status("Checking status..."):
@@ -148,6 +153,7 @@ def status(path: str = typer.Option(".", "--path", "-p")):
     )
 
 
+@command()
 def tools():
     """Show available tools and their status."""
     from algitex.tools import discover_tools, TOOL_REGISTRY
@@ -167,10 +173,10 @@ def tools():
     console.print(table)
 
 
-def ask(
-    prompt: str = typer.Argument(...),
-    tier: Optional[str] = typer.Option(None, "--tier", "-t"),
-):
+@command()
+@argument("prompt")
+@option("--tier", "-t")
+def ask(prompt: str, tier: Optional[str]):
     """Quick LLM query via proxym."""
     from algitex.tools.proxy import Proxy
     with console.status("Thinking..."):
@@ -181,6 +187,7 @@ def ask(
         console.print(f"\n[dim]Model: {resp.model} | Cost: ${resp.cost_usd:.4f}[/]")
 
 
+@command()
 def sync():
     """Sync tickets to external backend."""
     from algitex.tools.tickets import Tickets

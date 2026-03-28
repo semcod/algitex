@@ -1,32 +1,17 @@
 """CLI — the algitex command.
 
 Refactored: split into subcommand modules to reduce complexity.
-
-Usage:
-    algitex init ./my-app           # initialize
-    algitex analyze                 # run all analysis
-    algitex plan                    # generate sprint plan
-    algitex go                      # full pipeline
-    algitex status                  # dashboard
-
-    algitex ask "question"          # quick LLM query
-    algitex ticket add "title"      # add ticket
-    algitex ticket list             # show tickets
-    algitex sync                    # push to GitHub/Jira
-
-    algitex algo discover           # start trace collection
-    algitex algo extract            # find patterns
-    algitex algo rules              # generate deterministic replacements
-    algitex algo report             # show progress
-
-    algitex workflow run f.md       # execute Propact workflow
-    algitex workflow validate f.md  # check syntax
-    algitex tools                   # show installed tools
+Uses clickmd for markdown-enhanced CLI output.
 """
 
 from __future__ import annotations
 
-import typer
+import clickmd
+from clickmd import (
+    blockquote, render_md as markdown, group, command, option, argument,
+    Path, Choice, INT, BOOL
+)
+from clickmd.help import success, warning, error, info, echo_md
 from rich.console import Console
 
 from algitex.cli.core import init, analyze, plan, go, status, tools, ask, sync
@@ -35,133 +20,213 @@ from algitex.cli.algo import algo_discover, algo_extract, algo_rules, algo_repor
 from algitex.cli.workflow import workflow_run, workflow_validate
 from algitex.cli.docker import docker_list, docker_spawn, docker_call, docker_teardown, docker_caps
 from algitex.cli.todo import todo_list, todo_run, todo_stats, todo_fix, todo_verify, todo_fix_parallel, todo_benchmark, todo_hybrid, todo_batch, todo_verify_prefact
-from algitex.cli.microtask import microtask_app, microtask_classify, microtask_plan, microtask_run
-from algitex.cli.nlp import nlp_app, nlp_dead_code, nlp_docstrings, nlp_duplicates, nlp_imports
+from algitex.cli.microtask import microtask_classify, microtask_plan, microtask_run
+from algitex.cli.nlp import nlp_dead_code, nlp_docstrings, nlp_duplicates, nlp_imports
 from algitex.cli.parallel import parallel
 from algitex.cli.metrics import metrics_show, metrics_clear, metrics_cache, metrics_compare
 from algitex.cli.benchmark import benchmark_cache, benchmark_tiers, benchmark_memory, benchmark_full, benchmark_quick
 from algitex.cli.dashboard import dashboard_live, dashboard_monitor, dashboard_export
 
-# Main app
-app = typer.Typer(
-    name="algitex",
-    help="Progressive algorithmization toolchain — from LLM to deterministic, from proxy to tickets.",
-    no_args_is_help=True,
-)
-
-# Subcommand groups
-ticket_app = typer.Typer(help="Manage tickets.")
-algo_app = typer.Typer(help="Progressive algorithmization.")
-workflow_app = typer.Typer(help="Propact Markdown workflows.")
-docker_app = typer.Typer(help="Manage Docker-based development tools.")
-todo_app = typer.Typer(help="Execute todo lists via Docker MCP.")
-microtask_app = typer.Typer(help="Atomic MicroTask pipeline for small LLMs.")
-nlp_app = typer.Typer(help="Deterministic NLP refactor helpers.")
-metrics_app = typer.Typer(help="Metrics and observability.")
-benchmark_app = typer.Typer(help="Performance benchmarks.")
-dashboard_app = typer.Typer(help="Real-time monitoring dashboard.")
-
-app.add_typer(ticket_app, name="ticket")
-app.add_typer(algo_app, name="algo")
-app.add_typer(workflow_app, name="workflow")
-app.add_typer(docker_app, name="docker")
-app.add_typer(todo_app, name="todo")
-app.add_typer(microtask_app, name="microtask")
-app.add_typer(nlp_app, name="nlp")
-app.add_typer(metrics_app, name="metrics")
-app.add_typer(benchmark_app, name="benchmark")
-app.add_typer(dashboard_app, name="dashboard")
-
 console = Console()
 
-# Register core commands
-app.command()(init)
-app.command()(analyze)
-app.command()(plan)
-app.command()(go)
-app.command()(status)
-app.command()(tools)
-app.command()(ask)
-app.command()(sync)
-app.command()(parallel)
+# Main app group
+main_help = """# Algitex CLI
+
+Progressive algorithmization toolchain — from LLM to deterministic, from proxy to tickets.
+
+## Commands
+
+- **init** — Initialize algitex project
+- **analyze** — Analyze codebase
+- **plan** — Create execution plan
+- **go** — Execute plan
+- **status** — Show project status
+- **tools** — List available tools
+- **ask** — Ask questions about code
+- **sync** — Sync project state
+- **ticket** — Manage tickets
+- **algo** — Progressive algorithmization
+- **workflow** — Markdown workflows
+- **docker** — Docker-based tools
+- **todo** — Execute todo lists
+- **microtask** — MicroTask pipeline
+- **nlp** — NLP refactor helpers
+- **metrics** — Metrics and observability
+- **benchmark** — Performance benchmarks
+- **dashboard** — Real-time monitoring
+
+Use `algitex <command> --help` for more info.
+"""
+
+
+@group(invoke_without_command=True, no_args_is_help=True, help=markdown(main_help))
+@clickmd.pass_context
+def app(ctx):
+    """Algitex CLI main group."""
+    if ctx.invoked_subcommand is None:
+        clickmd.echo(markdown(main_help))
+
+
+# Subcommand groups
+@group(help="Manage tickets.")
+def ticket():
+    """Ticket management commands."""
+    pass
+
+
+@group(help="Progressive algorithmization.")
+def algo():
+    """Algorithmization commands."""
+    pass
+
+
+@group(help="Propact Markdown workflows.")
+def workflow():
+    """Workflow commands."""
+    pass
+
+
+@group(help="Manage Docker-based development tools.")
+def docker():
+    """Docker management commands."""
+    pass
+
+
+@group(help="Execute todo lists via Docker MCP.")
+def todo():
+    """Todo execution commands."""
+    pass
+
+
+@group(help="Atomic MicroTask pipeline for small LLMs.")
+def microtask():
+    """Microtask pipeline commands."""
+    pass
+
+
+@group(help="Deterministic NLP refactor helpers.")
+def nlp():
+    """NLP helper commands."""
+    pass
+
+
+@group(help="Metrics and observability.")
+def metrics():
+    """Metrics commands."""
+    pass
+
+
+@group(help="Performance benchmarks.")
+def benchmark():
+    """Benchmark commands."""
+    pass
+
+
+@group(help="Real-time monitoring dashboard.")
+def dashboard():
+    """Dashboard commands."""
+    pass
+
+
+# Register subcommand groups
+app.add_command(ticket, name="ticket")
+app.add_command(algo, name="algo")
+app.add_command(workflow, name="workflow")
+app.add_command(docker, name="docker")
+app.add_command(todo, name="todo")
+app.add_command(microtask, name="microtask")
+app.add_command(nlp, name="nlp")
+app.add_command(metrics, name="metrics")
+app.add_command(benchmark, name="benchmark")
+app.add_command(dashboard, name="dashboard")
+
+# Register main commands
+app.add_command(init, name="init")
+app.add_command(analyze, name="analyze")
+app.add_command(plan, name="plan")
+app.add_command(go, name="go")
+app.add_command(status, name="status")
+app.add_command(tools, name="tools")
+app.add_command(ask, name="ask")
+app.add_command(sync, name="sync")
+app.add_command(parallel, name="parallel")
 
 # Register ticket subcommands
-ticket_app.command("add")(ticket_add)
-ticket_app.command("list")(ticket_list)
-ticket_app.command("board")(ticket_board)
+ticket.add_command(ticket_add, name="add")
+ticket.add_command(ticket_list, name="list")
+ticket.add_command(ticket_board, name="board")
 
 # Register algo subcommands
-algo_app.command("discover")(algo_discover)
-algo_app.command("extract")(algo_extract)
-algo_app.command("rules")(algo_rules)
-algo_app.command("report")(algo_report)
+algo.add_command(algo_discover, name="discover")
+algo.add_command(algo_extract, name="extract")
+algo.add_command(algo_rules, name="rules")
+algo.add_command(algo_report, name="report")
 
 # Register workflow subcommands
-workflow_app.command("run")(workflow_run)
-workflow_app.command("validate")(workflow_validate)
+workflow.add_command(workflow_run, name="run")
+workflow.add_command(workflow_validate, name="validate")
 
 # Register docker subcommands
-docker_app.command("list")(docker_list)
-docker_app.command("spawn")(docker_spawn)
-docker_app.command("call")(docker_call)
-docker_app.command("teardown")(docker_teardown)
-docker_app.command("caps")(docker_caps)
+docker.add_command(docker_list, name="list")
+docker.add_command(docker_spawn, name="spawn")
+docker.add_command(docker_call, name="call")
+docker.add_command(docker_teardown, name="teardown")
+docker.add_command(docker_caps, name="caps")
 
 # Register todo subcommands
-todo_app.command("list")(todo_list)
-todo_app.command("run")(todo_run)
-todo_app.command("stats")(todo_stats)
-todo_app.command("fix")(todo_fix)
-todo_app.command("verify")(todo_verify)
-todo_app.command("fix-auto")(todo_fix_parallel)
-todo_app.command("benchmark")(todo_benchmark)
-todo_app.command("hybrid")(todo_hybrid)
-todo_app.command("batch")(todo_batch)
-
-todo_app.command("verify-prefact")(todo_verify_prefact)
-app.command("fix", help="Quick hybrid autofix (alias for 'todo hybrid')")(todo_hybrid)
+todo.add_command(todo_list, name="list")
+todo.add_command(todo_run, name="run")
+todo.add_command(todo_stats, name="stats")
+todo.add_command(todo_fix, name="fix")
+todo.add_command(todo_verify, name="verify")
+todo.add_command(todo_fix_parallel, name="fix-auto")
+todo.add_command(todo_benchmark, name="benchmark")
+todo.add_command(todo_hybrid, name="hybrid")
+todo.add_command(todo_batch, name="batch")
+todo.add_command(todo_verify_prefact, name="verify-prefact")
 
 # Register microtask subcommands
-microtask_app.command("classify")(microtask_classify)
-microtask_app.command("plan")(microtask_plan)
-microtask_app.command("run")(microtask_run)
+microtask.add_command(microtask_classify, name="classify")
+microtask.add_command(microtask_plan, name="plan")
+microtask.add_command(microtask_run, name="run")
 
 # Register nlp subcommands
-nlp_app.command("docstrings")(nlp_docstrings)
-nlp_app.command("imports")(nlp_imports)
-nlp_app.command("dead-code")(nlp_dead_code)
-nlp_app.command("duplicates")(nlp_duplicates)
+nlp.add_command(nlp_docstrings, name="docstrings")
+nlp.add_command(nlp_imports, name="imports")
+nlp.add_command(nlp_dead_code, name="dead-code")
+nlp.add_command(nlp_duplicates, name="duplicates")
 
 # Register metrics subcommands
-metrics_app.command("show")(metrics_show)
-metrics_app.command("clear")(metrics_clear)
-metrics_app.command("cache")(metrics_cache)
-metrics_app.command("compare")(metrics_compare)
+metrics.add_command(metrics_show, name="show")
+metrics.add_command(metrics_clear, name="clear")
+metrics.add_command(metrics_cache, name="cache")
+metrics.add_command(metrics_compare, name="compare")
 
 # Register benchmark subcommands
-benchmark_app.command("cache")(benchmark_cache)
-benchmark_app.command("tiers")(benchmark_tiers)
-benchmark_app.command("memory")(benchmark_memory)
-benchmark_app.command("full")(benchmark_full)
-benchmark_app.command("quick")(benchmark_quick)
+benchmark.add_command(benchmark_cache, name="cache")
+benchmark.add_command(benchmark_tiers, name="tiers")
+benchmark.add_command(benchmark_memory, name="memory")
+benchmark.add_command(benchmark_full, name="full")
+benchmark.add_command(benchmark_quick, name="quick")
 
 # Register dashboard subcommands
-dashboard_app.command("live")(dashboard_live)
-dashboard_app.command("monitor")(dashboard_monitor)
-dashboard_app.command("export")(dashboard_export)
+dashboard.add_command(dashboard_live, name="live")
+dashboard.add_command(dashboard_monitor, name="monitor")
+dashboard.add_command(dashboard_export, name="export")
 
 # Backward compatibility
 __all__ = [
     "app", "console",
+    "ticket", "algo", "workflow", "docker", "todo", "microtask", "nlp", "metrics", "benchmark", "dashboard",
     "init", "analyze", "plan", "go", "status", "tools", "ask", "sync",
     "ticket_add", "ticket_list", "ticket_board",
     "algo_discover", "algo_extract", "algo_rules", "algo_report",
     "workflow_run", "workflow_validate",
     "docker_list", "docker_spawn", "docker_call", "docker_teardown", "docker_caps",
     "todo_list", "todo_run", "todo_stats", "todo_fix", "todo_verify", "todo_fix_parallel", "todo_benchmark", "todo_hybrid",
-    "microtask_app", "microtask_classify", "microtask_plan", "microtask_run",
-    "nlp_app", "nlp_docstrings", "nlp_imports", "nlp_dead_code", "nlp_duplicates",
-    "metrics_app", "metrics_show", "metrics_clear", "metrics_cache", "metrics_compare",
-    "benchmark_app", "benchmark_cache", "benchmark_tiers", "benchmark_memory", "benchmark_full", "benchmark_quick",
-    "dashboard_app", "dashboard_live", "dashboard_monitor", "dashboard_export",
+    "microtask_classify", "microtask_plan", "microtask_run",
+    "nlp_docstrings", "nlp_imports", "nlp_dead_code", "nlp_duplicates",
+    "metrics_show", "metrics_clear", "metrics_cache", "metrics_compare",
+    "benchmark_cache", "benchmark_tiers", "benchmark_memory", "benchmark_full", "benchmark_quick",
+    "dashboard_live", "dashboard_monitor", "dashboard_export",
 ]

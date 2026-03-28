@@ -1,6 +1,9 @@
 """CLI command for parallel execution of algitex tasks."""
-import typer
 from pathlib import Path
+from typing import Optional
+
+import clickmd
+from clickmd import command, option, argument, confirm
 from rich.console import Console
 
 console = Console()
@@ -48,7 +51,7 @@ def _extract_and_partition(project_path: Path, open_tickets, agents: int, verbos
 
 def _display_partition_plan(groups, open_tickets):
     """Display the partition plan to the user."""
-    console.print(f"\nPartition plan ({len(open_tickets)} tickets → {len(groups)} agents):\n")
+    console.print(f"\nPartition plan ({len(open_tickets)} tickets -> {len(groups)} agents):\n")
     for agent_idx, ticket_ids in groups.items():
         tickets_info = []
         for tid in ticket_ids:
@@ -85,7 +88,7 @@ def _display_results(results, verbose: bool):
             console.print(f"  {r}")
             continue
             
-        icon = "✓" if r.status == "clean" else "✗" if r.status == "semantic_conflict" else "!"
+        icon = "\u2713" if r.status == "clean" else "\u2717" if r.status == "semantic_conflict" else "!"
         files = ", ".join(r.files_changed[:3]) if r.files_changed else ""
         if len(r.files_changed) > 3:
             files += f" and {len(r.files_changed) - 3} more"
@@ -99,13 +102,13 @@ def _display_results(results, verbose: bool):
             console.print("    Line drift detected and handled")
 
 
-def parallel(
-    path: str = typer.Argument(".", help="Path to project"),
-    agents: int = typer.Option(4, "--agents", "-n", help="Number of parallel agents"),
-    tool: str = typer.Option("aider-mcp", "--tool", "-t", help="Docker tool to use"),
-    dry_run: bool = typer.Option(False, "--dry-run", help="Show partition plan without executing"),
-    verbose: bool = typer.Option(False, "--verbose", "-v", help="Verbose output"),
-):
+@command()
+@argument("path", default=".")
+@option("--agents", "-n", default=4, help="Number of parallel agents")
+@option("--tool", "-t", default="aider-mcp", help="Docker tool to use")
+@option("--dry-run", is_flag=True, help="Show partition plan without executing")
+@option("--verbose", "-v", is_flag=True, help="Verbose output")
+def parallel(path: str, agents: int, tool: str, dry_run: bool, verbose: bool):
     """Execute tickets in parallel with conflict-free coordination."""
     project_path = Path(path).resolve()
     
@@ -132,7 +135,7 @@ def parallel(
         console.print("\n[yellow]Dry run complete. Remove --dry-run to execute.[/yellow]")
         return
     
-    if not typer.confirm(f"\nExecute with {len(groups)} parallel agents using {tool}?"):
+    if not clickmd.confirm(f"\nExecute with {len(groups)} parallel agents using {tool}?"):
         console.print("[yellow]Aborted.[/yellow]")
         return
     

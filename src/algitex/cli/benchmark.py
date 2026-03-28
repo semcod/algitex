@@ -6,7 +6,8 @@ import tempfile
 from pathlib import Path
 from typing import Optional
 
-import typer
+import clickmd
+from clickmd import command, option, argument
 from rich.console import Console
 from rich.table import Table
 from rich.panel import Panel
@@ -15,10 +16,10 @@ from rich.progress import Progress, SpinnerColumn, TextColumn
 console = Console()
 
 
-def benchmark_cache(
-    entries: int = typer.Option(100, "--entries", "-e", help="Number of cache entries"),
-    lookups: int = typer.Option(500, "--lookups", "-l", help="Number of lookups"),
-):
+@command()
+@option("--entries", "-e", default=100, help="Number of cache entries")
+@option("--lookups", "-l", default=500, help="Number of lookups")
+def benchmark_cache(entries: int, lookups: int):
     """Benchmark LLM cache performance."""
     from algitex.benchmark import CacheBenchmark
     
@@ -50,6 +51,7 @@ def benchmark_cache(
         ))
 
 
+@command()
 def benchmark_tiers():
     """Benchmark all three tiers (algorithm, micro, big)."""
     from algitex.benchmark import TierBenchmark
@@ -91,9 +93,9 @@ def benchmark_tiers():
     console.print("\n[dim]Note: 'big' tier requires actual LLM API keys for real benchmarking[/]")
 
 
-def benchmark_memory(
-    lines: int = typer.Option(1000, "--lines", "-n", help="Lines in test file"),
-):
+@command()
+@option("--lines", "-n", default=1000, help="Lines in test file")
+def benchmark_memory(lines: int):
     """Benchmark memory usage for large file processing."""
     from algitex.benchmark import MemoryBenchmark
     
@@ -111,10 +113,10 @@ def benchmark_memory(
     ))
 
 
-def benchmark_full(
-    export: Optional[str] = typer.Option(None, "--export", "-o", help="Export to JSON file"),
-    quick: bool = typer.Option(False, "--quick", help="Quick mode (smaller datasets)"),
-):
+@command()
+@option("--export", "-o", help="Export to JSON file")
+@option("--quick", is_flag=True, help="Quick mode (smaller datasets)")
+def benchmark_full(export: Optional[str], quick: bool):
     """Run full benchmark suite."""
     from algitex.benchmark import BenchmarkRunner, CacheBenchmark, TierBenchmark, MemoryBenchmark
     from algitex.benchmark import run_quick_benchmark
@@ -155,6 +157,7 @@ def benchmark_full(
             console.print(f"\n[green]✓ Exported to {export}[/]")
 
 
+@command()
 def benchmark_quick():
     """Quick benchmark (30 seconds)."""
     from algitex.benchmark import run_quick_benchmark

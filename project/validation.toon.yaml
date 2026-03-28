@@ -1,23 +1,27 @@
-# vallm batch | 379f | 201✓ 8⚠ 17✗ | 2026-03-28
+# vallm batch | 491f | 208✓ 9⚠ 17✗ | 2026-03-28
 
 SUMMARY:
-  scanned: 379  passed: 201 (53.0%)  warnings: 8  errors: 17  unsupported: 161
+  scanned: 491  passed: 208 (42.4%)  warnings: 9  errors: 17  unsupported: 266
 
-WARNINGS[8]{path,score}:
+WARNINGS[9]{path,score}:
   src/algitex/cli/todo.py,0.87
     issues[7]{rule,severity,message,line}:
-      complexity.cyclomatic,warning,_tf_execute_phased has cyclomatic complexity 25 (max: 15),564
-      complexity.cyclomatic,warning,todo_verify_prefact has cyclomatic complexity 29 (max: 15),920
-      complexity.maintainability,warning,Low maintainability index: 15.0 (threshold: 20),
+      complexity.cyclomatic,warning,_tf_execute_phased has cyclomatic complexity 25 (max: 15),586
+      complexity.cyclomatic,warning,todo_verify_prefact has cyclomatic complexity 29 (max: 15),955
+      complexity.maintainability,warning,Low maintainability index: 14.5 (threshold: 20),
       complexity.lizard_cc,warning,_run_with_dashboard.run_phases: CC=27 exceeds limit 15,101
       complexity.lizard_cc,warning,_run_with_dashboard: CC=16 exceeds limit 15,45
-      complexity.lizard_cc,warning,_tf_execute_phased: CC=25 exceeds limit 15,564
-      complexity.lizard_cc,warning,todo_verify_prefact: CC=29 exceeds limit 15,920
+      complexity.lizard_cc,warning,_tf_execute_phased: CC=25 exceeds limit 15,586
+      complexity.lizard_cc,warning,todo_verify_prefact: CC=29 exceeds limit 15,955
   src/algitex/microtask/executor.py,0.96
     issues[3]{rule,severity,message,line}:
       complexity.cyclomatic,warning,_apply_magic_name has cyclomatic complexity 16 (max: 15),372
       complexity.maintainability,warning,Low maintainability index: 8.3 (threshold: 20),
       complexity.lizard_cc,warning,_apply_magic_name: CC=16 exceeds limit 15,372
+  scripts/generate_lib_docs.py,0.97
+    issues[2]{rule,severity,message,line}:
+      complexity.cyclomatic,warning,parse_file has cyclomatic complexity 24 (max: 15),54
+      complexity.lizard_cc,warning,parse_file: CC=24 exceeds limit 15,54
   src/algitex/microtask/classifier.py,0.97
     issues[2]{rule,severity,message,line}:
       complexity.cyclomatic,warning,_classify_message has cyclomatic complexity 48 (max: 15),105
@@ -118,8 +122,8 @@ ERRORS[17]{path,score}:
       python.import.resolvable,error,Module 'tqdm' not found,34
 
 UNSUPPORTED[5]{bucket,count}:
-  *.md,83
+  *.md,182
   Dockerfile*,31
   *.txt,2
   *.yml,3
-  other,42
+  other,48
