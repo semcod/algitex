@@ -1,0 +1,143 @@
+# algitex docker-tools.yaml — deklaracja narzędzi Docker
+# Algitex Pipeline czyta ten plik i uruchamia kontenery na żądanie.
+
+tools:
+  # ─── Code Editing ────────────────────────────────────
+  aider-mcp:
+    image: danielscholl/aider-mcp-server:latest
+    transport: mcp-stdio
+    env:
+      TRANSPORT: stdio
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+    volumes:
+      - "${PROJECT_DIR}:/app"
+    capabilities:
+      - aider_ai_code
+      - aider_list_models
+
+  aider-cli:
+    image: paulgauthier/aider-full:latest
+    transport: cli
+    env:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+    volumes:
+      - "${PROJECT_DIR}:/app"
+    capabilities:
+      - code-edit
+      - code-review
+
+  # ─── VCS & Infrastructure ───────────────────────────
+  github-mcp:
+    image: ghcr.io/github/github-mcp-server:latest
+    transport: mcp-stdio
+    env:
+      GITHUB_PERSONAL_ACCESS_TOKEN: ${GITHUB_PAT}
+    capabilities:
+      - create_or_update_file
+      - create_issue
+      - create_pull_request
+      - search_code
+      - list_commits
+      - get_file_contents
+
+  docker-mcp:
+    image: mcp/docker:latest
+    transport: mcp-stdio
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    capabilities:
+      - docker_list_containers
+      - docker_run_container
+      - docker_stop_container
+      - docker_build_image
+
+  filesystem-mcp:
+    image: mcp/filesystem:latest
+    transport: mcp-stdio
+    volumes:
+      - "${PROJECT_DIR}:/workspace:ro"
+    capabilities:
+      - read_file
+      - write_file
+      - list_directory
+      - search_files
+
+  # ─── Analysis (wronai ecosystem) ────────────────────
+  code2llm:
+    image: wronai/code2llm:latest
+    transport: cli
+    volumes:
+      - "${PROJECT_DIR}:/project"
+    capabilities:
+      - analyze
+      - toon-export
+      - evolution-export
+
+  vallm:
+    image: wronai/vallm:latest
+    transport: cli
+    volumes:
+      - "${PROJECT_DIR}:/project"
+    capabilities:
+      - validate
+      - batch
+      - score
+
+  redup:
+    image: wronai/redup:latest
+    transport: cli
+    volumes:
+      - "${PROJECT_DIR}:/project"
+    capabilities:
+      - scan
+      - report
+
+  # ─── LLM Providers ──────────────────────────────────
+  proxym:
+    image: wronai/proxym:latest
+    transport: rest
+    port: 4000
+    env:
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+    health_check: "http://localhost:4000/health"
+    capabilities:
+      - chat-completions
+      - model-selection
+      - budget-tracking
+
+  # ─── Ecosystem MCP servers ──────────────────────────
+  planfile-mcp:
+    image: wronai/planfile-mcp:latest
+    transport: mcp-sse
+    port: 8201
+    volumes:
+      - "${PROJECT_DIR}/.planfile:/data"
+    capabilities:
+      - planfile_create_ticket
+      - planfile_list_tickets
+      - planfile_update_ticket
+      - planfile_create_tickets_bulk
+      - planfile_sprint_status
+      - planfile_sync
+
+  propact-mcp:
+    image: wronai/propact-mcp:latest
+    transport: mcp-sse
+    port: 8202
+    volumes:
+      - "${PROJECT_DIR}:/workspace"
+    capabilities:
+      - execute_workflow
+      - validate_workflow
+
+  # ─── Browser / Testing ──────────────────────────────
+  playwright-mcp:
+    image: mcp/playwright:latest
+    transport: mcp-stdio
+    capabilities:
+      - navigate
+      - screenshot
+      - click
+      - fill
+      - evaluate

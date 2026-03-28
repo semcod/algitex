@@ -3,24 +3,24 @@ flowchart LR
         examples__01_quickstart__main__main["main"]
     end
     subgraph src__algitex
-        src__algitex__tools__tickets__Tickets____init__["__init__"]
-        src__algitex__config___merge_yaml["_merge_yaml"]
-        src__algitex__config__Config__load["load"]
-        src__algitex__project__Project____init__["__init__"]
-        src__algitex__tools__analysis__Analyzer___run_code2llm["_run_code2llm"]
-        src__algitex__tools__analysis__Analyzer___run_redup["_run_redup"]
         src__algitex__tools__discover_tools["discover_tools"]
-        src__algitex__config__TicketConfig__from_env["from_env"]
-        src__algitex__project__Project__status["status"]
-        src__algitex__tools__analysis___run_cli["_run_cli"]
         src__algitex__tools__require_tool["require_tool"]
         src__algitex__cli__tools["tools"]
-        src__algitex__config__AnalysisConfig__from_env["from_env"]
-        src__algitex__config___find_config["_find_config"]
-        src__algitex__tools__analysis__Analyzer___run_vallm["_run_vallm"]
         src__algitex__config__ProxyConfig__from_env["from_env"]
+        src__algitex__tools__tickets__Tickets____init__["__init__"]
         src__algitex__cli__init["init"]
+        src__algitex__config___find_config["_find_config"]
+        src__algitex__config___merge_yaml["_merge_yaml"]
+        src__algitex__project__Project____init__["__init__"]
+        src__algitex__tools__analysis__Analyzer___run_vallm["_run_vallm"]
+        src__algitex__config__TicketConfig__from_env["from_env"]
+        src__algitex__tools__analysis__Analyzer___run_code2llm["_run_code2llm"]
+        src__algitex__config__Config__load["load"]
+        src__algitex__tools__analysis__Analyzer___run_redup["_run_redup"]
+        src__algitex__project__Project__status["status"]
+        src__algitex__tools__analysis___run_cli["_run_cli"]
         src__algitex__tools__proxy__Proxy____init__["__init__"]
+        src__algitex__config__AnalysisConfig__from_env["from_env"]
     end
     src__algitex__cli__init --> src__algitex__config__Config__load
     src__algitex__cli__init --> src__algitex__tools__discover_tools
@@ -30,9 +30,9 @@ flowchart LR
     src__algitex__config__Config__load --> src__algitex__config__AnalysisConfig__from_env
     src__algitex__config__Config__load --> src__algitex__config___find_config
     src__algitex__config__Config__load --> src__algitex__config___merge_yaml
+    src__algitex__tools__proxy__Proxy____init__ --> src__algitex__config__ProxyConfig__from_env
     src__algitex__project__Project____init__ --> src__algitex__config__Config__load
     src__algitex__project__Project__status --> src__algitex__tools__discover_tools
-    src__algitex__tools__proxy__Proxy____init__ --> src__algitex__config__ProxyConfig__from_env
     src__algitex__tools__tickets__Tickets____init__ --> src__algitex__config__TicketConfig__from_env
     examples__01_quickstart__main__main --> src__algitex__tools__discover_tools
     src__algitex__tools__require_tool --> src__algitex__tools__discover_tools

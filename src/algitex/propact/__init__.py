@@ -50,7 +50,7 @@ class WorkflowStep:
     """Single executable step in a Propact workflow."""
 
     index: int
-    type: str  # rest | shell | mcp | llm
+    type: str  # rest | shell | mcp | llm | docker
     title: str = ""
     content: str = ""
     status: str = "pending"  # pending | running | done | failed | skipped
@@ -87,7 +87,7 @@ class WorkflowResult:
 
 
 STEP_PATTERN = re.compile(
-    r"```propact:(rest|shell|mcp|llm)\s*\n(.*?)```",
+    r"```propact:(rest|shell|mcp|llm|docker)\s*\n(.*?)```",
     re.DOTALL,
 )
 HEADING_PATTERN = re.compile(r"^#+\s+(.+)$", re.MULTILINE)
@@ -175,43 +175,57 @@ class Workflow:
             steps_total=len(self._steps),
         )
 
-        for step in self._steps:
-            if dry_run:
-                step.status = "skipped"
+        # Shared DockerToolManager for reuse across steps
+        docker_mgr = None
+        try:
+            for step in self._steps:
+                if dry_run:
+                    step.status = "skipped"
+                    result.steps.append(step)
+                    continue
+
+                step.status = "running"
+                start = time.time()
+
+                try:
+                    if step.type == "shell":
+                        step = self._exec_shell(step)
+                    elif step.type == "rest":
+                        step = self._exec_rest(step, proxy_url)
+                    elif step.type == "mcp":
+                        step = self._exec_mcp(step, proxy_url)
+                    elif step.type == "llm":
+                        step = self._exec_llm(step, proxy_url)
+                    elif step.type == "docker":
+                        step = self._exec_docker(step, docker_mgr)
+                        if docker_mgr is None:
+                            # Store the manager after first docker step
+                            from algitex.tools.docker import DockerToolManager
+                            from algitex.config import Config
+                            docker_mgr = DockerToolManager(Config.load())
+                except Exception as e:
+                    step.status = "failed"
+                    step.result = str(e)
+
+                step.elapsed_ms = (time.time() - start) * 1000
+                result.total_elapsed_ms += step.elapsed_ms
+                result.total_cost_usd += step.cost_usd
+
+                if step.status == "done":
+                    result.steps_done += 1
+                elif step.status == "failed":
+                    result.steps_failed += 1
+                    if stop_on_error:
+                        # Mark remaining as skipped
+                        for remaining in self._steps[step.index + 1 :]:
+                            remaining.status = "skipped"
+                        break
+
                 result.steps.append(step)
-                continue
-
-            step.status = "running"
-            start = time.time()
-
-            try:
-                if step.type == "shell":
-                    step = self._exec_shell(step)
-                elif step.type == "rest":
-                    step = self._exec_rest(step, proxy_url)
-                elif step.type == "mcp":
-                    step = self._exec_mcp(step, proxy_url)
-                elif step.type == "llm":
-                    step = self._exec_llm(step, proxy_url)
-            except Exception as e:
-                step.status = "failed"
-                step.result = str(e)
-
-            step.elapsed_ms = (time.time() - start) * 1000
-            result.total_elapsed_ms += step.elapsed_ms
-            result.total_cost_usd += step.cost_usd
-
-            if step.status == "done":
-                result.steps_done += 1
-            elif step.status == "failed":
-                result.steps_failed += 1
-                if stop_on_error:
-                    # Mark remaining as skipped
-                    for remaining in self._steps[step.index + 1 :]:
-                        remaining.status = "skipped"
-                    break
-
-            result.steps.append(step)
+        finally:
+            # Cleanup Docker containers if manager was created
+            if docker_mgr:
+                docker_mgr.teardown_all()
 
         result.steps = self._steps
         return result
@@ -299,6 +313,99 @@ class Workflow:
         except Exception as e:
             step.status = "failed"
             step.result = str(e)
+        return step
+
+    def _exec_docker(self, step: WorkflowStep, docker_mgr: Optional[DockerToolManager] = None) -> WorkflowStep:
+        """Execute a step using a Docker tool from docker-tools.yaml.
+
+        Propact syntax:
+            ```propact:docker
+            tool: aider-mcp
+            action: aider_ai_code
+            input:
+              prompt: "Fix import errors in cli.py"
+              relative_editable_files: ["src/algitex/cli.py"]
+              model: "gemini/gemini-2.5-pro"
+            ```
+        """
+        from algitex.tools.docker import DockerToolManager
+        from algitex.config import Config
+        import json
+        import os
+
+        # Parse YAML content from step
+        try:
+            import yaml
+            params = yaml.safe_load(step.content)
+        except ImportError:
+            # Fallback to simple JSON parsing if yaml not available
+            params = json.loads(step.content)
+
+        tool_name = params["tool"]
+        action = params["action"]
+        input_data = params.get("input", {})
+        env_overrides = params.get("env", {})
+
+        # Resolve environment variables in env_overrides
+        resolved_env = {}
+        for k, v in env_overrides.items():
+            if isinstance(v, str) and v.startswith("$"):
+                env_var = v[2:-1] if v.startswith("${") else v[1:]
+                resolved_env[k] = os.getenv(env_var, v)
+            else:
+                resolved_env[k] = v
+
+        # Initialize DockerToolManager (reuse if provided)
+        config = Config.load()
+        if docker_mgr is None:
+            with DockerToolManager(config) as mgr:
+                return self._exec_docker_internal(step, mgr)
+        else:
+            return self._exec_docker_internal(step, docker_mgr)
+    
+    def _exec_docker_internal(self, step: WorkflowStep, mgr: DockerToolManager) -> WorkflowStep:
+        """Internal method to execute Docker step with a given manager."""
+        from algitex.tools.docker import DockerToolManager
+        from algitex.config import Config
+        import json
+        import os
+
+        # Parse YAML content from step
+        try:
+            import yaml
+            params = yaml.safe_load(step.content)
+        except ImportError:
+            # Fallback to simple JSON parsing if yaml not available
+            params = json.loads(step.content)
+
+        tool_name = params["tool"]
+        action = params["action"]
+        input_data = params.get("input", {})
+        env_overrides = params.get("env", {})
+
+        # Resolve environment variables in env_overrides
+        resolved_env = {}
+        for k, v in env_overrides.items():
+            if isinstance(v, str) and v.startswith("$"):
+                env_var = v[2:-1] if v.startswith("${") else v[1:]
+                resolved_env[k] = os.getenv(env_var, v)
+            else:
+                resolved_env[k] = v
+
+        # Spawn if not running
+        if tool_name not in mgr.list_running():
+            mgr.spawn(tool_name, env=resolved_env)
+
+        # Call the tool
+        result = mgr.call_tool(tool_name, action, input_data)
+
+        step.result = json.dumps(result, indent=2)[:2000]
+        step.status = "done" if result.get("rc", 0) == 0 else "error"
+        
+        # Extract cost if available
+        if "cost_usd" in result:
+            step.cost_usd = result["cost_usd"]
+
         return step
 
     def _exec_llm(self, step: WorkflowStep, proxy_url: str) -> WorkflowStep:

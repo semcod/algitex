@@ -1,10 +1,10 @@
-# vallm batch | 70f | 31✓ 0⚠ 0✗ | 2026-03-28
+# vallm batch | 73f | 33✓ 0⚠ 0✗ | 2026-03-28
 
 SUMMARY:
-  scanned: 70  passed: 31 (44.3%)  warnings: 0  errors: 0  unsupported: 39
+  scanned: 73  passed: 33 (45.2%)  warnings: 0  errors: 0  unsupported: 40
 
 UNSUPPORTED[5]{bucket,count}:
-  *.md,24
+  *.md,25
   Dockerfile*,1
   *.txt,1
   *.yml,1

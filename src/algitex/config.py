@@ -87,6 +87,7 @@ class Config:
     tickets: TicketConfig = field(default_factory=TicketConfig)
     analysis: AnalysisConfig = field(default_factory=AnalysisConfig)
     project_path: str = "."
+    docker_tools_path: str = "docker-tools.yaml"
     verbose: bool = False
 
     @classmethod

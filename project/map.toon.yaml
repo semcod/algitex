@@ -2,7 +2,7 @@
 # stats: 97 func | 0 cls | 15 mod | CC̄=3.0 | critical:0 | cycles:0
 # alerts[5]: fan-out init=16; fan-out Project.status=15; fan-out Workflow._exec_rest=13; fan-out Workflow.parse=13; fan-out Loop.extract=10
 # hotspots[5]: init fan=16; Project.status fan=15; Workflow.parse fan=13; Workflow._exec_rest fan=13; go fan=10
-# evolution: baseline
+# evolution: CC̄ 3.0→3.0 (flat 0.0)
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
 M[15]:
   project.sh,24
@@ -86,8 +86,8 @@ D:
   src/algitex/workflows/__init__.py:
     e: Pipeline
     Pipeline: __init__(2),analyze(1),create_tickets(0),execute(1),validate(0),sync(1),report(0)  # Composable workflow: chain steps fluently...
-  src/algitex/__init__.py:
   src/algitex/algo/loop.py:
+  src/algitex/__init__.py:
   src/algitex/propact/workflow.py:
   src/algitex/workflows/pipeline.py:
   project.sh:

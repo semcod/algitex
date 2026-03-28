@@ -151,7 +151,7 @@ Content outside the markers is preserved when regenerating. Enable this with `sy
 
 ```
 algitex/
-    ├── algitex/            ├── loop        ├── cli        ├── config        ├── project            ├── proxy            ├── tickets        ├── propact/            ├── workflow        ├── workflows/            ├── pipeline        ├── main        ├── main        ├── main        ├── main        ├── main├── project        ├── run        ├── run        ├── run        ├── run        ├── run            ├── analysis        ├── algo/        ├── tools/```
+    ├── algitex/            ├── loop        ├── cli        ├── config        ├── project            ├── proxy            ├── tickets        ├── propact/            ├── workflow        ├── workflows/            ├── pipeline        ├── main        ├── main        ├── main        ├── main        ├── main├── project        ├── run        ├── run        ├── run        ├── run        ├── run        ├── tools/        ├── algo/            ├── analysis```
 
 ## API Overview
 
@@ -170,15 +170,15 @@ algitex/
 - **`WorkflowResult`** — Result of workflow execution.
 - **`Workflow`** — Parse and execute Propact Markdown workflows.
 - **`Pipeline`** — Composable workflow: chain steps fluently.
-- **`HealthReport`** — Combined analysis result from all tools.
-- **`Analyzer`** — Unified interface for code analysis tools.
-- **`CLIResult`** — —
+- **`ToolStatus`** — —
 - **`TraceEntry`** — Single LLM interaction trace.
 - **`Pattern`** — Extracted repeating pattern from traces.
 - **`Rule`** — Deterministic replacement for an LLM pattern.
 - **`LoopState`** — Current state of the progressive algorithmization loop.
 - **`Loop`** — The progressive algorithmization engine.
-- **`ToolStatus`** — —
+- **`HealthReport`** — Combined analysis result from all tools.
+- **`Analyzer`** — Unified interface for code analysis tools.
+- **`CLIResult`** — —
 
 ### Functions
 

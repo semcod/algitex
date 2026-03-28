@@ -157,6 +157,16 @@ class Project:
 
         tools = discover_tools()
         algo_report = self.algo.report()
+        
+        # Docker tools status
+        docker_status = {"available": [], "running": []}
+        try:
+            from algitex.tools.docker import DockerToolManager
+            docker_mgr = DockerToolManager(self.config)
+            docker_status["available"] = docker_mgr.list_tools()
+            docker_status["running"] = docker_mgr.list_running()
+        except Exception:
+            pass  # Docker tools not available
 
         # Cost ledger
         total_cost = sum(
@@ -186,6 +196,7 @@ class Project:
             "algo": algo_report,
             "proxy": {"healthy": proxy_healthy},
             "tools": {name: str(s) for name, s in tools.items()},
+            "docker": docker_status,
         }
 
     # ── Propact workflows ─────────────────────────────────

@@ -55,6 +55,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.6] - 2026-03-28
+
+### Docs
+- Update TODO.md
+- Update docs/README.md
+- Update examples/docker-workflow-example.md
+
+### Other
+- Update docker-tools.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/duplication.toon.yaml
+- Update project/evolution.toon.yaml
+- Update project/index.html
+- Update project/map.toon.yaml
+- Update project/prompt.txt
+- Update project/validation.toon.yaml
+
 ## [0.1.5] - 2026-03-28
 
 ### Docs
