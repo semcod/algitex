@@ -8,7 +8,8 @@ This example demonstrates how to use the telemetry module to:
 """
 
 import time
-from algitex.tools.telemetry,Telemetry
+from typing import Any
+from algitex.tools.telemetry import Telemetry
 
 
 def basic_telemetry_example() -> Any:

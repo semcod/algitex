@@ -1,3 +1,5 @@
+from typing import Any
+
 #!/usr/bin/env python3
 """Example 11: Aider MCP - Real Code Refactoring.
 

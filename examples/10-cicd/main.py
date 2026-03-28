@@ -1,3 +1,5 @@
+from typing import Any
+
 """Example: Using CI/CD module for automated quality gates.
 
 This example demonstrates how to:
@@ -7,7 +9,6 @@ This example demonstrates how to:
 4. Generate Dockerfiles and pre-commit hooks
 """
 
-,tempfile
 import shutil
 from pathlib import Path
 from algitex.tools.cicd import CICDGenerator, create_quality_gate_config

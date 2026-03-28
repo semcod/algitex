@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import List, Optional
 
-from algitex.tools.benchmark,ModelBenchmark
+from algitex.tools.benchmark import ModelBenchmark
 
 
 class BenchmarkMixin:

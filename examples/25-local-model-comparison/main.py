@@ -21,12 +21,15 @@ def main() -> int:
     print("Checking services...")
     p.print_service_status()
 
-    # Check Ollama
+    # Check Ollama - this also initializes the ollama service needed for benchmark
     ollama_status = p.check_ollama()
     if not ollama_status["healthy"]:
         print("❌ Ollama not running")
         print("   Start: ollama serve")
         return 1
+
+    # Initialize ollama service for benchmark (needed for benchmark_models)
+    _ = p._ollama_service
 
     models = ollama_status["details"]["models"]
     print(f"✅ Ollama running with {len(models)} models")

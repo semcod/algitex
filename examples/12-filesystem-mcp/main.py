@@ -1,10 +1,11 @@
+from typing import Any
+
 #!/usr/bin/env python3
 """Example 12: Filesystem MCP - Real File Operations.
 
 Creates sample files and demonstrates real filesystem operations.
 """
 
-,os
 from pathlib import Path
 
 

@@ -27,7 +27,14 @@ CLI via algitex:
     algitex todo fix --category unused_import
 """
 from algitex.todo.verifier import TodoVerifier, verify_todos, VerificationResult
-from algitex.todo.fixer import parallel_fix, parse_todo, TodoTask, FIXERS
+from algitex.todo.fixer import (
+    parallel_fix,
+    parse_todo,
+    TodoTask,
+    FIXERS,
+    mark_tasks_completed,
+    parallel_fix_and_update,
+)
 from algitex.todo.benchmark import (
     benchmark_fix,
     benchmark_sequential,
@@ -46,6 +53,8 @@ __all__ = [
     "parse_todo",
     "TodoTask",
     "FIXERS",
+    "mark_tasks_completed",
+    "parallel_fix_and_update",
     "benchmark_fix",
     "benchmark_sequential",
     "benchmark_parallel",

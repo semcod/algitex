@@ -1,10 +1,11 @@
+from typing import Any, Dict
+
 #!/usr/bin/env python3
 """Example 14: Docker MCP - Real Container Operations.
 
 Creates sample Dockerfile and demonstrates Docker operations.
 """
 
-,os
 from pathlib import Path
 import subprocess
 

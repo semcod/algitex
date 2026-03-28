@@ -8,6 +8,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.10] - 2026-03-28
 
 ### Fixed
+- Fix wildcard-imports issues (ticket-abf7bb0e)
+- Fix wildcard-imports issues (ticket-8bc5c078)
+- Fix wildcard-imports issues (ticket-4e8294b8)
+- Fix wildcard-imports issues (ticket-6c587419)
+- Fix wildcard-imports issues (ticket-59eb47a3)
+- Fix wildcard-imports issues (ticket-59057726)
+- Fix wildcard-imports issues (ticket-6196d0e1)
+- Fix wildcard-imports issues (ticket-572569aa)
+- Fix wildcard-imports issues (ticket-c3ffb1b1)
+- Fix wildcard-imports issues (ticket-b3cd6f38)
+- Fix wildcard-imports issues (ticket-c4cb4823)
+- Fix wildcard-imports issues (ticket-fb4052cc)
+- Fix wildcard-imports issues (ticket-a7c5d148)
+- Fix wildcard-imports issues (ticket-de2a9603)
+- Fix wildcard-imports issues (ticket-ff9cee3c)
+- Fix wildcard-imports issues (ticket-b43c2235)
+- Fix wildcard-imports issues (ticket-99205f1e)
+- Fix wildcard-imports issues (ticket-5604ae19)
+- Fix wildcard-imports issues (ticket-95487250)
+- Fix wildcard-imports issues (ticket-fb553724)
+- Fix wildcard-imports issues (ticket-65e799b0)
+
+## [0.1.10] - 2026-03-28
+
+### Fixed
 - Fix smart-return-type issues (ticket-f02b2ed3)
 - Fix string-concat issues (ticket-6bdcd284)
 - Fix magic-numbers issues (ticket-778acfea)
@@ -1586,6 +1611,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix llm-generated-code issues (ticket-06d0712f)
 
 ## [Unreleased]
+
+## [0.1.31] - 2026-03-28
+
+### Docs
+- Update CHANGELOG.md
+- Update docs/README.md
+- Update examples/22-claude-code-ollama/TODO.md
+- Update examples/23-continue-dev-ollama/TODO.md
+- Update examples/26-litellm-proxy-ollama/TODO.md
+- Update examples/27-unified-autofix/TODO.md
+- Update project/README.md
+- Update project/context.md
+
+### Other
+- Update examples/04-ide-integration/main.py
+- Update examples/05-cost-tracking/main.py
+- Update examples/06-telemetry/main.py
+- Update examples/07-context/main.py
+- Update examples/08-feedback/main.py
+- Update examples/09-workspace/main.py
+- Update examples/10-cicd/main.py
+- Update examples/11-aider-mcp/main.py
+- Update examples/11-aider-mcp/sample_project/calculator.py
+- Update examples/12-filesystem-mcp/main.py
+- ... and 39 more files
 
 ## [0.1.30] - 2026-03-28
 

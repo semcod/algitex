@@ -1,3 +1,5 @@
+from typing import Any
+
 #!/usr/bin/env python3
 """Example 18: Ollama Local - Local LLM Integration with practical demo"""
 

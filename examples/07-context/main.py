@@ -8,7 +8,8 @@ This example demonstrates how to use the context module to:
 """
 
 from pathlib import Path
-from algitex.tools.context,ContextBuilder
+from typing import Any
+from algitex.tools.context import ContextBuilder
 
 
 def basic_context_example() -> Any:

@@ -19673,3 +19673,276 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
+  - id: ticket-abf7bb0e
+    name: Fix wildcard-imports issues
+    description: Resolve 1 wildcard-imports issues in docker/code2llm/code2llm_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - docker/code2llm/code2llm_server.py
+    rule_id: wildcard-imports
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-8bc5c078
+    name: Fix wildcard-imports issues
+    description: Resolve 1 wildcard-imports issues in docker/proxym/proxym_mcp_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - docker/proxym/proxym_mcp_server.py
+    rule_id: wildcard-imports
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-4e8294b8
+    name: Fix wildcard-imports issues
+    description: Resolve 1 wildcard-imports issues in docker/proxym/proxym_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - docker/proxym/proxym_server.py
+    rule_id: wildcard-imports
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-6c587419
+    name: Fix wildcard-imports issues
+    description: Resolve 1 wildcard-imports issues in docker/vallm/vallm_mcp_server.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - docker/vallm/vallm_mcp_server.py
+    rule_id: wildcard-imports
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-59eb47a3
+    name: Fix wildcard-imports issues
+    description: Resolve 1 wildcard-imports issues in examples/05-cost-tracking/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/05-cost-tracking/main.py
+    rule_id: wildcard-imports
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-59057726
+    name: Fix wildcard-imports issues
+    description: Resolve 1 wildcard-imports issues in examples/06-telemetry/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/06-telemetry/main.py
+    rule_id: wildcard-imports
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-6196d0e1
+    name: Fix wildcard-imports issues
+    description: Resolve 1 wildcard-imports issues in examples/07-context/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/07-context/main.py
+    rule_id: wildcard-imports
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-572569aa
+    name: Fix wildcard-imports issues
+    description: Resolve 1 wildcard-imports issues in examples/09-workspace/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/09-workspace/main.py
+    rule_id: wildcard-imports
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-c3ffb1b1
+    name: Fix wildcard-imports issues
+    description: Resolve 1 wildcard-imports issues in examples/10-cicd/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/10-cicd/main.py
+    rule_id: wildcard-imports
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b3cd6f38
+    name: Fix wildcard-imports issues
+    description: Resolve 1 wildcard-imports issues in examples/12-filesystem-mcp/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/12-filesystem-mcp/main.py
+    rule_id: wildcard-imports
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-c4cb4823
+    name: Fix wildcard-imports issues
+    description: Resolve 1 wildcard-imports issues in examples/13-vallm/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/13-vallm/main.py
+    rule_id: wildcard-imports
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-fb4052cc
+    name: Fix wildcard-imports issues
+    description: Resolve 1 wildcard-imports issues in examples/14-docker-mcp/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/14-docker-mcp/main.py
+    rule_id: wildcard-imports
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-a7c5d148
+    name: Fix wildcard-imports issues
+    description: Resolve 1 wildcard-imports issues in examples/16-test-workflow/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/16-test-workflow/main.py
+    rule_id: wildcard-imports
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-de2a9603
+    name: Fix wildcard-imports issues
+    description: Resolve 2 wildcard-imports issues in examples/18-ollama-local/buggy_code.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/18-ollama-local/buggy_code.py
+    rule_id: wildcard-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-ff9cee3c
+    name: Fix wildcard-imports issues
+    description: Resolve 4 wildcard-imports issues in examples/19-local-mcp-tools/buggy_code.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - examples/19-local-mcp-tools/buggy_code.py
+    rule_id: wildcard-imports
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b43c2235
+    name: Fix wildcard-imports issues
+    description: Resolve 2 wildcard-imports issues in examples/20-self-hosted-pipeline/buggy_code.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/20-self-hosted-pipeline/buggy_code.py
+    rule_id: wildcard-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-99205f1e
+    name: Fix wildcard-imports issues
+    description: Resolve 3 wildcard-imports issues in examples/21-aider-cli-ollama/buggy_code.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/21-aider-cli-ollama/buggy_code.py
+    rule_id: wildcard-imports
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-5604ae19
+    name: Fix wildcard-imports issues
+    description: Resolve 2 wildcard-imports issues in examples/22-claude-code-ollama/buggy_code.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/22-claude-code-ollama/buggy_code.py
+    rule_id: wildcard-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-95487250
+    name: Fix wildcard-imports issues
+    description: Resolve 2 wildcard-imports issues in examples/23-continue-dev-ollama/buggy_code.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/23-continue-dev-ollama/buggy_code.py
+    rule_id: wildcard-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-fb553724
+    name: Fix wildcard-imports issues
+    description: Resolve 2 wildcard-imports issues in examples/26-litellm-proxy-ollama/buggy_code.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/26-litellm-proxy-ollama/buggy_code.py
+    rule_id: wildcard-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-65e799b0
+    name: Fix wildcard-imports issues
+    description: Resolve 1 wildcard-imports issues in examples/30-parallel-execution/parallel_real_world.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/30-parallel-execution/parallel_real_world.py
+    rule_id: wildcard-imports
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced

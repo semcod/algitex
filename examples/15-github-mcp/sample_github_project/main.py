@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Sample application."""
 
-def calculate(x, y) -> Any:
+def calculate(x, y):
     """Calculate sum."""
     return x + y
 

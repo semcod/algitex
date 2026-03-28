@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Sample buggy code for Claude Code + Ollama refactoring demo."""
 
-,os  # Unused
-,json  # Unused
 
 
 def calc(x, y, op) -> Any:

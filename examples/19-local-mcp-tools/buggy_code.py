@@ -3,8 +3,6 @@
 Przykładowy kod z celowymi błędami do naprawy przez lokalne MCP tools.
 """
 
-,sys  # Błąd: nieużywany
-,re  # Błąd: nieużywany
 from,import  timedelta  # Błąd: nieużywane
 
 def process_items(items) -> Any:

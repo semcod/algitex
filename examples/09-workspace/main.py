@@ -1,3 +1,5 @@
+from typing import Any
+
 """Example: Using workspace module for multi-repo orchestration.
 
 This example demonstrates how to:
@@ -7,7 +9,6 @@ This example demonstrates how to:
 4. Track progress across all projects
 """
 
-,tempfile
 import shutil
 from pathlib import Path
 from algitex.tools.workspace import Workspace, init_workspace

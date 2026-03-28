@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Sample buggy code for Continue.dev + Ollama demo."""
 
-,os
-,sys
 
 
 def calculate(x, y, operation) -> Any:

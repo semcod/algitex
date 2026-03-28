@@ -45,8 +45,8 @@ class TaskPartitioner:
                                 touched_regions.add(r2.key)
                     # Add shadow conflicts
                     for shadow in r.shadow_conflicts:
-                        for r2 in self._regions_by_symbol(shadow, f):
-                            touched_regions.add(r2.key)
+                        for r2_key in self._regions_by_symbol(shadow, f):
+                            touched_regions.add(r2_key)
 
             footprints[ticket["id"]] = touched_regions
         return footprints

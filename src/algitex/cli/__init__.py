@@ -101,6 +101,9 @@ todo_app.command("fix-auto")(todo_fix_parallel)
 todo_app.command("benchmark")(todo_benchmark)
 todo_app.command("hybrid")(todo_hybrid)
 
+# Top-level convenience command: algitex fix = algitex todo hybrid
+app.command("fix", help="Quick hybrid autofix (alias for 'todo hybrid')")(todo_hybrid)
+
 # Backward compatibility
 __all__ = [
     "app", "console",

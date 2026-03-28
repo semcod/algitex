@@ -13,7 +13,7 @@ from algitex import Project
 def main() -> int:
     parser = argparse.ArgumentParser(description="Unified AutoFix - Complete algitex demo")
     parser.add_argument("--limit", "-l", type=int, help="Limit number of issues to fix")
-    parser.add_argument("--backend", "-b", default="auto", choices=["auto", "ollama", "aider", "litellm-proxy"])
+    parser.add_argument("--backend", "-b", default="ollama", choices=["auto", "ollama", "aider", "litellm-proxy"])
     parser.add_argument("--demo", action="store_true", help="Run feature demos")
     
     args = parser.parse_args()

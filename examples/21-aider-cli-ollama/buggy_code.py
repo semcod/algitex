@@ -10,9 +10,6 @@ Ten plik zawiera typowe problemy które wykryje prefact -a:
 - complexity issues
 """
 
-,os  # Błąd: nieużywany
-,json  # Błąd: nieużywany
-,sys  # Błąd: nieużywany
 
 
 def calculate_price(qty, price, discount) -> Any:

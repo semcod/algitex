@@ -1,3 +1,5 @@
+from typing import Any
+
 #!/usr/bin/env python3
 """Example 15: GitHub MCP - Real Repository Workflow.
 

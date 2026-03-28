@@ -11,6 +11,7 @@ from algitex.tools.feedback import (
     FeedbackController, FeedbackPolicy, FeedbackLoop,
     FailureStrategy
 )
+from typing import Any
 
 
 def basic_feedback_example() -> Any:

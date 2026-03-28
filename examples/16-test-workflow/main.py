@@ -1,10 +1,11 @@
+from typing import Any, Dict
+
 #!/usr/bin/env python3
 """Example 16: Test Workflow - Real Project Setup.
 
 Creates sample project and demonstrates testing workflow.
 """
 
-,os
 from pathlib import Path
 import subprocess
 

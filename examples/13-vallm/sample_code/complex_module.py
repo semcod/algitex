@@ -1,5 +1,5 @@
 
-def process_data(data) -> Any:
+def process_data(data):
     """Process data with nested logic."""
     result = []
     for item in data:
@@ -12,7 +12,7 @@ def process_data(data) -> Any:
                                 result.append(sub.process())
     return result
 
-def calculate(x, y, operation) -> Any:
+def calculate(x, y, operation):
     if operation == "add":
         return x + y
     elif operation == "sub":

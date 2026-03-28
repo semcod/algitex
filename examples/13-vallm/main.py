@@ -1,10 +1,11 @@
+from typing import Any
+
 #!/usr/bin/env python3
 """Example 13: Vallm - Real Code Validation.
 
 Creates sample code with issues and demonstrates validation.
 """
 
-,os
 from pathlib import Path
 import subprocess
 

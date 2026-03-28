@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Sample buggy code for LiteLLM proxy + Ollama testing."""
 
-,os  # Unused
-,json  # Unused
 
 
 def calculate(x, y, operation) -> Any:

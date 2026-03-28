@@ -1,3 +1,5 @@
+from typing import Any
+
 #!/usr/bin/env python3
 """Example 19: Local MCP Tools - Self-hosted MCP services"""
 

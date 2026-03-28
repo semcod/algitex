@@ -41,8 +41,8 @@ def main() -> None:
     ]
     
     print(f"Discovered {len(patterns)} recurring patterns:")
-    for p in patterns:
-        print(f"  - {p['name']}: {p['frequency']}x occurrences ({p['type']})")
+    for pattern in patterns:
+        print(f"  - {pattern['name']}: {pattern['frequency']}x occurrences ({pattern['type']})")
     
     # Stage 2: Trace — structural analysis
     print("\n" + "=" * 40)

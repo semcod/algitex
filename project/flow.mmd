@@ -4,25 +4,26 @@ flowchart TD
     classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
 
     subgraph Core
+        docker__aider_mcp__aider_mcp_server__run_rest_server["run_rest_server"]
         docker__vallm__vallm_server__VallmServer__create_fastapi_app["create_fastapi_app"]
         docker__vallm__vallm_server__VallmServer___validate_static["_validate_static"]
         docker__vallm__vallm_server__VallmServer___validate_runtime["_validate_runtime"]
         docker__vallm__vallm_server__VallmServer___validate_security["_validate_security"]
         docker__vallm__vallm_server__VallmServer___analyze_complexity["_analyze_complexity"]
         docker__vallm__vallm_server__VallmServer__run["run"]
-        docker__proxym__proxym_server__ProxymServer__create_fastapi_app["create_fastapi_app"]
-        docker__proxym__proxym_server__ProxymServer___call_anthropic["_call_anthropic"]
-        docker__proxym__proxym_server__ProxymServer___call_openai["_call_openai"]
-        docker__proxym__proxym_server__ProxymServer___mock_response["_mock_response"]
-        docker__proxym__proxym_server__ProxymServer___track_cost["_track_cost"]
-        docker__proxym__proxym_server__ProxymServer__run["run"]
-        docker__vallm__vallm_mcp_server__run_rest_server["run_rest_server"]
-        docker__proxym__proxym_mcp_server__count_tokens["count_tokens"]
-        docker__proxym__proxym_mcp_server__chat_completion("chat_completion CC=9")
-        ...["+340 more"]
+        docker__code2llm__code2llm_mcp_server___analyze_python_file("_analyze_python_file CC=10")
+        docker__code2llm__code2llm_mcp_server___collect_project_metrics["_collect_project_metrics"]
+        docker__code2llm__code2llm_mcp_server__analyze_project["analyze_project"]
+        docker__code2llm__code2llm_mcp_server__create_rest_api["create_rest_api"]
+        docker__code2llm__code2llm_mcp_server__run_rest_server["run_rest_server"]
+        docker__planfile_mcp__planfile_mcp_server__planfile_create_tickets_bulk["planfile_create_tickets_bulk"]
+        docker__planfile_mcp__planfile_mcp_server__planfile_sync["planfile_sync"]
+        docker__planfile_mcp__planfile_mcp_server__run_rest_server["run_rest_server"]
+        ...["+469 more"]
     end
 
     subgraph Exporters
+        docker__code2llm__code2llm_mcp_server__evolution_export["evolution_export"]
     end
 
-    class docker__vallm__vallm_server__VallmServer__create_fastapi_app,docker__vallm__vallm_server__VallmServer___validate_static,docker__vallm__vallm_server__VallmServer___validate_runtime,docker__vallm__vallm_server__VallmServer___validate_security,docker__vallm__vallm_server__VallmServer___analyze_complexity,docker__vallm__vallm_server__VallmServer__run,docker__proxym__proxym_server__ProxymServer__create_fastapi_app,docker__proxym__proxym_server__ProxymServer___call_anthropic,docker__proxym__proxym_server__ProxymServer___call_openai,docker__proxym__proxym_server__ProxymServer___mock_response entry
+    class docker__aider_mcp__aider_mcp_server__run_rest_server,docker__vallm__vallm_server__VallmServer__create_fastapi_app,docker__vallm__vallm_server__VallmServer___validate_static,docker__vallm__vallm_server__VallmServer___validate_runtime,docker__vallm__vallm_server__VallmServer___validate_security,docker__vallm__vallm_server__VallmServer___analyze_complexity,docker__vallm__vallm_server__VallmServer__run,docker__code2llm__code2llm_mcp_server__run_rest_server,docker__planfile_mcp__planfile_mcp_server__planfile_create_tickets_bulk,docker__planfile_mcp__planfile_mcp_server__planfile_sync entry

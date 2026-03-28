@@ -4,8 +4,6 @@ Przykładowy kod z celowymi błędami do naprawy przez Algitex.
 Ten plik demonstruje typowe problemy które mogą być wykryte i naprawione.
 """
 
-,os  # Błąd: nieużywany
-,json  # Błąd: nieużywany
 from typing import  List, Any, Optional  # Błąd: nieużywane importy
 
 def calculate_statistics(data) -> Any:

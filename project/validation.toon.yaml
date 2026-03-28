@@ -1,22 +1,18 @@
-# vallm batch | 329f | 156✓ 5⚠ 23✗ | 2026-03-28
+# vallm batch | 329f | 148✓ 4⚠ 31✗ | 2026-03-28
 
 SUMMARY:
-  scanned: 329  passed: 156 (47.4%)  warnings: 5  errors: 23  unsupported: 150
+  scanned: 329  passed: 148 (45.0%)  warnings: 4  errors: 31  unsupported: 150
 
-WARNINGS[5]{path,score}:
+WARNINGS[4]{path,score}:
   examples/32-workspace-coordination/main.py,0.93
     issues[3]{rule,severity,message,line}:
-      complexity.cyclomatic,warning,main has cyclomatic complexity 24 (max: 15),23
-      complexity.lizard_cc,warning,main: CC=24 exceeds limit 15,23
-      complexity.lizard_length,warning,main: 121 lines exceeds limit 100,23
+      complexity.cyclomatic,warning,main has cyclomatic complexity 24 (max: 15),22
+      complexity.lizard_cc,warning,main: CC=24 exceeds limit 15,22
+      complexity.lizard_length,warning,main: 121 lines exceeds limit 100,22
   examples/33-hybrid-autofix/main.py,0.97
     issues[2]{rule,severity,message,line}:
       complexity.cyclomatic,warning,main has cyclomatic complexity 16 (max: 15),125
       complexity.lizard_cc,warning,main: CC=16 exceeds limit 15,125
-  src/algitex/todo/fixer.py,0.97
-    issues[2]{rule,severity,message,line}:
-      complexity.cyclomatic,warning,parallel_fix has cyclomatic complexity 22 (max: 15),201
-      complexity.lizard_cc,warning,parallel_fix: CC=21 exceeds limit 15,201
   tests/test_e2e_integration.py,0.97
     issues[2]{rule,severity,message,line}:
       complexity.cyclomatic,warning,test_complete_pipeline_flow has cyclomatic complexity 16 (max: 15),167
@@ -25,43 +21,73 @@ WARNINGS[5]{path,score}:
     issues[1]{rule,severity,message,line}:
       complexity.cyclomatic,warning,test_extract_functions_and_classes has cyclomatic complexity 19 (max: 15),14
 
-ERRORS[23]{path,score}:
-  src/algitex/tools/batch.py,0.00
-    issues[1]{rule,severity,message,line}:
-      syntax.parse,error,SyntaxError: invalid syntax,29
-  src/algitex/tools/benchmark.py,0.00
-    issues[1]{rule,severity,message,line}:
-      syntax.parse,error,SyntaxError: invalid syntax,24
-  src/algitex/tools/config.py,0.00
-    issues[1]{rule,severity,message,line}:
-      syntax.parse,error,SyntaxError: invalid syntax,15
-  src/algitex/tools/context.py,0.00
+ERRORS[31]{path,score}:
+  docker/code2llm/code2llm_server.py,0.00
     issues[1]{rule,severity,message,line}:
       syntax.parse,error,SyntaxError: invalid syntax,9
-  src/algitex/tools/docker.py,0.00
+  docker/proxym/proxym_mcp_server.py,0.00
+    issues[1]{rule,severity,message,line}:
+      syntax.parse,error,SyntaxError: invalid syntax,9
+  docker/proxym/proxym_server.py,0.00
+    issues[1]{rule,severity,message,line}:
+      syntax.parse,error,SyntaxError: invalid syntax,9
+  docker/vallm/vallm_mcp_server.py,0.00
+    issues[1]{rule,severity,message,line}:
+      syntax.parse,error,SyntaxError: invalid syntax,12
+  examples/05-cost-tracking/main.py,0.00
     issues[1]{rule,severity,message,line}:
       syntax.parse,error,SyntaxError: invalid syntax,11
-  src/algitex/tools/docker_transport.py,0.00
+  examples/06-telemetry/main.py,0.00
     issues[1]{rule,severity,message,line}:
-      syntax.parse,error,SyntaxError: invalid syntax,17
-  src/algitex/tools/parallel/partitioner.py,0.00
+      syntax.parse,error,SyntaxError: invalid syntax,11
+  examples/07-context/main.py,0.00
     issues[1]{rule,severity,message,line}:
-      syntax.parse,error,SyntaxError: invalid syntax,2
-  src/algitex/tools/services.py,0.00
-    issues[1]{rule,severity,message,line}:
-      syntax.parse,error,SyntaxError: invalid syntax,15
-  src/algitex/tools/tickets.py,0.00
-    issues[1]{rule,severity,message,line}:
-      syntax.parse,error,SyntaxError: invalid syntax,15
-  src/algitex/tools/todo_executor.py,0.00
-    issues[1]{rule,severity,message,line}:
-      syntax.parse,error,SyntaxError: invalid syntax,14
-  src/algitex/tools/todo_local.py,0.00
+      syntax.parse,error,SyntaxError: invalid syntax,11
+  examples/09-workspace/main.py,0.00
     issues[1]{rule,severity,message,line}:
       syntax.parse,error,SyntaxError: invalid syntax,10
-  src/algitex/tools/todo_runner.py,0.00
+  examples/10-cicd/main.py,0.00
     issues[1]{rule,severity,message,line}:
-      syntax.parse,error,SyntaxError: invalid syntax,16
+      syntax.parse,error,SyntaxError: invalid syntax,10
+  examples/12-filesystem-mcp/main.py,0.00
+    issues[1]{rule,severity,message,line}:
+      syntax.parse,error,SyntaxError: invalid syntax,7
+  examples/13-vallm/main.py,0.00
+    issues[1]{rule,severity,message,line}:
+      syntax.parse,error,SyntaxError: invalid syntax,7
+  examples/14-docker-mcp/main.py,0.00
+    issues[1]{rule,severity,message,line}:
+      syntax.parse,error,SyntaxError: invalid syntax,7
+  examples/16-test-workflow/main.py,0.00
+    issues[1]{rule,severity,message,line}:
+      syntax.parse,error,SyntaxError: invalid syntax,7
+  examples/18-ollama-local/buggy_code.py,0.00
+    issues[1]{rule,severity,message,line}:
+      syntax.parse,error,SyntaxError: invalid syntax,7
+  examples/19-local-mcp-tools/buggy_code.py,0.00
+    issues[1]{rule,severity,message,line}:
+      syntax.parse,error,SyntaxError: invalid syntax,6
+  examples/20-self-hosted-pipeline/buggy_code.py,0.00
+    issues[1]{rule,severity,message,line}:
+      syntax.parse,error,SyntaxError: invalid syntax,7
+  examples/21-aider-cli-ollama/buggy_code.py,0.00
+    issues[1]{rule,severity,message,line}:
+      syntax.parse,error,SyntaxError: invalid syntax,13
+  examples/22-claude-code-ollama/buggy_code.py,0.00
+    issues[1]{rule,severity,message,line}:
+      syntax.parse,error,SyntaxError: invalid syntax,4
+  examples/23-continue-dev-ollama/buggy_code.py,0.00
+    issues[1]{rule,severity,message,line}:
+      syntax.parse,error,SyntaxError: invalid syntax,4
+  examples/26-litellm-proxy-ollama/buggy_code.py,0.00
+    issues[1]{rule,severity,message,line}:
+      syntax.parse,error,SyntaxError: invalid syntax,4
+  examples/30-parallel-execution/parallel_real_world.py,0.00
+    issues[1]{rule,severity,message,line}:
+      syntax.parse,error,SyntaxError: invalid syntax,9
+  src/algitex/project/benchmark.py,0.00
+    issues[1]{rule,severity,message,line}:
+      syntax.parse,error,SyntaxError: invalid syntax,7
   tests/test_examples_30_32.py,0.76
     issues[9]{rule,severity,message,line}:
       python.import.resolvable,error,Module 'parallel_refactoring' not found,53
@@ -82,43 +108,29 @@ ERRORS[23]{path,score}:
   examples/16-test-workflow/sample_test_project/tests/test_calculator.py,0.86
     issues[1]{rule,severity,message,line}:
       python.import.resolvable,error,Module 'calculator' not found,6
-  docker/proxym/proxym_mcp_server.py,0.87
-    issues[4]{rule,severity,message,line}:
-      python.import.resolvable,error,Module 'mcp.server.fastmcp' not found,14
-      python.import.resolvable,error,Module 'fastapi' not found,15
-      python.import.resolvable,error,Module 'fastapi.responses' not found,16
-      python.import.resolvable,error,Module 'uvicorn' not found,17
   docker/planfile-mcp/planfile_mcp_server.py,0.88
     issues[3]{rule,severity,message,line}:
       python.import.resolvable,error,Module 'mcp.server.fastmcp' not found,15
       python.import.resolvable,error,Module 'fastapi' not found,16
       python.import.resolvable,error,Module 'uvicorn' not found,17
-  docker/proxym/proxym_server.py,0.89
-    issues[3]{rule,severity,message,line}:
-      python.import.resolvable,error,Module 'fastapi' not found,15
-      python.import.resolvable,error,Module 'fastapi.responses' not found,16
-      python.import.resolvable,error,Module 'uvicorn' not found,17
-  docker/vallm/vallm_mcp_server.py,0.89
-    issues[3]{rule,severity,message,line}:
-      python.import.resolvable,error,Module 'mcp.server.fastmcp' not found,16
-      python.import.resolvable,error,Module 'fastapi' not found,17
-      python.import.resolvable,error,Module 'uvicorn' not found,18
+  docker/vallm/vallm_server.py,0.90
+    issues[2]{rule,severity,message,line}:
+      python.import.resolvable,error,Module 'fastapi' not found,14
+      python.import.resolvable,error,Module 'uvicorn' not found,15
   docker/code2llm/code2llm_mcp_server.py,0.91
     issues[3]{rule,severity,message,line}:
       python.import.resolvable,error,Module 'mcp.server.fastmcp' not found,16
       python.import.resolvable,error,Module 'fastapi' not found,17
       python.import.resolvable,error,Module 'uvicorn' not found,18
-  docker/vallm/vallm_server.py,0.92
-    issues[2]{rule,severity,message,line}:
-      python.import.resolvable,error,Module 'fastapi' not found,16
-      python.import.resolvable,error,Module 'uvicorn' not found,17
-  docker/code2llm/code2llm_server.py,0.93
-    issues[2]{rule,severity,message,line}:
-      python.import.resolvable,error,Module 'fastapi' not found,16
-      python.import.resolvable,error,Module 'uvicorn' not found,17
+  src/algitex/tools/context.py,0.94
+    issues[1]{rule,severity,message,line}:
+      python.import.resolvable,error,Module 'qdrant_client' not found,178
   src/algitex/tools/telemetry.py,0.95
     issues[1]{rule,severity,message,line}:
       python.import.resolvable,error,Module 'langfuse' not found,97
+  src/algitex/tools/batch.py,0.96
+    issues[1]{rule,severity,message,line}:
+      python.import.resolvable,error,Module 'tqdm' not found,34
 
 UNSUPPORTED[5]{bucket,count}:
   *.md,72

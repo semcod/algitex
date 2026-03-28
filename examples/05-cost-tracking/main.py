@@ -8,7 +8,7 @@ Run:
     python examples/05_cost_tracking.py
 """
 
-from algitex.algo,Loop
+from algitex.algo import Loop
 from algitex.tools.tickets import Tickets
 
 

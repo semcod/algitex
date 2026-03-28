@@ -342,3 +342,68 @@ def parallel_fix(
         "skipped": total_skipped,
         "errors": total_errors
     }
+
+
+def mark_tasks_completed(todo_path: str | Path, completed_tasks: list[TodoTask]) -> int:
+    """Mark completed tasks in TODO.md by changing - [ ] to - [x].
+    
+    Args:
+        todo_path: Path to TODO.md file
+        completed_tasks: List of tasks that were successfully fixed
+        
+    Returns:
+        Number of tasks marked as completed
+    """
+    todo_path = Path(todo_path)
+    if not todo_path.exists():
+        return 0
+    
+    text = todo_path.read_text()
+    marked = 0
+    
+    for task in completed_tasks:
+        # Create pattern to match this specific task
+        # Format: - [ ] file:line - message
+        pattern = rf"^- \[ \] {re.escape(task.file)}:{task.line} - {re.escape(task.message)}$"
+        
+        # Find and replace
+        new_text, count = re.subn(pattern, f"- [x] {task.file}:{task.line} - {task.message}", text, flags=re.MULTILINE)
+        if count > 0:
+            text = new_text
+            marked += 1
+    
+    if marked > 0:
+        todo_path.write_text(text)
+        print(f"\n✓ Marked {marked} tasks as completed in TODO.md")
+    
+    return marked
+
+
+def parallel_fix_and_update(
+    todo_path: str | Path,
+    workers: int = 8,
+    dry_run: bool = True,
+    category_filter: str | None = None
+) -> dict[str, int]:
+    """Fix tasks and update TODO.md to mark completed tasks.
+    
+    This is a wrapper around parallel_fix that also updates the TODO.md
+    to mark successfully fixed tasks as completed.
+    """
+    # First, run the fix
+    result = parallel_fix(todo_path, workers, dry_run, category_filter)
+    
+    # If not dry run and we fixed something, mark tasks as completed
+    if not dry_run and result["fixed"] > 0:
+        # Get the list of tasks that were fixed
+        tasks = parse_todo(todo_path)
+        if category_filter:
+            tasks = [t for t in tasks if t.category == category_filter]
+        
+        # Filter to only FIXERS categories (mechanical fixes)
+        fixable_tasks = [t for t in tasks if t.category in FIXERS]
+        
+        # Mark them as completed
+        mark_tasks_completed(todo_path, fixable_tasks[:result["fixed"]])
+    
+    return result

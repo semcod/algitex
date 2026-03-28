@@ -20,7 +20,6 @@ Usage:
     llm_results = fixer.fix_complex("TODO.md")
 """
 import time
-,asyncio
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -290,7 +289,6 @@ class HybridAutofix:
 
                 backend = ProxyBackend(
                     proxy_url=self.proxy_url,
-                    tool=self.tool,  # Pass tool selection (aider, ollama, direct)
                     dry_run=self.dry_run
                 )
                 result = backend.fix(backend_task)

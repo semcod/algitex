@@ -1,3 +1,5 @@
+from typing import Any
+
 """Main demonstration of workspace coordination across multiple repositories.
 
 This script shows how algitex orchestrates analysis and fixes across
