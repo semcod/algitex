@@ -4,11 +4,11 @@ Przykładowy kod z celowymi błędami do naprawy przez self-hosted pipeline.
 Ten plik służy do demonstracji pełnego workflowu: analiza → walidacja → naprawa.
 """
 
-import hashlib  # Błąd: nieużywany
-import base64  # Błąd: nieużywany
-from collections import defaultdict, Counter  # Błąd: nieużywane
+,hashlib  # Błąd: nieużywany
+,base64  # Błąd: nieużywany
+from collections import  Counter  # Błąd: nieużywane
 
-def fetch_user_data(user_id, db_connection):
+def fetch_user_data(user_id, db_connection) -> Any:
     """Fetch user data from database."""
     cursor = db_connection.cursor()
     
@@ -18,7 +18,7 @@ def fetch_user_data(user_id, db_connection):
     # Błąd: nie zamknięty cursor
     return cursor.fetchone()
 
-def calculate_discount(price, user_type):
+def calculate_discount(price, user_type) -> Any:
     """Calculate discounted price."""
     # Błąd: magic numbers
     if user_type == "premium":
@@ -29,7 +29,7 @@ def calculate_discount(price, user_type):
         # Błąd: brak obsługi nieznanego user_type
         return price
 
-def log_activity(user_id, action):
+def log_activity(user_id, action) -> None:
     """Log user activity."""
     # Błąd: hardcoded path
     with open("/var/log/app/activity.log", "a") as f:

@@ -13,7 +13,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 from algitex.tools.mcp import MCPOrchestrator
 
 
-def main():
+def main() -> int:
     parser = argparse.ArgumentParser(description="MCP Service Orchestrator")
     parser.add_argument(
         "command",

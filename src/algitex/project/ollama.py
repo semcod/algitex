@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import  Optional
 
-from algitex.tools.ollama import OllamaClient, OllamaService
+from algitex.tools.ollama import  OllamaService
 
 
 class OllamaMixin:

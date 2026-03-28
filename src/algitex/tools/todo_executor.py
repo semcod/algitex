@@ -11,7 +11,7 @@ Usage:
     results = executor.run(tasks, tool_name="filesystem-mcp")
 """
 
-from dataclasses,dataclass
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
 import json

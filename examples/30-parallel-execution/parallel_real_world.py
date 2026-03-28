@@ -6,9 +6,9 @@ teams need to work simultaneously without conflicts.
 """
 from pathlib import Path
 from algitex import Project
-from algitex.tools.parallel import ParallelExecutor, RegionExtractor, TaskPartitioner
+from algitex.tools.parallel,RegionExtractor, TaskPartitioner
 
-def setup_sample_project(base_dir: Path):
+def setup_sample_project(base_dir: Path) -> None:
     """Create a sample project structure for demonstration."""
     # Create directory structure
     dirs = ["src/auth", "src/api", "src/models", "src/utils", "tests"]
@@ -123,7 +123,7 @@ def calculate_pagination(page, limit, total):
     for file_path, content in files.items():
         (base_dir / file_path).write_text(content)
 
-def main():
+def main() -> None:
     """Demonstrate parallel refactoring of a real-world project."""
     import tempfile
     

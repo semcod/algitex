@@ -52,7 +52,7 @@ def roo_code_config() -> None:
     }
 
 
-def cline_config():
+def cline_config() -> Dict:
     """Settings for Cline (VS Code extension)."""
     return {
         "cline.provider": "openai-compatible",
@@ -62,7 +62,7 @@ def cline_config():
     }
 
 
-def continuedev_config():
+def continuedev_config() -> Dict:
     """~/.continue/config.json for Continue.dev."""
     return {
         "models": [
@@ -91,7 +91,7 @@ def continuedev_config():
     }
 
 
-def aider_env():
+def aider_env() -> Dict:
     """Environment variables for Aider."""
     return {
         "OPENAI_API_BASE": PROXY_URL,

@@ -19400,3 +19400,276 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
+  - id: ticket-f02b2ed3
+    name: Fix smart-return-type issues
+    description: Resolve 7 smart-return-type issues in examples/33-hybrid-autofix/main.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - examples/33-hybrid-autofix/main.py
+    rule_id: smart-return-type
+    count: 7
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-6bdcd284
+    name: Fix string-concat issues
+    description: Resolve 7 string-concat issues in examples/33-hybrid-autofix/main.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - examples/33-hybrid-autofix/main.py
+    rule_id: string-concat
+    count: 7
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-778acfea
+    name: Fix magic-numbers issues
+    description: Resolve 16 magic-numbers issues in examples/33-hybrid-autofix/main.py
+    task_type: prefactor
+    priority: high
+    estimate: 3d
+    files:
+    - examples/33-hybrid-autofix/main.py
+    rule_id: magic-numbers
+    count: 16
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-8963b389
+    name: Fix llm-generated-code issues
+    description: Resolve 6 llm-generated-code issues in examples/33-hybrid-autofix/main.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - examples/33-hybrid-autofix/main.py
+    rule_id: llm-generated-code
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-8ea43096
+    name: Fix ai-boilerplate issues
+    description: Resolve 2 ai-boilerplate issues in examples/33-hybrid-autofix/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/33-hybrid-autofix/main.py
+    rule_id: ai-boilerplate
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-212cd122
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in src/algitex/todo/hybrid.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/todo/hybrid.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-408c7e20
+    name: Fix string-concat issues
+    description: Resolve 4 string-concat issues in src/algitex/todo/hybrid.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - src/algitex/todo/hybrid.py
+    rule_id: string-concat
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-c710489c
+    name: Fix unused-imports issues
+    description: Resolve 28 unused-imports issues in src/algitex/todo/hybrid.py
+    task_type: prefactor
+    priority: high
+    estimate: 3d
+    files:
+    - src/algitex/todo/hybrid.py
+    rule_id: unused-imports
+    count: 28
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-6a6347ca
+    name: Fix duplicate-imports issues
+    description: Resolve 2 duplicate-imports issues in src/algitex/todo/hybrid.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/todo/hybrid.py
+    rule_id: duplicate-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-5407f6e9
+    name: Fix magic-numbers issues
+    description: Resolve 4 magic-numbers issues in src/algitex/todo/hybrid.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - src/algitex/todo/hybrid.py
+    rule_id: magic-numbers
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-7cf51540
+    name: Fix llm-generated-code issues
+    description: Resolve 5 llm-generated-code issues in src/algitex/todo/hybrid.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - src/algitex/todo/hybrid.py
+    rule_id: llm-generated-code
+    count: 5
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-cb3a9367
+    name: Fix wildcard-imports issues
+    description: Resolve 1 wildcard-imports issues in src/algitex/tools/batch.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/batch.py
+    rule_id: wildcard-imports
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-074fdd4e
+    name: Fix wildcard-imports issues
+    description: Resolve 1 wildcard-imports issues in src/algitex/tools/config.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/config.py
+    rule_id: wildcard-imports
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-e067e9fa
+    name: Fix wildcard-imports issues
+    description: Resolve 1 wildcard-imports issues in src/algitex/tools/context.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/context.py
+    rule_id: wildcard-imports
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-3c2554bd
+    name: Fix wildcard-imports issues
+    description: Resolve 1 wildcard-imports issues in src/algitex/tools/docker.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/docker.py
+    rule_id: wildcard-imports
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-ab773137
+    name: Fix wildcard-imports issues
+    description: Resolve 1 wildcard-imports issues in src/algitex/tools/docker_transport.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/docker_transport.py
+    rule_id: wildcard-imports
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-9b9e110b
+    name: Fix wildcard-imports issues
+    description: Resolve 1 wildcard-imports issues in src/algitex/tools/parallel/partitioner.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/parallel/partitioner.py
+    rule_id: wildcard-imports
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-cc0c6754
+    name: Fix wildcard-imports issues
+    description: Resolve 1 wildcard-imports issues in src/algitex/tools/tickets.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/tickets.py
+    rule_id: wildcard-imports
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-3a1fe365
+    name: Fix wildcard-imports issues
+    description: Resolve 1 wildcard-imports issues in src/algitex/tools/todo_executor.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/todo_executor.py
+    rule_id: wildcard-imports
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-aa3e5ab7
+    name: Fix wildcard-imports issues
+    description: Resolve 1 wildcard-imports issues in src/algitex/tools/todo_local.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/todo_local.py
+    rule_id: wildcard-imports
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-43e71a97
+    name: Fix wildcard-imports issues
+    description: Resolve 1 wildcard-imports issues in src/algitex/tools/todo_runner.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/todo_runner.py
+    rule_id: wildcard-imports
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced

@@ -11,7 +11,6 @@ import statistics
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Callable
 
 from algitex.todo.fixer import parse_todo, FIXERS, TodoTask
 
@@ -52,7 +51,7 @@ class BenchmarkResult:
         """Tickets per second."""
         return self.total_tasks / (self.total_time_ms / 1000) if self.total_time_ms > 0 else 0
 
-    def print_report(self, detailed: bool = False):
+    def print_report(self, detailed: bool = False) -> None:
         """Print formatted benchmark report."""
         print(f"\n{'═' * 70}")
         print(f"  BENCHMARK: {self.mode.upper()} | Workers: {self.workers} | Tasks: {self.total_tasks}")

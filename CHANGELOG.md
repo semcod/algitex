@@ -8,6 +8,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.10] - 2026-03-28
 
 ### Fixed
+- Fix smart-return-type issues (ticket-f02b2ed3)
+- Fix string-concat issues (ticket-6bdcd284)
+- Fix magic-numbers issues (ticket-778acfea)
+- Fix llm-generated-code issues (ticket-8963b389)
+- Fix ai-boilerplate issues (ticket-8ea43096)
+- Fix smart-return-type issues (ticket-212cd122)
+- Fix string-concat issues (ticket-408c7e20)
+- Fix unused-imports issues (ticket-c710489c)
+- Fix duplicate-imports issues (ticket-6a6347ca)
+- Fix magic-numbers issues (ticket-5407f6e9)
+- Fix llm-generated-code issues (ticket-7cf51540)
+- Fix wildcard-imports issues (ticket-cb3a9367)
+- Fix wildcard-imports issues (ticket-074fdd4e)
+- Fix wildcard-imports issues (ticket-e067e9fa)
+- Fix wildcard-imports issues (ticket-3c2554bd)
+- Fix wildcard-imports issues (ticket-ab773137)
+- Fix wildcard-imports issues (ticket-9b9e110b)
+- Fix wildcard-imports issues (ticket-cc0c6754)
+- Fix wildcard-imports issues (ticket-3a1fe365)
+- Fix wildcard-imports issues (ticket-aa3e5ab7)
+- Fix wildcard-imports issues (ticket-43e71a97)
+
+## [0.1.10] - 2026-03-28
+
+### Fixed
 - Fix smart-return-type issues (ticket-61632c6f)
 - Fix string-concat issues (ticket-bf8de75f)
 - Fix unused-imports issues (ticket-c9c10a3e)
@@ -1561,6 +1586,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix llm-generated-code issues (ticket-06d0712f)
 
 ## [Unreleased]
+
+## [0.1.30] - 2026-03-28
+
+### Docs
+- Update CHANGELOG.md
+- Update TODO.md
+
+### Other
+- Update docker/code2llm/code2llm_mcp_server.py
+- Update docker/code2llm/code2llm_server.py
+- Update docker/proxym/proxym_mcp_server.py
+- Update docker/proxym/proxym_server.py
+- Update docker/vallm/vallm_mcp_server.py
+- Update docker/vallm/vallm_server.py
+- Update examples/04-ide-integration/main.py
+- Update examples/05-cost-tracking/main.py
+- Update examples/06-telemetry/main.py
+- Update examples/07-context/main.py
+- ... and 48 more files
 
 ## [0.1.29] - 2026-03-28
 

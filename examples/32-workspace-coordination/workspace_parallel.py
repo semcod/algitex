@@ -12,7 +12,7 @@ Requires workspace.yaml in current directory.
 from algitex.tools.workspace import Workspace
 
 
-def main():
+def main() -> None:
     ws = Workspace("./workspace.yaml")
 
     # ─── Step 1: Analyze all repos in parallel ────────────

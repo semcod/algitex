@@ -9,7 +9,7 @@ from rich.table import Table
 console = Console()
 
 
-def algo_discover(path: str = typer.Option(".", "--path", "-p")):
+def algo_discover(path: str = typer.Option(".", "--path", "-p")) -> None:
     """Stage 1: Start trace collection from proxym."""
     from algitex.algo import Loop
     loop = Loop(path)

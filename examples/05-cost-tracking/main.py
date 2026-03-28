@@ -8,12 +8,11 @@ Run:
     python examples/05_cost_tracking.py
 """
 
-from algitex import Project
-from algitex.algo import Loop
+from algitex.algo,Loop
 from algitex.tools.tickets import Tickets
 
 
-def main():
+def main() -> None:
     print("=== Cost Tracking Demo ===\n")
 
     # 1. Create tickets with simulated cost metadata

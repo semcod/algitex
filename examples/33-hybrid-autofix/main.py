@@ -24,7 +24,7 @@ from algitex.todo import HybridAutofix, verify_todos, benchmark_fix
 DEFAULT_TODO = Path(__file__).parent / "TODO.md"
 
 
-def demo_dry_run(todo_file=DEFAULT_TODO):
+def demo_dry_run(todo_file=DEFAULT_TODO) -> None:
     """Demo: Dry run to preview what would be fixed."""
     print("\n" + "=" * 70)
     print("DEMO 1: Dry Run (Preview)")
@@ -45,7 +45,7 @@ def demo_dry_run(todo_file=DEFAULT_TODO):
     print("   Use --execute to apply fixes.")
 
 
-def demo_verify_first(todo_file=DEFAULT_TODO):
+def demo_verify_first(todo_file=DEFAULT_TODO) -> None:
     """Demo: Verify TODO tasks before fixing."""
     print("\n" + "=" * 70)
     print("DEMO 2: Verify TODO Tasks First")
@@ -57,7 +57,7 @@ def demo_verify_first(todo_file=DEFAULT_TODO):
     print(f"Invalid (duplicates): {result.invalid}")
 
 
-def demo_benchmark(todo_file=DEFAULT_TODO):
+def demo_benchmark(todo_file=DEFAULT_TODO) -> None:
     """Demo: Benchmark performance."""
     print("\n" + "=" * 70)
     print("DEMO 3: Benchmark Performance")

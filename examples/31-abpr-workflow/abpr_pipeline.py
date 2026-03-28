@@ -12,7 +12,7 @@ Run:
 from algitex import Project, Loop
 
 
-def abpr_pipeline(project_path: str = "./my-app"):
+def abpr_pipeline(project_path: str = "./my-app") -> None:
     """ABPR loop: Execute → Trace → Conflict → Rule → Validate → Repeat."""
 
     p = Project(project_path)

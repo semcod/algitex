@@ -6,13 +6,13 @@ Routes requests to multiple LLM providers with budget tracking
 
 import os
 import sys
-import json
+,json
 import logging
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 from datetime import datetime
 
 from mcp.server.fastmcp import FastMCP
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 import uvicorn
 import httpx

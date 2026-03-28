@@ -10,7 +10,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 from algitex import Project
 
 
-def main():
+def main() -> int:
     parser = argparse.ArgumentParser(description="Unified AutoFix - Complete algitex demo")
     parser.add_argument("--limit", "-l", type=int, help="Limit number of issues to fix")
     parser.add_argument("--backend", "-b", default="auto", choices=["auto", "ollama", "aider", "litellm-proxy"])

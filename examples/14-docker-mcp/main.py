@@ -4,12 +4,12 @@
 Creates sample Dockerfile and demonstrates Docker operations.
 """
 
-import os
+,os
 from pathlib import Path
 import subprocess
 
 
-def create_sample_docker_project():
+def create_sample_docker_project() -> Any:
     """Create sample project with Dockerfile."""
     base_dir = Path(__file__).parent / "sample_docker_project"
     base_dir.mkdir(exist_ok=True)
@@ -56,7 +56,7 @@ CMD ["python", "app.py"]
     return base_dir
 
 
-def run_docker_command(cmd, cwd=None):
+def run_docker_command(cmd, cwd=None) -> Dict:
     """Run Docker command and return result."""
     try:
         result = subprocess.run(
@@ -74,7 +74,7 @@ def run_docker_command(cmd, cwd=None):
         return {"success": False, "output": "Docker not found", "returncode": -1}
 
 
-def demo_docker_operations():
+def demo_docker_operations() -> None:
     """Demonstrate real Docker operations."""
     print("=== Docker MCP - Real Container Operations ===\n")
     

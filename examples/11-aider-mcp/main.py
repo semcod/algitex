@@ -8,7 +8,7 @@ import os
 from pathlib import Path
 
 
-def create_sample_project():
+def create_sample_project() -> Any:
     """Create sample project with code to refactor."""
     base_dir = Path(__file__).parent / "sample_project"
     base_dir.mkdir(exist_ok=True)
@@ -42,7 +42,7 @@ def calc(a,b,op):
     return base_dir
 
 
-def demo_refactoring():
+def demo_refactoring() -> None:
     """Demonstrate real refactoring workflow."""
     print("=== Aider MCP - Real Refactoring Demo ===\n")
     

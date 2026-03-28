@@ -3,11 +3,11 @@
 Przykładowy kod z celowymi błędami do naprawy przez lokalne MCP tools.
 """
 
-import sys  # Błąd: nieużywany import
-import re  # Błąd: nieużywany import
-from datetime import datetime, timedelta  # Błąd: nieużywane
+,sys  # Błąd: nieużywany
+,re  # Błąd: nieużywany
+from,import  timedelta  # Błąd: nieużywane
 
-def process_items(items):
+def process_items(items) -> Any:
     """Process a list of items."""
     results = []
     
@@ -20,7 +20,7 @@ def process_items(items):
     
     return results
 
-def load_data(source):
+def load_data(source) -> Any:
     """Load data from source."""
     # Błąd: SQL injection vulnerability
     query = "SELECT * FROM users WHERE id = " + source
@@ -30,7 +30,7 @@ def load_data(source):
     
     return config
 
-def cache_result(func):
+def cache_result(func) -> Any:
     """Decorator with issues."""
     cache = {}
     

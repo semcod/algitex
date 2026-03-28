@@ -10,17 +10,16 @@ import yaml
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from algitex.tools.workspace import Workspace
 
 
-def load_workspace_config():
+def load_workspace_config() -> Any:
     """Load the workspace configuration."""
     config_path = Path(__file__).parent / "workspace.yaml"
     with open(config_path) as f:
         return yaml.safe_load(f)
 
 
-def main():
+def main() -> None:
     """Demonstrate workspace coordination across multiple repositories."""
     print("=" * 60)
     print("Workspace Coordination Demo")

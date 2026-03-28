@@ -12,7 +12,7 @@ Usage:
 
 from __future__ import annotations
 
-import os
+,os
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -257,7 +257,7 @@ class AutoFix:
 
         return result
 
-    def print_summary(self, results: List[FixResult]):
+    def print_summary(self, results: List[FixResult]) -> None:
         """Print summary of fixing results."""
         print("\n" + "=" * 70)
         print("AutoFix Summary")

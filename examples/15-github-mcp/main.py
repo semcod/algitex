@@ -8,7 +8,7 @@ import os
 from pathlib import Path
 
 
-def create_sample_project():
+def create_sample_project() -> Any:
     """Create sample project for GitHub workflow."""
     base_dir = Path(__file__).parent / "sample_github_project"
     base_dir.mkdir(exist_ok=True)
@@ -61,7 +61,7 @@ A sample project for GitHub MCP demonstration.
     return base_dir
 
 
-def demo_github_workflow():
+def demo_github_workflow() -> None:
     """Demonstrate GitHub workflow."""
     print("=== GitHub MCP - Real Repository Workflow ===\n")
     

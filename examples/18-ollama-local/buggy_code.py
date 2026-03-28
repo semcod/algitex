@@ -4,11 +4,11 @@ Przykładowy kod z celowymi błędami do naprawy przez Algitex.
 Ten plik demonstruje typowe problemy które mogą być wykryte i naprawione.
 """
 
-import os  # Błąd: nieużywany import
-import json  # Błąd: nieużywany import
-from typing import Dict, List, Any, Optional  # Błąd: nieużywane importy
+,os  # Błąd: nieużywany
+,json  # Błąd: nieużywany
+from typing import  List, Any, Optional  # Błąd: nieużywane importy
 
-def calculate_statistics(data):
+def calculate_statistics(data) -> Any:
     """Calculate basic statistics for a dataset."""
     # Błąd: brak sprawdzania czy data jest pusta
     total = 0
@@ -20,14 +20,14 @@ def calculate_statistics(data):
     result = "Total: " + str(total) + ", Average: " + str(average)
     return result
 
-def find_user(users, name):
+def find_user(users, name) -> Any:
     """Find user by name."""
     for user in users:
         if user['name'] == name:
             return user
     # Błąd: brak return gdy nie znaleziono
 
-def process_file(filename):
+def process_file(filename) -> Any:
     """Process a file."""
     f = open(filename, 'r')  # Błąd: nie zamknięty plik, brak context manager
     content = f.read()

@@ -7,13 +7,13 @@ This example demonstrates how to:
 4. Track progress across all projects
 """
 
-import tempfile
+,tempfile
 import shutil
 from pathlib import Path
-from algitex.tools.workspace import Workspace, RepoConfig, init_workspace
+from algitex.tools.workspace import Workspace, init_workspace
 
 
-def create_sample_workspace():
+def create_sample_workspace() -> Any:
     """Create a sample workspace configuration."""
     print("=== Creating Sample Workspace ===\n")
     
@@ -88,7 +88,7 @@ def create_sample_workspace():
     return str(config_path)
 
 
-def workspace_management_example():
+def workspace_management_example() -> Any:
     """Example of workspace management operations."""
     print("\n=== Workspace Management Example ===\n")
     
@@ -127,7 +127,7 @@ def workspace_management_example():
     return workspace
 
 
-def cross_repo_analysis_example():
+def cross_repo_analysis_example() -> Any:
     """Example of analyzing multiple repositories."""
     print("\n=== Cross-Repository Analysis ===\n")
     

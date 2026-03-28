@@ -13,7 +13,7 @@ Usage:
     results = runner.run_from_file("TODO.md", tool="ollama-mcp")
 """
 
-from dataclasses,dataclass
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
 import json

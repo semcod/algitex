@@ -20,11 +20,10 @@ Usage:
     llm_results = fixer.fix_complex("TODO.md")
 """
 import time
-import asyncio
+,asyncio
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Optional, Callable
 from collections import deque
 import threading
 
@@ -362,7 +361,7 @@ class HybridAutofix:
             cost_estimate=self.total_cost
         )
 
-    def print_summary(self, result: HybridResult):
+    def print_summary(self, result: HybridResult) -> None:
         """Print formatted summary of hybrid fix results."""
         print(f"\n{'═' * 70}")
         print("  HYBRID AUTOFIX SUMMARY")

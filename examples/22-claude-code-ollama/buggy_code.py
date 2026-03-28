@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Sample buggy code for Claude Code + Ollama refactoring demo."""
 
-import os  # Unused
-import json  # Unused
+,os  # Unused
+,json  # Unused
 
 
-def calc(x, y, op):
+def calc(x, y, op) -> Any:
     # No type hints, no docstring
     if op == "+":
         return x + y
@@ -20,7 +20,7 @@ def calc(x, y, op):
     return None
 
 
-def process(items):
+def process(items) -> Any:
     # High complexity
     result = []
     for item in items:
@@ -32,7 +32,7 @@ def process(items):
     return result
 
 
-def load(path):
+def load(path) -> Any:
     # Resource leak
     f = open(path, 'r')
     return f.read()

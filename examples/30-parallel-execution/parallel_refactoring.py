@@ -12,13 +12,12 @@ What happens:
     3. Groups them on same agent (sequential) while other agents run in parallel
     4. Merges all results — zero conflicts because regions don't overlap
 """
-from pathlib import Path
 
 from algitex import Project
 from algitex.tools.parallel import ParallelExecutor, RegionExtractor, TaskPartitioner
 
 
-def main():
+def main() -> None:
     project_path = "./my-app"
     p = Project(project_path)
 

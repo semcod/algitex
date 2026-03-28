@@ -11,7 +11,7 @@ from rich.table import Table
 console = Console()
 
 
-def docker_list():
+def docker_list() -> None:
     """List available Docker tools from docker-tools.yaml."""
     from algitex.tools.docker import DockerToolManager
     from algitex.config import Config
@@ -32,7 +32,7 @@ def docker_list():
     console.print(table)
 
 
-def docker_spawn(tool_name: str = typer.Argument(...)):
+def docker_spawn(tool_name: str = typer.Argument(...)) -> None:
     """Start a Docker tool container."""
     from algitex.tools.docker import DockerToolManager
     from algitex.config import Config

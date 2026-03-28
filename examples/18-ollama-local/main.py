@@ -10,7 +10,7 @@ OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
 DEFAULT_MODEL = os.getenv("DEFAULT_MODEL", "qwen2.5-coder:7b")
 
 
-def check_ollama():
+def check_ollama() -> Any:
     """Check if Ollama is running."""
     try:
         r = requests.get(f"{OLLAMA_URL}/api/tags", timeout=5)
@@ -19,7 +19,7 @@ def check_ollama():
         return False
 
 
-def list_models():
+def list_models() -> Any:
     """List available local models."""
     try:
         r = requests.get(f"{OLLAMA_URL}/api/tags", timeout=5)
@@ -107,7 +107,7 @@ Respond with JSON only:
         return {"error": str(e)}
 
 
-def demo_code_generation():
+def demo_code_generation() -> None:
     """Demo: Generate a function using local LLM."""
     print("\n📝 Demo 1: Code Generation")
     print("-" * 60)

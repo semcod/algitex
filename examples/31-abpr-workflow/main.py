@@ -12,7 +12,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 from algitex import Project, Loop
 
 
-def main():
+def main() -> None:
     """Demonstrate ABPR pipeline: Execute → Trace → Conflict → Rule → Validate → Repeat."""
     print("=" * 60)
     print("ABPR (Abduction-Based Procedural Refinement) Demo")

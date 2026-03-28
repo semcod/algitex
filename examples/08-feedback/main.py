@@ -13,7 +13,7 @@ from algitex.tools.feedback import (
 )
 
 
-def basic_feedback_example():
+def basic_feedback_example() -> Any:
     """Basic feedback controller example."""
     print("=== Basic Feedback Example ===\n")
     
@@ -82,7 +82,7 @@ def basic_feedback_example():
     return controller
 
 
-def custom_policy_example():
+def custom_policy_example() -> Any:
     """Example with custom feedback policy."""
     print("\n=== Custom Policy Example ===\n")
     
@@ -119,7 +119,7 @@ def custom_policy_example():
     return controller
 
 
-def feedback_extraction_example():
+def feedback_extraction_example() -> Any:
     """Example of extracting actionable feedback."""
     print("\n=== Feedback Extraction Example ===\n")
     

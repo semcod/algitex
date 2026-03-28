@@ -1,13 +1,13 @@
 
-def add(x, y):
+def add(x, y) -> Any:
     """Add two numbers."""
     return x + y
 
-def subtract(x, y):
+def subtract(x, y) -> Any:
     """Subtract y from x."""
     return x - y
 
-def multiply(x, y):
+def multiply(x, y) -> Any:
     """Multiply two numbers."""
     return x * y
 

@@ -22,7 +22,7 @@ def ticket_add(
     console.print(f"\u2705 Created: [bold]{ticket.id}[/] \u2014 {ticket.title}")
 
 
-def ticket_list(status: Optional[str] = typer.Option(None, "--status", "-s")):
+def ticket_list(status: Optional[str] = typer.Option(None, "--status", "-s")) -> None:
     """List tickets."""
     from algitex.tools.tickets import Tickets
     tickets = Tickets().list(status=status)
@@ -36,7 +36,7 @@ def ticket_list(status: Optional[str] = typer.Option(None, "--status", "-s")):
     console.print(table)
 
 
-def ticket_board():
+def ticket_board() -> None:
     """Kanban board view."""
     from algitex.tools.tickets import Tickets
     for col, tickets in Tickets().board().items():

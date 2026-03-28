@@ -6,14 +6,14 @@ Generates Toon notation and LLM-friendly code representation
 
 import os
 import sys
-import json
+,json
 import ast
 import logging
 from pathlib import Path
-from typing import Any, Dict, List, Set
+from typing import Any, Dict, List
 from datetime import datetime
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 import uvicorn
 import radon
 from radon.complexity import cc_visit

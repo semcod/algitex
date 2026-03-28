@@ -18,7 +18,7 @@ class ServiceMixin:
         statuses = self.services.check_all(services)
         return {s.name: s.to_dict() for s in statuses}
 
-    def print_service_status(self, show_details: bool = False):
+    def print_service_status(self, show_details: bool = False) -> None:
         """Print service status in a formatted way."""
         statuses = self.services.check_all()
         self.services.print_status(statuses, show_details)

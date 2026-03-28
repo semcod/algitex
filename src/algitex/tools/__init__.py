@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from typing import Optional
 
 # Export new modules
-from algitex.tools import ollama, services, autofix, batch, benchmark, ide, config, mcp, proxy
+from algitex.tools import  batch, benchmark, ide, config, mcp, proxy
 from algitex.tools.parallel import (
     CodeRegion,
     MergeResult,
@@ -106,7 +106,7 @@ def require_tool(name: str) -> None:
         )
 
 
-def get_tool_module(name: str):
+def get_tool_module(name: str) -> Any:
     """Import and return a tool module, or None if unavailable."""
     try:
         return importlib.import_module(TOOL_REGISTRY[name]["import"])

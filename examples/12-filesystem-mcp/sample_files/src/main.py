@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-def main():
+def main() -> None:
     print("Hello from sample project!")
 
 if __name__ == "__main__":

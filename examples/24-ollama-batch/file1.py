@@ -2,7 +2,7 @@
 """Sample buggy files for batch processing demo."""
 
 
-def bad_function_1(x, y):
+def bad_function_1(x, y) -> Any:
     if x > 0:
         if y > 0:
             return x + y
@@ -11,7 +11,7 @@ def bad_function_1(x, y):
     return 0
 
 
-def bad_function_2(data):
+def bad_function_2(data) -> Any:
     result = []
     for item in data:
         if item:
@@ -21,7 +21,7 @@ def bad_function_2(data):
     return result
 
 
-def bad_function_3(a, b, c, d, e):
+def bad_function_3(a, b, c, d, e) -> Any:
     if a > 0:
         if b > 0:
             if c > 0:

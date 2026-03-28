@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Sample buggy code for Continue.dev + Ollama demo."""
 
-import os
-import sys
+,os
+,sys
 
 
-def calculate(x, y, operation):
+def calculate(x, y, operation) -> Any:
     # No type hints
     if operation == "add":
         return x + y
@@ -20,7 +20,7 @@ def calculate(x, y, operation):
     return None
 
 
-def process_items(data):
+def process_items(data) -> Any:
     # No docstring
     result = []
     for item in data:
@@ -30,7 +30,7 @@ def process_items(data):
     return result
 
 
-def load_file(path):
+def load_file(path) -> Any:
     f = open(path, 'r')
     data = f.read()
     return data

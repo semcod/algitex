@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Sample buggy code for LiteLLM proxy + Ollama testing."""
 
-import os  # Unused
-import json  # Unused
+,os  # Unused
+,json  # Unused
 
 
-def calculate(x, y, operation):
+def calculate(x, y, operation) -> Any:
     # No type hints, no docstring
     if operation == "add":
         return x + y
@@ -20,7 +20,7 @@ def calculate(x, y, operation):
     return None
 
 
-def process_items(data):
+def process_items(data) -> Any:
     # No docstring, high complexity
     result = []
     for item in data:
@@ -30,7 +30,7 @@ def process_items(data):
     return result
 
 
-def load_file(path):
+def load_file(path) -> Any:
     # Resource leak
     f = open(path, 'r')
     return f.read()

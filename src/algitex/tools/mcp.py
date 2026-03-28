@@ -52,7 +52,7 @@ class MCPOrchestrator:
     
     def _setup_signal_handlers(self):
         """Setup signal handlers for graceful shutdown."""
-        def handler(signum, frame):
+        def handler(signum, frame) -> None:
             self.stop_all()
             exit(0)
         

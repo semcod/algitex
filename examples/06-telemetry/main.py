@@ -8,10 +8,10 @@ This example demonstrates how to use the telemetry module to:
 """
 
 import time
-from algitex.tools.telemetry import Telemetry, TraceSpan
+from algitex.tools.telemetry,Telemetry
 
 
-def basic_telemetry_example():
+def basic_telemetry_example() -> Any:
     """Basic telemetry tracking example."""
     print("=== Basic Telemetry Example ===\n")
     
@@ -84,7 +84,7 @@ def basic_telemetry_example():
     return tel
 
 
-def context_manager_example():
+def context_manager_example() -> Any:
     """Using telemetry as a context manager."""
     print("\n=== Context Manager Example ===\n")
     
@@ -113,7 +113,7 @@ def context_manager_example():
     return tel
 
 
-def multi_model_comparison():
+def multi_model_comparison() -> Any:
     """Compare costs across different models."""
     print("\n=== Multi-Model Cost Comparison ===\n")
     

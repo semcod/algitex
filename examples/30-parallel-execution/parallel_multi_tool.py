@@ -7,7 +7,7 @@ algitex assigns the right tool per ticket based on complexity.
 from algitex import Project
 from algitex.tools.parallel import ParallelExecutor
 
-def main():
+def main() -> None:
     p = Project("./my-app")
 
     tickets = [

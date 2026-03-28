@@ -6,10 +6,9 @@ REST API compatible with OpenAI format
 
 import os
 import sys
-import json
+,json
 import logging
-from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 from datetime import datetime
 
 from fastapi import FastAPI, HTTPException, Header

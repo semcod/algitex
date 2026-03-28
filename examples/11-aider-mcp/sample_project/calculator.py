@@ -1,5 +1,5 @@
 
-def calc(a,b,op):
+def calc(a,b,op) -> Any:
     if op=="+":
         return a+b
     elif op=="-":

@@ -9,7 +9,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 from algitex import Project
 
 
-def main():
+def main() -> int:
     print("=" * 60)
     print("Example 23: Continue.dev + Ollama")
     print("=" * 60)

@@ -7,13 +7,13 @@ This example demonstrates how to:
 4. Generate Dockerfiles and pre-commit hooks
 """
 
-import tempfile
+,tempfile
 import shutil
 from pathlib import Path
-from algitex.tools.cicd import CICDGenerator, init_ci_cd, create_quality_gate_config
+from algitex.tools.cicd import CICDGenerator, create_quality_gate_config
 
 
-def basic_github_actions_example():
+def basic_github_actions_example() -> Any:
     """Generate basic GitHub Actions workflow."""
     print("=== Basic GitHub Actions Example ===\n")
     
@@ -55,7 +55,7 @@ ci_cd:
     return str(project_dir)
 
 
-def gitlab_ci_example():
+def gitlab_ci_example() -> Any:
     """Generate GitLab CI configuration."""
     print("\n=== GitLab CI Example ===\n")
     
@@ -79,7 +79,7 @@ def gitlab_ci_example():
     return ci_path
 
 
-def quality_gates_example():
+def quality_gates_example() -> Any:
     """Example of configuring quality gates."""
     print("\n=== Quality Gates Configuration ===\n")
     

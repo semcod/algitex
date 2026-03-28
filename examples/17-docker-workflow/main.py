@@ -15,7 +15,7 @@ import os
 from pathlib import Path
 
 
-def load_env():
+def load_env() -> None:
     """Load .env file if present."""
     env_file = Path(__file__).parent / ".env"
     if env_file.exists():
@@ -28,7 +28,7 @@ def load_env():
                         os.environ[key] = val
 
 
-def check_required_env():
+def check_required_env() -> bool:
     """Check required environment variables."""
     github = os.getenv("GITHUB_PAT")
     gemini = os.getenv("GEMINI_API_KEY")
@@ -42,7 +42,7 @@ def check_required_env():
     return True
 
 
-def show_workflow():
+def show_workflow() -> None:
     """Display the 7-step refactoring workflow."""
     
     steps = [

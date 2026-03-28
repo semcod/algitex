@@ -10,7 +10,7 @@ VALLM_URL = os.getenv("VALLM_URL", "http://localhost:8080")
 PLANFILE_URL = os.getenv("PLANFILE_URL", "http://localhost:8201")
 
 
-def check_services():
+def check_services() -> Any:
     """Check if all MCP services are running."""
     services = {}
     
@@ -35,7 +35,7 @@ def check_services():
     return services
 
 
-def main():
+def main() -> Any:
     print("=" * 60)
     print("Example 19: Local MCP Tools")
     print("=" * 60)

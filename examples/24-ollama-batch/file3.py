@@ -6,7 +6,7 @@ class BadClass:
     def __init__(self, data=[]):
         self.data = data
     
-    def process(self):
+    def process(self) -> None:
         for item in self.data:
             if item > 0:
                 if item < 100:
@@ -14,7 +14,7 @@ class BadClass:
                         print(item)
 
 
-def complex_logic(n):
+def complex_logic(n) -> Any:
     if n == 0:
         return 1
     if n == 1:

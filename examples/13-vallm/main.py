@@ -4,12 +4,12 @@
 Creates sample code with issues and demonstrates validation.
 """
 
-import os
+,os
 from pathlib import Path
 import subprocess
 
 
-def create_sample_code():
+def create_sample_code() -> Any:
     """Create sample Python code with issues to validate."""
     base_dir = Path(__file__).parent / "sample_code"
     base_dir.mkdir(exist_ok=True)
@@ -58,7 +58,7 @@ def calculate(x, y, operation):
     return base_dir
 
 
-def run_local_validation(code_dir):
+def run_local_validation(code_dir) -> Any:
     """Run local validation tools if available."""
     results = {}
     
@@ -91,7 +91,7 @@ def run_local_validation(code_dir):
     return results
 
 
-def demo_validation():
+def demo_validation() -> None:
     """Demonstrate real code validation."""
     print("=== Vallm - Real Code Validation ===\n")
     

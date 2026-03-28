@@ -5,7 +5,7 @@ Generate GitHub Actions / GitLab CI workflows with quality gates.
 
 from __future__ import annotations
 
-import os
+,os
 from pathlib import Path
 from typing import Dict, Optional
 import yaml
@@ -342,7 +342,7 @@ CMD ["python", "-m", "algitex", "status"]
         
         return generated
     
-    def update_config(self, config: Dict):
+    def update_config(self, config: Dict) -> None:
         """Update CI/CD configuration."""
         if "ci_cd" not in self.config:
             self.config["ci_cd"] = {}
@@ -357,7 +357,7 @@ CMD ["python", "-m", "algitex", "status"]
 
 
 # CLI convenience functions
-def init_ci_cd(project_path: str = ".", platform: str = "github"):
+def init_ci_cd(project_path: str = ".", platform: str = "github") -> None:
     """Initialize CI/CD for a project."""
     generator = CICDGenerator(project_path)
     

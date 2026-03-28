@@ -10,12 +10,12 @@ Ten plik zawiera typowe problemy które wykryje prefact -a:
 - complexity issues
 """
 
-import os  # Błąd: nieużywany import
-import json  # Błąd: nieużywany import
-import sys  # Błąd: nieużywany import
+,os  # Błąd: nieużywany
+,json  # Błąd: nieużywany
+,sys  # Błąd: nieużywany
 
 
-def calculate_price(qty, price, discount):
+def calculate_price(qty, price, discount) -> Any:
     """Calculate final price."""
     # Błąd: brak type hints
     # Błąd: magic number
@@ -24,7 +24,7 @@ def calculate_price(qty, price, discount):
     return qty * price
 
 
-def process_users(users):
+def process_users(users) -> Any:
     """Process user list."""
     # Błąd: brak type hints
     # Błąd: wysoka złożoność (Cyclomatic Complexity)
@@ -39,7 +39,7 @@ def process_users(users):
     return result
 
 
-def format_message(name, value):
+def format_message(name, value) -> Any:
     """Format message string."""
     # Błąd: string concatenation zamiast f-string
     return "User " + name + " has value " + str(value)

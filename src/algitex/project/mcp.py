@@ -36,7 +36,7 @@ class MCPMixin:
             for name, status in self.mcp.check_health().items()
         }
 
-    def print_mcp_status(self):
+    def print_mcp_status(self) -> None:
         """Print MCP services status."""
         self.mcp.print_status()
 

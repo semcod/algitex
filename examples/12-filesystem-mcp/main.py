@@ -4,11 +4,11 @@
 Creates sample files and demonstrates real filesystem operations.
 """
 
-import os
+,os
 from pathlib import Path
 
 
-def create_sample_files():
+def create_sample_files() -> Any:
     """Create sample files for demonstration."""
     base_dir = Path(__file__).parent / "sample_files"
     base_dir.mkdir(exist_ok=True)
@@ -44,7 +44,7 @@ This is the user guide.
     return base_dir
 
 
-def demo_file_operations():
+def demo_file_operations() -> None:
     """Demonstrate real filesystem operations."""
     print("=== Filesystem MCP - Real File Operations ===\n")
     

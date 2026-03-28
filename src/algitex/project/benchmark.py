@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import List, Optional
 
-from algitex.tools.benchmark import ModelBenchmark, Task
+from algitex.tools.benchmark,ModelBenchmark
 
 
 class BenchmarkMixin:
@@ -37,7 +37,7 @@ class BenchmarkMixin:
             expected_keywords=expected_keywords
         )
 
-    def print_benchmark_results(self, results: dict, format: str = "table"):
+    def print_benchmark_results(self, results: dict, format: str = "table") -> None:
         """Print benchmark results from dict."""
         from algitex.tools.benchmark import BenchmarkResults, TaskResult
 

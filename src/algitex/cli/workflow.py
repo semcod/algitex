@@ -25,7 +25,7 @@ def workflow_run(
             console.print(f"  {err}")
 
 
-def workflow_validate(path: str = typer.Argument(...)):
+def workflow_validate(path: str = typer.Argument(...)) -> None:
     """Check a Propact workflow for errors."""
     from algitex.propact import Workflow
     wf = Workflow(path)

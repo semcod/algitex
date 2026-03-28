@@ -13,7 +13,7 @@ from algitex import Project
 from algitex.tools.parallel import ParallelExecutor, RegionExtractor, TaskPartitioner
 
 
-def main():
+def main() -> None:
     """Demonstrate parallel execution with region-based coordination."""
     print("=" * 60)
     print("algitex Parallel Execution Demo")

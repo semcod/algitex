@@ -161,6 +161,106 @@ FIXERS: dict[str, Callable[[Path, TodoTask], bool]] = {
 }
 
 
+def _group_tasks_by_file(tasks: list[TodoTask]) -> dict[str, list[TodoTask]]:
+    """Group tasks by file path for parallel processing."""
+    by_file: dict[str, list[TodoTask]] = {}
+    for task in tasks:
+        by_file.setdefault(task.file, []).append(task)
+    return by_file
+
+
+def _compute_category_stats(tasks: list[TodoTask]) -> dict[str, int]:
+    """Compute category statistics for tasks."""
+    cats: dict[str, int] = {}
+    for task in tasks:
+        cats[task.category] = cats.get(task.category, 0) + 1
+    return cats
+
+
+def _print_pre_execution_summary(
+    tasks: list[TodoTask],
+    by_file: dict[str, list[TodoTask]],
+    workers: int,
+    dry_run: bool
+) -> None:
+    """Print pre-execution summary with category stats."""
+    cats = _compute_category_stats(tasks)
+
+    print("Categories:")
+    for cat, count in sorted(cats.items(), key=lambda x: -x[1]):
+        fixable = "✓ auto" if cat in FIXERS else "○ manual"
+        print(f"  {count:>4} {cat:<20} {fixable}")
+
+    auto_fixable = sum(1 for t in tasks if t.category in FIXERS)
+    if tasks:
+        pct = auto_fixable * 100 // len(tasks)
+        print(f"\nAuto-fixable: {auto_fixable}/{len(tasks)} ({pct}%)")
+    print(f"Files to process: {len(by_file)}")
+    print(f"Workers: {workers}")
+    print(f"Mode: {'DRY RUN' if dry_run else 'EXECUTE'}\n")
+
+    if dry_run:
+        print("─" * 60)
+
+
+def _execute_parallel_fixes(
+    by_file: dict[str, list[TodoTask]],
+    workers: int,
+    dry_run: bool
+) -> tuple[int, int, int]:
+    """Execute fixes in parallel using ThreadPoolExecutor.
+
+    Returns:
+        Tuple of (total_fixed, total_skipped, total_errors)
+    """
+    total_fixed = 0
+    total_skipped = 0
+    total_errors = 0
+
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        futures = {
+            pool.submit(fix_file, file_path, file_tasks, dry_run): file_path
+            for file_path, file_tasks in by_file.items()
+        }
+
+        for future in as_completed(futures):
+            file_path = futures[future]
+            try:
+                result = future.result()
+                total_fixed += result.fixed
+                total_skipped += result.skipped
+                total_errors += len(result.errors)
+
+                if not dry_run and result.fixed > 0:
+                    print(f"  ✓ {file_path}: {result.fixed} fixed, {result.skipped} skipped")
+                if result.errors:
+                    for err in result.errors:
+                        print(f"  ✗ {file_path}: {err}")
+
+            except Exception as e:
+                print(f"  ✗ {file_path}: {e}")
+                total_errors += 1
+
+    return total_fixed, total_skipped, total_errors
+
+
+def _print_execution_summary(
+    total_fixed: int,
+    total_skipped: int,
+    total_errors: int,
+    dry_run: bool
+) -> None:
+    """Print final execution summary."""
+    print(f"\n{'═' * 60}")
+    print(f"  Fixed:   {total_fixed}")
+    print(f"  Skipped: {total_skipped} (need manual fix or flynt/mypy)")
+    print(f"  Errors:  {total_errors}")
+    print(f"{'═' * 60}")
+
+    if dry_run and total_fixed > 0:
+        print(f"\nRun with dry_run=False to apply {total_fixed} fixes")
+
+
 # ─── Parallel executor ───────────────────────────────────
 
 def fix_file(file_path: str, tasks: list[TodoTask], dry_run: bool = True) -> FixResult:
@@ -224,68 +324,18 @@ def parallel_fix(
         print(f"Filtered to {len(tasks)} tasks of category '{category_filter}'\n")
 
     # Group by file
-    by_file: dict[str, list[TodoTask]] = {}
-    for task in tasks:
-        by_file.setdefault(task.file, []).append(task)
+    by_file = _group_tasks_by_file(tasks)
 
-    # Category stats
-    cats: dict[str, int] = {}
-    for task in tasks:
-        cats[task.category] = cats.get(task.category, 0) + 1
-
-    print("Categories:")
-    for cat, count in sorted(cats.items(), key=lambda x: -x[1]):
-        fixable = "✓ auto" if cat in FIXERS else "○ manual"
-        print(f"  {count:>4} {cat:<20} {fixable}")
-
-    auto_fixable = sum(1 for t in tasks if t.category in FIXERS)
-    if tasks:
-        pct = auto_fixable * 100 // len(tasks)
-        print(f"\nAuto-fixable: {auto_fixable}/{len(tasks)} ({pct}%)")
-    print(f"Files to process: {len(by_file)}")
-    print(f"Workers: {workers}")
-    print(f"Mode: {'DRY RUN' if dry_run else 'EXECUTE'}\n")
-
-    if dry_run:
-        print("─" * 60)
+    # Print pre-execution summary
+    _print_pre_execution_summary(tasks, by_file, workers, dry_run)
 
     # Execute in parallel (one worker per file — zero conflicts)
-    total_fixed = 0
-    total_skipped = 0
-    total_errors = 0
+    total_fixed, total_skipped, total_errors = _execute_parallel_fixes(
+        by_file, workers, dry_run
+    )
 
-    with ThreadPoolExecutor(max_workers=workers) as pool:
-        futures = {
-            pool.submit(fix_file, file_path, file_tasks, dry_run): file_path
-            for file_path, file_tasks in by_file.items()
-        }
-
-        for future in as_completed(futures):
-            file_path = futures[future]
-            try:
-                result = future.result()
-                total_fixed += result.fixed
-                total_skipped += result.skipped
-                total_errors += len(result.errors)
-
-                if not dry_run and result.fixed > 0:
-                    print(f"  ✓ {file_path}: {result.fixed} fixed, {result.skipped} skipped")
-                if result.errors:
-                    for err in result.errors:
-                        print(f"  ✗ {file_path}: {err}")
-
-            except Exception as e:
-                print(f"  ✗ {file_path}: {e}")
-                total_errors += 1
-
-    print(f"\n{'═' * 60}")
-    print(f"  Fixed:   {total_fixed}")
-    print(f"  Skipped: {total_skipped} (need manual fix or flynt/mypy)")
-    print(f"  Errors:  {total_errors}")
-    print(f"{'═' * 60}")
-
-    if dry_run and total_fixed > 0:
-        print(f"\nRun with dry_run=False to apply {total_fixed} fixes")
+    # Print final summary
+    _print_execution_summary(total_fixed, total_skipped, total_errors, dry_run)
 
     return {
         "fixed": total_fixed,

@@ -14,7 +14,8 @@ import subprocess
 import time
 from typing import TYPE_CHECKING
 
-,httpx
+
+import httpx
 
 if TYPE_CHECKING:
     from algitex.tools.docker import DockerTool, RunningTool

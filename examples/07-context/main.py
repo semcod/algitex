@@ -8,10 +8,10 @@ This example demonstrates how to use the context module to:
 """
 
 from pathlib import Path
-from algitex.tools.context import ContextBuilder, CodeContext
+from algitex.tools.context,ContextBuilder
 
 
-def basic_context_example():
+def basic_context_example() -> Any:
     """Basic context building example."""
     print("=== Basic Context Example ===\n")
     
@@ -129,7 +129,7 @@ D[api -> external_api]
     return context, project_dir
 
 
-def context_optimization_example():
+def context_optimization_example() -> Any:
     """Example of optimizing context for different use cases."""
     print("\n=== Context Optimization Example ===\n")
     
@@ -225,7 +225,7 @@ def test_engine():
     return project_dir
 
 
-def semantic_search_example():
+def semantic_search_example() -> Any:
     """Example of semantic search for related code (placeholder)."""
     print("\n=== Semantic Search Example ===\n")
     

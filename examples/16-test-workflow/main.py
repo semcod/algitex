@@ -4,12 +4,12 @@
 Creates sample project and demonstrates testing workflow.
 """
 
-import os
+,os
 from pathlib import Path
 import subprocess
 
 
-def create_sample_project():
+def create_sample_project() -> Any:
     """Create sample project with tests."""
     base_dir = Path(__file__).parent / "sample_test_project"
     base_dir.mkdir(exist_ok=True)
@@ -96,7 +96,7 @@ pytest-cov>=4.0.0
     return base_dir
 
 
-def run_tests(project_dir):
+def run_tests(project_dir) -> Dict:
     """Try to run tests if pytest available."""
     try:
         result = subprocess.run(
@@ -117,7 +117,7 @@ def run_tests(project_dir):
         return {"success": False, "output": "timeout", "returncode": -1}
 
 
-def demo_test_workflow():
+def demo_test_workflow() -> None:
     """Demonstrate test workflow."""
     print("=== Test Workflow - Real Project Setup ===\n")
     
