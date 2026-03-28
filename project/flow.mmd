@@ -16,10 +16,10 @@ flowchart TD
         docker__proxym__proxym_server__ProxymServer___mock_response["_mock_response"]
         docker__proxym__proxym_server__ProxymServer___track_cost["_track_cost"]
         docker__proxym__proxym_server__ProxymServer__run["run"]
+        docker__vallm__vallm_mcp_server__run_rest_server["run_rest_server"]
         docker__proxym__proxym_mcp_server__count_tokens["count_tokens"]
         docker__proxym__proxym_mcp_server__chat_completion("chat_completion CC=9")
-        docker__proxym__proxym_mcp_server___call_anthropic["_call_anthropic"]
-        ...["+479 more"]
+        ...["+340 more"]
     end
 
     subgraph Exporters

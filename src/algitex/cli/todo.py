@@ -164,22 +164,27 @@ def todo_benchmark(
 def todo_hybrid(
     file: str = typer.Argument("TODO.md", help="Path to todo file"),
     backend: str = typer.Option("litellm-proxy", "--backend", "-b", help="LLM backend: litellm-proxy, ollama, aider"),
+    tool: str = typer.Option("aider", "--tool", "-t", help="Tool for LLM fixes: aider, ollama, direct"),
     workers: int = typer.Option(4, "--workers", "-w", help="Parallel workers"),
     rate_limit: int = typer.Option(10, "--rate-limit", "-r", help="LLM calls per second"),
+    proxy_url: str = typer.Option("http://localhost:4000", "--proxy-url", "-p", help="LiteLLM proxy URL"),
     dry_run: bool = typer.Option(True, "--dry-run/--execute", help="Preview or execute"),
 ):
-    """Hybrid autofix: parallel mechanical + rate-limited LLM fixes."""
+    """Hybrid autofix: parallel mechanical + rate-limited LLM fixes via proxy/tool."""
     from algitex.todo import HybridAutofix
 
     fixer = HybridAutofix(
         backend=backend,
+        tool=tool,
+        proxy_url=proxy_url,
         workers=workers,
         rate_limit=rate_limit,
         dry_run=dry_run
     )
 
     console.print(f"[bold]Hybrid Autofix[/]: {file}")
-    console.print(f"Backend: {backend}, Workers: {workers}, Rate: {rate_limit}/sec\n")
+    console.print(f"Backend: {backend}, Tool: {tool}, Proxy: {proxy_url}")
+    console.print(f"Workers: {workers}, Rate: {rate_limit}/sec\n")
 
     result = fixer.fix_all(file)
     fixer.print_summary(result)

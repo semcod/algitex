@@ -106,6 +106,7 @@ class HybridAutofix:
     def __init__(
         self,
         backend: str = "litellm-proxy",  # or "ollama", "aider"
+        tool: str = "aider",  # Tool selection: aider, ollama, direct
         proxy_url: str = "http://localhost:4000",
         workers: int = 4,
         rate_limit: float = 10.0,
@@ -114,6 +115,7 @@ class HybridAutofix:
         dry_run: bool = True
     ):
         self.backend = backend
+        self.tool = tool
         self.proxy_url = proxy_url
         self.workers = workers
         self.rate_limiter = RateLimiter(rate=rate_limit)
@@ -161,7 +163,7 @@ class HybridAutofix:
         Returns:
             Dict with fixed, skipped, errors counts
         """
-        print(f"\n🤖 Phase 2: LLM fixes (backend={self.backend}, rate={self.rate_limiter.rate}/sec)")
+        print(f"\n🤖 Phase 2: LLM fixes (backend={self.backend}, tool={self.tool}, rate={self.rate_limiter.rate}/sec)")
         start = time.perf_counter()
 
         # Parse and categorize tasks
@@ -289,6 +291,7 @@ class HybridAutofix:
 
                 backend = ProxyBackend(
                     proxy_url=self.proxy_url,
+                    tool=self.tool,  # Pass tool selection (aider, ollama, direct)
                     dry_run=self.dry_run
                 )
                 result = backend.fix(backend_task)
