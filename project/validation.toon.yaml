@@ -1,7 +1,7 @@
-# vallm batch | 288f | 140✓ 1⚠ 13✗ | 2026-03-28
+# vallm batch | 290f | 142✓ 1⚠ 13✗ | 2026-03-28
 
 SUMMARY:
-  scanned: 288  passed: 140 (48.6%)  warnings: 1  errors: 13  unsupported: 135
+  scanned: 290  passed: 142 (49.0%)  warnings: 1  errors: 13  unsupported: 135
 
 WARNINGS[1]{path,score}:
   tests/test_e2e_integration.py,0.97
@@ -10,18 +10,15 @@ WARNINGS[1]{path,score}:
       complexity.lizard_length,warning,sample_project: 120 lines exceeds limit 100,28
 
 ERRORS[13]{path,score}:
-  src/algitex/tools/benchmark.py,0.00
-    issues[1]{rule,severity,message,line}:
-      syntax.parse,error,SyntaxError: invalid syntax. Perhaps you forgot a comma?,178
-  examples/16-test-workflow/sample_test_project/tests/test_calculator.py,0.79
-    issues[1]{rule,severity,message,line}:
-      python.import.resolvable,error,Module 'calculator' not found,5
   docker/aider-mcp/aider_mcp_server.py,0.81
     issues[4]{rule,severity,message,line}:
       python.import.resolvable,error,Module 'mcp.server.fastmcp' not found,12
       python.import.resolvable,error,Module 'fastapi' not found,13
       python.import.resolvable,error,Module 'fastapi.responses' not found,14
       python.import.resolvable,error,Module 'uvicorn' not found,15
+  examples/16-test-workflow/sample_test_project/tests/test_calculator.py,0.86
+    issues[1]{rule,severity,message,line}:
+      python.import.resolvable,error,Module 'calculator' not found,6
   docker/proxym/proxym_mcp_server.py,0.87
     issues[4]{rule,severity,message,line}:
       python.import.resolvable,error,Module 'mcp.server.fastmcp' not found,14
@@ -56,6 +53,9 @@ ERRORS[13]{path,score}:
     issues[2]{rule,severity,message,line}:
       python.import.resolvable,error,Module 'fastapi' not found,16
       python.import.resolvable,error,Module 'uvicorn' not found,17
+  src/algitex/tools/benchmark.py,0.93
+    issues[1]{rule,severity,message,line}:
+      python.import.resolvable,error,Module 'tabulate' not found,26
   src/algitex/tools/context.py,0.94
     issues[1]{rule,severity,message,line}:
       python.import.resolvable,error,Module 'qdrant_client' not found,177

@@ -1,11 +1,11 @@
-# algitex | 505 func | 52f | 15592L | python | 2026-03-28
+# algitex | 525 func | 55f | 15662L | python | 2026-03-28
 
 HEALTH:
   CC̄=3.3  critical=22 (limit:10)  dup=2  cycles=0
 
 ALERTS[20]:
-  !!  high_fan_out     DockerToolManager._call_stdio = 18 (limit:10)
   !!  high_fan_out     Project.status = 18 (limit:10)
+  !!  high_fan_out     call_stdio = 17 (limit:10)
   !!  high_fan_out     BatchProcessor.process = 17 (limit:10)
   !!  high_fan_out     DockerToolManager.get_capabilities = 16 (limit:10)
   !!  high_fan_out     Project.__init__ = 16 (limit:10)
@@ -15,9 +15,8 @@ ALERTS[20]:
   !   high_fan_out     TodoRunner._execute_ollama = 13 (limit:10)
   !   high_fan_out     Workflow.parse = 13 (limit:10)
 
-MODULES[58] (top by size):
-  M[src/algitex/tools/todo_runner.py] 526L C:2 F:16 CC↑13 D:0 (python)
-  M[src/algitex/tools/docker.py] 504L C:3 F:23 CC↑12 D:0 (python)
+MODULES[61] (top by size):
+  M[src/algitex/tools/benchmark.py] 461L C:4 F:19 CC↑14 D:0 (python)
   M[src/algitex/tools/mcp.py] 448L C:2 F:18 CC↑11 D:0 (python)
   M[src/algitex/tools/ide.py] 430L C:6 F:22 CC↑8 D:0 (python)
   M[src/algitex/propact/__init__.py] 413L C:3 F:15 CC↑10 D:1 (python)
@@ -29,23 +28,22 @@ MODULES[58] (top by size):
   M[src/algitex/project/__init__.py] 378L C:1 F:12 CC↑9 D:0 (python)
   M[src/algitex/algo/__init__.py] 369L C:5 F:12 CC↑9 D:0 (python)
   M[src/algitex/tools/batch.py] 364L C:4 F:13 CC↑14 D:0 (python)
+  M[src/algitex/tools/todo_runner.py] 363L C:2 F:10 CC↑13 D:0 (python)
   M[docker/vallm/vallm_mcp_server.py] 360L C:0 F:8 CC↑9 D:0 (python)
   M[src/algitex/tools/workspace.py] 338L C:2 F:17 CC↑6 D:1 (python)
-  LANGS: python:57/shell:1
+  LANGS: python:60/shell:1
 
 HOTSPOTS[10]:
-  ★ DockerToolManager._call_stdio fan=18  // Send JSON-RPC over stdin, read from stdout with timeout.
   ★ Project.status fan=18  // Full project status: health + tickets + budget + algo progress.
+  ★ call_stdio fan=17  // Send JSON-RPC over stdin, read from stdout with timeout.
   ★ BatchProcessor.process fan=17  // Analysis pipeline, 17 stages
   ★ DockerToolManager.get_capabilities fan=16  // List MCP tools available on a running container.
   ★ Project.__init__ fan=16  // Orchestrates 16 calls
 
-REFACTOR[5]:
-  [1] H/H Split god module src/algitex/tools/todo_runner.py (526L, 2 classes)
-  [2] H/H Split god module src/algitex/tools/docker.py (504L, 3 classes)
-  [3] M/M Reduce DockerToolManager._call_stdio fan-out (currently 18)
-  [4] M/M Reduce Project.status fan-out (currently 18)
-  [5] M/M Reduce BatchProcessor.process fan-out (currently 17)
+REFACTOR[3]:
+  [1] M/M Reduce Project.status fan-out (currently 18)
+  [2] M/M Reduce call_stdio fan-out (currently 17)
+  [3] M/M Reduce BatchProcessor.process fan-out (currently 17)
 
 EVOLUTION:
-  2026-03-28 CC̄=3.3 crit=22 15592L // Automated analysis
+  2026-03-28 CC̄=3.3 crit=22 15662L // Automated analysis

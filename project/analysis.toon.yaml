@@ -1,20 +1,20 @@
-# code2llm | 58f 12017L | python:57,shell:1 | 2026-03-28
-# CC̄=3.3 | critical:0/674 | dups:0 | cycles:0
+# code2llm | 61f 12551L | python:60,shell:1 | 2026-03-28
+# CC̄=3.3 | critical:0/678 | dups:0 | cycles:0
 
 HEALTH[0]: ok
 
 REFACTOR[0]: none needed
 
-PIPELINES[522]:
+PIPELINES[534]:
   [1] Src [__init__]: __init__
       PURITY: 100% pure
-  [2] Src [create_fastapi_app]: create_fastapi_app → validate
+  [2] Src [create_fastapi_app]: create_fastapi_app
       PURITY: 100% pure
-  [3] Src [_validate_static]: _validate_static
+  [3] Src [_call_anthropic]: _call_anthropic
       PURITY: 100% pure
-  [4] Src [_validate_runtime]: _validate_runtime
+  [4] Src [_call_openai]: _call_openai
       PURITY: 100% pure
-  [5] Src [_validate_security]: _validate_security
+  [5] Src [_mock_response]: _mock_response
       PURITY: 100% pure
 
 LAYERS:
@@ -29,8 +29,7 @@ LAYERS:
   │ aider_mcp_server           156L  0C    5m  CC=2      ←0
   │
   src/                            CC̄=3.3    ←in:0  →out:0
-  │ !! todo_runner                526L  2C   16m  CC=13     ←0
-  │ !! docker                     504L  3C   23m  CC=12     ←0
+  │ benchmark                  461L  4C   19m  CC=14     ←0
   │ mcp                        448L  2C   18m  CC=11     ←0
   │ ide                        430L  6C   22m  CC=8      ←0
   │ services                   413L  3C   20m  CC=9      ←0
@@ -41,15 +40,19 @@ LAYERS:
   │ __init__                   378L  1C   12m  CC=9      ←0
   │ __init__                   369L  5C   12m  CC=9      ←0
   │ batch                      364L  4C   13m  CC=14     ←0
+  │ todo_runner                363L  2C   10m  CC=13     ←0
   │ workspace                  338L  2C   17m  CC=6      ←1
   │ __init__                   320L  3C   19m  CC=4      ←0
   │ __init__                   306L  1C   14m  CC=12     ←0
+  │ docker                     289L  3C   15m  CC=10     ←0
   │ todo_local                 282L  2C   11m  CC=11     ←0
   │ feedback                   252L  4C   12m  CC=8      ←0
-  │ tickets                    246L  2C   11m  CC=5      ←7
+  │ docker_transport           251L  0C    8m  CC=12     ←1
+  │ tickets                    246L  2C   11m  CC=5      ←8
   │ todo_executor              240L  2C   12m  CC=13     ←0
   │ todo_parser                206L  2C    8m  CC=7      ←0
   │ context                    206L  3C   14m  CC=7      ←0
+  │ todo_actions               200L  0C    7m  CC=13     ←1
   │ analysis                   182L  3C    8m  CC=7      ←0
   │ core                       177L  0C    8m  CC=5      ←0
   │ config                     170L  4C    7m  CC=10     ←9

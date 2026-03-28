@@ -4,25 +4,25 @@ flowchart TD
     classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
 
     subgraph Core
-        docker__vallm__vallm_server__VallmServer__create_fastapi_app["create_fastapi_app"]
-        docker__vallm__vallm_server__VallmServer___validate_static["_validate_static"]
-        docker__vallm__vallm_server__VallmServer___validate_runtime["_validate_runtime"]
-        docker__vallm__vallm_server__VallmServer___validate_security["_validate_security"]
-        docker__vallm__vallm_server__VallmServer___analyze_complexity["_analyze_complexity"]
-        docker__vallm__vallm_server__VallmServer__run["run"]
-        docker__vallm__vallm_mcp_server__run_rest_server["run_rest_server"]
         docker__proxym__proxym_server__ProxymServer__create_fastapi_app["create_fastapi_app"]
         docker__proxym__proxym_server__ProxymServer___call_anthropic["_call_anthropic"]
         docker__proxym__proxym_server__ProxymServer___call_openai["_call_openai"]
         docker__proxym__proxym_server__ProxymServer___mock_response["_mock_response"]
         docker__proxym__proxym_server__ProxymServer___track_cost["_track_cost"]
         docker__proxym__proxym_server__ProxymServer__run["run"]
+        docker__vallm__vallm_mcp_server__run_rest_server["run_rest_server"]
         docker__proxym__proxym_mcp_server__count_tokens["count_tokens"]
         docker__proxym__proxym_mcp_server__chat_completion("chat_completion CC=9")
-        ...["+403 more"]
+        docker__proxym__proxym_mcp_server___call_anthropic["_call_anthropic"]
+        docker__proxym__proxym_mcp_server__simple_prompt["simple_prompt"]
+        docker__proxym__proxym_mcp_server__create_rest_api["create_rest_api"]
+        docker__proxym__proxym_mcp_server__run_rest_server["run_rest_server"]
+        docker__vallm__vallm_server__VallmServer__create_fastapi_app["create_fastapi_app"]
+        docker__vallm__vallm_server__VallmServer___validate_static["_validate_static"]
+        ...["+420 more"]
     end
 
     subgraph Exporters
     end
 
-    class docker__vallm__vallm_server__VallmServer__create_fastapi_app,docker__vallm__vallm_server__VallmServer___validate_static,docker__vallm__vallm_server__VallmServer___validate_runtime,docker__vallm__vallm_server__VallmServer___validate_security,docker__vallm__vallm_server__VallmServer___analyze_complexity,docker__vallm__vallm_server__VallmServer__run,docker__vallm__vallm_mcp_server__run_rest_server,docker__proxym__proxym_server__ProxymServer__create_fastapi_app,docker__proxym__proxym_server__ProxymServer___call_anthropic,docker__proxym__proxym_server__ProxymServer___call_openai entry
+    class docker__proxym__proxym_server__ProxymServer__create_fastapi_app,docker__proxym__proxym_server__ProxymServer___call_anthropic,docker__proxym__proxym_server__ProxymServer___call_openai,docker__proxym__proxym_server__ProxymServer___mock_response,docker__proxym__proxym_server__ProxymServer___track_cost,docker__proxym__proxym_server__ProxymServer__run,docker__vallm__vallm_mcp_server__run_rest_server,docker__proxym__proxym_mcp_server__run_rest_server,docker__vallm__vallm_server__VallmServer__create_fastapi_app,docker__vallm__vallm_server__VallmServer___validate_static entry

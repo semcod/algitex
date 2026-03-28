@@ -4,19 +4,14 @@
 
 - **Project**: /home/tom/github/semcod/algitex
 - **Primary Language**: python
-- **Languages**: python: 102, shell: 26
+- **Languages**: python: 103, shell: 26
 - **Analysis Mode**: static
-- **Total Functions**: 674
-- **Total Classes**: 92
-- **Modules**: 128
-- **Entry Points**: 588
+- **Total Functions**: 678
+- **Total Classes**: 96
+- **Modules**: 129
+- **Entry Points**: 603
 
 ## Architecture by Module
-
-### src.algitex.tools.docker
-- **Functions**: 23
-- **Classes**: 3
-- **File**: `docker.py`
 
 ### src.algitex.tools.ide
 - **Functions**: 22
@@ -27,6 +22,11 @@
 - **Functions**: 20
 - **Classes**: 3
 - **File**: `services.py`
+
+### src.algitex.tools.benchmark
+- **Functions**: 19
+- **Classes**: 4
+- **File**: `benchmark.py`
 
 ### src.algitex.workflows
 - **Functions**: 19
@@ -48,10 +48,10 @@
 - **Classes**: 4
 - **File**: `ollama.py`
 
-### src.algitex.tools.todo_runner
-- **Functions**: 16
-- **Classes**: 2
-- **File**: `todo_runner.py`
+### src.algitex.tools.docker
+- **Functions**: 15
+- **Classes**: 3
+- **File**: `docker.py`
 
 ### src.algitex.propact
 - **Functions**: 15
@@ -142,17 +142,20 @@ Main execution flows into the system:
 ### examples.02-algo-loop.main.main
 - **Calls**: print, Loop, print, loop.discover, loop.report, print, print, print
 
+### examples.27-unified-autofix.main.main
+- **Calls**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.parse_args, print, print, print
+
 ### src.algitex.tools.batch.BatchProcessor.process
 > Process items in parallel.
 - **Calls**: print, print, print, time.time, self.stats.update, print, print, print
 
-### examples.06-telemetry.main.basic_telemetry_example
-> Basic telemetry tracking example.
-- **Calls**: print, Telemetry, print, tel.span, time.sleep, span1.finish, tel.span, time.sleep
-
 ### examples.15-github-mcp.main.demo_github_workflow
 > Demonstrate GitHub workflow.
 - **Calls**: print, examples.15-github-mcp.main.create_sample_project, print, print, project_dir.iterdir, print, print, print
+
+### examples.06-telemetry.main.basic_telemetry_example
+> Basic telemetry tracking example.
+- **Calls**: print, Telemetry, print, tel.span, time.sleep, span1.finish, tel.span, time.sleep
 
 ### examples.12-filesystem-mcp.main.demo_file_operations
 > Demonstrate real filesystem operations.
@@ -161,10 +164,6 @@ Main execution flows into the system:
 ### examples.10-cicd.main.complete_ci_cd_setup
 > Example of complete CI/CD setup.
 - **Calls**: print, Path, project_dir.mkdir, None.write_text, CICDGenerator, generator.generate_all, print, print
-
-### examples.20-self-hosted-pipeline.auto_fix_todos.main
-> Main workflow.
-- **Calls**: print, print, print, examples.20-self-hosted-pipeline.auto_fix_todos.get_last_todo_issues, print, enumerate, print, print
 
 ### examples.19-local-mcp-tools.main.main
 - **Calls**: print, print, print, print, print, print, print, print
@@ -187,10 +186,6 @@ Main execution flows into the system:
 > Create FastAPI application.
 - **Calls**: FastAPI, app.get, app.post, app.post, app.post, request.get, all, request.get
 
-### examples.21-aider-cli-ollama.main_simplified.main
-> Simplified version using algitex Project class.
-- **Calls**: print, print, print, print, Project, print, p.print_service_status, p.check_ollama
-
 ### examples.07-context.main.context_optimization_example
 > Example of optimizing context for different use cases.
 - **Calls**: print, Path, project_dir.mkdir, None.mkdir, None.write_text, None.write_text, None.mkdir, None.write_text
@@ -202,10 +197,6 @@ Main execution flows into the system:
 ### examples.08-feedback.main.feedback_loop_simulation
 > Simulate complete feedback loop with mock execution.
 - **Calls**: print, MockDockerManager, MockTickets, FeedbackController, FeedbackLoop, print, print, loop.execute_with_feedback
-
-### src.algitex.tools.docker.DockerToolManager._call_stdio
-> Send JSON-RPC over stdin, read from stdout with timeout.
-- **Calls**: json.dumps, RuntimeError, rt.process.stdin.write, rt.process.stdin.flush, time.time, len, select.select, rt.process.stdout.readline
 
 ### examples.23-continue-dev-ollama.main.main
 - **Calls**: print, print, print, print, Project, p.check_ollama, print, print
@@ -221,9 +212,17 @@ Main execution flows into the system:
 > List available configuration files.
 - **Calls**: None.expanduser, continue_config.exists, vscode_workspace.exists, vscode_global.exists, None.glob, None.glob, None.append, Path.cwd
 
+### src.algitex.tools.docker_transport.call_stdio
+> Send JSON-RPC over stdin, read from stdout with timeout.
+- **Calls**: json.dumps, rt.process.stdin.write, rt.process.stdin.flush, time.time, len, select.select, rt.process.stdout.readline, response_lines.append
+
 ### src.algitex.tools.ollama.OllamaClient.chat
 > Chat with Ollama using message format.
 - **Calls**: ValueError, self._client.post, response.raise_for_status, response.iter_lines, response.json, data.get, OllamaResponse, OllamaResponse
+
+### src.algitex.tools.benchmark.ModelBenchmark._print_summary
+> Print summary statistics.
+- **Calls**: results.get_summary, print, print, print, print, print, print, print
 
 ### src.algitex.cli.core.init
 > Initialize algitex for a project.
@@ -260,15 +259,15 @@ basic_context_example [examples.07-context.main]
 process [src.algitex.tools.batch.BatchProcessor]
 ```
 
-### Flow 6: basic_telemetry_example
-```
-basic_telemetry_example [examples.06-telemetry.main]
-```
-
-### Flow 7: demo_github_workflow
+### Flow 6: demo_github_workflow
 ```
 demo_github_workflow [examples.15-github-mcp.main]
   └─> create_sample_project
+```
+
+### Flow 7: basic_telemetry_example
+```
+basic_telemetry_example [examples.06-telemetry.main]
 ```
 
 ### Flow 8: demo_file_operations
@@ -289,11 +288,6 @@ status [src.algitex.project.Project]
 
 ## Key Classes
 
-### src.algitex.tools.docker.DockerToolManager
-> Spawn Docker containers, connect via MCP/REST, call tools, teardown.
-- **Methods**: 23
-- **Key Methods**: src.algitex.tools.docker.DockerToolManager.__init__, src.algitex.tools.docker.DockerToolManager.__enter__, src.algitex.tools.docker.DockerToolManager.__exit__, src.algitex.tools.docker.DockerToolManager._load_tools, src.algitex.tools.docker.DockerToolManager._load_state, src.algitex.tools.docker.DockerToolManager._save_state, src.algitex.tools.docker.DockerToolManager.spawn, src.algitex.tools.docker.DockerToolManager._spawn_stdio, src.algitex.tools.docker.DockerToolManager._spawn_sse, src.algitex.tools.docker.DockerToolManager._spawn_rest
-
 ### src.algitex.tools.autofix.AutoFix
 > Automated code fixing using various backends.
 - **Methods**: 18
@@ -309,10 +303,10 @@ status [src.algitex.project.Project]
 - **Methods**: 16
 - **Key Methods**: src.algitex.tools.services.ServiceChecker.__init__, src.algitex.tools.services.ServiceChecker.check_http_service, src.algitex.tools.services.ServiceChecker.check_ollama, src.algitex.tools.services.ServiceChecker.check_litellm_proxy, src.algitex.tools.services.ServiceChecker.check_mcp_service, src.algitex.tools.services.ServiceChecker.check_command_exists, src.algitex.tools.services.ServiceChecker.check_file_exists, src.algitex.tools.services.ServiceChecker.check_all, src.algitex.tools.services.ServiceChecker._format_status_line, src.algitex.tools.services.ServiceChecker._print_status_details
 
-### src.algitex.tools.todo_runner.TodoRunner
-> Execute todo tasks using Docker MCP tools with local fallback.
-- **Methods**: 16
-- **Key Methods**: src.algitex.tools.todo_runner.TodoRunner.__init__, src.algitex.tools.todo_runner.TodoRunner.__enter__, src.algitex.tools.todo_runner.TodoRunner.__exit__, src.algitex.tools.todo_runner.TodoRunner.run_from_file, src.algitex.tools.todo_runner.TodoRunner.run, src.algitex.tools.todo_runner.TodoRunner._execute_local, src.algitex.tools.todo_runner.TodoRunner._execute_ollama, src.algitex.tools.todo_runner.TodoRunner._execute_task, src.algitex.tools.todo_runner.TodoRunner._determine_action, src.algitex.tools.todo_runner.TodoRunner._nap_action
+### src.algitex.tools.docker.DockerToolManager
+> Spawn Docker containers, connect via MCP/REST, call tools, teardown.
+- **Methods**: 15
+- **Key Methods**: src.algitex.tools.docker.DockerToolManager.__init__, src.algitex.tools.docker.DockerToolManager.__enter__, src.algitex.tools.docker.DockerToolManager.__exit__, src.algitex.tools.docker.DockerToolManager._load_tools, src.algitex.tools.docker.DockerToolManager._load_state, src.algitex.tools.docker.DockerToolManager._save_state, src.algitex.tools.docker.DockerToolManager.spawn, src.algitex.tools.docker.DockerToolManager._wait_healthy, src.algitex.tools.docker.DockerToolManager._get_http_client, src.algitex.tools.docker.DockerToolManager.call_tool
 
 ### src.algitex.tools.workspace.Workspace
 > Manage multiple repos as a single workspace.
@@ -333,6 +327,11 @@ status [src.algitex.project.Project]
 > Execute todo tasks using Docker MCP tools.
 - **Methods**: 12
 - **Key Methods**: src.algitex.tools.todo_executor.TodoExecutor.__init__, src.algitex.tools.todo_executor.TodoExecutor.__enter__, src.algitex.tools.todo_executor.TodoExecutor.__exit__, src.algitex.tools.todo_executor.TodoExecutor.run, src.algitex.tools.todo_executor.TodoExecutor._execute_task, src.algitex.tools.todo_executor.TodoExecutor._parse_action, src.algitex.tools.todo_executor.TodoExecutor._parse_fix_action, src.algitex.tools.todo_executor.TodoExecutor._parse_create_action, src.algitex.tools.todo_executor.TodoExecutor._parse_delete_action, src.algitex.tools.todo_executor.TodoExecutor._parse_read_action
+
+### src.algitex.tools.benchmark.ModelBenchmark
+> Benchmark models on standardized tasks.
+- **Methods**: 12
+- **Key Methods**: src.algitex.tools.benchmark.ModelBenchmark.__init__, src.algitex.tools.benchmark.ModelBenchmark._add_default_tasks, src.algitex.tools.benchmark.ModelBenchmark.add_task, src.algitex.tools.benchmark.ModelBenchmark.add_custom_task, src.algitex.tools.benchmark.ModelBenchmark.run_single_task, src.algitex.tools.benchmark.ModelBenchmark.compare_models, src.algitex.tools.benchmark.ModelBenchmark.print_results, src.algitex.tools.benchmark.ModelBenchmark._print_table, src.algitex.tools.benchmark.ModelBenchmark._print_summary, src.algitex.tools.benchmark.ModelBenchmark._print_detailed
 
 ### src.algitex.tools.autofix.proxy_backend.ProxyBackend
 > Fix issues using LiteLLM proxy.
@@ -375,6 +374,11 @@ status [src.algitex.project.Project]
 - **Methods**: 10
 - **Key Methods**: src.algitex.tools.tickets.Tickets.__init__, src.algitex.tools.tickets.Tickets.add, src.algitex.tools.tickets.Tickets.from_analysis, src.algitex.tools.tickets.Tickets.list, src.algitex.tools.tickets.Tickets.update, src.algitex.tools.tickets.Tickets.sync, src.algitex.tools.tickets.Tickets.board, src.algitex.tools.tickets.Tickets._load, src.algitex.tools.tickets.Tickets._save, src.algitex.tools.tickets.Tickets._planfile_add
 
+### src.algitex.tools.todo_runner.TodoRunner
+> Execute todo tasks using Docker MCP tools with local fallback.
+- **Methods**: 10
+- **Key Methods**: src.algitex.tools.todo_runner.TodoRunner.__init__, src.algitex.tools.todo_runner.TodoRunner.__enter__, src.algitex.tools.todo_runner.TodoRunner.__exit__, src.algitex.tools.todo_runner.TodoRunner.run_from_file, src.algitex.tools.todo_runner.TodoRunner.run, src.algitex.tools.todo_runner.TodoRunner._execute_local, src.algitex.tools.todo_runner.TodoRunner._execute_ollama, src.algitex.tools.todo_runner.TodoRunner._execute_task, src.algitex.tools.todo_runner.TodoRunner._format_output, src.algitex.tools.todo_runner.TodoRunner.get_summary
+
 ### docker.code2llm.code2llm_server.Code2LLMServer
 > Code analysis server for LLM context generation.
 - **Methods**: 9
@@ -385,26 +389,9 @@ status [src.algitex.project.Project]
 - **Methods**: 9
 - **Key Methods**: src.algitex.tools.cicd.CICDGenerator.__init__, src.algitex.tools.cicd.CICDGenerator._load_config, src.algitex.tools.cicd.CICDGenerator.generate_github_actions, src.algitex.tools.cicd.CICDGenerator.generate_gitlab_ci, src.algitex.tools.cicd.CICDGenerator._get_complexity_check, src.algitex.tools.cicd.CICDGenerator.generate_dockerfile, src.algitex.tools.cicd.CICDGenerator.generate_precommit_config, src.algitex.tools.cicd.CICDGenerator.generate_all, src.algitex.tools.cicd.CICDGenerator.update_config
 
-### src.algitex.tools.context.ContextBuilder
-> Build rich context for LLM coding tasks from .toon files + git + planfile.
-- **Methods**: 9
-- **Key Methods**: src.algitex.tools.context.ContextBuilder.__init__, src.algitex.tools.context.ContextBuilder.build, src.algitex.tools.context.ContextBuilder._load_toon_summary, src.algitex.tools.context.ContextBuilder._load_architecture, src.algitex.tools.context.ContextBuilder._resolve_targets, src.algitex.tools.context.ContextBuilder._find_related, src.algitex.tools.context.ContextBuilder._load_conventions, src.algitex.tools.context.ContextBuilder._git_recent, src.algitex.tools.context.ContextBuilder._format_ticket
-
 ## Data Transformation Functions
 
 Key functions that process and transform data:
-
-### docker.vallm.vallm_server.VallmServer._validate_static
-> Static analysis with pylint, mypy, ruff.
-- **Output to**: subprocess.run, subprocess.run, max, json.loads, errors.extend
-
-### docker.vallm.vallm_server.VallmServer._validate_runtime
-> Run tests with pytest.
-- **Output to**: subprocess.run, result.stdout.split, line.split, str, int
-
-### docker.vallm.vallm_server.VallmServer._validate_security
-> Security scan with bandit.
-- **Output to**: subprocess.run, max, len, logger.warning, json.loads
 
 ### docker.vallm.vallm_mcp_server.validate_static
 > Run static analysis with ruff, mypy on the project.
@@ -441,6 +428,18 @@ Args:
     path: Path to the project direc
 - **Output to**: mcp.tool, docker.vallm.vallm_mcp_server.validate_static, docker.vallm.vallm_mcp_server.validate_runtime, docker.vallm.vallm_mcp_server.validate_security, all
 
+### docker.vallm.vallm_server.VallmServer._validate_static
+> Static analysis with pylint, mypy, ruff.
+- **Output to**: subprocess.run, subprocess.run, max, json.loads, errors.extend
+
+### docker.vallm.vallm_server.VallmServer._validate_runtime
+> Run tests with pytest.
+- **Output to**: subprocess.run, result.stdout.split, line.split, str, int
+
+### docker.vallm.vallm_server.VallmServer._validate_security
+> Security scan with bandit.
+- **Output to**: subprocess.run, max, len, logger.warning, json.loads
+
 ### src.algitex.tools.todo_parser.TodoParser.parse
 > Parse file and return list of pending tasks.
 - **Output to**: self.file_path.read_text, tasks.extend, tasks.extend, tasks.extend, self.file_path.exists
@@ -457,6 +456,10 @@ Args:
 > Parse generic list items.
 - **Output to**: set, self.GENERIC_PATTERN.finditer, match.group, None.strip, seen.add
 
+### src.algitex.tools.context.ContextBuilder._format_ticket
+> Format ticket information.
+- **Output to**: ticket.get, ticket.get, ticket.get, ticket.get
+
 ### src.algitex.tools.workspace.Workspace._validate_dependencies
 > Validate that all dependencies exist.
 - **Output to**: set, self.repos.items, self.repos.keys, ValueError
@@ -464,10 +467,6 @@ Args:
 ### src.algitex.tools.workspace.Workspace.validate_all
 > Run validation across all repositories.
 - **Output to**: self._topo_sort, print, Pipeline, pipeline.validate, pipeline._results.get
-
-### src.algitex.tools.context.ContextBuilder._format_ticket
-> Format ticket information.
-- **Output to**: ticket.get, ticket.get, ticket.get, ticket.get
 
 ### src.algitex.tools.services.ServiceChecker._format_status_line
 > Format a single status line.
@@ -539,15 +538,15 @@ Args:
 - **Confidence**: 0.70
 - **Functions**: src.algitex.algo.LoopState.deterministic_ratio, src.algitex.algo.LoopState.stage_name
 
-### state_machine_OllamaClient
-- **Type**: state_machine
-- **Confidence**: 0.70
-- **Functions**: src.algitex.tools.ollama.OllamaClient.__init__, src.algitex.tools.ollama.OllamaClient.health, src.algitex.tools.ollama.OllamaClient.list_models, src.algitex.tools.ollama.OllamaClient.pull_model, src.algitex.tools.ollama.OllamaClient.generate
-
 ### state_machine_DockerToolManager
 - **Type**: state_machine
 - **Confidence**: 0.70
 - **Functions**: src.algitex.tools.docker.DockerToolManager.__init__, src.algitex.tools.docker.DockerToolManager.__enter__, src.algitex.tools.docker.DockerToolManager.__exit__, src.algitex.tools.docker.DockerToolManager._load_tools, src.algitex.tools.docker.DockerToolManager._load_state
+
+### state_machine_OllamaClient
+- **Type**: state_machine
+- **Confidence**: 0.70
+- **Functions**: src.algitex.tools.ollama.OllamaClient.__init__, src.algitex.tools.ollama.OllamaClient.health, src.algitex.tools.ollama.OllamaClient.list_models, src.algitex.tools.ollama.OllamaClient.pull_model, src.algitex.tools.ollama.OllamaClient.generate
 
 ### state_machine_TraceSpan
 - **Type**: state_machine
@@ -580,39 +579,39 @@ Functions exposed as public API (no underscore prefix):
 - `examples.13-vallm.main.demo_validation` - 35 calls
 - `examples.07-context.main.basic_context_example` - 34 calls
 - `examples.02-algo-loop.main.main` - 33 calls
+- `examples.27-unified-autofix.main.main` - 33 calls
 - `src.algitex.tools.batch.BatchProcessor.process` - 30 calls
-- `examples.06-telemetry.main.basic_telemetry_example` - 30 calls
 - `examples.15-github-mcp.main.demo_github_workflow` - 30 calls
+- `examples.06-telemetry.main.basic_telemetry_example` - 30 calls
 - `examples.12-filesystem-mcp.main.demo_file_operations` - 30 calls
 - `examples.10-cicd.main.complete_ci_cd_setup` - 29 calls
-- `examples.20-self-hosted-pipeline.auto_fix_todos.main` - 29 calls
 - `examples.19-local-mcp-tools.main.main` - 28 calls
 - `src.algitex.project.Project.status` - 27 calls
 - `examples.03-pipeline.main.main` - 27 calls
 - `examples.04-ide-integration.main.main` - 26 calls
 - `examples.07-context.main.prompt_engineering_example` - 26 calls
 - `docker.vallm.vallm_server.VallmServer.create_fastapi_app` - 25 calls
-- `examples.21-aider-cli-ollama.main_simplified.main` - 25 calls
-- `examples.20-self-hosted-pipeline.auto_fix_todos.analyze_buggy_code` - 25 calls
 - `examples.07-context.main.context_optimization_example` - 25 calls
 - `examples.08-feedback.main.feedback_loop_simulation` - 24 calls
 - `examples.23-continue-dev-ollama.main.main` - 23 calls
 - `examples.25-local-model-comparison.main.main` - 23 calls
 - `docker.code2llm.code2llm_server.Code2LLMServer.create_fastapi_app` - 22 calls
 - `src.algitex.tools.config.ConfigManager.list_configs` - 22 calls
+- `src.algitex.tools.docker_transport.call_stdio` - 22 calls
 - `src.algitex.tools.ollama.OllamaClient.chat` - 22 calls
 - `src.algitex.cli.core.init` - 22 calls
 - `examples.11-aider-mcp.main.demo_refactoring` - 22 calls
 - `examples.21-aider-cli-ollama.main.main` - 22 calls
-- `examples.27-unified-autofix.main.main` - 22 calls
 - `examples.28-mcp-orchestration.main.main` - 22 calls
 - `examples.08-feedback.main.basic_feedback_example` - 22 calls
-- `examples.20-self-hosted-pipeline.auto_fix_todos.validate_buggy_code` - 22 calls
 - `src.algitex.tools.feedback.FeedbackLoop.execute_with_feedback` - 21 calls
 - `examples.01-quickstart.main.main` - 21 calls
-- `examples.27-unified-autofix.main.execute_fixes` - 21 calls
 - `examples.28-mcp-orchestration.mcp_orchestrator.main` - 21 calls
 - `src.algitex.tools.mcp.MCPOrchestrator.wait_for_ready` - 20 calls
+- `src.algitex.tools.ollama.OllamaClient.generate` - 20 calls
+- `examples.08-feedback.main.cost_optimization_example` - 19 calls
+- `examples.09-workspace.main.workspace_management_example` - 19 calls
+- `examples.09-workspace.main.cross_repo_planning_example` - 19 calls
 
 ## System Interactions
 
@@ -634,22 +633,22 @@ graph TD
     main --> Loop
     main --> discover
     main --> report
+    main --> ArgumentParser
+    main --> add_argument
+    main --> parse_args
     process --> print
     process --> time
     process --> update
+    demo_github_workflow --> print
+    demo_github_workflow --> create_sample_projec
+    demo_github_workflow --> iterdir
     basic_telemetry_exam --> print
     basic_telemetry_exam --> Telemetry
     basic_telemetry_exam --> span
     basic_telemetry_exam --> sleep
-    demo_github_workflow --> print
-    demo_github_workflow --> create_sample_projec
-    demo_github_workflow --> iterdir
     demo_file_operations --> print
     demo_file_operations --> create_sample_files
     demo_file_operations --> rglob
-    complete_ci_cd_setup --> print
-    complete_ci_cd_setup --> Path
-    complete_ci_cd_setup --> mkdir
 ```
 
 ## Reverse Engineering Guidelines

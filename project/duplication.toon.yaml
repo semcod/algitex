@@ -1,20 +1,20 @@
-# redup/duplication | 22 groups | 95f 16557L | 2026-03-28
+# redup/duplication | 22 groups | 98f 17091L | 2026-03-28
 
 SUMMARY:
-  files_scanned: 95
-  total_lines:   16557
+  files_scanned: 98
+  total_lines:   17091
   dup_groups:    22
   dup_fragments: 65
   saved_lines:   310
-  scan_ms:       1859
+  scan_ms:       1925
 
 DUPLICATES[22] (ranked by impact):
   [2022722a542eec1b] ! STRU  run_rest_server  L=11 N=5 saved=44 sim=1.00
-      docker/vallm/vallm_mcp_server.py:0-10  (run_rest_server)
-      docker/proxym/proxym_mcp_server.py:0-10  (run_rest_server)
-      docker/planfile-mcp/planfile_mcp_server.py:0-10  (run_rest_server)
       docker/aider-mcp/aider_mcp_server.py:0-10  (run_rest_server)
       docker/code2llm/code2llm_mcp_server.py:0-10  (run_rest_server)
+      docker/proxym/proxym_mcp_server.py:0-10  (run_rest_server)
+      docker/vallm/vallm_mcp_server.py:0-10  (run_rest_server)
+      docker/planfile-mcp/planfile_mcp_server.py:0-10  (run_rest_server)
   [b1c2de350a34ae02] ! STRU  create_sample_project  L=35 N=2 saved=35 sim=1.00
       examples/11-aider-mcp/main.py:0-34  (create_sample_project)
       examples/13-vallm/main.py:0-49  (create_sample_code)
@@ -24,12 +24,12 @@ DUPLICATES[22] (ranked by impact):
       src/algitex/tools/autofix/proxy_backend.py:0-12  (_error_result)
   [bb223416bc6021bb]   EXAC  __enter__  L=4 N=7 saved=24 sim=1.00
       src/algitex/tools/proxy.py:0-3  (__enter__)
-      src/algitex/tools/ollama.py:0-3  (__enter__)
       src/algitex/tools/telemetry.py:0-3  (__enter__)
+      src/algitex/tools/ollama.py:0-3  (__enter__)
       src/algitex/tools/docker.py:0-3  (__enter__)
       src/algitex/tools/todo_executor.py:0-3  (__enter__)
-      src/algitex/tools/services.py:0-3  (__enter__)
       src/algitex/tools/todo_runner.py:0-3  (__enter__)
+      src/algitex/tools/services.py:0-3  (__enter__)
   [40924e4d495cb986]   STRU  __init__  L=4 N=6 saved=20 sim=1.00
       examples/22-claude-code-ollama/buggy_code.py:0-3  (__init__)
       examples/24-ollama-batch/file3.py:0-2  (__init__)
@@ -38,20 +38,17 @@ DUPLICATES[22] (ranked by impact):
       examples/21-aider-cli-ollama/buggy_code.py:0-3  (__init__)
       examples/19-local-mcp-tools/buggy_code.py:0-4  (__init__)
   [e1fb6a1236dee2cd]   STRU  run  L=9 N=3 saved=18 sim=1.00
-      docker/proxym/proxym_server.py:0-8  (run)
       docker/vallm/vallm_server.py:0-8  (run)
+      docker/proxym/proxym_server.py:0-8  (run)
       docker/code2llm/code2llm_server.py:0-8  (run)
   [829376433c553f8b]   EXAC  calculate  L=16 N=2 saved=16 sim=1.00
       examples/26-litellm-proxy-ollama/buggy_code.py:0-15  (calculate)
       examples/23-continue-dev-ollama/buggy_code.py:0-15  (calculate)
   [d7207102973f513a]   STRU  __init__  L=4 N=4 saved=12 sim=1.00
       src/algitex/project/config.py:0-3  (__init__)
-      src/algitex/project/mcp.py:0-3  (__init__)
       src/algitex/project/ollama.py:0-3  (__init__)
+      src/algitex/project/mcp.py:0-3  (__init__)
       src/algitex/project/services.py:0-3  (__init__)
-  [657614b0d6d15716]   STRU  to_dict  L=12 N=2 saved=12 sim=1.00
-      src/algitex/tools/services.py:0-11  (to_dict)
-      src/algitex/tools/batch.py:0-11  (to_dict)
   [b2799b0205f5f308]   STRU  divide  L=6 N=3 saved=12 sim=1.00
       examples/22-claude-code-ollama/buggy_code.py:0-5  (divide)
       examples/26-litellm-proxy-ollama/buggy_code.py:0-5  (divide_numbers)
@@ -61,16 +58,19 @@ DUPLICATES[22] (ranked by impact):
       examples/26-litellm-proxy-ollama/buggy_code.py:0-3  (add)
       examples/23-continue-dev-ollama/buggy_code.py:0-3  (add)
       examples/21-aider-cli-ollama/buggy_code.py:0-4  (add)
+  [657614b0d6d15716]   STRU  to_dict  L=12 N=2 saved=12 sim=1.00
+      src/algitex/tools/batch.py:0-11  (to_dict)
+      src/algitex/tools/services.py:0-11  (to_dict)
   [d9d818b06bd1d3d7]   EXAC  process_items  L=11 N=2 saved=11 sim=1.00
       examples/26-litellm-proxy-ollama/buggy_code.py:0-10  (process_items)
       examples/23-continue-dev-ollama/buggy_code.py:0-10  (process_items)
   [6703caf9345712a2]   STRU  close  L=5 N=3 saved=10 sim=1.00
       src/algitex/tools/ollama.py:0-4  (close)
-      src/algitex/tools/services.py:0-4  (close)
       src/algitex/project/mcp.py:0-4  (print_mcp_status)
-  [2659ec9f108dc1af]   STRU  restart_mcp_service  L=5 N=3 saved=10 sim=1.00
-      src/algitex/project/mcp.py:0-4  (restart_mcp_service)
+      src/algitex/tools/services.py:0-4  (close)
+  [2659ec9f108dc1af]   STRU  pull_ollama_model  L=5 N=3 saved=10 sim=1.00
       src/algitex/project/ollama.py:0-4  (pull_ollama_model)
+      src/algitex/project/mcp.py:0-4  (restart_mcp_service)
       src/algitex/project/ide.py:0-4  (setup_ide)
   [f234525eb4ea32e0]   STRU  health  L=9 N=2 saved=9 sim=1.00
       src/algitex/tools/proxy.py:0-8  (health)
@@ -84,9 +84,9 @@ DUPLICATES[22] (ranked by impact):
   [6624717f6f5dc991]   STRU  __init__  L=6 N=2 saved=6 sim=1.00
       docker/vallm/vallm_server.py:0-5  (__init__)
       docker/code2llm/code2llm_server.py:0-5  (__init__)
-  [01fbdf5043976d06]   STRU  list_services  L=5 N=2 saved=5 sim=1.00
-      src/algitex/tools/mcp.py:0-4  (list_services)
+  [01fbdf5043976d06]   STRU  list_tools  L=5 N=2 saved=5 sim=1.00
       src/algitex/tools/ide.py:0-4  (list_tools)
+      src/algitex/tools/mcp.py:0-4  (list_services)
   [8625104e7f7751c4]   STRU  divide_numbers  L=5 N=2 saved=5 sim=1.00
       examples/18-ollama-local/buggy_code.py:0-4  (divide_numbers)
       examples/21-aider-cli-ollama/buggy_code.py:0-6  (divide)
@@ -122,22 +122,22 @@ REFACTOR[22] (ranked by priority):
   [8] ○ extract_function   → src/algitex/project/utils/__init__.py
       WHY: 4 occurrences of 4-line block across 4 files — saves 12 lines
       FILES: src/algitex/project/config.py, src/algitex/project/mcp.py, src/algitex/project/ollama.py, src/algitex/project/services.py
-  [9] ○ extract_function   → src/algitex/tools/utils/to_dict.py
-      WHY: 2 occurrences of 12-line block across 2 files — saves 12 lines
-      FILES: src/algitex/tools/batch.py, src/algitex/tools/services.py
-  [10] ○ extract_function   → examples/utils/divide.py
+  [9] ○ extract_function   → examples/utils/divide.py
       WHY: 3 occurrences of 6-line block across 3 files — saves 12 lines
       FILES: examples/22-claude-code-ollama/buggy_code.py, examples/23-continue-dev-ollama/buggy_code.py, examples/26-litellm-proxy-ollama/buggy_code.py
-  [11] ○ extract_function   → examples/utils/add.py
+  [10] ○ extract_function   → examples/utils/add.py
       WHY: 4 occurrences of 4-line block across 4 files — saves 12 lines
       FILES: examples/21-aider-cli-ollama/buggy_code.py, examples/22-claude-code-ollama/buggy_code.py, examples/23-continue-dev-ollama/buggy_code.py, examples/26-litellm-proxy-ollama/buggy_code.py
+  [11] ○ extract_function   → src/algitex/tools/utils/to_dict.py
+      WHY: 2 occurrences of 12-line block across 2 files — saves 12 lines
+      FILES: src/algitex/tools/batch.py, src/algitex/tools/services.py
   [12] ○ extract_function   → examples/utils/process_items.py
       WHY: 2 occurrences of 11-line block across 2 files — saves 11 lines
       FILES: examples/23-continue-dev-ollama/buggy_code.py, examples/26-litellm-proxy-ollama/buggy_code.py
   [13] ○ extract_function   → src/algitex/utils/close.py
       WHY: 3 occurrences of 5-line block across 3 files — saves 10 lines
       FILES: src/algitex/project/mcp.py, src/algitex/tools/ollama.py, src/algitex/tools/services.py
-  [14] ○ extract_function   → src/algitex/project/utils/restart_mcp_service.py
+  [14] ○ extract_function   → src/algitex/project/utils/pull_ollama_model.py
       WHY: 3 occurrences of 5-line block across 3 files — saves 10 lines
       FILES: src/algitex/project/ide.py, src/algitex/project/mcp.py, src/algitex/project/ollama.py
   [15] ○ extract_function   → src/algitex/tools/utils/health.py
@@ -152,7 +152,7 @@ REFACTOR[22] (ranked by priority):
   [18] ○ extract_function   → docker/utils/__init__.py
       WHY: 2 occurrences of 6-line block across 2 files — saves 6 lines
       FILES: docker/code2llm/code2llm_server.py, docker/vallm/vallm_server.py
-  [19] ○ extract_function   → src/algitex/tools/utils/list_services.py
+  [19] ○ extract_function   → src/algitex/tools/utils/list_tools.py
       WHY: 2 occurrences of 5-line block across 2 files — saves 5 lines
       FILES: src/algitex/tools/ide.py, src/algitex/tools/mcp.py
   [20] ○ extract_function   → examples/utils/divide_numbers.py
