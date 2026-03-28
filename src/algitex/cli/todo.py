@@ -510,17 +510,18 @@ Limited tasks with workers:
 @option("--tool", "-t", default="ollama-mcp")
 @option("--task-id", default=None)
 @option("--limit", "-l", default=0)
-@option("--dry-run/--execute", default=False)
-@option("--algo", default=False)
-@option("--micro", default=False)
-@option("--all-phases", "--all", default=False)
-@option("--dashboard", "-d", default=False)
+@option("--dry-run/--execute", default=False, is_flag=True)
+@option("--algo", default=False, is_flag=True)
+@option("--micro", default=False, is_flag=True)
+@option("--all-phases", "--all", default=False, is_flag=True)
+@option("--dashboard", "-d", default=False, is_flag=True)
 @option("--workers", "-w", default=8)
 @option("--micro-workers", default=4)
 @option("--model", default="qwen3-coder:latest")
 @option("--backend", "-b", default="ollama")
 @option("--rate-limit", "-r", default=10)
 @option("--proxy-url", "-p", default="http://localhost:4000")
+@option("--verbose", "-v", is_flag=True, help="Enable verbose logging")
 def todo_fix(
     file: str,
     tool: str,
@@ -537,6 +538,7 @@ def todo_fix(
     backend: str,
     rate_limit: int,
     proxy_url: str,
+    verbose: bool,
 ):
     """Execute fix tasks (prefact-style) via Docker MCP.
     
@@ -544,6 +546,12 @@ def todo_fix(
     CC: 8 (5 functions + 3 branches)
     Was: CC ~50 (nested phase logic)
     """
+    # Enable verbose logging if requested
+    if verbose:
+        from algitex.tools.logging import set_verbose
+        set_verbose(True)
+        console.print("[dim][VERBOSE] Debug logging enabled[/]")
+    
     # Step 1: Parse and filter tasks
     tasks = _tf_parse_and_filter(file, task_id, limit)
     if not tasks:

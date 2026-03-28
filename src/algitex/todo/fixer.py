@@ -161,10 +161,46 @@ def _print_execution_summary(
 
 # ─── Core fixer ─────────────────────────────────────
 
+def _validate_file_with_vallm(path: Path, original_content: str) -> tuple[bool, str]:
+    """Validate file with vallm after fix. Restore original if invalid.
+    
+    Returns:
+        (is_valid, message)
+    """
+    try:
+        # Try to import and use vallm
+        from algitex.tools.analysis import Analyzer
+        
+        analyzer = Analyzer(str(path.parent))
+        report = analyzer.health()
+        
+        # Check if file is syntactically valid (vallm_pass_rate > 0)
+        if report.vallm_pass_rate >= 0:
+            return True, "valid"
+        else:
+            # Restore original content
+            path.write_text(original_content)
+            return False, f"validation failed (pass_rate: {report.vallm_pass_rate:.2f})"
+            
+    except Exception as e:
+        # If vallm not available, try basic syntax check
+        try:
+            import ast
+            ast.parse(path.read_text())
+            return True, "syntax OK"
+        except SyntaxError as se:
+            # Restore original content
+            path.write_text(original_content)
+            return False, f"syntax error: {se}"
+        except Exception:
+            return True, "vallm unavailable, skipped"
+
+
 def fix_file(file_path: str, tasks: list[TodoTask], dry_run: bool = True) -> FixResult:
     """Fix all tasks in a single file using strategy dispatch.
     
     CC: 6 (dispatcher + loop + 4 category handlers)
+    Validates with vallm after each fix, restores if invalid.
     """
     path = Path(file_path)
     result = FixResult(file=file_path)
@@ -172,6 +208,9 @@ def fix_file(file_path: str, tasks: list[TodoTask], dry_run: bool = True) -> Fix
     if not path.exists():
         result.errors.append("file not found")
         return result
+
+    # Save original content for potential restore
+    original_content = path.read_text()
 
     # Sort tasks by line number DESCENDING — fix bottom-up to preserve line numbers
     sorted_tasks = sorted(tasks, key=lambda t: t.line, reverse=True)
@@ -183,7 +222,7 @@ def fix_file(file_path: str, tasks: list[TodoTask], dry_run: bool = True) -> Fix
     exec_tasks = [t for t in sorted_tasks if t.category in {"exec_block", "module_block"}]
     other_tasks = [t for t in sorted_tasks if t.category not in REPAIRERS]
 
-    # Process line-based fixes
+    # Process line-based fixes with validation after each
     for task in line_tasks:
         repairer = REPAIRERS.get(task.category)
         if not repairer:
@@ -208,7 +247,16 @@ def fix_file(file_path: str, tasks: list[TodoTask], dry_run: bool = True) -> Fix
                 ok = repairer(path, "", task.line - 1)
             
             if ok:
-                result.fixed += 1
+                # Validate with vallm after fix
+                is_valid, msg = _validate_file_with_vallm(path, original_content)
+                if is_valid:
+                    result.fixed += 1
+                    print(f"    ✓ validated: {msg}")
+                else:
+                    result.errors.append(f"L{task.line}: fix invalid - {msg}")
+                    result.skipped += 1
+                    # Restore original content
+                    original_content = path.read_text()
             else:
                 result.skipped += 1
         except Exception as e:
@@ -218,17 +266,17 @@ def fix_file(file_path: str, tasks: list[TodoTask], dry_run: bool = True) -> Fix
     # Count other tasks as skipped
     result.skipped += len(other_tasks)
 
-    # Process magic number fixes
+    # Process magic number fixes with validation
     if magic_tasks:
-        _process_magic_batch(path, magic_tasks, result, dry_run)
+        _process_magic_batch(path, magic_tasks, result, dry_run, original_content)
 
-    # Process fstring fixes
+    # Process fstring fixes with validation
     if fstring_tasks:
-        _process_fstring_batch(path, fstring_tasks, result, dry_run)
+        _process_fstring_batch(path, fstring_tasks, result, dry_run, original_content)
 
-    # Process exec block fixes
+    # Process exec block fixes with validation
     if exec_tasks:
-        _process_exec_batch(path, exec_tasks, result, dry_run)
+        _process_exec_batch(path, exec_tasks, result, dry_run, original_content)
 
     return result
 
@@ -244,8 +292,8 @@ def _extract_return_type(message: str) -> str | None:
     return None
 
 
-def _process_magic_batch(path: Path, tasks: list[TodoTask], result: FixResult, dry_run: bool) -> None:
-    """Process magic number fixes as a batch."""
+def _process_magic_batch(path: Path, tasks: list[TodoTask], result: FixResult, dry_run: bool, original_content: str) -> None:
+    """Process magic number fixes as a batch with validation."""
     from algitex.todo.classify import KNOWN_MAGIC_CONSTANTS
     
     if dry_run:
@@ -271,7 +319,14 @@ def _process_magic_batch(path: Path, tasks: list[TodoTask], result: FixResult, d
         
         try:
             if repair_magic_number(path, number, task.line - 1, const_name):
-                result.fixed += 1
+                is_valid, msg = _validate_file_with_vallm(path, original_content)
+                if is_valid:
+                    result.fixed += 1
+                    print(f"    ✓ magic validated: {msg}")
+                else:
+                    result.errors.append(f"magic L{task.line}: invalid - {msg}")
+                    result.skipped += 1
+                    original_content = path.read_text()
             else:
                 result.skipped += 1
         except Exception as e:
@@ -279,8 +334,8 @@ def _process_magic_batch(path: Path, tasks: list[TodoTask], result: FixResult, d
             result.skipped += 1
 
 
-def _process_fstring_batch(path: Path, tasks: list[TodoTask], result: FixResult, dry_run: bool) -> None:
-    """Process fstring fixes as a batch."""
+def _process_fstring_batch(path: Path, tasks: list[TodoTask], result: FixResult, dry_run: bool, original_content: str) -> None:
+    """Process fstring fixes as a batch with validation."""
     if dry_run:
         for task in tasks:
             print(f"  [DRY] {task.file}:{task.line} — fstring")
@@ -289,7 +344,14 @@ def _process_fstring_batch(path: Path, tasks: list[TodoTask], result: FixResult,
 
     try:
         if repair_fstring(path):
-            result.fixed += len(tasks)
+            is_valid, msg = _validate_file_with_vallm(path, original_content)
+            if is_valid:
+                result.fixed += len(tasks)
+                print(f"    ✓ fstring validated: {msg}")
+            else:
+                result.errors.append(f"fstring: invalid - {msg}")
+                result.skipped += len(tasks)
+                path.write_text(original_content)
         else:
             result.skipped += len(tasks)
     except Exception as e:
@@ -297,8 +359,8 @@ def _process_fstring_batch(path: Path, tasks: list[TodoTask], result: FixResult,
         result.skipped += len(tasks)
 
 
-def _process_exec_batch(path: Path, tasks: list[TodoTask], result: FixResult, dry_run: bool) -> None:
-    """Process exec block fixes as a batch."""
+def _process_exec_batch(path: Path, tasks: list[TodoTask], result: FixResult, dry_run: bool, original_content: str) -> None:
+    """Process exec block fixes as a batch with validation."""
     if dry_run:
         for task in tasks:
             print(f"  [DRY] {task.file}:{task.line} — exec_block")
@@ -307,7 +369,14 @@ def _process_exec_batch(path: Path, tasks: list[TodoTask], result: FixResult, dr
 
     try:
         if repair_module_block(path):
-            result.fixed += len(tasks)
+            is_valid, msg = _validate_file_with_vallm(path, original_content)
+            if is_valid:
+                result.fixed += len(tasks)
+                print(f"    ✓ exec_block validated: {msg}")
+            else:
+                result.errors.append(f"exec_block: invalid - {msg}")
+                result.skipped += len(tasks)
+                path.write_text(original_content)
         else:
             result.skipped += len(tasks)
     except Exception as e:

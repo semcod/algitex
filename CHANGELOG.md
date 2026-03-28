@@ -75,6 +75,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Examples 01-34 (except 29) all execute without errors
 - BatchFix, Hybrid AutoFix, and Parallel Execution examples fully functional
 
+## [0.1.55] - 2026-03-28
+
+### Docs
+- Update TODO.md
+
+### Test
+- Update tests/test_cli.py
+- Update tests/test_cli_metrics.py
+
 ## [0.1.54] - 2026-03-28
 
 ### Docs
