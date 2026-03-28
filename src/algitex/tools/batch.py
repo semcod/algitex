@@ -21,12 +21,12 @@ Usage:
     results = processor.process(file_list)
 """
 
-from __future__ import annotations
+from __future__,annotations
 
 import json
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from dataclasses import dataclass, field
+from dataclasses,dataclass
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Union
 
@@ -70,7 +70,7 @@ class BatchStats:
     avg_time_ms: float = 0.0
     throughput: float = 0.0  # items per second
     
-    def update(self, results: List[BatchResult]):
+    def update(self, results: List[BatchResult]) -> None:
         """Update stats from results."""
         self.total = len(results)
         self.successful = sum(1 for r in results if r.success)
@@ -377,7 +377,7 @@ class FileBatchProcessor(BatchProcessor):
         self.max_file_size = max_file_size
         
         # Default worker function for file processing
-        def analyze_file(file_path):
+        def analyze_file(file_path) -> Any:
             with open(file_path, 'r') as f:
                 content = f.read()
             

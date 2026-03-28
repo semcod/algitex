@@ -8,11 +8,11 @@ Usage:
     checker.print_status(status)
 """
 
-from __future__ import annotations
+from __future__,annotations
 
 import json
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional, Set
+from typing,Any, Dict, List, Optional
 from pathlib import Path
 
 import httpx
@@ -302,7 +302,7 @@ class ServiceChecker:
             elif key == "path":
                 print(f"    {key}: {value}")
 
-    def print_status(self, statuses: List[ServiceStatus], show_details: bool = False):
+    def print_status(self, statuses: List[ServiceStatus], show_details: bool = False) -> None:
         """Print service statuses in a formatted way."""
         print("\n" + "=" * 60)
         print("Service Status Check")
@@ -352,7 +352,7 @@ class ServiceChecker:
         
         return False
     
-    def close(self):
+    def close(self) -> None:
         """Close the HTTP client."""
         self._client.close()
     
@@ -381,7 +381,7 @@ class ServiceDependency:
         ordered = []
         visited = set()
         
-        def visit(service: str):
+        def visit(service: str) -> None:
             if service in visited or service not in services:
                 return
             visited.add(service)

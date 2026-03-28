@@ -8,7 +8,7 @@ Usage:
     response = client.generate("Explain this code", model="qwen2.5-coder:7b")
 """
 
-from __future__ import annotations
+from __future__,annotations
 
 import json
 import re
@@ -16,7 +16,6 @@ from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Union
 
 import httpx
-from pathlib import Path
 
 
 @dataclass
@@ -312,7 +311,7 @@ Return JSON with:
         except json.JSONDecodeError:
             return {"raw_response": response.content}
     
-    def close(self):
+    def close(self) -> None:
         """Close the HTTP client."""
         self._client.close()
     

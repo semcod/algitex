@@ -9,7 +9,7 @@ Usage:
     print(proxy.budget())                    # remaining budget
 """
 
-from __future__ import annotations
+from __future__,annotations
 
 from dataclasses import dataclass
 from typing import Any, Optional
@@ -135,7 +135,7 @@ class Proxy:
         except httpx.HTTPError:
             return False
 
-    def close(self):
+    def close(self) -> None:
         self._client.close()
 
     def __enter__(self):

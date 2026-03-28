@@ -20,8 +20,11 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
 from algitex.todo import HybridAutofix, verify_todos, benchmark_fix
 
+# Default TODO.md path (relative to script location - works with symlink)
+DEFAULT_TODO = Path(__file__).parent / "TODO.md"
 
-def demo_dry_run():
+
+def demo_dry_run(todo_file=DEFAULT_TODO):
     """Demo: Dry run to preview what would be fixed."""
     print("\n" + "=" * 70)
     print("DEMO 1: Dry Run (Preview)")
@@ -35,37 +38,37 @@ def demo_dry_run():
         dry_run=True  # <-- Preview mode
     )
 
-    result = fixer.fix_all("TODO.md")
+    result = fixer.fix_all(todo_file)
     fixer.print_summary(result)
 
     print("\n✅ This was a dry run. No actual changes made.")
     print("   Use --execute to apply fixes.")
 
 
-def demo_verify_first():
+def demo_verify_first(todo_file=DEFAULT_TODO):
     """Demo: Verify TODO tasks before fixing."""
     print("\n" + "=" * 70)
     print("DEMO 2: Verify TODO Tasks First")
     print("=" * 70)
 
-    result = verify_todos("TODO.md")
+    result = verify_todos(todo_file)
     print(f"\nStill open: {result.still_open}")
     print(f"Already fixed: {result.already_fixed}")
     print(f"Invalid (duplicates): {result.invalid}")
 
 
-def demo_benchmark():
+def demo_benchmark(todo_file=DEFAULT_TODO):
     """Demo: Benchmark performance."""
     print("\n" + "=" * 70)
     print("DEMO 3: Benchmark Performance")
     print("=" * 70)
 
     # Benchmark mechanical fixes
-    result = benchmark_fix("TODO.md", limit=100, workers=8, mode="parallel")
+    result = benchmark_fix(todo_file, limit=100, workers=8, mode="parallel")
     result.print_report(detailed=True)
 
 
-def demo_mechanical_only():
+def demo_mechanical_only(todo_file=DEFAULT_TODO):
     """Demo: Fix only mechanical issues (fastest)."""
     print("\n" + "=" * 70)
     print("DEMO 4: Mechanical Fixes Only (Fast)")
@@ -74,11 +77,11 @@ def demo_mechanical_only():
     fixer = HybridAutofix(workers=8, dry_run=False)
 
     # Only Phase 1 - no LLM calls
-    result = fixer.fix_mechanical("TODO.md")
+    result = fixer.fix_mechanical(todo_file)
     print(f"\nFixed: {result['fixed']}, Skipped: {result['skipped']}, Errors: {result['errors']}")
 
 
-def demo_full_hybrid():
+def demo_full_hybrid(todo_file=DEFAULT_TODO, workers=4, rate_limit=10):
     """Demo: Full hybrid with LLM backend."""
     print("\n" + "=" * 70)
     print("DEMO 5: Full Hybrid (Mechanical + LLM)")
@@ -87,8 +90,8 @@ def demo_full_hybrid():
     fixer = HybridAutofix(
         backend="litellm-proxy",
         proxy_url="http://localhost:4000",
-        workers=4,
-        rate_limit=10,          # 10 LLM calls per second
+        workers=workers,
+        rate_limit=rate_limit,          # LLM calls per second
         retry_attempts=3,
         dry_run=False           # <-- Actually execute
     )
@@ -97,11 +100,11 @@ def demo_full_hybrid():
     print("🤖 Phase 2: Rate-limited LLM fixes (10 req/sec)")
     print()
 
-    result = fixer.fix_all("TODO.md")
+    result = fixer.fix_all(todo_file)
     fixer.print_summary(result)
 
 
-def demo_ollama_local():
+def demo_ollama_local(todo_file=DEFAULT_TODO):
     """Demo: 100% offline with Ollama."""
     print("\n" + "=" * 70)
     print("DEMO 6: Ollama Local (100% Offline)")
@@ -115,7 +118,7 @@ def demo_ollama_local():
         dry_run=False
     )
 
-    result = fixer.fix_all("TODO.md")
+    result = fixer.fix_all(todo_file)
     fixer.print_summary(result)
 
 
@@ -137,6 +140,8 @@ def main():
                         help="LLM backend")
     parser.add_argument("--proxy-url", default="http://localhost:4000",
                         help="LiteLLM proxy URL")
+    parser.add_argument("--todo-file", "-f", type=Path, default=Path(__file__).parent / "TODO.md",
+                        help="Path to TODO.md file (default: ./TODO.md)")
 
     args = parser.parse_args()
 
@@ -146,22 +151,22 @@ def main():
     print("=" * 70)
 
     if args.demo == "dry-run" or args.demo == "all":
-        demo_dry_run()
+        demo_dry_run(args.todo_file)
 
     if args.demo == "verify" or args.demo == "all":
-        demo_verify_first()
+        demo_verify_first(args.todo_file)
 
     if args.demo == "benchmark" or args.demo == "all":
-        demo_benchmark()
+        demo_benchmark(args.todo_file)
 
     if args.demo == "mechanical":
-        demo_mechanical_only()
+        demo_mechanical_only(args.todo_file)
 
     if args.demo == "hybrid":
-        demo_full_hybrid()
+        demo_full_hybrid(args.todo_file, args.workers, args.rate_limit)
 
     if args.demo == "ollama":
-        demo_ollama_local()
+        demo_ollama_local(args.todo_file)
 
     print("\n" + "=" * 70)
     print("Done! Check the TODO.md for remaining tasks.")

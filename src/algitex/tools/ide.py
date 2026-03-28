@@ -9,7 +9,7 @@ Usage:
     result = claude.fix_file("main.py", "Add type hints")
 """
 
-from __future__ import annotations
+from __future__,annotations
 
 import os
 import subprocess
@@ -139,7 +139,7 @@ class ClaudeCodeHelper(IDEHelper):
         super().__init__()
         self.tool_name = "claude-code"
     
-    def setup_environment(self):
+    def setup_environment(self) -> Any:
         """Setup Claude Code environment for Ollama."""
         return self.setup_tool(self.tool_name)
     
@@ -311,7 +311,7 @@ class VSCodeHelper(IDEHelper):
         super().__init__()
         self.tool_name = "vscode"
     
-    def open_file(self, file_path: Union[str, Path], line: Optional[int] = None):
+    def open_file(self, file_path: Union[str, Path], line: Optional[int] = None) -> bool:
         """Open file in VS Code."""
         cmd = ["code", str(file_path)]
         
@@ -324,7 +324,7 @@ class VSCodeHelper(IDEHelper):
         except:
             return False
     
-    def install_extensions(self, extensions: List[str]):
+    def install_extensions(self, extensions: List[str]) -> None:
         """Install VS Code extensions."""
         tool = self.tools[self.tool_name]
         

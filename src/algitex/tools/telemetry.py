@@ -1,6 +1,6 @@
 """LLM cost & performance telemetry for algitex pipelines."""
 
-from __future__ import annotations
+from __future__,annotations
 
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -28,7 +28,7 @@ class TraceSpan:
     def duration_s(self) -> float:
         return (self.ended or time.time()) - self.started
 
-    def finish(self, status="ok", **kwargs):
+    def finish(self, status="ok", **kwargs) -> None:
         self.ended = time.time()
         self.status = status
         for k, v in kwargs.items():
@@ -91,7 +91,7 @@ class Telemetry:
         }
 
     # ─── Langfuse integration (optional) ─────────────
-    def push_to_langfuse(self):
+    def push_to_langfuse(self) -> None:
         """Push traces to Langfuse for visualization."""
         try:
             from langfuse import Langfuse
@@ -111,7 +111,7 @@ class Telemetry:
             pass  # Langfuse optional
 
     # ─── Local persistence ───────────────────────────
-    def save(self, output_dir: str = ".algitex"):
+    def save(self, output_dir: str = ".algitex") -> None:
         """Save telemetry data to local file."""
         path = Path(output_dir) / "telemetry" / f"{self.run_id}.json"
         path.parent.mkdir(parents=True, exist_ok=True)

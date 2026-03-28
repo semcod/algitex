@@ -1,5 +1,5 @@
 """Task partitioning — partition tickets into non-conflicting groups."""
-from typing import Dict, List, Set, Tuple
+from typing,Dict, List, Set
 
 from algitex.tools.parallel.models import CodeRegion
 

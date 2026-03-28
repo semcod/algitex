@@ -1,12 +1,12 @@
 """Context management — build optimal prompts for LLM coding tools."""
 
-from __future__ import annotations
+from __future__,annotations
 
 from pathlib import Path
 from dataclasses import dataclass
 from typing import Optional, Dict, Any, List
 import subprocess
-import yaml
+,yaml
 
 
 @dataclass
@@ -193,7 +193,7 @@ class SemanticCache:
         except Exception:
             return []
     
-    def store_context(self, context: CodeContext, task: str, result: Dict[str, Any]):
+    def store_context(self, context: CodeContext, task: str, result: Dict[str, Any]) -> None:
         """Store context with its result for future retrieval."""
         client = self._get_client()
         if not client:

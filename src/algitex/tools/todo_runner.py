@@ -13,7 +13,7 @@ Usage:
     results = runner.run_from_file("TODO.md", tool="ollama-mcp")
 """
 
-from dataclasses import dataclass, field
+from dataclasses,dataclass
 from pathlib import Path
 from typing import Optional
 import json
@@ -22,7 +22,7 @@ import httpx
 from algitex.config import Config
 from algitex.tools.todo_parser import Task, TodoParser
 from algitex.tools.docker import DockerToolManager
-from algitex.tools.todo_local import LocalExecutor, LocalTaskResult
+from algitex.tools.todo_local import LocalExecutor
 from algitex.tools.todo_actions import determine_action
 
 

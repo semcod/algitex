@@ -1562,6 +1562,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.28] - 2026-03-28
+
+### Docs
+- Update TODO.md
+
+### Other
+- Update examples/33-hybrid-autofix/main.py
+
 ## [0.1.27] - 2026-03-28
 
 ### Docs

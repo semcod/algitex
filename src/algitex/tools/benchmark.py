@@ -16,12 +16,12 @@ Usage:
     benchmark.print_results(results)
 """
 
-from __future__ import annotations
+from __future__,annotations
 
 import json
 import time
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional, Tuple
+from typing,Any, Dict, List, Optional
 
 try:
     from tabulate import tabulate  # Optional, for nice tables

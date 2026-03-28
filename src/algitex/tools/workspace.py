@@ -3,12 +3,12 @@
 Manage multiple repositories as a single workspace with dependency ordering.
 """
 
-from __future__ import annotations
+from __future__,annotations
 
 import subprocess
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, List, Optional, Set
+from typing import Dict, List
 import yaml
 from graphlib import TopologicalSorter
 
@@ -83,7 +83,7 @@ class Workspace:
         # Return RepoConfig objects in sorted order
         return [self.repos[name] for name in sorted_names]
     
-    def clone_all(self, base_dir: str = "."):
+    def clone_all(self, base_dir: str = ".") -> None:
         """Clone all repositories if they don't exist."""
         base_path = Path(base_dir).resolve()
         
@@ -100,7 +100,7 @@ class Workspace:
             else:
                 print(f"{repo.name} already exists at {repo_path}")
     
-    def pull_all(self):
+    def pull_all(self) -> None:
         """Pull latest changes for all repositories."""
         for repo in self.repos.values():
             repo_path = Path(repo.path)
@@ -300,7 +300,7 @@ def create_workspace_template(name: str, repos: List[Dict]) -> str:
     return yaml.dump(template, default_flow_style=False)
 
 
-def init_workspace(name: str, config_path: str = "workspace.yaml"):
+def init_workspace(name: str, config_path: str = "workspace.yaml") -> None:
     """Initialize a new workspace with template."""
     template = create_workspace_template(name, [
         {

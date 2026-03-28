@@ -10,9 +10,9 @@ Usage:
     t.sync()                   # push to GitHub/Jira
 """
 
-from __future__ import annotations
+from __future__,annotations
 
-import json
+,json
 import subprocess
 from dataclasses import dataclass, field
 from datetime import datetime

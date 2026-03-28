@@ -7,9 +7,8 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, Optional
 import yaml
-from datetime import datetime
 
 
 class CICDGenerator:

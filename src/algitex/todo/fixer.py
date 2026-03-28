@@ -191,30 +191,37 @@ def fix_file(file_path: str, tasks: list[TodoTask], dry_run: bool = True) -> Fix
     return result
 
 
-def _parse_and_filter_tasks(
-    todo_path: str | Path, category_filter: str | None = None
-) -> list[TodoTask]:
-    """Parse TODO.md and optionally filter by category."""
+def parallel_fix(
+    todo_path: str | Path,
+    workers: int = 8,
+    dry_run: bool = True,
+    category_filter: str | None = None
+) -> dict[str, int]:
+    """Fix all TODO tasks in parallel, one worker per file.
+
+    Args:
+        todo_path: Path to TODO.md file
+        workers: Number of parallel workers
+        dry_run: If True, only show what would be fixed
+        category_filter: If set, only fix this category
+
+    Returns:
+        Dict with counts: fixed, skipped, errors
+    """
     tasks = parse_todo(todo_path)
     print(f"Parsed {len(tasks)} tasks (excluding worktree duplicates)\n")
 
+    # Filter by category if requested
     if category_filter:
         tasks = [t for t in tasks if t.category == category_filter]
         print(f"Filtered to {len(tasks)} tasks of category '{category_filter}'\n")
 
-    return tasks
-
-
-def _group_tasks_by_file(tasks: list[TodoTask]) -> dict[str, list[TodoTask]]:
-    """Group tasks by file path."""
+    # Group by file
     by_file: dict[str, list[TodoTask]] = {}
     for task in tasks:
         by_file.setdefault(task.file, []).append(task)
-    return by_file
 
-
-def _print_category_stats(tasks: list[TodoTask]) -> int:
-    """Print category breakdown and return auto-fixable count."""
+    # Category stats
     cats: dict[str, int] = {}
     for task in tasks:
         cats[task.category] = cats.get(task.category, 0) + 1
@@ -228,16 +235,14 @@ def _print_category_stats(tasks: list[TodoTask]) -> int:
     if tasks:
         pct = auto_fixable * 100 // len(tasks)
         print(f"\nAuto-fixable: {auto_fixable}/{len(tasks)} ({pct}%)")
+    print(f"Files to process: {len(by_file)}")
+    print(f"Workers: {workers}")
+    print(f"Mode: {'DRY RUN' if dry_run else 'EXECUTE'}\n")
 
-    return auto_fixable
+    if dry_run:
+        print("─" * 60)
 
-
-def _execute_parallel_fixes(
-    by_file: dict[str, list[TodoTask]],
-    workers: int,
-    dry_run: bool,
-) -> tuple[int, int, int]:
-    """Execute fixes in parallel and return (fixed, skipped, errors) counts."""
+    # Execute in parallel (one worker per file — zero conflicts)
     total_fixed = 0
     total_skipped = 0
     total_errors = 0
@@ -266,16 +271,6 @@ def _execute_parallel_fixes(
                 print(f"  ✗ {file_path}: {e}")
                 total_errors += 1
 
-    return total_fixed, total_skipped, total_errors
-
-
-def _print_summary(
-    total_fixed: int,
-    total_skipped: int,
-    total_errors: int,
-    dry_run: bool,
-) -> None:
-    """Print final summary of fix results."""
     print(f"\n{'═' * 60}")
     print(f"  Fixed:   {total_fixed}")
     print(f"  Skipped: {total_skipped} (need manual fix or flynt/mypy)")
@@ -285,50 +280,8 @@ def _print_summary(
     if dry_run and total_fixed > 0:
         print(f"\nRun with dry_run=False to apply {total_fixed} fixes")
 
-
-def parallel_fix(
-    todo_path: str | Path,
-    workers: int = 8,
-    dry_run: bool = True,
-    category_filter: str | None = None,
-) -> dict[str, int]:
-    """Fix all TODO tasks in parallel, one worker per file.
-
-    Args:
-        todo_path: Path to TODO.md file
-        workers: Number of parallel workers
-        dry_run: If True, only show what would be fixed
-        category_filter: If set, only fix this category
-
-    Returns:
-        Dict with counts: fixed, skipped, errors
-    """
-    # Step 1: Parse and filter tasks
-    tasks = _parse_and_filter_tasks(todo_path, category_filter)
-
-    # Step 2: Group by file
-    by_file = _group_tasks_by_file(tasks)
-
-    # Step 3: Print category stats
-    auto_fixable = _print_category_stats(tasks)
-
-    print(f"Files to process: {len(by_file)}")
-    print(f"Workers: {workers}")
-    print(f"Mode: {'DRY RUN' if dry_run else 'EXECUTE'}\n")
-
-    if dry_run:
-        print("─" * 60)
-
-    # Step 4: Execute in parallel (one worker per file — zero conflicts)
-    total_fixed, total_skipped, total_errors = _execute_parallel_fixes(
-        by_file, workers, dry_run
-    )
-
-    # Step 5: Print summary
-    _print_summary(total_fixed, total_skipped, total_errors, dry_run)
-
     return {
         "fixed": total_fixed,
         "skipped": total_skipped,
-        "errors": total_errors,
+        "errors": total_errors
     }

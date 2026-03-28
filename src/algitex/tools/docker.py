@@ -1,6 +1,6 @@
 """Docker tool manager — spawn, connect, call, teardown."""
 
-from __future__ import annotations
+from __future__,annotations
 
 import json
 import os
@@ -8,7 +8,7 @@ import subprocess
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Optional
+from typing,Optional
 
 import httpx
 import yaml
@@ -210,7 +210,7 @@ class DockerToolManager:
 
     # ─── Teardown ─────────────────────────────────────────
 
-    def teardown(self, tool_name: str):
+    def teardown(self, tool_name: str) -> None:
         """Stop and remove container."""
         rt = self._running.pop(tool_name, None)
         if not rt:
@@ -239,7 +239,7 @@ class DockerToolManager:
             )
         self._save_state()
 
-    def teardown_all(self):
+    def teardown_all(self) -> None:
         """Stop all running containers."""
         for name in list(self._running):
             self.teardown(name)

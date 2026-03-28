@@ -9,10 +9,10 @@ Usage:
     manager.install_config(config, "~/.continue/config.json")
 """
 
-from __future__ import annotations
+from __future__,annotations
 
 import json
-import os
+,os
 import shutil
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union

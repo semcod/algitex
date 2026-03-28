@@ -7,7 +7,7 @@ Handles common prefact-style fixes:
 - Add module execution blocks
 """
 
-import ast
+,ast
 import re
 from dataclasses import dataclass
 from pathlib import Path

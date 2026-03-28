@@ -9,7 +9,7 @@ Usage:
     orchestrator.wait_for_ready()
 """
 
-from __future__ import annotations
+from __future__,annotations
 
 import json
 import os
@@ -104,7 +104,7 @@ class MCPOrchestrator:
             dependencies=[]
         )
     
-    def add_service(self, service: MCPService):
+    def add_service(self, service: MCPService) -> None:
         """Add a custom service."""
         self.services[service.name] = service
     
@@ -394,7 +394,7 @@ class MCPOrchestrator:
         
         return info
     
-    def print_status(self):
+    def print_status(self) -> None:
         """Print status of all services."""
         print("\nMCP Services Status")
         print("=" * 60)
