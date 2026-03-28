@@ -20102,3 +20102,224 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
+  - id: ticket-622dccb1
+    name: Fix smart-return-type issues
+    description: Resolve 5 smart-return-type issues in examples/34-batch-fix/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - examples/34-batch-fix/main.py
+    rule_id: smart-return-type
+    count: 5
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-6cb4d8e9
+    name: Fix unused-imports issues
+    description: Resolve 4 unused-imports issues in examples/34-batch-fix/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - examples/34-batch-fix/main.py
+    rule_id: unused-imports
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-12bee88d
+    name: Fix llm-generated-code issues
+    description: Resolve 4 llm-generated-code issues in examples/34-batch-fix/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - examples/34-batch-fix/main.py
+    rule_id: llm-generated-code
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-92338fe3
+    name: Fix ai-boilerplate issues
+    description: Resolve 2 ai-boilerplate issues in examples/34-batch-fix/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/34-batch-fix/main.py
+    rule_id: ai-boilerplate
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-3cb52967
+    name: Fix smart-return-type issues
+    description: Resolve 3 smart-return-type issues in examples/34-batch-fix/sample_code/file1.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/34-batch-fix/sample_code/file1.py
+    rule_id: smart-return-type
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-aa02f000
+    name: Fix string-concat issues
+    description: Resolve 6 string-concat issues in examples/34-batch-fix/sample_code/file1.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - examples/34-batch-fix/sample_code/file1.py
+    rule_id: string-concat
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-7bf30c8a
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in examples/34-batch-fix/sample_code/file1.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/34-batch-fix/sample_code/file1.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-c4d5ba6d
+    name: Fix smart-return-type issues
+    description: Resolve 3 smart-return-type issues in examples/34-batch-fix/sample_code/file2.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/34-batch-fix/sample_code/file2.py
+    rule_id: smart-return-type
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-bfa301d2
+    name: Fix magic-numbers issues
+    description: Resolve 1 magic-numbers issues in examples/34-batch-fix/sample_code/file2.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/34-batch-fix/sample_code/file2.py
+    rule_id: magic-numbers
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-3f0770ef
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in examples/34-batch-fix/sample_code/file2.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/34-batch-fix/sample_code/file2.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-d454ffc1
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in examples/34-batch-fix/sample_code/file3.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/34-batch-fix/sample_code/file3.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-2e160291
+    name: Fix unused-imports issues
+    description: Resolve 12 unused-imports issues in examples/34-batch-fix/sample_code/file3.py
+    task_type: prefactor
+    priority: high
+    estimate: 3d
+    files:
+    - examples/34-batch-fix/sample_code/file3.py
+    rule_id: unused-imports
+    count: 12
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-d41d9344
+    name: Fix ai-boilerplate issues
+    description: Resolve 1 ai-boilerplate issues in examples/34-batch-fix/sample_code/file3.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/34-batch-fix/sample_code/file3.py
+    rule_id: ai-boilerplate
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b3a334b7
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in src/algitex/tools/autofix/batch_backend.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/autofix/batch_backend.py
+    rule_id: string-concat
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-81971195
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/algitex/tools/autofix/batch_backend.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/autofix/batch_backend.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-423988cd
+    name: Fix magic-numbers issues
+    description: Resolve 1 magic-numbers issues in src/algitex/tools/autofix/batch_backend.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/autofix/batch_backend.py
+    rule_id: magic-numbers
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-3887e630
+    name: Fix llm-generated-code issues
+    description: Resolve 2 llm-generated-code issues in src/algitex/tools/autofix/batch_backend.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/autofix/batch_backend.py
+    rule_id: llm-generated-code
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced

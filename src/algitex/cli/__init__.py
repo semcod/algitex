@@ -34,7 +34,7 @@ from algitex.cli.ticket import ticket_add, ticket_list, ticket_board
 from algitex.cli.algo import algo_discover, algo_extract, algo_rules, algo_report
 from algitex.cli.workflow import workflow_run, workflow_validate
 from algitex.cli.docker import docker_list, docker_spawn, docker_call, docker_teardown, docker_caps
-from algitex.cli.todo import todo_list, todo_run, todo_fix, todo_verify, todo_fix_parallel, todo_benchmark, todo_hybrid
+from algitex.cli.todo import todo_list, todo_run, todo_fix, todo_verify, todo_fix_parallel, todo_benchmark, todo_hybrid, todo_batch
 from algitex.cli.parallel import parallel
 
 # Main app
@@ -100,6 +100,7 @@ todo_app.command("verify")(todo_verify)
 todo_app.command("fix-auto")(todo_fix_parallel)
 todo_app.command("benchmark")(todo_benchmark)
 todo_app.command("hybrid")(todo_hybrid)
+todo_app.command("batch")(todo_batch)
 
 # Top-level convenience command: algitex fix = algitex todo hybrid
 app.command("fix", help="Quick hybrid autofix (alias for 'todo hybrid')")(todo_hybrid)

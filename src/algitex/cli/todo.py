@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Optional
 
 import typer
@@ -241,13 +242,12 @@ def todo_hybrid(
     fixer.print_summary(result)
 
 
-@todo_app.command("batch")
 def todo_batch(
-    file: Path = Option(Path("TODO.md"), "--file", "-f", help="TODO.md file path"),
-    backend: str = Option("ollama", "--backend", "-b", help="Backend: ollama, litellm-proxy"),
-    batch_size: int = Option(5, "--batch-size", "-s", help="Max files per batch"),
-    dry_run: bool = Option(True, "--dry-run/--execute", help="Dry run or execute"),
-    verbose: bool = Option(False, "--verbose", "-v", help="Verbose logging"),
+    file: Path = typer.Option(Path("TODO.md"), "--file", "-f", help="TODO.md file path"),
+    backend: str = typer.Option("ollama", "--backend", "-b", help="Backend: ollama, litellm-proxy"),
+    batch_size: int = typer.Option(5, "--batch-size", "-s", help="Max files per batch"),
+    dry_run: bool = typer.Option(True, "--dry-run/--execute", help="Dry run or execute"),
+    verbose: bool = typer.Option(False, "--verbose", "-v", help="Verbose logging"),
 ):
     """BatchFix: grupowanie i optymalizacja podobnych zadań.
     

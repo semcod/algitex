@@ -25,9 +25,11 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from collections import deque
 import threading
+from typing import Optional
 
 from algitex.todo.fixer import parse_todo, FIXERS, TodoTask, fix_file, FixResult
 from algitex.todo.verifier import TodoVerifier
+from algitex.todo.audit import AuditLogger
 
 
 @dataclass
@@ -37,6 +39,7 @@ class HybridResult:
     llm: dict = field(default_factory=dict)
     total_time_sec: float = 0.0
     cost_estimate: float = 0.0
+    audit_log: Optional[str] = None  # Path to audit log
 
 
 class RateLimiter:
@@ -110,7 +113,8 @@ class HybridAutofix:
         rate_limit: float = 10.0,
         retry_attempts: int = 3,
         timeout: float = 30.0,
-        dry_run: bool = True
+        dry_run: bool = True,
+        audit_dir: str = ".algitex/audit"
     ):
         self.backend = backend
         self.tool = tool
@@ -120,6 +124,10 @@ class HybridAutofix:
         self.retry_attempts = retry_attempts
         self.timeout = timeout
         self.dry_run = dry_run
+
+        # Audit logger for transparency and rollback
+        self.audit = AuditLogger(audit_dir)
+        self._current_op_id: Optional[str] = None
 
         # Statistics
         self.llm_calls = 0
@@ -132,17 +140,20 @@ class HybridAutofix:
         self._lock = threading.Lock()
 
     def fix_mechanical(self, todo_path: str | Path) -> dict:
-        """Phase 1: Fast parallel mechanical fixes.
-
-        Uses ThreadPoolExecutor with FIXERS (no LLM calls).
-        Throughput: ~1500 tickets/sec
-
-        Returns:
-            Dict with fixed, skipped, errors counts
-        """
+        """Phase 1: Fast parallel mechanical fixes with audit logging."""
         from algitex.todo import fix_todos
 
+        # Start audit logging
+        self._current_op_id = self.audit.start_operation(
+            operation="fix_mechanical",
+            file_path=str(todo_path),
+            command=f"fix_todos({todo_path}, workers={self.workers}, dry_run={self.dry_run})",
+            metadata={"workers": self.workers, "dry_run": self.dry_run}
+        )
+
         print(f"🔧 Phase 1: Mechanical fixes (workers={self.workers})")
+        print(f"   👤 Initiated by: {self.audit._get_user()}")
+        print(f"   📝 Operation ID: {self._current_op_id}")
         start = time.perf_counter()
 
         result = fix_todos(
@@ -152,8 +163,17 @@ class HybridAutofix:
         )
 
         elapsed = time.perf_counter() - start
+
+        # Log completion
+        self.audit.complete_operation(
+            self._current_op_id,
+            success=result['errors'] == 0,
+            duration_ms=elapsed * 1000
+        )
+
         print(f"   ✓ Fixed: {result['fixed']}, Skipped: {result['skipped']}, Errors: {result['errors']}")
         print(f"   ⏱️  Time: {elapsed:.3f}s ({result['fixed'] / elapsed:.0f} tickets/sec)")
+        print(f"   📄 Audit: {self.audit.audit_dir}")
 
         return result
 
@@ -332,26 +352,75 @@ class HybridAutofix:
             return False
 
     def fix_all(self, todo_path: str | Path) -> HybridResult:
-        """Run both phases: mechanical then LLM.
+        """Run both phases with full transparency and audit logging.
 
         Returns:
-            HybridResult with both phases' results and timing
+            HybridResult with audit log path for rollback capability.
         """
-        start = time.perf_counter()
+        # Start master operation
+        op_id = self.audit.start_operation(
+            operation="fix_all",
+            file_path=str(todo_path),
+            command=f"HybridAutofix.fix_all({todo_path})",
+            metadata={
+                "backend": self.backend,
+                "tool": self.tool,
+                "workers": self.workers,
+                "rate_limit": self.rate_limiter.rate,
+                "dry_run": self.dry_run
+            }
+        )
+
+        print(f"\n{'='*70}")
+        print("Hybrid Autofix - Transparent Mode")
+        print(f"{'='*70}")
+        print(f"👤 User: {self.audit._get_user()}")
+        print(f"🆔 Operation ID: {op_id}")
+        print(f"🔧 Backend: {self.backend} | Tool: {self.tool}")
+        print(f"📊 Workers: {self.workers} | Rate: {self.rate_limiter.rate}/sec")
+        print(f"📁 Audit Log: {self.audit.audit_dir}")
+        print(f"{'='*70}\n")
+
+        total_start = time.perf_counter()
 
         # Phase 1: Mechanical
         mechanical = self.fix_mechanical(todo_path)
 
-        # Phase 2: LLM
-        llm = self.fix_complex(todo_path)
+        # Phase 2: LLM (if not dry_run or explicitly enabled)
+        llm = {"fixed": 0, "skipped": 0, "errors": 0}
+        if not self.dry_run:
+            llm = self.fix_complex(todo_path)
+        else:
+            print("\n⏸️  Phase 2 (LLM) skipped - dry_run mode")
+            print("   Use dry_run=False to enable LLM fixes")
 
-        total = time.perf_counter() - start
+        total_elapsed = time.perf_counter() - total_start
+
+        # Complete master operation
+        self.audit.complete_operation(
+            op_id,
+            success=mechanical['errors'] == 0 and llm['errors'] == 0,
+            duration_ms=total_elapsed * 1000
+        )
+
+        # Print summary with rollback info
+        print(f"\n{'='*70}")
+        print("Summary & Audit Trail")
+        print(f"{'='*70}")
+        print(f"✅ Mechanical: {mechanical['fixed']} fixed, {mechanical['errors']} errors")
+        print(f"🤖 LLM: {llm['fixed']} fixed, {llm['errors']} errors")
+        print(f"⏱️  Total: {total_elapsed:.2f}s | 💰 Est. cost: ${self.total_cost:.4f}")
+        print(f"\n📜 Audit Commands:")
+        print(f"   View history: python -c \"from algitex.todo.audit import AuditLogger; AuditLogger().print_summary()\"")
+        print(f"   Rollback:     python -c \"from algitex.todo.audit import AuditLogger; AuditLogger().rollback_last()\"")
+        print(f"{'='*70}\n")
 
         return HybridResult(
             mechanical=mechanical,
             llm=llm,
-            total_time_sec=total,
-            cost_estimate=self.total_cost
+            total_time_sec=total_elapsed,
+            cost_estimate=self.total_cost,
+            audit_log=str(self.audit.audit_dir)
         )
 
     def print_summary(self, result: HybridResult | dict) -> None:

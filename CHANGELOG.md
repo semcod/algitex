@@ -8,6 +8,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.10] - 2026-03-28
 
 ### Fixed
+- Fix smart-return-type issues (ticket-622dccb1)
+- Fix unused-imports issues (ticket-6cb4d8e9)
+- Fix llm-generated-code issues (ticket-12bee88d)
+- Fix ai-boilerplate issues (ticket-92338fe3)
+- Fix smart-return-type issues (ticket-3cb52967)
+- Fix string-concat issues (ticket-aa02f000)
+- Fix ai-boilerplate issues (ticket-7bf30c8a)
+- Fix smart-return-type issues (ticket-c4d5ba6d)
+- Fix magic-numbers issues (ticket-bfa301d2)
+- Fix ai-boilerplate issues (ticket-3f0770ef)
+- Fix smart-return-type issues (ticket-d454ffc1)
+- Fix unused-imports issues (ticket-2e160291)
+- Fix ai-boilerplate issues (ticket-d41d9344)
+- Fix string-concat issues (ticket-b3a334b7)
+- Fix unused-imports issues (ticket-81971195)
+- Fix magic-numbers issues (ticket-423988cd)
+- Fix llm-generated-code issues (ticket-3887e630)
+
+## [0.1.10] - 2026-03-28
+
+### Fixed
 - Fix string-concat issues (ticket-afbf6239)
 - Fix magic-numbers issues (ticket-338c15bd)
 
@@ -1639,6 +1660,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix llm-generated-code issues (ticket-06d0712f)
 
 ## [Unreleased]
+
+## [0.1.38] - 2026-03-28
+
+### Docs
+- Update CHANGELOG.md
+- Update TODO.md
+
+### Other
+- Update docker/aider-mcp/aider_mcp_server.py
+- Update docker/code2llm/code2llm_mcp_server.py
+- Update docker/code2llm/code2llm_server.py
+- Update docker/planfile-mcp/planfile_mcp_server.py
+- Update docker/proxym/proxym_mcp_server.py
+- Update docker/proxym/proxym_server.py
+- Update docker/vallm/vallm_mcp_server.py
+- Update examples/01-quickstart/main.py
+- Update examples/02-algo-loop/main.py
+- Update examples/03-pipeline/main.py
+- ... and 1 more files
 
 ## [0.1.37] - 2026-03-28
 
