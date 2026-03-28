@@ -1,14 +1,57 @@
-# code2llm/evolution | 525 func | 55f | 2026-03-28
+# code2llm/evolution | 2261 func | 231f | 2026-03-28
 
-NEXT[0]: no refactoring needed
+NEXT[10] (ranked by impact):
+  [1] !! SPLIT           my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/parallel.py
+      WHY: 549L, 7 classes, max CC=22
+      EFFORT: ~4h  IMPACT: 12078
 
-RISKS[0]: none
+  [2] !! SPLIT           my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/parallel.py
+      WHY: 549L, 7 classes, max CC=22
+      EFFORT: ~4h  IMPACT: 12078
+
+  [3] !! SPLIT           my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/parallel.py
+      WHY: 549L, 7 classes, max CC=22
+      EFFORT: ~4h  IMPACT: 12078
+
+  [4] !! SPLIT-FUNC      parallel  CC=31  fan=25
+      WHY: CC=31 exceeds 15
+      EFFORT: ~1h  IMPACT: 775
+
+  [5] !! SPLIT-FUNC      parallel  CC=31  fan=25
+      WHY: CC=31 exceeds 15
+      EFFORT: ~1h  IMPACT: 775
+
+  [6] !! SPLIT-FUNC      parallel  CC=31  fan=25
+      WHY: CC=31 exceeds 15
+      EFFORT: ~1h  IMPACT: 775
+
+  [7] !  SPLIT-FUNC      TaskPartitioner.partition  CC=22  fan=18
+      WHY: CC=22 exceeds 15
+      EFFORT: ~1h  IMPACT: 396
+
+  [8] !  SPLIT-FUNC      TaskPartitioner.partition  CC=22  fan=18
+      WHY: CC=22 exceeds 15
+      EFFORT: ~1h  IMPACT: 396
+
+  [9] !  SPLIT-FUNC      TaskPartitioner.partition  CC=22  fan=18
+      WHY: CC=22 exceeds 15
+      EFFORT: ~1h  IMPACT: 396
+
+  [10] !  SPLIT-FUNC      TaskPartitioner.partition  CC=22  fan=18
+      WHY: CC=22 exceeds 15
+      EFFORT: ~1h  IMPACT: 396
+
+
+RISKS[3]:
+  ⚠ Splitting my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/parallel.py may break 21 import paths
+  ⚠ Splitting my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/parallel.py may break 21 import paths
+  ⚠ Splitting my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/parallel.py may break 21 import paths
 
 METRICS-TARGET:
-  CC̄:          3.3 → ≤2.3
-  max-CC:      14 → ≤7
-  god-modules: 0 → 0
-  high-CC(≥15): 0 → ≤0
+  CC̄:          3.4 → ≤2.4
+  max-CC:      31 → ≤15
+  god-modules: 3 → 0
+  high-CC(≥15): 7 → ≤3
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -36,4 +79,4 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=3.3 → now CC̄=3.3
+  prev CC̄=3.4 → now CC̄=3.4

@@ -13,6 +13,15 @@ from typing import Optional
 
 # Export new modules
 from algitex.tools import ollama, services, autofix, batch, benchmark, ide, config, mcp, proxy
+from algitex.tools.parallel import (
+    CodeRegion,
+    MergeResult,
+    ParallelExecutor,
+    RegionExtractor,
+    RegionType,
+    TaskAssignment,
+    TaskPartitioner,
+)
 
 
 @dataclass

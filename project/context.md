@@ -4,11 +4,11 @@
 
 - **Project**: /home/tom/github/semcod/algitex
 - **Primary Language**: python
-- **Languages**: python: 452, shell: 104
+- **Languages**: python: 456, shell: 104
 - **Analysis Mode**: static
-- **Total Functions**: 2908
+- **Total Functions**: 2913
 - **Total Classes**: 416
-- **Modules**: 556
+- **Modules**: 560
 - **Entry Points**: 2621
 
 ## Architecture by Module
@@ -32,11 +32,6 @@
 - **Functions**: 22
 - **Classes**: 6
 - **File**: `ide.py`
-
-### src.algitex.tools.parallel
-- **Functions**: 21
-- **Classes**: 7
-- **File**: `parallel.py`
 
 ### my-app.my-app..algitex.worktrees.agent-0.src.algitex.tools.parallel
 - **Functions**: 21
@@ -113,6 +108,11 @@
 - **Classes**: 3
 - **File**: `__init__.py`
 
+### my-app.my-app..algitex.worktrees.agent-2.src.algitex.tools.benchmark
+- **Functions**: 19
+- **Classes**: 4
+- **File**: `benchmark.py`
+
 ## Key Entry Points
 
 Main execution flows into the system:
@@ -148,10 +148,6 @@ Main execution flows into the system:
 ### my-app.my-app..algitex.worktrees.agent-1.examples.31-abpr-workflow.main.main
 > Demonstrate ABPR pipeline: Execute → Trace → Conflict → Rule → Validate → Repeat.
 - **Calls**: print, print, print, print, print, print, str, Project
-
-### src.algitex.cli.parallel.parallel
-> Execute tickets in parallel with conflict-free coordination.
-- **Calls**: typer.Argument, typer.Option, typer.Option, typer.Option, typer.Option, None.resolve, console.print, console.print
 
 ### my-app.my-app..algitex.worktrees.agent-0.src.algitex.cli.parallel.parallel
 > Execute tickets in parallel with conflict-free coordination.
@@ -234,6 +230,10 @@ Main execution flows into the system:
 ### my-app.my-app..algitex.worktrees.agent-2.examples.05-cost-tracking.main.main
 - **Calls**: print, Tickets, print, print, print, sorted, print, Loop
 
+### my-app.my-app..algitex.worktrees.agent-1.examples.14-docker-mcp.main.demo_docker_operations
+> Demonstrate real Docker operations.
+- **Calls**: print, my-app.my-app..algitex.worktrees.agent-1.examples.14-docker-mcp.main.create_sample_docker_project, print, print, project_dir.iterdir, print, print, print
+
 ## Process Flows
 
 Key execution flows identified:
@@ -246,7 +246,7 @@ main [examples.32-workspace-coordination.main]
 
 ### Flow 2: parallel
 ```
-parallel [src.algitex.cli.parallel]
+parallel [my-app.my-app..algitex.worktrees.agent-0.src.algitex.cli.parallel]
 ```
 
 ## Key Classes
@@ -469,13 +469,13 @@ Args:
 > Extract meaningful output from MCP result.
 - **Output to**: isinstance, isinstance, json.dumps, str, str
 
-### src.algitex.tools.parallel.ParallelExecutor._parse_diff_ranges
-> Extract line ranges from unified diff.
-- **Output to**: re.finditer, int, int, ranges.append, match.group
+### src.algitex.tools.batch.BatchProcessor._process_item
+> Process single item with retry logic.
+- **Output to**: time.time, self._rate_limit, self.worker_func, BatchResult, BatchResult
 
-### src.algitex.tools.feedback.FeedbackLoop._validate_result
-> Validate the execution result.
-- **Output to**: self.docker_mgr.list_tools, self.docker_mgr.call_tool
+### src.algitex.tools.batch.BatchProcessor.process
+> Process items in parallel using 3-stage pipeline.
+- **Output to**: self._prepare, self._execute, self._collect
 
 ## Behavioral Patterns
 
@@ -549,10 +549,10 @@ Args:
 - **Confidence**: 0.70
 - **Functions**: src.algitex.algo.LoopState.deterministic_ratio, src.algitex.algo.LoopState.stage_name
 
-### state_machine_DockerToolManager
+### state_machine_OllamaClient
 - **Type**: state_machine
 - **Confidence**: 0.70
-- **Functions**: src.algitex.tools.docker.DockerToolManager.__init__, src.algitex.tools.docker.DockerToolManager.__enter__, src.algitex.tools.docker.DockerToolManager.__exit__, src.algitex.tools.docker.DockerToolManager._load_tools, src.algitex.tools.docker.DockerToolManager._load_state
+- **Functions**: src.algitex.tools.ollama.OllamaClient.__init__, src.algitex.tools.ollama.OllamaClient.health, src.algitex.tools.ollama.OllamaClient.list_models, src.algitex.tools.ollama.OllamaClient.pull_model, src.algitex.tools.ollama.OllamaClient.generate
 
 ## Public API Surface
 
@@ -566,7 +566,6 @@ Functions exposed as public API (no underscore prefix):
 - `my-app.my-app..algitex.worktrees.agent-0.examples.31-abpr-workflow.main.main` - 77 calls
 - `my-app.my-app..algitex.worktrees.agent-2.examples.31-abpr-workflow.main.main` - 77 calls
 - `my-app.my-app..algitex.worktrees.agent-1.examples.31-abpr-workflow.main.main` - 77 calls
-- `src.algitex.cli.parallel.parallel` - 65 calls
 - `my-app.my-app..algitex.worktrees.agent-0.src.algitex.cli.parallel.parallel` - 65 calls
 - `my-app.my-app..algitex.worktrees.agent-2.src.algitex.cli.parallel.parallel` - 65 calls
 - `my-app.my-app..algitex.worktrees.agent-1.src.algitex.cli.parallel.parallel` - 65 calls
@@ -598,6 +597,7 @@ Functions exposed as public API (no underscore prefix):
 - `examples.13-vallm.main.demo_validation` - 35 calls
 - `my-app.my-app..algitex.worktrees.agent-0.examples.13-vallm.main.demo_validation` - 35 calls
 - `my-app.my-app..algitex.worktrees.agent-2.examples.13-vallm.main.demo_validation` - 35 calls
+- `my-app.my-app..algitex.worktrees.agent-1.examples.13-vallm.main.demo_validation` - 35 calls
 
 ## System Interactions
 

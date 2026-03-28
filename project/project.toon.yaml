@@ -1,49 +1,51 @@
-# algitex | 525 func | 55f | 15662L | python | 2026-03-28
+# algitex | 2261 func | 231f | 68408L | python | 2026-03-28
 
 HEALTH:
-  CC̄=3.3  critical=22 (limit:10)  dup=2  cycles=0
+  CC̄=3.4  critical=96 (limit:10)  dup=92  cycles=0
 
 ALERTS[20]:
-  !!  high_fan_out     Project.status = 18 (limit:10)
-  !!  high_fan_out     call_stdio = 17 (limit:10)
-  !!  high_fan_out     BatchProcessor.process = 17 (limit:10)
-  !!  high_fan_out     DockerToolManager.get_capabilities = 16 (limit:10)
-  !!  high_fan_out     Project.__init__ = 16 (limit:10)
-  !!  high_fan_out     analyze_complexity = 15 (limit:10)
-  !!  high_fan_out     init = 15 (limit:10)
-  !   high_fan_out     VallmServer.create_fastapi_app = 14 (limit:10)
-  !   high_fan_out     TodoRunner._execute_ollama = 13 (limit:10)
-  !   high_fan_out     Workflow.parse = 13 (limit:10)
+  !!! cc_exceeded      parallel = 31 (limit:15)
+  !!! cc_exceeded      parallel = 31 (limit:15)
+  !!! cc_exceeded      parallel = 31 (limit:15)
+  !!! high_fan_out     parallel = 25 (limit:10)
+  !!! high_fan_out     parallel = 25 (limit:10)
+  !!! high_fan_out     parallel = 25 (limit:10)
+  !!  cc_exceeded      TaskPartitioner.partition = 22 (limit:15)
+  !!  cc_exceeded      TaskPartitioner.partition = 22 (limit:15)
+  !!  cc_exceeded      TaskPartitioner.partition = 22 (limit:15)
+  !!  cc_exceeded      TaskPartitioner.partition = 22 (limit:15)
 
-MODULES[61] (top by size):
+MODULES[256] (top by size):
+  M[my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/parallel.py] 549L C:7 F:21 CC↑22 D:0 (python)
+  M[my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/parallel.py] 549L C:7 F:21 CC↑22 D:0 (python)
+  M[my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/parallel.py] 549L C:7 F:21 CC↑22 D:0 (python)
+  M[my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/benchmark.py] 461L C:4 F:19 CC↑14 D:0 (python)
+  M[my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/benchmark.py] 461L C:4 F:19 CC↑14 D:0 (python)
+  M[my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/benchmark.py] 461L C:4 F:19 CC↑14 D:0 (python)
   M[src/algitex/tools/benchmark.py] 461L C:4 F:19 CC↑14 D:0 (python)
+  M[my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/mcp.py] 448L C:2 F:18 CC↑11 D:0 (python)
+  M[my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/mcp.py] 448L C:2 F:18 CC↑11 D:0 (python)
+  M[my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/mcp.py] 448L C:2 F:18 CC↑11 D:0 (python)
   M[src/algitex/tools/mcp.py] 448L C:2 F:18 CC↑11 D:0 (python)
-  M[src/algitex/tools/ide.py] 430L C:6 F:22 CC↑8 D:0 (python)
-  M[src/algitex/propact/__init__.py] 413L C:3 F:15 CC↑10 D:1 (python)
-  M[src/algitex/tools/services.py] 413L C:3 F:20 CC↑9 D:0 (python)
-  M[src/algitex/tools/cicd.py] 405L C:1 F:11 CC↑5 D:1 (python)
-  M[docker/proxym/proxym_mcp_server.py] 387L C:0 F:10 CC↑9 D:0 (python)
-  M[src/algitex/tools/config.py] 386L C:1 F:12 CC↑8 D:0 (python)
-  M[src/algitex/tools/ollama.py] 383L C:4 F:16 CC↑11 D:0 (python)
-  M[src/algitex/project/__init__.py] 378L C:1 F:12 CC↑9 D:0 (python)
-  M[src/algitex/algo/__init__.py] 369L C:5 F:12 CC↑9 D:0 (python)
-  M[src/algitex/tools/batch.py] 364L C:4 F:13 CC↑14 D:0 (python)
-  M[src/algitex/tools/todo_runner.py] 363L C:2 F:10 CC↑13 D:0 (python)
-  M[docker/vallm/vallm_mcp_server.py] 360L C:0 F:8 CC↑9 D:0 (python)
-  M[src/algitex/tools/workspace.py] 338L C:2 F:17 CC↑6 D:1 (python)
-  LANGS: python:60/shell:1
+  M[src/algitex/project/__init__.py] 435L C:1 F:16 CC↑12 D:0 (python)
+  M[my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/ide.py] 430L C:6 F:22 CC↑8 D:0 (python)
+  M[my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/ide.py] 430L C:6 F:22 CC↑8 D:0 (python)
+  M[my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/ide.py] 430L C:6 F:22 CC↑8 D:0 (python)
+  LANGS: python:252/shell:4
 
 HOTSPOTS[10]:
-  ★ Project.status fan=18  // Full project status: health + tickets + budget + algo progress.
-  ★ call_stdio fan=17  // Send JSON-RPC over stdin, read from stdout with timeout.
-  ★ BatchProcessor.process fan=17  // Analysis pipeline, 17 stages
-  ★ DockerToolManager.get_capabilities fan=16  // List MCP tools available on a running container.
-  ★ Project.__init__ fan=16  // Orchestrates 16 calls
+  ★ parallel fan=25  // Execute tickets in parallel with conflict-free coordination.
+  ★ parallel fan=25  // Execute tickets in parallel with conflict-free coordination.
+  ★ parallel fan=25  // Execute tickets in parallel with conflict-free coordination.
+  ★ TaskPartitioner.partition fan=18  // Assign tickets to agents ensuring no region overlap.
+  ★ TaskPartitioner.partition fan=18  // Assign tickets to agents ensuring no region overlap.
 
-REFACTOR[3]:
-  [1] M/M Reduce Project.status fan-out (currently 18)
-  [2] M/M Reduce call_stdio fan-out (currently 17)
-  [3] M/M Reduce BatchProcessor.process fan-out (currently 17)
+REFACTOR[13]:
+  [1] H/L Split parallel (CC=31 → target CC<10)
+  [2] H/L Split parallel (CC=31 → target CC<10)
+  [3] H/L Split parallel (CC=31 → target CC<10)
+  [4] H/H Split god module my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/parallel.py (549L, 7 classes)
+  [5] H/H Split god module my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/parallel.py (549L, 7 classes)
 
 EVOLUTION:
-  2026-03-28 CC̄=3.3 crit=22 15662L // Automated analysis
+  2026-03-28 CC̄=3.4 crit=96 68408L // Automated analysis

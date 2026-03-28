@@ -191,44 +191,46 @@ class Test32WorkspaceCoordination:
             assert "path" in repo
             assert "priority" in repo or "depends_on" in repo
     
-    @patch('workspace_parallel.Workspace')
-    def test_workspace_parallel_main_logic(self, mock_workspace):
+    def test_workspace_parallel_main_logic(self):
         """Test the main logic of workspace parallel example."""
-        from workspace_parallel import main
-        
         # Change to the example directory first
         original_cwd = os.getcwd()
         try:
             os.chdir(examples_dir / "32-workspace-coordination")
             
-            # Mock workspace
-            mock_ws = Mock()
-            mock_workspace.return_value = mock_ws
-            
-            # Mock analyze_all results
-            mock_ws.analyze_all.return_value = {
-                "algitex": {"cc": 3.3, "criticals": 22, "loc": 12551, "files": 61},
-                "code2llm": {"cc": 4.8, "criticals": 52, "loc": 18340, "files": 102},
-                "vallm": {"cc": 3.5, "criticals": 12, "loc": 8604, "files": 56}
-            }
-            
-            # Mock plan_all results
-            mock_ws.plan_all.return_value = {
-                "algitex": [Mock()],
-                "code2llm": [Mock(), Mock()],
-                "vallm": [Mock()]
-            }
-            
-            # Mock execute_all results
-            mock_ws.execute_all.return_value = [
-                {"repo": "algitex", "status": "success", "executed": 1, "errors": [], "tickets": ["PLF-001"], "cost": 2.5},
-                {"repo": "code2llm", "status": "success", "executed": 2, "errors": [], "tickets": ["PLF-002", "PLF-003"], "cost": 5.0},
-                {"repo": "vallm", "status": "success", "executed": 1, "errors": [], "tickets": ["PLF-004"], "cost": 2.5}
-            ]
-            
-            # Run main (should not crash)
-            with patch('workspace_parallel.print'):
-                main()
+            # Patch Workspace BEFORE importing the module
+            with patch('workspace_parallel.Workspace') as mock_workspace:
+                # Import main after patching
+                from workspace_parallel import main
+                
+                # Mock workspace
+                mock_ws = Mock()
+                mock_workspace.return_value = mock_ws
+                
+                # Mock analyze_all results
+                mock_ws.analyze_all.return_value = {
+                    "algitex": {"cc": 3.3, "criticals": 22, "loc": 12551, "files": 61},
+                    "code2llm": {"cc": 4.8, "criticals": 52, "loc": 18340, "files": 102},
+                    "vallm": {"cc": 3.5, "criticals": 12, "loc": 8604, "files": 56}
+                }
+                
+                # Mock plan_all results
+                mock_ws.plan_all.return_value = {
+                    "algitex": [Mock()],
+                    "code2llm": [Mock(), Mock()],
+                    "vallm": [Mock()]
+                }
+                
+                # Mock execute_all results
+                mock_ws.execute_all.return_value = [
+                    {"repo": "algitex", "status": "success", "executed": 1, "errors": [], "tickets": ["PLF-001"], "cost": 2.5},
+                    {"repo": "code2llm", "status": "success", "executed": 2, "errors": [], "tickets": ["PLF-002", "PLF-003"], "cost": 5.0},
+                    {"repo": "vallm", "status": "success", "executed": 1, "errors": [], "tickets": ["PLF-004"], "cost": 2.5}
+                ]
+                
+                # Run main (should not crash)
+                with patch('workspace_parallel.print'):
+                    main()
         finally:
             os.chdir(original_cwd)
     

@@ -1,0 +1,12 @@
+# Directories to exclude from code2llm analysis
+.algitex/
+my-app/.algitex/
+venv/
+.venv/
+__pycache__/
+.pytest_cache/
+.tox/
+build/
+dist/
+node_modules/
+.git/
