@@ -8,6 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.10] - 2026-03-28
 
 ### Fixed
+- Fix string-concat issues (ticket-fe5cfeb1)
+- Fix unused-imports issues (ticket-61ba1ad5)
+- Fix duplicate-imports issues (ticket-73a60d75)
+- Fix magic-numbers issues (ticket-4a16f56c)
+- Fix llm-generated-code issues (ticket-33043082)
+
+## [0.1.10] - 2026-03-28
+
+### Fixed
 - Fix smart-return-type issues (ticket-c01fdadf)
 - Fix llm-generated-code issues (ticket-822d060b)
 - Fix smart-return-type issues (ticket-0ae15f2b)
@@ -464,6 +473,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix llm-generated-code issues (ticket-06d0712f)
 
 ## [Unreleased]
+
+## [0.1.23] - 2026-03-28
+
+### Docs
+- Update CHANGELOG.md
+- Update TODO.md
+- Update examples/26-litellm-proxy-ollama/README.md
+
+### Other
+- Update planfile.yaml
 
 ## [0.1.22] - 2026-03-28
 
