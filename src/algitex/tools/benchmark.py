@@ -23,7 +23,10 @@ import time
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Tuple
 
-from tabulate import tabulate  # Optional, for nice tables
+try:
+    from tabulate import tabulate  # Optional, for nice tables
+except ImportError:
+    tabulate = None
 
 
 @dataclass

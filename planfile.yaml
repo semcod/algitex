@@ -19192,3 +19192,211 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
+  - id: ticket-61632c6f
+    name: Fix smart-return-type issues
+    description: Resolve 2 smart-return-type issues in benchmark_parallel_fix.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - benchmark_parallel_fix.py
+    rule_id: smart-return-type
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-bf8de75f
+    name: Fix string-concat issues
+    description: Resolve 2 string-concat issues in benchmark_parallel_fix.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - benchmark_parallel_fix.py
+    rule_id: string-concat
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-c9c10a3e
+    name: Fix unused-imports issues
+    description: Resolve 4 unused-imports issues in benchmark_parallel_fix.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - benchmark_parallel_fix.py
+    rule_id: unused-imports
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-e4902dee
+    name: Fix magic-numbers issues
+    description: Resolve 2 magic-numbers issues in benchmark_parallel_fix.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - benchmark_parallel_fix.py
+    rule_id: magic-numbers
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-f5c0d70f
+    name: Fix ai-boilerplate issues
+    description: Resolve 2 ai-boilerplate issues in benchmark_parallel_fix.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - benchmark_parallel_fix.py
+    rule_id: ai-boilerplate
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-8a06d1fb
+    name: Fix llm-generated-code issues
+    description: Resolve 1 llm-generated-code issues in src/algitex/todo/__init__.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/todo/__init__.py
+    rule_id: llm-generated-code
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-fed545cc
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in src/algitex/todo/benchmark.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/todo/benchmark.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-cf2134bd
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in src/algitex/todo/benchmark.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/todo/benchmark.py
+    rule_id: string-concat
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-09a1926f
+    name: Fix unused-imports issues
+    description: Resolve 4 unused-imports issues in src/algitex/todo/benchmark.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - src/algitex/todo/benchmark.py
+    rule_id: unused-imports
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-68966c84
+    name: Fix magic-numbers issues
+    description: Resolve 5 magic-numbers issues in src/algitex/todo/benchmark.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - src/algitex/todo/benchmark.py
+    rule_id: magic-numbers
+    count: 5
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-fd0a6b15
+    name: Fix llm-generated-code issues
+    description: Resolve 2 llm-generated-code issues in src/algitex/todo/benchmark.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/todo/benchmark.py
+    rule_id: llm-generated-code
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-1e89f61e
+    name: Fix string-concat issues
+    description: Resolve 5 string-concat issues in src/algitex/todo/fixer.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - src/algitex/todo/fixer.py
+    rule_id: string-concat
+    count: 5
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-13081f4d
+    name: Fix llm-generated-code issues
+    description: Resolve 1 llm-generated-code issues in src/algitex/todo/fixer.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/todo/fixer.py
+    rule_id: llm-generated-code
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-e5d79947
+    name: Fix unused-imports issues
+    description: Resolve 4 unused-imports issues in src/algitex/todo/verifier.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - src/algitex/todo/verifier.py
+    rule_id: unused-imports
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-f1a673ac
+    name: Fix magic-numbers issues
+    description: Resolve 2 magic-numbers issues in src/algitex/todo/verifier.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/todo/verifier.py
+    rule_id: magic-numbers
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-4838d83f
+    name: Fix llm-generated-code issues
+    description: Resolve 1 llm-generated-code issues in src/algitex/todo/verifier.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/todo/verifier.py
+    rule_id: llm-generated-code
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced

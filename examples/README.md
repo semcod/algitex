@@ -29,9 +29,27 @@ This directory contains example scripts and workflows demonstrating various algi
 ### 🧪 Testing & Advanced (23-29)
 - **[24-ollama-batch](24-ollama-batch/)** - Batch processing with Ollama
 - **[28-mcp-orchestration](28-mcp-orchestration/)** - MCP server orchestration
+- **[33-hybrid-autofix](33-hybrid-autofix/)** - Fast parallel + LLM with rate limiting
 - And more...
 
 ## Recent Additions
+
+### Hybrid AutoFix (33)
+
+Combines fast parallel mechanical fixes with rate-limited LLM fixes:
+
+```bash
+cd examples/33-hybrid-autofix
+make dry-run    # Preview
+make hybrid     # Execute with LiteLLM proxy
+make ollama     # Execute with Ollama (100% offline)
+```
+
+Features:
+- **Phase 1**: Parallel mechanical fixes (8 workers, ~1500 tps)
+- **Phase 2**: Rate-limited LLM fixes (10 req/sec with retry)
+- Backends: `litellm-proxy`, `ollama`, `aider`
+- Cost tracking per LLM call
 
 ### Parallel Execution Suite (30-32)
 

@@ -114,6 +114,171 @@ algitex ask "Explain this race condition" --tier premium
 algitex tools                 # show installed tools
 ```
 
+## Parallel TODO Task Processing
+
+Execute TODO tasks from prefact analysis in parallel with automatic categorization and fix strategies:
+
+```bash
+# Verify which TODO tasks are still valid vs already fixed
+algitex todo verify
+
+# Auto-fix mechanical issues in parallel (dry-run)
+algitex todo fix-auto --workers 8
+
+# Actually apply fixes
+algitex todo fix-auto --execute
+
+# Fix only specific category
+algitex todo fix-auto --category unused_import --execute
+algitex todo fix-auto --category return_type --execute
+
+# Benchmark performance
+algitex todo benchmark 100 --workers 8
+algitex todo benchmark 50 --compare  # parallel vs sequential
+```
+
+### Python API
+
+```python
+from algitex.todo import verify_todos, fix_todos, benchmark_fix, compare_modes
+
+# Verify task validity
+result = verify_todos("TODO.md")
+print(f"Still open: {result.still_open}, Fixed: {result.already_fixed}")
+
+# Parallel auto-fix (mechanical tasks only)
+stats = fix_todos("TODO.md", workers=8, dry_run=False)
+print(f"Fixed: {stats['fixed']}, Skipped: {stats['skipped']}")
+
+# Benchmark performance
+result = benchmark_fix("TODO.md", limit=100, workers=8, mode="parallel")
+result.print_report()
+
+# Compare modes
+comparison = compare_modes("TODO.md", limit=50, workers=8)
+# Shows: sequential vs parallel speedup, throughput, efficiency
+```
+
+### Auto-fix Categories
+
+| Category | Auto-fixable | Description |
+|----------|--------------|-------------|
+| `unused_import` | ✅ Yes | Remove unused imports (import X, from Y import X) |
+| `return_type` | ✅ Yes | Add missing return type annotations |
+| `fstring` | ⚠️ Partial | Delegate to `flynt` tool |
+| `magic` | ❌ No | Requires manual constant extraction |
+| `docstring` | ❌ No | Requires LLM-style rewrite |
+| `exec_block` | ❌ No | Requires architectural decision |
+
+### How Parallel Processing Works
+
+```
+┌─────────────────────────────────────────────────────────┐
+│              Parallel TODO Processing                    │
+├─────────────────────────────────────────────────────────┤
+│                                                         │
+│  1. Parse TODO.md → filter worktree duplicates          │
+│  2. Categorize tasks (unused_import, return_type...)    │
+│  3. Group by file (1 worker per file, zero conflicts)   │
+│  4. Sort tasks bottom-up (line DESC) → preserve numbers│
+│  5. Execute in ThreadPoolExecutor (8 workers default)  │
+│  6. Collect results: fixed, skipped, errors            │
+│                                                         │
+│  Safety: Each worker touches different file.           │
+│  Within file: bottom-up prevents line number shifts.   │
+│                                                         │
+└─────────────────────────────────────────────────────────┘
+```
+
+### Three Execution Paths
+
+| Path | LLM? | Parallel? | Throughput | Use Case |
+|------|------|-----------|------------|----------|
+| `todo fix-auto` | ❌ No | ✅ Yes (8 workers) | ~1500 tickets/sec | Mechanical fixes: unused imports, return types |
+| `todo run --tool ollama-mcp` | ✅ Yes | ❌ Sequential (queue) | ~1-10 tickets/sec | Complex fixes requiring reasoning |
+| `autofix via proxy` | ✅ Yes | ⚠️ Batch | ~5-50 tickets/sec | Intelligent fixes via litellm-proxy |
+
+**When to use which:**
+
+**Path 1: Mechanical Fixes (`todo fix-auto`)**
+- No LLM calls — pure regex/text manipulation
+- 8 parallel workers, thread-safe per-file isolation
+- Handles: `unused_import`, `return_type`, `fstring` (via flynt)
+- Best for: bulk cleanup of 100+ simple issues
+
+```python
+from algitex.todo import fix_todos
+stats = fix_todos("TODO.md", workers=8, dry_run=False)
+# 2679 tasks → ~1.8 seconds total
+```
+
+**Path 2: LLM-based Fixes (`todo run`)**
+- Uses Ollama/aider via Docker MCP
+- Sequential execution (respects LLM rate limits)
+- Handles: complex refactoring, architectural changes
+- Best for: issues requiring code understanding
+
+```bash
+algitex todo run --tool ollama-mcp --limit 10
+```
+
+**Path 3: Hybrid via Proxy (`autofix`)**
+- Routes through litellm-proxy with cost tracking
+- Batch processing with retry logic
+- Handles: smart fixes with context awareness
+- Best for: production workflows with budget constraints
+
+```python
+from algitex.tools.autofix import AutoFix
+autofix = AutoFix(backend="litellm-proxy", proxy_url="http://localhost:4000")
+autofix.fix_all(limit=5)  # $0.12 per batch avg
+```
+
+**Path 4: Hybrid CLI (`todo hybrid`) — Fast + Parallel + LLM**
+- Phase 1: Parallel mechanical fixes (no LLM)
+- Phase 2: Rate-limited parallel LLM fixes
+- Handles: complete TODO workflow in one command
+
+```bash
+# Dry run (preview)
+algitex todo hybrid --workers 4 --rate-limit 10
+
+# Execute with rate limiting
+algitex todo hybrid --execute --backend litellm-proxy --workers 4 --rate-limit 10
+
+# Local Ollama (100% offline)
+algitex todo hybrid --execute --backend ollama --workers 2 --rate-limit 5
+```
+
+### The Missing Piece: Fast + Parallel + LLM
+
+To achieve **szybkie + równoległe + LLM**, you need to combine `ThreadPoolExecutor` with `ProxyBackend`:
+
+```python
+from algitex.todo import HybridAutofix
+
+# Combines parallel task distribution with LLM backend
+fixer = HybridAutofix(
+    backend="litellm-proxy",
+    workers=4,              # Parallel workers
+    rate_limit=10,          # Requests per second
+    retry_attempts=3,
+    timeout=30
+)
+
+# Mechanical fixes: parallel, no LLM
+fixer.fix_mechanical("TODO.md")  # 1000+ tickets/sec
+
+# Complex fixes: parallel LLM with rate limiting
+fixer.fix_complex("TODO.md")     # 10-50 tickets/sec, cost-tracked
+```
+
+**Requirements for parallel LLM:**
+- Rate limiting (prevent 429 errors)
+- Retry logic with exponential backoff
+- Cost tracking per batch
+- Circuit breaker for failed requests
+
 ## The 5-Stage Progressive Algorithmization
 
 ```
@@ -234,6 +399,12 @@ make benchmark
 cd examples/26-litellm-proxy-ollama
 make setup && make proxy  # Terminal 1
 make fix                  # Terminal 2
+
+# Hybrid AutoFix — fast parallel + LLM with rate limiting
+cd examples/33-hybrid-autofix
+make dry-run              # Preview
+make hybrid               # Execute with LiteLLM proxy
+make ollama               # Execute with Ollama (100% offline)
 ```
 
 Each example has:
@@ -263,6 +434,7 @@ Each example has:
 - [24-ollama-batch/README.md](examples/24-ollama-batch/README.md) — Parallel batch processing with Ollama
 - [25-local-model-comparison/README.md](examples/25-local-model-comparison/README.md) — Benchmark Ollama models
 - [26-litellm-proxy-ollama/README.md](examples/26-litellm-proxy-ollama/README.md) — LiteLLM Proxy + Ollama (native algitex)
+- [33-hybrid-autofix/README.md](examples/33-hybrid-autofix/README.md) — Fast parallel + LLM with rate limiting
 - `run.sh` — executable script
 - `Makefile` — `make run`, `make setup`, `make clean`
 - `.env.example` — configuration template (where applicable)
@@ -401,7 +573,13 @@ Licensed under Apache-2.0.
 
 Licensed under Apache-2.0.
 
+
+Licensed under Apache-2.0.
+
 ## Author
+
+Tom Sapletta
+
 
 Tom Sapletta
 

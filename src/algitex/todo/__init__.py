@@ -35,6 +35,7 @@ from algitex.todo.benchmark import (
     compare_modes,
     BenchmarkResult,
 )
+from algitex.todo.hybrid import HybridAutofix, HybridResult, RateLimiter
 
 __all__ = [
     "TodoVerifier",
@@ -50,6 +51,9 @@ __all__ = [
     "benchmark_parallel",
     "compare_modes",
     "BenchmarkResult",
+    "HybridAutofix",
+    "HybridResult",
+    "RateLimiter",
 ]
 
 

@@ -1,10 +1,10 @@
-# algitex | 256f 53524L | python:252,shell:4 | 2026-03-28
-# stats: 2261 func | 0 cls | 256 mod | CC̄=3.4 | critical:7 | cycles:0
-# alerts[5]: CC parallel=31; CC parallel=31; CC parallel=31; fan-out parallel=25; fan-out parallel=25
-# hotspots[5]: parallel fan=25; parallel fan=25; parallel fan=25; TaskPartitioner.partition fan=18; TaskPartitioner.partition fan=18
+# algitex | 71f 14382L | python:70,shell:1 | 2026-03-28
+# stats: 603 func | 0 cls | 71 mod | CC̄=3.4 | critical:0 | cycles:0
+# alerts[5]: fan-out DockerToolManager.get_capabilities=16; fan-out ParallelExecutor.execute=15; fan-out analyze_complexity=15; fan-out init=15; fan-out VallmServer.create_fastapi_app=14
+# hotspots[5]: DockerToolManager.get_capabilities fan=16; analyze_complexity fan=15; init fan=15; ParallelExecutor.execute fan=15; VallmServer.create_fastapi_app fan=14
 # evolution: CC̄ 3.4→3.4 (flat 0.0)
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[256]:
+M[71]:
   docker/aider-mcp/aider_mcp_server.py,156
   docker/code2llm/code2llm_mcp_server.py,323
   docker/code2llm/code2llm_server.py,283
@@ -13,206 +13,17 @@ M[256]:
   docker/proxym/proxym_server.py,257
   docker/vallm/vallm_mcp_server.py,360
   docker/vallm/vallm_server.py,271
-  my-app/my-app/.algitex/worktrees/agent-0/docker/aider-mcp/aider_mcp_server.py,156
-  my-app/my-app/.algitex/worktrees/agent-0/docker/code2llm/code2llm_mcp_server.py,323
-  my-app/my-app/.algitex/worktrees/agent-0/docker/code2llm/code2llm_server.py,283
-  my-app/my-app/.algitex/worktrees/agent-0/docker/planfile-mcp/planfile_mcp_server.py,276
-  my-app/my-app/.algitex/worktrees/agent-0/docker/proxym/proxym_mcp_server.py,387
-  my-app/my-app/.algitex/worktrees/agent-0/docker/proxym/proxym_server.py,257
-  my-app/my-app/.algitex/worktrees/agent-0/docker/vallm/vallm_mcp_server.py,360
-  my-app/my-app/.algitex/worktrees/agent-0/docker/vallm/vallm_server.py,271
-  my-app/my-app/.algitex/worktrees/agent-0/project.sh,24
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/__init__.py,36
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/algo/__init__.py,369
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/algo/loop.py,4
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/cli/__init__.py,109
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/cli/algo.py,63
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/cli/core.py,177
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/cli/docker.py,96
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/cli/parallel.py,108
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/cli/ticket.py,46
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/cli/todo.py,120
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/cli/workflow.py,39
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/config.py,170
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/project/__init__.py,427
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/project/autofix.py,52
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/project/batch.py,60
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/project/benchmark.py,58
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/project/config.py,36
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/project/ide.py,47
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/project/mcp.py,46
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/project/ollama.py,39
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/project/services.py,28
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/propact/__init__.py,413
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/propact/workflow.py,2
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/__init__.py,105
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/analysis.py,182
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/autofix/__init__.py,306
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/autofix/aider_backend.py,165
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/autofix/base.py,44
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/autofix/ollama_backend.py,80
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/autofix/proxy_backend.py,161
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/batch.py,421
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/benchmark.py,461
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/cicd.py,405
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/config.py,386
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/context.py,206
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/docker.py,289
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/docker_transport.py,290
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/feedback.py,252
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/ide.py,430
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/mcp.py,448
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/ollama.py,383
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/parallel.py,549
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/proxy.py,145
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/services.py,413
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/telemetry.py,152
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/tickets.py,246
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/todo_actions.py,200
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/todo_executor.py,240
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/todo_local.py,282
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/todo_parser.py,206
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/todo_runner.py,363
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/workspace.py,338
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/workflows/__init__.py,320
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/workflows/pipeline.py,5
-  my-app/my-app/.algitex/worktrees/agent-1/docker/aider-mcp/aider_mcp_server.py,156
-  my-app/my-app/.algitex/worktrees/agent-1/docker/code2llm/code2llm_mcp_server.py,323
-  my-app/my-app/.algitex/worktrees/agent-1/docker/code2llm/code2llm_server.py,283
-  my-app/my-app/.algitex/worktrees/agent-1/docker/planfile-mcp/planfile_mcp_server.py,276
-  my-app/my-app/.algitex/worktrees/agent-1/docker/proxym/proxym_mcp_server.py,387
-  my-app/my-app/.algitex/worktrees/agent-1/docker/proxym/proxym_server.py,257
-  my-app/my-app/.algitex/worktrees/agent-1/docker/vallm/vallm_mcp_server.py,360
-  my-app/my-app/.algitex/worktrees/agent-1/docker/vallm/vallm_server.py,271
-  my-app/my-app/.algitex/worktrees/agent-1/project.sh,24
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/__init__.py,36
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/algo/__init__.py,369
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/algo/loop.py,4
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/cli/__init__.py,109
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/cli/algo.py,63
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/cli/core.py,177
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/cli/docker.py,96
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/cli/parallel.py,108
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/cli/ticket.py,46
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/cli/todo.py,120
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/cli/workflow.py,39
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/config.py,170
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/project/__init__.py,427
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/project/autofix.py,52
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/project/batch.py,60
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/project/benchmark.py,58
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/project/config.py,36
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/project/ide.py,47
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/project/mcp.py,46
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/project/ollama.py,39
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/project/services.py,28
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/propact/__init__.py,413
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/propact/workflow.py,2
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/__init__.py,105
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/analysis.py,182
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/autofix/__init__.py,306
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/autofix/aider_backend.py,165
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/autofix/base.py,44
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/autofix/ollama_backend.py,80
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/autofix/proxy_backend.py,161
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/batch.py,421
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/benchmark.py,461
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/cicd.py,405
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/config.py,386
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/context.py,206
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/docker.py,289
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/docker_transport.py,290
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/feedback.py,252
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/ide.py,430
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/mcp.py,448
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/ollama.py,383
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/parallel.py,549
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/proxy.py,145
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/services.py,413
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/telemetry.py,152
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/tickets.py,246
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/todo_actions.py,200
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/todo_executor.py,240
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/todo_local.py,282
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/todo_parser.py,206
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/todo_runner.py,363
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/workspace.py,338
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/workflows/__init__.py,320
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/workflows/pipeline.py,5
-  my-app/my-app/.algitex/worktrees/agent-2/docker/aider-mcp/aider_mcp_server.py,156
-  my-app/my-app/.algitex/worktrees/agent-2/docker/code2llm/code2llm_mcp_server.py,323
-  my-app/my-app/.algitex/worktrees/agent-2/docker/code2llm/code2llm_server.py,283
-  my-app/my-app/.algitex/worktrees/agent-2/docker/planfile-mcp/planfile_mcp_server.py,276
-  my-app/my-app/.algitex/worktrees/agent-2/docker/proxym/proxym_mcp_server.py,387
-  my-app/my-app/.algitex/worktrees/agent-2/docker/proxym/proxym_server.py,257
-  my-app/my-app/.algitex/worktrees/agent-2/docker/vallm/vallm_mcp_server.py,360
-  my-app/my-app/.algitex/worktrees/agent-2/docker/vallm/vallm_server.py,271
-  my-app/my-app/.algitex/worktrees/agent-2/project.sh,24
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/__init__.py,36
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/algo/__init__.py,369
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/algo/loop.py,4
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/cli/__init__.py,109
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/cli/algo.py,63
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/cli/core.py,177
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/cli/docker.py,96
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/cli/parallel.py,108
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/cli/ticket.py,46
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/cli/todo.py,120
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/cli/workflow.py,39
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/config.py,170
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/project/__init__.py,427
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/project/autofix.py,52
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/project/batch.py,60
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/project/benchmark.py,58
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/project/config.py,36
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/project/ide.py,47
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/project/mcp.py,46
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/project/ollama.py,39
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/project/services.py,28
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/propact/__init__.py,413
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/propact/workflow.py,2
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/__init__.py,105
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/analysis.py,182
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/autofix/__init__.py,306
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/autofix/aider_backend.py,165
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/autofix/base.py,44
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/autofix/ollama_backend.py,80
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/autofix/proxy_backend.py,161
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/batch.py,421
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/benchmark.py,461
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/cicd.py,405
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/config.py,386
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/context.py,206
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/docker.py,289
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/docker_transport.py,290
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/feedback.py,252
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/ide.py,430
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/mcp.py,448
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/ollama.py,383
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/parallel.py,549
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/proxy.py,145
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/services.py,413
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/telemetry.py,152
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/tickets.py,246
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/todo_actions.py,200
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/todo_executor.py,240
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/todo_local.py,282
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/todo_parser.py,206
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/todo_runner.py,363
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/workspace.py,338
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/workflows/__init__.py,320
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/workflows/pipeline.py,5
   project.sh,24
   src/algitex/__init__.py,36
   src/algitex/algo/__init__.py,369
   src/algitex/algo/loop.py,4
-  src/algitex/cli/__init__.py,109
+  src/algitex/cli/__init__.py,112
   src/algitex/cli/algo.py,63
   src/algitex/cli/core.py,177
   src/algitex/cli/docker.py,96
   src/algitex/cli/parallel.py,149
   src/algitex/cli/ticket.py,46
-  src/algitex/cli/todo.py,120
+  src/algitex/cli/todo.py,162
   src/algitex/cli/workflow.py,39
   src/algitex/config.py,170
   src/algitex/project/__init__.py,435
@@ -226,6 +37,10 @@ M[256]:
   src/algitex/project/services.py,28
   src/algitex/propact/__init__.py,413
   src/algitex/propact/workflow.py,2
+  src/algitex/todo/__init__.py,73
+  src/algitex/todo/benchmark.py,245
+  src/algitex/todo/fixer.py,334
+  src/algitex/todo/verifier.py,196
   src/algitex/tools/__init__.py,114
   src/algitex/tools/analysis.py,183
   src/algitex/tools/autofix/__init__.py,306
@@ -248,7 +63,7 @@ M[256]:
   src/algitex/tools/parallel/executor.py,255
   src/algitex/tools/parallel/extractor.py,156
   src/algitex/tools/parallel/models.py,57
-  src/algitex/tools/parallel/partitioner.py,88
+  src/algitex/tools/parallel/partitioner.py,118
   src/algitex/tools/proxy.py,145
   src/algitex/tools/services.py,413
   src/algitex/tools/telemetry.py,152
@@ -262,64 +77,7 @@ M[256]:
   src/algitex/workflows/__init__.py,320
   src/algitex/workflows/pipeline.py,5
 D:
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/cli/parallel.py:
-    e: parallel
-    parallel(path;agents;tool;dry_run;verbose)
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/cli/parallel.py:
-    e: parallel
-    parallel(path;agents;tool;dry_run;verbose)
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/cli/parallel.py:
-    e: parallel
-    parallel(path;agents;tool;dry_run;verbose)
-  src/algitex/tools/parallel/partitioner.py:
-    e: TaskPartitioner
-    TaskPartitioner: __init__(1),partition(2),_regions_by_symbol(2)  # Partition tickets into non-conflicting groups for parallel e...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/parallel.py:
-    e: RegionType,CodeRegion,TaskAssignment,MergeResult,RegionExtractor,TaskPartitioner,ParallelExecutor
-    RegionType(Enum):
-    CodeRegion: compute_signature_hash(1)  # An AST-level lockable region within a file...
-    TaskAssignment:  # A ticket assigned to a specific agent with locked regions...
-    MergeResult:  # Result of merging agent worktrees back to main...
-    RegionExtractor: __init__(1),extract_all(0),_should_skip_file(1),_extract_from_toon(1),_extract_from_file(1),_find_calls(1),_detect_shadow_conflicts(1)  # Extract lockable AST regions from Python files using map.too...
-    TaskPartitioner: __init__(1),partition(2),_regions_by_symbol(2)  # Partition tickets into non-conflicting groups for parallel e...
-    ParallelExecutor: __init__(2),execute(2),_create_worktree(1),_run_agent(4),_merge_all(1),_detect_line_drift(1),_resolve_conflict(1),_changes_are_disjoint(2),_parse_diff_ranges(1),_cleanup_worktrees(0)  # Execute tickets in parallel using git worktrees + region loc...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/parallel.py:
-    e: RegionType,CodeRegion,TaskAssignment,MergeResult,RegionExtractor,TaskPartitioner,ParallelExecutor
-    RegionType(Enum):
-    CodeRegion: compute_signature_hash(1)  # An AST-level lockable region within a file...
-    TaskAssignment:  # A ticket assigned to a specific agent with locked regions...
-    MergeResult:  # Result of merging agent worktrees back to main...
-    RegionExtractor: __init__(1),extract_all(0),_should_skip_file(1),_extract_from_toon(1),_extract_from_file(1),_find_calls(1),_detect_shadow_conflicts(1)  # Extract lockable AST regions from Python files using map.too...
-    TaskPartitioner: __init__(1),partition(2),_regions_by_symbol(2)  # Partition tickets into non-conflicting groups for parallel e...
-    ParallelExecutor: __init__(2),execute(2),_create_worktree(1),_run_agent(4),_merge_all(1),_detect_line_drift(1),_resolve_conflict(1),_changes_are_disjoint(2),_parse_diff_ranges(1),_cleanup_worktrees(0)  # Execute tickets in parallel using git worktrees + region loc...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/parallel.py:
-    e: RegionType,CodeRegion,TaskAssignment,MergeResult,RegionExtractor,TaskPartitioner,ParallelExecutor
-    RegionType(Enum):
-    CodeRegion: compute_signature_hash(1)  # An AST-level lockable region within a file...
-    TaskAssignment:  # A ticket assigned to a specific agent with locked regions...
-    MergeResult:  # Result of merging agent worktrees back to main...
-    RegionExtractor: __init__(1),extract_all(0),_should_skip_file(1),_extract_from_toon(1),_extract_from_file(1),_find_calls(1),_detect_shadow_conflicts(1)  # Extract lockable AST regions from Python files using map.too...
-    TaskPartitioner: __init__(1),partition(2),_regions_by_symbol(2)  # Partition tickets into non-conflicting groups for parallel e...
-    ParallelExecutor: __init__(2),execute(2),_create_worktree(1),_run_agent(4),_merge_all(1),_detect_line_drift(1),_resolve_conflict(1),_changes_are_disjoint(2),_parse_diff_ranges(1),_cleanup_worktrees(0)  # Execute tickets in parallel using git worktrees + region loc...
   src/algitex/tools/benchmark.py:
-    e: Task,TaskResult,BenchmarkResults,ModelBenchmark
-    Task: evaluate_quality(1)  # Benchmark task definition...
-    TaskResult: to_dict(0)  # Result for a single model on a single task...
-    BenchmarkResults: get_model_results(1),get_task_results(1),get_best_model(2),to_dict(0),get_summary(0)  # Complete benchmark results...
-    ModelBenchmark: __init__(2),_add_default_tasks(0),add_task(1),add_custom_task(4),run_single_task(2),compare_models(3),print_results(2),_print_table(1),_print_summary(1),_print_detailed(1),save_results(2),load_results(1)  # Benchmark models on standardized tasks...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/benchmark.py:
-    e: Task,TaskResult,BenchmarkResults,ModelBenchmark
-    Task: evaluate_quality(1)  # Benchmark task definition...
-    TaskResult: to_dict(0)  # Result for a single model on a single task...
-    BenchmarkResults: get_model_results(1),get_task_results(1),get_best_model(2),to_dict(0),get_summary(0)  # Complete benchmark results...
-    ModelBenchmark: __init__(2),_add_default_tasks(0),add_task(1),add_custom_task(4),run_single_task(2),compare_models(3),print_results(2),_print_table(1),_print_summary(1),_print_detailed(1),save_results(2),load_results(1)  # Benchmark models on standardized tasks...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/benchmark.py:
-    e: Task,TaskResult,BenchmarkResults,ModelBenchmark
-    Task: evaluate_quality(1)  # Benchmark task definition...
-    TaskResult: to_dict(0)  # Result for a single model on a single task...
-    BenchmarkResults: get_model_results(1),get_task_results(1),get_best_model(2),to_dict(0),get_summary(0)  # Complete benchmark results...
-    ModelBenchmark: __init__(2),_add_default_tasks(0),add_task(1),add_custom_task(4),run_single_task(2),compare_models(3),print_results(2),_print_table(1),_print_summary(1),_print_detailed(1),save_results(2),load_results(1)  # Benchmark models on standardized tasks...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/benchmark.py:
     e: Task,TaskResult,BenchmarkResults,ModelBenchmark
     Task: evaluate_quality(1)  # Benchmark task definition...
     TaskResult: to_dict(0)  # Result for a single model on a single task...
@@ -343,103 +101,28 @@ D:
     TaskResult:  # Result of executing a single task...
     TodoRunner: __init__(2),__enter__(0),__exit__(3),run_from_file(4),run(3),_execute_local(2),_execute_ollama(2),_execute_task(3),_format_output(1),get_summary(0)  # Execute todo tasks using Docker MCP tools with local fallbac...
   src/algitex/cli/todo.py:
-    e: todo_list,todo_run,todo_fix
+    e: todo_verify,todo_fix_parallel,todo_list,todo_run,todo_fix,todo_benchmark
+    todo_verify(file)
+    todo_fix_parallel(file;workers;dry_run;category)
     todo_list(file)
     todo_run(file;tool;dry_run;limit)
     todo_fix(file;tool;task_id;limit)
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/todo_executor.py:
-    e: TaskResult,TodoExecutor
-    TaskResult:  # Result of executing a single task...
-    TodoExecutor: __init__(2),__enter__(0),__exit__(3),run(3),_execute_task(3),_parse_action(1),_parse_fix_action(1),_parse_create_action(1),_parse_delete_action(1),_parse_read_action(1),_extract_output(1),get_summary(0)  # Execute todo tasks using Docker MCP tools...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/todo_runner.py:
-    e: TaskResult,TodoRunner
-    TaskResult:  # Result of executing a single task...
-    TodoRunner: __init__(2),__enter__(0),__exit__(3),run_from_file(4),run(3),_execute_local(2),_execute_ollama(2),_execute_task(3),_format_output(1),get_summary(0)  # Execute todo tasks using Docker MCP tools with local fallbac...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/todo_actions.py:
-    e: nap_action,aider_action,ollama_action,filesystem_action,github_action,get_action_handler,determine_action
-    nap_action(task)
-    aider_action(task)
-    ollama_action(task)
-    filesystem_action(task)
-    github_action(task)
-    get_action_handler(tool)
-    determine_action(task;tool)
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/cli/todo.py:
-    e: todo_list,todo_run,todo_fix
-    todo_list(file)
-    todo_run(file;tool;dry_run;limit)
-    todo_fix(file;tool;task_id;limit)
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/todo_executor.py:
-    e: TaskResult,TodoExecutor
-    TaskResult:  # Result of executing a single task...
-    TodoExecutor: __init__(2),__enter__(0),__exit__(3),run(3),_execute_task(3),_parse_action(1),_parse_fix_action(1),_parse_create_action(1),_parse_delete_action(1),_parse_read_action(1),_extract_output(1),get_summary(0)  # Execute todo tasks using Docker MCP tools...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/todo_runner.py:
-    e: TaskResult,TodoRunner
-    TaskResult:  # Result of executing a single task...
-    TodoRunner: __init__(2),__enter__(0),__exit__(3),run_from_file(4),run(3),_execute_local(2),_execute_ollama(2),_execute_task(3),_format_output(1),get_summary(0)  # Execute todo tasks using Docker MCP tools with local fallbac...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/todo_actions.py:
-    e: nap_action,aider_action,ollama_action,filesystem_action,github_action,get_action_handler,determine_action
-    nap_action(task)
-    aider_action(task)
-    ollama_action(task)
-    filesystem_action(task)
-    github_action(task)
-    get_action_handler(tool)
-    determine_action(task;tool)
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/cli/todo.py:
-    e: todo_list,todo_run,todo_fix
-    todo_list(file)
-    todo_run(file;tool;dry_run;limit)
-    todo_fix(file;tool;task_id;limit)
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/todo_executor.py:
-    e: TaskResult,TodoExecutor
-    TaskResult:  # Result of executing a single task...
-    TodoExecutor: __init__(2),__enter__(0),__exit__(3),run(3),_execute_task(3),_parse_action(1),_parse_fix_action(1),_parse_create_action(1),_parse_delete_action(1),_parse_read_action(1),_extract_output(1),get_summary(0)  # Execute todo tasks using Docker MCP tools...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/todo_runner.py:
-    e: TaskResult,TodoRunner
-    TaskResult:  # Result of executing a single task...
-    TodoRunner: __init__(2),__enter__(0),__exit__(3),run_from_file(4),run(3),_execute_local(2),_execute_ollama(2),_execute_task(3),_format_output(1),get_summary(0)  # Execute todo tasks using Docker MCP tools with local fallbac...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/todo_actions.py:
-    e: nap_action,aider_action,ollama_action,filesystem_action,github_action,get_action_handler,determine_action
-    nap_action(task)
-    aider_action(task)
-    ollama_action(task)
-    filesystem_action(task)
-    github_action(task)
-    get_action_handler(tool)
-    determine_action(task;tool)
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/cli/todo.py:
-    e: todo_list,todo_run,todo_fix
-    todo_list(file)
-    todo_run(file;tool;dry_run;limit)
-    todo_fix(file;tool;task_id;limit)
+    todo_benchmark(limit;file;workers;compare)
   src/algitex/project/__init__.py:
     e: Project
     Project(ServiceMixin,AutoFixMixin,OllamaMixin,BatchMixin,BenchmarkMixin,IDEMixin,ConfigMixin,MCPMixin): __init__(2),analyze(1),plan(3),execute(1),status(0),_status_health(0),_status_tickets(0),_status_infra(0),_status_algo(0),run_workflow(1),ask(1),add_ticket(1),generate_todo(1),_build_prompt(1),_select_tier(1),_generate_strategy(2)  # One project, all tools, zero boilerplate...
   src/algitex/tools/autofix/__init__.py:
     e: AutoFix
     AutoFix: __init__(5),check_backends(0),choose_backend(0),_convert_task(1),mark_task_done(1),fix_with_ollama(1),fix_with_aider(1),fix_with_proxy(1),fix_task(2),fix_all(3),fix_issue(2),print_summary(1),list_tasks(0),get_stats(0)  # Automated code fixing using various backends...
+  src/algitex/todo/verifier.py:
+    e: TodoTask,VerificationResult,TodoVerifier,verify_todos
+    TodoTask:  # Single TODO task from prefact output...
+    VerificationResult:  # Result of TODO verification...
+    TodoVerifier: __init__(1),parse(0),verify(0),_verify_task(1),_check_by_type(1),_check_unused_import(2),print_report(0)  # Verify which TODO tasks from prefact are still valid...
+    verify_todos(todo_path)
   src/algitex/tools/parallel/extractor.py:
     e: RegionExtractor
     RegionExtractor: __init__(1),extract_all(0),_should_skip_file(1),_extract_from_toon(1),_extract_from_file(1),_find_calls(1),_detect_shadow_conflicts(1)  # Extract lockable AST regions from Python files using map.too...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/project/__init__.py:
-    e: Project
-    Project(ServiceMixin,AutoFixMixin,OllamaMixin,BatchMixin,BenchmarkMixin,IDEMixin,ConfigMixin,MCPMixin): __init__(2),analyze(1),plan(3),execute(1),status(0),_status_health(0),_status_tickets(0),_status_infra(0),_status_algo(0),run_workflow(1),ask(1),add_ticket(1),generate_todo(1),_build_prompt(1),_select_tier(1),_generate_strategy(2)  # One project, all tools, zero boilerplate...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/autofix/__init__.py:
-    e: AutoFix
-    AutoFix: __init__(5),check_backends(0),choose_backend(0),_convert_task(1),mark_task_done(1),fix_with_ollama(1),fix_with_aider(1),fix_with_proxy(1),fix_task(2),fix_all(3),fix_issue(2),print_summary(1),list_tasks(0),get_stats(0)  # Automated code fixing using various backends...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/project/__init__.py:
-    e: Project
-    Project(ServiceMixin,AutoFixMixin,OllamaMixin,BatchMixin,BenchmarkMixin,IDEMixin,ConfigMixin,MCPMixin): __init__(2),analyze(1),plan(3),execute(1),status(0),_status_health(0),_status_tickets(0),_status_infra(0),_status_algo(0),run_workflow(1),ask(1),add_ticket(1),generate_todo(1),_build_prompt(1),_select_tier(1),_generate_strategy(2)  # One project, all tools, zero boilerplate...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/autofix/__init__.py:
-    e: AutoFix
-    AutoFix: __init__(5),check_backends(0),choose_backend(0),_convert_task(1),mark_task_done(1),fix_with_ollama(1),fix_with_aider(1),fix_with_proxy(1),fix_task(2),fix_all(3),fix_issue(2),print_summary(1),list_tasks(0),get_stats(0)  # Automated code fixing using various backends...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/project/__init__.py:
-    e: Project
-    Project(ServiceMixin,AutoFixMixin,OllamaMixin,BatchMixin,BenchmarkMixin,IDEMixin,ConfigMixin,MCPMixin): __init__(2),analyze(1),plan(3),execute(1),status(0),_status_health(0),_status_tickets(0),_status_infra(0),_status_algo(0),run_workflow(1),ask(1),add_ticket(1),generate_todo(1),_build_prompt(1),_select_tier(1),_generate_strategy(2)  # One project, all tools, zero boilerplate...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/autofix/__init__.py:
-    e: AutoFix
-    AutoFix: __init__(5),check_backends(0),choose_backend(0),_convert_task(1),mark_task_done(1),fix_with_ollama(1),fix_with_aider(1),fix_with_proxy(1),fix_task(2),fix_all(3),fix_issue(2),print_summary(1),list_tasks(0),get_stats(0)  # Automated code fixing using various backends...
   src/algitex/tools/mcp.py:
     e: MCPService,MCPOrchestrator
     MCPService: __post_init__(0)  # Definition of an MCP service...
@@ -462,48 +145,6 @@ D:
     _execute_parallel(project_path;open_tickets;agents;tool)
     _display_results(results;verbose)
     parallel(path;agents;tool;dry_run;verbose)
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/mcp.py:
-    e: MCPService,MCPOrchestrator
-    MCPService: __post_init__(0)  # Definition of an MCP service...
-    MCPOrchestrator: __init__(0),_setup_signal_handlers(0),_register_default_services(0),add_service(1),add_custom_service(3),start_service(1),stop_service(2),restart_service(1),start_all(1),stop_all(1),wait_for_ready(2),check_health(0),get_logs(2),list_services(0),get_service_info(1),print_status(0),generate_mcp_config(1)  # Orchestrates multiple MCP services...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/ollama.py:
-    e: OllamaModel,OllamaResponse,OllamaClient,OllamaService
-    OllamaModel:  # Information about an Ollama model...
-    OllamaResponse: __str__(0)  # Response from Ollama API...
-    OllamaClient: __init__(3),health(0),list_models(0),pull_model(1),generate(7),chat(6),fix_code(4),analyze_code(3),close(0),__enter__(0),__exit__(0)  # Client for interacting with Ollama API...
-    OllamaService: __init__(1),ensure_model(1),get_recommended_models(0),auto_fix_file(4)  # High-level service for Ollama operations...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/todo_local.py:
-    e: LocalTaskResult,LocalExecutor
-    LocalTaskResult:  # Result of executing a single task locally...
-    LocalExecutor: __init__(1),can_execute(1),_determine_fix_and_apply(2),execute(1),_fix_return_type(3),_has_return_type(2),_import_exists(3),_fix_unused_import(3),_fix_fstring(2),_fix_standalone_main(1),_add_main_block(1)  # Execute simple code fixes locally without Docker...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/mcp.py:
-    e: MCPService,MCPOrchestrator
-    MCPService: __post_init__(0)  # Definition of an MCP service...
-    MCPOrchestrator: __init__(0),_setup_signal_handlers(0),_register_default_services(0),add_service(1),add_custom_service(3),start_service(1),stop_service(2),restart_service(1),start_all(1),stop_all(1),wait_for_ready(2),check_health(0),get_logs(2),list_services(0),get_service_info(1),print_status(0),generate_mcp_config(1)  # Orchestrates multiple MCP services...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/ollama.py:
-    e: OllamaModel,OllamaResponse,OllamaClient,OllamaService
-    OllamaModel:  # Information about an Ollama model...
-    OllamaResponse: __str__(0)  # Response from Ollama API...
-    OllamaClient: __init__(3),health(0),list_models(0),pull_model(1),generate(7),chat(6),fix_code(4),analyze_code(3),close(0),__enter__(0),__exit__(0)  # Client for interacting with Ollama API...
-    OllamaService: __init__(1),ensure_model(1),get_recommended_models(0),auto_fix_file(4)  # High-level service for Ollama operations...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/todo_local.py:
-    e: LocalTaskResult,LocalExecutor
-    LocalTaskResult:  # Result of executing a single task locally...
-    LocalExecutor: __init__(1),can_execute(1),_determine_fix_and_apply(2),execute(1),_fix_return_type(3),_has_return_type(2),_import_exists(3),_fix_unused_import(3),_fix_fstring(2),_fix_standalone_main(1),_add_main_block(1)  # Execute simple code fixes locally without Docker...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/mcp.py:
-    e: MCPService,MCPOrchestrator
-    MCPService: __post_init__(0)  # Definition of an MCP service...
-    MCPOrchestrator: __init__(0),_setup_signal_handlers(0),_register_default_services(0),add_service(1),add_custom_service(3),start_service(1),stop_service(2),restart_service(1),start_all(1),stop_all(1),wait_for_ready(2),check_health(0),get_logs(2),list_services(0),get_service_info(1),print_status(0),generate_mcp_config(1)  # Orchestrates multiple MCP services...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/ollama.py:
-    e: OllamaModel,OllamaResponse,OllamaClient,OllamaService
-    OllamaModel:  # Information about an Ollama model...
-    OllamaResponse: __str__(0)  # Response from Ollama API...
-    OllamaClient: __init__(3),health(0),list_models(0),pull_model(1),generate(7),chat(6),fix_code(4),analyze_code(3),close(0),__enter__(0),__exit__(0)  # Client for interacting with Ollama API...
-    OllamaService: __init__(1),ensure_model(1),get_recommended_models(0),auto_fix_file(4)  # High-level service for Ollama operations...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/todo_local.py:
-    e: LocalTaskResult,LocalExecutor
-    LocalTaskResult:  # Result of executing a single task locally...
-    LocalExecutor: __init__(1),can_execute(1),_determine_fix_and_apply(2),execute(1),_fix_return_type(3),_has_return_type(2),_import_exists(3),_fix_unused_import(3),_fix_fstring(2),_fix_standalone_main(1),_add_main_block(1)  # Execute simple code fixes locally without Docker...
   docker/code2llm/code2llm_server.py:
     e: Code2LLMServer
     Code2LLMServer: __init__(0),create_fastapi_app(0),_analyze_python_file(2),_calculate_complexity_metrics(1),_collect_project_metrics(1),_analyze_project(1),_generate_toon(1),_generate_readme(1),run(0)  # Code analysis server for LLM context generation...
@@ -536,102 +177,9 @@ D:
     WorkflowStep: to_dict(0)  # Single executable step in a Propact workflow...
     WorkflowResult:  # Result of workflow execution...
     Workflow: __init__(1),parse(0),validate(0),_execute_step(3),_update_result(3),_handle_step_failure(2),execute(0),status(0),_exec_shell(1),_exec_rest(2),_exec_mcp(2),_exec_docker(2),_execute_with_manager(6),_exec_llm(2)  # Parse and execute Propact Markdown workflows...
-  my-app/my-app/.algitex/worktrees/agent-0/docker/code2llm/code2llm_server.py:
-    e: Code2LLMServer
-    Code2LLMServer: __init__(0),create_fastapi_app(0),_analyze_python_file(2),_calculate_complexity_metrics(1),_collect_project_metrics(1),_analyze_project(1),_generate_toon(1),_generate_readme(1),run(0)  # Code analysis server for LLM context generation...
-  my-app/my-app/.algitex/worktrees/agent-0/docker/code2llm/code2llm_mcp_server.py:
-    e: _analyze_python_file,_calculate_complexity_metrics,_collect_project_metrics,analyze_project,generate_toon,generate_readme,evolution_export,create_rest_api,run_rest_server
-    _analyze_python_file(py_file;root)
-    _calculate_complexity_metrics(complexity_scores)
-    _collect_project_metrics(root)
-    analyze_project(path)
-    generate_toon(path)
-    generate_readme(path)
-    evolution_export(path)
-    create_rest_api()
-    run_rest_server()
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/config.py:
-    e: ProxyConfig,TicketConfig,AnalysisConfig,Config,_find_config,_merge_yaml
-    ProxyConfig: from_env(0)  # Proxym gateway settings...
-    TicketConfig: from_env(0)  # Planfile ticket system settings...
-    AnalysisConfig: from_env(0)  # Code analysis tool settings...
-    Config: load(1),save(1)  # Unified config for the entire algitex stack...
-    _find_config(explicit)
-    _merge_yaml(cfg;path)
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/docker.py:
-    e: DockerTool,RunningTool,DockerToolManager
-    DockerTool:  # Single Docker-based tool declaration from docker-tools.yaml...
-    RunningTool:  # A spawned Docker container with connection info...
-    DockerToolManager: __init__(1),__enter__(0),__exit__(3),_load_tools(0),_load_state(0),_save_state(0),spawn(1),_wait_healthy(2),_get_http_client(0),call_tool(3),teardown(1),teardown_all(0),list_tools(0),list_running(0),get_capabilities(1)  # Spawn Docker containers, connect via MCP/REST, call tools, t...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/propact/__init__.py:
-    e: WorkflowStep,WorkflowResult,Workflow
-    WorkflowStep: to_dict(0)  # Single executable step in a Propact workflow...
-    WorkflowResult:  # Result of workflow execution...
-    Workflow: __init__(1),parse(0),validate(0),_execute_step(3),_update_result(3),_handle_step_failure(2),execute(0),status(0),_exec_shell(1),_exec_rest(2),_exec_mcp(2),_exec_docker(2),_execute_with_manager(6),_exec_llm(2)  # Parse and execute Propact Markdown workflows...
-  my-app/my-app/.algitex/worktrees/agent-2/docker/code2llm/code2llm_server.py:
-    e: Code2LLMServer
-    Code2LLMServer: __init__(0),create_fastapi_app(0),_analyze_python_file(2),_calculate_complexity_metrics(1),_collect_project_metrics(1),_analyze_project(1),_generate_toon(1),_generate_readme(1),run(0)  # Code analysis server for LLM context generation...
-  my-app/my-app/.algitex/worktrees/agent-2/docker/code2llm/code2llm_mcp_server.py:
-    e: _analyze_python_file,_calculate_complexity_metrics,_collect_project_metrics,analyze_project,generate_toon,generate_readme,evolution_export,create_rest_api,run_rest_server
-    _analyze_python_file(py_file;root)
-    _calculate_complexity_metrics(complexity_scores)
-    _collect_project_metrics(root)
-    analyze_project(path)
-    generate_toon(path)
-    generate_readme(path)
-    evolution_export(path)
-    create_rest_api()
-    run_rest_server()
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/config.py:
-    e: ProxyConfig,TicketConfig,AnalysisConfig,Config,_find_config,_merge_yaml
-    ProxyConfig: from_env(0)  # Proxym gateway settings...
-    TicketConfig: from_env(0)  # Planfile ticket system settings...
-    AnalysisConfig: from_env(0)  # Code analysis tool settings...
-    Config: load(1),save(1)  # Unified config for the entire algitex stack...
-    _find_config(explicit)
-    _merge_yaml(cfg;path)
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/docker.py:
-    e: DockerTool,RunningTool,DockerToolManager
-    DockerTool:  # Single Docker-based tool declaration from docker-tools.yaml...
-    RunningTool:  # A spawned Docker container with connection info...
-    DockerToolManager: __init__(1),__enter__(0),__exit__(3),_load_tools(0),_load_state(0),_save_state(0),spawn(1),_wait_healthy(2),_get_http_client(0),call_tool(3),teardown(1),teardown_all(0),list_tools(0),list_running(0),get_capabilities(1)  # Spawn Docker containers, connect via MCP/REST, call tools, t...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/propact/__init__.py:
-    e: WorkflowStep,WorkflowResult,Workflow
-    WorkflowStep: to_dict(0)  # Single executable step in a Propact workflow...
-    WorkflowResult:  # Result of workflow execution...
-    Workflow: __init__(1),parse(0),validate(0),_execute_step(3),_update_result(3),_handle_step_failure(2),execute(0),status(0),_exec_shell(1),_exec_rest(2),_exec_mcp(2),_exec_docker(2),_execute_with_manager(6),_exec_llm(2)  # Parse and execute Propact Markdown workflows...
-  my-app/my-app/.algitex/worktrees/agent-1/docker/code2llm/code2llm_server.py:
-    e: Code2LLMServer
-    Code2LLMServer: __init__(0),create_fastapi_app(0),_analyze_python_file(2),_calculate_complexity_metrics(1),_collect_project_metrics(1),_analyze_project(1),_generate_toon(1),_generate_readme(1),run(0)  # Code analysis server for LLM context generation...
-  my-app/my-app/.algitex/worktrees/agent-1/docker/code2llm/code2llm_mcp_server.py:
-    e: _analyze_python_file,_calculate_complexity_metrics,_collect_project_metrics,analyze_project,generate_toon,generate_readme,evolution_export,create_rest_api,run_rest_server
-    _analyze_python_file(py_file;root)
-    _calculate_complexity_metrics(complexity_scores)
-    _collect_project_metrics(root)
-    analyze_project(path)
-    generate_toon(path)
-    generate_readme(path)
-    evolution_export(path)
-    create_rest_api()
-    run_rest_server()
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/config.py:
-    e: ProxyConfig,TicketConfig,AnalysisConfig,Config,_find_config,_merge_yaml
-    ProxyConfig: from_env(0)  # Proxym gateway settings...
-    TicketConfig: from_env(0)  # Planfile ticket system settings...
-    AnalysisConfig: from_env(0)  # Code analysis tool settings...
-    Config: load(1),save(1)  # Unified config for the entire algitex stack...
-    _find_config(explicit)
-    _merge_yaml(cfg;path)
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/docker.py:
-    e: DockerTool,RunningTool,DockerToolManager
-    DockerTool:  # Single Docker-based tool declaration from docker-tools.yaml...
-    RunningTool:  # A spawned Docker container with connection info...
-    DockerToolManager: __init__(1),__enter__(0),__exit__(3),_load_tools(0),_load_state(0),_save_state(0),spawn(1),_wait_healthy(2),_get_http_client(0),call_tool(3),teardown(1),teardown_all(0),list_tools(0),list_running(0),get_capabilities(1)  # Spawn Docker containers, connect via MCP/REST, call tools, t...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/propact/__init__.py:
-    e: WorkflowStep,WorkflowResult,Workflow
-    WorkflowStep: to_dict(0)  # Single executable step in a Propact workflow...
-    WorkflowResult:  # Result of workflow execution...
-    Workflow: __init__(1),parse(0),validate(0),_execute_step(3),_update_result(3),_handle_step_failure(2),execute(0),status(0),_exec_shell(1),_exec_rest(2),_exec_mcp(2),_exec_docker(2),_execute_with_manager(6),_exec_llm(2)  # Parse and execute Propact Markdown workflows...
+  src/algitex/tools/parallel/partitioner.py:
+    e: TaskPartitioner
+    TaskPartitioner: __init__(1),partition(2),_compute_footprints(1),_build_conflict_graph(2),_greedy_coloring(4),_group_by_color(1),_regions_by_symbol(2)  # Partition tickets into non-conflicting groups for parallel e...
   docker/vallm/vallm_server.py:
     e: VallmServer
     VallmServer: __init__(0),create_fastapi_app(0),_validate_static(1),_validate_runtime(1),_validate_security(1),_analyze_complexity(1),run(0)  # Validation server with multiple validation levels...
@@ -684,162 +232,6 @@ D:
     ServiceStatus: to_dict(0)  # Status of a single service...
     ServiceChecker: __init__(1),check_http_service(4),check_ollama(1),check_litellm_proxy(1),check_mcp_service(2),check_command_exists(2),check_file_exists(2),check_all(1),_format_status_line(1),_print_status_details(1),print_status(2),get_unhealthy(1),wait_for_services(3),close(0),__enter__(0),__exit__(0)  # Checker for various services used by algitex...
     ServiceDependency: __init__(1),get_startup_order(1),check_with_dependencies(1)  # Manage service dependencies and startup order...
-  my-app/my-app/.algitex/worktrees/agent-0/docker/vallm/vallm_server.py:
-    e: VallmServer
-    VallmServer: __init__(0),create_fastapi_app(0),_validate_static(1),_validate_runtime(1),_validate_security(1),_analyze_complexity(1),run(0)  # Validation server with multiple validation levels...
-  my-app/my-app/.algitex/worktrees/agent-0/docker/vallm/vallm_mcp_server.py:
-    e: validate_static,validate_runtime,validate_security,validate_all,analyze_complexity,calculate_quality_score,create_rest_api,run_rest_server
-    validate_static(path)
-    validate_runtime(path)
-    validate_security(path)
-    validate_all(path)
-    analyze_complexity(path)
-    calculate_quality_score(path)
-    create_rest_api()
-    run_rest_server()
-  my-app/my-app/.algitex/worktrees/agent-0/docker/proxym/proxym_mcp_server.py:
-    e: count_tokens,list_models,chat_completion,_call_anthropic,_call_openai,_call_gemini,simple_prompt,get_budget_status,create_rest_api,run_rest_server
-    count_tokens(text)
-    list_models()
-    chat_completion(messages;model;temperature;max_tokens)
-    _call_anthropic(messages;model;temperature;max_tokens;input_tokens)
-    _call_openai(messages;model;temperature;max_tokens;input_tokens)
-    _call_gemini(messages;model;temperature;max_tokens;input_tokens)
-    simple_prompt(prompt;model)
-    get_budget_status()
-    create_rest_api()
-    run_rest_server()
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/algo/__init__.py:
-    e: TraceEntry,Pattern,Rule,LoopState,Loop
-    TraceEntry: to_dict(0)  # Single LLM interaction trace...
-    Pattern:  # Extracted repeating pattern from traces...
-    Rule:  # Deterministic replacement for an LLM pattern...
-    LoopState:  # Current state of the progressive algorithmization loop...
-    Loop: __init__(1),discover(1),add_trace(2),extract(1),generate_rules(1),_llm_generate_rule(2),route(1),optimize(0),report(0),_load(0),_save(0)  # The progressive algorithmization engine...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/proxy.py:
-    e: LLMResponse,Proxy
-    LLMResponse: __str__(0)  # Simplified LLM response...
-    Proxy: __init__(1),ask(1),budget(0),models(0),health(0),close(0),__enter__(0),__exit__(0)  # Simple wrapper around proxym gateway...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/docker_transport.py:
-    e: StdioTransport,spawn_stdio,spawn_sse,spawn_rest,spawn_cli,call_stdio,call_sse,call_rest,call_cli
-    StdioTransport: __init__(1),send(2),_serialize(1),_write(2),_read_with_timeout(1),_parse(1)  # Transport layer for JSON-RPC over stdin/stdout communication...
-    spawn_stdio(tool;env;running;save_state)
-    spawn_sse(tool;env;running;save_state;wait_healthy)
-    spawn_rest(tool;env;running;save_state)
-    spawn_cli(tool;env;running;save_state)
-    call_stdio(rt;tool;args;get_client)
-    call_sse(rt;tool;args;get_client)
-    call_rest(rt;tool;args;get_client)
-    call_cli(rt;cmd;args;get_client)
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/services.py:
-    e: ServiceStatus,ServiceChecker,ServiceDependency
-    ServiceStatus: to_dict(0)  # Status of a single service...
-    ServiceChecker: __init__(1),check_http_service(4),check_ollama(1),check_litellm_proxy(1),check_mcp_service(2),check_command_exists(2),check_file_exists(2),check_all(1),_format_status_line(1),_print_status_details(1),print_status(2),get_unhealthy(1),wait_for_services(3),close(0),__enter__(0),__exit__(0)  # Checker for various services used by algitex...
-    ServiceDependency: __init__(1),get_startup_order(1),check_with_dependencies(1)  # Manage service dependencies and startup order...
-  my-app/my-app/.algitex/worktrees/agent-2/docker/vallm/vallm_server.py:
-    e: VallmServer
-    VallmServer: __init__(0),create_fastapi_app(0),_validate_static(1),_validate_runtime(1),_validate_security(1),_analyze_complexity(1),run(0)  # Validation server with multiple validation levels...
-  my-app/my-app/.algitex/worktrees/agent-2/docker/vallm/vallm_mcp_server.py:
-    e: validate_static,validate_runtime,validate_security,validate_all,analyze_complexity,calculate_quality_score,create_rest_api,run_rest_server
-    validate_static(path)
-    validate_runtime(path)
-    validate_security(path)
-    validate_all(path)
-    analyze_complexity(path)
-    calculate_quality_score(path)
-    create_rest_api()
-    run_rest_server()
-  my-app/my-app/.algitex/worktrees/agent-2/docker/proxym/proxym_mcp_server.py:
-    e: count_tokens,list_models,chat_completion,_call_anthropic,_call_openai,_call_gemini,simple_prompt,get_budget_status,create_rest_api,run_rest_server
-    count_tokens(text)
-    list_models()
-    chat_completion(messages;model;temperature;max_tokens)
-    _call_anthropic(messages;model;temperature;max_tokens;input_tokens)
-    _call_openai(messages;model;temperature;max_tokens;input_tokens)
-    _call_gemini(messages;model;temperature;max_tokens;input_tokens)
-    simple_prompt(prompt;model)
-    get_budget_status()
-    create_rest_api()
-    run_rest_server()
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/algo/__init__.py:
-    e: TraceEntry,Pattern,Rule,LoopState,Loop
-    TraceEntry: to_dict(0)  # Single LLM interaction trace...
-    Pattern:  # Extracted repeating pattern from traces...
-    Rule:  # Deterministic replacement for an LLM pattern...
-    LoopState:  # Current state of the progressive algorithmization loop...
-    Loop: __init__(1),discover(1),add_trace(2),extract(1),generate_rules(1),_llm_generate_rule(2),route(1),optimize(0),report(0),_load(0),_save(0)  # The progressive algorithmization engine...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/proxy.py:
-    e: LLMResponse,Proxy
-    LLMResponse: __str__(0)  # Simplified LLM response...
-    Proxy: __init__(1),ask(1),budget(0),models(0),health(0),close(0),__enter__(0),__exit__(0)  # Simple wrapper around proxym gateway...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/docker_transport.py:
-    e: StdioTransport,spawn_stdio,spawn_sse,spawn_rest,spawn_cli,call_stdio,call_sse,call_rest,call_cli
-    StdioTransport: __init__(1),send(2),_serialize(1),_write(2),_read_with_timeout(1),_parse(1)  # Transport layer for JSON-RPC over stdin/stdout communication...
-    spawn_stdio(tool;env;running;save_state)
-    spawn_sse(tool;env;running;save_state;wait_healthy)
-    spawn_rest(tool;env;running;save_state)
-    spawn_cli(tool;env;running;save_state)
-    call_stdio(rt;tool;args;get_client)
-    call_sse(rt;tool;args;get_client)
-    call_rest(rt;tool;args;get_client)
-    call_cli(rt;cmd;args;get_client)
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/services.py:
-    e: ServiceStatus,ServiceChecker,ServiceDependency
-    ServiceStatus: to_dict(0)  # Status of a single service...
-    ServiceChecker: __init__(1),check_http_service(4),check_ollama(1),check_litellm_proxy(1),check_mcp_service(2),check_command_exists(2),check_file_exists(2),check_all(1),_format_status_line(1),_print_status_details(1),print_status(2),get_unhealthy(1),wait_for_services(3),close(0),__enter__(0),__exit__(0)  # Checker for various services used by algitex...
-    ServiceDependency: __init__(1),get_startup_order(1),check_with_dependencies(1)  # Manage service dependencies and startup order...
-  my-app/my-app/.algitex/worktrees/agent-1/docker/vallm/vallm_server.py:
-    e: VallmServer
-    VallmServer: __init__(0),create_fastapi_app(0),_validate_static(1),_validate_runtime(1),_validate_security(1),_analyze_complexity(1),run(0)  # Validation server with multiple validation levels...
-  my-app/my-app/.algitex/worktrees/agent-1/docker/vallm/vallm_mcp_server.py:
-    e: validate_static,validate_runtime,validate_security,validate_all,analyze_complexity,calculate_quality_score,create_rest_api,run_rest_server
-    validate_static(path)
-    validate_runtime(path)
-    validate_security(path)
-    validate_all(path)
-    analyze_complexity(path)
-    calculate_quality_score(path)
-    create_rest_api()
-    run_rest_server()
-  my-app/my-app/.algitex/worktrees/agent-1/docker/proxym/proxym_mcp_server.py:
-    e: count_tokens,list_models,chat_completion,_call_anthropic,_call_openai,_call_gemini,simple_prompt,get_budget_status,create_rest_api,run_rest_server
-    count_tokens(text)
-    list_models()
-    chat_completion(messages;model;temperature;max_tokens)
-    _call_anthropic(messages;model;temperature;max_tokens;input_tokens)
-    _call_openai(messages;model;temperature;max_tokens;input_tokens)
-    _call_gemini(messages;model;temperature;max_tokens;input_tokens)
-    simple_prompt(prompt;model)
-    get_budget_status()
-    create_rest_api()
-    run_rest_server()
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/proxy.py:
-    e: LLMResponse,Proxy
-    LLMResponse: __str__(0)  # Simplified LLM response...
-    Proxy: __init__(1),ask(1),budget(0),models(0),health(0),close(0),__enter__(0),__exit__(0)  # Simple wrapper around proxym gateway...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/algo/__init__.py:
-    e: TraceEntry,Pattern,Rule,LoopState,Loop
-    TraceEntry: to_dict(0)  # Single LLM interaction trace...
-    Pattern:  # Extracted repeating pattern from traces...
-    Rule:  # Deterministic replacement for an LLM pattern...
-    LoopState:  # Current state of the progressive algorithmization loop...
-    Loop: __init__(1),discover(1),add_trace(2),extract(1),generate_rules(1),_llm_generate_rule(2),route(1),optimize(0),report(0),_load(0),_save(0)  # The progressive algorithmization engine...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/docker_transport.py:
-    e: StdioTransport,spawn_stdio,spawn_sse,spawn_rest,spawn_cli,call_stdio,call_sse,call_rest,call_cli
-    StdioTransport: __init__(1),send(2),_serialize(1),_write(2),_read_with_timeout(1),_parse(1)  # Transport layer for JSON-RPC over stdin/stdout communication...
-    spawn_stdio(tool;env;running;save_state)
-    spawn_sse(tool;env;running;save_state;wait_healthy)
-    spawn_rest(tool;env;running;save_state)
-    spawn_cli(tool;env;running;save_state)
-    call_stdio(rt;tool;args;get_client)
-    call_sse(rt;tool;args;get_client)
-    call_rest(rt;tool;args;get_client)
-    call_cli(rt;cmd;args;get_client)
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/services.py:
-    e: ServiceStatus,ServiceChecker,ServiceDependency
-    ServiceStatus: to_dict(0)  # Status of a single service...
-    ServiceChecker: __init__(1),check_http_service(4),check_ollama(1),check_litellm_proxy(1),check_mcp_service(2),check_command_exists(2),check_file_exists(2),check_all(1),_format_status_line(1),_print_status_details(1),print_status(2),get_unhealthy(1),wait_for_services(3),close(0),__enter__(0),__exit__(0)  # Checker for various services used by algitex...
-    ServiceDependency: __init__(1),get_startup_order(1),check_with_dependencies(1)  # Manage service dependencies and startup order...
   src/algitex/tools/config.py:
     e: ConfigManager
     ConfigManager: __init__(1),_ensure_dir(1),_backup_file(1),install_config(3),generate_continue_config(3),install_continue_config(2),generate_vscode_settings(2),install_vscode_settings(2),generate_env_file(2),generate_docker_compose(2),setup_project_configs(2),list_configs(1)  # Manages configuration files for various IDEs and tools...
@@ -863,75 +255,22 @@ D:
   src/algitex/project/batch.py:
     e: BatchMixin
     BatchMixin: __init__(2),batch_analyze(4),create_batch_processor(3)  # Batch processing functionality for Project...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/config.py:
-    e: ConfigManager
-    ConfigManager: __init__(1),_ensure_dir(1),_backup_file(1),install_config(3),generate_continue_config(3),install_continue_config(2),generate_vscode_settings(2),install_vscode_settings(2),generate_env_file(2),generate_docker_compose(2),setup_project_configs(2),list_configs(1)  # Manages configuration files for various IDEs and tools...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/ide.py:
-    e: IDETool,IDEHelper,ClaudeCodeHelper,AiderHelper,VSCodeHelper,EditorIntegration
-    IDETool: __post_init__(0)  # IDE tool configuration...
-    IDEHelper: __init__(0),_register_default_tools(0),check_tool(1),setup_tool(1),list_tools(0),get_tool_status(0)  # Base class for IDE integrations...
-    ClaudeCodeHelper(IDEHelper): __init__(0),setup_environment(0),fix_file(4),chat(3),batch_fix(3)  # Helper for Claude Code (anthropic-curl) integration...
-    AiderHelper(IDEHelper): __init__(0),fix_file(4)  # Helper for Aider integration...
-    VSCodeHelper(IDEHelper): __init__(0),open_file(2),install_extensions(1),recommended_extensions(0)  # Helper for VS Code integration...
-    EditorIntegration: __init__(0),detect_editor(0),setup_best_integration(0),get_quick_fix_command(3)  # High-level editor integration manager...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/feedback.py:
-    e: FailureStrategy,FeedbackPolicy,FeedbackController,FeedbackLoop
-    FailureStrategy(Enum):
-    FeedbackPolicy: __post_init__(0)  # Policy configuration for feedback handling...
-    FeedbackController: __init__(1),on_validation_failure(3),on_success(2),needs_approval(1),_extract_feedback(1)  # Orchestrate retry/replan/escalate decisions...
-    FeedbackLoop: __init__(3),execute_with_feedback(2),_execute_single(2),_validate_result(1),_mark_ticket_done(3),_mark_ticket_skipped(2)  # Integrates feedback controller into the pipeline execution...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/project/autofix.py:
-    e: AutoFixMixin
-    AutoFixMixin: __init__(1),fix_issues(3),fix_issue(2),list_todo_tasks(0),sync(0)  # AutoFix integration functionality for Project...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/project/batch.py:
-    e: BatchMixin
-    BatchMixin: __init__(2),batch_analyze(4),create_batch_processor(3)  # Batch processing functionality for Project...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/config.py:
-    e: ConfigManager
-    ConfigManager: __init__(1),_ensure_dir(1),_backup_file(1),install_config(3),generate_continue_config(3),install_continue_config(2),generate_vscode_settings(2),install_vscode_settings(2),generate_env_file(2),generate_docker_compose(2),setup_project_configs(2),list_configs(1)  # Manages configuration files for various IDEs and tools...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/ide.py:
-    e: IDETool,IDEHelper,ClaudeCodeHelper,AiderHelper,VSCodeHelper,EditorIntegration
-    IDETool: __post_init__(0)  # IDE tool configuration...
-    IDEHelper: __init__(0),_register_default_tools(0),check_tool(1),setup_tool(1),list_tools(0),get_tool_status(0)  # Base class for IDE integrations...
-    ClaudeCodeHelper(IDEHelper): __init__(0),setup_environment(0),fix_file(4),chat(3),batch_fix(3)  # Helper for Claude Code (anthropic-curl) integration...
-    AiderHelper(IDEHelper): __init__(0),fix_file(4)  # Helper for Aider integration...
-    VSCodeHelper(IDEHelper): __init__(0),open_file(2),install_extensions(1),recommended_extensions(0)  # Helper for VS Code integration...
-    EditorIntegration: __init__(0),detect_editor(0),setup_best_integration(0),get_quick_fix_command(3)  # High-level editor integration manager...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/project/autofix.py:
-    e: AutoFixMixin
-    AutoFixMixin: __init__(1),fix_issues(3),fix_issue(2),list_todo_tasks(0),sync(0)  # AutoFix integration functionality for Project...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/feedback.py:
-    e: FailureStrategy,FeedbackPolicy,FeedbackController,FeedbackLoop
-    FailureStrategy(Enum):
-    FeedbackPolicy: __post_init__(0)  # Policy configuration for feedback handling...
-    FeedbackController: __init__(1),on_validation_failure(3),on_success(2),needs_approval(1),_extract_feedback(1)  # Orchestrate retry/replan/escalate decisions...
-    FeedbackLoop: __init__(3),execute_with_feedback(2),_execute_single(2),_validate_result(1),_mark_ticket_done(3),_mark_ticket_skipped(2)  # Integrates feedback controller into the pipeline execution...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/project/batch.py:
-    e: BatchMixin
-    BatchMixin: __init__(2),batch_analyze(4),create_batch_processor(3)  # Batch processing functionality for Project...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/config.py:
-    e: ConfigManager
-    ConfigManager: __init__(1),_ensure_dir(1),_backup_file(1),install_config(3),generate_continue_config(3),install_continue_config(2),generate_vscode_settings(2),install_vscode_settings(2),generate_env_file(2),generate_docker_compose(2),setup_project_configs(2),list_configs(1)  # Manages configuration files for various IDEs and tools...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/ide.py:
-    e: IDETool,IDEHelper,ClaudeCodeHelper,AiderHelper,VSCodeHelper,EditorIntegration
-    IDETool: __post_init__(0)  # IDE tool configuration...
-    IDEHelper: __init__(0),_register_default_tools(0),check_tool(1),setup_tool(1),list_tools(0),get_tool_status(0)  # Base class for IDE integrations...
-    ClaudeCodeHelper(IDEHelper): __init__(0),setup_environment(0),fix_file(4),chat(3),batch_fix(3)  # Helper for Claude Code (anthropic-curl) integration...
-    AiderHelper(IDEHelper): __init__(0),fix_file(4)  # Helper for Aider integration...
-    VSCodeHelper(IDEHelper): __init__(0),open_file(2),install_extensions(1),recommended_extensions(0)  # Helper for VS Code integration...
-    EditorIntegration: __init__(0),detect_editor(0),setup_best_integration(0),get_quick_fix_command(3)  # High-level editor integration manager...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/feedback.py:
-    e: FailureStrategy,FeedbackPolicy,FeedbackController,FeedbackLoop
-    FailureStrategy(Enum):
-    FeedbackPolicy: __post_init__(0)  # Policy configuration for feedback handling...
-    FeedbackController: __init__(1),on_validation_failure(3),on_success(2),needs_approval(1),_extract_feedback(1)  # Orchestrate retry/replan/escalate decisions...
-    FeedbackLoop: __init__(3),execute_with_feedback(2),_execute_single(2),_validate_result(1),_mark_ticket_done(3),_mark_ticket_skipped(2)  # Integrates feedback controller into the pipeline execution...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/project/autofix.py:
-    e: AutoFixMixin
-    AutoFixMixin: __init__(1),fix_issues(3),fix_issue(2),list_todo_tasks(0),sync(0)  # AutoFix integration functionality for Project...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/project/batch.py:
-    e: BatchMixin
-    BatchMixin: __init__(2),batch_analyze(4),create_batch_processor(3)  # Batch processing functionality for Project...
+  src/algitex/todo/fixer.py:
+    e: TodoTask,FixResult,parse_todo,_categorize,fix_unused_import,fix_fstring,fix_return_type,fix_file,_parse_and_filter_tasks,_group_tasks_by_file,_print_category_stats,_execute_parallel_fixes,_print_summary,parallel_fix
+    TodoTask:  # Single TODO task...
+    FixResult:  # Result of fixing a file...
+    parse_todo(todo_path)
+    _categorize(message)
+    fix_unused_import(path;task)
+    fix_fstring(path;task)
+    fix_return_type(path;task)
+    fix_file(file_path;tasks;dry_run)
+    _parse_and_filter_tasks(todo_path;category_filter)
+    _group_tasks_by_file(tasks)
+    _print_category_stats(tasks)
+    _execute_parallel_fixes(by_file;workers;dry_run)
+    _print_summary(total_fixed;total_skipped;total_errors;dry_run)
+    parallel_fix(todo_path;workers;dry_run;category_filter)
   docker/planfile-mcp/planfile_mcp_server.py:
     e: _load_tickets,_save_tickets,planfile_create_ticket,planfile_list_tickets,planfile_update_ticket,planfile_create_tickets_bulk,planfile_sprint_status,planfile_sync,create_rest_api,run_rest_server
     _load_tickets()
@@ -965,105 +304,6 @@ D:
     BatchStats: update(1)  # Statistics for batch processing...
     BatchProcessor: __init__(9),_rate_limit(0),_process_item(2),process(2),_prepare(1),_execute(2),_collect(1),_setup_progress_bar(1),_collect_results(3),_get_start_time(0),_print_summary(1),_save_results(0),get_successful(0),get_failed(0),filter_by_error(1)  # Generic batch processor with rate limiting and retries...
     FileBatchProcessor(BatchProcessor): __init__(4),find_files(3),process_directory(2)  # Specialized batch processor for files...
-  my-app/my-app/.algitex/worktrees/agent-0/docker/planfile-mcp/planfile_mcp_server.py:
-    e: _load_tickets,_save_tickets,planfile_create_ticket,planfile_list_tickets,planfile_update_ticket,planfile_create_tickets_bulk,planfile_sprint_status,planfile_sync,create_rest_api,run_rest_server
-    _load_tickets()
-    _save_tickets()
-    planfile_create_ticket(title;description;priority;tags)
-    planfile_list_tickets(status;priority)
-    planfile_update_ticket(ticket_id;status;resolution)
-    planfile_create_tickets_bulk(tickets)
-    planfile_sprint_status()
-    planfile_sync()
-    create_rest_api()
-    run_rest_server()
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/todo_parser.py:
-    e: Task,TodoParser
-    Task: to_dict(0)  # Single todo task extracted from file...
-    TodoParser: __init__(1),parse(0),_parse_prefact(1),_parse_github(1),_parse_generic(1),_extract_location(1),get_stats(0)  # Parse todo lists from Markdown and text files...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/analysis.py:
-    e: HealthReport,Analyzer,CLIResult,_run_cli
-    HealthReport: summary(0)  # Combined analysis result from all tools...
-    Analyzer: __init__(1),health(0),full(0),_run_code2llm(1),_run_vallm(1),_run_redup(1)  # Unified interface for code analysis tools...
-    CLIResult:
-    _run_cli(cmd;cwd)
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/context.py:
-    e: CodeContext,ContextBuilder,SemanticCache
-    CodeContext: to_prompt(1)  # Assembled context for an LLM coding task...
-    ContextBuilder: __init__(1),build(2),_load_toon_summary(0),_load_architecture(0),_resolve_targets(1),_find_related(1),_load_conventions(0),_git_recent(0),_format_ticket(1)  # Build rich context for LLM coding tasks from .toon files + g...
-    SemanticCache: __init__(2),_get_client(0),search_similar_context(2),store_context(3)  # Optional semantic caching using Qdrant for context retrieval...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/batch.py:
-    e: BatchResult,BatchStats,BatchProcessor,FileBatchProcessor
-    BatchResult: to_dict(0)  # Result from batch processing...
-    BatchStats: update(1)  # Statistics for batch processing...
-    BatchProcessor: __init__(9),_rate_limit(0),_process_item(2),process(2),_prepare(1),_execute(2),_collect(1),_setup_progress_bar(1),_collect_results(3),_get_start_time(0),_print_summary(1),_save_results(0),get_successful(0),get_failed(0),filter_by_error(1)  # Generic batch processor with rate limiting and retries...
-    FileBatchProcessor(BatchProcessor): __init__(4),find_files(3),process_directory(2)  # Specialized batch processor for files...
-  my-app/my-app/.algitex/worktrees/agent-2/docker/planfile-mcp/planfile_mcp_server.py:
-    e: _load_tickets,_save_tickets,planfile_create_ticket,planfile_list_tickets,planfile_update_ticket,planfile_create_tickets_bulk,planfile_sprint_status,planfile_sync,create_rest_api,run_rest_server
-    _load_tickets()
-    _save_tickets()
-    planfile_create_ticket(title;description;priority;tags)
-    planfile_list_tickets(status;priority)
-    planfile_update_ticket(ticket_id;status;resolution)
-    planfile_create_tickets_bulk(tickets)
-    planfile_sprint_status()
-    planfile_sync()
-    create_rest_api()
-    run_rest_server()
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/todo_parser.py:
-    e: Task,TodoParser
-    Task: to_dict(0)  # Single todo task extracted from file...
-    TodoParser: __init__(1),parse(0),_parse_prefact(1),_parse_github(1),_parse_generic(1),_extract_location(1),get_stats(0)  # Parse todo lists from Markdown and text files...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/analysis.py:
-    e: HealthReport,Analyzer,CLIResult,_run_cli
-    HealthReport: summary(0)  # Combined analysis result from all tools...
-    Analyzer: __init__(1),health(0),full(0),_run_code2llm(1),_run_vallm(1),_run_redup(1)  # Unified interface for code analysis tools...
-    CLIResult:
-    _run_cli(cmd;cwd)
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/context.py:
-    e: CodeContext,ContextBuilder,SemanticCache
-    CodeContext: to_prompt(1)  # Assembled context for an LLM coding task...
-    ContextBuilder: __init__(1),build(2),_load_toon_summary(0),_load_architecture(0),_resolve_targets(1),_find_related(1),_load_conventions(0),_git_recent(0),_format_ticket(1)  # Build rich context for LLM coding tasks from .toon files + g...
-    SemanticCache: __init__(2),_get_client(0),search_similar_context(2),store_context(3)  # Optional semantic caching using Qdrant for context retrieval...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/batch.py:
-    e: BatchResult,BatchStats,BatchProcessor,FileBatchProcessor
-    BatchResult: to_dict(0)  # Result from batch processing...
-    BatchStats: update(1)  # Statistics for batch processing...
-    BatchProcessor: __init__(9),_rate_limit(0),_process_item(2),process(2),_prepare(1),_execute(2),_collect(1),_setup_progress_bar(1),_collect_results(3),_get_start_time(0),_print_summary(1),_save_results(0),get_successful(0),get_failed(0),filter_by_error(1)  # Generic batch processor with rate limiting and retries...
-    FileBatchProcessor(BatchProcessor): __init__(4),find_files(3),process_directory(2)  # Specialized batch processor for files...
-  my-app/my-app/.algitex/worktrees/agent-1/docker/planfile-mcp/planfile_mcp_server.py:
-    e: _load_tickets,_save_tickets,planfile_create_ticket,planfile_list_tickets,planfile_update_ticket,planfile_create_tickets_bulk,planfile_sprint_status,planfile_sync,create_rest_api,run_rest_server
-    _load_tickets()
-    _save_tickets()
-    planfile_create_ticket(title;description;priority;tags)
-    planfile_list_tickets(status;priority)
-    planfile_update_ticket(ticket_id;status;resolution)
-    planfile_create_tickets_bulk(tickets)
-    planfile_sprint_status()
-    planfile_sync()
-    create_rest_api()
-    run_rest_server()
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/todo_parser.py:
-    e: Task,TodoParser
-    Task: to_dict(0)  # Single todo task extracted from file...
-    TodoParser: __init__(1),parse(0),_parse_prefact(1),_parse_github(1),_parse_generic(1),_extract_location(1),get_stats(0)  # Parse todo lists from Markdown and text files...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/analysis.py:
-    e: HealthReport,Analyzer,CLIResult,_run_cli
-    HealthReport: summary(0)  # Combined analysis result from all tools...
-    Analyzer: __init__(1),health(0),full(0),_run_code2llm(1),_run_vallm(1),_run_redup(1)  # Unified interface for code analysis tools...
-    CLIResult:
-    _run_cli(cmd;cwd)
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/context.py:
-    e: CodeContext,ContextBuilder,SemanticCache
-    CodeContext: to_prompt(1)  # Assembled context for an LLM coding task...
-    ContextBuilder: __init__(1),build(2),_load_toon_summary(0),_load_architecture(0),_resolve_targets(1),_find_related(1),_load_conventions(0),_git_recent(0),_format_ticket(1)  # Build rich context for LLM coding tasks from .toon files + g...
-    SemanticCache: __init__(2),_get_client(0),search_similar_context(2),store_context(3)  # Optional semantic caching using Qdrant for context retrieval...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/batch.py:
-    e: BatchResult,BatchStats,BatchProcessor,FileBatchProcessor
-    BatchResult: to_dict(0)  # Result from batch processing...
-    BatchStats: update(1)  # Statistics for batch processing...
-    BatchProcessor: __init__(9),_rate_limit(0),_process_item(2),process(2),_prepare(1),_execute(2),_collect(1),_setup_progress_bar(1),_collect_results(3),_get_start_time(0),_print_summary(1),_save_results(0),get_successful(0),get_failed(0),filter_by_error(1)  # Generic batch processor with rate limiting and retries...
-    FileBatchProcessor(BatchProcessor): __init__(4),find_files(3),process_directory(2)  # Specialized batch processor for files...
   docker/proxym/proxym_server.py:
     e: ProxymServer
     ProxymServer: __init__(0),create_fastapi_app(0),_call_anthropic(2),_call_openai(2),_mock_response(2),_track_cost(2),run(0)  # LLM proxy with budget tracking...
@@ -1073,36 +313,17 @@ D:
     Workspace: __init__(1),_load_config(0),_validate_dependencies(0),_topo_sort(0),clone_all(1),pull_all(0),analyze_all(1),plan_all(1),execute_all(2),validate_all(0),status(0),get_dependency_graph(0),find_repos_by_tag(1),get_execution_plan(0)  # Manage multiple repos as a single workspace...
     create_workspace_template(name;repos)
     init_workspace(name;config_path)
+  src/algitex/todo/benchmark.py:
+    e: BenchmarkResult,_benchmark_single,benchmark_sequential,benchmark_parallel,benchmark_fix,compare_modes
+    BenchmarkResult: print_report(1)  # Benchmark results for fix operations...
+    _benchmark_single(task;dry_run)
+    benchmark_sequential(tasks;dry_run)
+    benchmark_parallel(tasks;workers;dry_run)
+    benchmark_fix(todo_path;limit;workers;dry_run;mode)
+    compare_modes(todo_path;limit;workers;dry_run)
   src/algitex/tools/parallel/executor.py:
     e: ParallelExecutor
     ParallelExecutor: __init__(2),execute(2),_create_worktree(1),_run_agent(4),_merge_all(1),_detect_line_drift(1),_resolve_conflict(1),_changes_are_disjoint(2),_parse_diff_ranges(1),_cleanup_worktrees(0)  # Execute tickets in parallel using git worktrees + region loc...
-  my-app/my-app/.algitex/worktrees/agent-0/docker/proxym/proxym_server.py:
-    e: ProxymServer
-    ProxymServer: __init__(0),create_fastapi_app(0),_call_anthropic(2),_call_openai(2),_mock_response(2),_track_cost(2),run(0)  # LLM proxy with budget tracking...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/workspace.py:
-    e: RepoConfig,Workspace,create_workspace_template,init_workspace
-    RepoConfig: __post_init__(0)  # Configuration for a single repository in the workspace...
-    Workspace: __init__(1),_load_config(0),_validate_dependencies(0),_topo_sort(0),clone_all(1),pull_all(0),analyze_all(1),plan_all(1),execute_all(2),validate_all(0),status(0),get_dependency_graph(0),find_repos_by_tag(1),get_execution_plan(0)  # Manage multiple repos as a single workspace...
-    create_workspace_template(name;repos)
-    init_workspace(name;config_path)
-  my-app/my-app/.algitex/worktrees/agent-2/docker/proxym/proxym_server.py:
-    e: ProxymServer
-    ProxymServer: __init__(0),create_fastapi_app(0),_call_anthropic(2),_call_openai(2),_mock_response(2),_track_cost(2),run(0)  # LLM proxy with budget tracking...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/workspace.py:
-    e: RepoConfig,Workspace,create_workspace_template,init_workspace
-    RepoConfig: __post_init__(0)  # Configuration for a single repository in the workspace...
-    Workspace: __init__(1),_load_config(0),_validate_dependencies(0),_topo_sort(0),clone_all(1),pull_all(0),analyze_all(1),plan_all(1),execute_all(2),validate_all(0),status(0),get_dependency_graph(0),find_repos_by_tag(1),get_execution_plan(0)  # Manage multiple repos as a single workspace...
-    create_workspace_template(name;repos)
-    init_workspace(name;config_path)
-  my-app/my-app/.algitex/worktrees/agent-1/docker/proxym/proxym_server.py:
-    e: ProxymServer
-    ProxymServer: __init__(0),create_fastapi_app(0),_call_anthropic(2),_call_openai(2),_mock_response(2),_track_cost(2),run(0)  # LLM proxy with budget tracking...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/workspace.py:
-    e: RepoConfig,Workspace,create_workspace_template,init_workspace
-    RepoConfig: __post_init__(0)  # Configuration for a single repository in the workspace...
-    Workspace: __init__(1),_load_config(0),_validate_dependencies(0),_topo_sort(0),clone_all(1),pull_all(0),analyze_all(1),plan_all(1),execute_all(2),validate_all(0),status(0),get_dependency_graph(0),find_repos_by_tag(1),get_execution_plan(0)  # Manage multiple repos as a single workspace...
-    create_workspace_template(name;repos)
-    init_workspace(name;config_path)
   src/algitex/tools/cicd.py:
     e: CICDGenerator,init_ci_cd,create_quality_gate_config
     CICDGenerator: __init__(1),_load_config(0),generate_github_actions(1),generate_gitlab_ci(1),_get_complexity_check(0),generate_dockerfile(1),generate_precommit_config(1),generate_all(4),update_config(1)  # Generate CI/CD pipelines for algitex projects...
@@ -1113,63 +334,6 @@ D:
     Ticket: to_dict(0)  # A single work item...
     Tickets: __init__(2),add(1),from_analysis(1),list(1),update(1),sync(0),board(0),_load(0),_save(0),_planfile_add(1)  # Manage project tickets via planfile or local YAML...
   src/algitex/cli/core.py:
-    e: init,analyze,plan,go,status,tools,ask,sync
-    init(path)
-    analyze(path;quick)
-    plan(path;sprints;focus)
-    go(path;dry_run)
-    status(path)
-    tools()
-    ask(prompt;tier)
-    sync()
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/cicd.py:
-    e: CICDGenerator,init_ci_cd,create_quality_gate_config
-    CICDGenerator: __init__(1),_load_config(0),generate_github_actions(1),generate_gitlab_ci(1),_get_complexity_check(0),generate_dockerfile(1),generate_precommit_config(1),generate_all(4),update_config(1)  # Generate CI/CD pipelines for algitex projects...
-    init_ci_cd(project_path;platform)
-    create_quality_gate_config(max_cc;require_tests;security_scan)
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/tickets.py:
-    e: Ticket,Tickets
-    Ticket: to_dict(0)  # A single work item...
-    Tickets: __init__(2),add(1),from_analysis(1),list(1),update(1),sync(0),board(0),_load(0),_save(0),_planfile_add(1)  # Manage project tickets via planfile or local YAML...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/cli/core.py:
-    e: init,analyze,plan,go,status,tools,ask,sync
-    init(path)
-    analyze(path;quick)
-    plan(path;sprints;focus)
-    go(path;dry_run)
-    status(path)
-    tools()
-    ask(prompt;tier)
-    sync()
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/cicd.py:
-    e: CICDGenerator,init_ci_cd,create_quality_gate_config
-    CICDGenerator: __init__(1),_load_config(0),generate_github_actions(1),generate_gitlab_ci(1),_get_complexity_check(0),generate_dockerfile(1),generate_precommit_config(1),generate_all(4),update_config(1)  # Generate CI/CD pipelines for algitex projects...
-    init_ci_cd(project_path;platform)
-    create_quality_gate_config(max_cc;require_tests;security_scan)
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/tickets.py:
-    e: Ticket,Tickets
-    Ticket: to_dict(0)  # A single work item...
-    Tickets: __init__(2),add(1),from_analysis(1),list(1),update(1),sync(0),board(0),_load(0),_save(0),_planfile_add(1)  # Manage project tickets via planfile or local YAML...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/cli/core.py:
-    e: init,analyze,plan,go,status,tools,ask,sync
-    init(path)
-    analyze(path;quick)
-    plan(path;sprints;focus)
-    go(path;dry_run)
-    status(path)
-    tools()
-    ask(prompt;tier)
-    sync()
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/cicd.py:
-    e: CICDGenerator,init_ci_cd,create_quality_gate_config
-    CICDGenerator: __init__(1),_load_config(0),generate_github_actions(1),generate_gitlab_ci(1),_get_complexity_check(0),generate_dockerfile(1),generate_precommit_config(1),generate_all(4),update_config(1)  # Generate CI/CD pipelines for algitex projects...
-    init_ci_cd(project_path;platform)
-    create_quality_gate_config(max_cc;require_tests;security_scan)
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/tickets.py:
-    e: Ticket,Tickets
-    Ticket: to_dict(0)  # A single work item...
-    Tickets: __init__(2),add(1),from_analysis(1),list(1),update(1),sync(0),board(0),_load(0),_save(0),_planfile_add(1)  # Manage project tickets via planfile or local YAML...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/cli/core.py:
     e: init,analyze,plan,go,status,tools,ask,sync
     init(path)
     analyze(path;quick)
@@ -1194,83 +358,14 @@ D:
     ticket_add(title;priority;type)
     ticket_list(status)
     ticket_board()
-  src/algitex/tools/autofix/ollama_backend.py:
-    e: OllamaBackend
-    OllamaBackend: __init__(2),fix(1),_ensure_model(0),_apply_fix(2),_success_result(3),_error_result(3)  # Fix issues using Ollama local models...
   src/algitex/workflows/__init__.py:
     e: Pipeline,TicketExecutor,TicketValidator
     Pipeline: __init__(2),analyze(1),create_tickets(0),execute(2),validate(0),sync(1),report(0),finish(0)  # Composable workflow: chain steps fluently...
     TicketExecutor: __init__(5),execute_tickets(2),_get_open_tickets(1),_execute_single_ticket(2),_call_tool_with_context(3),_validate_with_vallm(2),_mark_ticket_done(3),_build_fix_prompt(1)  # Handles ticket execution with Docker tools, telemetry, conte...
     TicketValidator: __init__(1),validate_all(0),_run_security_scan(0)  # Multi-level validation: static analysis, runtime tests, secu...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/__init__.py:
-    e: ToolStatus,discover_tools,require_tool,get_tool_module
-    ToolStatus: __str__(0)
-    discover_tools()
-    require_tool(name)
-    get_tool_module(name)
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/telemetry.py:
-    e: TraceSpan,Telemetry
-    TraceSpan: finish(1),__enter__(0),__exit__(3)  # Single operation span...
-    Telemetry: __init__(2),span(2),summary(0),push_to_langfuse(0),save(1),report(0)  # Track costs, tokens, time across an algitex pipeline run...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/cli/ticket.py:
-    e: ticket_add,ticket_list,ticket_board
-    ticket_add(title;priority;type)
-    ticket_list(status)
-    ticket_board()
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/workflows/__init__.py:
-    e: Pipeline,TicketExecutor,TicketValidator
-    Pipeline: __init__(2),analyze(1),create_tickets(0),execute(2),validate(0),sync(1),report(0),finish(0)  # Composable workflow: chain steps fluently...
-    TicketExecutor: __init__(5),execute_tickets(2),_get_open_tickets(1),_execute_single_ticket(2),_call_tool_with_context(3),_validate_with_vallm(2),_mark_ticket_done(3),_build_fix_prompt(1)  # Handles ticket execution with Docker tools, telemetry, conte...
-    TicketValidator: __init__(1),validate_all(0),_run_security_scan(0)  # Multi-level validation: static analysis, runtime tests, secu...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/autofix/ollama_backend.py:
+  src/algitex/tools/autofix/ollama_backend.py:
     e: OllamaBackend
     OllamaBackend: __init__(2),fix(1),_ensure_model(0),_apply_fix(2),_success_result(3),_error_result(3)  # Fix issues using Ollama local models...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/__init__.py:
-    e: ToolStatus,discover_tools,require_tool,get_tool_module
-    ToolStatus: __str__(0)
-    discover_tools()
-    require_tool(name)
-    get_tool_module(name)
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/telemetry.py:
-    e: TraceSpan,Telemetry
-    TraceSpan: finish(1),__enter__(0),__exit__(3)  # Single operation span...
-    Telemetry: __init__(2),span(2),summary(0),push_to_langfuse(0),save(1),report(0)  # Track costs, tokens, time across an algitex pipeline run...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/cli/ticket.py:
-    e: ticket_add,ticket_list,ticket_board
-    ticket_add(title;priority;type)
-    ticket_list(status)
-    ticket_board()
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/workflows/__init__.py:
-    e: Pipeline,TicketExecutor,TicketValidator
-    Pipeline: __init__(2),analyze(1),create_tickets(0),execute(2),validate(0),sync(1),report(0),finish(0)  # Composable workflow: chain steps fluently...
-    TicketExecutor: __init__(5),execute_tickets(2),_get_open_tickets(1),_execute_single_ticket(2),_call_tool_with_context(3),_validate_with_vallm(2),_mark_ticket_done(3),_build_fix_prompt(1)  # Handles ticket execution with Docker tools, telemetry, conte...
-    TicketValidator: __init__(1),validate_all(0),_run_security_scan(0)  # Multi-level validation: static analysis, runtime tests, secu...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/autofix/ollama_backend.py:
-    e: OllamaBackend
-    OllamaBackend: __init__(2),fix(1),_ensure_model(0),_apply_fix(2),_success_result(3),_error_result(3)  # Fix issues using Ollama local models...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/__init__.py:
-    e: ToolStatus,discover_tools,require_tool,get_tool_module
-    ToolStatus: __str__(0)
-    discover_tools()
-    require_tool(name)
-    get_tool_module(name)
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/telemetry.py:
-    e: TraceSpan,Telemetry
-    TraceSpan: finish(1),__enter__(0),__exit__(3)  # Single operation span...
-    Telemetry: __init__(2),span(2),summary(0),push_to_langfuse(0),save(1),report(0)  # Track costs, tokens, time across an algitex pipeline run...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/cli/ticket.py:
-    e: ticket_add,ticket_list,ticket_board
-    ticket_add(title;priority;type)
-    ticket_list(status)
-    ticket_board()
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/autofix/ollama_backend.py:
-    e: OllamaBackend
-    OllamaBackend: __init__(2),fix(1),_ensure_model(0),_apply_fix(2),_success_result(3),_error_result(3)  # Fix issues using Ollama local models...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/workflows/__init__.py:
-    e: Pipeline,TicketExecutor,TicketValidator
-    Pipeline: __init__(2),analyze(1),create_tickets(0),execute(2),validate(0),sync(1),report(0),finish(0)  # Composable workflow: chain steps fluently...
-    TicketExecutor: __init__(5),execute_tickets(2),_get_open_tickets(1),_execute_single_ticket(2),_call_tool_with_context(3),_validate_with_vallm(2),_mark_ticket_done(3),_build_fix_prompt(1)  # Handles ticket execution with Docker tools, telemetry, conte...
-    TicketValidator: __init__(1),validate_all(0),_run_security_scan(0)  # Multi-level validation: static analysis, runtime tests, secu...
   src/algitex/cli/docker.py:
     e: docker_list,docker_spawn,docker_call,docker_teardown,docker_caps
     docker_list()
@@ -1278,89 +373,20 @@ D:
     docker_call(tool_name;action;input_json)
     docker_teardown(tool_name)
     docker_caps(tool_name)
-  src/algitex/cli/workflow.py:
-    e: workflow_run,workflow_validate
-    workflow_run(path;dry_run)
-    workflow_validate(path)
   src/algitex/cli/algo.py:
     e: algo_discover,algo_extract,algo_rules,algo_report
     algo_discover(path)
     algo_extract(path;min_freq)
     algo_rules(path;no_llm)
     algo_report(path)
+  src/algitex/cli/workflow.py:
+    e: workflow_run,workflow_validate
+    workflow_run(path;dry_run)
+    workflow_validate(path)
   src/algitex/tools/autofix/aider_backend.py:
     e: AiderBackend
     AiderBackend: __init__(1),fix(1),_validate_task(2),_ensure_git_repo(0),_build_command(1),_build_prompt(1),_execute_aider(2),_process_result(3),_dry_run_result(2),_timeout_result(2),_error_result(3)  # Fix issues using Aider CLI...
   src/algitex/tools/autofix/proxy_backend.py:
-    e: ProxyBackend
-    ProxyBackend: __init__(2),fix(1),_validate(2),_execute_fix(2),_read_file(1),_build_prompt(2),_call_api(1),_extract_code(1),_write_file(2),_success_result(2),_dry_run_result(2),_error_result(3)  # Fix issues using LiteLLM proxy...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/cli/docker.py:
-    e: docker_list,docker_spawn,docker_call,docker_teardown,docker_caps
-    docker_list()
-    docker_spawn(tool_name)
-    docker_call(tool_name;action;input_json)
-    docker_teardown(tool_name)
-    docker_caps(tool_name)
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/cli/algo.py:
-    e: algo_discover,algo_extract,algo_rules,algo_report
-    algo_discover(path)
-    algo_extract(path;min_freq)
-    algo_rules(path;no_llm)
-    algo_report(path)
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/cli/workflow.py:
-    e: workflow_run,workflow_validate
-    workflow_run(path;dry_run)
-    workflow_validate(path)
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/autofix/aider_backend.py:
-    e: AiderBackend
-    AiderBackend: __init__(1),fix(1),_validate_task(2),_ensure_git_repo(0),_build_command(1),_build_prompt(1),_execute_aider(2),_process_result(3),_dry_run_result(2),_timeout_result(2),_error_result(3)  # Fix issues using Aider CLI...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/autofix/proxy_backend.py:
-    e: ProxyBackend
-    ProxyBackend: __init__(2),fix(1),_validate(2),_execute_fix(2),_read_file(1),_build_prompt(2),_call_api(1),_extract_code(1),_write_file(2),_success_result(2),_dry_run_result(2),_error_result(3)  # Fix issues using LiteLLM proxy...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/cli/docker.py:
-    e: docker_list,docker_spawn,docker_call,docker_teardown,docker_caps
-    docker_list()
-    docker_spawn(tool_name)
-    docker_call(tool_name;action;input_json)
-    docker_teardown(tool_name)
-    docker_caps(tool_name)
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/cli/algo.py:
-    e: algo_discover,algo_extract,algo_rules,algo_report
-    algo_discover(path)
-    algo_extract(path;min_freq)
-    algo_rules(path;no_llm)
-    algo_report(path)
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/cli/workflow.py:
-    e: workflow_run,workflow_validate
-    workflow_run(path;dry_run)
-    workflow_validate(path)
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/autofix/aider_backend.py:
-    e: AiderBackend
-    AiderBackend: __init__(1),fix(1),_validate_task(2),_ensure_git_repo(0),_build_command(1),_build_prompt(1),_execute_aider(2),_process_result(3),_dry_run_result(2),_timeout_result(2),_error_result(3)  # Fix issues using Aider CLI...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/autofix/proxy_backend.py:
-    e: ProxyBackend
-    ProxyBackend: __init__(2),fix(1),_validate(2),_execute_fix(2),_read_file(1),_build_prompt(2),_call_api(1),_extract_code(1),_write_file(2),_success_result(2),_dry_run_result(2),_error_result(3)  # Fix issues using LiteLLM proxy...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/cli/docker.py:
-    e: docker_list,docker_spawn,docker_call,docker_teardown,docker_caps
-    docker_list()
-    docker_spawn(tool_name)
-    docker_call(tool_name;action;input_json)
-    docker_teardown(tool_name)
-    docker_caps(tool_name)
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/cli/algo.py:
-    e: algo_discover,algo_extract,algo_rules,algo_report
-    algo_discover(path)
-    algo_extract(path;min_freq)
-    algo_rules(path;no_llm)
-    algo_report(path)
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/cli/workflow.py:
-    e: workflow_run,workflow_validate
-    workflow_run(path;dry_run)
-    workflow_validate(path)
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/autofix/aider_backend.py:
-    e: AiderBackend
-    AiderBackend: __init__(1),fix(1),_validate_task(2),_ensure_git_repo(0),_build_command(1),_build_prompt(1),_execute_aider(2),_process_result(3),_dry_run_result(2),_timeout_result(2),_error_result(3)  # Fix issues using Aider CLI...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/autofix/proxy_backend.py:
     e: ProxyBackend
     ProxyBackend: __init__(2),fix(1),_validate(2),_execute_fix(2),_read_file(1),_build_prompt(2),_call_api(1),_extract_code(1),_write_file(2),_success_result(2),_dry_run_result(2),_error_result(3)  # Fix issues using LiteLLM proxy...
   docker/aider-mcp/aider_mcp_server.py:
@@ -1385,75 +411,12 @@ D:
   src/algitex/project/benchmark.py:
     e: BenchmarkMixin
     BenchmarkMixin: __init__(1),benchmark_models(2),add_benchmark_task(4),print_benchmark_results(2)  # Model benchmarking functionality for Project...
-  my-app/my-app/.algitex/worktrees/agent-0/docker/aider-mcp/aider_mcp_server.py:
-    e: aider_ai_code,aider_list_models,aider_chat,create_rest_api,run_rest_server
-    aider_ai_code(prompt;relative_editable_files;model)
-    aider_list_models()
-    aider_chat(message;context)
-    create_rest_api()
-    run_rest_server()
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/project/config.py:
-    e: ConfigMixin
-    ConfigMixin: __init__(0),setup_configs(1),install_continue_config(1),install_vscode_settings(0),generate_env_file(1)  # Configuration management functionality for Project...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/project/mcp.py:
-    e: MCPMixin
-    MCPMixin: __init__(0),start_mcp_services(1),stop_mcp_services(0),restart_mcp_service(1),wait_for_mcp_ready(1),get_mcp_status(0),print_mcp_status(0),generate_mcp_config(0)  # MCP service orchestration functionality for Project...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/project/ollama.py:
-    e: OllamaMixin
-    OllamaMixin: __init__(0),check_ollama(0),list_ollama_models(0),pull_ollama_model(1),generate_with_ollama(3)  # Ollama integration functionality for Project...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/project/services.py:
-    e: ServiceMixin
-    ServiceMixin: __init__(0),check_services(1),print_service_status(1),ensure_service(2)  # Service management functionality for Project...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/project/benchmark.py:
-    e: BenchmarkMixin
-    BenchmarkMixin: __init__(1),benchmark_models(2),add_benchmark_task(4),print_benchmark_results(2)  # Model benchmarking functionality for Project...
-  my-app/my-app/.algitex/worktrees/agent-2/docker/aider-mcp/aider_mcp_server.py:
-    e: aider_ai_code,aider_list_models,aider_chat,create_rest_api,run_rest_server
-    aider_ai_code(prompt;relative_editable_files;model)
-    aider_list_models()
-    aider_chat(message;context)
-    create_rest_api()
-    run_rest_server()
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/project/config.py:
-    e: ConfigMixin
-    ConfigMixin: __init__(0),setup_configs(1),install_continue_config(1),install_vscode_settings(0),generate_env_file(1)  # Configuration management functionality for Project...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/project/mcp.py:
-    e: MCPMixin
-    MCPMixin: __init__(0),start_mcp_services(1),stop_mcp_services(0),restart_mcp_service(1),wait_for_mcp_ready(1),get_mcp_status(0),print_mcp_status(0),generate_mcp_config(0)  # MCP service orchestration functionality for Project...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/project/ollama.py:
-    e: OllamaMixin
-    OllamaMixin: __init__(0),check_ollama(0),list_ollama_models(0),pull_ollama_model(1),generate_with_ollama(3)  # Ollama integration functionality for Project...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/project/services.py:
-    e: ServiceMixin
-    ServiceMixin: __init__(0),check_services(1),print_service_status(1),ensure_service(2)  # Service management functionality for Project...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/project/benchmark.py:
-    e: BenchmarkMixin
-    BenchmarkMixin: __init__(1),benchmark_models(2),add_benchmark_task(4),print_benchmark_results(2)  # Model benchmarking functionality for Project...
-  my-app/my-app/.algitex/worktrees/agent-1/docker/aider-mcp/aider_mcp_server.py:
-    e: aider_ai_code,aider_list_models,aider_chat,create_rest_api,run_rest_server
-    aider_ai_code(prompt;relative_editable_files;model)
-    aider_list_models()
-    aider_chat(message;context)
-    create_rest_api()
-    run_rest_server()
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/project/config.py:
-    e: ConfigMixin
-    ConfigMixin: __init__(0),setup_configs(1),install_continue_config(1),install_vscode_settings(0),generate_env_file(1)  # Configuration management functionality for Project...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/project/mcp.py:
-    e: MCPMixin
-    MCPMixin: __init__(0),start_mcp_services(1),stop_mcp_services(0),restart_mcp_service(1),wait_for_mcp_ready(1),get_mcp_status(0),print_mcp_status(0),generate_mcp_config(0)  # MCP service orchestration functionality for Project...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/project/ollama.py:
-    e: OllamaMixin
-    OllamaMixin: __init__(0),check_ollama(0),list_ollama_models(0),pull_ollama_model(1),generate_with_ollama(3)  # Ollama integration functionality for Project...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/project/services.py:
-    e: ServiceMixin
-    ServiceMixin: __init__(0),check_services(1),print_service_status(1),ensure_service(2)  # Service management functionality for Project...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/project/benchmark.py:
-    e: BenchmarkMixin
-    BenchmarkMixin: __init__(1),benchmark_models(2),add_benchmark_task(4),print_benchmark_results(2)  # Model benchmarking functionality for Project...
   src/algitex/project/ide.py:
     e: IDEMixin
     IDEMixin: __init__(0),setup_ide(1),fix_with_claude(3),fix_with_aider(3),detect_editor(0),get_ide_status(0)  # IDE integration functionality for Project...
+  src/algitex/todo/__init__.py:
+    e: fix_todos
+    fix_todos(todo_path;workers;dry_run;category)
   src/algitex/tools/autofix/base.py:
     e: FixResult,Task
     FixResult: to_dict(0)  # Result of fixing an issue...
@@ -1464,49 +427,10 @@ D:
     CodeRegion: compute_signature_hash(1)  # An AST-level lockable region within a file...
     TaskAssignment:  # A ticket assigned to a specific agent with locked regions...
     MergeResult:  # Result of merging agent worktrees back to main...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/project/ide.py:
-    e: IDEMixin
-    IDEMixin: __init__(0),setup_ide(1),fix_with_claude(3),fix_with_aider(3),detect_editor(0),get_ide_status(0)  # IDE integration functionality for Project...
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/tools/autofix/base.py:
-    e: FixResult,Task
-    FixResult: to_dict(0)  # Result of fixing an issue...
-    Task:  # Minimal task representation for backends...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/project/ide.py:
-    e: IDEMixin
-    IDEMixin: __init__(0),setup_ide(1),fix_with_claude(3),fix_with_aider(3),detect_editor(0),get_ide_status(0)  # IDE integration functionality for Project...
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/tools/autofix/base.py:
-    e: FixResult,Task
-    FixResult: to_dict(0)  # Result of fixing an issue...
-    Task:  # Minimal task representation for backends...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/project/ide.py:
-    e: IDEMixin
-    IDEMixin: __init__(0),setup_ide(1),fix_with_claude(3),fix_with_aider(3),detect_editor(0),get_ide_status(0)  # IDE integration functionality for Project...
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/tools/autofix/base.py:
-    e: FixResult,Task
-    FixResult: to_dict(0)  # Result of fixing an issue...
-    Task:  # Minimal task representation for backends...
   src/algitex/cli/__init__.py:
   src/algitex/__init__.py:
   src/algitex/algo/loop.py:
   src/algitex/tools/parallel/__init__.py:
   src/algitex/propact/workflow.py:
   src/algitex/workflows/pipeline.py:
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/cli/__init__.py:
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/__init__.py:
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/algo/loop.py:
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/propact/workflow.py:
-  my-app/my-app/.algitex/worktrees/agent-0/src/algitex/workflows/pipeline.py:
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/cli/__init__.py:
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/__init__.py:
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/algo/loop.py:
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/propact/workflow.py:
-  my-app/my-app/.algitex/worktrees/agent-2/src/algitex/workflows/pipeline.py:
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/cli/__init__.py:
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/__init__.py:
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/algo/loop.py:
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/propact/workflow.py:
-  my-app/my-app/.algitex/worktrees/agent-1/src/algitex/workflows/pipeline.py:
   project.sh:
-  my-app/my-app/.algitex/worktrees/agent-1/project.sh:
-  my-app/my-app/.algitex/worktrees/agent-2/project.sh:
-  my-app/my-app/.algitex/worktrees/agent-0/project.sh:

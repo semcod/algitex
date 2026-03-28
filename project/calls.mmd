@@ -1,69 +1,69 @@
 flowchart LR
     subgraph docker__aider_mcp
+        docker__aider_mcp__aider_mcp_server__create_rest_api["create_rest_api"]
+        docker__aider_mcp__aider_mcp_server__run_rest_server["run_rest_server"]
+        docker__aider_mcp__aider_mcp_server__aider_ai_code["aider_ai_code"]
         docker__aider_mcp__aider_mcp_server__aider_chat["aider_chat"]
         docker__aider_mcp__aider_mcp_server__aider_list_models["aider_list_models"]
-        docker__aider_mcp__aider_mcp_server__aider_ai_code["aider_ai_code"]
-        docker__aider_mcp__aider_mcp_server__run_rest_server["run_rest_server"]
-        docker__aider_mcp__aider_mcp_server__create_rest_api["create_rest_api"]
     end
     subgraph docker__code2llm
-        docker__code2llm__code2llm_mcp_server___analyze_python_file["_analyze_python_file"]
-        docker__code2llm__code2llm_mcp_server__generate_readme["generate_readme"]
-        docker__code2llm__code2llm_mcp_server__create_rest_api["create_rest_api"]
-        docker__code2llm__code2llm_mcp_server__analyze_project["analyze_project"]
-        docker__code2llm__code2llm_mcp_server___calculate_complexity_metrics["_calculate_complexity_metrics"]
-        docker__code2llm__code2llm_mcp_server__generate_toon["generate_toon"]
-        docker__code2llm__code2llm_mcp_server__evolution_export["evolution_export"]
-        docker__code2llm__code2llm_mcp_server__run_rest_server["run_rest_server"]
         docker__code2llm__code2llm_mcp_server___collect_project_metrics["_collect_project_metrics"]
+        docker__code2llm__code2llm_mcp_server__generate_readme["generate_readme"]
+        docker__code2llm__code2llm_mcp_server__generate_toon["generate_toon"]
+        docker__code2llm__code2llm_mcp_server___analyze_python_file["_analyze_python_file"]
+        docker__code2llm__code2llm_mcp_server__analyze_project["analyze_project"]
+        docker__code2llm__code2llm_mcp_server__evolution_export["evolution_export"]
+        docker__code2llm__code2llm_mcp_server__create_rest_api["create_rest_api"]
+        docker__code2llm__code2llm_mcp_server___calculate_complexity_metrics["_calculate_complexity_metrics"]
+        docker__code2llm__code2llm_mcp_server__run_rest_server["run_rest_server"]
     end
     subgraph docker__planfile_mcp
-        docker__planfile_mcp__planfile_mcp_server__run_rest_server["run_rest_server"]
-        docker__planfile_mcp__planfile_mcp_server__planfile_create_ticket["planfile_create_ticket"]
+        docker__planfile_mcp__planfile_mcp_server__planfile_sprint_status["planfile_sprint_status"]
+        docker__planfile_mcp__planfile_mcp_server__planfile_sync["planfile_sync"]
+        docker__planfile_mcp__planfile_mcp_server___load_tickets["_load_tickets"]
         docker__planfile_mcp__planfile_mcp_server__planfile_create_tickets_bulk["planfile_create_tickets_bulk"]
         docker__planfile_mcp__planfile_mcp_server__planfile_list_tickets["planfile_list_tickets"]
         docker__planfile_mcp__planfile_mcp_server__planfile_update_ticket["planfile_update_ticket"]
-        docker__planfile_mcp__planfile_mcp_server__planfile_sync["planfile_sync"]
+        docker__planfile_mcp__planfile_mcp_server__planfile_create_ticket["planfile_create_ticket"]
         docker__planfile_mcp__planfile_mcp_server__create_rest_api["create_rest_api"]
+        docker__planfile_mcp__planfile_mcp_server__run_rest_server["run_rest_server"]
         docker__planfile_mcp__planfile_mcp_server___save_tickets["_save_tickets"]
-        docker__planfile_mcp__planfile_mcp_server___load_tickets["_load_tickets"]
-        docker__planfile_mcp__planfile_mcp_server__planfile_sprint_status["planfile_sprint_status"]
     end
     subgraph docker__proxym
         docker__proxym__proxym_mcp_server___call_gemini["_call_gemini"]
-        docker__proxym__proxym_mcp_server___call_openai["_call_openai"]
-        docker__proxym__proxym_mcp_server__list_models["list_models"]
-        docker__proxym__proxym_mcp_server___call_anthropic["_call_anthropic"]
-        docker__proxym__proxym_mcp_server__count_tokens["count_tokens"]
-        docker__proxym__proxym_mcp_server__run_rest_server["run_rest_server"]
-        docker__proxym__proxym_mcp_server__simple_prompt["simple_prompt"]
         docker__proxym__proxym_mcp_server__chat_completion["chat_completion"]
+        docker__proxym__proxym_mcp_server__simple_prompt["simple_prompt"]
         docker__proxym__proxym_mcp_server__create_rest_api["create_rest_api"]
+        docker__proxym__proxym_mcp_server__run_rest_server["run_rest_server"]
+        docker__proxym__proxym_mcp_server___call_anthropic["_call_anthropic"]
+        docker__proxym__proxym_mcp_server___call_openai["_call_openai"]
+        docker__proxym__proxym_mcp_server__count_tokens["count_tokens"]
+        docker__proxym__proxym_mcp_server__list_models["list_models"]
     end
     subgraph docker__vallm
         docker__vallm__vallm_mcp_server__validate_security["validate_security"]
-        docker__vallm__vallm_mcp_server__analyze_complexity["analyze_complexity"]
         docker__vallm__vallm_mcp_server__validate_static["validate_static"]
         docker__vallm__vallm_mcp_server__calculate_quality_score["calculate_quality_score"]
         docker__vallm__vallm_mcp_server__create_rest_api["create_rest_api"]
         docker__vallm__vallm_mcp_server__validate_runtime["validate_runtime"]
-        docker__vallm__vallm_mcp_server__run_rest_server["run_rest_server"]
         docker__vallm__vallm_mcp_server__validate_all["validate_all"]
+        docker__vallm__vallm_mcp_server__analyze_complexity["analyze_complexity"]
+        docker__vallm__vallm_mcp_server__run_rest_server["run_rest_server"]
     end
     subgraph examples__01_quickstart
         examples__01_quickstart__main__main["main"]
     end
     subgraph examples__09_workspace
-        examples__09_workspace__main__workspace_management_example["workspace_management_example"]
-        examples__09_workspace__main___analyze_impact["_analyze_impact"]
-        examples__09_workspace__main__workspace_execution_example["workspace_execution_example"]
-        examples__09_workspace__main___analyze_parallel_execution["_analyze_parallel_execution"]
-        examples__09_workspace__main___calculate_metrics["_calculate_metrics"]
         examples__09_workspace__main__advanced_workspace_features["advanced_workspace_features"]
-        examples__09_workspace__main___analyze_workspace_structure["_analyze_workspace_structure"]
+        examples__09_workspace__main___analyze_parallel_execution["_analyze_parallel_execution"]
         examples__09_workspace__main__cross_repo_analysis_example["cross_repo_analysis_example"]
         examples__09_workspace__main__create_sample_workspace["create_sample_workspace"]
+        examples__09_workspace__main___analyze_impact["_analyze_impact"]
+        examples__09_workspace__main__workspace_execution_example["workspace_execution_example"]
+        examples__09_workspace__main__workspace_management_example["workspace_management_example"]
+        examples__09_workspace__main___analyze_workspace_structure["_analyze_workspace_structure"]
         examples__09_workspace__main__cross_repo_planning_example["cross_repo_planning_example"]
+        examples__09_workspace__main___calculate_metrics["_calculate_metrics"]
     end
     subgraph examples__10_cicd
         examples__10_cicd__main__quality_gates_example["quality_gates_example"]
@@ -77,8 +77,8 @@ flowchart LR
         examples__12_filesystem_mcp__main__create_sample_files["create_sample_files"]
     end
     subgraph examples__13_vallm
-        examples__13_vallm__main__create_sample_code["create_sample_code"]
         examples__13_vallm__main__demo_validation["demo_validation"]
+        examples__13_vallm__main__create_sample_code["create_sample_code"]
     end
     subgraph examples__14_docker_mcp
         examples__14_docker_mcp__main__demo_docker_operations["demo_docker_operations"]
@@ -88,14 +88,17 @@ flowchart LR
         examples__15_github_mcp__main__create_sample_project["create_sample_project"]
         examples__15_github_mcp__main__demo_github_workflow["demo_github_workflow"]
     end
+    subgraph examples__17_docker_workflow
+        examples__17_docker_workflow__main__demo_with_docker_tools["demo_with_docker_tools"]
+    end
     subgraph examples__18_ollama_local
+        examples__18_ollama_local__main__demo_code_generation["demo_code_generation"]
         examples__18_ollama_local__main__list_models["list_models"]
-        examples__18_ollama_local__main__demo_code_analysis["demo_code_analysis"]
         examples__18_ollama_local__main__main["main"]
         examples__18_ollama_local__main__analyze_code["analyze_code"]
-        examples__18_ollama_local__main__generate_code["generate_code"]
         examples__18_ollama_local__main__demo_cost_comparison["demo_cost_comparison"]
-        examples__18_ollama_local__main__demo_code_generation["demo_code_generation"]
+        examples__18_ollama_local__main__generate_code["generate_code"]
+        examples__18_ollama_local__main__demo_code_analysis["demo_code_analysis"]
     end
     subgraph examples__19_local_mcp_tools
         examples__19_local_mcp_tools__main__check_services["check_services"]
@@ -113,368 +116,91 @@ flowchart LR
         examples__32_workspace_coordination__main__main["main"]
         examples__32_workspace_coordination__main__load_workspace_config["load_workspace_config"]
     end
-    subgraph my_app__my_app
-        my_app__my_app____algitex__worktrees__agent_0__docker__vallm__vallm_mcp_server__analyze_complexity["analyze_complexity"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__32_workspace_coordination__main__load_workspace_config["load_workspace_config"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__14_docker_mcp__main__demo_docker_operations["demo_docker_operations"]
-        my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__mcp__MCPOrchestrator__list_services["list_services"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__18_ollama_local__main__list_models["list_models"]
-        my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__workspace__create_workspace_template["create_workspace_template"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__19_local_mcp_tools__main__check_services["check_services"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__aider_mcp__aider_mcp_server__create_rest_api["create_rest_api"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__code2llm__code2llm_mcp_server__create_rest_api["create_rest_api"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__15_github_mcp__main__demo_github_workflow["demo_github_workflow"]
-        my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__docker__DockerToolManager__teardown_all["teardown_all"]
-        my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__parallel__RegionExtractor___find_calls["_find_calls"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__32_workspace_coordination__main__load_workspace_config["load_workspace_config"]
-        my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__todo_actions__get_action_handler["get_action_handler"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__09_workspace__main___analyze_impact["_analyze_impact"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__09_workspace__main___analyze_workspace_structure["_analyze_workspace_structure"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__vallm__vallm_mcp_server__run_rest_server["run_rest_server"]
-        my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__analysis__Analyzer___run_vallm["_run_vallm"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__vallm__vallm_mcp_server__analyze_complexity["analyze_complexity"]
-        my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__analysis__Analyzer___run_redup["_run_redup"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__proxym__proxym_mcp_server___call_openai["_call_openai"]
-        my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__context__ContextBuilder___find_related["_find_related"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__18_ollama_local__main__main["main"]
-        my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__docker__DockerToolManager__list_tools["list_tools"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__13_vallm__main__demo_validation["demo_validation"]
-        my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__mcp__MCPOrchestrator__stop_all["stop_all"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__code2llm__code2llm_mcp_server___collect_project_metrics["_collect_project_metrics"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__code2llm__code2llm_mcp_server__create_rest_api["create_rest_api"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__19_local_mcp_tools__main__main["main"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__18_ollama_local__main__demo_cost_comparison["demo_cost_comparison"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__vallm__vallm_mcp_server__run_rest_server["run_rest_server"]
-        my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__todo_actions__get_action_handler["get_action_handler"]
-        my_app__my_app____algitex__worktrees__agent_1__src__algitex__cli__core__init["init"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server__run_rest_server["run_rest_server"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server___save_tickets["_save_tickets"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__vallm__vallm_mcp_server__calculate_quality_score["calculate_quality_score"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server__planfile_list_tickets["planfile_list_tickets"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__11_aider_mcp__main__create_sample_project["create_sample_project"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__proxym__proxym_mcp_server___call_anthropic["_call_anthropic"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__14_docker_mcp__main__create_sample_docker_project["create_sample_docker_project"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__01_quickstart__main__main["main"]
-        my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__require_tool["require_tool"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__20_self_hosted_pipeline__buggy_code__authenticate_user["authenticate_user"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__14_docker_mcp__main__demo_docker_operations["demo_docker_operations"]
-        my_app__my_app____algitex__worktrees__agent_1__src__algitex__project__Project___status_infra["_status_infra"]
-        my_app__my_app____algitex__worktrees__agent_2__src__algitex__project__Project___status_infra["_status_infra"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__proxym__proxym_mcp_server__create_rest_api["create_rest_api"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__aider_mcp__aider_mcp_server__run_rest_server["run_rest_server"]
-        my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__todo_runner__TodoRunner___execute_task["_execute_task"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__vallm__vallm_mcp_server__validate_all["validate_all"]
-        my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__telemetry__Telemetry__summary["summary"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__18_ollama_local__main__demo_code_generation["demo_code_generation"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__18_ollama_local__main__analyze_code["analyze_code"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server__planfile_sprint_status["planfile_sprint_status"]
-        my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__todo_runner__TodoRunner___execute_task["_execute_task"]
-        my_app__my_app____algitex__worktrees__agent_1__src__algitex__cli__core__tools["tools"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__09_workspace__main__workspace_management_example["workspace_management_example"]
-        my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__todo_actions__determine_action["determine_action"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__proxym__proxym_mcp_server___call_openai["_call_openai"]
-        my_app__my_app____algitex__worktrees__agent_1__src__algitex__config__Config__load["load"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server__planfile_create_ticket["planfile_create_ticket"]
-        my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__docker__DockerToolManager__list_running["list_running"]
-        my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__analysis__Analyzer___run_vallm["_run_vallm"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__09_workspace__main__cross_repo_analysis_example["cross_repo_analysis_example"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__proxym__proxym_mcp_server__simple_prompt["simple_prompt"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__code2llm__code2llm_mcp_server__run_rest_server["run_rest_server"]
-        my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__mcp__MCPOrchestrator__wait_for_ready["wait_for_ready"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__proxym__proxym_mcp_server__count_tokens["count_tokens"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__12_filesystem_mcp__main__create_sample_files["create_sample_files"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__18_ollama_local__main__demo_code_generation["demo_code_generation"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server__create_rest_api["create_rest_api"]
-        my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__benchmark__BenchmarkResults__get_summary["get_summary"]
-        my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__docker__DockerToolManager__list_tools["list_tools"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__code2llm__code2llm_mcp_server__generate_toon["generate_toon"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__09_workspace__main___analyze_parallel_execution["_analyze_parallel_execution"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__vallm__vallm_mcp_server__validate_static["validate_static"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__09_workspace__main__advanced_workspace_features["advanced_workspace_features"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__12_filesystem_mcp__main__demo_file_operations["demo_file_operations"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__proxym__proxym_mcp_server__create_rest_api["create_rest_api"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__aider_mcp__aider_mcp_server__aider_ai_code["aider_ai_code"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__18_ollama_local__main__main["main"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server__planfile_sync["planfile_sync"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__12_filesystem_mcp__main__create_sample_files["create_sample_files"]
-        my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__todo_actions__determine_action["determine_action"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__vallm__vallm_mcp_server__validate_runtime["validate_runtime"]
-        my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__analysis__Analyzer___run_code2llm["_run_code2llm"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server__planfile_create_ticket["planfile_create_ticket"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__vallm__vallm_mcp_server__validate_security["validate_security"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server___save_tickets["_save_tickets"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server__planfile_create_tickets_bulk["planfile_create_tickets_bulk"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__proxym__proxym_mcp_server__list_models["list_models"]
-        my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__docker__DockerToolManager__list_tools["list_tools"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__proxym__proxym_mcp_server__chat_completion["chat_completion"]
-        my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__todo_actions__get_action_handler["get_action_handler"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__code2llm__code2llm_mcp_server__generate_readme["generate_readme"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__vallm__vallm_mcp_server__calculate_quality_score["calculate_quality_score"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__18_ollama_local__main__generate_code["generate_code"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__09_workspace__main__cross_repo_analysis_example["cross_repo_analysis_example"]
-        my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__benchmark__BenchmarkResults__get_summary["get_summary"]
-        my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__workspace__Workspace___topo_sort["_topo_sort"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server__run_rest_server["run_rest_server"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__18_ollama_local__main__demo_cost_comparison["demo_cost_comparison"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__09_workspace__main___analyze_parallel_execution["_analyze_parallel_execution"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__11_aider_mcp__main__demo_refactoring["demo_refactoring"]
-        my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__mcp__MCPOrchestrator__list_services["list_services"]
-        my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__benchmark__ModelBenchmark__compare_models["compare_models"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__vallm__vallm_mcp_server__validate_static["validate_static"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__30_parallel_execution__parallel_real_world__main["main"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__vallm__vallm_mcp_server__validate_all["validate_all"]
-        my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__parallel__RegionExtractor___detect_shadow_conflicts["_detect_shadow_conflicts"]
-        my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__mcp__MCPOrchestrator__list_services["list_services"]
-        my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__mcp__MCPOrchestrator__start_all["start_all"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__15_github_mcp__main__demo_github_workflow["demo_github_workflow"]
-        my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__workspace__Workspace___topo_sort["_topo_sort"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__proxym__proxym_mcp_server__list_models["list_models"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server__planfile_create_tickets_bulk["planfile_create_tickets_bulk"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server__planfile_sync["planfile_sync"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__code2llm__code2llm_mcp_server__evolution_export["evolution_export"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__code2llm__code2llm_mcp_server__generate_toon["generate_toon"]
-        my_app__my_app____algitex__worktrees__agent_0__src__algitex__project__Project___status_infra["_status_infra"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server__planfile_update_ticket["planfile_update_ticket"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__09_workspace__main__cross_repo_planning_example["cross_repo_planning_example"]
-        my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__parallel__RegionExtractor___find_calls["_find_calls"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__20_self_hosted_pipeline__buggy_code__get_stored_password["get_stored_password"]
-        my_app__my_app____algitex__worktrees__agent_0__src__algitex__cli__core__tools["tools"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server__create_rest_api["create_rest_api"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__18_ollama_local__main__analyze_code["analyze_code"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__09_workspace__main__workspace_execution_example["workspace_execution_example"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__vallm__vallm_mcp_server__validate_static["validate_static"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__code2llm__code2llm_mcp_server__evolution_export["evolution_export"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__proxym__proxym_mcp_server___call_anthropic["_call_anthropic"]
-        my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__parallel__RegionExtractor___detect_shadow_conflicts["_detect_shadow_conflicts"]
-        my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__workspace__create_workspace_template["create_workspace_template"]
-        my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__discover_tools["discover_tools"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__20_self_hosted_pipeline__buggy_code__get_stored_password["get_stored_password"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server__planfile_update_ticket["planfile_update_ticket"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__14_docker_mcp__main__demo_docker_operations["demo_docker_operations"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__code2llm__code2llm_mcp_server___analyze_python_file["_analyze_python_file"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__09_workspace__main___analyze_impact["_analyze_impact"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__code2llm__code2llm_mcp_server___calculate_complexity_metrics["_calculate_complexity_metrics"]
-        my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__benchmark__ModelBenchmark__compare_models["compare_models"]
-        my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__benchmark__ModelBenchmark__compare_models["compare_models"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__vallm__vallm_mcp_server__validate_all["validate_all"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__vallm__vallm_mcp_server__validate_security["validate_security"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__18_ollama_local__main__demo_cost_comparison["demo_cost_comparison"]
-        my_app__my_app____algitex__worktrees__agent_2__src__algitex__cli__core__tools["tools"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__09_workspace__main__cross_repo_planning_example["cross_repo_planning_example"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__proxym__proxym_mcp_server__simple_prompt["simple_prompt"]
-        my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__mcp__MCPOrchestrator__wait_for_ready["wait_for_ready"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__code2llm__code2llm_mcp_server___analyze_python_file["_analyze_python_file"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__proxym__proxym_mcp_server__simple_prompt["simple_prompt"]
-        my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__mcp__MCPOrchestrator__start_all["start_all"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__aider_mcp__aider_mcp_server__aider_chat["aider_chat"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__10_cicd__main__quality_gates_example["quality_gates_example"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__15_github_mcp__main__create_sample_project["create_sample_project"]
-        my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__docker__DockerToolManager__teardown_all["teardown_all"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__15_github_mcp__main__create_sample_project["create_sample_project"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__20_self_hosted_pipeline__buggy_code__get_stored_password["get_stored_password"]
-        my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__analysis__Analyzer___run_code2llm["_run_code2llm"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__09_workspace__main___analyze_workspace_structure["_analyze_workspace_structure"]
-        my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__workspace__create_workspace_template["create_workspace_template"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server__planfile_update_ticket["planfile_update_ticket"]
-        my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__workspace__init_workspace["init_workspace"]
-        my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__context__ContextBuilder___find_related["_find_related"]
-        my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__docker__DockerToolManager__teardown_all["teardown_all"]
-        my_app__my_app____algitex__worktrees__agent_2__src__algitex__config__Config__load["load"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__proxym__proxym_mcp_server__run_rest_server["run_rest_server"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__code2llm__code2llm_mcp_server___calculate_complexity_metrics["_calculate_complexity_metrics"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__code2llm__code2llm_mcp_server__run_rest_server["run_rest_server"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__13_vallm__main__create_sample_code["create_sample_code"]
-        my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__require_tool["require_tool"]
-        my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__workspace__init_workspace["init_workspace"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__vallm__vallm_mcp_server__run_rest_server["run_rest_server"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__09_workspace__main__cross_repo_planning_example["cross_repo_planning_example"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__aider_mcp__aider_mcp_server__create_rest_api["create_rest_api"]
-        my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__telemetry__Telemetry__summary["summary"]
-        my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__telemetry__Telemetry__summary["summary"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__code2llm__code2llm_mcp_server___calculate_complexity_metrics["_calculate_complexity_metrics"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__proxym__proxym_mcp_server__count_tokens["count_tokens"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__30_parallel_execution__parallel_real_world__setup_sample_project["setup_sample_project"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__proxym__proxym_mcp_server___call_anthropic["_call_anthropic"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__aider_mcp__aider_mcp_server__create_rest_api["create_rest_api"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__09_workspace__main__workspace_management_example["workspace_management_example"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__09_workspace__main__cross_repo_analysis_example["cross_repo_analysis_example"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__proxym__proxym_mcp_server__create_rest_api["create_rest_api"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__30_parallel_execution__parallel_real_world__setup_sample_project["setup_sample_project"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__09_workspace__main__create_sample_workspace["create_sample_workspace"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__12_filesystem_mcp__main__demo_file_operations["demo_file_operations"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__20_self_hosted_pipeline__buggy_code__authenticate_user["authenticate_user"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__14_docker_mcp__main__create_sample_docker_project["create_sample_docker_project"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__10_cicd__main__quality_gates_example["quality_gates_example"]
-        my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__ide__IDEHelper__list_tools["list_tools"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server___load_tickets["_load_tickets"]
-        my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__todo_runner__TodoRunner___execute_task["_execute_task"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__19_local_mcp_tools__main__check_services["check_services"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__code2llm__code2llm_mcp_server__analyze_project["analyze_project"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__code2llm__code2llm_mcp_server__create_rest_api["create_rest_api"]
-        my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__analysis__Analyzer___run_redup["_run_redup"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__code2llm__code2llm_mcp_server__generate_toon["generate_toon"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__code2llm__code2llm_mcp_server__analyze_project["analyze_project"]
-        my_app__my_app____algitex__worktrees__agent_2__src__algitex__cli__core__init["init"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server__create_rest_api["create_rest_api"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__09_workspace__main__workspace_execution_example["workspace_execution_example"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__11_aider_mcp__main__demo_refactoring["demo_refactoring"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__18_ollama_local__main__list_models["list_models"]
-        my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__mcp__MCPOrchestrator__stop_all["stop_all"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__proxym__proxym_mcp_server___call_gemini["_call_gemini"]
-        my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__parallel__RegionExtractor___find_calls["_find_calls"]
-        my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__docker__DockerToolManager__list_running["list_running"]
-        my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__ide__IDEHelper__list_tools["list_tools"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__19_local_mcp_tools__main__check_services["check_services"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__13_vallm__main__demo_validation["demo_validation"]
-        my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__mcp__MCPOrchestrator__wait_for_ready["wait_for_ready"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__30_parallel_execution__parallel_real_world__setup_sample_project["setup_sample_project"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__12_filesystem_mcp__main__demo_file_operations["demo_file_operations"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__01_quickstart__main__main["main"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server__planfile_list_tickets["planfile_list_tickets"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__vallm__vallm_mcp_server__create_rest_api["create_rest_api"]
-        my_app__my_app____algitex__worktrees__agent_0__src__algitex__config__Config__load["load"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__code2llm__code2llm_mcp_server__generate_readme["generate_readme"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__proxym__proxym_mcp_server___call_gemini["_call_gemini"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__32_workspace_coordination__main__main["main"]
-        my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__analysis__Analyzer___run_code2llm["_run_code2llm"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__proxym__proxym_mcp_server___call_openai["_call_openai"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__32_workspace_coordination__main__main["main"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__vallm__vallm_mcp_server__validate_security["validate_security"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__code2llm__code2llm_mcp_server___collect_project_metrics["_collect_project_metrics"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__13_vallm__main__demo_validation["demo_validation"]
-        my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__discover_tools["discover_tools"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server__planfile_create_ticket["planfile_create_ticket"]
-        my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__parallel__RegionExtractor___detect_shadow_conflicts["_detect_shadow_conflicts"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__code2llm__code2llm_mcp_server__analyze_project["analyze_project"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__proxym__proxym_mcp_server__list_models["list_models"]
-        my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__todo_actions__determine_action["determine_action"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__15_github_mcp__main__create_sample_project["create_sample_project"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__code2llm__code2llm_mcp_server___collect_project_metrics["_collect_project_metrics"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__proxym__proxym_mcp_server___call_gemini["_call_gemini"]
-        my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__mcp__MCPOrchestrator__stop_all["stop_all"]
-        my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__analysis__Analyzer___run_vallm["_run_vallm"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__15_github_mcp__main__demo_github_workflow["demo_github_workflow"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__proxym__proxym_mcp_server__run_rest_server["run_rest_server"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__aider_mcp__aider_mcp_server__aider_list_models["aider_list_models"]
-        my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__context__ContextBuilder___find_related["_find_related"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__32_workspace_coordination__main__main["main"]
-        my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__mcp__MCPOrchestrator__start_all["start_all"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__proxym__proxym_mcp_server__chat_completion["chat_completion"]
-        my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__discover_tools["discover_tools"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__20_self_hosted_pipeline__buggy_code__authenticate_user["authenticate_user"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__19_local_mcp_tools__main__main["main"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__09_workspace__main__create_sample_workspace["create_sample_workspace"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__18_ollama_local__main__main["main"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server__run_rest_server["run_rest_server"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__aider_mcp__aider_mcp_server__aider_ai_code["aider_ai_code"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__14_docker_mcp__main__create_sample_docker_project["create_sample_docker_project"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server__planfile_sprint_status["planfile_sprint_status"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__09_workspace__main__workspace_execution_example["workspace_execution_example"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__aider_mcp__aider_mcp_server__aider_ai_code["aider_ai_code"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__13_vallm__main__create_sample_code["create_sample_code"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server__planfile_list_tickets["planfile_list_tickets"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__aider_mcp__aider_mcp_server__aider_list_models["aider_list_models"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server___load_tickets["_load_tickets"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__code2llm__code2llm_mcp_server__generate_readme["generate_readme"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__18_ollama_local__main__generate_code["generate_code"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__10_cicd__main__quality_gates_example["quality_gates_example"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__vallm__vallm_mcp_server__create_rest_api["create_rest_api"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__aider_mcp__aider_mcp_server__aider_list_models["aider_list_models"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__code2llm__code2llm_mcp_server__run_rest_server["run_rest_server"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__18_ollama_local__main__analyze_code["analyze_code"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__proxym__proxym_mcp_server__count_tokens["count_tokens"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__09_workspace__main__workspace_management_example["workspace_management_example"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__18_ollama_local__main__demo_code_analysis["demo_code_analysis"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__18_ollama_local__main__list_models["list_models"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__11_aider_mcp__main__create_sample_project["create_sample_project"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__18_ollama_local__main__demo_code_generation["demo_code_generation"]
-        my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__docker__DockerToolManager__list_running["list_running"]
-        my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__require_tool["require_tool"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__11_aider_mcp__main__demo_refactoring["demo_refactoring"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__vallm__vallm_mcp_server__validate_runtime["validate_runtime"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__01_quickstart__main__main["main"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__18_ollama_local__main__demo_code_analysis["demo_code_analysis"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__09_workspace__main___analyze_impact["_analyze_impact"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__09_workspace__main__advanced_workspace_features["advanced_workspace_features"]
-        my_app__my_app____algitex__worktrees__agent_0__src__algitex__cli__core__init["init"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__30_parallel_execution__parallel_real_world__main["main"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server__planfile_sprint_status["planfile_sprint_status"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__09_workspace__main__advanced_workspace_features["advanced_workspace_features"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__code2llm__code2llm_mcp_server__evolution_export["evolution_export"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__aider_mcp__aider_mcp_server__aider_chat["aider_chat"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server___save_tickets["_save_tickets"]
-        my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__analysis__Analyzer___run_redup["_run_redup"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__19_local_mcp_tools__main__main["main"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__18_ollama_local__main__demo_code_analysis["demo_code_analysis"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__proxym__proxym_mcp_server__chat_completion["chat_completion"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server___load_tickets["_load_tickets"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__aider_mcp__aider_mcp_server__aider_chat["aider_chat"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__09_workspace__main___calculate_metrics["_calculate_metrics"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__09_workspace__main___analyze_workspace_structure["_analyze_workspace_structure"]
-        my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__ide__IDEHelper__list_tools["list_tools"]
-        my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__benchmark__BenchmarkResults__get_summary["get_summary"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__aider_mcp__aider_mcp_server__run_rest_server["run_rest_server"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__32_workspace_coordination__main__load_workspace_config["load_workspace_config"]
-        my_app__my_app____algitex__worktrees__agent_1__examples__12_filesystem_mcp__main__create_sample_files["create_sample_files"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__aider_mcp__aider_mcp_server__run_rest_server["run_rest_server"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__09_workspace__main___calculate_metrics["_calculate_metrics"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__vallm__vallm_mcp_server__analyze_complexity["analyze_complexity"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server__planfile_create_tickets_bulk["planfile_create_tickets_bulk"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__proxym__proxym_mcp_server__run_rest_server["run_rest_server"]
-        my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__workspace__init_workspace["init_workspace"]
-        my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__workspace__Workspace___topo_sort["_topo_sort"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__vallm__vallm_mcp_server__calculate_quality_score["calculate_quality_score"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__09_workspace__main__create_sample_workspace["create_sample_workspace"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__09_workspace__main___calculate_metrics["_calculate_metrics"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__13_vallm__main__create_sample_code["create_sample_code"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__vallm__vallm_mcp_server__validate_runtime["validate_runtime"]
-        my_app__my_app____algitex__worktrees__agent_1__docker__code2llm__code2llm_mcp_server___analyze_python_file["_analyze_python_file"]
-        my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server__planfile_sync["planfile_sync"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__30_parallel_execution__parallel_real_world__main["main"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__09_workspace__main___analyze_parallel_execution["_analyze_parallel_execution"]
-        my_app__my_app____algitex__worktrees__agent_0__docker__vallm__vallm_mcp_server__create_rest_api["create_rest_api"]
-        my_app__my_app____algitex__worktrees__agent_2__examples__18_ollama_local__main__generate_code["generate_code"]
-        my_app__my_app____algitex__worktrees__agent_0__examples__11_aider_mcp__main__create_sample_project["create_sample_project"]
-    end
     subgraph src__algitex
-        src__algitex__tools__context__ContextBuilder___find_related["_find_related"]
-        src__algitex__tools__todo_runner__TodoRunner___execute_task["_execute_task"]
-        src__algitex__cli__core__init["init"]
-        src__algitex__tools__benchmark__ModelBenchmark__compare_models["compare_models"]
-        src__algitex__config___find_config["_find_config"]
-        src__algitex__tools__docker__DockerToolManager__teardown_all["teardown_all"]
-        src__algitex__tools__mcp__MCPOrchestrator__list_services["list_services"]
-        src__algitex__tools__discover_tools["discover_tools"]
-        src__algitex__tools__analysis___run_cli["_run_cli"]
-        src__algitex__cli__parallel___load_tickets["_load_tickets"]
-        src__algitex__cli__parallel__parallel["parallel"]
-        src__algitex__tools__analysis__Analyzer___run_code2llm["_run_code2llm"]
-        src__algitex__cli__parallel___extract_and_partition["_extract_and_partition"]
-        src__algitex__tools__docker__DockerToolManager__list_running["list_running"]
-        src__algitex__config___merge_yaml["_merge_yaml"]
-        src__algitex__tools__workspace__create_workspace_template["create_workspace_template"]
-        src__algitex__tools__mcp__MCPOrchestrator__stop_all["stop_all"]
-        src__algitex__tools__tickets__Tickets__list["list"]
-        src__algitex__tools__analysis__Analyzer___run_redup["_run_redup"]
-        src__algitex__tools__workspace__init_workspace["init_workspace"]
-        src__algitex__cli__parallel___display_partition_plan["_display_partition_plan"]
-        src__algitex__tools__require_tool["require_tool"]
-        src__algitex__tools__analysis__Analyzer___run_vallm["_run_vallm"]
-        src__algitex__tools__todo_actions__get_action_handler["get_action_handler"]
-        src__algitex__tools__parallel__extractor__RegionExtractor___find_calls["_find_calls"]
+        src__algitex__tools__docker_transport__call_sse["call_sse"]
         src__algitex__tools__docker__DockerToolManager__list_tools["list_tools"]
+        src__algitex__tools__mcp__MCPOrchestrator__list_services["list_services"]
         src__algitex__tools__cicd__create_quality_gate_config["create_quality_gate_config"]
-        src__algitex__tools__mcp__MCPOrchestrator__start_all["start_all"]
+        src__algitex__project__autofix__AutoFixMixin____init__["__init__"]
+        src__algitex__tools__analysis__Analyzer___run_redup["_run_redup"]
         src__algitex__tools__parallel__extractor__RegionExtractor___detect_shadow_conflicts["_detect_shadow_conflicts"]
-        src__algitex__config__Config__load["load"]
-        src__algitex__tools__benchmark__BenchmarkResults__get_summary["get_summary"]
-        src__algitex__tools__mcp__MCPOrchestrator__wait_for_ready["wait_for_ready"]
+        src__algitex__tools__proxy__Proxy____init__["__init__"]
+        src__algitex__tools__require_tool["require_tool"]
         src__algitex__project__Project___status_infra["_status_infra"]
-        src__algitex__tools__ide__IDEHelper__list_tools["list_tools"]
+        src__algitex__tools__docker_transport__call_stdio["call_stdio"]
+        src__algitex__tools__mcp__MCPOrchestrator__wait_for_ready["wait_for_ready"]
+        src__algitex__tools__todo_executor__TodoExecutor____init__["__init__"]
+        src__algitex__tools__tickets__Tickets____init__["__init__"]
+        src__algitex__propact__Workflow___exec_docker["_exec_docker"]
         src__algitex__tools__workspace__Workspace___topo_sort["_topo_sort"]
-        src__algitex__tools__todo_actions__determine_action["determine_action"]
+        src__algitex__propact__Workflow___execute_step["_execute_step"]
+        src__algitex__cli__docker__docker_call["docker_call"]
+        src__algitex__tools__tickets__Tickets__list["list"]
+        src__algitex__todo__fixer___print_summary["_print_summary"]
+        src__algitex__tools__todo_actions__get_action_handler["get_action_handler"]
+        src__algitex__tools__mcp__MCPOrchestrator__start_all["start_all"]
+        src__algitex__todo__benchmark___benchmark_single["_benchmark_single"]
+        src__algitex__tools__todo_runner__TodoRunner____init__["__init__"]
+        src__algitex__tools__docker__DockerToolManager__call_tool["call_tool"]
+        src__algitex__tools__docker__DockerToolManager__teardown_all["teardown_all"]
+        src__algitex__todo__fixer___execute_parallel_fixes["_execute_parallel_fixes"]
+        src__algitex__tools__discover_tools["discover_tools"]
+        src__algitex__tools__docker_transport__spawn_stdio["spawn_stdio"]
+        src__algitex__tools__docker_transport__spawn_sse["spawn_sse"]
+        src__algitex__cli__parallel___load_tickets["_load_tickets"]
+        src__algitex__todo__fixer__parse_todo["parse_todo"]
+        src__algitex__todo__fixer___group_tasks_by_file["_group_tasks_by_file"]
         src__algitex__cli__core__tools["tools"]
+        src__algitex__config___find_config["_find_config"]
+        src__algitex__tools__docker_transport__call_rest["call_rest"]
+        src__algitex__tools__context__ContextBuilder___find_related["_find_related"]
+        src__algitex__cli__docker__docker_spawn["docker_spawn"]
+        src__algitex__cli__todo__todo_benchmark["todo_benchmark"]
+        src__algitex__cli__parallel___extract_and_partition["_extract_and_partition"]
+        src__algitex__tools__analysis___run_cli["_run_cli"]
+        src__algitex__config__TicketConfig__from_env["from_env"]
+        src__algitex__cli__todo__todo_fix_parallel["todo_fix_parallel"]
+        src__algitex__todo__fixer___categorize["_categorize"]
+        src__algitex__cli__docker__docker_teardown["docker_teardown"]
+        src__algitex__todo__fixer___parse_and_filter_tasks["_parse_and_filter_tasks"]
+        src__algitex__tools__workspace__init_workspace["init_workspace"]
+        src__algitex__tools__docker__DockerToolManager__spawn["spawn"]
+        src__algitex__cli__parallel__parallel["parallel"]
+        src__algitex__config___merge_yaml["_merge_yaml"]
+        src__algitex__todo__benchmark__benchmark_sequential["benchmark_sequential"]
+        src__algitex__tools__docker__DockerToolManager__list_running["list_running"]
+        src__algitex__project__services__ServiceMixin____init__["__init__"]
+        src__algitex__config__AnalysisConfig__from_env["from_env"]
+        src__algitex__tools__docker_transport__call_cli["call_cli"]
+        src__algitex__tools__ide__IDEHelper__list_tools["list_tools"]
+        src__algitex__cli__core__init["init"]
+        src__algitex__todo__benchmark__benchmark_fix["benchmark_fix"]
+        src__algitex__tools__docker_transport__spawn_rest["spawn_rest"]
+        src__algitex__tools__todo_actions__determine_action["determine_action"]
+        src__algitex__tools__benchmark__ModelBenchmark__compare_models["compare_models"]
+        src__algitex__tools__parallel__extractor__RegionExtractor___find_calls["_find_calls"]
+        src__algitex__tools__analysis__Analyzer___run_vallm["_run_vallm"]
+        src__algitex__todo__fixer__parallel_fix["parallel_fix"]
+        src__algitex__todo__benchmark__benchmark_parallel["benchmark_parallel"]
+        src__algitex__tools__docker_transport__spawn_cli["spawn_cli"]
         src__algitex__tools__telemetry__Telemetry__summary["summary"]
+        src__algitex__project__Project____init__["__init__"]
+        src__algitex__todo__fixer___print_category_stats["_print_category_stats"]
+        src__algitex__tools__workspace__create_workspace_template["create_workspace_template"]
+        src__algitex__tools__benchmark__BenchmarkResults__get_summary["get_summary"]
+        src__algitex__tools__mcp__MCPOrchestrator__stop_all["stop_all"]
+        src__algitex__todo__fix_todos["fix_todos"]
+        src__algitex__todo__benchmark__compare_modes["compare_modes"]
+        src__algitex__project__config__ConfigMixin____init__["__init__"]
+        src__algitex__tools__todo_runner__TodoRunner___execute_task["_execute_task"]
+        src__algitex__cli__parallel___display_partition_plan["_display_partition_plan"]
+        src__algitex__tools__analysis__Analyzer___run_code2llm["_run_code2llm"]
+        src__algitex__config__Config__load["load"]
+        src__algitex__cli__docker__docker_list["docker_list"]
+        src__algitex__project__mcp__MCPMixin____init__["__init__"]
+        src__algitex__project__ide__IDEMixin____init__["__init__"]
+        src__algitex__config__ProxyConfig__from_env["from_env"]
+        src__algitex__cli__docker__docker_caps["docker_caps"]
     end
     docker__proxym__proxym_mcp_server__chat_completion --> docker__proxym__proxym_mcp_server__count_tokens
     docker__proxym__proxym_mcp_server__chat_completion --> docker__proxym__proxym_mcp_server___call_anthropic
@@ -492,10 +218,6 @@ flowchart LR
     docker__vallm__vallm_mcp_server__calculate_quality_score --> docker__vallm__vallm_mcp_server__analyze_complexity
     docker__vallm__vallm_mcp_server__create_rest_api --> docker__vallm__vallm_mcp_server__validate_all
     docker__vallm__vallm_mcp_server__run_rest_server --> docker__vallm__vallm_mcp_server__create_rest_api
-    docker__aider_mcp__aider_mcp_server__create_rest_api --> docker__aider_mcp__aider_mcp_server__aider_ai_code
-    docker__aider_mcp__aider_mcp_server__create_rest_api --> docker__aider_mcp__aider_mcp_server__aider_list_models
-    docker__aider_mcp__aider_mcp_server__create_rest_api --> docker__aider_mcp__aider_mcp_server__aider_chat
-    docker__aider_mcp__aider_mcp_server__run_rest_server --> docker__aider_mcp__aider_mcp_server__create_rest_api
     docker__planfile_mcp__planfile_mcp_server___save_tickets --> src__algitex__tools__tickets__Tickets__list
     docker__planfile_mcp__planfile_mcp_server__planfile_create_ticket --> docker__planfile_mcp__planfile_mcp_server___load_tickets
     docker__planfile_mcp__planfile_mcp_server__planfile_create_ticket --> docker__planfile_mcp__planfile_mcp_server___save_tickets
@@ -512,6 +234,10 @@ flowchart LR
     docker__planfile_mcp__planfile_mcp_server__create_rest_api --> docker__planfile_mcp__planfile_mcp_server__planfile_update_ticket
     docker__planfile_mcp__planfile_mcp_server__create_rest_api --> docker__planfile_mcp__planfile_mcp_server__planfile_sprint_status
     docker__planfile_mcp__planfile_mcp_server__run_rest_server --> docker__planfile_mcp__planfile_mcp_server__create_rest_api
+    docker__aider_mcp__aider_mcp_server__create_rest_api --> docker__aider_mcp__aider_mcp_server__aider_ai_code
+    docker__aider_mcp__aider_mcp_server__create_rest_api --> docker__aider_mcp__aider_mcp_server__aider_list_models
+    docker__aider_mcp__aider_mcp_server__create_rest_api --> docker__aider_mcp__aider_mcp_server__aider_chat
+    docker__aider_mcp__aider_mcp_server__run_rest_server --> docker__aider_mcp__aider_mcp_server__create_rest_api
     docker__code2llm__code2llm_mcp_server___collect_project_metrics --> docker__code2llm__code2llm_mcp_server___analyze_python_file
     docker__code2llm__code2llm_mcp_server__analyze_project --> docker__code2llm__code2llm_mcp_server___collect_project_metrics
     docker__code2llm__code2llm_mcp_server__analyze_project --> docker__code2llm__code2llm_mcp_server___calculate_complexity_metrics
@@ -520,36 +246,80 @@ flowchart LR
     docker__code2llm__code2llm_mcp_server__evolution_export --> docker__code2llm__code2llm_mcp_server__analyze_project
     docker__code2llm__code2llm_mcp_server__create_rest_api --> docker__code2llm__code2llm_mcp_server__analyze_project
     docker__code2llm__code2llm_mcp_server__run_rest_server --> docker__code2llm__code2llm_mcp_server__create_rest_api
+    src__algitex__config__Config__load --> src__algitex__config__ProxyConfig__from_env
+    src__algitex__config__Config__load --> src__algitex__config__TicketConfig__from_env
+    src__algitex__config__Config__load --> src__algitex__config__AnalysisConfig__from_env
     src__algitex__config__Config__load --> src__algitex__config___find_config
     src__algitex__config__Config__load --> src__algitex__config___merge_yaml
+    src__algitex__tools__proxy__Proxy____init__ --> src__algitex__config__ProxyConfig__from_env
     src__algitex__tools__mcp__MCPOrchestrator__start_all --> src__algitex__tools__tickets__Tickets__list
     src__algitex__tools__mcp__MCPOrchestrator__stop_all --> src__algitex__tools__tickets__Tickets__list
     src__algitex__tools__mcp__MCPOrchestrator__wait_for_ready --> src__algitex__tools__tickets__Tickets__list
     src__algitex__tools__mcp__MCPOrchestrator__list_services --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__tools__docker__DockerToolManager__spawn --> src__algitex__tools__docker_transport__spawn_stdio
+    src__algitex__tools__docker__DockerToolManager__spawn --> src__algitex__tools__docker_transport__spawn_sse
+    src__algitex__tools__docker__DockerToolManager__spawn --> src__algitex__tools__docker_transport__spawn_rest
+    src__algitex__tools__docker__DockerToolManager__spawn --> src__algitex__tools__docker_transport__spawn_cli
+    src__algitex__tools__docker__DockerToolManager__call_tool --> src__algitex__tools__docker_transport__call_stdio
+    src__algitex__tools__docker__DockerToolManager__call_tool --> src__algitex__tools__docker_transport__call_sse
+    src__algitex__tools__docker__DockerToolManager__call_tool --> src__algitex__tools__docker_transport__call_rest
+    src__algitex__tools__docker__DockerToolManager__call_tool --> src__algitex__tools__docker_transport__call_cli
     src__algitex__tools__docker__DockerToolManager__teardown_all --> src__algitex__tools__tickets__Tickets__list
     src__algitex__tools__docker__DockerToolManager__list_tools --> src__algitex__tools__tickets__Tickets__list
     src__algitex__tools__docker__DockerToolManager__list_running --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__tools__require_tool --> src__algitex__tools__discover_tools
     src__algitex__tools__analysis__Analyzer___run_code2llm --> src__algitex__tools__analysis___run_cli
     src__algitex__tools__analysis__Analyzer___run_vallm --> src__algitex__tools__analysis___run_cli
     src__algitex__tools__analysis__Analyzer___run_redup --> src__algitex__tools__analysis___run_cli
-    src__algitex__tools__require_tool --> src__algitex__tools__discover_tools
     src__algitex__tools__telemetry__Telemetry__summary --> src__algitex__tools__tickets__Tickets__list
     src__algitex__tools__context__ContextBuilder___find_related --> src__algitex__tools__tickets__Tickets__list
     src__algitex__tools__ide__IDEHelper__list_tools --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__tools__tickets__Tickets____init__ --> src__algitex__config__TicketConfig__from_env
     src__algitex__tools__workspace__Workspace___topo_sort --> src__algitex__tools__tickets__Tickets__list
     src__algitex__tools__workspace__init_workspace --> src__algitex__tools__workspace__create_workspace_template
+    src__algitex__tools__todo_executor__TodoExecutor____init__ --> src__algitex__config__Config__load
     src__algitex__tools__todo_actions__determine_action --> src__algitex__tools__todo_actions__get_action_handler
+    src__algitex__tools__todo_runner__TodoRunner____init__ --> src__algitex__config__Config__load
     src__algitex__tools__todo_runner__TodoRunner___execute_task --> src__algitex__tools__todo_actions__determine_action
+    src__algitex__cli__docker__docker_list --> src__algitex__config__Config__load
+    src__algitex__cli__docker__docker_spawn --> src__algitex__config__Config__load
+    src__algitex__cli__docker__docker_call --> src__algitex__config__Config__load
+    src__algitex__cli__docker__docker_teardown --> src__algitex__config__Config__load
+    src__algitex__cli__docker__docker_caps --> src__algitex__config__Config__load
     src__algitex__cli__parallel__parallel --> src__algitex__cli__parallel___load_tickets
     src__algitex__cli__parallel__parallel --> src__algitex__cli__parallel___extract_and_partition
     src__algitex__cli__parallel__parallel --> src__algitex__cli__parallel___display_partition_plan
     src__algitex__tools__benchmark__BenchmarkResults__get_summary --> src__algitex__tools__tickets__Tickets__list
     src__algitex__tools__benchmark__ModelBenchmark__compare_models --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__cli__todo__todo_fix_parallel --> src__algitex__todo__fix_todos
+    src__algitex__cli__todo__todo_benchmark --> src__algitex__todo__benchmark__compare_modes
+    src__algitex__cli__todo__todo_benchmark --> src__algitex__todo__benchmark__benchmark_fix
+    src__algitex__cli__core__init --> src__algitex__config__Config__load
     src__algitex__cli__core__init --> src__algitex__tools__discover_tools
     src__algitex__cli__core__tools --> src__algitex__tools__discover_tools
+    src__algitex__propact__Workflow___execute_step --> src__algitex__config__Config__load
+    src__algitex__propact__Workflow___exec_docker --> src__algitex__config__Config__load
+    src__algitex__todo__fix_todos --> src__algitex__todo__fixer__parallel_fix
+    src__algitex__todo__benchmark__benchmark_sequential --> src__algitex__todo__benchmark___benchmark_single
+    src__algitex__todo__benchmark__benchmark_fix --> src__algitex__todo__fixer__parse_todo
+    src__algitex__todo__benchmark__benchmark_fix --> src__algitex__todo__benchmark__benchmark_parallel
+    src__algitex__todo__benchmark__benchmark_fix --> src__algitex__todo__benchmark__benchmark_sequential
+    src__algitex__todo__benchmark__compare_modes --> src__algitex__todo__benchmark__benchmark_sequential
+    src__algitex__todo__benchmark__compare_modes --> src__algitex__todo__benchmark__benchmark_parallel
+    src__algitex__todo__fixer__parse_todo --> src__algitex__todo__fixer___categorize
+    src__algitex__todo__fixer___parse_and_filter_tasks --> src__algitex__todo__fixer__parse_todo
+    src__algitex__todo__fixer__parallel_fix --> src__algitex__todo__fixer___parse_and_filter_tasks
+    src__algitex__todo__fixer__parallel_fix --> src__algitex__todo__fixer___group_tasks_by_file
+    src__algitex__todo__fixer__parallel_fix --> src__algitex__todo__fixer___print_category_stats
+    src__algitex__todo__fixer__parallel_fix --> src__algitex__todo__fixer___execute_parallel_fixes
+    src__algitex__todo__fixer__parallel_fix --> src__algitex__todo__fixer___print_summary
+    src__algitex__project__Project____init__ --> src__algitex__project__services__ServiceMixin____init__
+    src__algitex__project__Project____init__ --> src__algitex__project__autofix__AutoFixMixin____init__
+    src__algitex__project__Project____init__ --> src__algitex__project__ide__IDEMixin____init__
+    src__algitex__project__Project____init__ --> src__algitex__project__config__ConfigMixin____init__
+    src__algitex__project__Project____init__ --> src__algitex__project__mcp__MCPMixin____init__
+    src__algitex__project__Project____init__ --> src__algitex__config__Config__load
     src__algitex__project__Project___status_infra --> src__algitex__tools__discover_tools
-    src__algitex__tools__parallel__extractor__RegionExtractor___find_calls --> src__algitex__tools__tickets__Tickets__list
-    src__algitex__tools__parallel__extractor__RegionExtractor___detect_shadow_conflicts --> src__algitex__tools__tickets__Tickets__list
     examples__01_quickstart__main__main --> src__algitex__tools__discover_tools
     examples__11_aider_mcp__main__demo_refactoring --> examples__11_aider_mcp__main__create_sample_project
     examples__18_ollama_local__main__demo_code_generation --> examples__18_ollama_local__main__generate_code
@@ -563,7 +333,10 @@ flowchart LR
     examples__32_workspace_coordination__main__main --> examples__32_workspace_coordination__main__load_workspace_config
     examples__14_docker_mcp__main__demo_docker_operations --> examples__14_docker_mcp__main__create_sample_docker_project
     examples__13_vallm__main__demo_validation --> examples__13_vallm__main__create_sample_code
+    examples__17_docker_workflow__main__demo_with_docker_tools --> src__algitex__config__Config__load
     examples__20_self_hosted_pipeline__buggy_code__authenticate_user --> examples__20_self_hosted_pipeline__buggy_code__get_stored_password
+    src__algitex__tools__parallel__extractor__RegionExtractor___find_calls --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__tools__parallel__extractor__RegionExtractor___detect_shadow_conflicts --> src__algitex__tools__tickets__Tickets__list
     examples__15_github_mcp__main__demo_github_workflow --> examples__15_github_mcp__main__create_sample_project
     examples__12_filesystem_mcp__main__demo_file_operations --> examples__12_filesystem_mcp__main__create_sample_files
     examples__19_local_mcp_tools__main__main --> examples__19_local_mcp_tools__main__check_services
@@ -577,297 +350,3 @@ flowchart LR
     examples__09_workspace__main__advanced_workspace_features --> examples__09_workspace__main___analyze_impact
     examples__09_workspace__main__advanced_workspace_features --> examples__09_workspace__main___analyze_parallel_execution
     examples__09_workspace__main__advanced_workspace_features --> examples__09_workspace__main___calculate_metrics
-    my_app__my_app____algitex__worktrees__agent_0__docker__vallm__vallm_mcp_server__validate_all --> my_app__my_app____algitex__worktrees__agent_0__docker__vallm__vallm_mcp_server__validate_static
-    my_app__my_app____algitex__worktrees__agent_0__docker__vallm__vallm_mcp_server__validate_all --> my_app__my_app____algitex__worktrees__agent_0__docker__vallm__vallm_mcp_server__validate_runtime
-    my_app__my_app____algitex__worktrees__agent_0__docker__vallm__vallm_mcp_server__validate_all --> my_app__my_app____algitex__worktrees__agent_0__docker__vallm__vallm_mcp_server__validate_security
-    my_app__my_app____algitex__worktrees__agent_0__docker__vallm__vallm_mcp_server__calculate_quality_score --> my_app__my_app____algitex__worktrees__agent_0__docker__vallm__vallm_mcp_server__validate_all
-    my_app__my_app____algitex__worktrees__agent_0__docker__vallm__vallm_mcp_server__calculate_quality_score --> my_app__my_app____algitex__worktrees__agent_0__docker__vallm__vallm_mcp_server__analyze_complexity
-    my_app__my_app____algitex__worktrees__agent_0__docker__vallm__vallm_mcp_server__create_rest_api --> my_app__my_app____algitex__worktrees__agent_0__docker__vallm__vallm_mcp_server__validate_all
-    my_app__my_app____algitex__worktrees__agent_0__docker__vallm__vallm_mcp_server__run_rest_server --> my_app__my_app____algitex__worktrees__agent_0__docker__vallm__vallm_mcp_server__create_rest_api
-    my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server___save_tickets --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server__planfile_create_ticket --> my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server___load_tickets
-    my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server__planfile_create_ticket --> my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server___save_tickets
-    my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server__planfile_list_tickets --> my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server___load_tickets
-    my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server__planfile_list_tickets --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server__planfile_update_ticket --> my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server___load_tickets
-    my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server__planfile_update_ticket --> my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server___save_tickets
-    my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server__planfile_create_tickets_bulk --> my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server__planfile_create_ticket
-    my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server__planfile_sprint_status --> my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server___load_tickets
-    my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server__planfile_sprint_status --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server__planfile_sync --> my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server___save_tickets
-    my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server__create_rest_api --> my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server__planfile_list_tickets
-    my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server__create_rest_api --> my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server__planfile_create_ticket
-    my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server__create_rest_api --> my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server__planfile_update_ticket
-    my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server__create_rest_api --> my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server__planfile_sprint_status
-    my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server__run_rest_server --> my_app__my_app____algitex__worktrees__agent_0__docker__planfile_mcp__planfile_mcp_server__create_rest_api
-    my_app__my_app____algitex__worktrees__agent_0__docker__proxym__proxym_mcp_server__chat_completion --> my_app__my_app____algitex__worktrees__agent_0__docker__proxym__proxym_mcp_server__count_tokens
-    my_app__my_app____algitex__worktrees__agent_0__docker__proxym__proxym_mcp_server__chat_completion --> my_app__my_app____algitex__worktrees__agent_0__docker__proxym__proxym_mcp_server___call_anthropic
-    my_app__my_app____algitex__worktrees__agent_0__docker__proxym__proxym_mcp_server__chat_completion --> my_app__my_app____algitex__worktrees__agent_0__docker__proxym__proxym_mcp_server___call_openai
-    my_app__my_app____algitex__worktrees__agent_0__docker__proxym__proxym_mcp_server__chat_completion --> my_app__my_app____algitex__worktrees__agent_0__docker__proxym__proxym_mcp_server___call_gemini
-    my_app__my_app____algitex__worktrees__agent_0__docker__proxym__proxym_mcp_server___call_anthropic --> my_app__my_app____algitex__worktrees__agent_0__docker__proxym__proxym_mcp_server__count_tokens
-    my_app__my_app____algitex__worktrees__agent_0__docker__proxym__proxym_mcp_server___call_gemini --> my_app__my_app____algitex__worktrees__agent_0__docker__proxym__proxym_mcp_server__count_tokens
-    my_app__my_app____algitex__worktrees__agent_0__docker__proxym__proxym_mcp_server__simple_prompt --> my_app__my_app____algitex__worktrees__agent_0__docker__proxym__proxym_mcp_server__chat_completion
-    my_app__my_app____algitex__worktrees__agent_0__docker__proxym__proxym_mcp_server__create_rest_api --> my_app__my_app____algitex__worktrees__agent_0__docker__proxym__proxym_mcp_server__list_models
-    my_app__my_app____algitex__worktrees__agent_0__docker__proxym__proxym_mcp_server__run_rest_server --> my_app__my_app____algitex__worktrees__agent_0__docker__proxym__proxym_mcp_server__create_rest_api
-    my_app__my_app____algitex__worktrees__agent_0__docker__aider_mcp__aider_mcp_server__create_rest_api --> my_app__my_app____algitex__worktrees__agent_0__docker__aider_mcp__aider_mcp_server__aider_ai_code
-    my_app__my_app____algitex__worktrees__agent_0__docker__aider_mcp__aider_mcp_server__create_rest_api --> my_app__my_app____algitex__worktrees__agent_0__docker__aider_mcp__aider_mcp_server__aider_list_models
-    my_app__my_app____algitex__worktrees__agent_0__docker__aider_mcp__aider_mcp_server__create_rest_api --> my_app__my_app____algitex__worktrees__agent_0__docker__aider_mcp__aider_mcp_server__aider_chat
-    my_app__my_app____algitex__worktrees__agent_0__docker__aider_mcp__aider_mcp_server__run_rest_server --> my_app__my_app____algitex__worktrees__agent_0__docker__aider_mcp__aider_mcp_server__create_rest_api
-    my_app__my_app____algitex__worktrees__agent_0__docker__code2llm__code2llm_mcp_server___collect_project_metrics --> my_app__my_app____algitex__worktrees__agent_0__docker__code2llm__code2llm_mcp_server___analyze_python_file
-    my_app__my_app____algitex__worktrees__agent_0__docker__code2llm__code2llm_mcp_server__analyze_project --> my_app__my_app____algitex__worktrees__agent_0__docker__code2llm__code2llm_mcp_server___collect_project_metrics
-    my_app__my_app____algitex__worktrees__agent_0__docker__code2llm__code2llm_mcp_server__analyze_project --> my_app__my_app____algitex__worktrees__agent_0__docker__code2llm__code2llm_mcp_server___calculate_complexity_metrics
-    my_app__my_app____algitex__worktrees__agent_0__docker__code2llm__code2llm_mcp_server__generate_toon --> my_app__my_app____algitex__worktrees__agent_0__docker__code2llm__code2llm_mcp_server__analyze_project
-    my_app__my_app____algitex__worktrees__agent_0__docker__code2llm__code2llm_mcp_server__generate_readme --> my_app__my_app____algitex__worktrees__agent_0__docker__code2llm__code2llm_mcp_server__analyze_project
-    my_app__my_app____algitex__worktrees__agent_0__docker__code2llm__code2llm_mcp_server__evolution_export --> my_app__my_app____algitex__worktrees__agent_0__docker__code2llm__code2llm_mcp_server__analyze_project
-    my_app__my_app____algitex__worktrees__agent_0__docker__code2llm__code2llm_mcp_server__create_rest_api --> my_app__my_app____algitex__worktrees__agent_0__docker__code2llm__code2llm_mcp_server__analyze_project
-    my_app__my_app____algitex__worktrees__agent_0__docker__code2llm__code2llm_mcp_server__run_rest_server --> my_app__my_app____algitex__worktrees__agent_0__docker__code2llm__code2llm_mcp_server__create_rest_api
-    my_app__my_app____algitex__worktrees__agent_0__src__algitex__config__Config__load --> src__algitex__config___find_config
-    my_app__my_app____algitex__worktrees__agent_0__src__algitex__config__Config__load --> src__algitex__config___merge_yaml
-    my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__mcp__MCPOrchestrator__start_all --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__mcp__MCPOrchestrator__stop_all --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__mcp__MCPOrchestrator__wait_for_ready --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__mcp__MCPOrchestrator__list_services --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__workspace__Workspace___topo_sort --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__workspace__init_workspace --> my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__workspace__create_workspace_template
-    my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__docker__DockerToolManager__teardown_all --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__docker__DockerToolManager__list_tools --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__docker__DockerToolManager__list_running --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__analysis__Analyzer___run_code2llm --> src__algitex__tools__analysis___run_cli
-    my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__analysis__Analyzer___run_vallm --> src__algitex__tools__analysis___run_cli
-    my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__analysis__Analyzer___run_redup --> src__algitex__tools__analysis___run_cli
-    my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__require_tool --> my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__discover_tools
-    my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__telemetry__Telemetry__summary --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__context__ContextBuilder___find_related --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__ide__IDEHelper__list_tools --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__parallel__RegionExtractor___find_calls --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__parallel__RegionExtractor___detect_shadow_conflicts --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__todo_runner__TodoRunner___execute_task --> src__algitex__tools__todo_actions__determine_action
-    my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__todo_actions__determine_action --> my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__todo_actions__get_action_handler
-    my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__benchmark__BenchmarkResults__get_summary --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_0__src__algitex__tools__benchmark__ModelBenchmark__compare_models --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_0__src__algitex__cli__core__init --> src__algitex__tools__discover_tools
-    my_app__my_app____algitex__worktrees__agent_0__src__algitex__cli__core__tools --> src__algitex__tools__discover_tools
-    my_app__my_app____algitex__worktrees__agent_0__src__algitex__project__Project___status_infra --> src__algitex__tools__discover_tools
-    my_app__my_app____algitex__worktrees__agent_0__examples__01_quickstart__main__main --> src__algitex__tools__discover_tools
-    my_app__my_app____algitex__worktrees__agent_0__examples__11_aider_mcp__main__demo_refactoring --> my_app__my_app____algitex__worktrees__agent_0__examples__11_aider_mcp__main__create_sample_project
-    my_app__my_app____algitex__worktrees__agent_0__examples__18_ollama_local__main__demo_code_generation --> my_app__my_app____algitex__worktrees__agent_0__examples__18_ollama_local__main__generate_code
-    my_app__my_app____algitex__worktrees__agent_0__examples__18_ollama_local__main__demo_code_analysis --> my_app__my_app____algitex__worktrees__agent_0__examples__18_ollama_local__main__analyze_code
-    my_app__my_app____algitex__worktrees__agent_0__examples__18_ollama_local__main__main --> my_app__my_app____algitex__worktrees__agent_0__examples__18_ollama_local__main__list_models
-    my_app__my_app____algitex__worktrees__agent_0__examples__18_ollama_local__main__main --> my_app__my_app____algitex__worktrees__agent_0__examples__18_ollama_local__main__demo_code_generation
-    my_app__my_app____algitex__worktrees__agent_0__examples__18_ollama_local__main__main --> my_app__my_app____algitex__worktrees__agent_0__examples__18_ollama_local__main__demo_code_analysis
-    my_app__my_app____algitex__worktrees__agent_0__examples__18_ollama_local__main__main --> my_app__my_app____algitex__worktrees__agent_0__examples__18_ollama_local__main__demo_cost_comparison
-    my_app__my_app____algitex__worktrees__agent_0__examples__10_cicd__main__quality_gates_example --> src__algitex__tools__cicd__create_quality_gate_config
-    my_app__my_app____algitex__worktrees__agent_0__examples__30_parallel_execution__parallel_real_world__main --> my_app__my_app____algitex__worktrees__agent_0__examples__30_parallel_execution__parallel_real_world__setup_sample_project
-    my_app__my_app____algitex__worktrees__agent_0__examples__32_workspace_coordination__main__main --> my_app__my_app____algitex__worktrees__agent_0__examples__32_workspace_coordination__main__load_workspace_config
-    my_app__my_app____algitex__worktrees__agent_0__examples__14_docker_mcp__main__demo_docker_operations --> my_app__my_app____algitex__worktrees__agent_0__examples__14_docker_mcp__main__create_sample_docker_project
-    my_app__my_app____algitex__worktrees__agent_0__examples__13_vallm__main__demo_validation --> my_app__my_app____algitex__worktrees__agent_0__examples__13_vallm__main__create_sample_code
-    my_app__my_app____algitex__worktrees__agent_0__examples__20_self_hosted_pipeline__buggy_code__authenticate_user --> my_app__my_app____algitex__worktrees__agent_0__examples__20_self_hosted_pipeline__buggy_code__get_stored_password
-    my_app__my_app____algitex__worktrees__agent_0__examples__15_github_mcp__main__demo_github_workflow --> my_app__my_app____algitex__worktrees__agent_0__examples__15_github_mcp__main__create_sample_project
-    my_app__my_app____algitex__worktrees__agent_0__examples__12_filesystem_mcp__main__demo_file_operations --> my_app__my_app____algitex__worktrees__agent_0__examples__12_filesystem_mcp__main__create_sample_files
-    my_app__my_app____algitex__worktrees__agent_0__examples__09_workspace__main__create_sample_workspace --> src__algitex__tools__workspace__init_workspace
-    my_app__my_app____algitex__worktrees__agent_0__examples__09_workspace__main__workspace_management_example --> my_app__my_app____algitex__worktrees__agent_0__examples__09_workspace__main__create_sample_workspace
-    my_app__my_app____algitex__worktrees__agent_0__examples__09_workspace__main__cross_repo_analysis_example --> my_app__my_app____algitex__worktrees__agent_0__examples__09_workspace__main__create_sample_workspace
-    my_app__my_app____algitex__worktrees__agent_0__examples__09_workspace__main__cross_repo_planning_example --> my_app__my_app____algitex__worktrees__agent_0__examples__09_workspace__main__create_sample_workspace
-    my_app__my_app____algitex__worktrees__agent_0__examples__09_workspace__main__workspace_execution_example --> my_app__my_app____algitex__worktrees__agent_0__examples__09_workspace__main__create_sample_workspace
-    my_app__my_app____algitex__worktrees__agent_0__examples__09_workspace__main__advanced_workspace_features --> my_app__my_app____algitex__worktrees__agent_0__examples__09_workspace__main__create_sample_workspace
-    my_app__my_app____algitex__worktrees__agent_0__examples__09_workspace__main__advanced_workspace_features --> my_app__my_app____algitex__worktrees__agent_0__examples__09_workspace__main___analyze_workspace_structure
-    my_app__my_app____algitex__worktrees__agent_0__examples__09_workspace__main__advanced_workspace_features --> my_app__my_app____algitex__worktrees__agent_0__examples__09_workspace__main___analyze_impact
-    my_app__my_app____algitex__worktrees__agent_0__examples__09_workspace__main__advanced_workspace_features --> my_app__my_app____algitex__worktrees__agent_0__examples__09_workspace__main___analyze_parallel_execution
-    my_app__my_app____algitex__worktrees__agent_0__examples__09_workspace__main__advanced_workspace_features --> my_app__my_app____algitex__worktrees__agent_0__examples__09_workspace__main___calculate_metrics
-    my_app__my_app____algitex__worktrees__agent_0__examples__19_local_mcp_tools__main__main --> my_app__my_app____algitex__worktrees__agent_0__examples__19_local_mcp_tools__main__check_services
-    my_app__my_app____algitex__worktrees__agent_2__docker__vallm__vallm_mcp_server__validate_all --> my_app__my_app____algitex__worktrees__agent_2__docker__vallm__vallm_mcp_server__validate_static
-    my_app__my_app____algitex__worktrees__agent_2__docker__vallm__vallm_mcp_server__validate_all --> my_app__my_app____algitex__worktrees__agent_2__docker__vallm__vallm_mcp_server__validate_runtime
-    my_app__my_app____algitex__worktrees__agent_2__docker__vallm__vallm_mcp_server__validate_all --> my_app__my_app____algitex__worktrees__agent_2__docker__vallm__vallm_mcp_server__validate_security
-    my_app__my_app____algitex__worktrees__agent_2__docker__vallm__vallm_mcp_server__calculate_quality_score --> my_app__my_app____algitex__worktrees__agent_2__docker__vallm__vallm_mcp_server__validate_all
-    my_app__my_app____algitex__worktrees__agent_2__docker__vallm__vallm_mcp_server__calculate_quality_score --> my_app__my_app____algitex__worktrees__agent_2__docker__vallm__vallm_mcp_server__analyze_complexity
-    my_app__my_app____algitex__worktrees__agent_2__docker__vallm__vallm_mcp_server__create_rest_api --> my_app__my_app____algitex__worktrees__agent_2__docker__vallm__vallm_mcp_server__validate_all
-    my_app__my_app____algitex__worktrees__agent_2__docker__vallm__vallm_mcp_server__run_rest_server --> my_app__my_app____algitex__worktrees__agent_2__docker__vallm__vallm_mcp_server__create_rest_api
-    my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server___save_tickets --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server__planfile_create_ticket --> my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server___load_tickets
-    my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server__planfile_create_ticket --> my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server___save_tickets
-    my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server__planfile_list_tickets --> my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server___load_tickets
-    my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server__planfile_list_tickets --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server__planfile_update_ticket --> my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server___load_tickets
-    my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server__planfile_update_ticket --> my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server___save_tickets
-    my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server__planfile_create_tickets_bulk --> my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server__planfile_create_ticket
-    my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server__planfile_sprint_status --> my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server___load_tickets
-    my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server__planfile_sprint_status --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server__planfile_sync --> my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server___save_tickets
-    my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server__create_rest_api --> my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server__planfile_list_tickets
-    my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server__create_rest_api --> my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server__planfile_create_ticket
-    my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server__create_rest_api --> my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server__planfile_update_ticket
-    my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server__create_rest_api --> my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server__planfile_sprint_status
-    my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server__run_rest_server --> my_app__my_app____algitex__worktrees__agent_2__docker__planfile_mcp__planfile_mcp_server__create_rest_api
-    my_app__my_app____algitex__worktrees__agent_2__docker__proxym__proxym_mcp_server__chat_completion --> my_app__my_app____algitex__worktrees__agent_2__docker__proxym__proxym_mcp_server__count_tokens
-    my_app__my_app____algitex__worktrees__agent_2__docker__proxym__proxym_mcp_server__chat_completion --> my_app__my_app____algitex__worktrees__agent_2__docker__proxym__proxym_mcp_server___call_anthropic
-    my_app__my_app____algitex__worktrees__agent_2__docker__proxym__proxym_mcp_server__chat_completion --> my_app__my_app____algitex__worktrees__agent_2__docker__proxym__proxym_mcp_server___call_openai
-    my_app__my_app____algitex__worktrees__agent_2__docker__proxym__proxym_mcp_server__chat_completion --> my_app__my_app____algitex__worktrees__agent_2__docker__proxym__proxym_mcp_server___call_gemini
-    my_app__my_app____algitex__worktrees__agent_2__docker__proxym__proxym_mcp_server___call_anthropic --> my_app__my_app____algitex__worktrees__agent_2__docker__proxym__proxym_mcp_server__count_tokens
-    my_app__my_app____algitex__worktrees__agent_2__docker__proxym__proxym_mcp_server___call_gemini --> my_app__my_app____algitex__worktrees__agent_2__docker__proxym__proxym_mcp_server__count_tokens
-    my_app__my_app____algitex__worktrees__agent_2__docker__proxym__proxym_mcp_server__simple_prompt --> my_app__my_app____algitex__worktrees__agent_2__docker__proxym__proxym_mcp_server__chat_completion
-    my_app__my_app____algitex__worktrees__agent_2__docker__proxym__proxym_mcp_server__create_rest_api --> my_app__my_app____algitex__worktrees__agent_2__docker__proxym__proxym_mcp_server__list_models
-    my_app__my_app____algitex__worktrees__agent_2__docker__proxym__proxym_mcp_server__run_rest_server --> my_app__my_app____algitex__worktrees__agent_2__docker__proxym__proxym_mcp_server__create_rest_api
-    my_app__my_app____algitex__worktrees__agent_2__docker__aider_mcp__aider_mcp_server__create_rest_api --> my_app__my_app____algitex__worktrees__agent_2__docker__aider_mcp__aider_mcp_server__aider_ai_code
-    my_app__my_app____algitex__worktrees__agent_2__docker__aider_mcp__aider_mcp_server__create_rest_api --> my_app__my_app____algitex__worktrees__agent_2__docker__aider_mcp__aider_mcp_server__aider_list_models
-    my_app__my_app____algitex__worktrees__agent_2__docker__aider_mcp__aider_mcp_server__create_rest_api --> my_app__my_app____algitex__worktrees__agent_2__docker__aider_mcp__aider_mcp_server__aider_chat
-    my_app__my_app____algitex__worktrees__agent_2__docker__aider_mcp__aider_mcp_server__run_rest_server --> my_app__my_app____algitex__worktrees__agent_2__docker__aider_mcp__aider_mcp_server__create_rest_api
-    my_app__my_app____algitex__worktrees__agent_2__docker__code2llm__code2llm_mcp_server___collect_project_metrics --> my_app__my_app____algitex__worktrees__agent_2__docker__code2llm__code2llm_mcp_server___analyze_python_file
-    my_app__my_app____algitex__worktrees__agent_2__docker__code2llm__code2llm_mcp_server__analyze_project --> my_app__my_app____algitex__worktrees__agent_2__docker__code2llm__code2llm_mcp_server___collect_project_metrics
-    my_app__my_app____algitex__worktrees__agent_2__docker__code2llm__code2llm_mcp_server__analyze_project --> my_app__my_app____algitex__worktrees__agent_2__docker__code2llm__code2llm_mcp_server___calculate_complexity_metrics
-    my_app__my_app____algitex__worktrees__agent_2__docker__code2llm__code2llm_mcp_server__generate_toon --> my_app__my_app____algitex__worktrees__agent_2__docker__code2llm__code2llm_mcp_server__analyze_project
-    my_app__my_app____algitex__worktrees__agent_2__docker__code2llm__code2llm_mcp_server__generate_readme --> my_app__my_app____algitex__worktrees__agent_2__docker__code2llm__code2llm_mcp_server__analyze_project
-    my_app__my_app____algitex__worktrees__agent_2__docker__code2llm__code2llm_mcp_server__evolution_export --> my_app__my_app____algitex__worktrees__agent_2__docker__code2llm__code2llm_mcp_server__analyze_project
-    my_app__my_app____algitex__worktrees__agent_2__docker__code2llm__code2llm_mcp_server__create_rest_api --> my_app__my_app____algitex__worktrees__agent_2__docker__code2llm__code2llm_mcp_server__analyze_project
-    my_app__my_app____algitex__worktrees__agent_2__docker__code2llm__code2llm_mcp_server__run_rest_server --> my_app__my_app____algitex__worktrees__agent_2__docker__code2llm__code2llm_mcp_server__create_rest_api
-    my_app__my_app____algitex__worktrees__agent_2__src__algitex__config__Config__load --> src__algitex__config___find_config
-    my_app__my_app____algitex__worktrees__agent_2__src__algitex__config__Config__load --> src__algitex__config___merge_yaml
-    my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__mcp__MCPOrchestrator__start_all --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__mcp__MCPOrchestrator__stop_all --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__mcp__MCPOrchestrator__wait_for_ready --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__mcp__MCPOrchestrator__list_services --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__workspace__Workspace___topo_sort --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__workspace__init_workspace --> my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__workspace__create_workspace_template
-    my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__docker__DockerToolManager__teardown_all --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__docker__DockerToolManager__list_tools --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__docker__DockerToolManager__list_running --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__analysis__Analyzer___run_code2llm --> src__algitex__tools__analysis___run_cli
-    my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__analysis__Analyzer___run_vallm --> src__algitex__tools__analysis___run_cli
-    my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__analysis__Analyzer___run_redup --> src__algitex__tools__analysis___run_cli
-    my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__require_tool --> my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__discover_tools
-    my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__telemetry__Telemetry__summary --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__context__ContextBuilder___find_related --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__parallel__RegionExtractor___find_calls --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__parallel__RegionExtractor___detect_shadow_conflicts --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__todo_runner__TodoRunner___execute_task --> src__algitex__tools__todo_actions__determine_action
-    my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__todo_actions__determine_action --> my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__todo_actions__get_action_handler
-    my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__benchmark__BenchmarkResults__get_summary --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__benchmark__ModelBenchmark__compare_models --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_2__src__algitex__tools__ide__IDEHelper__list_tools --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_2__src__algitex__cli__core__init --> src__algitex__tools__discover_tools
-    my_app__my_app____algitex__worktrees__agent_2__src__algitex__cli__core__tools --> src__algitex__tools__discover_tools
-    my_app__my_app____algitex__worktrees__agent_2__src__algitex__project__Project___status_infra --> src__algitex__tools__discover_tools
-    my_app__my_app____algitex__worktrees__agent_2__examples__01_quickstart__main__main --> src__algitex__tools__discover_tools
-    my_app__my_app____algitex__worktrees__agent_2__examples__18_ollama_local__main__demo_code_generation --> my_app__my_app____algitex__worktrees__agent_2__examples__18_ollama_local__main__generate_code
-    my_app__my_app____algitex__worktrees__agent_2__examples__18_ollama_local__main__demo_code_analysis --> my_app__my_app____algitex__worktrees__agent_2__examples__18_ollama_local__main__analyze_code
-    my_app__my_app____algitex__worktrees__agent_2__examples__18_ollama_local__main__main --> my_app__my_app____algitex__worktrees__agent_2__examples__18_ollama_local__main__list_models
-    my_app__my_app____algitex__worktrees__agent_2__examples__18_ollama_local__main__main --> my_app__my_app____algitex__worktrees__agent_2__examples__18_ollama_local__main__demo_code_generation
-    my_app__my_app____algitex__worktrees__agent_2__examples__18_ollama_local__main__main --> my_app__my_app____algitex__worktrees__agent_2__examples__18_ollama_local__main__demo_code_analysis
-    my_app__my_app____algitex__worktrees__agent_2__examples__18_ollama_local__main__main --> my_app__my_app____algitex__worktrees__agent_2__examples__18_ollama_local__main__demo_cost_comparison
-    my_app__my_app____algitex__worktrees__agent_2__examples__11_aider_mcp__main__demo_refactoring --> my_app__my_app____algitex__worktrees__agent_2__examples__11_aider_mcp__main__create_sample_project
-    my_app__my_app____algitex__worktrees__agent_2__examples__10_cicd__main__quality_gates_example --> src__algitex__tools__cicd__create_quality_gate_config
-    my_app__my_app____algitex__worktrees__agent_2__examples__30_parallel_execution__parallel_real_world__main --> my_app__my_app____algitex__worktrees__agent_2__examples__30_parallel_execution__parallel_real_world__setup_sample_project
-    my_app__my_app____algitex__worktrees__agent_2__examples__32_workspace_coordination__main__main --> my_app__my_app____algitex__worktrees__agent_2__examples__32_workspace_coordination__main__load_workspace_config
-    my_app__my_app____algitex__worktrees__agent_2__examples__14_docker_mcp__main__demo_docker_operations --> my_app__my_app____algitex__worktrees__agent_2__examples__14_docker_mcp__main__create_sample_docker_project
-    my_app__my_app____algitex__worktrees__agent_2__examples__13_vallm__main__demo_validation --> my_app__my_app____algitex__worktrees__agent_2__examples__13_vallm__main__create_sample_code
-    my_app__my_app____algitex__worktrees__agent_2__examples__20_self_hosted_pipeline__buggy_code__authenticate_user --> my_app__my_app____algitex__worktrees__agent_2__examples__20_self_hosted_pipeline__buggy_code__get_stored_password
-    my_app__my_app____algitex__worktrees__agent_2__examples__15_github_mcp__main__demo_github_workflow --> my_app__my_app____algitex__worktrees__agent_2__examples__15_github_mcp__main__create_sample_project
-    my_app__my_app____algitex__worktrees__agent_2__examples__12_filesystem_mcp__main__demo_file_operations --> my_app__my_app____algitex__worktrees__agent_2__examples__12_filesystem_mcp__main__create_sample_files
-    my_app__my_app____algitex__worktrees__agent_2__examples__19_local_mcp_tools__main__main --> my_app__my_app____algitex__worktrees__agent_2__examples__19_local_mcp_tools__main__check_services
-    my_app__my_app____algitex__worktrees__agent_2__examples__09_workspace__main__create_sample_workspace --> src__algitex__tools__workspace__init_workspace
-    my_app__my_app____algitex__worktrees__agent_2__examples__09_workspace__main__workspace_management_example --> my_app__my_app____algitex__worktrees__agent_2__examples__09_workspace__main__create_sample_workspace
-    my_app__my_app____algitex__worktrees__agent_2__examples__09_workspace__main__cross_repo_analysis_example --> my_app__my_app____algitex__worktrees__agent_2__examples__09_workspace__main__create_sample_workspace
-    my_app__my_app____algitex__worktrees__agent_2__examples__09_workspace__main__cross_repo_planning_example --> my_app__my_app____algitex__worktrees__agent_2__examples__09_workspace__main__create_sample_workspace
-    my_app__my_app____algitex__worktrees__agent_2__examples__09_workspace__main__workspace_execution_example --> my_app__my_app____algitex__worktrees__agent_2__examples__09_workspace__main__create_sample_workspace
-    my_app__my_app____algitex__worktrees__agent_2__examples__09_workspace__main__advanced_workspace_features --> my_app__my_app____algitex__worktrees__agent_2__examples__09_workspace__main__create_sample_workspace
-    my_app__my_app____algitex__worktrees__agent_2__examples__09_workspace__main__advanced_workspace_features --> my_app__my_app____algitex__worktrees__agent_2__examples__09_workspace__main___analyze_workspace_structure
-    my_app__my_app____algitex__worktrees__agent_2__examples__09_workspace__main__advanced_workspace_features --> my_app__my_app____algitex__worktrees__agent_2__examples__09_workspace__main___analyze_impact
-    my_app__my_app____algitex__worktrees__agent_2__examples__09_workspace__main__advanced_workspace_features --> my_app__my_app____algitex__worktrees__agent_2__examples__09_workspace__main___analyze_parallel_execution
-    my_app__my_app____algitex__worktrees__agent_2__examples__09_workspace__main__advanced_workspace_features --> my_app__my_app____algitex__worktrees__agent_2__examples__09_workspace__main___calculate_metrics
-    my_app__my_app____algitex__worktrees__agent_1__docker__vallm__vallm_mcp_server__validate_all --> my_app__my_app____algitex__worktrees__agent_1__docker__vallm__vallm_mcp_server__validate_static
-    my_app__my_app____algitex__worktrees__agent_1__docker__vallm__vallm_mcp_server__validate_all --> my_app__my_app____algitex__worktrees__agent_1__docker__vallm__vallm_mcp_server__validate_runtime
-    my_app__my_app____algitex__worktrees__agent_1__docker__vallm__vallm_mcp_server__validate_all --> my_app__my_app____algitex__worktrees__agent_1__docker__vallm__vallm_mcp_server__validate_security
-    my_app__my_app____algitex__worktrees__agent_1__docker__vallm__vallm_mcp_server__calculate_quality_score --> my_app__my_app____algitex__worktrees__agent_1__docker__vallm__vallm_mcp_server__validate_all
-    my_app__my_app____algitex__worktrees__agent_1__docker__vallm__vallm_mcp_server__calculate_quality_score --> my_app__my_app____algitex__worktrees__agent_1__docker__vallm__vallm_mcp_server__analyze_complexity
-    my_app__my_app____algitex__worktrees__agent_1__docker__vallm__vallm_mcp_server__create_rest_api --> my_app__my_app____algitex__worktrees__agent_1__docker__vallm__vallm_mcp_server__validate_all
-    my_app__my_app____algitex__worktrees__agent_1__docker__vallm__vallm_mcp_server__run_rest_server --> my_app__my_app____algitex__worktrees__agent_1__docker__vallm__vallm_mcp_server__create_rest_api
-    my_app__my_app____algitex__worktrees__agent_1__docker__proxym__proxym_mcp_server__chat_completion --> my_app__my_app____algitex__worktrees__agent_1__docker__proxym__proxym_mcp_server__count_tokens
-    my_app__my_app____algitex__worktrees__agent_1__docker__proxym__proxym_mcp_server__chat_completion --> my_app__my_app____algitex__worktrees__agent_1__docker__proxym__proxym_mcp_server___call_anthropic
-    my_app__my_app____algitex__worktrees__agent_1__docker__proxym__proxym_mcp_server__chat_completion --> my_app__my_app____algitex__worktrees__agent_1__docker__proxym__proxym_mcp_server___call_openai
-    my_app__my_app____algitex__worktrees__agent_1__docker__proxym__proxym_mcp_server__chat_completion --> my_app__my_app____algitex__worktrees__agent_1__docker__proxym__proxym_mcp_server___call_gemini
-    my_app__my_app____algitex__worktrees__agent_1__docker__proxym__proxym_mcp_server___call_anthropic --> my_app__my_app____algitex__worktrees__agent_1__docker__proxym__proxym_mcp_server__count_tokens
-    my_app__my_app____algitex__worktrees__agent_1__docker__proxym__proxym_mcp_server___call_gemini --> my_app__my_app____algitex__worktrees__agent_1__docker__proxym__proxym_mcp_server__count_tokens
-    my_app__my_app____algitex__worktrees__agent_1__docker__proxym__proxym_mcp_server__simple_prompt --> my_app__my_app____algitex__worktrees__agent_1__docker__proxym__proxym_mcp_server__chat_completion
-    my_app__my_app____algitex__worktrees__agent_1__docker__proxym__proxym_mcp_server__create_rest_api --> my_app__my_app____algitex__worktrees__agent_1__docker__proxym__proxym_mcp_server__list_models
-    my_app__my_app____algitex__worktrees__agent_1__docker__proxym__proxym_mcp_server__run_rest_server --> my_app__my_app____algitex__worktrees__agent_1__docker__proxym__proxym_mcp_server__create_rest_api
-    my_app__my_app____algitex__worktrees__agent_1__docker__aider_mcp__aider_mcp_server__create_rest_api --> my_app__my_app____algitex__worktrees__agent_1__docker__aider_mcp__aider_mcp_server__aider_ai_code
-    my_app__my_app____algitex__worktrees__agent_1__docker__aider_mcp__aider_mcp_server__create_rest_api --> my_app__my_app____algitex__worktrees__agent_1__docker__aider_mcp__aider_mcp_server__aider_list_models
-    my_app__my_app____algitex__worktrees__agent_1__docker__aider_mcp__aider_mcp_server__create_rest_api --> my_app__my_app____algitex__worktrees__agent_1__docker__aider_mcp__aider_mcp_server__aider_chat
-    my_app__my_app____algitex__worktrees__agent_1__docker__aider_mcp__aider_mcp_server__run_rest_server --> my_app__my_app____algitex__worktrees__agent_1__docker__aider_mcp__aider_mcp_server__create_rest_api
-    my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server___save_tickets --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server__planfile_create_ticket --> my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server___load_tickets
-    my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server__planfile_create_ticket --> my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server___save_tickets
-    my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server__planfile_list_tickets --> my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server___load_tickets
-    my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server__planfile_list_tickets --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server__planfile_update_ticket --> my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server___load_tickets
-    my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server__planfile_update_ticket --> my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server___save_tickets
-    my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server__planfile_create_tickets_bulk --> my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server__planfile_create_ticket
-    my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server__planfile_sprint_status --> my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server___load_tickets
-    my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server__planfile_sprint_status --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server__planfile_sync --> my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server___save_tickets
-    my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server__create_rest_api --> my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server__planfile_list_tickets
-    my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server__create_rest_api --> my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server__planfile_create_ticket
-    my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server__create_rest_api --> my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server__planfile_update_ticket
-    my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server__create_rest_api --> my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server__planfile_sprint_status
-    my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server__run_rest_server --> my_app__my_app____algitex__worktrees__agent_1__docker__planfile_mcp__planfile_mcp_server__create_rest_api
-    my_app__my_app____algitex__worktrees__agent_1__docker__code2llm__code2llm_mcp_server___collect_project_metrics --> my_app__my_app____algitex__worktrees__agent_1__docker__code2llm__code2llm_mcp_server___analyze_python_file
-    my_app__my_app____algitex__worktrees__agent_1__docker__code2llm__code2llm_mcp_server__analyze_project --> my_app__my_app____algitex__worktrees__agent_1__docker__code2llm__code2llm_mcp_server___collect_project_metrics
-    my_app__my_app____algitex__worktrees__agent_1__docker__code2llm__code2llm_mcp_server__analyze_project --> my_app__my_app____algitex__worktrees__agent_1__docker__code2llm__code2llm_mcp_server___calculate_complexity_metrics
-    my_app__my_app____algitex__worktrees__agent_1__docker__code2llm__code2llm_mcp_server__generate_toon --> my_app__my_app____algitex__worktrees__agent_1__docker__code2llm__code2llm_mcp_server__analyze_project
-    my_app__my_app____algitex__worktrees__agent_1__docker__code2llm__code2llm_mcp_server__generate_readme --> my_app__my_app____algitex__worktrees__agent_1__docker__code2llm__code2llm_mcp_server__analyze_project
-    my_app__my_app____algitex__worktrees__agent_1__docker__code2llm__code2llm_mcp_server__evolution_export --> my_app__my_app____algitex__worktrees__agent_1__docker__code2llm__code2llm_mcp_server__analyze_project
-    my_app__my_app____algitex__worktrees__agent_1__docker__code2llm__code2llm_mcp_server__create_rest_api --> my_app__my_app____algitex__worktrees__agent_1__docker__code2llm__code2llm_mcp_server__analyze_project
-    my_app__my_app____algitex__worktrees__agent_1__docker__code2llm__code2llm_mcp_server__run_rest_server --> my_app__my_app____algitex__worktrees__agent_1__docker__code2llm__code2llm_mcp_server__create_rest_api
-    my_app__my_app____algitex__worktrees__agent_1__src__algitex__config__Config__load --> src__algitex__config___find_config
-    my_app__my_app____algitex__worktrees__agent_1__src__algitex__config__Config__load --> src__algitex__config___merge_yaml
-    my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__mcp__MCPOrchestrator__start_all --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__mcp__MCPOrchestrator__stop_all --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__mcp__MCPOrchestrator__wait_for_ready --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__mcp__MCPOrchestrator__list_services --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__workspace__Workspace___topo_sort --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__workspace__init_workspace --> my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__workspace__create_workspace_template
-    my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__docker__DockerToolManager__teardown_all --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__docker__DockerToolManager__list_tools --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__docker__DockerToolManager__list_running --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__require_tool --> my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__discover_tools
-    my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__analysis__Analyzer___run_code2llm --> src__algitex__tools__analysis___run_cli
-    my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__analysis__Analyzer___run_vallm --> src__algitex__tools__analysis___run_cli
-    my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__analysis__Analyzer___run_redup --> src__algitex__tools__analysis___run_cli
-    my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__telemetry__Telemetry__summary --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__context__ContextBuilder___find_related --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__ide__IDEHelper__list_tools --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__parallel__RegionExtractor___find_calls --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__parallel__RegionExtractor___detect_shadow_conflicts --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__todo_runner__TodoRunner___execute_task --> src__algitex__tools__todo_actions__determine_action
-    my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__todo_actions__determine_action --> my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__todo_actions__get_action_handler
-    my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__benchmark__BenchmarkResults__get_summary --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_1__src__algitex__tools__benchmark__ModelBenchmark__compare_models --> src__algitex__tools__tickets__Tickets__list
-    my_app__my_app____algitex__worktrees__agent_1__src__algitex__cli__core__init --> src__algitex__tools__discover_tools
-    my_app__my_app____algitex__worktrees__agent_1__src__algitex__cli__core__tools --> src__algitex__tools__discover_tools
-    my_app__my_app____algitex__worktrees__agent_1__src__algitex__project__Project___status_infra --> src__algitex__tools__discover_tools
-    my_app__my_app____algitex__worktrees__agent_1__examples__01_quickstart__main__main --> src__algitex__tools__discover_tools
-    my_app__my_app____algitex__worktrees__agent_1__examples__11_aider_mcp__main__demo_refactoring --> my_app__my_app____algitex__worktrees__agent_1__examples__11_aider_mcp__main__create_sample_project
-    my_app__my_app____algitex__worktrees__agent_1__examples__18_ollama_local__main__demo_code_generation --> my_app__my_app____algitex__worktrees__agent_1__examples__18_ollama_local__main__generate_code
-    my_app__my_app____algitex__worktrees__agent_1__examples__18_ollama_local__main__demo_code_analysis --> my_app__my_app____algitex__worktrees__agent_1__examples__18_ollama_local__main__analyze_code
-    my_app__my_app____algitex__worktrees__agent_1__examples__18_ollama_local__main__main --> my_app__my_app____algitex__worktrees__agent_1__examples__18_ollama_local__main__list_models
-    my_app__my_app____algitex__worktrees__agent_1__examples__18_ollama_local__main__main --> my_app__my_app____algitex__worktrees__agent_1__examples__18_ollama_local__main__demo_code_generation
-    my_app__my_app____algitex__worktrees__agent_1__examples__18_ollama_local__main__main --> my_app__my_app____algitex__worktrees__agent_1__examples__18_ollama_local__main__demo_code_analysis
-    my_app__my_app____algitex__worktrees__agent_1__examples__18_ollama_local__main__main --> my_app__my_app____algitex__worktrees__agent_1__examples__18_ollama_local__main__demo_cost_comparison
-    my_app__my_app____algitex__worktrees__agent_1__examples__10_cicd__main__quality_gates_example --> src__algitex__tools__cicd__create_quality_gate_config
-    my_app__my_app____algitex__worktrees__agent_1__examples__30_parallel_execution__parallel_real_world__main --> my_app__my_app____algitex__worktrees__agent_1__examples__30_parallel_execution__parallel_real_world__setup_sample_project
-    my_app__my_app____algitex__worktrees__agent_1__examples__32_workspace_coordination__main__main --> my_app__my_app____algitex__worktrees__agent_1__examples__32_workspace_coordination__main__load_workspace_config
-    my_app__my_app____algitex__worktrees__agent_1__examples__14_docker_mcp__main__demo_docker_operations --> my_app__my_app____algitex__worktrees__agent_1__examples__14_docker_mcp__main__create_sample_docker_project
-    my_app__my_app____algitex__worktrees__agent_1__examples__13_vallm__main__demo_validation --> my_app__my_app____algitex__worktrees__agent_1__examples__13_vallm__main__create_sample_code
-    my_app__my_app____algitex__worktrees__agent_1__examples__20_self_hosted_pipeline__buggy_code__authenticate_user --> my_app__my_app____algitex__worktrees__agent_1__examples__20_self_hosted_pipeline__buggy_code__get_stored_password
-    my_app__my_app____algitex__worktrees__agent_1__examples__15_github_mcp__main__demo_github_workflow --> my_app__my_app____algitex__worktrees__agent_1__examples__15_github_mcp__main__create_sample_project
-    my_app__my_app____algitex__worktrees__agent_1__examples__12_filesystem_mcp__main__demo_file_operations --> my_app__my_app____algitex__worktrees__agent_1__examples__12_filesystem_mcp__main__create_sample_files
-    my_app__my_app____algitex__worktrees__agent_1__examples__19_local_mcp_tools__main__main --> my_app__my_app____algitex__worktrees__agent_1__examples__19_local_mcp_tools__main__check_services
-    my_app__my_app____algitex__worktrees__agent_1__examples__09_workspace__main__create_sample_workspace --> src__algitex__tools__workspace__init_workspace
-    my_app__my_app____algitex__worktrees__agent_1__examples__09_workspace__main__workspace_management_example --> my_app__my_app____algitex__worktrees__agent_1__examples__09_workspace__main__create_sample_workspace
-    my_app__my_app____algitex__worktrees__agent_1__examples__09_workspace__main__cross_repo_analysis_example --> my_app__my_app____algitex__worktrees__agent_1__examples__09_workspace__main__create_sample_workspace
-    my_app__my_app____algitex__worktrees__agent_1__examples__09_workspace__main__cross_repo_planning_example --> my_app__my_app____algitex__worktrees__agent_1__examples__09_workspace__main__create_sample_workspace
-    my_app__my_app____algitex__worktrees__agent_1__examples__09_workspace__main__workspace_execution_example --> my_app__my_app____algitex__worktrees__agent_1__examples__09_workspace__main__create_sample_workspace
-    my_app__my_app____algitex__worktrees__agent_1__examples__09_workspace__main__advanced_workspace_features --> my_app__my_app____algitex__worktrees__agent_1__examples__09_workspace__main__create_sample_workspace
-    my_app__my_app____algitex__worktrees__agent_1__examples__09_workspace__main__advanced_workspace_features --> my_app__my_app____algitex__worktrees__agent_1__examples__09_workspace__main___analyze_workspace_structure
-    my_app__my_app____algitex__worktrees__agent_1__examples__09_workspace__main__advanced_workspace_features --> my_app__my_app____algitex__worktrees__agent_1__examples__09_workspace__main___analyze_impact
-    my_app__my_app____algitex__worktrees__agent_1__examples__09_workspace__main__advanced_workspace_features --> my_app__my_app____algitex__worktrees__agent_1__examples__09_workspace__main___analyze_parallel_execution
-    my_app__my_app____algitex__worktrees__agent_1__examples__09_workspace__main__advanced_workspace_features --> my_app__my_app____algitex__worktrees__agent_1__examples__09_workspace__main___calculate_metrics

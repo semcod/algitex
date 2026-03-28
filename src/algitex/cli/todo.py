@@ -160,3 +160,28 @@ def todo_benchmark(
         result.print_report(detailed=True)
         console.print(f"\n[dim]Tip: Use --compare to see parallel vs sequential comparison[/]")
 
+
+def todo_hybrid(
+    file: str = typer.Argument("TODO.md", help="Path to todo file"),
+    backend: str = typer.Option("litellm-proxy", "--backend", "-b", help="LLM backend: litellm-proxy, ollama, aider"),
+    workers: int = typer.Option(4, "--workers", "-w", help="Parallel workers"),
+    rate_limit: int = typer.Option(10, "--rate-limit", "-r", help="LLM calls per second"),
+    dry_run: bool = typer.Option(True, "--dry-run/--execute", help="Preview or execute"),
+):
+    """Hybrid autofix: parallel mechanical + rate-limited LLM fixes."""
+    from algitex.todo import HybridAutofix
+
+    fixer = HybridAutofix(
+        backend=backend,
+        workers=workers,
+        rate_limit=rate_limit,
+        dry_run=dry_run
+    )
+
+    console.print(f"[bold]Hybrid Autofix[/]: {file}")
+    console.print(f"Backend: {backend}, Workers: {workers}, Rate: {rate_limit}/sec\n")
+
+    result = fixer.fix_all(file)
+    fixer.print_summary(result)
+
+

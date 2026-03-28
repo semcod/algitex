@@ -8,6 +8,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.10] - 2026-03-28
 
 ### Fixed
+- Fix smart-return-type issues (ticket-61632c6f)
+- Fix string-concat issues (ticket-bf8de75f)
+- Fix unused-imports issues (ticket-c9c10a3e)
+- Fix magic-numbers issues (ticket-e4902dee)
+- Fix ai-boilerplate issues (ticket-f5c0d70f)
+- Fix llm-generated-code issues (ticket-8a06d1fb)
+- Fix smart-return-type issues (ticket-fed545cc)
+- Fix string-concat issues (ticket-cf2134bd)
+- Fix unused-imports issues (ticket-09a1926f)
+- Fix magic-numbers issues (ticket-68966c84)
+- Fix llm-generated-code issues (ticket-fd0a6b15)
+- Fix string-concat issues (ticket-1e89f61e)
+- Fix llm-generated-code issues (ticket-13081f4d)
+- Fix unused-imports issues (ticket-e5d79947)
+- Fix magic-numbers issues (ticket-f1a673ac)
+- Fix llm-generated-code issues (ticket-4838d83f)
+
+## [0.1.10] - 2026-03-28
+
+### Fixed
 - Fix smart-return-type issues (ticket-9efdc3c5)
 - Fix string-concat issues (ticket-92dc3ccb)
 - Fix magic-numbers issues (ticket-cb394b17)
@@ -1541,6 +1561,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix llm-generated-code issues (ticket-06d0712f)
 
 ## [Unreleased]
+
+## [0.1.27] - 2026-03-28
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update TODO.md
+- Update docs/README.md
+- Update examples/33-hybrid-autofix/README.md
+- Update examples/33-hybrid-autofix/TODO.md
+- Update examples/README.md
+- Update project/README.md
+- Update project/context.md
+
+### Other
+- Update benchmark_parallel_fix.py
+- Update examples/33-hybrid-autofix/Makefile
+- Update examples/33-hybrid-autofix/main.py
+- Update planfile.yaml
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/compact_flow.mmd
+- Update project/compact_flow.png
+- Update project/duplication.toon.yaml
+- ... and 8 more files
 
 ## [0.1.26] - 2026-03-28
 

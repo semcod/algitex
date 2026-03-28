@@ -1,18 +1,14 @@
-# vallm batch | 318f | 160✓ 4⚠ 13✗ | 2026-03-28
+# vallm batch | 324f | 164✓ 3⚠ 13✗ | 2026-03-28
 
 SUMMARY:
-  scanned: 318  passed: 160 (50.3%)  warnings: 4  errors: 13  unsupported: 145
+  scanned: 324  passed: 164 (50.6%)  warnings: 3  errors: 13  unsupported: 147
 
-WARNINGS[4]{path,score}:
+WARNINGS[3]{path,score}:
   examples/32-workspace-coordination/main.py,0.93
     issues[3]{rule,severity,message,line}:
       complexity.cyclomatic,warning,main has cyclomatic complexity 24 (max: 15),23
       complexity.lizard_cc,warning,main: CC=24 exceeds limit 15,23
       complexity.lizard_length,warning,main: 121 lines exceeds limit 100,23
-  src/algitex/tools/parallel/partitioner.py,0.97
-    issues[2]{rule,severity,message,line}:
-      complexity.cyclomatic,warning,partition has cyclomatic complexity 22 (max: 15),16
-      complexity.lizard_cc,warning,partition: CC=22 exceeds limit 15,16
   tests/test_e2e_integration.py,0.97
     issues[2]{rule,severity,message,line}:
       complexity.cyclomatic,warning,test_complete_pipeline_flow has cyclomatic complexity 16 (max: 15),167
@@ -91,4 +87,4 @@ UNSUPPORTED[5]{bucket,count}:
   Dockerfile*,31
   *.txt,2
   *.yml,3
-  other,39
+  other,41
