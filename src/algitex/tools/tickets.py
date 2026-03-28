@@ -10,7 +10,7 @@ Usage:
     t.sync()                   # push to GitHub/Jira
 """
 
-from __future__,annotations
+from __future__ import annotations
 
 ,json
 import subprocess

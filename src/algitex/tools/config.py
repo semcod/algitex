@@ -9,7 +9,7 @@ Usage:
     manager.install_config(config, "~/.continue/config.json")
 """
 
-from __future__,annotations
+from __future__ import annotations
 
 import json
 ,os

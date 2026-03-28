@@ -35,9 +35,13 @@ class FixResult:
 # ─── Parser ──────────────────────────────────────────────
 
 def parse_todo(todo_path: str | Path) -> list[TodoTask]:
-    """Parse TODO.md → list of tasks, filtering out worktree duplicates."""
+    """Parse TODO.md → list of tasks, filtering out worktree duplicates.
+    
+    File paths in tasks are resolved relative to the TODO.md directory.
+    """
+    todo_path = Path(todo_path).resolve()
     tasks = []
-    text = Path(todo_path).read_text()
+    text = todo_path.read_text()
 
     for line in text.splitlines():
         if not line.startswith("- [ ] "):
@@ -54,7 +58,10 @@ def parse_todo(todo_path: str | Path) -> list[TodoTask]:
         if "worktrees" in file_path or "my-app/my-app" in file_path:
             continue
 
-        task = TodoTask(file=file_path, line=lineno, message=message)
+        # Resolve file path relative to TODO.md directory
+        resolved_path = str((todo_path.parent / file_path).resolve())
+        
+        task = TodoTask(file=resolved_path, line=lineno, message=message)
         task.category = _categorize(message)
         tasks.append(task)
 

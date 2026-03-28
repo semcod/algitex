@@ -7,7 +7,7 @@ This module contains transport-specific logic for Docker MCP tools:
 - cli: On-demand docker exec
 """
 
-from __future__,annotations
+from __future__ import annotations
 
 import json
 import subprocess

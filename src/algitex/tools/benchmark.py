@@ -16,7 +16,7 @@ Usage:
     benchmark.print_results(results)
 """
 
-from __future__,annotations
+from __future__ import annotations
 
 import json
 import time

@@ -3,7 +3,7 @@
 Manage multiple repositories as a single workspace with dependency ordering.
 """
 
-from __future__,annotations
+from __future__ import annotations
 
 import subprocess
 from dataclasses import dataclass, field

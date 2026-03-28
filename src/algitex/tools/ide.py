@@ -9,7 +9,7 @@ Usage:
     result = claude.fix_file("main.py", "Add type hints")
 """
 
-from __future__,annotations
+from __future__ import annotations
 
 import os
 import subprocess

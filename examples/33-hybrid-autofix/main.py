@@ -145,6 +145,47 @@ def main():
 
     args = parser.parse_args()
 
+    # Validate TODO file exists
+    if not args.todo_file.exists():
+        print(f"\n❌ Error: TODO file not found: {args.todo_file}")
+        print(f"\n💡 Suggestions:")
+        print(f"   1. Run from project root: cd /home/tom/github/semcod/algitex")
+        print(f"   2. Use absolute path: -f /home/tom/github/semcod/algitex/TODO.md")
+        print(f"   3. Create TODO.md first: algitex todo verify")
+        return 1
+
+    # Validate at least some source files exist
+    from algitex.todo import parse_todo
+    tasks = parse_todo(args.todo_file)
+    if not tasks:
+        print(f"\n❌ Error: No tasks found in {args.todo_file}")
+        return 1
+    
+    # Check if files are resolvable
+    import os
+    missing_files = []
+    for task in tasks[:10]:  # Check first 10
+        if not os.path.exists(task.file):
+            missing_files.append(task.file)
+    
+    if len(missing_files) >= 5:
+        print(f"\n⚠️  Warning: {len(missing_files)}+ files not found from first 10 checked")
+        print(f"\n💡 This usually means:")
+        print(f"   - TODO.md paths are relative to project root")
+        print(f"   - You're running from a subdirectory")
+        print(f"\n💡 Solutions:")
+        print(f"   1. Run from project root:")
+        print(f"      cd /home/tom/github/semcod/algitex")
+        print(f"      python examples/33-hybrid-autofix/main.py --demo hybrid")
+        print(f"   2. Or use absolute path to TODO.md:")
+        print(f"      python main.py --demo hybrid -f /home/tom/github/semcod/algitex/TODO.md")
+        print(f"\n   Current TODO.md: {args.todo_file}")
+        print(f"   Current directory: {os.getcwd()}")
+        
+        response = input("\nContinue anyway? [y/N]: ")
+        if response.lower() != 'y':
+            return 1
+
     print("=" * 70)
     print("Example 33: Hybrid AutoFix")
     print("Fast Parallel Mechanical + Rate-Limited LLM")

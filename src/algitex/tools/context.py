@@ -1,6 +1,6 @@
 """Context management — build optimal prompts for LLM coding tools."""
 
-from __future__,annotations
+from __future__ import annotations
 
 from pathlib import Path
 from dataclasses import dataclass

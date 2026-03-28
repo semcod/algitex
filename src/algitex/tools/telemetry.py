@@ -1,6 +1,6 @@
 """LLM cost & performance telemetry for algitex pipelines."""
 
-from __future__,annotations
+from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import datetime

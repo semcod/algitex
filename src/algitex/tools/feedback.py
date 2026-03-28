@@ -1,6 +1,6 @@
 """Feedback loop controller for algitex pipelines."""
 
-from __future__,annotations
+from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import Enum

@@ -8,7 +8,7 @@ Usage:
     response = client.generate("Explain this code", model="qwen2.5-coder:7b")
 """
 
-from __future__,annotations
+from __future__ import annotations
 
 import json
 import re

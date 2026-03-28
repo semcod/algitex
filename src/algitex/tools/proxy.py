@@ -9,7 +9,7 @@ Usage:
     print(proxy.budget())                    # remaining budget
 """
 
-from __future__,annotations
+from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import Any, Optional

@@ -1,6 +1,6 @@
 """Docker tool manager — spawn, connect, call, teardown."""
 
-from __future__,annotations
+from __future__ import annotations
 
 import json
 import os
