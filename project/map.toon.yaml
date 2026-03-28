@@ -1,10 +1,10 @@
-# algitex | 214f 46555L | python:213,shell:1 | 2026-03-28
-# stats: 2019 func | 0 cls | 214 mod | CC̄=3.4 | critical:6 | cycles:0
-# alerts[5]: CC classify_message=50; CC fix_file=30; CC todo_verify_prefact=29; CC todo_verify_prefact=29; fan-out todo_verify_prefact=21
-# hotspots[5]: todo_verify_prefact fan=21; todo_verify_prefact fan=21; BatchFixBackend.fix_batch fan=20; _apply_magic_number_fixes fan=18; fix_file fan=18
-# evolution: CC̄ 3.4→3.4 (flat 0.0)
+# algitex | 223f 48391L | python:222,shell:1 | 2026-03-28
+# stats: 2105 func | 0 cls | 223 mod | CC̄=3.5 | critical:9 | cycles:0
+# alerts[5]: CC classify_message=50; CC todo_fix=50; CC _classify_message=48; CC fix_file=30; CC todo_verify_prefact=29
+# hotspots[5]: todo_fix fan=23; todo_verify_prefact fan=21; DocstringShortener.fix_file fan=21; todo_verify_prefact fan=21; BatchFixBackend.fix_batch fan=20
+# evolution: CC̄ 3.4→3.5 (regressed +0.1)
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[214]:
+M[223]:
   .algitex/backups/batch_20260328_142940/docker/aider-mcp/aider_mcp_server.py,156
   .algitex/backups/batch_20260328_142940/docker/planfile-mcp/planfile_mcp_server.py,276
   .algitex/backups/batch_20260328_142940/docker/vallm/vallm_server.py,274
@@ -149,18 +149,27 @@ M[214]:
   docker/planfile-mcp/planfile_mcp_server.py,276
   docker/vallm/vallm_server.py,274
   project.sh,24
+  scripts/fix_readme.py,33
   src/algitex/__init__.py,36
   src/algitex/algo/__init__.py,367
   src/algitex/algo/loop.py,4
-  src/algitex/cli/__init__.py,117
+  src/algitex/cli/__init__.py,137
   src/algitex/cli/algo.py,63
   src/algitex/cli/core.py,188
   src/algitex/cli/docker.py,96
+  src/algitex/cli/microtask.py,190
+  src/algitex/cli/nlp.py,143
   src/algitex/cli/parallel.py,149
   src/algitex/cli/ticket.py,46
-  src/algitex/cli/todo.py,601
+  src/algitex/cli/todo.py,627
   src/algitex/cli/workflow.py,39
   src/algitex/config.py,170
+  src/algitex/microtask/__init__.py,196
+  src/algitex/microtask/classifier.py,185
+  src/algitex/microtask/executor.py,421
+  src/algitex/microtask/prompts.py,126
+  src/algitex/microtask/slicer.py,121
+  src/algitex/nlp/__init__.py,331
   src/algitex/project/__init__.py,439
   src/algitex/project/autofix.py,52
   src/algitex/project/batch.py,60
@@ -175,9 +184,9 @@ M[214]:
   src/algitex/todo/__init__.py,130
   src/algitex/todo/audit.py,286
   src/algitex/todo/benchmark.py,244
-  src/algitex/todo/fixer.py,704
+  src/algitex/todo/fixer.py,724
   src/algitex/todo/hybrid.py,479
-  src/algitex/todo/micro.py,581
+  src/algitex/todo/micro.py,605
   src/algitex/todo/tiering.py,279
   src/algitex/todo/verifier.py,195
   src/algitex/tools/__init__.py,115
@@ -220,6 +229,19 @@ M[214]:
   src/algitex/workflows/__init__.py,320
   src/algitex/workflows/pipeline.py,5
 D:
+  src/algitex/cli/todo.py:
+    e: _render_todo_stats,todo_stats,todo_verify,todo_fix_parallel,todo_list,todo_run,todo_fix,todo_benchmark,todo_hybrid,todo_batch,todo_verify_prefact
+    _render_todo_stats(file;tasks)
+    todo_stats(file)
+    todo_verify(file)
+    todo_fix_parallel(file;workers;dry_run;category)
+    todo_list(file)
+    todo_run(file;tool;dry_run;limit)
+    todo_fix(file;tool;task_id;limit;dry_run;algo;micro;all_phases;workers;micro_workers;model;backend;rate_limit;proxy_url)
+    todo_benchmark(limit;file;workers;compare)
+    todo_hybrid(file;backend;tool;workers;rate_limit;proxy_url;hybrid;fallback;verbose;dry_run)
+    todo_batch(file;backend;batch_size;parallel;dry_run;verbose;prune;limit;no_log)
+    todo_verify_prefact(file;prune)
   src/algitex/todo/tiering.py:
     e: TaskTriage,TierSummary,_first_int,_normalise_task_message,classify_message,classify_task,summarise_tasks,load_todo_tasks,filter_tasks,partition_tasks
     TaskTriage:  # Classification result for a single TODO task...
@@ -232,8 +254,18 @@ D:
     load_todo_tasks(todo_path)
     filter_tasks(tasks)
     partition_tasks(tasks)
+  src/algitex/microtask/classifier.py:
+    e: classify_prefact_line,classify_todo_file,_classify_message,_resolve_file,_is_ignored_path,_first_int,_extract_function_name,_extract_suggestion
+    classify_prefact_line(line;task_id;base_dir)
+    classify_todo_file(path)
+    _classify_message(message)
+    _resolve_file(file_path;base_dir)
+    _is_ignored_path(file_path)
+    _first_int(text)
+    _extract_function_name(message)
+    _extract_suggestion(message)
   src/algitex/todo/fixer.py:
-    e: TodoTask,FixResult,parse_todo,_categorize,_simple_fstring_rewrite,_find_import_insert_point,_extract_magic_number,_apply_magic_number_fixes,_apply_fstring_fix,_apply_module_block_fix,fix_unused_import,fix_fstring,fix_magic_number,fix_module_block,fix_return_type,_group_tasks_by_file,_compute_category_stats,_compute_tier_stats,_print_pre_execution_summary,_execute_parallel_fixes,_print_execution_summary,fix_file,parallel_fix,mark_tasks_completed,parallel_fix_and_update
+    e: TodoTask,FixResult,parse_todo,_categorize,_simple_fstring_rewrite,_find_import_insert_point,_extract_magic_number,_locate_magic_line,_apply_magic_number_fixes,_apply_fstring_fix,_apply_module_block_fix,fix_unused_import,fix_fstring,fix_magic_number,fix_module_block,fix_return_type,_group_tasks_by_file,_compute_category_stats,_compute_tier_stats,_print_pre_execution_summary,_execute_parallel_fixes,_print_execution_summary,fix_file,parallel_fix,mark_tasks_completed,parallel_fix_and_update
     TodoTask:  # Single TODO task...
     FixResult:  # Result of fixing a file...
     parse_todo(todo_path)
@@ -241,6 +273,7 @@ D:
     _simple_fstring_rewrite(line)
     _find_import_insert_point(lines)
     _extract_magic_number(task)
+    _locate_magic_line(lines;task;number)
     _apply_magic_number_fixes(path;tasks)
     _apply_fstring_fix(path)
     _apply_module_block_fix(path)
@@ -270,19 +303,10 @@ D:
     todo_hybrid(file;backend;tool;workers;rate_limit;proxy_url;hybrid;fallback;verbose;dry_run)
     todo_batch(file;backend;batch_size;parallel;dry_run;verbose;prune;limit)
     todo_verify_prefact(file;prune)
-  src/algitex/cli/todo.py:
-    e: _render_todo_stats,todo_stats,todo_verify,todo_fix_parallel,todo_list,todo_run,todo_fix,todo_benchmark,todo_hybrid,todo_batch,todo_verify_prefact
-    _render_todo_stats(file;tasks)
-    todo_stats(file)
-    todo_verify(file)
-    todo_fix_parallel(file;workers;dry_run;category)
-    todo_list(file)
-    todo_run(file;tool;dry_run;limit)
-    todo_fix(file;tool;task_id;limit)
-    todo_benchmark(limit;file;workers;compare)
-    todo_hybrid(file;backend;tool;workers;rate_limit;proxy_url;hybrid;fallback;verbose;dry_run)
-    todo_batch(file;backend;batch_size;parallel;dry_run;verbose;prune;limit;no_log)
-    todo_verify_prefact(file;prune)
+  src/algitex/microtask/executor.py:
+    e: PhaseResult,MicroTaskExecutor
+    PhaseResult: as_dict(0)  # Summary for a single execution phase...
+    MicroTaskExecutor: __init__(5),execute(2),group_by_file(1),_phase_algorithmic(2),_process_algorithmic_batch(2),_phase_llm(4),_process_llm_batch(2),_supports_algorithmic(1),_apply_line_fix(2),_apply_fstring_fix(2),_apply_llm_response(2),_apply_magic_name(3),_apply_rewrite(3),_strip_trailing_whitespace(1),_todo_category(1),_resolve_path(1),_find_import_insert_point(1),_first_int(1),_sanitize_constant_name(2),_strip_code_fences(1),_validate_python(1),close(0)  # Execute micro tasks in three tiers: algorithmic, small LLM, ...
   src/algitex/tools/autofix/batch_logger.py:
     e: BatchLogEntry,BatchSessionLog,BatchLogger,get_logger,start_session,end_session
     BatchLogEntry:  # Single entry in batch log...
@@ -291,20 +315,6 @@ D:
     get_logger()
     start_session(backend;batch_size;parallel)
     end_session()
-  src/algitex/todo/micro.py:
-    e: FunctionSnippet,MicroFixResult,FunctionExtractor,MicroPromptBuilder,MicroFixer,_find_import_insert_point,_extract_first_int,_normalize_model_name,_strip_code_fences,_sanitize_constant_name,_validate_python,_coerce_task
-    FunctionSnippet:  # Minimal source slice around a function or method...
-    MicroFixResult:  # Result of a micro-LLM fix...
-    FunctionExtractor: extract(2)  # Extract a single function or method around a task line...
-    MicroPromptBuilder: build(3),_build_user_prompt(3)  # Build narrow prompts for micro-LLM fixes...
-    MicroFixer: __init__(4),fix_file(2),fix_task(1),run(3),fix_tasks(2),_fix_magic_name(3),_apply_function_rewrite(5),_apply_magic_name(5)  # Execute micro-LLM fixes on a TODO file...
-    _find_import_insert_point(lines)
-    _extract_first_int(text)
-    _normalize_model_name(model)
-    _strip_code_fences(text)
-    _sanitize_constant_name(text;number)
-    _validate_python(source)
-    _coerce_task(task)
   .algitex/backups/batch_20260328_142940/src/algitex/tools/benchmark.py:
     e: Task,TaskResult,BenchmarkResults,ModelBenchmark
     Task: evaluate_quality(1)  # Benchmark task definition...
@@ -333,6 +343,21 @@ D:
     TaskResult: to_dict(0)  # Result for a single model on a single task...
     BenchmarkResults: get_model_results(1),get_task_results(1),get_best_model(2),to_dict(0),get_summary(0)  # Complete benchmark results...
     ModelBenchmark: __init__(2),_add_default_tasks(0),add_task(1),add_custom_task(4),run_single_task(2),compare_models(3),print_results(2),_print_table(1),_print_summary(1),_print_detailed(1),save_results(2),load_results(1)  # Benchmark models on standardized tasks...
+  src/algitex/nlp/__init__.py:
+    e: DocstringChange,DocstringShortener,DeadCodeDetector,_DuplicateWindow,_UsageCollector,sort_imports_in_path,find_duplicate_blocks,_sort_imports,_fallback_sort_imports,_python_files,_is_ignored,_ensure_trailing_newline,_stable_line_hash
+    DocstringChange:  # Single docstring rewrite...
+    DocstringShortener: shorten(1),fix_file(2),fix_path(2),_iter_docstring_nodes(1)  # Shorten verbose docstrings to one or two lines...
+    DeadCodeDetector: scan(1)  # Detect top-level functions that appear unused...
+    _DuplicateWindow:
+    _UsageCollector(ast.NodeVisitor): __init__(0),visit_ClassDef(1),visit_FunctionDef(1),visit_AsyncFunctionDef(1),visit_Name(1),visit_Attribute(1)
+    sort_imports_in_path(path;apply)
+    find_duplicate_blocks(project_path;min_lines)
+    _sort_imports(source)
+    _fallback_sort_imports(source)
+    _python_files(path)
+    _is_ignored(path)
+    _ensure_trailing_newline(text)
+    _stable_line_hash(line)
   .algitex/backups/batch_20260328_142940/src/algitex/tools/todo_executor.py:
     e: TaskResult,TodoExecutor
     TaskResult:  # Result of executing a single task...
@@ -350,14 +375,14 @@ D:
     github_action(task)
     get_action_handler(tool)
     determine_action(task;tool)
-  .algitex/backups/batch_20260328_143434/src/algitex/tools/todo_executor.py:
-    e: TaskResult,TodoExecutor
-    TaskResult:  # Result of executing a single task...
-    TodoExecutor: __init__(2),__enter__(0),__exit__(3),run(3),_execute_task(3),_parse_action(1),_parse_fix_action(1),_parse_create_action(1),_parse_delete_action(1),_parse_read_action(1),_extract_output(1),get_summary(0)  # Execute todo tasks using Docker MCP tools...
   .algitex/backups/batch_20260328_143434/src/algitex/tools/todo_runner.py:
     e: TaskResult,TodoRunner
     TaskResult:  # Result of executing a single task...
     TodoRunner: __init__(2),__enter__(0),__exit__(3),run_from_file(4),run(3),_execute_local(2),_execute_ollama(2),_build_ollama_prompt(2),_call_ollama_api(1),_execute_task(3),_format_output(1),get_summary(0)  # Execute todo tasks using Docker MCP tools with local fallbac...
+  .algitex/backups/batch_20260328_143434/src/algitex/tools/todo_executor.py:
+    e: TaskResult,TodoExecutor
+    TaskResult:  # Result of executing a single task...
+    TodoExecutor: __init__(2),__enter__(0),__exit__(3),run(3),_execute_task(3),_parse_action(1),_parse_fix_action(1),_parse_create_action(1),_parse_delete_action(1),_parse_read_action(1),_extract_output(1),get_summary(0)  # Execute todo tasks using Docker MCP tools...
   .algitex/backups/batch_20260328_143434/src/algitex/tools/todo_actions.py:
     e: nap_action,aider_action,ollama_action,filesystem_action,github_action,get_action_handler,determine_action
     nap_action(task)
@@ -384,6 +409,9 @@ D:
     github_action(task)
     get_action_handler(tool)
     determine_action(task;tool)
+  src/algitex/microtask/slicer.py:
+    e: ContextSlicer
+    ContextSlicer: __init__(1),slice(1),_resolve_path(1),_extract_function(3),_expand_window(3),_extract_lines(3),_estimate_tokens(1)  # Extract the smallest useful context for a micro task...
   .algitex/backups/batch_20260328_142940/src/algitex/tools/autofix/__init__.py:
     e: AutoFix
     AutoFix: __init__(5),check_backends(0),choose_backend(0),_convert_task(1),mark_task_done(1),fix_with_ollama(1),fix_with_aider(1),fix_with_proxy(1),fix_task(2),fix_all(3),fix_issue(2),print_summary(1),list_tasks(0),get_stats(0)  # Automated code fixing using various backends...
@@ -411,6 +439,20 @@ D:
   src/algitex/tools/autofix/__init__.py:
     e: AutoFix
     AutoFix: __init__(5),check_backends(0),choose_backend(0),_convert_task(1),mark_task_done(1),fix_with_ollama(1),fix_with_aider(1),fix_with_proxy(1),fix_task(2),fix_all(3),fix_issue(2),print_summary(1),list_tasks(0),get_stats(0)  # Automated code fixing using various backends...
+  src/algitex/todo/micro.py:
+    e: FunctionSnippet,MicroFixResult,FunctionExtractor,MicroPromptBuilder,MicroFixer,_find_import_insert_point,_extract_first_int,_normalize_model_name,_strip_code_fences,_sanitize_constant_name,_validate_python,_coerce_task
+    FunctionSnippet:  # Minimal source slice around a function or method...
+    MicroFixResult:  # Result of a micro-LLM fix...
+    FunctionExtractor: extract(2)  # Extract a single function or method around a task line...
+    MicroPromptBuilder: build(3),_build_user_prompt(3)  # Build narrow prompts for micro-LLM fixes...
+    MicroFixer: __init__(4),fix_file(2),fix_task(1),run(3),fix_tasks_detailed(2),fix_tasks(2),_fix_magic_name(3),_apply_function_rewrite(5),_apply_magic_name(5)  # Execute micro-LLM fixes on a TODO file...
+    _find_import_insert_point(lines)
+    _extract_first_int(text)
+    _normalize_model_name(model)
+    _strip_code_fences(text)
+    _sanitize_constant_name(text;number)
+    _validate_python(source)
+    _coerce_task(task)
   src/algitex/todo/verifier.py:
     e: TodoTask,VerificationResult,TodoVerifier,verify_todos
     TodoTask:  # Single TODO task from prefact output...
@@ -790,12 +832,6 @@ Usage:
     DockerTool:  # Single Docker-based tool declaration from docker-tools.yaml...
     RunningTool:  # A spawned Docker container with connection info...
     DockerToolManager: __init__(1),__enter__(0),__exit__(3),_load_tools(0),_read_yaml_with_expansion(1),_expand_tool_spec(1),_expand_env_vars(1),_expand_volumes(1),_load_state(0),_save_state(0),spawn(1),_wait_healthy(2),_get_http_client(0),call_tool(3),teardown(1),teardown_all(0),list_tools(0),list_running(0),get_capabilities(1),_query_stdio_capabilities(1)  # Spawn Docker containers, connect via MCP/REST, call tools, t...
-  src/algitex/tools/feedback.py:
-    e: FailureStrategy,FeedbackPolicy,FeedbackController,FeedbackLoop
-    FailureStrategy(Enum):
-    FeedbackPolicy: __post_init__(0)  # Policy configuration for feedback handling...
-    FeedbackController: __init__(1),on_validation_failure(3),on_success(2),needs_approval(1),_extract_feedback(1)  # Orchestrate retry/replan/escalate decisions...
-    FeedbackLoop: __init__(3),execute_with_feedback(2),_execute_single(2),_validate_result(1),_mark_ticket_done(3),_mark_ticket_skipped(2)  # Integrates feedback controller into the pipeline execution...
   src/algitex/tools/ide.py:
     e: IDETool,IDEHelper,ClaudeCodeHelper,AiderHelper,VSCodeHelper,EditorIntegration
     IDETool: __post_init__(0)  # IDE tool configuration...
@@ -804,6 +840,12 @@ Usage:
     AiderHelper(IDEHelper): __init__(0),fix_file(4)  # Helper for Aider integration...
     VSCodeHelper(IDEHelper): __init__(0),open_file(2),install_extensions(1),recommended_extensions(0)  # Helper for VS Code integration...
     EditorIntegration: __init__(0),detect_editor(0),setup_best_integration(0),get_quick_fix_command(3)  # High-level editor integration manager...
+  src/algitex/tools/feedback.py:
+    e: FailureStrategy,FeedbackPolicy,FeedbackController,FeedbackLoop
+    FailureStrategy(Enum):
+    FeedbackPolicy: __post_init__(0)  # Policy configuration for feedback handling...
+    FeedbackController: __init__(1),on_validation_failure(3),on_success(2),needs_approval(1),_extract_feedback(1)  # Orchestrate retry/replan/escalate decisions...
+    FeedbackLoop: __init__(3),execute_with_feedback(2),_execute_single(2),_validate_result(1),_mark_ticket_done(3),_mark_ticket_skipped(2)  # Integrates feedback controller into the pipeline execution...
   src/algitex/project/autofix.py:
     e: AutoFixMixin
     AutoFixMixin: __init__(1),fix_issues(3),fix_issue(2),list_todo_tasks(0),sync(0)  # AutoFix integration functionality for Project...
@@ -894,6 +936,9 @@ Usage:
     planfile_sync()
     create_rest_api()
     run_rest_server()
+  src/algitex/tools/config.py:
+    e: ConfigManager
+    ConfigManager: __init__(1),_ensure_dir(1),_backup_file(1),install_config(3),generate_continue_config(3),install_continue_config(2),generate_vscode_settings(2),install_vscode_settings(2),generate_env_file(2),generate_docker_compose(2),setup_project_configs(2),list_configs(1),_list_continue_configs(1),_list_vscode_configs(1),_list_env_configs(0),_list_docker_configs(0)  # Manages configuration files for various IDEs and tools...
   src/algitex/tools/todo_parser.py:
     e: Task,TodoParser
     Task: to_dict(0)  # Single todo task extracted from file...
@@ -904,9 +949,6 @@ Usage:
     Analyzer: __init__(1),health(0),full(0),_run_code2llm(1),_run_vallm(1),_run_redup(1)  # Unified interface for code analysis tools...
     CLIResult:
     _run_cli(cmd;cwd)
-  src/algitex/tools/config.py:
-    e: ConfigManager
-    ConfigManager: __init__(1),_ensure_dir(1),_backup_file(1),install_config(3),generate_continue_config(3),install_continue_config(2),generate_vscode_settings(2),install_vscode_settings(2),generate_env_file(2),generate_docker_compose(2),setup_project_configs(2),list_configs(1),_list_continue_configs(1),_list_vscode_configs(1),_list_env_configs(0),_list_docker_configs(0)  # Manages configuration files for various IDEs and tools...
   src/algitex/tools/context.py:
     e: CodeContext,ContextBuilder,SemanticCache
     CodeContext: to_prompt(1)  # Assembled context for an LLM coding task...
@@ -918,6 +960,22 @@ Usage:
     BatchStats: update(1)  # Statistics for batch processing...
     BatchProcessor: __init__(9),_rate_limit(0),_process_item(2),process(2),_prepare(1),_execute(2),_collect(1),_setup_progress_bar(1),_collect_results(3),_get_start_time(0),_print_summary(1),_save_results(0),get_successful(0),get_failed(0),filter_by_error(1)  # Generic batch processor with rate limiting and retries...
     FileBatchProcessor(BatchProcessor): __init__(4),find_files(3),process_directory(2)  # Specialized batch processor for files...
+  src/algitex/cli/microtask.py:
+    e: microtask_classify,microtask_plan,microtask_run,_filter_tasks,_print_summary,_print_task_table,_print_plan_table,_print_file_batches,_print_phase_results,_shorten_path
+    microtask_classify(todo_path)
+    microtask_plan(todo_path)
+    microtask_run(todo_path;algo_only;tier;dry_run;workers;llm_workers;rate_limit)
+    _filter_tasks(tasks)
+    _print_summary(tasks)
+    _print_task_table(tasks)
+    _print_plan_table(tasks)
+    _print_file_batches(tasks)
+    _print_phase_results(results)
+    _shorten_path(path;max_len)
+  src/algitex/microtask/prompts.py:
+    e: _SafeDict,PromptBuilder
+    _SafeDict(<ast.Subscript object at 0x7dbc1c6758d0>): __missing__(1)
+    PromptBuilder: __init__(1),build(1),_select_model(1),_build_instruction(1),_build_user_prompt(2)  # Build compact chat prompts for local LLMs...
   .algitex/backups/batch_20260328_142940/src/algitex/project/__init__.py:
     e: Project
     Project(ServiceMixin,AutoFixMixin,OllamaMixin,BatchMixin,BenchmarkMixin,IDEMixin,ConfigMixin,MCPMixin): __init__(2),analyze(1),plan(3),execute(1),status(0),_status_health(0),_status_tickets(0),_status_infra(0),_check_proxy_status(0),_check_docker_status(0),_check_tools_status(0),_compute_cost_ledger(1),_status_algo(0),run_workflow(1),ask(1),add_ticket(1),generate_todo(1),_collect_hotspot_issues(1),_write_todo_file(3),_build_prompt(1),_select_tier(1),_generate_strategy(2)  # One project, all tools, zero boilerplate...
@@ -1108,6 +1166,16 @@ Usage:
     ticket_add(title;priority;type)
     ticket_list(status)
     ticket_board()
+  src/algitex/cli/nlp.py:
+    e: nlp_docstrings,nlp_imports,nlp_dead_code,nlp_duplicates,_print_docstring_changes,_print_dead_code,_print_duplicates,_shorten
+    nlp_docstrings(path;fix)
+    nlp_imports(path;sort)
+    nlp_dead_code(path)
+    nlp_duplicates(path;min_lines)
+    _print_docstring_changes(changes)
+    _print_dead_code(results)
+    _print_duplicates(results)
+    _shorten(text;limit)
   src/algitex/workflows/__init__.py:
     e: Pipeline,TicketExecutor,TicketValidator
     Pipeline: __init__(2),analyze(1),create_tickets(0),execute(2),validate(0),sync(1),report(0),finish(0)  # Composable workflow: chain steps fluently...
@@ -1209,6 +1277,12 @@ Usage:
     e: workflow_run,workflow_validate
     workflow_run(path;dry_run)
     workflow_validate(path)
+  src/algitex/microtask/__init__.py:
+    e: TaskType,MicroTask,MicroTaskBatch,group_tasks_by_file
+    TaskType(str,Enum):  # Classification tiers for micro tasks...
+    MicroTask:  # Atomic unit of work for a single file change...
+    MicroTaskBatch: stats(0)  # Tasks grouped by file for execution...
+    group_tasks_by_file(tasks)
   src/algitex/tools/autofix/aider_backend.py:
     e: AiderBackend
     AiderBackend: __init__(1),fix(1),_validate_task(2),_ensure_git_repo(0),_build_command(1),_build_prompt(1),_execute_aider(2),_process_result(3),_dry_run_result(2),_timeout_result(2),_error_result(3)  # Fix issues using Aider CLI...
@@ -1281,6 +1355,9 @@ Usage:
   src/algitex/project/benchmark.py:
     e: BenchmarkMixin
     BenchmarkMixin: __init__(1),benchmark_models(2),add_benchmark_task(4),print_benchmark_results(2)  # Model benchmarking functionality for Project...
+  scripts/fix_readme.py:
+    e: fix_readme
+    fix_readme(path)
   .algitex/backups/batch_20260328_142940/src/algitex/project/ide.py:
     e: IDEMixin
     IDEMixin: __init__(0),setup_ide(1),fix_with_claude(3),fix_with_aider(3),detect_editor(0),get_ide_status(0)  # IDE integration functionality for Project...
@@ -1344,8 +1421,8 @@ Usage:
   .algitex/backups/batch_20260328_143434/src/algitex/tools/parallel/__init__.py:
   .algitex/backups/batch_20260328_143434/src/algitex/propact/workflow.py:
   .algitex/backups/batch_20260328_143434/src/algitex/workflows/pipeline.py:
-  src/algitex/__init__.py:
   src/algitex/cli/__init__.py:
+  src/algitex/__init__.py:
   src/algitex/algo/loop.py:
   src/algitex/tools/parallel/__init__.py:
   src/algitex/propact/workflow.py:

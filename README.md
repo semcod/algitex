@@ -563,8 +563,6 @@ Licensed under Apache-2.0.
 Tom Sapletta
 
 
-Tom Sapletta
-
 Created by **Tom Sapletta** — [tom@sapletta.com](mailto:tom@sapletta.com).
 
 Part of the [semcod](https://github.com/semcod) / [wronai](https://github.com/wronai) ecosystem.

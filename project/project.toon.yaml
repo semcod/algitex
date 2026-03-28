@@ -1,27 +1,27 @@
-# algitex | 2019 func | 195f | 62642L | python | 2026-03-28
+# algitex | 2105 func | 204f | 64481L | python | 2026-03-28
 
 HEALTH:
-  CC̄=3.4  critical=99 (limit:10)  dup=107  cycles=0
+  CC̄=3.5  critical=108 (limit:10)  dup=107  cycles=0
 
 ALERTS[20]:
+  !!! cc_exceeded      todo_fix = 50 (limit:15)
   !!! cc_exceeded      classify_message = 50 (limit:15)
+  !!! cc_exceeded      _classify_message = 48 (limit:15)
   !!! cc_exceeded      fix_file = 30 (limit:15)
   !!! cc_exceeded      todo_verify_prefact = 29 (limit:15)
   !!! cc_exceeded      todo_verify_prefact = 29 (limit:15)
+  !!! cc_exceeded      MicroTaskExecutor._process_algorithmic_batch = 27 (limit:15)
+  !!! high_fan_out     todo_fix = 23 (limit:10)
   !!! high_fan_out     todo_verify_prefact = 21 (limit:10)
-  !!! high_fan_out     todo_verify_prefact = 21 (limit:10)
-  !!! high_fan_out     BatchFixBackend.fix_batch = 20 (limit:10)
-  !!  cc_exceeded      BatchSessionLog.to_markdown = 22 (limit:15)
-  !!  high_fan_out     _apply_magic_number_fixes = 18 (limit:10)
-  !!  high_fan_out     fix_file = 18 (limit:10)
+  !!! high_fan_out     DocstringShortener.fix_file = 21 (limit:10)
 
-MODULES[214] (top by size):
-  M[src/algitex/todo/fixer.py] 704L C:2 F:23 CC↑30 D:0 (python)
+MODULES[223] (top by size):
+  M[src/algitex/todo/fixer.py] 724L C:2 F:24 CC↑30 D:1 (python)
   M[src/algitex/tools/autofix/batch_backend.py] 699L C:2 F:16 CC↑11 D:0 (python)
   M[.algitex/backups/batch_20260328_143434/src/algitex/tools/autofix/batch_backend.py] 667L C:2 F:16 CC↑11 D:0 (python)
   M[.algitex/backups/batch_20260328_142940/src/algitex/tools/autofix/batch_backend.py] 631L C:2 F:15 CC↑11 D:0 (python)
-  M[src/algitex/cli/todo.py] 601L C:0 F:11 CC↑29 D:0 (python)
-  M[src/algitex/todo/micro.py] 581L C:5 F:18 CC↑19 D:0 (python)
+  M[src/algitex/cli/todo.py] 627L C:0 F:11 CC↑50 D:0 (python)
+  M[src/algitex/todo/micro.py] 605L C:5 F:19 CC↑12 D:0 (python)
   M[src/algitex/todo/hybrid.py] 479L C:4 F:10 CC↑12 D:0 (python)
   M[.algitex/backups/batch_20260328_143434/src/algitex/cli/todo.py] 476L C:0 F:9 CC↑29 D:0 (python)
   M[.algitex/backups/batch_20260328_142940/src/algitex/todo/hybrid.py] 467L C:4 F:10 CC↑8 D:0 (python)
@@ -31,12 +31,14 @@ MODULES[214] (top by size):
   M[src/algitex/tools/benchmark.py] 464L C:4 F:19 CC↑14 D:0 (python)
   M[.algitex/backups/batch_20260328_142940/src/algitex/tools/mcp.py] 448L C:2 F:18 CC↑11 D:0 (python)
   M[.algitex/backups/batch_20260328_143434/src/algitex/tools/mcp.py] 448L C:2 F:18 CC↑11 D:0 (python)
-  LANGS: python:213/shell:1
+  LANGS: python:222/shell:1
 
 HOTSPOTS[10]:
+  ★ todo_fix fan=23  // Execute fix tasks (prefact-style) via Docker MCP.
   ★ todo_verify_prefact fan=21  // Verify TODO.md against actual code using prefact.
 
 Uses prefact to scan for issu
+  ★ DocstringShortener.fix_file fan=21  // Shorten docstrings in a single Python file.
   ★ todo_verify_prefact fan=21  // Verify TODO.md against actual code using prefact.
 
 Uses prefact to scan for issu
@@ -44,15 +46,13 @@ Uses prefact to scan for issu
 
 Args:
     tasks
-  ★ _apply_magic_number_fixes fan=18  // Apply known magic-number replacements in one pass.
-  ★ fix_file fan=18  // Fix all tasks in a single file. Safe to run in parallel per-file.
 
 REFACTOR[15]:
   [1] H/L Split todo_verify_prefact (CC=29 → target CC<10)
-  [2] H/L Split todo_verify_prefact (CC=29 → target CC<10)
-  [3] H/L Split classify_message (CC=50 → target CC<10)
-  [4] H/L Split fix_file (CC=30 → target CC<10)
-  [5] H/H Split god module src/algitex/todo/fixer.py (704L, 2 classes)
+  [2] H/L Split todo_fix (CC=50 → target CC<10)
+  [3] H/L Split todo_verify_prefact (CC=29 → target CC<10)
+  [4] H/L Split classify_message (CC=50 → target CC<10)
+  [5] H/L Split fix_file (CC=30 → target CC<10)
 
 EVOLUTION:
-  2026-03-28 CC̄=3.4 crit=99 62642L // Automated analysis
+  2026-03-28 CC̄=3.5 crit=108 64481L // Automated analysis

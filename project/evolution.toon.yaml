@@ -1,9 +1,9 @@
-# code2llm/evolution | 2019 func | 195f | 2026-03-28
+# code2llm/evolution | 2104 func | 203f | 2026-03-28
 
-NEXT[9] (ranked by impact):
+NEXT[10] (ranked by impact):
   [1] !! SPLIT           src/algitex/todo/fixer.py
-      WHY: 704L, 2 classes, max CC=30
-      EFFORT: ~4h  IMPACT: 21120
+      WHY: 724L, 2 classes, max CC=30
+      EFFORT: ~4h  IMPACT: 21720
 
   [2] !! SPLIT           src/algitex/tools/autofix/batch_backend.py
       WHY: 699L, 2 classes, max CC=11
@@ -13,41 +13,45 @@ NEXT[9] (ranked by impact):
       WHY: 667L, 2 classes, max CC=11
       EFFORT: ~4h  IMPACT: 7337
 
-  [4] !! SPLIT-FUNC      todo_verify_prefact  CC=29  fan=21
-      WHY: CC=29 exceeds 15
-      EFFORT: ~1h  IMPACT: 609
+  [4] !! SPLIT-FUNC      todo_fix  CC=50  fan=23
+      WHY: CC=50 exceeds 15
+      EFFORT: ~1h  IMPACT: 1150
 
   [5] !! SPLIT-FUNC      todo_verify_prefact  CC=29  fan=21
       WHY: CC=29 exceeds 15
       EFFORT: ~1h  IMPACT: 609
 
-  [6] !! SPLIT-FUNC      fix_file  CC=30  fan=18
+  [6] !! SPLIT-FUNC      todo_verify_prefact  CC=29  fan=21
+      WHY: CC=29 exceeds 15
+      EFFORT: ~1h  IMPACT: 609
+
+  [7] !! SPLIT-FUNC      fix_file  CC=30  fan=18
       WHY: CC=30 exceeds 15
       EFFORT: ~1h  IMPACT: 540
 
-  [7] !  SPLIT-FUNC      MicroFixer.fix_tasks  CC=19  fan=12
-      WHY: CC=19 exceeds 15
-      EFFORT: ~1h  IMPACT: 228
+  [8] !! SPLIT-FUNC      MicroTaskExecutor._process_algorithmic_batch  CC=27  fan=12
+      WHY: CC=27 exceeds 15
+      EFFORT: ~1h  IMPACT: 324
 
-  [8] !  SPLIT-FUNC      BatchSessionLog.to_markdown  CC=22  fan=10
+  [9] !  SPLIT-FUNC      MicroTaskExecutor._apply_magic_name  CC=16  fan=16
+      WHY: CC=16 exceeds 15
+      EFFORT: ~1h  IMPACT: 256
+
+  [10] !  SPLIT-FUNC      BatchSessionLog.to_markdown  CC=22  fan=10
       WHY: CC=22 exceeds 15
       EFFORT: ~1h  IMPACT: 220
 
-  [9] !! SPLIT-FUNC      classify_message  CC=50  fan=4
-      WHY: CC=50 exceeds 15
-      EFFORT: ~1h  IMPACT: 200
-
 
 RISKS[3]:
-  ⚠ Splitting src/algitex/todo/fixer.py may break 23 import paths
+  ⚠ Splitting src/algitex/todo/fixer.py may break 24 import paths
   ⚠ Splitting src/algitex/tools/autofix/batch_backend.py may break 16 import paths
   ⚠ Splitting .algitex/backups/batch_20260328_143434/src/algitex/tools/autofix/batch_backend.py may break 16 import paths
 
 METRICS-TARGET:
-  CC̄:          3.4 → ≤2.4
+  CC̄:          3.5 → ≤2.4
   max-CC:      50 → ≤20
   god-modules: 6 → 0
-  high-CC(≥15): 6 → ≤3
+  high-CC(≥15): 9 → ≤4
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -75,4 +79,4 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=3.4 → now CC̄=3.4
+  prev CC̄=3.4 → now CC̄=3.5

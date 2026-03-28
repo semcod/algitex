@@ -14,6 +14,8 @@ The following new modules have been added to simplify usage:
 6. **IDE Integration** (`algitex.tools.ide`) - Support for Claude Code, Aider, VS Code, etc.
 7. **Configuration Management** (`algitex.tools.config`) - Generate and manage IDE/tool configs
 8. **MCP Orchestration** (`algitex.tools.mcp`) - Manage multiple MCP services
+9. **MicroTask** (`algitex.cli.microtask`) - Atomic micro-tasks pipeline for small LLMs
+10. **NLP** (`algitex.cli.nlp`) - Deterministic NLP refactor helpers
 
 ## New Features in Project Class
 

@@ -1,25 +1,32 @@
-# vallm batch | 346f | 176✓ 7⚠ 14✗ | 2026-03-28
+# vallm batch | 355f | 184✓ 9⚠ 15✗ | 2026-03-28
 
 SUMMARY:
-  scanned: 346  passed: 176 (50.9%)  warnings: 7  errors: 14  unsupported: 156
+  scanned: 355  passed: 184 (51.8%)  warnings: 9  errors: 15  unsupported: 156
 
-WARNINGS[7]{path,score}:
-  src/algitex/cli/todo.py,0.93
-    issues[4]{rule,severity,message,line}:
-      complexity.cyclomatic,warning,todo_fix has cyclomatic complexity 32 (max: 15),152
-      complexity.cyclomatic,warning,todo_verify_prefact has cyclomatic complexity 29 (max: 15),469
-      complexity.lizard_cc,warning,todo_fix: CC=32 exceeds limit 15,152
-      complexity.lizard_cc,warning,todo_verify_prefact: CC=29 exceeds limit 15,469
+WARNINGS[9]{path,score}:
+  src/algitex/cli/todo.py,0.90
+    issues[5]{rule,severity,message,line}:
+      complexity.cyclomatic,warning,todo_fix has cyclomatic complexity 50 (max: 15),157
+      complexity.cyclomatic,warning,todo_verify_prefact has cyclomatic complexity 29 (max: 15),495
+      complexity.lizard_cc,warning,todo_fix: CC=50 exceeds limit 15,157
+      complexity.lizard_length,warning,todo_fix: 115 lines exceeds limit 100,157
+      complexity.lizard_cc,warning,todo_verify_prefact: CC=29 exceeds limit 15,495
+  src/algitex/microtask/executor.py,0.93
+    issues[5]{rule,severity,message,line}:
+      complexity.cyclomatic,warning,_process_algorithmic_batch has cyclomatic complexity 27 (max: 15),116
+      complexity.cyclomatic,warning,_apply_magic_name has cyclomatic complexity 16 (max: 15),295
+      complexity.maintainability,warning,Low maintainability index: 4.7 (threshold: 20),
+      complexity.lizard_cc,warning,_process_algorithmic_batch: CC=27 exceeds limit 15,116
+      complexity.lizard_cc,warning,_apply_magic_name: CC=16 exceeds limit 15,295
   src/algitex/todo/fixer.py,0.96
     issues[3]{rule,severity,message,line}:
-      complexity.cyclomatic,warning,fix_file has cyclomatic complexity 30 (max: 15),468
-      complexity.maintainability,warning,Low maintainability index: 15.5 (threshold: 20),
-      complexity.lizard_cc,warning,fix_file: CC=30 exceeds limit 15,468
-  src/algitex/todo/micro.py,0.96
-    issues[3]{rule,severity,message,line}:
-      complexity.cyclomatic,warning,fix_tasks has cyclomatic complexity 19 (max: 15),285
-      complexity.maintainability,warning,Low maintainability index: 11.5 (threshold: 20),
-      complexity.lizard_cc,warning,fix_tasks: CC=19 exceeds limit 15,285
+      complexity.cyclomatic,warning,fix_file has cyclomatic complexity 30 (max: 15),487
+      complexity.maintainability,warning,Low maintainability index: 14.2 (threshold: 20),
+      complexity.lizard_cc,warning,fix_file: CC=30 exceeds limit 15,487
+  src/algitex/microtask/classifier.py,0.97
+    issues[2]{rule,severity,message,line}:
+      complexity.cyclomatic,warning,_classify_message has cyclomatic complexity 48 (max: 15),105
+      complexity.lizard_cc,warning,_classify_message: CC=48 exceeds limit 15,105
   src/algitex/todo/tiering.py,0.97
     issues[2]{rule,severity,message,line}:
       complexity.cyclomatic,warning,classify_message has cyclomatic complexity 50 (max: 15),161
@@ -28,6 +35,9 @@ WARNINGS[7]{path,score}:
     issues[2]{rule,severity,message,line}:
       complexity.cyclomatic,warning,test_complete_pipeline_flow has cyclomatic complexity 16 (max: 15),167
       complexity.lizard_length,warning,sample_project: 120 lines exceeds limit 100,28
+  src/algitex/todo/micro.py,0.98
+    issues[1]{rule,severity,message,line}:
+      complexity.maintainability,warning,Low maintainability index: 9.9 (threshold: 20),
   src/algitex/tools/autofix/batch_logger.py,0.98
     issues[1]{rule,severity,message,line}:
       complexity.cyclomatic,warning,to_markdown has cyclomatic complexity 22 (max: 15),47
@@ -35,7 +45,7 @@ WARNINGS[7]{path,score}:
     issues[1]{rule,severity,message,line}:
       complexity.cyclomatic,warning,test_extract_functions_and_classes has cyclomatic complexity 19 (max: 15),14
 
-ERRORS[14]{path,score}:
+ERRORS[15]{path,score}:
   docker/code2llm/code2llm_mcp_server.py,0.00
     issues[1]{rule,severity,message,line}:
       syntax.parse,error,SyntaxError: invalid syntax,9
@@ -65,15 +75,15 @@ ERRORS[14]{path,score}:
       python.import.resolvable,error,Module 'abpr_pipeline' not found,103
       python.import.resolvable,error,Module 'workspace_parallel' not found,162
       python.import.resolvable,error,Module 'workspace_parallel' not found,204
-  examples/16-test-workflow/sample_test_project/tests/test_calculator.py,0.79
-    issues[1]{rule,severity,message,line}:
-      python.import.resolvable,error,Module 'calculator' not found,5
   docker/aider-mcp/aider_mcp_server.py,0.81
     issues[4]{rule,severity,message,line}:
       python.import.resolvable,error,Module 'mcp.server.fastmcp' not found,12
       python.import.resolvable,error,Module 'fastapi' not found,13
       python.import.resolvable,error,Module 'fastapi.responses' not found,14
       python.import.resolvable,error,Module 'uvicorn' not found,15
+  examples/16-test-workflow/sample_test_project/tests/test_calculator.py,0.86
+    issues[1]{rule,severity,message,line}:
+      python.import.resolvable,error,Module 'calculator' not found,6
   docker/planfile-mcp/planfile_mcp_server.py,0.88
     issues[3]{rule,severity,message,line}:
       python.import.resolvable,error,Module 'mcp.server.fastmcp' not found,15
@@ -86,6 +96,9 @@ ERRORS[14]{path,score}:
   src/algitex/tools/context.py,0.94
     issues[1]{rule,severity,message,line}:
       python.import.resolvable,error,Module 'qdrant_client' not found,178
+  src/algitex/nlp/__init__.py,0.95
+    issues[1]{rule,severity,message,line}:
+      python.import.resolvable,error,Module 'isort' not found,264
   src/algitex/tools/telemetry.py,0.95
     issues[1]{rule,severity,message,line}:
       python.import.resolvable,error,Module 'langfuse' not found,97

@@ -173,10 +173,17 @@ class BatchFixBackend:
         todo_tasks = parse_todo("TODO.md")
         completed_todo_tasks = []
         
+        print(f"     🔍 Szukam {len(completed_task_ids)} zadań w {len(todo_tasks)} taskach z TODO.md")
+        
         for task in todo_tasks:
-            task_id = f"{task.file}:{task.line}"
-            if task_id in completed_task_ids:
+            if task.id in completed_task_ids:
                 completed_todo_tasks.append(task)
+                print(f"       ✓ Znaleziono do oznaczenia: {task.id} - {task.description[:50]}...")
+        
+        if not completed_todo_tasks:
+            # Debug: pokaż przykłady ID które nie pasują
+            print(f"       ⚠️  Przykłady completed_task_ids: {list(completed_task_ids)[:5]}")
+            print(f"       ⚠️  Przykłady task.id z TODO: {[t.id for t in todo_tasks[:5]]}")
         
         if completed_todo_tasks:
             marked = mark_tasks_completed("TODO.md", completed_todo_tasks)
@@ -472,7 +479,12 @@ class BatchFixBackend:
             # Pokaż pełną ścieżkę dla łatwiejszego debugowania
             rel_path = Path(task.file_path).relative_to(Path.cwd()) if str(task.file_path).startswith(str(Path.cwd())) else task.file_path
             print(f"     • Individual fix: {rel_path}")
+            print(f"       Opis: {task.description}")
+            print(f"       Linia: {task.line_number}")
             result = self._fix_single(task)
+            print(f"       Wynik: {'✓ Sukces' if result.success else '✗ Porażka'} ({result.method})")
+            if result.error:
+                print(f"       Błąd: {result.error}")
             results.append(result)
         return results
     
@@ -520,18 +532,39 @@ Line {task.line_number}: {task.description}
 
 {content}
 """)
-            except Exception:
+            except Exception as e:
+                print(f"     ⚠️  Błąd odczytu {task.file_path}: {e}")
                 continue
         
-        return f"""Fix the following {group.pattern} issues in multiple files.
+        if not files_content:
+            print(f"     ✗ Brak plików do przetworzenia w grupie {group.category}")
+            return ""
+        
+        prompt = f"""You are a code refactoring tool. Fix the following {group.pattern} issues in multiple files.
 
 {''.join(files_content)}
 
-Apply fixes to ALL files. Return the complete fixed content for each file.
-Format:
-=== FIXED: <filepath> ===
-<fixed content>
-"""
+INSTRUCTIONS:
+1. Apply fixes to ALL files above
+2. Return the COMPLETE fixed content for each file
+3. Use EXACTLY this format for each file:
+
+=== FIXED: /full/path/to/file.py ===
+<complete fixed file content here>
+
+=== FIXED: /full/path/to/another_file.py ===
+<complete fixed file content here>
+
+IMPORTANT:
+- Do NOT explain what you did
+- Do NOT provide instructions or examples
+- ONLY return the === FIXED: sections with complete code
+- Fix ALL files mentioned above"""
+        # Logowanie promptu (pierwsze 500 znaków)
+        print(f"     📝 Prompt length: {len(prompt)} chars")
+        print(f"     📝 Prompt preview:\n{prompt[:500]}...\n")
+        
+        return prompt
     
     def _call_llm(self, prompt: str, model: str, max_retries: int = 2) -> str:
         """Wywołaj LLM z spinnerem i retry dla timeoutów."""
@@ -596,7 +629,12 @@ Format:
             sys.stdout.write(f"\r      ✓ LLM: {elapsed:.1f}s{' ' * 20}\n")
             sys.stdout.flush()
             
-            return response_container[0].content
+            # Logowanie odpowiedzi (pierwsze 1000 znaków)
+            response_content = response_container[0].content
+            print(f"     📝 LLM response length: {len(response_content)} chars")
+            print(f"     📝 LLM response preview:\n{response_content[:1000]}...\n")
+            
+            return response_content
         
         raise TimeoutError(f"LLM call exceeded timeout after {max_retries} retries")
     
@@ -605,37 +643,65 @@ Format:
         results = {}
         backups = {}  # filepath -> original content
         
+        print(f"     🔍 Parsowanie odpowiedzi dla {len(group.tasks)} zadań...")
+        print(f"     🔍 Oczekiwane pliki: {[t.file_path for t in group.tasks]}")
+        
         # Parsuj sekcje === FIXED: path ===
         import re
         pattern = r'=== FIXED: (.+?) ===\n(.*?)(?==== FIXED:|$)'
         matches = re.findall(pattern, response, re.DOTALL)
         
-        for filepath, fixed_content in matches:
+        print(f"     🔍 Znaleziono {len(matches)} sekcji FIXED w odpowiedzi")
+        
+        for idx, (filepath, fixed_content) in enumerate(matches):
             filepath = filepath.strip()
             fixed_content = fixed_content.strip()
+            print(f"     [{idx+1}] Parsowanie: {filepath}")
+            print(f"         Content length: {len(fixed_content)} chars")
+            print(f"         Content preview: {fixed_content[:200]}...")
+            
             try:
                 path = Path(filepath)
                 # Backup przed zapisem
                 if path.exists():
                     backups[filepath] = path.read_text()
+                    print(f"         📦 Backup created ({len(backups[filepath])} chars)")
                 else:
                     backups[filepath] = None  # Nowy plik
+                    print(f"         📦 Nowy plik (brak backup)")
+                
+                # Sprawdź czy content jest różny
+                original_content = backups.get(filepath, "")
+                if original_content == fixed_content:
+                    print(f"         ⚠️  Content nie zmieniony - pomijam zapis")
+                    results[filepath] = False
+                    continue
                 
                 path.write_text(fixed_content)
                 results[filepath] = True
-                print(f"     ✓ Zapisano: {filepath}")
+                print(f"         ✓ Zapisano: {filepath}")
             except Exception as e:
-                print(f"     ✗ Błąd zapisu {filepath}: {e}")
+                print(f"         ✗ Błąd zapisu {filepath}: {e}")
                 results[filepath] = False
         
         # Oznacz pliki bez odpowiedzi jako failed
+        missing_count = 0
         for task in group.tasks:
             if task.file_path not in results:
+                print(f"     ⚠️  Brak odpowiedzi dla: {task.file_path}")
                 results[task.file_path] = False
+                missing_count += 1
         
+        if missing_count > 0:
+            print(f"     ✗ {missing_count} plików bez odpowiedzi z LLM")
+        
+        # Podsumowanie
+        success_count = sum(1 for v in results.values() if v)
+        print(f"     📊 Podsumowanie: {success_count}/{len(results)} plików zapisanych")
         
         # Walidacja i rollback jeśli potrzeba
         if results and any(results.values()):
+            print(f"     🔍 Rozpoczynam walidację...")
             self._validate_and_rollback(results, backups)
         return results
     
