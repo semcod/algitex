@@ -289,14 +289,8 @@ def workspace_execution_example():
     return results
 
 
-def advanced_workspace_features():
-    """Example of advanced workspace features."""
-    print("\n=== Advanced Workspace Features ===\n")
-    
-    config_path = create_sample_workspace()
-    workspace = Workspace(config_path)
-    
-    # 1. Custom workspace queries
+def _analyze_workspace_structure(workspace):
+    """Analyze and print workspace structure."""
     print("1. Custom Queries:")
     
     # Find all services
@@ -313,15 +307,19 @@ def advanced_workspace_features():
         all_deps.update(repo.depends_on)
     leaf_nodes = [r.name for r in workspace.repos.values() if r.name not in all_deps]
     print(f"   Leaf nodes: {leaf_nodes}")
-    
-    # 2. Impact analysis
+
+
+def _analyze_impact(workspace):
+    """Analyze and print impact analysis."""
     print("\n2. Impact Analysis:")
     print("   If shared-utils changes, it affects:")
     for repo in workspace.repos.values():
         if "shared-utils" in repo.depends_on:
             print(f"   - {repo.name} (direct)")
-    
-    # 3. Parallel execution opportunities
+
+
+def _analyze_parallel_execution(workspace):
+    """Analyze and print parallel execution opportunities."""
     print("\n3. Parallel Execution Opportunities:")
     execution_plan = workspace.get_execution_plan()
     
@@ -336,17 +334,40 @@ def advanced_workspace_features():
     
     for level, repos in sorted(levels.items()):
         print(f"   Level {level}: {repos} (can run in parallel)")
-    
-    # 4. Workspace metrics
+
+
+def _calculate_metrics(workspace):
+    """Calculate and print workspace metrics."""
     print("\n4. Workspace Metrics:")
     total_repos = len(workspace.repos)
     max_depth = max(len(r.depends_on) for r in workspace.repos.values())
     avg_deps = sum(len(r.depends_on) for r in workspace.repos.values()) / total_repos
+    execution_plan = workspace.get_execution_plan()
     
     print(f"   Total repositories: {total_repos}")
     print(f"   Maximum dependency depth: {max_depth}")
     print(f"   Average dependencies: {avg_deps:.1f}")
     print(f"   Critical path length: {len(execution_plan)}")
+
+
+def advanced_workspace_features():
+    """Example of advanced workspace features."""
+    print("\n=== Advanced Workspace Features ===\n")
+    
+    config_path = create_sample_workspace()
+    workspace = Workspace(config_path)
+    
+    # 1. Analyze workspace structure
+    _analyze_workspace_structure(workspace)
+    
+    # 2. Impact analysis
+    _analyze_impact(workspace)
+    
+    # 3. Parallel execution opportunities
+    _analyze_parallel_execution(workspace)
+    
+    # 4. Workspace metrics
+    _calculate_metrics(workspace)
 
 
 def cleanup_sample_workspace():

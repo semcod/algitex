@@ -1,23 +1,22 @@
-# vallm batch | 265f | 124✓ 3⚠ 11✗ | 2026-03-28
+# vallm batch | 282f | 135✓ 2⚠ 13✗ | 2026-03-28
 
 SUMMARY:
-  scanned: 265  passed: 124 (46.8%)  warnings: 3  errors: 11  unsupported: 130
+  scanned: 282  passed: 135 (47.9%)  warnings: 2  errors: 13  unsupported: 134
 
-WARNINGS[3]{path,score}:
+WARNINGS[2]{path,score}:
   examples/21-aider-cli-ollama/auto_fix.py,0.97
     issues[2]{rule,severity,message,line}:
       complexity.cyclomatic,warning,fix_with_aider has cyclomatic complexity 18 (max: 15),116
       complexity.lizard_cc,warning,fix_with_aider: CC=18 exceeds limit 15,116
-  src/algitex/propact/__init__.py,0.97
-    issues[2]{rule,severity,message,line}:
-      complexity.cyclomatic,warning,execute has cyclomatic complexity 16 (max: 15),161
-      complexity.lizard_cc,warning,execute: CC=17 exceeds limit 15,161
   tests/test_e2e_integration.py,0.97
     issues[2]{rule,severity,message,line}:
       complexity.cyclomatic,warning,test_complete_pipeline_flow has cyclomatic complexity 16 (max: 15),167
       complexity.lizard_length,warning,sample_project: 120 lines exceeds limit 100,28
 
-ERRORS[11]{path,score}:
+ERRORS[13]{path,score}:
+  src/algitex/tools/benchmark.py,0.00
+    issues[1]{rule,severity,message,line}:
+      syntax.parse,error,SyntaxError: invalid syntax. Perhaps you forgot a comma?,178
   examples/16-test-workflow/sample_test_project/tests/test_calculator.py,0.79
     issues[1]{rule,severity,message,line}:
       python.import.resolvable,error,Module 'calculator' not found,5
@@ -67,10 +66,13 @@ ERRORS[11]{path,score}:
   src/algitex/tools/telemetry.py,0.95
     issues[1]{rule,severity,message,line}:
       python.import.resolvable,error,Module 'langfuse' not found,97
+  src/algitex/tools/batch.py,0.96
+    issues[1]{rule,severity,message,line}:
+      python.import.resolvable,error,Module 'tqdm' not found,34
 
 UNSUPPORTED[5]{bucket,count}:
-  *.md,60
+  *.md,63
   Dockerfile*,31
   *.txt,2
   *.yml,3
-  other,34
+  other,35

@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from typing import Optional
 
 # Export new modules
-from algitex.tools import ollama, services, autofix
+from algitex.tools import ollama, services, autofix, batch, benchmark, ide, config, mcp
 
 
 @dataclass

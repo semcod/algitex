@@ -275,6 +275,33 @@ class ServiceChecker:
         
         return statuses
     
+    def _format_status_line(self, status: ServiceStatus) -> str:
+        """Format a single status line."""
+        line = f"{status.status_icon} {status.name:<20}"
+        
+        if status.response_time_ms:
+            line += f" ({status.response_time_ms:.0f}ms)"
+        
+        if status.error:
+            line += f" - {status.error}"
+        
+        return line
+
+    def _print_status_details(self, status: ServiceStatus):
+        """Print detailed information for a status."""
+        if not status.details:
+            return
+            
+        for key, value in status.details.items():
+            if key == "models" and isinstance(value, list):
+                print(f"    {key}: {', '.join(value[:5])}")
+                if len(value) > 5:
+                    print(f"    ... and {len(value) - 5} more")
+            elif key == "models_count":
+                print(f"    {key}: {value}")
+            elif key == "path":
+                print(f"    {key}: {value}")
+
     def print_status(self, statuses: List[ServiceStatus], show_details: bool = False):
         """Print service statuses in a formatted way."""
         print("\n" + "=" * 60)
@@ -285,26 +312,11 @@ class ServiceChecker:
         total_count = len(statuses)
         
         for status in statuses:
-            line = f"{status.status_icon} {status.name:<20}"
-            
-            if status.response_time_ms:
-                line += f" ({status.response_time_ms:.0f}ms)"
-            
-            if status.error:
-                line += f" - {status.error}"
-            
+            line = self._format_status_line(status)
             print(line)
             
-            if show_details and status.details:
-                for key, value in status.details.items():
-                    if key == "models" and isinstance(value, list):
-                        print(f"    {key}: {', '.join(value[:5])}")
-                        if len(value) > 5:
-                            print(f"    ... and {len(value) - 5} more")
-                    elif key == "models_count":
-                        print(f"    {key}: {value}")
-                    elif key == "path":
-                        print(f"    {key}: {value}")
+            if show_details:
+                self._print_status_details(status)
         
         print("-" * 60)
         print(f"Summary: {healthy_count}/{total_count} services healthy")

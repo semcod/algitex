@@ -213,33 +213,24 @@ class AutoFix:
                 error=str(e)
             )
     
-    def fix_with_aider(self, task: Task) -> FixResult:
-        """Fix using Aider CLI."""
-        import time
-        start_time = time.time()
-        
-        if not task.file_path:
-            return FixResult(
-                task=task,
-                success=False,
-                method="aider",
-                error="No file path specified"
-            )
-        
-        # Ensure git repo exists
+    def _ensure_git_repo(self):
+        """Ensure git repository exists for aider."""
         if not Path(".git").exists():
             subprocess.run(["git", "init"], capture_output=True)
             subprocess.run(["git", "config", "user.email", "autofix@local"], capture_output=True)
             subprocess.run(["git", "config", "user.name", "AutoFix"], capture_output=True)
-        
-        # Build prompt
+
+    def _build_aider_prompt(self, task: Task) -> str:
+        """Build the prompt for aider."""
         prompt = f"Fix this issue in {task.file_path}"
         if task.line_number:
             prompt += f" at line {task.line_number}"
         prompt += f":\n{task.description}\n\nMake minimal changes to fix only this specific issue."
-        
-        # Build command
-        cmd = [
+        return prompt
+
+    def _build_aider_command(self, task: Task, prompt: str) -> List[str]:
+        """Build the aider command."""
+        return [
             "aider",
             "--model", "ollama/qwen2.5-coder:7b",
             "--openai-api-key", "dummy",
@@ -250,17 +241,10 @@ class AutoFix:
             "--message", prompt,
             task.file_path
         ]
-        
+
+    def _run_aider_subprocess(self, cmd: List[str], start_time: float, task: Task) -> FixResult:
+        """Run aider subprocess and handle all error cases."""
         try:
-            if self.dry_run:
-                return FixResult(
-                    task=task,
-                    success=True,
-                    method="aider",
-                    time_ms=(time.time() - start_time) * 1000,
-                    error="[DRY RUN]"
-                )
-            
             result = subprocess.run(
                 cmd,
                 capture_output=True,
@@ -301,6 +285,99 @@ class AutoFix:
                 time_ms=(time.time() - start_time) * 1000,
                 error=str(e)
             )
+
+    def fix_with_aider(self, task: Task) -> FixResult:
+        """Fix using Aider CLI."""
+        import time
+        start_time = time.time()
+        
+        if not task.file_path:
+            return FixResult(
+                task=task,
+                success=False,
+                method="aider",
+                error="No file path specified"
+            )
+        
+        # Ensure git repo exists
+        self._ensure_git_repo()
+        
+        # Build prompt and command
+        prompt = self._build_aider_prompt(task)
+        cmd = self._build_aider_command(task, prompt)
+        
+        # Handle dry run
+        if self.dry_run:
+            return FixResult(
+                task=task,
+                success=True,
+                method="aider",
+                time_ms=(time.time() - start_time) * 1000,
+                error="[DRY RUN]"
+            )
+        
+        # Run aider subprocess
+        return self._run_aider_subprocess(cmd, start_time, task)
+    
+    def _read_file_content(self, file_path: str) -> str:
+        """Read file content for processing."""
+        with open(file_path, 'r') as f:
+            return f.read()
+    
+    def _build_proxy_prompt(self, task: Task, file_content: str) -> str:
+        """Build the prompt for LiteLLM proxy."""
+        return f"""Fix this specific issue in the code.
+
+File: {task.file_path}
+Line: {task.line_number or 'unknown'}
+Issue: {task.description}
+
+Current code:
+```python
+{file_content}
+```
+
+Provide ONLY the fixed code for this specific issue. Do not explain changes. Return the complete fixed file content."""
+    
+    def _call_proxy_api(self, prompt: str) -> Optional[str]:
+        """Call LiteLLM proxy API and return response."""
+        if requests is None:
+            return None
+        
+        response = requests.post(
+            f"{self.proxy_url}/v1/chat/completions",
+            headers={
+                "Authorization": "Bearer dummy-key",
+                "Content-Type": "application/json"
+            },
+            json={
+                "model": "qwen-coder",
+                "messages": [
+                    {"role": "system", "content": "You are an expert Python code reviewer. Fix issues precisely."},
+                    {"role": "user", "content": prompt}
+                ],
+                "temperature": 0.3,
+                "max_tokens": 2000
+            },
+            timeout=120
+        )
+        
+        if response.status_code == 200:
+            data = response.json()
+            return data["choices"][0]["message"]["content"]
+        return None
+    
+    def _extract_code_from_response(self, response: str) -> str:
+        """Extract code from markdown response."""
+        code_match = re.search(r'```python\n(.*?)\n```', response, re.DOTALL)
+        if code_match:
+            return code_match.group(1)
+        return response
+    
+    def _write_fixed_file(self, file_path: str, content: str):
+        """Write fixed content to file."""
+        with open(file_path, 'w') as f:
+            f.write(content)
     
     def fix_with_proxy(self, task: Task) -> FixResult:
         """Fix using LiteLLM proxy."""
@@ -315,90 +392,44 @@ class AutoFix:
                 error="No file path specified"
             )
         
-        if requests is None:
+        # Handle dry run
+        if self.dry_run:
             return FixResult(
                 task=task,
-                success=False,
+                success=True,
                 method="litellm-proxy",
-                error="requests module not installed. Install with: pip install requests"
+                time_ms=(time.time() - start_time) * 1000,
+                error="[DRY RUN]"
             )
         
         try:
             # Read file content
-            with open(task.file_path, 'r') as f:
-                file_content = f.read()
+            file_content = self._read_file_content(task.file_path)
             
             # Build prompt
-            prompt = f"""Fix this specific issue in the code.
-
-File: {task.file_path}
-Line: {task.line_number or 'unknown'}
-Issue: {task.description}
-
-Current code:
-```python
-{file_content}
-```
-
-Provide ONLY the fixed code for this specific issue. Do not explain changes. Return the complete fixed file content."""
+            prompt = self._build_proxy_prompt(task, file_content)
             
-            if self.dry_run:
-                return FixResult(
-                    task=task,
-                    success=True,
-                    method="litellm-proxy",
-                    time_ms=(time.time() - start_time) * 1000,
-                    error="[DRY RUN]"
-                )
-            
-            # Call proxy
-            response = requests.post(
-                f"{self.proxy_url}/v1/chat/completions",
-                headers={
-                    "Authorization": "Bearer dummy-key",
-                    "Content-Type": "application/json"
-                },
-                json={
-                    "model": "qwen-coder",
-                    "messages": [
-                        {"role": "system", "content": "You are an expert Python code reviewer. Fix issues precisely."},
-                        {"role": "user", "content": prompt}
-                    ],
-                    "temperature": 0.3,
-                    "max_tokens": 2000
-                },
-                timeout=120
-            )
-            
-            elapsed = (time.time() - start_time) * 1000
-            
-            if response.status_code == 200:
-                data = response.json()
-                fixed_code = data["choices"][0]["message"]["content"]
-                
-                # Extract code from markdown if present
-                code_match = re.search(r'```python\n(.*?)\n```', fixed_code, re.DOTALL)
-                if code_match:
-                    fixed_code = code_match.group(1)
-                
-                # Write fixed code
-                with open(task.file_path, 'w') as f:
-                    f.write(fixed_code)
-                
-                return FixResult(
-                    task=task,
-                    success=True,
-                    method="litellm-proxy",
-                    time_ms=elapsed
-                )
-            else:
+            # Call API
+            response = self._call_proxy_api(prompt)
+            if response is None:
                 return FixResult(
                     task=task,
                     success=False,
                     method="litellm-proxy",
-                    time_ms=elapsed,
-                    error=f"API error: {response.status_code}"
+                    time_ms=(time.time() - start_time) * 1000,
+                    error="API call failed"
                 )
+            
+            # Extract and write fixed code
+            fixed_code = self._extract_code_from_response(response)
+            self._write_fixed_file(task.file_path, fixed_code)
+            
+            return FixResult(
+                task=task,
+                success=True,
+                method="litellm-proxy",
+                time_ms=(time.time() - start_time) * 1000
+            )
         except Exception as e:
             return FixResult(
                 task=task,

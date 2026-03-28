@@ -1,19 +1,13 @@
-# code2llm | 35f 8969L | python:34,shell:1 | 2026-03-28
-# CC̄=3.6 | critical:5/547 | dups:0 | cycles:0
+# code2llm | 40f 11586L | python:39,shell:1 | 2026-03-28
+# CC̄=3.4 | critical:0/702 | dups:0 | cycles:0
 
-HEALTH[7]:
-  🟡 CC    _analyze_project CC=17 (limit:15)
-  🟡 CC    analyze_project CC=17 (limit:15)
-  🟡 CC    print_status CC=15 (limit:15)
-  🟡 CC    execute CC=15 (limit:15)
-  🟡 CC    execute CC=16 (limit:15)
+HEALTH[1]:
   🟡 CC    fix_with_aider CC=18 (limit:15)
-  🟡 CC    advanced_workspace_features CC=15 (limit:15)
 
 REFACTOR[1]:
-  1. split 7 high-CC methods  (CC>15)
+  1. split 1 high-CC methods  (CC>15)
 
-PIPELINES[384]:
+PIPELINES[511]:
   [1] Src [__init__]: __init__
       PURITY: 100% pure
   [2] Src [create_fastapi_app]: create_fastapi_app
@@ -26,31 +20,36 @@ PIPELINES[384]:
       PURITY: 100% pure
 
 LAYERS:
-  docker/                         CC̄=3.6    ←in:0  →out:0
+  docker/                         CC̄=3.4    ←in:0  →out:0
   │ proxym_mcp_server          387L  0C   10m  CC=9      ←0
   │ vallm_mcp_server           360L  0C    8m  CC=9      ←0
+  │ code2llm_mcp_server        323L  0C    9m  CC=10     ←0
+  │ code2llm_server            283L  1C    9m  CC=10     ←0
   │ planfile_mcp_server        276L  0C   10m  CC=7      ←0
-  │ !! code2llm_mcp_server        276L  0C    6m  CC=17     ←0
   │ vallm_server               271L  1C    7m  CC=9      ←0
   │ proxym_server              257L  1C    7m  CC=6      ←0
-  │ !! code2llm_server            239L  1C    6m  CC=17     ←0
   │ aider_mcp_server           156L  0C    5m  CC=2      ←0
   │
-  src/                            CC̄=3.6    ←in:0  →out:0
+  src/                            CC̄=3.4    ←in:0  →out:0
+  │ !! project                    581L  1C   43m  CC=8      ←0
   │ !! cli                        571L  0C   25m  CC=13     ←0
+  │ !! autofix                    565L  2C   23m  CC=12     ←0
   │ !! todo_runner                526L  2C   16m  CC=13     ←0
   │ !! docker                     504L  3C   23m  CC=12     ←0
+  │ mcp                        448L  2C   18m  CC=11     ←0
+  │ ide                        430L  6C   22m  CC=8      ←0
+  │ services                   413L  3C   20m  CC=9      ←0
+  │ __init__                   413L  3C   15m  CC=10     ←1
   │ cicd                       405L  1C   11m  CC=5      ←1
-  │ !! services                   401L  3C   18m  CC=15     ←0
-  │ !! __init__                   397L  3C   12m  CC=16     ←1
+  │ config                     386L  1C   12m  CC=8      ←0
   │ ollama                     383L  4C   16m  CC=11     ←0
   │ __init__                   369L  5C   12m  CC=9      ←0
+  │ batch                      364L  4C   13m  CC=14     ←0
   │ workspace                  338L  2C   17m  CC=6      ←1
   │ __init__                   320L  3C   19m  CC=4      ←0
-  │ project                    294L  1C   12m  CC=6      ←0
-  │ !! todo_local                 267L  2C   10m  CC=15     ←0
+  │ todo_local                 282L  2C   11m  CC=11     ←0
   │ feedback                   252L  4C   12m  CC=8      ←0
-  │ tickets                    246L  2C   11m  CC=5      ←6
+  │ tickets                    246L  2C   11m  CC=5      ←8
   │ todo_executor              240L  2C   12m  CC=13     ←0
   │ todo_parser                206L  2C    8m  CC=7      ←0
   │ context                    206L  3C   14m  CC=7      ←0
@@ -58,7 +57,7 @@ LAYERS:
   │ config                     170L  4C    7m  CC=10     ←8
   │ telemetry                  152L  2C    9m  CC=4      ←0
   │ proxy                      145L  2C    9m  CC=9      ←0
-  │ __init__                   102L  1C    4m  CC=4      ←3
+  │ __init__                   105L  1C    4m  CC=4      ←3
   │ __init__                    36L  0C    0m  CC=0.0    ←0
   │ pipeline                     5L  0C    0m  CC=0.0    ←0
   │ loop                         4L  0C    0m  CC=0.0    ←0

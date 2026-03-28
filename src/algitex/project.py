@@ -22,7 +22,7 @@ Usage:
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Optional
+from typing import List, Optional
 
 from algitex.config import Config
 from algitex.tools.analysis import Analyzer, HealthReport
@@ -31,6 +31,11 @@ from algitex.algo import Loop
 from algitex.tools.ollama import OllamaClient, OllamaService
 from algitex.tools.services import ServiceChecker
 from algitex.tools.autofix import AutoFix
+from algitex.tools.batch import BatchProcessor, FileBatchProcessor
+from algitex.tools.benchmark import ModelBenchmark, Task
+from algitex.tools.ide import IDEHelper, ClaudeCodeHelper, AiderHelper, EditorIntegration
+from algitex.tools.config import ConfigManager
+from algitex.tools.mcp import MCPOrchestrator
 
 
 class Project:
@@ -52,6 +57,23 @@ class Project:
         self.services = ServiceChecker()
         self.ollama = OllamaService()
         self.autofix = AutoFix(str(self.path / "TODO.md"))
+        
+        # New: batch processing and benchmarking
+        self.batch = FileBatchProcessor(
+            ollama_client=self.ollama.client,
+            output_dir=str(self.path / ".batch_results")
+        )
+        self.benchmark = ModelBenchmark(self.ollama.client)
+        
+        # New: IDE integration
+        self.ide = IDEHelper()
+        self.claude = ClaudeCodeHelper()
+        self.aider = AiderHelper()
+        self.editor = EditorIntegration()
+        
+        # New: configuration and MCP management
+        self.config_manager = ConfigManager()
+        self.mcp = MCPOrchestrator()
 
     # ── Core workflow ─────────────────────────────────────
 
@@ -340,6 +362,186 @@ class Project:
         """Generate text using Ollama."""
         response = self.ollama.client.generate(prompt, model=model, system=system)
         return str(response)
+    
+    # ── Batch Processing ────────────────────────────────────
+    
+    def batch_analyze(
+        self,
+        directory: str = ".",
+        pattern: str = "*.py",
+        parallelism: Optional[int] = None,
+        rate_limit: Optional[float] = None
+    ) -> dict:
+        """Batch analyze files in directory."""
+        # Update processor config if provided
+        if parallelism:
+            self.batch.parallelism = parallelism
+        if rate_limit:
+            self.batch.rate_limit = rate_limit
+        
+        # Process files
+        results = self.batch.process_directory(directory, pattern)
+        
+        # Convert to dict
+        return {
+            "total": len(results),
+            "successful": len([r for r in results if r.success]),
+            "failed": len([r for r in results if not r.success]),
+            "results": [r.to_dict() for r in results]
+        }
+    
+    def create_batch_processor(
+        self,
+        worker_func,
+        parallelism: int = 4,
+        rate_limit: float = 2.0,
+        **kwargs
+    ) -> BatchProcessor:
+        """Create a custom batch processor."""
+        return BatchProcessor(
+            worker_func=worker_func,
+            parallelism=parallelism,
+            rate_limit=rate_limit,
+            output_dir=str(self.path / ".batch_results"),
+            **kwargs
+        )
+    
+    # ── Model Benchmarking ─────────────────────────────────
+    
+    def benchmark_models(
+        self,
+        models: List[str],
+        tasks: Optional[List[str]] = None
+    ) -> dict:
+        """Benchmark models on tasks."""
+        results = self.benchmark.compare_models(models, tasks)
+        
+        # Convert to dict
+        return results.to_dict()
+    
+    def add_benchmark_task(
+        self,
+        task_id: str,
+        name: str,
+        prompt: str,
+        expected_keywords: List[str]
+    ):
+        """Add a custom benchmark task."""
+        self.benchmark.add_custom_task(
+            task_id=task_id,
+            name=name,
+            prompt=prompt,
+            expected_keywords=expected_keywords
+        )
+    
+    def print_benchmark_results(self, results: dict, format: str = "table"):
+        """Print benchmark results from dict."""
+        # Convert back to BenchmarkResults
+        from algitex.tools.benchmark import BenchmarkResults, TaskResult
+        
+        benchmark_results = BenchmarkResults()
+        for r in results["results"]:
+            result = TaskResult(
+                model=r["model"],
+                task_id=r["task_id"],
+                success=r["success"],
+                time_seconds=r["time_seconds"],
+                tokens_estimated=r["tokens_estimated"],
+                quality_score=r["quality_score"],
+                response=r.get("response_preview", ""),
+                error=r.get("error")
+            )
+            benchmark_results.results.append(result)
+        
+        self.benchmark.print_results(benchmark_results, format)
+    
+    # ── IDE Integration ─────────────────────────────────────
+    
+    def setup_ide(self, tool_name: str) -> bool:
+        """Setup IDE tool."""
+        return self.ide.setup_tool(tool_name)
+    
+    def fix_with_claude(
+        self,
+        file_path: str,
+        instruction: str,
+        model: str = "qwen2.5-coder:7b"
+    ) -> bool:
+        """Fix file using Claude Code."""
+        return self.claude.fix_file(file_path, instruction, model)
+    
+    def fix_with_aider(
+        self,
+        file_path: str,
+        instruction: str,
+        model: str = "qwen2.5-coder:7b"
+    ) -> bool:
+        """Fix file using Aider."""
+        return self.aider.fix_file(file_path, instruction, model)
+    
+    def detect_editor(self) -> Optional[str]:
+        """Detect which editor is available."""
+        return self.editor.detect_editor()
+    
+    def get_ide_status(self) -> dict:
+        """Get status of all IDE tools."""
+        return self.ide.get_tool_status()
+    
+    # ── Configuration Management ───────────────────────────
+    
+    def setup_configs(self, tools: List[str] = None) -> bool:
+        """Setup project configurations."""
+        return self.config_manager.setup_project_configs(self.path, tools)
+    
+    def install_continue_config(self, models: List[str] = None) -> bool:
+        """Install Continue.dev configuration."""
+        return self.config_manager.install_continue_config(models)
+    
+    def install_vscode_settings(self) -> bool:
+        """Install VS Code settings."""
+        return self.config_manager.install_vscode_settings(self.path)
+    
+    def generate_env_file(self, services: Dict[str, str] = None) -> bool:
+        """Generate .env file."""
+        if services is None:
+            services = {
+                "ollama": "http://localhost:11434",
+                "litellm": "http://localhost:4000"
+            }
+        return self.config_manager.generate_env_file(services, self.path / ".env")
+    
+    # ── MCP Service Orchestration ────────────────────────────
+    
+    def start_mcp_services(self, services: List[str] = None) -> bool:
+        """Start MCP services."""
+        return self.mcp.start_all(services)
+    
+    def stop_mcp_services(self) -> bool:
+        """Stop all MCP services."""
+        return self.mcp.stop_all()
+    
+    def restart_mcp_service(self, service: str) -> bool:
+        """Restart a specific MCP service."""
+        return self.mcp.restart_service(service)
+    
+    def wait_for_mcp_ready(self, timeout: int = 60) -> bool:
+        """Wait for MCP services to be ready."""
+        return self.mcp.wait_for_ready(timeout=timeout)
+    
+    def get_mcp_status(self) -> dict:
+        """Get MCP services status."""
+        return {
+            name: status.to_dict()
+            for name, status in self.mcp.check_health().items()
+        }
+    
+    def print_mcp_status(self):
+        """Print MCP services status."""
+        self.mcp.print_status()
+    
+    def generate_mcp_config(self) -> bool:
+        """Generate MCP client configuration."""
+        return self.mcp.generate_mcp_config(self.path / "mcp_config.json")
 
     # ── Private helpers ───────────────────────────────────
 

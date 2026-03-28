@@ -1,51 +1,51 @@
-# algitex | 344 func | 30f | 12610L | python | 2026-03-28
+# algitex | 475 func | 35f | 15084L | python | 2026-03-28
 
 HEALTH:
-  CC̄=3.6  critical=18 (limit:10)  dup=1  cycles=0
+  CC̄=3.4  critical=22 (limit:10)  dup=1  cycles=0
 
 ALERTS[20]:
-  !!! high_fan_out     analyze_project = 24 (limit:10)
-  !!! high_fan_out     Code2LLMServer._analyze_project = 21 (limit:10)
+  !!  high_fan_out     Project.__init__ = 18 (limit:10)
   !!  high_fan_out     Project.status = 18 (limit:10)
   !!  high_fan_out     DockerToolManager._call_stdio = 18 (limit:10)
+  !!  high_fan_out     BatchProcessor.process = 17 (limit:10)
   !!  high_fan_out     init = 16 (limit:10)
   !!  high_fan_out     DockerToolManager.get_capabilities = 16 (limit:10)
   !!  high_fan_out     analyze_complexity = 15 (limit:10)
-  !   cc_exceeded      Code2LLMServer._analyze_project = 17 (limit:15)
-  !   cc_exceeded      analyze_project = 17 (limit:15)
-  !   cc_exceeded      Workflow.execute = 16 (limit:15)
+  !   high_fan_out     VallmServer.create_fastapi_app = 14 (limit:10)
+  !   high_fan_out     TodoRunner._execute_ollama = 13 (limit:10)
+  !   high_fan_out     Workflow.parse = 13 (limit:10)
 
-MODULES[35] (top by size):
+MODULES[40] (top by size):
+  M[src/algitex/project.py] 581L C:1 F:43 CC↑8 D:0 (python)
   M[src/algitex/cli.py] 571L C:0 F:25 CC↑13 D:0 (python)
+  M[src/algitex/tools/autofix.py] 565L C:2 F:23 CC↑12 D:0 (python)
   M[src/algitex/tools/todo_runner.py] 526L C:2 F:16 CC↑13 D:0 (python)
   M[src/algitex/tools/docker.py] 504L C:3 F:23 CC↑12 D:0 (python)
+  M[src/algitex/tools/mcp.py] 448L C:2 F:18 CC↑11 D:0 (python)
+  M[src/algitex/tools/ide.py] 430L C:6 F:22 CC↑8 D:0 (python)
+  M[src/algitex/propact/__init__.py] 413L C:3 F:15 CC↑10 D:1 (python)
+  M[src/algitex/tools/services.py] 413L C:3 F:20 CC↑9 D:0 (python)
   M[src/algitex/tools/cicd.py] 405L C:1 F:11 CC↑5 D:1 (python)
-  M[src/algitex/tools/services.py] 401L C:3 F:18 CC↑15 D:0 (python)
-  M[src/algitex/propact/__init__.py] 397L C:3 F:12 CC↑16 D:1 (python)
   M[docker/proxym/proxym_mcp_server.py] 387L C:0 F:10 CC↑9 D:0 (python)
+  M[src/algitex/tools/config.py] 386L C:1 F:12 CC↑8 D:0 (python)
   M[src/algitex/tools/ollama.py] 383L C:4 F:16 CC↑11 D:0 (python)
-  M[src/algitex/project.py] 379L C:1 F:12 CC↑6 D:0 (python)
   M[src/algitex/algo/__init__.py] 369L C:5 F:12 CC↑9 D:0 (python)
-  M[docker/vallm/vallm_mcp_server.py] 360L C:0 F:8 CC↑9 D:0 (python)
-  M[src/algitex/tools/workspace.py] 338L C:2 F:17 CC↑6 D:1 (python)
-  M[src/algitex/workflows/__init__.py] 320L C:3 F:19 CC↑4 D:0 (python)
-  M[docker/code2llm/code2llm_mcp_server.py] 276L C:0 F:6 CC↑17 D:0 (python)
-  M[docker/planfile-mcp/planfile_mcp_server.py] 276L C:0 F:10 CC↑7 D:0 (python)
-  LANGS: python:34/shell:1
+  M[src/algitex/tools/batch.py] 364L C:4 F:13 CC↑14 D:0 (python)
+  LANGS: python:39/shell:1
 
 HOTSPOTS[10]:
-  ★ analyze_project fan=24  // Analysis pipeline, 24 stages
-  ★ Code2LLMServer._analyze_project fan=21  // Analysis pipeline, 21 stages
+  ★ Project.__init__ fan=18  // Orchestrates 18 calls
   ★ Project.status fan=18  // Full project status: health + tickets + budget + algo progress.
   ★ DockerToolManager._call_stdio fan=18  // Send JSON-RPC over stdin, read from stdout with timeout.
+  ★ BatchProcessor.process fan=17  // Analysis pipeline, 17 stages
   ★ init fan=16  // Initialize algitex for a project.
 
-REFACTOR[11]:
+REFACTOR[8]:
   [1] H/H Split god module src/algitex/cli.py (571L, 0 classes)
   [2] H/H Split god module src/algitex/tools/todo_runner.py (526L, 2 classes)
-  [3] H/H Split god module src/algitex/tools/docker.py (504L, 3 classes)
-  [4] M/L Split Code2LLMServer._analyze_project (CC=17 → target CC<10)
-  [5] M/L Split analyze_project (CC=17 → target CC<10)
+  [3] H/H Split god module src/algitex/tools/autofix.py (565L, 2 classes)
+  [4] H/H Split god module src/algitex/tools/docker.py (504L, 3 classes)
+  [5] H/H Split god module src/algitex/project.py (581L, 1 classes)
 
 EVOLUTION:
-  2026-03-28 CC̄=3.6 crit=18 12610L // Automated analysis
+  2026-03-28 CC̄=3.4 crit=22 15084L // Automated analysis

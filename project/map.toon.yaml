@@ -1,13 +1,13 @@
-# algitex | 35f 8969L | python:34,shell:1 | 2026-03-28
-# stats: 344 func | 0 cls | 35 mod | CC̄=3.6 | critical:5 | cycles:0
-# alerts[5]: fan-out analyze_project=24; fan-out Code2LLMServer._analyze_project=21; fan-out DockerToolManager._call_stdio=18; fan-out Project.status=18; CC Code2LLMServer._analyze_project=17
-# hotspots[5]: analyze_project fan=24; Code2LLMServer._analyze_project fan=21; Project.status fan=18; DockerToolManager._call_stdio fan=18; init fan=16
-# evolution: CC̄ 3.6→3.6 (flat 0.0)
+# algitex | 40f 11586L | python:39,shell:1 | 2026-03-28
+# stats: 475 func | 0 cls | 40 mod | CC̄=3.4 | critical:0 | cycles:0
+# alerts[5]: fan-out DockerToolManager._call_stdio=18; fan-out Project.__init__=18; fan-out Project.status=18; fan-out BatchProcessor.process=17; fan-out DockerToolManager.get_capabilities=16
+# hotspots[5]: Project.__init__ fan=18; Project.status fan=18; DockerToolManager._call_stdio fan=18; BatchProcessor.process fan=17; init fan=16
+# evolution: CC̄ 3.5→3.4 (improved -0.1)
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[35]:
+M[40]:
   docker/aider-mcp/aider_mcp_server.py,156
-  docker/code2llm/code2llm_mcp_server.py,276
-  docker/code2llm/code2llm_server.py,239
+  docker/code2llm/code2llm_mcp_server.py,323
+  docker/code2llm/code2llm_server.py,283
   docker/planfile-mcp/planfile_mcp_server.py,276
   docker/proxym/proxym_mcp_server.py,387
   docker/proxym/proxym_server.py,257
@@ -19,53 +19,39 @@ M[35]:
   src/algitex/algo/loop.py,4
   src/algitex/cli.py,571
   src/algitex/config.py,170
-  src/algitex/project.py,294
-  src/algitex/propact/__init__.py,397
+  src/algitex/project.py,581
+  src/algitex/propact/__init__.py,413
   src/algitex/propact/workflow.py,2
-  src/algitex/tools/__init__.py,102
+  src/algitex/tools/__init__.py,105
   src/algitex/tools/analysis.py,182
+  src/algitex/tools/autofix.py,565
+  src/algitex/tools/batch.py,364
   src/algitex/tools/cicd.py,405
+  src/algitex/tools/config.py,386
   src/algitex/tools/context.py,206
   src/algitex/tools/docker.py,504
   src/algitex/tools/feedback.py,252
+  src/algitex/tools/ide.py,430
+  src/algitex/tools/mcp.py,448
   src/algitex/tools/ollama.py,383
   src/algitex/tools/proxy.py,145
-  src/algitex/tools/services.py,401
+  src/algitex/tools/services.py,413
   src/algitex/tools/telemetry.py,152
   src/algitex/tools/tickets.py,246
   src/algitex/tools/todo_executor.py,240
-  src/algitex/tools/todo_local.py,267
+  src/algitex/tools/todo_local.py,282
   src/algitex/tools/todo_parser.py,206
   src/algitex/tools/todo_runner.py,526
   src/algitex/tools/workspace.py,338
   src/algitex/workflows/__init__.py,320
   src/algitex/workflows/pipeline.py,5
 D:
-  docker/code2llm/code2llm_server.py:
-    e: Code2LLMServer
-    Code2LLMServer: __init__(0),create_fastapi_app(0),_analyze_project(1),_generate_toon(1),_generate_readme(1),run(0)  # Code analysis server for LLM context generation...
-  docker/code2llm/code2llm_mcp_server.py:
-    e: analyze_project,generate_toon,generate_readme,evolution_export,create_rest_api,run_rest_server
-    analyze_project(path)
-    generate_toon(path)
-    generate_readme(path)
-    evolution_export(path)
-    create_rest_api()
-    run_rest_server()
-  src/algitex/propact/__init__.py:
-    e: WorkflowStep,WorkflowResult,Workflow
-    WorkflowStep: to_dict(0)  # Single executable step in a Propact workflow...
-    WorkflowResult:  # Result of workflow execution...
-    Workflow: __init__(1),parse(0),validate(0),execute(0),status(0),_exec_shell(1),_exec_rest(2),_exec_mcp(2),_exec_docker(2),_execute_with_manager(6),_exec_llm(2)  # Parse and execute Propact Markdown workflows...
-  src/algitex/tools/services.py:
-    e: ServiceStatus,ServiceChecker,ServiceDependency
-    ServiceStatus: to_dict(0)  # Status of a single service...
-    ServiceChecker: __init__(1),check_http_service(4),check_ollama(1),check_litellm_proxy(1),check_mcp_service(2),check_command_exists(2),check_file_exists(2),check_all(1),print_status(2),get_unhealthy(1),wait_for_services(3),close(0),__enter__(0),__exit__(0)  # Checker for various services used by algitex...
-    ServiceDependency: __init__(1),get_startup_order(1),check_with_dependencies(1)  # Manage service dependencies and startup order...
-  src/algitex/tools/todo_local.py:
-    e: LocalTaskResult,LocalExecutor
-    LocalTaskResult:  # Result of executing a single task locally...
-    LocalExecutor: __init__(1),can_execute(1),execute(1),_fix_return_type(3),_has_return_type(2),_import_exists(3),_fix_unused_import(3),_fix_fstring(2),_fix_standalone_main(1),_add_main_block(1)  # Execute simple code fixes locally without Docker...
+  src/algitex/tools/batch.py:
+    e: BatchResult,BatchStats,BatchProcessor,FileBatchProcessor
+    BatchResult: to_dict(0)  # Result from batch processing...
+    BatchStats: update(1)  # Statistics for batch processing...
+    BatchProcessor: __init__(9),_rate_limit(0),_process_item(2),process(2),_save_results(0),get_successful(0),get_failed(0),filter_by_error(1)  # Generic batch processor with rate limiting and retries...
+    FileBatchProcessor(BatchProcessor): __init__(4),find_files(3),process_directory(2)  # Specialized batch processor for files...
   src/algitex/cli.py:
     e: init,analyze,plan,go,status,tools,ask,sync,ticket_add,ticket_list,ticket_board,algo_discover,algo_extract,algo_rules,algo_report,workflow_run,workflow_validate,docker_list,docker_spawn,docker_call,docker_teardown,docker_caps,todo_list,todo_run,todo_fix
     init(path)
@@ -101,17 +87,43 @@ D:
     e: TaskResult,TodoRunner
     TaskResult:  # Result of executing a single task...
     TodoRunner: __init__(2),__enter__(0),__exit__(3),run_from_file(4),run(3),_execute_local(2),_execute_ollama(2),_execute_task(3),_determine_action(2),_nap_action(1),_aider_action(1),_ollama_action(1),_filesystem_action(1),_github_action(1),_format_output(1),get_summary(0)  # Execute todo tasks using Docker MCP tools with local fallbac...
+  src/algitex/tools/autofix.py:
+    e: FixResult,AutoFix
+    FixResult: to_dict(0)  # Result of fixing an issue...
+    AutoFix: __init__(5),check_backends(0),choose_backend(0),mark_task_done(1),fix_with_ollama(1),_ensure_git_repo(0),_build_aider_prompt(1),_build_aider_command(2),_run_aider_subprocess(3),fix_with_aider(1),_read_file_content(1),_build_proxy_prompt(2),_call_proxy_api(1),_extract_code_from_response(1),_write_fixed_file(2),fix_with_proxy(1),fix_task(2),fix_all(3),fix_issue(2),print_summary(1),list_tasks(0),get_stats(0)  # Automated code fixing using various backends...
   src/algitex/tools/docker.py:
     e: DockerTool,RunningTool,DockerToolManager
     DockerTool:  # Single Docker-based tool declaration from docker-tools.yaml...
     RunningTool:  # A spawned Docker container with connection info...
     DockerToolManager: __init__(1),__enter__(0),__exit__(3),_load_tools(0),_load_state(0),_save_state(0),spawn(1),_spawn_stdio(2),_spawn_sse(2),_spawn_rest(2),_spawn_cli(2),_wait_healthy(2),_get_http_client(0),call_tool(3),_call_stdio(3),_call_sse(3),_call_rest(3),_call_cli(3),teardown(1),teardown_all(0),list_tools(0),list_running(0),get_capabilities(1)  # Spawn Docker containers, connect via MCP/REST, call tools, t...
+  src/algitex/tools/mcp.py:
+    e: MCPService,MCPOrchestrator
+    MCPService: __post_init__(0)  # Definition of an MCP service...
+    MCPOrchestrator: __init__(0),_setup_signal_handlers(0),_register_default_services(0),add_service(1),add_custom_service(3),start_service(1),stop_service(2),restart_service(1),start_all(1),stop_all(1),wait_for_ready(2),check_health(0),get_logs(2),list_services(0),get_service_info(1),print_status(0),generate_mcp_config(1)  # Orchestrates multiple MCP services...
   src/algitex/tools/ollama.py:
     e: OllamaModel,OllamaResponse,OllamaClient,OllamaService
     OllamaModel:  # Information about an Ollama model...
     OllamaResponse: __str__(0)  # Response from Ollama API...
     OllamaClient: __init__(3),health(0),list_models(0),pull_model(1),generate(7),chat(6),fix_code(4),analyze_code(3),close(0),__enter__(0),__exit__(0)  # Client for interacting with Ollama API...
     OllamaService: __init__(1),ensure_model(1),get_recommended_models(0),auto_fix_file(4)  # High-level service for Ollama operations...
+  src/algitex/tools/todo_local.py:
+    e: LocalTaskResult,LocalExecutor
+    LocalTaskResult:  # Result of executing a single task locally...
+    LocalExecutor: __init__(1),can_execute(1),_determine_fix_and_apply(2),execute(1),_fix_return_type(3),_has_return_type(2),_import_exists(3),_fix_unused_import(3),_fix_fstring(2),_fix_standalone_main(1),_add_main_block(1)  # Execute simple code fixes locally without Docker...
+  docker/code2llm/code2llm_server.py:
+    e: Code2LLMServer
+    Code2LLMServer: __init__(0),create_fastapi_app(0),_analyze_python_file(2),_calculate_complexity_metrics(1),_collect_project_metrics(1),_analyze_project(1),_generate_toon(1),_generate_readme(1),run(0)  # Code analysis server for LLM context generation...
+  docker/code2llm/code2llm_mcp_server.py:
+    e: _analyze_python_file,_calculate_complexity_metrics,_collect_project_metrics,analyze_project,generate_toon,generate_readme,evolution_export,create_rest_api,run_rest_server
+    _analyze_python_file(py_file;root)
+    _calculate_complexity_metrics(complexity_scores)
+    _collect_project_metrics(root)
+    analyze_project(path)
+    generate_toon(path)
+    generate_readme(path)
+    evolution_export(path)
+    create_rest_api()
+    run_rest_server()
   src/algitex/config.py:
     e: ProxyConfig,TicketConfig,AnalysisConfig,Config,_find_config,_merge_yaml
     ProxyConfig: from_env(0)  # Proxym gateway settings...
@@ -120,18 +132,11 @@ D:
     Config: load(1),save(1)  # Unified config for the entire algitex stack...
     _find_config(explicit)
     _merge_yaml(cfg;path)
-  docker/proxym/proxym_mcp_server.py:
-    e: count_tokens,list_models,chat_completion,_call_anthropic,_call_openai,_call_gemini,simple_prompt,get_budget_status,create_rest_api,run_rest_server
-    count_tokens(text)
-    list_models()
-    chat_completion(messages;model;temperature;max_tokens)
-    _call_anthropic(messages;model;temperature;max_tokens;input_tokens)
-    _call_openai(messages;model;temperature;max_tokens;input_tokens)
-    _call_gemini(messages;model;temperature;max_tokens;input_tokens)
-    simple_prompt(prompt;model)
-    get_budget_status()
-    create_rest_api()
-    run_rest_server()
+  src/algitex/propact/__init__.py:
+    e: WorkflowStep,WorkflowResult,Workflow
+    WorkflowStep: to_dict(0)  # Single executable step in a Propact workflow...
+    WorkflowResult:  # Result of workflow execution...
+    Workflow: __init__(1),parse(0),validate(0),_execute_step(3),_update_result(3),_handle_step_failure(2),execute(0),status(0),_exec_shell(1),_exec_rest(2),_exec_mcp(2),_exec_docker(2),_execute_with_manager(6),_exec_llm(2)  # Parse and execute Propact Markdown workflows...
   docker/vallm/vallm_mcp_server.py:
     e: validate_static,validate_runtime,validate_security,validate_all,analyze_complexity,calculate_quality_score,create_rest_api,run_rest_server
     validate_static(path)
@@ -145,6 +150,18 @@ D:
   docker/vallm/vallm_server.py:
     e: VallmServer
     VallmServer: __init__(0),create_fastapi_app(0),_validate_static(1),_validate_runtime(1),_validate_security(1),_analyze_complexity(1),run(0)  # Validation server with multiple validation levels...
+  docker/proxym/proxym_mcp_server.py:
+    e: count_tokens,list_models,chat_completion,_call_anthropic,_call_openai,_call_gemini,simple_prompt,get_budget_status,create_rest_api,run_rest_server
+    count_tokens(text)
+    list_models()
+    chat_completion(messages;model;temperature;max_tokens)
+    _call_anthropic(messages;model;temperature;max_tokens;input_tokens)
+    _call_openai(messages;model;temperature;max_tokens;input_tokens)
+    _call_gemini(messages;model;temperature;max_tokens;input_tokens)
+    simple_prompt(prompt;model)
+    get_budget_status()
+    create_rest_api()
+    run_rest_server()
   src/algitex/tools/proxy.py:
     e: LLMResponse,Proxy
     LLMResponse: __str__(0)  # Simplified LLM response...
@@ -156,6 +173,25 @@ D:
     Rule:  # Deterministic replacement for an LLM pattern...
     LoopState:  # Current state of the progressive algorithmization loop...
     Loop: __init__(1),discover(1),add_trace(2),extract(1),generate_rules(1),_llm_generate_rule(2),route(1),optimize(0),report(0),_load(0),_save(0)  # The progressive algorithmization engine...
+  src/algitex/tools/services.py:
+    e: ServiceStatus,ServiceChecker,ServiceDependency
+    ServiceStatus: to_dict(0)  # Status of a single service...
+    ServiceChecker: __init__(1),check_http_service(4),check_ollama(1),check_litellm_proxy(1),check_mcp_service(2),check_command_exists(2),check_file_exists(2),check_all(1),_format_status_line(1),_print_status_details(1),print_status(2),get_unhealthy(1),wait_for_services(3),close(0),__enter__(0),__exit__(0)  # Checker for various services used by algitex...
+    ServiceDependency: __init__(1),get_startup_order(1),check_with_dependencies(1)  # Manage service dependencies and startup order...
+  src/algitex/tools/config.py:
+    e: ConfigManager
+    ConfigManager: __init__(1),_ensure_dir(1),_backup_file(1),install_config(3),generate_continue_config(3),install_continue_config(2),generate_vscode_settings(2),install_vscode_settings(2),generate_env_file(2),generate_docker_compose(2),setup_project_configs(2),list_configs(1)  # Manages configuration files for various IDEs and tools...
+  src/algitex/project.py:
+    e: Project
+    Project: __init__(2),analyze(1),plan(3),execute(1),status(0),run_workflow(1),ask(1),add_ticket(1),sync(0),check_services(1),print_service_status(1),ensure_service(2),fix_issues(3),fix_issue(2),list_todo_tasks(0),check_ollama(0),list_ollama_models(0),pull_ollama_model(1),generate_with_ollama(3),batch_analyze(4),create_batch_processor(3),benchmark_models(2),add_benchmark_task(4),print_benchmark_results(2),setup_ide(1),fix_with_claude(3),fix_with_aider(3),detect_editor(0),get_ide_status(0),setup_configs(1),install_continue_config(1),install_vscode_settings(0),generate_env_file(1),start_mcp_services(1),stop_mcp_services(0),restart_mcp_service(1),wait_for_mcp_ready(1),get_mcp_status(0),print_mcp_status(0),generate_mcp_config(0),_build_prompt(1),_select_tier(1),_generate_strategy(2)  # One project, all tools, zero boilerplate...
+  src/algitex/tools/ide.py:
+    e: IDETool,IDEHelper,ClaudeCodeHelper,AiderHelper,VSCodeHelper,EditorIntegration
+    IDETool: __post_init__(0)  # IDE tool configuration...
+    IDEHelper: __init__(0),_register_default_tools(0),check_tool(1),setup_tool(1),list_tools(0),get_tool_status(0)  # Base class for IDE integrations...
+    ClaudeCodeHelper(IDEHelper): __init__(0),setup_environment(0),fix_file(4),chat(3),batch_fix(3)  # Helper for Claude Code (anthropic-curl) integration...
+    AiderHelper(IDEHelper): __init__(0),fix_file(4)  # Helper for Aider integration...
+    VSCodeHelper(IDEHelper): __init__(0),open_file(2),install_extensions(1),recommended_extensions(0)  # Helper for VS Code integration...
+    EditorIntegration: __init__(0),detect_editor(0),setup_best_integration(0),get_quick_fix_command(3)  # High-level editor integration manager...
   src/algitex/tools/feedback.py:
     e: FailureStrategy,FeedbackPolicy,FeedbackController,FeedbackLoop
     FailureStrategy(Enum):
@@ -192,9 +228,6 @@ D:
   docker/proxym/proxym_server.py:
     e: ProxymServer
     ProxymServer: __init__(0),create_fastapi_app(0),_call_anthropic(2),_call_openai(2),_mock_response(2),_track_cost(2),run(0)  # LLM proxy with budget tracking...
-  src/algitex/project.py:
-    e: Project
-    Project: __init__(2),analyze(1),plan(3),execute(1),status(0),run_workflow(1),ask(1),add_ticket(1),sync(0),_build_prompt(1),_select_tier(1),_generate_strategy(2)  # One project, all tools, zero boilerplate...
   src/algitex/tools/workspace.py:
     e: RepoConfig,Workspace,create_workspace_template,init_workspace
     RepoConfig: __post_init__(0)  # Configuration for a single repository in the workspace...

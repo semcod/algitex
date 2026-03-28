@@ -30,6 +30,104 @@ logger = logging.getLogger(__name__)
 mcp = FastMCP("code2llm")
 
 
+def _analyze_python_file(py_file: Path, root: Path) -> Dict[str, Any]:
+    """Analyze a single Python file and extract metrics."""
+    try:
+        content = py_file.read_text()
+        tree = ast.parse(content)
+        
+        rel_path = str(py_file.relative_to(root))
+        
+        # Extract AST information
+        functions = []
+        classes = []
+        imports = []
+        
+        for node in ast.walk(tree):
+            if isinstance(node, ast.FunctionDef):
+                functions.append(f"{rel_path}:{node.name}")
+            elif isinstance(node, ast.ClassDef):
+                classes.append(f"{rel_path}:{node.name}")
+            elif isinstance(node, (ast.Import, ast.ImportFrom)):
+                if isinstance(node, ast.ImportFrom) and node.module:
+                    imports.append(node.module)
+        
+        # Complexity analysis
+        complexity_scores = []
+        try:
+            cc_results = cc_visit(content)
+            for result in cc_results:
+                complexity_scores.append({
+                    "file": rel_path,
+                    "name": result.name,
+                    "complexity": result.complexity
+                })
+        except:
+            pass
+        
+        return {
+            "file": rel_path,
+            "functions": functions,
+            "classes": classes,
+            "imports": imports,
+            "complexity_scores": complexity_scores
+        }
+    except Exception as e:
+        logger.warning(f"Error analyzing {py_file}: {e}")
+        return None
+
+
+def _calculate_complexity_metrics(complexity_scores: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """Calculate complexity metrics from scores."""
+    if not complexity_scores:
+        return {"avg_cc": 0, "max_cc": 0, "hotspots": []}
+    
+    avg_cc = sum(c["complexity"] for c in complexity_scores) / len(complexity_scores)
+    max_cc = max(c["complexity"] for c in complexity_scores)
+    
+    # Hotspots (high complexity)
+    hotspots = [
+        f"{h['file']}: {h['name']}() CC={h['complexity']}"
+        for h in complexity_scores
+        if h["complexity"] > 10
+    ][:10]
+    
+    return {
+        "avg_cc": round(avg_cc, 2),
+        "max_cc": max_cc,
+        "hotspots": hotspots
+    }
+
+
+def _collect_project_metrics(root: Path) -> Dict[str, Any]:
+    """Collect all metrics for the project."""
+    files = []
+    all_functions = []
+    all_classes = []
+    all_imports = []
+    all_complexity_scores = []
+    
+    for py_file in root.rglob("*.py"):
+        if "__pycache__" in str(py_file):
+            continue
+        
+        result = _analyze_python_file(py_file, root)
+        if result:
+            files.append(result["file"])
+            all_functions.extend(result["functions"])
+            all_classes.extend(result["classes"])
+            all_imports.extend(result["imports"])
+            all_complexity_scores.extend(result["complexity_scores"])
+    
+    return {
+        "files": files,
+        "functions": all_functions,
+        "classes": all_classes,
+        "imports": all_imports,
+        "complexity_scores": all_complexity_scores
+    }
+
+
 @mcp.tool()
 def analyze_project(path: str = "/project") -> Dict[str, Any]:
     """
@@ -43,76 +141,25 @@ def analyze_project(path: str = "/project") -> Dict[str, Any]:
     """
     root = Path(path)
     
-    files = []
-    functions = []
-    classes = []
-    imports = []
-    complexity_scores = []
+    # Collect all project metrics
+    metrics = _collect_project_metrics(root)
     
-    for py_file in root.rglob("*.py"):
-        if "__pycache__" in str(py_file):
-            continue
-        
-        try:
-            content = py_file.read_text()
-            tree = ast.parse(content)
-            
-            rel_path = str(py_file.relative_to(root))
-            files.append(rel_path)
-            
-            # Analyze AST
-            for node in ast.walk(tree):
-                if isinstance(node, ast.FunctionDef):
-                    func_name = f"{rel_path}:{node.name}"
-                    functions.append(func_name)
-                elif isinstance(node, ast.ClassDef):
-                    classes.append(f"{rel_path}:{node.name}")
-                elif isinstance(node, (ast.Import, ast.ImportFrom)):
-                    if isinstance(node, ast.ImportFrom) and node.module:
-                        imports.append(node.module)
-            
-            # Complexity analysis
-            try:
-                cc_results = cc_visit(content)
-                for result in cc_results:
-                    complexity_scores.append({
-                        "file": rel_path,
-                        "name": result.name,
-                        "complexity": result.complexity
-                    })
-            except:
-                pass
-        except Exception as e:
-            logger.warning(f"Error analyzing {py_file}: {e}")
+    # Calculate complexity metrics
+    complexity_metrics = _calculate_complexity_metrics(metrics["complexity_scores"])
     
-    # Calculate average complexity
-    if complexity_scores:
-        avg_cc = sum(c["complexity"] for c in complexity_scores) / len(complexity_scores)
-        max_cc = max(c["complexity"] for c in complexity_scores)
-    else:
-        avg_cc = 0
-        max_cc = 0
-    
-    # Hotspots (high complexity)
-    hotspots = [
-        f"{h['file']}: {h['name']}() CC={h['complexity']}"
-        for h in complexity_scores
-        if h["complexity"] > 10
-    ][:10]
-    
-    # Dependencies
-    unique_imports = sorted(set(imports))[:20]
+    # Dependencies (unique, limited to 20)
+    unique_imports = sorted(set(metrics["imports"]))[:20]
     
     return {
-        "total_files": len(files),
-        "total_functions": len(functions),
-        "total_classes": len(classes),
-        "average_cc": round(avg_cc, 2),
-        "max_cc": max_cc,
-        "hotspots": hotspots,
+        "total_files": len(metrics["files"]),
+        "total_functions": len(metrics["functions"]),
+        "total_classes": len(metrics["classes"]),
+        "average_cc": complexity_metrics["avg_cc"],
+        "max_cc": complexity_metrics["max_cc"],
+        "hotspots": complexity_metrics["hotspots"],
         "dependencies": unique_imports,
-        "modules": files[:20],
-        "complexity_scores": complexity_scores[:20],
+        "modules": metrics["files"][:20],
+        "complexity_scores": metrics["complexity_scores"][:20],
         "timestamp": datetime.now().isoformat()
     }
 

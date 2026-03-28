@@ -44,6 +44,36 @@ class LocalExecutor:
         ]
         return any(fix in desc for fix in local_fixes)
 
+    def _determine_fix_and_apply(self, content: str, task: Task) -> tuple[str, str]:
+        """Determine the type of fix needed and apply it. Returns (content, action)."""
+        desc = task.description.lower()
+        
+        if "return type" in desc or "-> none" in desc or "-> any" in desc:
+            # Check if already has return type
+            if self._has_return_type(content, task.line_number):
+                return content, "already_fixed"
+            content = self._fix_return_type(content, task.line_number, desc)
+            action = "fix_return_type"
+        elif "unused import" in desc:
+            # Check if import was already removed
+            if not self._import_exists(content, task.line_number, desc):
+                return content, "already_fixed"
+            content = self._fix_unused_import(content, task.line_number, desc)
+            action = "fix_unused_import"
+        elif "f-string" in desc or "string concatenation" in desc:
+            content = self._fix_fstring(content, task.line_number)
+            action = "fix_fstring"
+        elif "standalone main function" in desc:
+            content = self._fix_standalone_main(content)
+            action = "fix_standalone_main"
+        elif "module execution block" in desc:
+            content = self._add_main_block(content)
+            action = "add_main_block"
+        else:
+            return content, "no_fix_available"
+        
+        return content, action
+
     def execute(self, task: Task) -> LocalTaskResult:
         """Execute a single task locally."""
         if not task.file_path:
@@ -68,40 +98,25 @@ class LocalExecutor:
             original_content = content
 
             # Determine fix type and apply
-            desc = task.description.lower()
-
-            if "return type" in desc or "-> none" in desc or "-> any" in desc:
-                # Check if already has return type
-                if self._has_return_type(content, task.line_number):
+            content, action = self._determine_fix_and_apply(content, task)
+            
+            # Handle special cases
+            if action == "already_fixed":
+                if "return type" in task.description.lower():
                     return LocalTaskResult(
                         task=task,
                         success=True,
                         action="already_fixed",
                         output=f"Return type already present in {task.file_path}:{task.line_number}"
                     )
-                content = self._fix_return_type(content, task.line_number, desc)
-                action = "fix_return_type"
-            elif "unused import" in desc:
-                # Check if import was already removed
-                if not self._import_exists(content, task.line_number, desc):
+                else:  # unused import
                     return LocalTaskResult(
                         task=task,
                         success=True,
                         action="already_fixed",
                         output=f"Import already removed from {task.file_path}:{task.line_number}"
                     )
-                content = self._fix_unused_import(content, task.line_number, desc)
-                action = "fix_unused_import"
-            elif "f-string" in desc or "string concatenation" in desc:
-                content = self._fix_fstring(content, task.line_number)
-                action = "fix_fstring"
-            elif "standalone main function" in desc:
-                content = self._fix_standalone_main(content)
-                action = "fix_standalone_main"
-            elif "module execution block" in desc:
-                content = self._add_main_block(content)
-                action = "add_main_block"
-            else:
+            elif action == "no_fix_available":
                 return LocalTaskResult(
                     task=task,
                     success=False,

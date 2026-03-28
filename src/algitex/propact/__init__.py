@@ -158,6 +158,43 @@ class Workflow:
 
         return errors
 
+    def _execute_step(self, step: WorkflowStep, proxy_url: str, docker_mgr) -> tuple[WorkflowStep, Any]:
+        """Execute a single step and return the step and potentially updated docker_mgr."""
+        if step.type == "shell":
+            step = self._exec_shell(step)
+        elif step.type == "rest":
+            step = self._exec_rest(step, proxy_url)
+        elif step.type == "mcp":
+            step = self._exec_mcp(step, proxy_url)
+        elif step.type == "llm":
+            step = self._exec_llm(step, proxy_url)
+        elif step.type == "docker":
+            step = self._exec_docker(step, docker_mgr)
+            if docker_mgr is None:
+                # Store the manager after first docker step
+                from algitex.tools.docker import DockerToolManager
+                from algitex.config import Config
+                docker_mgr = DockerToolManager(Config.load())
+        return step, docker_mgr
+
+    def _update_result(self, result: WorkflowResult, step: WorkflowStep, start_time: float):
+        """Update result with step metrics."""
+        step.elapsed_ms = (time.time() - start_time) * 1000
+        result.total_elapsed_ms += step.elapsed_ms
+        result.total_cost_usd += step.cost_usd
+
+        if step.status == "done":
+            result.steps_done += 1
+        elif step.status == "failed":
+            result.steps_failed += 1
+
+    def _handle_step_failure(self, step: WorkflowStep, stop_on_error: bool):
+        """Handle step failure and mark remaining steps as skipped if needed."""
+        if stop_on_error:
+            # Mark remaining as skipped
+            for remaining in self._steps[step.index + 1 :]:
+                remaining.status = "skipped"
+
     def execute(
         self,
         *,
@@ -188,37 +225,16 @@ class Workflow:
                 start = time.time()
 
                 try:
-                    if step.type == "shell":
-                        step = self._exec_shell(step)
-                    elif step.type == "rest":
-                        step = self._exec_rest(step, proxy_url)
-                    elif step.type == "mcp":
-                        step = self._exec_mcp(step, proxy_url)
-                    elif step.type == "llm":
-                        step = self._exec_llm(step, proxy_url)
-                    elif step.type == "docker":
-                        step = self._exec_docker(step, docker_mgr)
-                        if docker_mgr is None:
-                            # Store the manager after first docker step
-                            from algitex.tools.docker import DockerToolManager
-                            from algitex.config import Config
-                            docker_mgr = DockerToolManager(Config.load())
+                    step, docker_mgr = self._execute_step(step, proxy_url, docker_mgr)
                 except Exception as e:
                     step.status = "failed"
                     step.result = str(e)
 
-                step.elapsed_ms = (time.time() - start) * 1000
-                result.total_elapsed_ms += step.elapsed_ms
-                result.total_cost_usd += step.cost_usd
-
-                if step.status == "done":
-                    result.steps_done += 1
-                elif step.status == "failed":
-                    result.steps_failed += 1
+                self._update_result(result, step, start)
+                
+                if step.status == "failed":
+                    self._handle_step_failure(step, stop_on_error)
                     if stop_on_error:
-                        # Mark remaining as skipped
-                        for remaining in self._steps[step.index + 1 :]:
-                            remaining.status = "skipped"
                         break
 
                 result.steps.append(step)

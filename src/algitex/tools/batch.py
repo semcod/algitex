@@ -30,7 +30,12 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Union
 
-import tqdm  # Optional, for progress bars
+try:
+    import tqdm  # Optional, for progress bars
+    HAS_TQDM = True
+except ImportError:
+    tqdm = None
+    HAS_TQDM = False
 
 
 @dataclass
@@ -177,11 +182,11 @@ class BatchProcessor:
         
         # Progress bar
         pbar = None
-        if self.progress:
-            try:
-                pbar = tqdm.tqdm(total=len(items), desc="Processing")
-            except ImportError:
-                self.progress = False
+        if self.progress and HAS_TQDM:
+            pbar = tqdm.tqdm(total=len(items), desc="Processing")
+        elif self.progress and not HAS_TQDM:
+            print("Install tqdm for progress bars: pip install tqdm")
+            self.progress = False
         
         # Process in parallel
         with ThreadPoolExecutor(max_workers=self.parallelism) as executor:
