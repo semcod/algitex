@@ -12,6 +12,8 @@ try:
 except ImportError:
     requests = None
 
+import os
+
 from algitex.tools.autofix.base import FixResult, Task
 
 
@@ -19,7 +21,7 @@ class ProxyBackend:
     """Fix issues using LiteLLM proxy."""
 
     DEFAULT_TIMEOUT = 120
-    DEFAULT_MODEL = "qwen-coder"
+    DEFAULT_MODEL = os.environ.get("OPENROUTER_MODEL", "qwen-coder")
     DEFAULT_MAX_TOKENS = 2000
 
     def __init__(self, proxy_url: str = "http://localhost:4000", dry_run: bool = False):
