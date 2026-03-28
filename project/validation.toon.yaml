@@ -24,16 +24,16 @@ WARNINGS[4]{path,score}:
 ERRORS[15]{path,score}:
   docker/code2llm/code2llm_mcp_server.py,0.00
     issues[1]{rule,severity,message,line}:
-      syntax.parse,error,SyntaxError: invalid syntax,9
+      syntax.parse,error,SyntaxError: invalid syntax. Perhaps you forgot a comma?,1
   docker/code2llm/code2llm_server.py,0.00
     issues[1]{rule,severity,message,line}:
-      syntax.parse,error,SyntaxError: invalid syntax,9
+      syntax.parse,error,SyntaxError: invalid syntax. Perhaps you forgot a comma?,1
   docker/proxym/proxym_mcp_server.py,0.00
     issues[1]{rule,severity,message,line}:
-      syntax.parse,error,SyntaxError: invalid syntax,9
+      syntax.parse,error,SyntaxError: invalid syntax. Perhaps you forgot a comma?,1
   docker/proxym/proxym_server.py,0.00
     issues[1]{rule,severity,message,line}:
-      syntax.parse,error,SyntaxError: invalid syntax,9
+      syntax.parse,error,SyntaxError: invalid syntax. Perhaps you forgot a comma?,1
   docker/vallm/vallm_mcp_server.py,0.00
     issues[1]{rule,severity,message,line}:
       syntax.parse,error,SyntaxError: invalid syntax,12

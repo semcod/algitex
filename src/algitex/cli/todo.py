@@ -222,6 +222,22 @@ def todo_hybrid(
         result = fixer.fix_all(file)
     else:
         result = fixer.fix_complex(file)
+    
+    # Update TODO.md - mark completed tasks
+    if not dry_run and result.get('fixed', 0) > 0:
+        from algitex.todo.fixer import parse_todo, mark_tasks_completed
+        try:
+            tasks = parse_todo(file)
+            # Mark LLM tasks as completed (categories not in FIXERS)
+            from algitex.todo.fixer import FIXERS
+            llm_tasks = [t for t in tasks if t.category not in FIXERS]
+            task_ids = [f"{t.file}:{t.line}" for t in llm_tasks]
+            if task_ids:
+                mark_tasks_completed(file, task_ids)
+                console.print(f"\n[green]✓ Updated TODO.md — marked {len(task_ids)} tasks as completed[/]")
+        except Exception as e:
+            console.print(f"\n[yellow]⚠️  Could not update TODO.md: {e}[/]")
+    
     fixer.print_summary(result)
 
 

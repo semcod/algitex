@@ -6,10 +6,10 @@
 - **Primary Language**: python
 - **Languages**: python: 118, shell: 26
 - **Analysis Mode**: static
-- **Total Functions**: 760
+- **Total Functions**: 761
 - **Total Classes**: 115
 - **Modules**: 144
-- **Entry Points**: 677
+- **Entry Points**: 678
 
 ## Architecture by Module
 
@@ -98,15 +98,15 @@
 - **Classes**: 5
 - **File**: `__init__.py`
 
-### src.algitex.tools.todo_executor
-- **Functions**: 12
-- **Classes**: 2
-- **File**: `todo_executor.py`
-
 ### src.algitex.tools.todo_runner
 - **Functions**: 12
 - **Classes**: 2
 - **File**: `todo_runner.py`
+
+### src.algitex.tools.todo_executor
+- **Functions**: 12
+- **Classes**: 2
+- **File**: `todo_executor.py`
 
 ### src.algitex.tools.feedback
 - **Functions**: 12
@@ -164,13 +164,13 @@ Main execution flows into the system:
 ### examples.27-unified-autofix.main.main
 - **Calls**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.parse_args, print, print, print
 
-### examples.15-github-mcp.main.demo_github_workflow
-> Demonstrate GitHub workflow.
-- **Calls**: print, examples.15-github-mcp.main.create_sample_project, print, print, project_dir.iterdir, print, print, print
-
 ### examples.06-telemetry.main.basic_telemetry_example
 > Basic telemetry tracking example.
 - **Calls**: print, Telemetry, print, tel.span, time.sleep, span1.finish, tel.span, time.sleep
+
+### examples.15-github-mcp.main.demo_github_workflow
+> Demonstrate GitHub workflow.
+- **Calls**: print, examples.15-github-mcp.main.create_sample_project, print, print, project_dir.iterdir, print, print, print
 
 ### examples.12-filesystem-mcp.main.demo_file_operations
 > Demonstrate real filesystem operations.
@@ -261,15 +261,15 @@ demo_validation [examples.13-vallm.main]
 basic_context_example [examples.07-context.main]
 ```
 
-### Flow 6: demo_github_workflow
+### Flow 6: basic_telemetry_example
+```
+basic_telemetry_example [examples.06-telemetry.main]
+```
+
+### Flow 7: demo_github_workflow
 ```
 demo_github_workflow [examples.15-github-mcp.main]
   └─> create_sample_project
-```
-
-### Flow 7: basic_telemetry_example
-```
-basic_telemetry_example [examples.06-telemetry.main]
 ```
 
 ### Flow 8: demo_file_operations
@@ -336,15 +336,15 @@ print_summary [src.algitex.todo.hybrid.HybridAutofix]
 - **Methods**: 12
 - **Key Methods**: src.algitex.tools.config.ConfigManager.__init__, src.algitex.tools.config.ConfigManager._ensure_dir, src.algitex.tools.config.ConfigManager._backup_file, src.algitex.tools.config.ConfigManager.install_config, src.algitex.tools.config.ConfigManager.generate_continue_config, src.algitex.tools.config.ConfigManager.install_continue_config, src.algitex.tools.config.ConfigManager.generate_vscode_settings, src.algitex.tools.config.ConfigManager.install_vscode_settings, src.algitex.tools.config.ConfigManager.generate_env_file, src.algitex.tools.config.ConfigManager.generate_docker_compose
 
-### src.algitex.tools.todo_executor.TodoExecutor
-> Execute todo tasks using Docker MCP tools.
-- **Methods**: 12
-- **Key Methods**: src.algitex.tools.todo_executor.TodoExecutor.__init__, src.algitex.tools.todo_executor.TodoExecutor.__enter__, src.algitex.tools.todo_executor.TodoExecutor.__exit__, src.algitex.tools.todo_executor.TodoExecutor.run, src.algitex.tools.todo_executor.TodoExecutor._execute_task, src.algitex.tools.todo_executor.TodoExecutor._parse_action, src.algitex.tools.todo_executor.TodoExecutor._parse_fix_action, src.algitex.tools.todo_executor.TodoExecutor._parse_create_action, src.algitex.tools.todo_executor.TodoExecutor._parse_delete_action, src.algitex.tools.todo_executor.TodoExecutor._parse_read_action
-
 ### src.algitex.tools.todo_runner.TodoRunner
 > Execute todo tasks using Docker MCP tools with local fallback.
 - **Methods**: 12
 - **Key Methods**: src.algitex.tools.todo_runner.TodoRunner.__init__, src.algitex.tools.todo_runner.TodoRunner.__enter__, src.algitex.tools.todo_runner.TodoRunner.__exit__, src.algitex.tools.todo_runner.TodoRunner.run_from_file, src.algitex.tools.todo_runner.TodoRunner.run, src.algitex.tools.todo_runner.TodoRunner._execute_local, src.algitex.tools.todo_runner.TodoRunner._execute_ollama, src.algitex.tools.todo_runner.TodoRunner._build_ollama_prompt, src.algitex.tools.todo_runner.TodoRunner._call_ollama_api, src.algitex.tools.todo_runner.TodoRunner._execute_task
+
+### src.algitex.tools.todo_executor.TodoExecutor
+> Execute todo tasks using Docker MCP tools.
+- **Methods**: 12
+- **Key Methods**: src.algitex.tools.todo_executor.TodoExecutor.__init__, src.algitex.tools.todo_executor.TodoExecutor.__enter__, src.algitex.tools.todo_executor.TodoExecutor.__exit__, src.algitex.tools.todo_executor.TodoExecutor.run, src.algitex.tools.todo_executor.TodoExecutor._execute_task, src.algitex.tools.todo_executor.TodoExecutor._parse_action, src.algitex.tools.todo_executor.TodoExecutor._parse_fix_action, src.algitex.tools.todo_executor.TodoExecutor._parse_create_action, src.algitex.tools.todo_executor.TodoExecutor._parse_delete_action, src.algitex.tools.todo_executor.TodoExecutor._parse_read_action
 
 ### src.algitex.tools.benchmark.ModelBenchmark
 > Benchmark models on standardized tasks.
@@ -431,10 +431,6 @@ Key functions that process and transform data:
 > Parse generic list items.
 - **Output to**: set, self.GENERIC_PATTERN.finditer, match.group, None.strip, seen.add
 
-### src.algitex.tools.context.ContextBuilder._format_ticket
-> Format ticket information.
-- **Output to**: ticket.get, ticket.get, ticket.get, ticket.get
-
 ### src.algitex.tools.workspace.Workspace._validate_dependencies
 > Validate that all dependencies exist.
 - **Output to**: set, self.repos.items, self.repos.keys, ValueError
@@ -442,6 +438,14 @@ Key functions that process and transform data:
 ### src.algitex.tools.workspace.Workspace.validate_all
 > Run validation across all repositories.
 - **Output to**: self._topo_sort, print, Pipeline, pipeline.validate, pipeline._results.get
+
+### src.algitex.tools.context.ContextBuilder._format_ticket
+> Format ticket information.
+- **Output to**: ticket.get, ticket.get, ticket.get, ticket.get
+
+### src.algitex.tools.todo_runner.TodoRunner._format_output
+> Extract meaningful output from MCP result.
+- **Output to**: isinstance, isinstance, json.dumps, str, str
 
 ### src.algitex.tools.services.ServiceChecker._format_status_line
 > Format a single status line.
@@ -477,10 +481,6 @@ Key functions that process and transform data:
 ### src.algitex.tools.logging.format_result
 > Format a result for display.
 - **Output to**: repr, len
-
-### src.algitex.tools.todo_runner.TodoRunner._format_output
-> Extract meaningful output from MCP result.
-- **Output to**: isinstance, isinstance, json.dumps, str, str
 
 ### src.algitex.tools.batch.BatchProcessor._process_item
 > Process single item with retry logic.
@@ -531,6 +531,11 @@ Key functions that process and transform data:
 - **Confidence**: 0.70
 - **Functions**: src.algitex.tools.telemetry.TraceSpan.duration_s, src.algitex.tools.telemetry.TraceSpan.finish, src.algitex.tools.telemetry.TraceSpan.__enter__, src.algitex.tools.telemetry.TraceSpan.__exit__
 
+### state_machine_TodoRunner
+- **Type**: state_machine
+- **Confidence**: 0.70
+- **Functions**: src.algitex.tools.todo_runner.TodoRunner.__init__, src.algitex.tools.todo_runner.TodoRunner.__enter__, src.algitex.tools.todo_runner.TodoRunner.__exit__, src.algitex.tools.todo_runner.TodoRunner.run_from_file, src.algitex.tools.todo_runner.TodoRunner.run
+
 ### state_machine_ServiceChecker
 - **Type**: state_machine
 - **Confidence**: 0.70
@@ -545,11 +550,6 @@ Key functions that process and transform data:
 - **Type**: state_machine
 - **Confidence**: 0.70
 - **Functions**: src.algitex.tools.logging.VerboseContext.__init__, src.algitex.tools.logging.VerboseContext.__enter__, src.algitex.tools.logging.VerboseContext.__exit__
-
-### state_machine_TodoRunner
-- **Type**: state_machine
-- **Confidence**: 0.70
-- **Functions**: src.algitex.tools.todo_runner.TodoRunner.__init__, src.algitex.tools.todo_runner.TodoRunner.__enter__, src.algitex.tools.todo_runner.TodoRunner.__exit__, src.algitex.tools.todo_runner.TodoRunner.run_from_file, src.algitex.tools.todo_runner.TodoRunner.run
 
 ## Public API Surface
 
@@ -568,8 +568,8 @@ Functions exposed as public API (no underscore prefix):
 - `examples.07-context.main.basic_context_example` - 34 calls
 - `examples.02-algo-loop.main.main` - 33 calls
 - `examples.27-unified-autofix.main.main` - 33 calls
-- `examples.15-github-mcp.main.demo_github_workflow` - 30 calls
 - `examples.06-telemetry.main.basic_telemetry_example` - 30 calls
+- `examples.15-github-mcp.main.demo_github_workflow` - 30 calls
 - `examples.12-filesystem-mcp.main.demo_file_operations` - 30 calls
 - `src.algitex.cli.todo.todo_hybrid` - 29 calls
 - `src.algitex.todo.hybrid.HybridAutofix.print_summary` - 29 calls
@@ -626,12 +626,12 @@ graph TD
     main --> discover
     main --> report
     main --> parse_args
-    demo_github_workflow --> print
-    demo_github_workflow --> create_sample_projec
-    demo_github_workflow --> iterdir
     basic_telemetry_exam --> print
     basic_telemetry_exam --> Telemetry
     basic_telemetry_exam --> span
+    basic_telemetry_exam --> sleep
+    demo_github_workflow --> print
+    demo_github_workflow --> create_sample_projec
 ```
 
 ## Reverse Engineering Guidelines

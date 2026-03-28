@@ -14,29 +14,40 @@ console = Console()
 
 def init(path: str = typer.Argument(".", help="Project directory")) -> None:
     """Initialize algitex for a project."""
-    from algitex.config import Config
-    from algitex.tools import discover_tools
+    project_path = _init_project_dir(path)
+    cfg_path = _init_config(project_path)
+    
+    console.print(f"\n[bold green]\u2705 algitex initialized[/] in {project_path}")
+    console.print(f"   Config: {cfg_path}")
+    
+    _print_tools_status()
 
+
+def _init_project_dir(path: str) -> Path:
     project_path = Path(path).resolve()
     project_path.mkdir(parents=True, exist_ok=True)
     (project_path / ".algitex").mkdir(exist_ok=True)
+    return project_path
 
+
+def _init_config(project_path: Path) -> str:
+    from algitex.config import Config
     cfg = Config.load()
-    cfg_path = cfg.save(str(project_path / "algitex.yaml"))
+    return cfg.save(str(project_path / "algitex.yaml"))
 
-    console.print(f"\n[bold green]\u2705 algitex initialized[/] in {project_path}")
-    console.print(f"   Config: {cfg_path}")
 
+def _print_tools_status():
+    from algitex.tools import discover_tools, TOOL_REGISTRY
     tools = discover_tools()
     table = Table(title="Available Tools")
     table.add_column("Tool", style="bold")
     table.add_column("Status")
     table.add_column("Role")
-    from algitex.tools import TOOL_REGISTRY
+    
     for name, status in tools.items():
-        table.add_row(name, str(status), TOOL_REGISTRY[name]["role"])
+        table.add_row(name, str(status), TOOL_REGISTRY.get(name, {}).get("role", "unknown"))
     console.print(table)
-
+    
     missing = [n for n, s in tools.items() if not s.installed]
     if missing:
         console.print(f"\n[yellow]Install missing:[/] pip install {' '.join(missing)}")

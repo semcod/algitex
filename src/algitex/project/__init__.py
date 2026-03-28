@@ -340,31 +340,11 @@ class Project(ServiceMixin, AutoFixMixin, OllamaMixin, BatchMixin, BenchmarkMixi
         """
         from pathlib import Path
         
-        # Get analysis report
         if not self._last_report:
             self.analyze()
         
         report = self._last_report
-        issues = []
-        
-        # Add issues from complexity hotspots (use god_functions if available)
-        hotspots = getattr(report, 'complexity_hotspots', None) or getattr(report, 'god_functions', [])
-        for hotspot in hotspots[:5]:
-            if isinstance(hotspot, dict):
-                issues.append({
-                    "description": f"Refactor high complexity function {hotspot.get('function', 'unknown')} (CC={hotspot.get('complexity', 0)})",
-                    "file": hotspot.get("file", ""),
-                    "line": hotspot.get("line", 1),
-                    "priority": "high" if hotspot.get("complexity", 0) > 10 else "normal"
-                })
-            else:
-                # hotspot is a string (god_functions format)
-                issues.append({
-                    "description": f"Refactor complex function: {hotspot}",
-                    "file": str(hotspot).split(":")[0] if ":" in str(hotspot) else "",
-                    "line": 1,
-                    "priority": "normal"
-                })
+        issues = self._collect_hotspot_issues(report)
         
         # Add generic code quality issues
         generic_issues = [
@@ -376,25 +356,47 @@ class Project(ServiceMixin, AutoFixMixin, OllamaMixin, BatchMixin, BenchmarkMixi
             if not any(i["file"] == issue["file"] and i["line"] == issue["line"] for i in issues):
                 issues.append(issue)
         
-        # Write TODO.md
         todo_path = self.path / filename
-        with open(todo_path, 'w') as f:
-            f.write("# TODO - Code Issues\n\n")
-            f.write(f"Generated from analysis (Grade: {report.grade})\n\n")
-            f.write("## Current Issues\n\n")
-            for i, issue in enumerate(issues, 1):
-                priority = issue.get("priority", "normal")
-                file_path = issue.get("file", "")
-                line = issue.get("line", "")
-                desc = issue["description"]
-                f.write(f"- [ ] {file_path}:{line} - {desc} [priority:{priority}]\n")
+        self._write_todo_file(todo_path, report.grade, issues)
         
         return {
             "filename": str(todo_path),
             "count": len(issues),
             "grade": report.grade
         }
+    
 
+    def _collect_hotspot_issues(self, report) -> list:
+        issues = []
+        hotspots = getattr(report, 'complexity_hotspots', None) or getattr(report, 'god_functions', [])
+        for hotspot in hotspots[:5]:
+            if isinstance(hotspot, dict):
+                issues.append({
+                    "description": f"Refactor high complexity function {hotspot.get('function', 'unknown')} (CC={hotspot.get('complexity', 0)})",
+                    "file": hotspot.get("file", ""),
+                    "line": hotspot.get("line", 1),
+                    "priority": "high" if hotspot.get("complexity", 0) > 10 else "normal"
+                })
+            else:
+                issues.append({
+                    "description": f"Refactor complex function: {hotspot}",
+                    "file": str(hotspot).split(":")[0] if ":" in str(hotspot) else "",
+                    "line": 1,
+                    "priority": "normal"
+                })
+        return issues
+
+    def _write_todo_file(self, path, grade: str, issues: list):
+        with open(path, 'w') as f:
+            f.write("# TODO - Code Issues\n\n")
+            f.write(f"Generated from analysis (Grade: {grade})\n\n")
+            f.write("## Current Issues\n\n")
+            for issue in issues:
+                priority = issue.get("priority", "normal")
+                file_path = issue.get("file", "")
+                line = issue.get("line", "")
+                desc = issue["description"]
+                f.write(f"- [ ] {file_path}:{line} - {desc} [priority:{priority}]\n")
     # ── Private helpers ───────────────────────────────────
 
     def _build_prompt(self, ticket: Ticket) -> str:

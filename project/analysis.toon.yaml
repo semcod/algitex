@@ -1,5 +1,5 @@
 # code2llm | 69f 13715L | python:68,shell:1 | 2026-03-28
-# CC̄=3.3 | critical:0/760 | dups:0 | cycles:0
+# CC̄=3.3 | critical:0/761 | dups:0 | cycles:0
 
 HEALTH[2]:
   🟡 CC    main CC=24 (limit:15)
@@ -8,16 +8,16 @@ HEALTH[2]:
 REFACTOR[1]:
   1. split 2 high-CC methods  (CC>15)
 
-PIPELINES[608]:
-  [1] Src [run_rest_server]: run_rest_server → create_rest_api → aider_ai_code
+PIPELINES[609]:
+  [1] Src [planfile_create_tickets_bulk]: planfile_create_tickets_bulk → planfile_create_ticket → _load_tickets
       PURITY: 100% pure
-  [2] Src [__init__]: __init__
+  [2] Src [planfile_sync]: planfile_sync → _save_tickets → list
       PURITY: 100% pure
-  [3] Src [create_fastapi_app]: create_fastapi_app → validate
+  [3] Src [run_rest_server]: run_rest_server → create_rest_api → planfile_list_tickets → _load_tickets
       PURITY: 100% pure
-  [4] Src [_validate_static]: _validate_static
+  [4] Src [run_rest_server]: run_rest_server → create_rest_api → aider_ai_code
       PURITY: 100% pure
-  [5] Src [_validate_runtime]: _validate_runtime
+  [5] Src [__init__]: __init__
       PURITY: 100% pure
 
 LAYERS:
@@ -68,7 +68,7 @@ LAYERS:
   │ telemetry                  152L  2C    9m  CC=4      ←0
   │ parallel                   149L  0C    6m  CC=11     ←0
   │ proxy                      145L  2C    9m  CC=9      ←0
-  │ ollama_backend             119L  1C    6m  CC=5      ←0
+  │ ollama_backend             119L  1C    7m  CC=6      ←0
   │ partitioner                118L  1C    7m  CC=10     ←0
   │ __init__                   116L  0C    0m  CC=0.0    ←0
   │ __init__                   115L  1C    4m  CC=4      ←3

@@ -113,8 +113,12 @@ class Workflow:
         heading = HEADING_PATTERN.search(content)
         self._title = heading.group(1) if heading else self.path.stem
 
-        # Extract steps
-        self._steps = []
+        self._steps = self._extract_steps_from_content(content)
+        self._parsed = True
+        return self._steps
+
+    def _extract_steps_from_content(self, content: str) -> list[WorkflowStep]:
+        steps = []
         last_heading = self._title
         for i, match in enumerate(STEP_PATTERN.finditer(content)):
             step_type = match.group(1)
@@ -126,7 +130,7 @@ class Workflow:
             if headings:
                 last_heading = headings[-1]
 
-            self._steps.append(
+            steps.append(
                 WorkflowStep(
                     index=i,
                     type=step_type,
@@ -134,9 +138,7 @@ class Workflow:
                     content=step_content,
                 )
             )
-
-        self._parsed = True
-        return self._steps
+        return steps
 
     def validate(self) -> list[str]:
         """Check workflow for errors without executing."""
@@ -275,17 +277,7 @@ class Workflow:
         """Execute a REST API call."""
         import httpx
 
-        lines = step.content.strip().split("\n", 1)
-        method_line = lines[0].strip()
-        body = lines[1].strip() if len(lines) > 1 else ""
-
-        parts = method_line.split(None, 1)
-        method = parts[0].upper()
-        url = parts[1] if len(parts) > 1 else ""
-
-        # Replace relative URLs with proxy
-        if url.startswith("/"):
-            url = proxy_url + url
+        method, url, body = self._parse_rest_block(step.content, proxy_url)
 
         with httpx.Client(timeout=120) as client:
             kwargs: dict[str, Any] = {}
@@ -299,16 +291,30 @@ class Workflow:
 
         step.result = resp.text[:2000]
         step.status = "done" if resp.status_code < 400 else "failed"
-
-        # Extract cost from proxym metadata
-        try:
-            data = resp.json()
-            meta = data.get("_proxy", {})
-            step.cost_usd = meta.get("cost_usd", 0.0)
-        except Exception:
-            pass
+        step.cost_usd = self._extract_proxy_cost(resp)
 
         return step
+
+    def _parse_rest_block(self, content: str, proxy_url: str) -> tuple[str, str, str]:
+        lines = content.strip().split("\n", 1)
+        method_line = lines[0].strip()
+        body = lines[1].strip() if len(lines) > 1 else ""
+
+        parts = method_line.split(None, 1)
+        method = parts[0].upper()
+        url = parts[1] if len(parts) > 1 else ""
+
+        # Replace relative URLs with proxy
+        if url.startswith("/"):
+            url = proxy_url + url
+        return method, url, body
+
+    def _extract_proxy_cost(self, resp: Any) -> float:
+        try:
+            data = resp.json()
+            return float(data.get("_proxy", {}).get("cost_usd", 0.0))
+        except Exception:
+            return 0.0
 
     def _exec_mcp(self, step: WorkflowStep, proxy_url: str) -> WorkflowStep:
         """Execute an MCP tool call."""

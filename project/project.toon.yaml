@@ -1,4 +1,4 @@
-# algitex | 600 func | 62f | 19077L | python | 2026-03-28
+# algitex | 601 func | 62f | 17832L | python | 2026-03-28
 
 HEALTH:
   CC̄=3.3  critical=24 (limit:10)  dup=4  cycles=0
@@ -44,4 +44,4 @@ REFACTOR[1]:
   [1] M/M Reduce init fan-out (currently 15)
 
 EVOLUTION:
-  2026-03-28 CC̄=3.3 crit=24 19077L // Automated analysis
+  2026-03-28 CC̄=3.3 crit=24 17832L // Automated analysis

@@ -40,21 +40,28 @@ class OllamaBackend:
             return self._error_result(task, start_time, "No file path specified")
 
         # Quick health check
+        print(f"   🔍 Checking Ollama at {self.base_url}...")
         if not self._is_healthy():
+            print(f"   ✗ Ollama not responding at {self.base_url}")
             return self._error_result(task, start_time, "Ollama not available at " + self.base_url)
+        print(f"   ✓ Ollama is reachable")
 
         try:
+            print(f"   🔍 Getting available models...")
             model = self._ensure_model()
             if not model:
                 return self._error_result(task, start_time, "No suitable model found")
+            print(f"   ✓ Using model: {model}")
 
             if self.dry_run:
                 return self._success_result(task, start_time, True, method="ollama-dry-run")
 
+            print(f"   🔧 Applying fix to {task.file_path}...")
             success = self._apply_fix(task, model)
             return self._success_result(task, start_time, success, method="ollama")
 
         except Exception as e:
+            print(f"   ✗ Error: {e}")
             return self._error_result(task, start_time, str(e))
 
     def _is_healthy(self) -> bool:
