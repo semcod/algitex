@@ -2,7 +2,7 @@
 
 **The algorithmic text-engine that turns LLM traces into deterministic rules.**
 
-Algitex is the execution layer that transforms LLM-driven behavior into deterministic, cost-efficient algorithmic systems. It serves as the intelligence compilation engine in the devloop ecosystem, enabling progressive algorithmization from probabilistic AI reasoning to structured, deterministic logic.
+Algitex is the execution layer that transforms LLM-driven behavior into deterministic, cost-efficient algorithmic systems. It serves as the intelligence compilation engine, enabling progressive algorithmization from probabilistic AI reasoning to structured, deterministic logic.
 
 ## 🧠 Core Concept
 
@@ -23,12 +23,12 @@ LLM Reasoning → Pattern Extraction → Rule Generation → Hybrid Routing → 
 
 ## ⚙️ Architecture
 
-### In the devloop Ecosystem
+### In the Algitex Ecosystem
 
 ```
 ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│   devloop       │───▶│   Algitex        │───▶│   Optimization  │
-│   Orchestration │    │   Engine         │    │   Layer         │
+│   Discovery     │───▶│   Algitex        │───▶│   Optimization  │
+│   Layer         │    │   Engine         │    │   Layer         │
 └─────────────────┘    └──────────────────┘    └─────────────────┘
          │                       │                       │
          ▼                       ▼                       ▼
@@ -171,7 +171,7 @@ By progressively algorithmizing intelligence workflows, Algitex enables systems 
 
 ## 📚 Additional Resources
 
-- [devloop Documentation](./devloop)
+- [Algitex API Documentation](./api)
 - [API Reference](./api)
 - [Examples and Tutorials](./examples)
 - [Contributing Guidelines](./contributing)

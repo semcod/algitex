@@ -24,12 +24,12 @@ python3 -m ruff check src/ tests/ 2>&1 || echo "⚠️ Lint issues found"
 
 ```propact:shell
 python3 -c "
-from devloop import Project
+from algitex import Project
 p = Project('.')
 r = p.analyze(full=False)
 print(f'Grade: {r.grade} | CC̄={r.cc_avg:.1f} | Files: {r.files}')
 if r.grade in ('C', 'D'):
-    print('⚠️ Quality below target — consider devloop plan')
+    print('⚠️ Quality below target — consider algitex plan')
     exit(1)
 print('✅ Quality check passed')
 "
@@ -39,7 +39,7 @@ print('✅ Quality check passed')
 
 ```propact:shell
 python3 -c "
-from devloop.algo import Loop
+from algitex.algo import Loop
 report = Loop('.').report()
 print(f'Algo stage: {report[\"stage\"]}')
 print(f'Deterministic: {report[\"deterministic_ratio\"]}')

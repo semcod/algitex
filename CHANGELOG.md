@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-03-28
+
+### Docs
+- Update README.md
+- Update README2.md
+- Update articles/README.md
+- Update articles/devloop-ecosystem-overview.md
+- Update articles/devloop-unified-toolchain.md
+- Update examples/workflows/ci-pipeline.md
+- Update examples/workflows/health-check.md
+- Update examples/workflows/refactor-plan.md
+
+### Test
+- Update tests/test_cli.py
+- Update tests/test_core.py
+- Update tests/test_integration.py
+
+### Other
+- Update .gitignore
+- Update Makefile
+- Update examples/01_quickstart.py
+- Update examples/02_algo_loop.py
+- Update examples/03_pipeline.py
+- Update examples/04_ide_integration.py
+- Update examples/05_cost_tracking.py
+
 ## [0.1.1] - 2026-03-28
 
 ### Docs

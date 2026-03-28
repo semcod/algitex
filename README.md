@@ -1,4 +1,4 @@
-# devloop
+# algitex
 
 **Progressive algorithmization toolchain — from LLM to deterministic code, from proxy to tickets.**
 
@@ -6,20 +6,20 @@
 > to "most traffic runs deterministically, LLM only for edge cases."
 
 ```
-pip install devloop
-devloop init ./my-app
-devloop go
+pip install algitex
+algitex init ./my-app
+algitex go
 ```
 
-## Why "devloop"?
+## Why "algitex"?
 
 The name reflects the core cycle: **analyze → plan → execute → validate → repeat**. Each iteration makes your codebase healthier and your LLM usage cheaper. The progressive algorithmization loop gradually replaces LLM calls with deterministic rules.
 
 ## Name alternatives considered
 
-| Name | Why it works | Why we picked devloop |
+| Name | Why it works | Why we picked algitex |
 |------|-------------|----------------------|
-| **devloop** | Core concept: the continuous improvement loop | Clear, memorable, tech-neutral |
+| **algitex** | Core concept: the continuous improvement loop | Clear, memorable, tech-neutral |
 | prollama | "progressive" + llama vibes | Ties too much to one model family |
 | codefact | Code + factory/fact | Sounds like a trivia app |
 | algopact | Algorithm + Propact | Hard to pronounce |
@@ -30,7 +30,7 @@ The name reflects the core cycle: **analyze → plan → execute → validate �
 
 ### Layer 1: Code Quality Loop
 ```python
-from devloop import Project
+from algitex import Project
 
 p = Project("./my-app")
 p.analyze()    # code2llm + vallm + redup → health report
@@ -41,7 +41,7 @@ p.status()     # health + tickets + budget + cost ledger
 
 ### Layer 2: Progressive Algorithmization
 ```python
-from devloop import Loop
+from algitex import Loop
 
 loop = Loop("./my-app")
 loop.discover()        # Stage 1: collect all LLM traces
@@ -54,7 +54,7 @@ print(loop.report())   # "42% deterministic, $12.50 saved"
 
 ### Layer 3: Propact Workflows
 ```python
-from devloop import Workflow
+from algitex import Workflow
 
 wf = Workflow("./refactor-v1.md")
 wf.execute()   # runs propact:shell, propact:rest, propact:llm blocks
@@ -64,31 +64,31 @@ wf.execute()   # runs propact:shell, propact:rest, propact:llm blocks
 
 ```bash
 # Core loop
-devloop init ./my-app         # initialize project
-devloop analyze               # health check
-devloop plan --sprints 3      # generate sprint strategy + tickets
-devloop go                    # full pipeline
-devloop status                # dashboard
+algitex init ./my-app         # initialize project
+algitex analyze               # health check
+algitex plan --sprints 3      # generate sprint strategy + tickets
+algitex go                    # full pipeline
+algitex status                # dashboard
 
 # Progressive algorithmization
-devloop algo discover         # start trace collection
-devloop algo extract          # find patterns in traces
-devloop algo rules            # generate deterministic replacements
-devloop algo report           # show % deterministic vs LLM
+algitex algo discover         # start trace collection
+algitex algo extract          # find patterns in traces
+algitex algo rules            # generate deterministic replacements
+algitex algo report           # show % deterministic vs LLM
 
 # Propact workflows
-devloop workflow run fix.md   # execute Markdown workflow
-devloop workflow validate f.md
+algitex workflow run fix.md   # execute Markdown workflow
+algitex workflow validate f.md
 
 # Tickets
-devloop ticket add "Fix auth" --priority high
-devloop ticket list
-devloop ticket board
-devloop sync                  # push to GitHub/Jira
+algitex ticket add "Fix auth" --priority high
+algitex ticket list
+algitex ticket board
+algitex sync                  # push to GitHub/Jira
 
 # Quick queries
-devloop ask "Explain this race condition" --tier premium
-devloop tools                 # show installed tools
+algitex ask "Explain this race condition" --tier premium
+algitex tools                 # show installed tools
 ```
 
 ## The 5-Stage Progressive Algorithmization
@@ -101,7 +101,7 @@ Stage 4: Hybrid        → confidence-based: known patterns → rules, unknown �
 Stage 5: Optimization  → most traffic deterministic, LLM for edge cases only
 ```
 
-No existing framework automates this path. DSPy goes LLM→smaller LLM. devloop goes LLM→algorithm.
+No existing framework automates this path. DSPy goes LLM→smaller LLM. algitex goes LLM→algorithm.
 
 ## Propact: Markdown as Workflow
 
@@ -130,7 +130,7 @@ vallm batch ./src/auth --recursive
 
 ## Planfile-Aware Proxy Headers
 
-Every LLM request through devloop carries context:
+Every LLM request through algitex carries context:
 
 ```
 X-Planfile-Ref: my-project/current/DLP-0042
@@ -144,18 +144,18 @@ Proxym logs cost/model/latency **per ticket**. The cost ledger shows exactly wha
 ## Installation
 
 ```bash
-pip install devloop                # core
-pip install devloop[all]           # + all tools
-pip install devloop[proxy]         # + proxym
-pip install devloop[analysis]      # + code2llm, vallm, redup
-pip install devloop[tickets]       # + planfile
-pip install devloop[routing]       # + llx
+pip install algitex                # core
+pip install algitex[all]           # + all tools
+pip install algitex[proxy]         # + proxym
+pip install algitex[analysis]      # + code2llm, vallm, redup
+pip install algitex[tickets]       # + planfile
+pip install algitex[routing]       # + llx
 ```
 
 ## Architecture
 
 ```
-src/devloop/
+src/algitex/
 ├── __init__.py           # Project, Loop, Workflow, Config, Pipeline
 ├── config.py             # Unified config (env + YAML)
 ├── project.py            # Main Project class (expanded)
@@ -180,7 +180,7 @@ src/devloop/
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│                     devloop                         │
+│                     algitex                         │
 │            (orchestration layer)                    │
 ├─────────────────────────────────────────────────────┤
 │                                                     │
@@ -217,9 +217,15 @@ src/devloop/
 Licensed under Apache-2.0.
 
 
+Licensed under Apache-2.0.
+
+
 Apache License 2.0
 
 ## Author
+
+Tom Sapletta
+
 
 Tom Sapletta
 

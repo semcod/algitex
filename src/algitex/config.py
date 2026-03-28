@@ -1,9 +1,9 @@
 """Configuration — one file to rule them all.
 
 Reads from (in priority order):
-    1. Environment variables (DEVLOOP_*, PROXYM_*, etc.)
-    2. ./devloop.yaml
-    3. ~/.config/devloop/config.yaml
+    1. Environment variables (ALGITEX_*, PROXYM_*, etc.)
+    2. ./algitex.yaml
+    3. ~/.config/algitex/config.yaml
     4. Sensible defaults (everything works out of the box)
 """
 
@@ -73,15 +73,15 @@ class AnalysisConfig:
     @classmethod
     def from_env(cls) -> AnalysisConfig:
         return cls(
-            cc_target=float(os.getenv("DEVLOOP_CC_TARGET", "3.5")),
-            max_cc=int(os.getenv("DEVLOOP_MAX_CC", "15")),
-            vallm_pass_target=float(os.getenv("DEVLOOP_VALLM_TARGET", "0.90")),
+            cc_target=float(os.getenv("ALGITEX_CC_TARGET", "3.5")),
+            max_cc=int(os.getenv("ALGITEX_MAX_CC", "15")),
+            vallm_pass_target=float(os.getenv("ALGITEX_VALLM_TARGET", "0.90")),
         )
 
 
 @dataclass
 class Config:
-    """Unified config for the entire devloop stack."""
+    """Unified config for the entire algitex stack."""
 
     proxy: ProxyConfig = field(default_factory=ProxyConfig)
     tickets: TicketConfig = field(default_factory=TicketConfig)
@@ -96,7 +96,7 @@ class Config:
         cfg.proxy = ProxyConfig.from_env()
         cfg.tickets = TicketConfig.from_env()
         cfg.analysis = AnalysisConfig.from_env()
-        cfg.verbose = os.getenv("DEVLOOP_VERBOSE", "").lower() in ("1", "true")
+        cfg.verbose = os.getenv("ALGITEX_VERBOSE", "").lower() in ("1", "true")
 
         yaml_path = _find_config(path)
         if yaml_path:
@@ -105,8 +105,8 @@ class Config:
         return cfg
 
     def save(self, path: Optional[str] = None) -> Path:
-        """Save current config to devloop.yaml."""
-        target = Path(path or "./devloop.yaml")
+        """Save current config to algitex.yaml."""
+        target = Path(path or "./algitex.yaml")
         data = {
             "proxy": {
                 "url": self.proxy.url,
@@ -133,9 +133,9 @@ def _find_config(explicit: Optional[str] = None) -> Optional[Path]:
     """Search for config file in standard locations."""
     candidates = [
         Path(explicit) if explicit else None,
-        Path("./devloop.yaml"),
-        Path("./devloop.yml"),
-        Path.home() / ".config" / "devloop" / "config.yaml",
+        Path("./algitex.yaml"),
+        Path("./algitex.yml"),
+        Path.home() / ".config" / "algitex" / "config.yaml",
     ]
     for p in candidates:
         if p and p.exists():

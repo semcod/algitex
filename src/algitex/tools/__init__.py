@@ -1,4 +1,4 @@
-"""Tool discovery — detect which devloop tools are installed.
+"""Tool discovery — detect which algitex tools are installed.
 
 Each tool is optional. The library works with whatever is available,
 gracefully degrading when tools are missing.
@@ -86,11 +86,11 @@ def require_tool(name: str) -> None:
     if name not in tools or not tools[name].installed:
         install_cmd = f"pip install {name}"
         if name in ("code2llm", "vallm", "redup"):
-            install_cmd = f"pip install devloop[analysis]"
+            install_cmd = f"pip install algitex[analysis]"
         raise ImportError(
             f"{name} is not installed.\n"
             f"Install it with: {install_cmd}\n"
-            f"Or install everything: pip install devloop[all]"
+            f"Or install everything: pip install algitex[all]"
         )
 
 

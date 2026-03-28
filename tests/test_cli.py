@@ -1,10 +1,10 @@
-"""Tests for devloop CLI commands."""
+"""Tests for algitex CLI commands."""
 
 import json
 import pytest
 from typer.testing import CliRunner
 
-from devloop.cli import app
+from algitex.cli import app
 
 runner = CliRunner()
 
@@ -25,14 +25,14 @@ class TestCLIBasic:
     def test_init(self, tmp_path):
         result = runner.invoke(app, ["init", str(tmp_path)])
         assert result.exit_code == 0
-        assert "devloop initialized" in result.stdout
-        assert (tmp_path / "devloop.yaml").exists()
-        assert (tmp_path / ".devloop").is_dir()
+        assert "algitex initialized" in result.stdout
+        assert (tmp_path / "algitex.yaml").exists()
+        assert (tmp_path / ".algitex").is_dir()
 
     def test_init_creates_yaml(self, tmp_path):
         runner.invoke(app, ["init", str(tmp_path)])
         import yaml
-        data = yaml.safe_load((tmp_path / "devloop.yaml").read_text())
+        data = yaml.safe_load((tmp_path / "algitex.yaml").read_text())
         assert "proxy" in data
         assert "tickets" in data
         assert "analysis" in data

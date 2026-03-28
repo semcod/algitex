@@ -1,7 +1,7 @@
 """Pipeline — for users who want custom workflows.
 
 Usage:
-    from devloop import Pipeline
+    from algitex import Pipeline
 
     result = (
         Pipeline("./my-app")
@@ -18,8 +18,8 @@ from __future__ import annotations
 
 from typing import Optional
 
-from devloop.project import Project
-from devloop.config import Config
+from algitex.project import Project
+from algitex.config import Config
 
 
 class Pipeline:

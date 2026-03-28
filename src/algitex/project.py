@@ -8,7 +8,7 @@ Expanded from wronai with:
 - DSL rule extraction
 
 Usage:
-    from devloop import Project
+    from algitex import Project
 
     p = Project("./my-app")
     p.analyze()                     # code2llm + vallm + redup
@@ -24,10 +24,10 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Optional
 
-from devloop.config import Config
-from devloop.tools.analysis import Analyzer, HealthReport
-from devloop.tools.tickets import Tickets, Ticket
-from devloop.algo import Loop
+from algitex.config import Config
+from algitex.tools.analysis import Analyzer, HealthReport
+from algitex.tools.tickets import Tickets, Ticket
+from algitex.algo import Loop
 
 
 class Project:
@@ -84,7 +84,7 @@ class Project:
 
     def execute(self, ticket_id: Optional[str] = None) -> dict:
         """Execute work with planfile-aware headers and cost tracking."""
-        from devloop.tools.proxy import Proxy
+        from algitex.tools.proxy import Proxy
 
         results = []
         proxy = Proxy(self.config.proxy)
@@ -144,8 +144,8 @@ class Project:
 
     def status(self) -> dict:
         """Full project status: health + tickets + budget + algo progress."""
-        from devloop.tools.proxy import Proxy
-        from devloop.tools import discover_tools
+        from algitex.tools.proxy import Proxy
+        from algitex.tools import discover_tools
 
         report = self._last_report or self.analyze(full=False)
         board = self._tickets.board()
@@ -192,7 +192,7 @@ class Project:
 
     def run_workflow(self, workflow_path: str, *, dry_run: bool = False) -> dict:
         """Execute a Propact Markdown workflow."""
-        from devloop.propact import Workflow
+        from algitex.propact import Workflow
 
         wf = Workflow(workflow_path)
         errors = wf.validate()
@@ -226,7 +226,7 @@ class Project:
 
     def ask(self, prompt: str, **kwargs) -> str:
         """Quick LLM query with planfile-aware routing."""
-        from devloop.tools.proxy import Proxy
+        from algitex.tools.proxy import Proxy
 
         with Proxy(self.config.proxy) as proxy:
             resp = proxy.ask(prompt, **kwargs)

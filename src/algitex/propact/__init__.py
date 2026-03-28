@@ -4,7 +4,7 @@ Propact treats Markdown as a workflow format. Code blocks tagged with
 `propact:rest`, `propact:shell`, `propact:mcp` are executable steps.
 
 Usage:
-    from devloop.propact import Workflow
+    from algitex.propact import Workflow
 
     wf = Workflow("./refactor-v1.md")
     wf.validate()       # check syntax
@@ -303,7 +303,7 @@ class Workflow:
 
     def _exec_llm(self, step: WorkflowStep, proxy_url: str) -> WorkflowStep:
         """Send prompt to LLM via proxym."""
-        from devloop.tools.proxy import Proxy
+        from algitex.tools.proxy import Proxy
 
         try:
             with Proxy() as proxy:

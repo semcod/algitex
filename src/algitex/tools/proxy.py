@@ -1,7 +1,7 @@
 """Proxy wrapper — talk to proxym without learning its API.
 
 Usage:
-    from devloop.tools.proxy import Proxy
+    from algitex.tools.proxy import Proxy
 
     proxy = Proxy()                          # auto-config from env
     reply = proxy.ask("Explain this code")   # routes to best model
@@ -16,7 +16,7 @@ from typing import Any, Optional
 
 import httpx
 
-from devloop.config import ProxyConfig
+from algitex.config import ProxyConfig
 
 
 @dataclass

@@ -1,14 +1,14 @@
-"""Tests for devloop — including algo loop and propact."""
+"""Tests for algitex — including algo loop and propact."""
 
 import pytest
 from pathlib import Path
 
-from devloop.config import Config, ProxyConfig
-from devloop.tools import discover_tools, TOOL_REGISTRY
-from devloop.tools.tickets import Tickets
-from devloop.tools.analysis import HealthReport
-from devloop.algo import Loop, TraceEntry, Pattern
-from devloop.propact import Workflow
+from algitex.config import Config, ProxyConfig
+from algitex.tools import discover_tools, TOOL_REGISTRY
+from algitex.tools.tickets import Tickets
+from algitex.tools.analysis import HealthReport
+from algitex.algo import Loop, TraceEntry, Pattern
+from algitex.propact import Workflow
 
 
 class TestConfig:
@@ -24,7 +24,7 @@ class TestConfig:
     def test_save_load(self, tmp_path):
         cfg = Config()
         cfg.proxy.default_tier = "cheap"
-        saved = cfg.save(str(tmp_path / "devloop.yaml"))
+        saved = cfg.save(str(tmp_path / "algitex.yaml"))
         assert saved.exists()
 
 
@@ -198,17 +198,17 @@ rm -rf /
 
 class TestProject:
     def test_init(self, tmp_path):
-        from devloop.project import Project
+        from algitex.project import Project
         p = Project(str(tmp_path))
         assert p.path == tmp_path
 
     def test_algo_accessible(self, tmp_path):
-        from devloop.project import Project
+        from algitex.project import Project
         p = Project(str(tmp_path))
         assert isinstance(p.algo, Loop)
 
     def test_add_ticket(self, tmp_path):
-        from devloop.project import Project
+        from algitex.project import Project
         p = Project(str(tmp_path))
         t = p.add_ticket("Test", priority="high")
         assert t.id == "DLP-0001"

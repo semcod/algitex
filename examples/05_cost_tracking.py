@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 """Example 05: Cost Tracking & Budget.
 
-Shows how devloop tracks LLM costs per-ticket
+Shows how algitex tracks LLM costs per-ticket
 and how the algo loop reduces spending over time.
 
 Run:
     python examples/05_cost_tracking.py
 """
 
-from devloop import Project
-from devloop.algo import Loop
-from devloop.tools.tickets import Tickets
+from algitex import Project
+from algitex.algo import Loop
+from algitex.tools.tickets import Tickets
 
 
 def main():
@@ -93,7 +93,7 @@ def main():
     print(f"  That's {potential_savings / max(report['total_cost_usd'], 0.01):.0%} "
           f"of current spend")
 
-    print("\n✅ In production, devloop algo rules generates")
+    print("\n✅ In production, algitex algo rules generates")
     print("   deterministic handlers for these patterns automatically.")
 
 

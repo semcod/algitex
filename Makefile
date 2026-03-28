@@ -16,7 +16,7 @@ test-fast: ## Run tests without slow integration tests
 	python -m pytest tests/ -v --tb=short -m "not slow"
 
 test-cov: ## Run tests with coverage
-	python -m pytest tests/ -v --cov=devloop --cov-report=html --cov-report=term
+	python -m pytest tests/ -v --cov=algitex --cov-report=html --cov-report=term
 
 lint: ## Run linting
 	ruff check src/ tests/
@@ -26,20 +26,20 @@ format: ## Auto-format code
 	ruff format src/ tests/
 
 typecheck: ## Run mypy
-	mypy src/devloop/
+	mypy src/algitex/
 
 # ── Docker ────────────────────────────────────────────
 
-docker-build: ## Build devloop image
-	docker build -t devloop:latest .
+docker-build: ## Build algitex image
+	docker build -t algitex:latest .
 
 docker-test: ## Run tests inside Docker
-	docker build --target test -t devloop:test .
+	docker build --target test -t algitex:test .
 
 docker-up: ## Start full stack (proxym + ollama + redis)
 	docker compose up -d
 	@echo "\n✅ Stack running. proxym at http://localhost:4000"
-	@echo "   Run: docker compose exec devloop devloop status"
+	@echo "   Run: docker compose exec algitex algitex status"
 
 docker-tools: ## Start with MCP tools (aider, github)
 	docker compose --profile tools up -d
@@ -53,8 +53,8 @@ docker-down: ## Stop all services
 docker-logs: ## Follow proxym logs
 	docker compose logs -f proxym
 
-docker-shell: ## Open shell in devloop container
-	docker compose exec devloop bash
+docker-shell: ## Open shell in algitex container
+	docker compose exec algitex bash
 
 # ── Examples ──────────────────────────────────────────
 
@@ -65,7 +65,7 @@ example-algo: ## Run algo loop example
 	python examples/02_algo_loop.py
 
 example-workflow: ## Run workflow example
-	devloop workflow run examples/workflows/health-check.md
+	algitex workflow run examples/workflows/health-check.md
 
 example-pipeline: ## Run pipeline example
 	python examples/03_pipeline.py

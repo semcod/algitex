@@ -1,25 +1,25 @@
-"""CLI — the devloop command.
+"""CLI — the algitex command.
 
 Usage:
-    devloop init ./my-app           # initialize
-    devloop analyze                 # run all analysis
-    devloop plan                    # generate sprint plan
-    devloop go                      # full pipeline
-    devloop status                  # dashboard
+    algitex init ./my-app           # initialize
+    algitex analyze                 # run all analysis
+    algitex plan                    # generate sprint plan
+    algitex go                      # full pipeline
+    algitex status                  # dashboard
 
-    devloop ask "question"          # quick LLM query
-    devloop ticket add "title"      # add ticket
-    devloop ticket list             # show tickets
-    devloop sync                    # push to GitHub/Jira
+    algitex ask "question"          # quick LLM query
+    algitex ticket add "title"      # add ticket
+    algitex ticket list             # show tickets
+    algitex sync                    # push to GitHub/Jira
 
-    devloop algo discover           # start trace collection
-    devloop algo extract            # find patterns
-    devloop algo rules              # generate deterministic replacements
-    devloop algo report             # show progress
+    algitex algo discover           # start trace collection
+    algitex algo extract            # find patterns
+    algitex algo rules              # generate deterministic replacements
+    algitex algo report             # show progress
 
-    devloop workflow run f.md       # execute Propact workflow
-    devloop workflow validate f.md  # check syntax
-    devloop tools                   # show installed tools
+    algitex workflow run f.md       # execute Propact workflow
+    algitex workflow validate f.md  # check syntax
+    algitex tools                   # show installed tools
 """
 
 from __future__ import annotations
@@ -32,7 +32,7 @@ from rich.console import Console
 from rich.table import Table
 
 app = typer.Typer(
-    name="devloop",
+    name="algitex",
     help="Progressive algorithmization toolchain — from LLM to deterministic, from proxy to tickets.",
     no_args_is_help=True,
 )
@@ -48,18 +48,18 @@ console = Console()
 
 @app.command()
 def init(path: str = typer.Argument(".", help="Project directory")):
-    """Initialize devloop for a project."""
-    from devloop.config import Config
-    from devloop.tools import discover_tools
+    """Initialize algitex for a project."""
+    from algitex.config import Config
+    from algitex.tools import discover_tools
 
     project_path = Path(path).resolve()
     project_path.mkdir(parents=True, exist_ok=True)
-    (project_path / ".devloop").mkdir(exist_ok=True)
+    (project_path / ".algitex").mkdir(exist_ok=True)
 
     cfg = Config.load()
-    cfg_path = cfg.save(str(project_path / "devloop.yaml"))
+    cfg_path = cfg.save(str(project_path / "algitex.yaml"))
 
-    console.print(f"\n[bold green]\u2705 devloop initialized[/] in {project_path}")
+    console.print(f"\n[bold green]\u2705 algitex initialized[/] in {project_path}")
     console.print(f"   Config: {cfg_path}")
 
     tools = discover_tools()
@@ -67,7 +67,7 @@ def init(path: str = typer.Argument(".", help="Project directory")):
     table.add_column("Tool", style="bold")
     table.add_column("Status")
     table.add_column("Role")
-    from devloop.tools import TOOL_REGISTRY
+    from algitex.tools import TOOL_REGISTRY
     for name, status in tools.items():
         table.add_row(name, str(status), TOOL_REGISTRY[name]["role"])
     console.print(table)
@@ -83,7 +83,7 @@ def analyze(
     quick: bool = typer.Option(False, "--quick", "-q"),
 ):
     """Analyze project health."""
-    from devloop.project import Project
+    from algitex.project import Project
     with console.status("Analyzing..."):
         p = Project(path)
         report = p.analyze(full=not quick)
@@ -92,7 +92,7 @@ def analyze(
     if report.grade in ("A", "B"):
         console.print(f"[bold green]Grade {report.grade}[/] — looking good!")
     else:
-        console.print(f"[bold yellow]Grade {report.grade}[/] — run [bold]devloop plan[/] for improvements.")
+        console.print(f"[bold yellow]Grade {report.grade}[/] — run [bold]algitex plan[/] for improvements.")
 
 
 @app.command()
@@ -102,7 +102,7 @@ def plan(
     focus: str = typer.Option("complexity", "--focus", "-f"),
 ):
     """Generate sprint plan with auto-tickets."""
-    from devloop.project import Project
+    from algitex.project import Project
     with console.status("Planning..."):
         p = Project(path)
         result = p.plan(sprints=sprints, focus=focus)
@@ -124,7 +124,7 @@ def go(
     dry_run: bool = typer.Option(False, "--dry-run"),
 ):
     """Full pipeline: analyze \u2192 plan \u2192 execute \u2192 validate."""
-    from devloop.workflows import Pipeline
+    from algitex.workflows import Pipeline
     console.print("[bold]Starting full pipeline...[/]\n")
     pipeline = Pipeline(path)
     with console.status("[1/4] Analyzing..."):
@@ -148,7 +148,7 @@ def go(
 @app.command()
 def status(path: str = typer.Option(".", "--path", "-p")):
     """Show project status dashboard."""
-    from devloop.project import Project
+    from algitex.project import Project
     with console.status("Checking status..."):
         p = Project(path)
         s = p.status()
@@ -179,9 +179,9 @@ def status(path: str = typer.Option(".", "--path", "-p")):
 @app.command()
 def tools():
     """Show available tools and their status."""
-    from devloop.tools import discover_tools, TOOL_REGISTRY
+    from algitex.tools import discover_tools, TOOL_REGISTRY
     all_tools = discover_tools()
-    table = Table(title="devloop Toolchain")
+    table = Table(title="algitex Toolchain")
     table.add_column("Tool", style="bold")
     table.add_column("Installed"); table.add_column("Version")
     table.add_column("CLI"); table.add_column("Role")
@@ -202,7 +202,7 @@ def ask(
     tier: Optional[str] = typer.Option(None, "--tier", "-t"),
 ):
     """Quick LLM query via proxym."""
-    from devloop.tools.proxy import Proxy
+    from algitex.tools.proxy import Proxy
     with console.status("Thinking..."):
         with Proxy() as proxy:
             resp = proxy.ask(prompt, tier=tier)
@@ -214,7 +214,7 @@ def ask(
 @app.command()
 def sync():
     """Sync tickets to external backend."""
-    from devloop.tools.tickets import Tickets
+    from algitex.tools.tickets import Tickets
     t = Tickets()
     console.print(f"Sync: {t.sync()}")
 
@@ -228,7 +228,7 @@ def ticket_add(
     type: str = typer.Option("task", "--type", "-t"),
 ):
     """Add a new ticket."""
-    from devloop.tools.tickets import Tickets
+    from algitex.tools.tickets import Tickets
     ticket = Tickets().add(title, priority=priority, type=type)
     console.print(f"\u2705 Created: [bold]{ticket.id}[/] \u2014 {ticket.title}")
 
@@ -236,7 +236,7 @@ def ticket_add(
 @ticket_app.command("list")
 def ticket_list(status: Optional[str] = typer.Option(None, "--status", "-s")):
     """List tickets."""
-    from devloop.tools.tickets import Tickets
+    from algitex.tools.tickets import Tickets
     tickets = Tickets().list(status=status)
     if not tickets:
         console.print("No tickets."); return
@@ -251,7 +251,7 @@ def ticket_list(status: Optional[str] = typer.Option(None, "--status", "-s")):
 @ticket_app.command("board")
 def ticket_board():
     """Kanban board view."""
-    from devloop.tools.tickets import Tickets
+    from algitex.tools.tickets import Tickets
     for col, tickets in Tickets().board().items():
         if tickets:
             console.print(f"\n[bold]{col.upper()}[/] ({len(tickets)})")
@@ -264,11 +264,11 @@ def ticket_board():
 @algo_app.command("discover")
 def algo_discover(path: str = typer.Option(".", "--path", "-p")):
     """Stage 1: Start trace collection from proxym."""
-    from devloop.algo import Loop
+    from algitex.algo import Loop
     loop = Loop(path)
     loop.discover()
     console.print("\u2705 Discovery mode active. Traces will be collected from proxym.")
-    console.print("Use your IDE normally \u2014 devloop records every LLM interaction.")
+    console.print("Use your IDE normally \u2014 algitex records every LLM interaction.")
 
 
 @algo_app.command("extract")
@@ -277,7 +277,7 @@ def algo_extract(
     min_freq: int = typer.Option(3, "--min-freq"),
 ):
     """Stage 2: Extract repeating patterns from traces."""
-    from devloop.algo import Loop
+    from algitex.algo import Loop
     loop = Loop(path)
     patterns = loop.extract(min_frequency=min_freq)
     if not patterns:
@@ -297,7 +297,7 @@ def algo_rules(
     no_llm: bool = typer.Option(False, "--no-llm"),
 ):
     """Stage 3: Generate deterministic rules for top patterns."""
-    from devloop.algo import Loop
+    from algitex.algo import Loop
     loop = Loop(path)
     with console.status("Generating rules..."):
         rules = loop.generate_rules(use_llm=not no_llm)
@@ -309,7 +309,7 @@ def algo_rules(
 @algo_app.command("report")
 def algo_report(path: str = typer.Option(".", "--path", "-p")):
     """Show algorithmization progress."""
-    from devloop.algo import Loop
+    from algitex.algo import Loop
     report = Loop(path).report()
     console.print(f"\n[bold]Progressive Algorithmization Report[/]")
     console.print(f"Stage: [bold]{report['stage']}[/]")
@@ -327,7 +327,7 @@ def workflow_run(
     dry_run: bool = typer.Option(False, "--dry-run"),
 ):
     """Execute a Propact Markdown workflow."""
-    from devloop.project import Project
+    from algitex.project import Project
     p = Project(".")
     with console.status(f"Running workflow {path}..."):
         result = p.run_workflow(path, dry_run=dry_run)
@@ -342,7 +342,7 @@ def workflow_run(
 @workflow_app.command("validate")
 def workflow_validate(path: str = typer.Argument(...)):
     """Check a Propact workflow for errors."""
-    from devloop.propact import Workflow
+    from algitex.propact import Workflow
     wf = Workflow(path)
     errors = wf.validate()
     if errors:

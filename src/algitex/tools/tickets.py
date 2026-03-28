@@ -1,7 +1,7 @@
 """Tickets wrapper — manage planfile tickets without the ceremony.
 
 Usage:
-    from devloop.tools.tickets import Tickets
+    from algitex.tools.tickets import Tickets
 
     t = Tickets("./my-project")
     t.add("Fix god module in cli.py", priority="high")
@@ -21,7 +21,7 @@ from typing import Any, Optional
 
 import yaml
 
-from devloop.config import TicketConfig
+from algitex.config import TicketConfig
 
 
 @dataclass
@@ -62,7 +62,7 @@ class Tickets:
     def __init__(self, project_path: str = ".", config: Optional[TicketConfig] = None):
         self.path = Path(project_path).resolve()
         self.config = config or TicketConfig.from_env()
-        self._store_path = self.path / ".devloop" / "tickets.yaml"
+        self._store_path = self.path / ".algitex" / "tickets.yaml"
         self._counter = 0
         self._tickets: list[Ticket] = []
         self._load()

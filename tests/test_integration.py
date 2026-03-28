@@ -5,13 +5,13 @@ import pytest
 from pathlib import Path
 from unittest.mock import patch, MagicMock
 
-from devloop import Project, Pipeline
-from devloop.algo import Loop
-from devloop.propact import Workflow
-from devloop.tools.tickets import Tickets
-from devloop.tools.analysis import HealthReport, Analyzer
-from devloop.tools.proxy import Proxy, LLMResponse
-from devloop.config import Config
+from algitex import Project, Pipeline
+from algitex.algo import Loop
+from algitex.propact import Workflow
+from algitex.tools.tickets import Tickets
+from algitex.tools.analysis import HealthReport, Analyzer
+from algitex.tools.proxy import Proxy, LLMResponse
+from algitex.config import Config
 
 
 class TestProjectWorkflow:
@@ -140,19 +140,19 @@ class TestPropactWorkflowIntegration:
 ## Create file
 
 ```propact:shell
-echo "hello" > /tmp/devloop-test-output.txt
+echo "hello" > /tmp/algitex-test-output.txt
 ```
 
 ## Read file
 
 ```propact:shell
-cat /tmp/devloop-test-output.txt
+cat /tmp/algitex-test-output.txt
 ```
 
 ## Clean up
 
 ```propact:shell
-rm -f /tmp/devloop-test-output.txt
+rm -f /tmp/algitex-test-output.txt
 ```
 """)
         wf = Workflow(str(wf_file))
@@ -301,7 +301,7 @@ class TestConfigIntegration:
         cfg.analysis.cc_target = 2.5
         cfg.analysis.formats = ["toon", "evolution", "flow"]
 
-        path = cfg.save(str(tmp_path / "devloop.yaml"))
+        path = cfg.save(str(tmp_path / "algitex.yaml"))
 
         import yaml
         data = yaml.safe_load(path.read_text())

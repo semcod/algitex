@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Example 04: IDE Integration.
 
-Shows how to configure popular IDEs/agents to work with devloop + proxym.
+Shows how to configure popular IDEs/agents to work with algitex + proxym.
 Generates config snippets for Roo Code, Cline, Continue.dev, Aider, Cursor.
 
 Run:
@@ -45,14 +45,14 @@ def continuedev_config():
     return {
         "models": [
             {
-                "title": "devloop balanced",
+                "title": "algitex balanced",
                 "provider": "openai",
                 "model": "balanced",
                 "apiBase": f"{PROXY_URL}/v1",
                 "apiKey": API_KEY,
             },
             {
-                "title": "devloop premium",
+                "title": "algitex premium",
                 "provider": "openai",
                 "model": "premium",
                 "apiBase": f"{PROXY_URL}/v1",
@@ -60,7 +60,7 @@ def continuedev_config():
             },
         ],
         "tabAutocompleteModel": {
-            "title": "devloop local",
+            "title": "algitex local",
             "provider": "openai",
             "model": "local",
             "apiBase": f"{PROXY_URL}/v1",

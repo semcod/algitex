@@ -12,7 +12,7 @@ Run:
 """
 
 import time
-from devloop.algo import Loop
+from algitex.algo import Loop
 
 
 def main():
@@ -94,7 +94,7 @@ def main():
 
     print("\n✅ Loop complete!")
     print("  In production, traces arrive automatically from proxym.")
-    print("  Run: devloop algo report")
+    print("  Run: algitex algo report")
 
 
 if __name__ == "__main__":

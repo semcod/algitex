@@ -8,7 +8,7 @@ Run:
     python examples/03_pipeline.py
 """
 
-from devloop import Pipeline
+from algitex import Pipeline
 
 
 def main():
@@ -38,7 +38,7 @@ def main():
 
     # Pattern C: Custom ticket creation
     print("\n[3] Adding tickets from external source:")
-    from devloop.tools.tickets import Tickets
+    from algitex.tools.tickets import Tickets
     t = Tickets(".")
     t.add("Integrate with CI/CD", priority="normal", type="feature",
           source="human", tags=["ci", "devops"])
@@ -55,7 +55,7 @@ def main():
                 print(f"    [{ticket.priority}] {ticket.id}: {ticket.title}")
 
     print("\n✅ Pipeline complete!")
-    print("  Use devloop go for the full automated cycle.")
+    print("  Use algitex go for the full automated cycle.")
 
 
 if __name__ == "__main__":

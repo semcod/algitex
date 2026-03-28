@@ -3,7 +3,7 @@
 The 5-stage pipeline: LLM → patterns → rules → hybrid → deterministic.
 
 Usage:
-    from devloop.algo.loop import Loop
+    from algitex.algo.loop import Loop
 
     loop = Loop("./my-app")
     loop.discover()        # Stage 1: LLM handles all, collect traces
@@ -118,7 +118,7 @@ class Loop:
 
     def __init__(self, project_path: str = "."):
         self.path = Path(project_path).resolve()
-        self._store = self.path / ".devloop" / "algo"
+        self._store = self.path / ".algitex" / "algo"
         self._state = LoopState()
         self._load()
 
@@ -138,7 +138,7 @@ class Loop:
             resp = httpx.post(
                 f"{proxy_url}/v1/hooks/register",
                 json={
-                    "name": "devloop-trace",
+                    "name": "algitex-trace",
                     "events": ["completion"],
                     "callback": "local",  # store in proxym, we poll
                 },
@@ -238,7 +238,7 @@ class Loop:
 
     def _llm_generate_rule(self, pattern: Pattern, rule: Rule) -> Rule:
         """Ask LLM to generate a deterministic replacement for a pattern."""
-        from devloop.tools.proxy import Proxy
+        from algitex.tools.proxy import Proxy
 
         prompt = (
             f"I have a recurring LLM request pattern that appears {pattern.frequency} times.\n"

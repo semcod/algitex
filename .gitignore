@@ -14,5 +14,5 @@ build/
 .mypy_cache/
 .ruff_cache/
 .venv/
-.devloop/
-devloop.yaml
+.algitex/
+algitex.yaml

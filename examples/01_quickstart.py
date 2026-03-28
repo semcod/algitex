@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Example 01: devloop in 60 seconds.
+"""Example 01: algitex in 60 seconds.
 
 Shows the three main objects: Project, Loop, Workflow.
 Works even without any tools installed — gracefully degrades.
@@ -8,12 +8,12 @@ Run:
     python examples/01_quickstart.py
 """
 
-from devloop import Project
-from devloop.tools import discover_tools
+from algitex import Project
+from algitex.tools import discover_tools
 
 
 def main():
-    print("=== devloop quickstart ===\n")
+    print("=== algitex quickstart ===\n")
 
     # 1. Check what tools are available
     print("Installed tools:")
@@ -40,13 +40,13 @@ def main():
     print(f"Algo stage: {status['algo']['stage']}")
 
     # 6. Add a ticket manually
-    t = p.add_ticket("Learn devloop", priority="low", type="task")
+    t = p.add_ticket("Learn algitex", priority="low", type="task")
     print(f"\nManual ticket: {t.id} — {t.title}")
 
     print("\n✅ Done! Next steps:")
-    print("  devloop go                     # full pipeline")
-    print("  devloop algo discover          # start collecting traces")
-    print("  devloop ask 'What is CC̄?'      # quick LLM query")
+    print("  algitex go                     # full pipeline")
+    print("  algitex algo discover          # start collecting traces")
+    print("  algitex ask 'What is CC̄?'      # quick LLM query")
 
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 """Analysis wrapper — run code2llm, vallm, redup from one place.
 
 Usage:
-    from devloop.tools.analysis import Analyzer
+    from algitex.tools.analysis import Analyzer
 
     a = Analyzer("./my-project")
     report = a.health()        # quick health check

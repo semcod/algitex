@@ -1,9 +1,9 @@
-# devloop — full local stack
+# algitex — full local stack
 #
 # Usage:
 #   cp .env.example .env       # configure API keys
 #   docker compose up -d       # start everything
-#   docker compose exec devloop devloop status
+#   docker compose exec algitex algitex status
 #   docker compose logs -f proxym
 #
 # Profiles:
@@ -14,17 +14,17 @@
 version: "3.8"
 
 services:
-  # ── Core: devloop CLI ───────────────────────────────
-  devloop:
+  # ── Core: algitex CLI ───────────────────────────────
+  algitex:
     build: .
     volumes:
-      - devloop-data:/app/data
+      - algitex-data:/app/data
       - ./examples:/app/examples:ro
-      - ./.devloop:/app/.devloop
+      - ./.algitex:/app/.algitex
     environment:
       - PROXYM_URL=http://proxym:4000
       - PROXYM_API_KEY=${PROXYM_API_KEY:-sk-proxy-local-dev}
-      - DEVLOOP_VERBOSE=${DEVLOOP_VERBOSE:-false}
+      - ALGITEX_VERBOSE=${ALGITEX_VERBOSE:-false}
     depends_on:
       proxym:
         condition: service_healthy
@@ -124,7 +124,7 @@ services:
       - "${LANGFUSE_PORT:-3000}:3000"
     environment:
       - DATABASE_URL=postgresql://langfuse:langfuse@langfuse-db:5432/langfuse
-      - NEXTAUTH_SECRET=${LANGFUSE_SECRET:-devloop-secret-change-me}
+      - NEXTAUTH_SECRET=${LANGFUSE_SECRET:-algitex-secret-change-me}
       - NEXTAUTH_URL=http://localhost:3000
     depends_on:
       - langfuse-db
@@ -142,7 +142,7 @@ services:
     restart: unless-stopped
 
 volumes:
-  devloop-data:
+  algitex-data:
   proxym-data:
   ollama-data:
   redis-data:
@@ -150,4 +150,4 @@ volumes:
 
 networks:
   default:
-    name: devloop-net
+    name: algitex-net

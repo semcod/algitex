@@ -1,7 +1,7 @@
 FROM python:3.12-slim AS base
 
 LABEL maintainer="Tom Sapletta <tom@sapletta.com>"
-LABEL org.opencontainers.image.source="https://github.com/semcod/devloop"
+LABEL org.opencontainers.image.source="https://github.com/semcod/algitex"
 
 WORKDIR /app
 
@@ -22,10 +22,10 @@ COPY examples/ examples/
 RUN mkdir -p /app/data
 VOLUME /app/data
 
-ENV DEVLOOP_DATA_DIR=/app/data
+ENV ALGITEX_DATA_DIR=/app/data
 ENV PROXYM_URL=http://proxym:4000
 
-ENTRYPOINT ["devloop"]
+ENTRYPOINT ["algitex"]
 CMD ["--help"]
 
 # ── Test stage ────────────────────────────────────────
