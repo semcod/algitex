@@ -33,6 +33,15 @@ class TraceSpan:
         self.status = status
         for k, v in kwargs.items():
             setattr(self, k, v)
+    
+    def __enter__(self):
+        return self
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if exc_type:
+            self.finish(status="error", error=str(exc_val))
+        else:
+            self.finish(status="ok")
 
 
 class Telemetry:

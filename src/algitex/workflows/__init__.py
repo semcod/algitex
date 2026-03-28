@@ -226,24 +226,24 @@ class TicketExecutor:
             self._mark_ticket_done(ticket, "aider-mcp", "passed")
             return {"success": True}
         else:
-            error = f"Ticket {ticket['id']} failed validation"
+            error = f"Ticket {ticket.id} failed validation"
             return {"success": False, "error": error}
     
-    def _mark_ticket_done(self, ticket: dict, tool: str, validation: str):
+    def _mark_ticket_done(self, ticket: Ticket, tool: str, validation: str):
         """Mark ticket as done in planfile."""
         self.docker_mgr.call_tool("planfile-mcp", "planfile_update_ticket", {
-            "ticket_id": ticket["id"],
+            "ticket_id": ticket.id,
             "status": "done",
             "resolution": {"tool": tool, "validation": validation},
         })
     
-    def _build_fix_prompt(self, ticket: dict) -> str:
+    def _build_fix_prompt(self, ticket: Ticket) -> str:
         """Build a fix prompt from ticket data."""
-        prompt = f"Fix: {ticket.get('title', '')}\n\n"
-        if ticket.get('description'):
-            prompt += f"Description: {ticket['description']}\n\n"
-        if ticket.get('files_to_modify'):
-            prompt += f"Files to modify: {', '.join(ticket['files_to_modify'])}\n\n"
+        prompt = f"Fix: {ticket.title}\n\n"
+        if ticket.description:
+            prompt += f"Description: {ticket.description}\n\n"
+        if ticket.meta.get("files_to_modify"):
+            prompt += f"Files to modify: {', '.join(ticket.meta['files_to_modify'])}\n\n"
         prompt += "Please fix this issue following the project's coding standards."
         return prompt
 

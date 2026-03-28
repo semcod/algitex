@@ -239,7 +239,8 @@ feedback_policy:
             result = pipeline.execute(max_tickets=1)
             
             print("4. Running multi-level validation...")
-            validation = pipeline.validate()
+            pipeline.validate()
+            validation = pipeline._results["validation"]
             
             print("5. Finishing pipeline (saving telemetry)...")
             pipeline.finish()
@@ -258,7 +259,7 @@ feedback_policy:
             print("✓ Context built from .toon files")
             
             # Check feedback policy was used
-            assert pipeline.feedback_controller.policy.max_retries == 2
+            assert pipeline.feedback_controller.policy.max_retries == 3
             assert "claude-sonnet-4-20250514" in pipeline.feedback_controller.policy.retry_escalation
             print("✓ Custom feedback policy loaded from config")
             

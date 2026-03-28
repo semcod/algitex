@@ -77,6 +77,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.8] - 2026-03-28
+
+### Docs
+- Update examples/06-telemetry/README.md
+- Update examples/07-context/README.md
+- Update examples/08-feedback/README.md
+- Update examples/09-workspace/README.md
+- Update examples/10-cicd/README.md
+
+### Test
+- Update tests/test_cicd.py
+- Update tests/test_e2e_integration.py
+- Update tests/test_workspace.py
+
+### Other
+- Update examples/06-telemetry/Makefile
+- Update examples/06-telemetry/main.py
+- Update examples/06-telemetry/run.sh
+- Update examples/07-context/Makefile
+- Update examples/07-context/main.py
+- Update examples/07-context/run.sh
+- Update examples/08-feedback/Makefile
+- Update examples/08-feedback/main.py
+- Update examples/08-feedback/run.sh
+- Update examples/09-workspace/Makefile
+- ... and 5 more files
+
 ## [0.1.7] - 2026-03-28
 
 ### Docs
