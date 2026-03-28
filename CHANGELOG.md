@@ -33,6 +33,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Examples 01-34 (except 29) all execute without errors
 - BatchFix, Hybrid AutoFix, and Parallel Execution examples fully functional
 
+## [0.1.49] - 2026-03-28
+
+### Test
+- Update tests/test_benchmark.py
+
+### Other
+- Update .code2llmignore
+
 ## [0.1.48] - 2026-03-28
 
 ### Docs

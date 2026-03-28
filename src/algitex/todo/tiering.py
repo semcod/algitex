@@ -8,6 +8,12 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from algitex.tools.todo_parser import Task, TodoParser
+from algitex.todo.classify import (
+    KNOWN_MAGIC_CONSTANTS,
+    TaskTriage,
+    classify_message,
+    classify_task,
+)
 
 
 KNOWN_MAGIC_CONSTANTS: dict[int, str] = {
@@ -60,36 +66,6 @@ TIER_LABELS = {
     "micro": "Small LLM",
     "big": "Big LLM",
 }
-
-
-@dataclass(frozen=True)
-class TaskTriage:
-    """Classification result for a single TODO task."""
-
-    category: str
-    tier: str
-    reason: str = ""
-    number: int | None = None
-
-    @property
-    def tier_label(self) -> str:
-        """Human-friendly tier label."""
-        return TIER_LABELS.get(self.tier, self.tier.title())
-
-    @property
-    def is_algorithmic(self) -> bool:
-        """Return True for deterministic fixes."""
-        return self.tier == "algorithm"
-
-    @property
-    def is_micro(self) -> bool:
-        """Return True for small-LLM fixes."""
-        return self.tier == "micro"
-
-    @property
-    def is_big(self) -> bool:
-        """Return True for large-LLM fixes."""
-        return self.tier == "big"
 
 
 @dataclass

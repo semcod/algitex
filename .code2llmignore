@@ -1,4 +1,5 @@
 .algitex/worktrees/
+.algitex/backups/
 my-app/
 htmlcov/
 *.egg-info/

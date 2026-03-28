@@ -250,7 +250,7 @@ class CacheBenchmark:
         return {
             "attempted_stores": duplicates,
             "actual_entries": stats["entries"],  # Should be 1
-            "dedup_ratio": duplicates / stats["entries"] if stats["entries"] > 0 else 0,
+            "dedup_ratio": (duplicates / stats["entries"]) if stats["entries"] > 0 else float(duplicates),
             "store_time_ms": store_duration * 1000,
         }
 

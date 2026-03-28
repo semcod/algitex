@@ -17,6 +17,7 @@ from algitex.cli import (
     microtask_app, microtask_classify, microtask_plan, microtask_run,
     nlp_app, nlp_docstrings, nlp_imports, nlp_dead_code, nlp_duplicates,
     metrics_app, metrics_show, metrics_clear, metrics_cache, metrics_compare,
+    benchmark_app, benchmark_cache, benchmark_tiers, benchmark_memory, benchmark_full, benchmark_quick,
 )
 
 if __name__ == "__main__":
@@ -33,4 +34,5 @@ __all__ = [
     "microtask_app", "microtask_classify", "microtask_plan", "microtask_run",
     "nlp_app", "nlp_docstrings", "nlp_imports", "nlp_dead_code", "nlp_duplicates",
     "metrics_app", "metrics_show", "metrics_clear", "metrics_cache", "metrics_compare",
+    "benchmark_app", "benchmark_cache", "benchmark_tiers", "benchmark_memory", "benchmark_full", "benchmark_quick",
 ]

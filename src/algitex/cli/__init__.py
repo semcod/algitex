@@ -39,6 +39,8 @@ from algitex.cli.microtask import microtask_app, microtask_classify, microtask_p
 from algitex.cli.nlp import nlp_app, nlp_dead_code, nlp_docstrings, nlp_duplicates, nlp_imports
 from algitex.cli.parallel import parallel
 from algitex.cli.metrics import metrics_show, metrics_clear, metrics_cache, metrics_compare
+from algitex.cli.benchmark import benchmark_cache, benchmark_tiers, benchmark_memory, benchmark_full, benchmark_quick
+from algitex.cli.dashboard import dashboard_live, dashboard_monitor, dashboard_export
 
 # Main app
 app = typer.Typer(
@@ -56,6 +58,8 @@ todo_app = typer.Typer(help="Execute todo lists via Docker MCP.")
 microtask_app = typer.Typer(help="Atomic MicroTask pipeline for small LLMs.")
 nlp_app = typer.Typer(help="Deterministic NLP refactor helpers.")
 metrics_app = typer.Typer(help="Metrics and observability.")
+benchmark_app = typer.Typer(help="Performance benchmarks.")
+dashboard_app = typer.Typer(help="Real-time monitoring dashboard.")
 
 app.add_typer(ticket_app, name="ticket")
 app.add_typer(algo_app, name="algo")
@@ -65,6 +69,8 @@ app.add_typer(todo_app, name="todo")
 app.add_typer(microtask_app, name="microtask")
 app.add_typer(nlp_app, name="nlp")
 app.add_typer(metrics_app, name="metrics")
+app.add_typer(benchmark_app, name="benchmark")
+app.add_typer(dashboard_app, name="dashboard")
 
 console = Console()
 
@@ -132,6 +138,18 @@ metrics_app.command("clear")(metrics_clear)
 metrics_app.command("cache")(metrics_cache)
 metrics_app.command("compare")(metrics_compare)
 
+# Register benchmark subcommands
+benchmark_app.command("cache")(benchmark_cache)
+benchmark_app.command("tiers")(benchmark_tiers)
+benchmark_app.command("memory")(benchmark_memory)
+benchmark_app.command("full")(benchmark_full)
+benchmark_app.command("quick")(benchmark_quick)
+
+# Register dashboard subcommands
+dashboard_app.command("live")(dashboard_live)
+dashboard_app.command("monitor")(dashboard_monitor)
+dashboard_app.command("export")(dashboard_export)
+
 # Backward compatibility
 __all__ = [
     "app", "console",
@@ -144,4 +162,6 @@ __all__ = [
     "microtask_app", "microtask_classify", "microtask_plan", "microtask_run",
     "nlp_app", "nlp_docstrings", "nlp_imports", "nlp_dead_code", "nlp_duplicates",
     "metrics_app", "metrics_show", "metrics_clear", "metrics_cache", "metrics_compare",
+    "benchmark_app", "benchmark_cache", "benchmark_tiers", "benchmark_memory", "benchmark_full", "benchmark_quick",
+    "dashboard_app", "dashboard_live", "dashboard_monitor", "dashboard_export",
 ]
