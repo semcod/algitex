@@ -53,6 +53,35 @@ cd examples/20-self-hosted-pipeline
 make run
 ```
 
+## Pełny Pipeline z przykładowym kodem
+
+```bash
+# 1. Analiza kodu z błędami
+curl -X POST http://localhost:8081/analyze \
+  -H "Content-Type: application/json" \
+  -d '{"path": "/workspace", "files": ["buggy_code.py"]}'
+
+# 2. Walidacja lokalna
+curl -X POST http://localhost:8080/validate \
+  -H "Content-Type: application/json" \
+  -d '{"path": "/workspace", "files": ["buggy_code.py"]}'
+
+# 3. Auto-fix workflow
+python auto_fix_todos.py
+
+# 4. Naprawa konkretnego pliku
+algitex fix buggy_code.py --model ollama/qwen2.5-coder:7b
+```
+
+### Przykładowe błędy bezpieczeństwa w `buggy_code.py`:
+
+- SQL injection w `fetch_user_data`
+- YAML deserialization vulnerability
+- Timing attack w `authenticate_user`
+- Hardcoded credentials
+- Path traversal w `cleanup_old_files`
+- Deserialization vulnerability w `generate_report`
+
 ## Pełny Pipeline Lokalny
 
 ```bash

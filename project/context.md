@@ -4,12 +4,12 @@
 
 - **Project**: /home/tom/github/semcod/algitex
 - **Primary Language**: python
-- **Languages**: python: 51, shell: 20
+- **Languages**: python: 52, shell: 20
 - **Analysis Mode**: static
 - **Total Functions**: 397
 - **Total Classes**: 50
-- **Modules**: 71
-- **Entry Points**: 348
+- **Modules**: 72
+- **Entry Points**: 330
 
 ## Architecture by Module
 
@@ -57,15 +57,15 @@
 - **Classes**: 2
 - **File**: `todo_executor.py`
 
-### src.algitex.propact
-- **Functions**: 12
-- **Classes**: 3
-- **File**: `__init__.py`
-
 ### src.algitex.tools.feedback
 - **Functions**: 12
 - **Classes**: 4
 - **File**: `feedback.py`
+
+### src.algitex.propact
+- **Functions**: 12
+- **Classes**: 3
+- **File**: `__init__.py`
 
 ### src.algitex.tools.cicd
 - **Functions**: 11
@@ -116,9 +116,16 @@ Main execution flows into the system:
 ### examples.05-cost-tracking.main.main
 - **Calls**: print, Tickets, print, print, print, sorted, print, Loop
 
+### examples.18-ollama-local.main.main
+- **Calls**: print, print, print, print, print, examples.18-ollama-local.main.list_models, examples.18-ollama-local.main.demo_code_generation, examples.18-ollama-local.main.demo_code_analysis
+
 ### examples.09-workspace.main.advanced_workspace_features
 > Example of advanced workspace features.
 - **Calls**: print, examples.09-workspace.main.create_sample_workspace, Workspace, print, workspace.find_repos_by_tag, print, print, set
+
+### examples.20-self-hosted-pipeline.main.main
+> Main demo function.
+- **Calls**: print, print, print, print, print, print, print, print
 
 ### examples.07-context.main.basic_context_example
 > Basic context building example.
@@ -135,9 +142,16 @@ Main execution flows into the system:
 > Example of complete CI/CD setup.
 - **Calls**: print, Path, project_dir.mkdir, None.write_text, CICDGenerator, generator.generate_all, print, print
 
+### examples.20-self-hosted-pipeline.auto_fix_todos.main
+> Main workflow.
+- **Calls**: print, print, print, examples.20-self-hosted-pipeline.auto_fix_todos.get_last_todo_issues, print, enumerate, print, print
+
 ### docker.code2llm.code2llm_server.Code2LLMServer._analyze_project
 > Analyze Python project.
 - **Calls**: Path, root.rglob, max, sorted, len, len, len, round
+
+### examples.19-local-mcp-tools.main.main
+- **Calls**: print, print, print, print, print, print, print, print
 
 ### src.algitex.project.Project.status
 > Full project status: health + tickets + budget + algo progress.
@@ -211,22 +225,6 @@ Main execution flows into the system:
 ### examples.08-feedback.main.cost_optimization_example
 > Example of optimizing costs with feedback policies.
 - **Calls**: print, print, print, print, print, print, print, print
-
-### examples.09-workspace.main.workspace_management_example
-> Example of workspace management operations.
-- **Calls**: print, examples.09-workspace.main.create_sample_workspace, Workspace, print, workspace.status, print, print, print
-
-### examples.09-workspace.main.cross_repo_planning_example
-> Example of planning across repositories.
-- **Calls**: print, examples.09-workspace.main.create_sample_workspace, Workspace, print, workspace.get_execution_plan, print, all_tickets.items, print
-
-### examples.07-context.main.semantic_search_example
-> Example of semantic search for related code (placeholder).
-- **Calls**: print, Path, project_dir.mkdir, None.write_text, None.write_text, ContextBuilder, builder.build, print
-
-### src.algitex.cli.plan
-> Generate sprint plan with auto-tickets.
-- **Calls**: app.command, typer.Option, typer.Option, typer.Option, console.print, console.print, console.print, console.status
 
 ## Process Flows
 
@@ -391,6 +389,18 @@ context_optimization_example [examples.07-context.main]
 
 Key functions that process and transform data:
 
+### docker.vallm.vallm_server.VallmServer._validate_static
+> Static analysis with pylint, mypy, ruff.
+- **Output to**: subprocess.run, subprocess.run, max, json.loads, errors.extend
+
+### docker.vallm.vallm_server.VallmServer._validate_runtime
+> Run tests with pytest.
+- **Output to**: subprocess.run, result.stdout.split, line.split, str, int
+
+### docker.vallm.vallm_server.VallmServer._validate_security
+> Security scan with bandit.
+- **Output to**: subprocess.run, max, len, logger.warning, json.loads
+
 ### docker.vallm.vallm_mcp_server.validate_static
 > Run static analysis with ruff, mypy on the project.
 
@@ -425,18 +435,6 @@ Returns:
 Args:
     path: Path to the project direc
 - **Output to**: mcp.tool, docker.vallm.vallm_mcp_server.validate_static, docker.vallm.vallm_mcp_server.validate_runtime, docker.vallm.vallm_mcp_server.validate_security, all
-
-### docker.vallm.vallm_server.VallmServer._validate_static
-> Static analysis with pylint, mypy, ruff.
-- **Output to**: subprocess.run, subprocess.run, max, json.loads, errors.extend
-
-### docker.vallm.vallm_server.VallmServer._validate_runtime
-> Run tests with pytest.
-- **Output to**: subprocess.run, result.stdout.split, line.split, str, int
-
-### docker.vallm.vallm_server.VallmServer._validate_security
-> Security scan with bandit.
-- **Output to**: subprocess.run, max, len, logger.warning, json.loads
 
 ### src.algitex.cli.workflow_validate
 > Check a Propact workflow for errors.
@@ -494,6 +492,10 @@ Args:
 > Extract meaningful output from MCP result.
 - **Output to**: isinstance, isinstance, json.dumps, str, str
 
+### src.algitex.tools.feedback.FeedbackLoop._validate_result
+> Validate the execution result.
+- **Output to**: self.docker_mgr.list_tools, self.docker_mgr.call_tool
+
 ### src.algitex.propact.Workflow.parse
 > Parse Markdown into executable steps.
 - **Output to**: self.path.read_text, HEADING_PATTERN.search, enumerate, self.path.exists, FileNotFoundError
@@ -505,10 +507,6 @@ Args:
 ### src.algitex.workflows.Pipeline.validate
 > Step: multi-level validation (static + runtime + security).
 - **Output to**: TicketValidator, validator.validate_all, self._steps.append, DockerToolManager, validation_results.get
-
-### src.algitex.workflows.TicketExecutor._validate_with_vallm
-> Validate ticket execution with vallm.
-- **Output to**: self.docker_mgr.call_tool, validation.get, self._mark_ticket_done
 
 ## Behavioral Patterns
 
@@ -527,15 +525,15 @@ Args:
 - **Confidence**: 0.70
 - **Functions**: src.algitex.algo.LoopState.deterministic_ratio, src.algitex.algo.LoopState.stage_name
 
-### state_machine_TraceSpan
-- **Type**: state_machine
-- **Confidence**: 0.70
-- **Functions**: src.algitex.tools.telemetry.TraceSpan.duration_s, src.algitex.tools.telemetry.TraceSpan.finish, src.algitex.tools.telemetry.TraceSpan.__enter__, src.algitex.tools.telemetry.TraceSpan.__exit__
-
 ### state_machine_DockerToolManager
 - **Type**: state_machine
 - **Confidence**: 0.70
 - **Functions**: src.algitex.tools.docker.DockerToolManager.__init__, src.algitex.tools.docker.DockerToolManager.__enter__, src.algitex.tools.docker.DockerToolManager.__exit__, src.algitex.tools.docker.DockerToolManager._load_tools, src.algitex.tools.docker.DockerToolManager._load_state
+
+### state_machine_TraceSpan
+- **Type**: state_machine
+- **Confidence**: 0.70
+- **Functions**: src.algitex.tools.telemetry.TraceSpan.duration_s, src.algitex.tools.telemetry.TraceSpan.finish, src.algitex.tools.telemetry.TraceSpan.__enter__, src.algitex.tools.telemetry.TraceSpan.__exit__
 
 ### state_machine_TodoExecutor
 - **Type**: state_machine
@@ -552,12 +550,16 @@ Args:
 Functions exposed as public API (no underscore prefix):
 
 - `examples.05-cost-tracking.main.main` - 40 calls
+- `examples.18-ollama-local.main.main` - 39 calls
 - `examples.09-workspace.main.advanced_workspace_features` - 37 calls
+- `examples.20-self-hosted-pipeline.main.main` - 36 calls
 - `examples.07-context.main.basic_context_example` - 34 calls
 - `examples.02-algo-loop.main.main` - 33 calls
 - `docker.code2llm.code2llm_mcp_server.analyze_project` - 31 calls
 - `examples.06-telemetry.main.basic_telemetry_example` - 30 calls
 - `examples.10-cicd.main.complete_ci_cd_setup` - 29 calls
+- `examples.20-self-hosted-pipeline.auto_fix_todos.main` - 29 calls
+- `examples.19-local-mcp-tools.main.main` - 28 calls
 - `src.algitex.project.Project.status` - 27 calls
 - `examples.03-pipeline.main.main` - 27 calls
 - `examples.04-ide-integration.main.main` - 26 calls
@@ -580,17 +582,13 @@ Functions exposed as public API (no underscore prefix):
 - `docker.vallm.vallm_mcp_server.create_rest_api` - 17 calls
 - `src.algitex.cli.plan` - 17 calls
 - `src.algitex.tools.docker.DockerToolManager.get_capabilities` - 17 calls
+- `examples.18-ollama-local.main.demo_code_analysis` - 17 calls
 - `src.algitex.propact.Workflow.execute` - 17 calls
-- `examples.18-ollama-local.main.demo_integration` - 17 calls
 - `examples.09-workspace.main.create_sample_workspace` - 17 calls
 - `examples.09-workspace.main.workspace_execution_example` - 17 calls
 - `docker.vallm.vallm_mcp_server.validate_all` - 16 calls
 - `docker.vallm.vallm_mcp_server.analyze_complexity` - 16 calls
 - `docker.proxym.proxym_mcp_server.create_rest_api` - 16 calls
-- `docker.planfile-mcp.planfile_mcp_server.create_rest_api` - 16 calls
-- `src.algitex.cli.todo_list` - 16 calls
-- `src.algitex.cli.todo_fix` - 16 calls
-- `examples.10-cicd.main.basic_github_actions_example` - 16 calls
 
 ## System Interactions
 
@@ -620,6 +618,7 @@ graph TD
     complete_ci_cd_setup --> mkdir
     complete_ci_cd_setup --> write_text
     complete_ci_cd_setup --> CICDGenerator
+    main --> get_last_todo_issues
     _analyze_project --> Path
     _analyze_project --> rglob
     _analyze_project --> max
@@ -627,7 +626,6 @@ graph TD
     _analyze_project --> len
     status --> board
     status --> Proxy
-    status --> budget
 ```
 
 ## Reverse Engineering Guidelines

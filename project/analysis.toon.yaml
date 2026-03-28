@@ -1,4 +1,4 @@
-# code2llm | 33f 8187L | python:32,shell:1 | 2026-03-28
+# code2llm | 33f 8185L | python:32,shell:1 | 2026-03-28
 # CC̄=3.6 | critical:4/397 | dups:0 | cycles:0
 
 HEALTH[5]:
@@ -11,7 +11,7 @@ HEALTH[5]:
 REFACTOR[1]:
   1. split 5 high-CC methods  (CC>15)
 
-PIPELINES[332]:
+PIPELINES[314]:
   [1] Src [__init__]: __init__
       PURITY: 100% pure
   [2] Src [create_fastapi_app]: create_fastapi_app
@@ -27,12 +27,12 @@ LAYERS:
   docker/                         CC̄=3.6    ←in:0  →out:0
   │ proxym_mcp_server          387L  0C   10m  CC=9      ←0
   │ vallm_mcp_server           360L  0C    8m  CC=9      ←0
-  │ planfile_mcp_server        277L  0C   10m  CC=7      ←0
+  │ planfile_mcp_server        276L  0C   10m  CC=7      ←0
   │ !! code2llm_mcp_server        276L  0C    6m  CC=17     ←0
   │ vallm_server               271L  1C    7m  CC=9      ←0
   │ proxym_server              257L  1C    7m  CC=6      ←0
   │ !! code2llm_server            239L  1C    6m  CC=17     ←0
-  │ aider_mcp_server           157L  0C    5m  CC=2      ←0
+  │ aider_mcp_server           156L  0C    5m  CC=2      ←0
   │
   src/                            CC̄=3.6    ←in:0  →out:0
   │ !! cli                        571L  0C   25m  CC=13     ←0

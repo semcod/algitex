@@ -1,7 +1,7 @@
-# vallm batch | 192f | 79✓ 2⚠ 10✗ | 2026-03-28
+# vallm batch | 193f | 80✓ 2⚠ 10✗ | 2026-03-28
 
 SUMMARY:
-  scanned: 192  passed: 79 (41.1%)  warnings: 2  errors: 10  unsupported: 103
+  scanned: 193  passed: 80 (41.5%)  warnings: 2  errors: 10  unsupported: 103
 
 WARNINGS[2]{path,score}:
   src/algitex/propact/__init__.py,0.97
@@ -14,23 +14,23 @@ WARNINGS[2]{path,score}:
       complexity.lizard_length,warning,sample_project: 120 lines exceeds limit 100,28
 
 ERRORS[10]{path,score}:
-  docker/aider-mcp/aider_mcp_server.py,0.83
+  docker/aider-mcp/aider_mcp_server.py,0.81
     issues[4]{rule,severity,message,line}:
-      python.import.resolvable,error,Module 'mcp.server.fastmcp' not found,13
-      python.import.resolvable,error,Module 'fastapi' not found,14
-      python.import.resolvable,error,Module 'fastapi.responses' not found,15
-      python.import.resolvable,error,Module 'uvicorn' not found,16
+      python.import.resolvable,error,Module 'mcp.server.fastmcp' not found,12
+      python.import.resolvable,error,Module 'fastapi' not found,13
+      python.import.resolvable,error,Module 'fastapi.responses' not found,14
+      python.import.resolvable,error,Module 'uvicorn' not found,15
   docker/proxym/proxym_mcp_server.py,0.87
     issues[4]{rule,severity,message,line}:
       python.import.resolvable,error,Module 'mcp.server.fastmcp' not found,14
       python.import.resolvable,error,Module 'fastapi' not found,15
       python.import.resolvable,error,Module 'fastapi.responses' not found,16
       python.import.resolvable,error,Module 'uvicorn' not found,17
-  docker/planfile-mcp/planfile_mcp_server.py,0.89
+  docker/planfile-mcp/planfile_mcp_server.py,0.88
     issues[3]{rule,severity,message,line}:
-      python.import.resolvable,error,Module 'mcp.server.fastmcp' not found,16
-      python.import.resolvable,error,Module 'fastapi' not found,17
-      python.import.resolvable,error,Module 'uvicorn' not found,18
+      python.import.resolvable,error,Module 'mcp.server.fastmcp' not found,15
+      python.import.resolvable,error,Module 'fastapi' not found,16
+      python.import.resolvable,error,Module 'uvicorn' not found,17
   docker/proxym/proxym_server.py,0.89
     issues[3]{rule,severity,message,line}:
       python.import.resolvable,error,Module 'fastapi' not found,15

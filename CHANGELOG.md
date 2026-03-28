@@ -8,6 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.10] - 2026-03-28
 
 ### Fixed
+- Fix smart-return-type issues (ticket-400b9000)
+- Fix string-concat issues (ticket-650aa48d)
+- Fix unused-imports issues (ticket-d98d1fbd)
+- Fix duplicate-imports issues (ticket-daf713be)
+- Fix magic-numbers issues (ticket-b9cea5da)
+- Fix ai-boilerplate issues (ticket-597787d6)
+- Fix unused-imports issues (ticket-f662de00)
+
+## [0.1.10] - 2026-03-28
+
+### Fixed
 - Fix string-concat issues (ticket-bc134358)
 - Fix unused-imports issues (ticket-accf717c)
 - Fix llm-generated-code issues (ticket-6131503f)
@@ -201,6 +212,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix llm-generated-code issues (ticket-06d0712f)
 
 ## [Unreleased]
+
+## [0.1.12] - 2026-03-28
+
+### Docs
+- Update CHANGELOG.md
+- Update TODO.md
+- Update docs/README.md
+- Update examples/18-ollama-local/README.md
+- Update examples/19-local-mcp-tools/README.md
+- Update examples/20-self-hosted-pipeline/README.md
+- Update project/README.md
+- Update project/context.md
+
+### Other
+- Update examples/18-ollama-local/buggy_code.py
+- Update examples/18-ollama-local/main.py
+- Update examples/19-local-mcp-tools/buggy_code.py
+- Update examples/20-self-hosted-pipeline/buggy_code.py
+- Update planfile.yaml
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/compact_flow.mmd
+- Update project/compact_flow.png
+- ... and 8 more files
 
 ## [0.1.11] - 2026-03-28
 

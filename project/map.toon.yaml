@@ -1,14 +1,14 @@
-# algitex | 33f 8187L | python:32,shell:1 | 2026-03-28
+# algitex | 33f 8185L | python:32,shell:1 | 2026-03-28
 # stats: 310 func | 0 cls | 33 mod | CC̄=3.6 | critical:4 | cycles:0
 # alerts[5]: fan-out analyze_project=24; fan-out Code2LLMServer._analyze_project=21; fan-out DockerToolManager._call_stdio=18; fan-out Project.status=18; CC Code2LLMServer._analyze_project=17
 # hotspots[5]: analyze_project fan=24; Code2LLMServer._analyze_project fan=21; Project.status fan=18; DockerToolManager._call_stdio fan=18; init fan=16
-# evolution: CC̄ 3.4→3.6 (regressed +0.2)
+# evolution: CC̄ 3.6→3.6 (flat 0.0)
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
 M[33]:
-  docker/aider-mcp/aider_mcp_server.py,157
+  docker/aider-mcp/aider_mcp_server.py,156
   docker/code2llm/code2llm_mcp_server.py,276
   docker/code2llm/code2llm_server.py,239
-  docker/planfile-mcp/planfile_mcp_server.py,277
+  docker/planfile-mcp/planfile_mcp_server.py,276
   docker/proxym/proxym_mcp_server.py,387
   docker/proxym/proxym_server.py,257
   docker/vallm/vallm_mcp_server.py,360
@@ -107,6 +107,9 @@ D:
     Config: load(1),save(1)  # Unified config for the entire algitex stack...
     _find_config(explicit)
     _merge_yaml(cfg;path)
+  docker/vallm/vallm_server.py:
+    e: VallmServer
+    VallmServer: __init__(0),create_fastapi_app(0),_validate_static(1),_validate_runtime(1),_validate_security(1),_analyze_complexity(1),run(0)  # Validation server with multiple validation levels...
   docker/vallm/vallm_mcp_server.py:
     e: validate_static,validate_runtime,validate_security,validate_all,analyze_complexity,calculate_quality_score,create_rest_api,run_rest_server
     validate_static(path)
@@ -129,9 +132,6 @@ D:
     get_budget_status()
     create_rest_api()
     run_rest_server()
-  docker/vallm/vallm_server.py:
-    e: VallmServer
-    VallmServer: __init__(0),create_fastapi_app(0),_validate_static(1),_validate_runtime(1),_validate_security(1),_analyze_complexity(1),run(0)  # Validation server with multiple validation levels...
   src/algitex/tools/proxy.py:
     e: LLMResponse,Proxy
     LLMResponse: __str__(0)  # Simplified LLM response...

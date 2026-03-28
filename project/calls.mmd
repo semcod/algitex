@@ -1,62 +1,62 @@
 flowchart LR
     subgraph docker__aider_mcp
-        docker__aider_mcp__aider_mcp_server__run_rest_server["run_rest_server"]
-        docker__aider_mcp__aider_mcp_server__aider_ai_code["aider_ai_code"]
-        docker__aider_mcp__aider_mcp_server__aider_chat["aider_chat"]
-        docker__aider_mcp__aider_mcp_server__aider_list_models["aider_list_models"]
         docker__aider_mcp__aider_mcp_server__create_rest_api["create_rest_api"]
+        docker__aider_mcp__aider_mcp_server__aider_list_models["aider_list_models"]
+        docker__aider_mcp__aider_mcp_server__run_rest_server["run_rest_server"]
+        docker__aider_mcp__aider_mcp_server__aider_chat["aider_chat"]
+        docker__aider_mcp__aider_mcp_server__aider_ai_code["aider_ai_code"]
     end
     subgraph docker__code2llm
-        docker__code2llm__code2llm_mcp_server__evolution_export["evolution_export"]
-        docker__code2llm__code2llm_mcp_server__run_rest_server["run_rest_server"]
-        docker__code2llm__code2llm_mcp_server__generate_toon["generate_toon"]
         docker__code2llm__code2llm_mcp_server__generate_readme["generate_readme"]
-        docker__code2llm__code2llm_mcp_server__create_rest_api["create_rest_api"]
+        docker__code2llm__code2llm_mcp_server__generate_toon["generate_toon"]
+        docker__code2llm__code2llm_mcp_server__run_rest_server["run_rest_server"]
+        docker__code2llm__code2llm_mcp_server__evolution_export["evolution_export"]
         docker__code2llm__code2llm_mcp_server__analyze_project["analyze_project"]
+        docker__code2llm__code2llm_mcp_server__create_rest_api["create_rest_api"]
     end
     subgraph docker__planfile_mcp
-        docker__planfile_mcp__planfile_mcp_server__planfile_update_ticket["planfile_update_ticket"]
         docker__planfile_mcp__planfile_mcp_server__create_rest_api["create_rest_api"]
-        docker__planfile_mcp__planfile_mcp_server___save_tickets["_save_tickets"]
-        docker__planfile_mcp__planfile_mcp_server__planfile_create_tickets_bulk["planfile_create_tickets_bulk"]
-        docker__planfile_mcp__planfile_mcp_server__planfile_sprint_status["planfile_sprint_status"]
-        docker__planfile_mcp__planfile_mcp_server__run_rest_server["run_rest_server"]
         docker__planfile_mcp__planfile_mcp_server___load_tickets["_load_tickets"]
-        docker__planfile_mcp__planfile_mcp_server__planfile_sync["planfile_sync"]
         docker__planfile_mcp__planfile_mcp_server__planfile_list_tickets["planfile_list_tickets"]
+        docker__planfile_mcp__planfile_mcp_server__run_rest_server["run_rest_server"]
+        docker__planfile_mcp__planfile_mcp_server__planfile_create_tickets_bulk["planfile_create_tickets_bulk"]
+        docker__planfile_mcp__planfile_mcp_server__planfile_update_ticket["planfile_update_ticket"]
+        docker__planfile_mcp__planfile_mcp_server__planfile_sprint_status["planfile_sprint_status"]
+        docker__planfile_mcp__planfile_mcp_server__planfile_sync["planfile_sync"]
         docker__planfile_mcp__planfile_mcp_server__planfile_create_ticket["planfile_create_ticket"]
+        docker__planfile_mcp__planfile_mcp_server___save_tickets["_save_tickets"]
     end
     subgraph docker__proxym
-        docker__proxym__proxym_mcp_server__count_tokens["count_tokens"]
-        docker__proxym__proxym_mcp_server___call_anthropic["_call_anthropic"]
-        docker__proxym__proxym_mcp_server__create_rest_api["create_rest_api"]
         docker__proxym__proxym_mcp_server___call_gemini["_call_gemini"]
-        docker__proxym__proxym_mcp_server__list_models["list_models"]
-        docker__proxym__proxym_mcp_server___call_openai["_call_openai"]
+        docker__proxym__proxym_mcp_server__create_rest_api["create_rest_api"]
         docker__proxym__proxym_mcp_server__chat_completion["chat_completion"]
-        docker__proxym__proxym_mcp_server__run_rest_server["run_rest_server"]
+        docker__proxym__proxym_mcp_server__count_tokens["count_tokens"]
         docker__proxym__proxym_mcp_server__simple_prompt["simple_prompt"]
+        docker__proxym__proxym_mcp_server__list_models["list_models"]
+        docker__proxym__proxym_mcp_server__run_rest_server["run_rest_server"]
+        docker__proxym__proxym_mcp_server___call_openai["_call_openai"]
+        docker__proxym__proxym_mcp_server___call_anthropic["_call_anthropic"]
     end
     subgraph docker__vallm
-        docker__vallm__vallm_mcp_server__validate_all["validate_all"]
+        docker__vallm__vallm_mcp_server__validate_security["validate_security"]
+        docker__vallm__vallm_mcp_server__run_rest_server["run_rest_server"]
         docker__vallm__vallm_mcp_server__validate_runtime["validate_runtime"]
         docker__vallm__vallm_mcp_server__analyze_complexity["analyze_complexity"]
-        docker__vallm__vallm_mcp_server__run_rest_server["run_rest_server"]
         docker__vallm__vallm_mcp_server__calculate_quality_score["calculate_quality_score"]
-        docker__vallm__vallm_mcp_server__validate_security["validate_security"]
-        docker__vallm__vallm_mcp_server__validate_static["validate_static"]
         docker__vallm__vallm_mcp_server__create_rest_api["create_rest_api"]
+        docker__vallm__vallm_mcp_server__validate_all["validate_all"]
+        docker__vallm__vallm_mcp_server__validate_static["validate_static"]
     end
     subgraph examples__01_quickstart
         examples__01_quickstart__main__main["main"]
     end
     subgraph examples__09_workspace
-        examples__09_workspace__main__workspace_management_example["workspace_management_example"]
-        examples__09_workspace__main__advanced_workspace_features["advanced_workspace_features"]
-        examples__09_workspace__main__cross_repo_planning_example["cross_repo_planning_example"]
         examples__09_workspace__main__create_sample_workspace["create_sample_workspace"]
-        examples__09_workspace__main__cross_repo_analysis_example["cross_repo_analysis_example"]
+        examples__09_workspace__main__advanced_workspace_features["advanced_workspace_features"]
         examples__09_workspace__main__workspace_execution_example["workspace_execution_example"]
+        examples__09_workspace__main__workspace_management_example["workspace_management_example"]
+        examples__09_workspace__main__cross_repo_planning_example["cross_repo_planning_example"]
+        examples__09_workspace__main__cross_repo_analysis_example["cross_repo_analysis_example"]
     end
     subgraph examples__10_cicd
         examples__10_cicd__main__quality_gates_example["quality_gates_example"]
@@ -80,45 +80,58 @@ flowchart LR
         examples__17_docker_workflow__main__demo_with_docker_tools["demo_with_docker_tools"]
     end
     subgraph examples__18_ollama_local
-        examples__18_ollama_local__main__demo_local_analysis["demo_local_analysis"]
-        examples__18_ollama_local__main__list_local_models["list_local_models"]
+        examples__18_ollama_local__main__generate_code["generate_code"]
+        examples__18_ollama_local__main__demo_cost_comparison["demo_cost_comparison"]
+        examples__18_ollama_local__main__list_models["list_models"]
+        examples__18_ollama_local__main__demo_code_generation["demo_code_generation"]
+        examples__18_ollama_local__main__analyze_code["analyze_code"]
+        examples__18_ollama_local__main__demo_code_analysis["demo_code_analysis"]
+        examples__18_ollama_local__main__main["main"]
+    end
+    subgraph examples__19_local_mcp_tools
+        examples__19_local_mcp_tools__main__main["main"]
+        examples__19_local_mcp_tools__main__check_services["check_services"]
+    end
+    subgraph examples__20_self_hosted_pipeline
+        examples__20_self_hosted_pipeline__auto_fix_todos__get_last_todo_issues["get_last_todo_issues"]
+        examples__20_self_hosted_pipeline__auto_fix_todos__main["main"]
     end
     subgraph src__algitex
+        src__algitex__cli__docker_caps["docker_caps"]
         src__algitex__tools__todo_executor__TodoExecutor____init__["__init__"]
         src__algitex__config__ProxyConfig__from_env["from_env"]
-        src__algitex__tools__context__ContextBuilder___find_related["_find_related"]
-        src__algitex__tools__analysis__Analyzer___run_code2llm["_run_code2llm"]
-        src__algitex__cli__docker_teardown["docker_teardown"]
-        src__algitex__tools__workspace__init_workspace["init_workspace"]
-        src__algitex__tools__docker__DockerToolManager__list_tools["list_tools"]
-        src__algitex__project__Project____init__["__init__"]
-        src__algitex__tools__require_tool["require_tool"]
-        src__algitex__cli__tools["tools"]
-        src__algitex__tools__docker__DockerToolManager__teardown_all["teardown_all"]
-        src__algitex__project__Project__status["status"]
-        src__algitex__config__AnalysisConfig__from_env["from_env"]
-        src__algitex__tools__workspace__create_workspace_template["create_workspace_template"]
-        src__algitex__propact__Workflow___exec_docker["_exec_docker"]
-        src__algitex__tools__cicd__create_quality_gate_config["create_quality_gate_config"]
-        src__algitex__cli__docker_caps["docker_caps"]
-        src__algitex__tools__telemetry__Telemetry__summary["summary"]
-        src__algitex__cli__docker_spawn["docker_spawn"]
-        src__algitex__tools__analysis__Analyzer___run_redup["_run_redup"]
         src__algitex__tools__analysis__Analyzer___run_vallm["_run_vallm"]
-        src__algitex__config___find_config["_find_config"]
+        src__algitex__tools__docker__DockerToolManager__list_tools["list_tools"]
+        src__algitex__tools__docker__DockerToolManager__teardown_all["teardown_all"]
         src__algitex__tools__docker__DockerToolManager__list_running["list_running"]
-        src__algitex__cli__docker_call["docker_call"]
-        src__algitex__config___merge_yaml["_merge_yaml"]
-        src__algitex__config__TicketConfig__from_env["from_env"]
-        src__algitex__tools__workspace__Workspace___topo_sort["_topo_sort"]
+        src__algitex__config___find_config["_find_config"]
+        src__algitex__tools__discover_tools["discover_tools"]
         src__algitex__config__Config__load["load"]
-        src__algitex__cli__init["init"]
-        src__algitex__tools__tickets__Tickets__list["list"]
         src__algitex__tools__proxy__Proxy____init__["__init__"]
         src__algitex__tools__tickets__Tickets____init__["__init__"]
-        src__algitex__tools__discover_tools["discover_tools"]
-        src__algitex__tools__todo_runner__TodoRunner____init__["__init__"]
+        src__algitex__config__AnalysisConfig__from_env["from_env"]
+        src__algitex__tools__workspace__Workspace___topo_sort["_topo_sort"]
+        src__algitex__config___merge_yaml["_merge_yaml"]
+        src__algitex__cli__init["init"]
+        src__algitex__tools__analysis__Analyzer___run_redup["_run_redup"]
+        src__algitex__tools__require_tool["require_tool"]
         src__algitex__tools__analysis___run_cli["_run_cli"]
+        src__algitex__cli__docker_teardown["docker_teardown"]
+        src__algitex__tools__analysis__Analyzer___run_code2llm["_run_code2llm"]
+        src__algitex__tools__cicd__create_quality_gate_config["create_quality_gate_config"]
+        src__algitex__project__Project____init__["__init__"]
+        src__algitex__tools__telemetry__Telemetry__summary["summary"]
+        src__algitex__tools__context__ContextBuilder___find_related["_find_related"]
+        src__algitex__cli__tools["tools"]
+        src__algitex__project__Project__status["status"]
+        src__algitex__tools__workspace__create_workspace_template["create_workspace_template"]
+        src__algitex__tools__workspace__init_workspace["init_workspace"]
+        src__algitex__cli__docker_spawn["docker_spawn"]
+        src__algitex__propact__Workflow___exec_docker["_exec_docker"]
+        src__algitex__cli__docker_call["docker_call"]
+        src__algitex__tools__tickets__Tickets__list["list"]
+        src__algitex__config__TicketConfig__from_env["from_env"]
+        src__algitex__tools__todo_runner__TodoRunner____init__["__init__"]
     end
     docker__vallm__vallm_mcp_server__validate_all --> docker__vallm__vallm_mcp_server__validate_static
     docker__vallm__vallm_mcp_server__validate_all --> docker__vallm__vallm_mcp_server__validate_runtime
@@ -161,6 +174,11 @@ flowchart LR
     docker__code2llm__code2llm_mcp_server__evolution_export --> docker__code2llm__code2llm_mcp_server__analyze_project
     docker__code2llm__code2llm_mcp_server__create_rest_api --> docker__code2llm__code2llm_mcp_server__analyze_project
     docker__code2llm__code2llm_mcp_server__run_rest_server --> docker__code2llm__code2llm_mcp_server__create_rest_api
+    src__algitex__config__Config__load --> src__algitex__config__ProxyConfig__from_env
+    src__algitex__config__Config__load --> src__algitex__config__TicketConfig__from_env
+    src__algitex__config__Config__load --> src__algitex__config__AnalysisConfig__from_env
+    src__algitex__config__Config__load --> src__algitex__config___find_config
+    src__algitex__config__Config__load --> src__algitex__config___merge_yaml
     src__algitex__cli__init --> src__algitex__config__Config__load
     src__algitex__cli__init --> src__algitex__tools__discover_tools
     src__algitex__cli__tools --> src__algitex__tools__discover_tools
@@ -168,38 +186,40 @@ flowchart LR
     src__algitex__cli__docker_call --> src__algitex__config__Config__load
     src__algitex__cli__docker_teardown --> src__algitex__config__Config__load
     src__algitex__cli__docker_caps --> src__algitex__config__Config__load
-    src__algitex__config__Config__load --> src__algitex__config__ProxyConfig__from_env
-    src__algitex__config__Config__load --> src__algitex__config__TicketConfig__from_env
-    src__algitex__config__Config__load --> src__algitex__config__AnalysisConfig__from_env
-    src__algitex__config__Config__load --> src__algitex__config___find_config
-    src__algitex__config__Config__load --> src__algitex__config___merge_yaml
     src__algitex__project__Project____init__ --> src__algitex__config__Config__load
     src__algitex__project__Project__status --> src__algitex__tools__discover_tools
     src__algitex__tools__proxy__Proxy____init__ --> src__algitex__config__ProxyConfig__from_env
     src__algitex__tools__workspace__Workspace___topo_sort --> src__algitex__tools__tickets__Tickets__list
     src__algitex__tools__workspace__init_workspace --> src__algitex__tools__workspace__create_workspace_template
     src__algitex__tools__require_tool --> src__algitex__tools__discover_tools
-    src__algitex__tools__telemetry__Telemetry__summary --> src__algitex__tools__tickets__Tickets__list
-    src__algitex__tools__analysis__Analyzer___run_code2llm --> src__algitex__tools__analysis___run_cli
-    src__algitex__tools__analysis__Analyzer___run_vallm --> src__algitex__tools__analysis___run_cli
-    src__algitex__tools__analysis__Analyzer___run_redup --> src__algitex__tools__analysis___run_cli
-    src__algitex__tools__context__ContextBuilder___find_related --> src__algitex__tools__tickets__Tickets__list
-    src__algitex__tools__tickets__Tickets____init__ --> src__algitex__config__TicketConfig__from_env
     src__algitex__tools__docker__DockerToolManager__teardown_all --> src__algitex__tools__tickets__Tickets__list
     src__algitex__tools__docker__DockerToolManager__list_tools --> src__algitex__tools__tickets__Tickets__list
     src__algitex__tools__docker__DockerToolManager__list_running --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__tools__analysis__Analyzer___run_code2llm --> src__algitex__tools__analysis___run_cli
+    src__algitex__tools__analysis__Analyzer___run_vallm --> src__algitex__tools__analysis___run_cli
+    src__algitex__tools__analysis__Analyzer___run_redup --> src__algitex__tools__analysis___run_cli
+    src__algitex__tools__telemetry__Telemetry__summary --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__tools__context__ContextBuilder___find_related --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__tools__tickets__Tickets____init__ --> src__algitex__config__TicketConfig__from_env
     src__algitex__tools__todo_executor__TodoExecutor____init__ --> src__algitex__config__Config__load
     src__algitex__tools__todo_runner__TodoRunner____init__ --> src__algitex__config__Config__load
-    src__algitex__propact__Workflow___exec_docker --> src__algitex__config__Config__load
+    examples__18_ollama_local__main__demo_code_generation --> examples__18_ollama_local__main__generate_code
+    examples__18_ollama_local__main__demo_code_analysis --> examples__18_ollama_local__main__analyze_code
+    examples__18_ollama_local__main__main --> examples__18_ollama_local__main__list_models
+    examples__18_ollama_local__main__main --> examples__18_ollama_local__main__demo_code_generation
+    examples__18_ollama_local__main__main --> examples__18_ollama_local__main__demo_code_analysis
+    examples__18_ollama_local__main__main --> examples__18_ollama_local__main__demo_cost_comparison
     examples__01_quickstart__main__main --> src__algitex__tools__discover_tools
-    examples__18_ollama_local__main__demo_local_analysis --> examples__18_ollama_local__main__list_local_models
+    src__algitex__propact__Workflow___exec_docker --> src__algitex__config__Config__load
     examples__11_aider_mcp__main__demo_with_docker_tools --> src__algitex__config__Config__load
-    examples__14_docker_mcp__main__demo_with_docker_tools --> src__algitex__config__Config__load
-    examples__13_vallm__main__demo_with_docker_tools --> src__algitex__config__Config__load
     examples__10_cicd__main__quality_gates_example --> src__algitex__tools__cicd__create_quality_gate_config
+    examples__14_docker_mcp__main__demo_with_docker_tools --> src__algitex__config__Config__load
     examples__17_docker_workflow__main__demo_with_docker_tools --> src__algitex__config__Config__load
+    examples__13_vallm__main__demo_with_docker_tools --> src__algitex__config__Config__load
     examples__15_github_mcp__main__demo_with_docker_tools --> src__algitex__config__Config__load
+    examples__20_self_hosted_pipeline__auto_fix_todos__main --> examples__20_self_hosted_pipeline__auto_fix_todos__get_last_todo_issues
     examples__12_filesystem_mcp__main__demo_with_docker_tools --> src__algitex__config__Config__load
+    examples__19_local_mcp_tools__main__main --> examples__19_local_mcp_tools__main__check_services
     examples__09_workspace__main__create_sample_workspace --> src__algitex__tools__workspace__init_workspace
     examples__09_workspace__main__workspace_management_example --> examples__09_workspace__main__create_sample_workspace
     examples__09_workspace__main__cross_repo_analysis_example --> examples__09_workspace__main__create_sample_workspace

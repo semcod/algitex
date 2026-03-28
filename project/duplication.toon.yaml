@@ -1,55 +1,52 @@
-# redup/duplication | 7 groups | 47f 11961L | 2026-03-28
+# redup/duplication | 7 groups | 48f 11968L | 2026-03-28
 
 SUMMARY:
-  files_scanned: 47
-  total_lines:   11961
+  files_scanned: 48
+  total_lines:   11968
   dup_groups:    7
-  dup_fragments: 29
-  saved_lines:   252
-  scan_ms:       2088
+  dup_fragments: 26
+  saved_lines:   210
+  scan_ms:       2101
 
 DUPLICATES[7] (ranked by impact):
-  [f0266f94ca105535] !! EXAC  load_env  L=14 N=9 saved=112 sim=1.00
+  [f0266f94ca105535] ! EXAC  load_env  L=14 N=6 saved=70 sim=1.00
       examples/11-aider-mcp/main.py:0-13  (load_env)
-      examples/18-ollama-local/main.py:0-13  (load_env)
       examples/14-docker-mcp/main.py:0-13  (load_env)
+      examples/13-vallm/main.py:0-13  (load_env)
       examples/17-docker-workflow/main.py:0-13  (load_env)
       examples/15-github-mcp/main.py:0-13  (load_env)
-      examples/13-vallm/main.py:0-13  (load_env)
       examples/12-filesystem-mcp/main.py:0-13  (load_env)
-      examples/20-self-hosted-pipeline/main.py:0-13  (load_env)
-      examples/19-local-mcp-tools/main.py:0-13  (load_env)
   [88c63ada733e10ed] ! STRU  demo_with_docker_tools  L=26 N=3 saved=52 sim=1.00
       examples/14-docker-mcp/main.py:0-25  (demo_with_docker_tools)
-      examples/15-github-mcp/main.py:0-25  (demo_with_docker_tools)
       examples/13-vallm/main.py:0-25  (demo_with_docker_tools)
+      examples/15-github-mcp/main.py:0-25  (demo_with_docker_tools)
   [2022722a542eec1b] ! STRU  run_rest_server  L=11 N=5 saved=44 sim=1.00
-      docker/proxym/proxym_mcp_server.py:0-10  (run_rest_server)
-      docker/aider-mcp/aider_mcp_server.py:0-10  (run_rest_server)
       docker/code2llm/code2llm_mcp_server.py:0-10  (run_rest_server)
-      docker/vallm/vallm_mcp_server.py:0-10  (run_rest_server)
       docker/planfile-mcp/planfile_mcp_server.py:0-10  (run_rest_server)
+      docker/aider-mcp/aider_mcp_server.py:0-10  (run_rest_server)
+      docker/proxym/proxym_mcp_server.py:0-10  (run_rest_server)
+      docker/vallm/vallm_mcp_server.py:0-10  (run_rest_server)
   [e1fb6a1236dee2cd]   STRU  run  L=9 N=3 saved=18 sim=1.00
-      docker/proxym/proxym_server.py:0-8  (run)
-      docker/vallm/vallm_server.py:0-8  (run)
       docker/code2llm/code2llm_server.py:0-8  (run)
+      docker/vallm/vallm_server.py:0-8  (run)
+      docker/proxym/proxym_server.py:0-8  (run)
   [bb223416bc6021bb]   EXAC  __enter__  L=4 N=5 saved=16 sim=1.00
+      src/algitex/tools/proxy.py:0-3  (__enter__)
       src/algitex/tools/telemetry.py:0-3  (__enter__)
+      src/algitex/tools/todo_executor.py:0-3  (__enter__)
       src/algitex/tools/docker.py:0-3  (__enter__)
       src/algitex/tools/todo_runner.py:0-3  (__enter__)
-      src/algitex/tools/todo_executor.py:0-3  (__enter__)
-      src/algitex/tools/proxy.py:0-3  (__enter__)
   [6624717f6f5dc991]   STRU  __init__  L=6 N=2 saved=6 sim=1.00
-      docker/vallm/vallm_server.py:0-5  (__init__)
       docker/code2llm/code2llm_server.py:0-5  (__init__)
+      docker/vallm/vallm_server.py:0-5  (__init__)
   [4f5a6bbc30edb647]   STRU  __init__  L=4 N=2 saved=4 sim=1.00
       src/algitex/tools/analysis.py:0-3  (__init__)
       src/algitex/tools/todo_local.py:0-3  (__init__)
 
 REFACTOR[7] (ranked by priority):
   [1] ○ extract_function   → examples/utils/load_env.py
-      WHY: 9 occurrences of 14-line block across 9 files — saves 112 lines
-      FILES: examples/11-aider-mcp/main.py, examples/12-filesystem-mcp/main.py, examples/13-vallm/main.py, examples/14-docker-mcp/main.py, examples/15-github-mcp/main.py +4 more
+      WHY: 6 occurrences of 14-line block across 6 files — saves 70 lines
+      FILES: examples/11-aider-mcp/main.py, examples/12-filesystem-mcp/main.py, examples/13-vallm/main.py, examples/14-docker-mcp/main.py, examples/15-github-mcp/main.py +1 more
   [2] ○ extract_function   → examples/utils/demo_with_docker_tools.py
       WHY: 3 occurrences of 26-line block across 3 files — saves 52 lines
       FILES: examples/13-vallm/main.py, examples/14-docker-mcp/main.py, examples/15-github-mcp/main.py
@@ -71,4 +68,4 @@ REFACTOR[7] (ranked by priority):
 
 METRICS-TARGET:
   dup_groups:  7 → 0
-  saved_lines: 252 lines recoverable
+  saved_lines: 210 lines recoverable

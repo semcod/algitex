@@ -2240,3 +2240,94 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
+  - id: ticket-400b9000
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in examples/20-self-hosted-pipeline/auto_fix_todos.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/20-self-hosted-pipeline/auto_fix_todos.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-650aa48d
+    name: Fix string-concat issues
+    description: Resolve 2 string-concat issues in examples/20-self-hosted-pipeline/auto_fix_todos.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/20-self-hosted-pipeline/auto_fix_todos.py
+    rule_id: string-concat
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-d98d1fbd
+    name: Fix unused-imports issues
+    description: Resolve 12 unused-imports issues in examples/20-self-hosted-pipeline/auto_fix_todos.py
+    task_type: prefactor
+    priority: high
+    estimate: 3d
+    files:
+    - examples/20-self-hosted-pipeline/auto_fix_todos.py
+    rule_id: unused-imports
+    count: 12
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-daf713be
+    name: Fix duplicate-imports issues
+    description: Resolve 2 duplicate-imports issues in examples/20-self-hosted-pipeline/auto_fix_todos.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/20-self-hosted-pipeline/auto_fix_todos.py
+    rule_id: duplicate-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b9cea5da
+    name: Fix magic-numbers issues
+    description: Resolve 9 magic-numbers issues in examples/20-self-hosted-pipeline/auto_fix_todos.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - examples/20-self-hosted-pipeline/auto_fix_todos.py
+    rule_id: magic-numbers
+    count: 9
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-597787d6
+    name: Fix ai-boilerplate issues
+    description: Resolve 2 ai-boilerplate issues in examples/20-self-hosted-pipeline/auto_fix_todos.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/20-self-hosted-pipeline/auto_fix_todos.py
+    rule_id: ai-boilerplate
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-f662de00
+    name: Fix unused-imports issues
+    description: Resolve 4 unused-imports issues in examples/20-self-hosted-pipeline/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - examples/20-self-hosted-pipeline/main.py
+    rule_id: unused-imports
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
