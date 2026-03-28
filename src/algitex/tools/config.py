@@ -355,33 +355,34 @@ class ConfigManager:
     def list_configs(self, config_dir: Union[str, Path] = "~") -> Dict[str, List[str]]:
         """List available configuration files."""
         config_dir = Path(config_dir).expanduser()
-        configs = {
-            "continue": [],
-            "vscode": [],
-            "env": [],
-            "docker": []
-        }
         
-        # Continue.dev
+        return {
+            "continue": self._list_continue_configs(config_dir),
+            "vscode": self._list_vscode_configs(config_dir),
+            "env": self._list_env_configs(),
+            "docker": self._list_docker_configs()
+        }
+
+    def _list_continue_configs(self, config_dir: Path) -> List[str]:
+        configs = []
         continue_config = config_dir / ".continue" / "config.json"
         if continue_config.exists():
-            configs["continue"].append(str(continue_config))
-        
-        # VS Code (check workspace and global)
+            configs.append(str(continue_config))
+        return configs
+
+    def _list_vscode_configs(self, config_dir: Path) -> List[str]:
+        configs = []
         vscode_workspace = Path.cwd() / ".vscode"
         if vscode_workspace.exists():
-            configs["vscode"].extend([str(p) for p in vscode_workspace.glob("*.json")])
+            configs.extend([str(p) for p in vscode_workspace.glob("*.json")])
         
         vscode_global = config_dir / ".config" / "Code" / "User"
         if vscode_global.exists():
-            configs["vscode"].extend([str(p) for p in vscode_global.glob("*.json")])
-        
-        # Environment files
-        for env_file in Path.cwd().glob(".env*"):
-            configs["env"].append(str(env_file))
-        
-        # Docker files
-        for docker_file in Path.cwd().glob("docker-compose*.yml"):
-            configs["docker"].append(str(docker_file))
-        
+            configs.extend([str(p) for p in vscode_global.glob("*.json")])
         return configs
+
+    def _list_env_configs(self) -> List[str]:
+        return [str(p) for p in Path.cwd().glob(".env*")]
+
+    def _list_docker_configs(self) -> List[str]:
+        return [str(p) for p in Path.cwd().glob("docker-compose*.yml")]

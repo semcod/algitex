@@ -42,7 +42,7 @@ rules:
     enabled: true
     tools:
     - ruff
-    - autoflake
+    # - autoflake  # Disabled - causes syntax errors
     severity: error
   relative-imports:
     enabled: true

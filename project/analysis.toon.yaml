@@ -1,5 +1,5 @@
-# code2llm | 69f 13757L | python:68,shell:1 | 2026-03-28
-# CC̄=3.3 | critical:0/769 | dups:0 | cycles:0
+# code2llm | 66f 13428L | python:65,shell:1 | 2026-03-28
+# CC̄=3.3 | critical:0/752 | dups:0 | cycles:0
 
 HEALTH[2]:
   🟡 CC    main CC=24 (limit:15)
@@ -8,50 +8,46 @@ HEALTH[2]:
 REFACTOR[1]:
   1. split 2 high-CC methods  (CC>15)
 
-PIPELINES[614]:
-  [1] Src [run_rest_server]: run_rest_server → create_rest_api → aider_ai_code
+PIPELINES[609]:
+  [1] Src [_ensure_dir]: _ensure_dir
       PURITY: 100% pure
-  [2] Src [__init__]: __init__
+  [2] Src [_backup_file]: _backup_file
       PURITY: 100% pure
-  [3] Src [create_fastapi_app]: create_fastapi_app → validate
+  [3] Src [install_config]: install_config
       PURITY: 100% pure
-  [4] Src [_validate_static]: _validate_static
+  [4] Src [generate_continue_config]: generate_continue_config
       PURITY: 100% pure
-  [5] Src [_validate_runtime]: _validate_runtime
+  [5] Src [install_continue_config]: install_continue_config
       PURITY: 100% pure
 
 LAYERS:
-  docker/                         CC̄=3.3    ←in:0  →out:0
-  │ planfile_mcp_server        276L  0C   10m  CC=7      ←0
-  │ vallm_server               269L  1C    7m  CC=9      ←0
-  │ aider_mcp_server           156L  0C    5m  CC=2      ←0
-  │
   src/                            CC̄=3.3    ←in:0  →out:0
   │ benchmark                  464L  4C   19m  CC=14     ←0
   │ mcp                        448L  2C   18m  CC=11     ←0
   │ __init__                   439L  1C   22m  CC=6      ←0
   │ ide                        430L  6C   22m  CC=8      ←0
   │ batch                      421L  4C   20m  CC=7      ←0
-  │ __init__                   419L  3C   18m  CC=10     ←1
+  │ __init__                   419L  3C   18m  CC=10     ←0
   │ services                   413L  3C   20m  CC=9      ←0
   │ fixer                      409L  2C   14m  CC=8      ←5
   │ cicd                       403L  1C   11m  CC=5      ←1
+  │ hybrid                     398L  4C   10m  CC=8      ←0
   │ config                     387L  1C   12m  CC=8      ←0
   │ ollama                     382L  4C   16m  CC=11     ←0
-  │ hybrid                     380L  4C   10m  CC=8      ←0
   │ __init__                   367L  5C   12m  CC=9      ←0
   │ todo_runner                363L  2C   12m  CC=13     ←0
+  │ batch_backend              339L  2C   11m  CC=11     ←0
   │ workspace                  338L  2C   17m  CC=6      ←1
+  │ todo                       326L  0C    8m  CC=14     ←0
   │ __init__                   320L  3C   19m  CC=4      ←0
   │ __init__                   306L  1C   14m  CC=12     ←0
-  │ docker                     293L  3C   16m  CC=10     ←0
   │ docker_transport           291L  1C   14m  CC=9      ←1
+  │ docker                     288L  3C   16m  CC=10     ←0
   │ todo_local                 283L  2C   11m  CC=11     ←0
   │ executor                   260L  1C   11m  CC=6      ←0
   │ feedback                   252L  4C   12m  CC=8      ←0
-  │ tickets                    247L  2C   11m  CC=5      ←9
+  │ tickets                    247L  2C   11m  CC=5      ←8
   │ benchmark                  244L  1C    6m  CC=6      ←2
-  │ todo                       243L  0C    7m  CC=14     ←0
   │ todo_executor              240L  2C   12m  CC=13     ←0
   │ todo_parser                207L  2C    8m  CC=7      ←0
   │ context                    207L  3C   14m  CC=7      ←0
@@ -71,10 +67,9 @@ LAYERS:
   │ ollama_backend             126L  1C    7m  CC=6      ←0
   │ partitioner                118L  1C    7m  CC=10     ←0
   │ __init__                   116L  0C    0m  CC=0.0    ←0
-  │ __init__                   115L  1C    4m  CC=4      ←3
+  │ __init__                   115L  1C    4m  CC=4      ←2
   │ docker                      96L  0C    5m  CC=3      ←0
   │ __init__                    86L  0C    1m  CC=1      ←2
-  │ algo                        63L  0C    4m  CC=3      ←0
   │ batch                       60L  1C    3m  CC=8      ←0
   │ benchmark                   58L  1C    4m  CC=2      ←0
   │ models                      57L  4C    1m  CC=1      ←0
@@ -97,12 +92,7 @@ LAYERS:
   │ project.sh                  24L  0C    0m  CC=0.0    ←0
   │
 
-COUPLING:
-                               src.algitex  docker.planfile-mcp         docker.vallm
-          src.algitex                   ──                   ←3                   ←1
-  docker.planfile-mcp                    3                   ──                     
-         docker.vallm                    1                                        ──
-  CYCLES: none
+COUPLING: no cross-package imports detected
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon

@@ -241,3 +241,86 @@ def todo_hybrid(
     fixer.print_summary(result)
 
 
+@todo_app.command("batch")
+def todo_batch(
+    file: Path = Option(Path("TODO.md"), "--file", "-f", help="TODO.md file path"),
+    backend: str = Option("ollama", "--backend", "-b", help="Backend: ollama, litellm-proxy"),
+    batch_size: int = Option(5, "--batch-size", "-s", help="Max files per batch"),
+    dry_run: bool = Option(True, "--dry-run/--execute", help="Dry run or execute"),
+    verbose: bool = Option(False, "--verbose", "-v", help="Verbose logging"),
+):
+    """BatchFix: grupowanie i optymalizacja podobnych zadań.
+    
+    Zamiast wykonywać każde zadanie osobno, BatchFix grupuje podobne problemy
+    (np. "f-string", "magic number") i wykonuje je za jednym razem.
+    
+    Przykłady:
+        algitex todo batch --dry-run        # Symulacja
+        algitex todo batch --execute       # Wykonaj fixy
+        algitex todo batch -b ollama -s 3  # Ollama, max 3 pliki/batch
+    """
+    from algitex.todo import parse_todo
+    from algitex.tools.autofix.batch_backend import BatchFixBackend, Task
+    from algitex.tools.logging import set_verbose
+    
+    if verbose:
+        set_verbose(True)
+        console.print("[dim][VERBOSE] Debug logging enabled[/]")
+    
+    console.print(f"[bold]BatchFix[/]: {file}")
+    console.print(f"Backend: {backend}, Batch size: {batch_size}")
+    
+    if dry_run:
+        console.print(f"\n[dim]⚠️  DRY RUN — Symulacja bez zmian[/]")
+    else:
+        console.print(f"\n[bold red]⚡ EXECUTE — Fixy zostaną zastosowane[/]")
+    
+    # Parse TODO
+    todo_tasks = parse_todo(file)
+    
+    # Convert to Task objects
+    tasks = [
+        Task(
+            id=f"{t.file}:{t.line}",
+            description=t.message,
+            file_path=str(t.file),
+            line_number=t.line,
+            status="pending"
+        )
+        for t in todo_tasks
+    ]
+    
+    console.print(f"\n📋 Znaleziono {len(tasks)} zadań")
+    
+    if not tasks:
+        console.print("[yellow]Brak zadań do wykonania[/]")
+        return
+    
+    # Initialize backend
+    backend_fixer = BatchFixBackend(
+        base_url="http://localhost:11434",
+        dry_run=dry_run
+    )
+    backend_fixer.MAX_FILES_PER_BATCH = batch_size
+    
+    # Execute batch fix
+    results = backend_fixer.fix_batch(tasks)
+    
+    # Summary
+    success = sum(1 for r in results if r.success)
+    failed = len(results) - success
+    
+    console.print(f"\n[bold]{'═' * 60}[/]")
+    console.print(f"  BATCH FIX SUMMARY")
+    console.print(f"[bold]{'═' * 60}[/]")
+    console.print(f"\n  ✅ Success: {success}")
+    console.print(f"  ❌ Failed:  {failed}")
+    console.print(f"  📊 Total:   {len(results)}")
+    
+    if not dry_run and success > 0:
+        console.print(f"\n[green]✓ Zaktualizowano {success} plików[/]")
+        # TODO: Mark tasks as completed in TODO.md
+    
+    console.print(f"[bold]{'═' * 60}[/]")
+
+
