@@ -1,10 +1,10 @@
-# algitex | 223f 48391L | python:222,shell:1 | 2026-03-28
-# stats: 2105 func | 0 cls | 223 mod | CC̄=3.5 | critical:9 | cycles:0
+# algitex | 228f 49779L | python:227,shell:1 | 2026-03-28
+# stats: 2174 func | 0 cls | 228 mod | CC̄=3.5 | critical:10 | cycles:0
 # alerts[5]: CC classify_message=50; CC todo_fix=50; CC _classify_message=48; CC fix_file=30; CC todo_verify_prefact=29
 # hotspots[5]: todo_fix fan=23; todo_verify_prefact fan=21; DocstringShortener.fix_file fan=21; todo_verify_prefact fan=21; BatchFixBackend.fix_batch fan=20
-# evolution: CC̄ 3.4→3.5 (regressed +0.1)
+# evolution: CC̄ 3.5→3.5 (flat 0.0)
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[223]:
+M[228]:
   .algitex/backups/batch_20260328_142940/docker/aider-mcp/aider_mcp_server.py,156
   .algitex/backups/batch_20260328_142940/docker/planfile-mcp/planfile_mcp_server.py,276
   .algitex/backups/batch_20260328_142940/docker/vallm/vallm_server.py,274
@@ -153,23 +153,26 @@ M[223]:
   src/algitex/__init__.py,36
   src/algitex/algo/__init__.py,367
   src/algitex/algo/loop.py,4
-  src/algitex/cli/__init__.py,137
+  src/algitex/cli/__init__.py,147
   src/algitex/cli/algo.py,63
   src/algitex/cli/core.py,188
   src/algitex/cli/docker.py,96
+  src/algitex/cli/metrics.py,171
   src/algitex/cli/microtask.py,190
   src/algitex/cli/nlp.py,143
   src/algitex/cli/parallel.py,149
   src/algitex/cli/ticket.py,46
-  src/algitex/cli/todo.py,627
+  src/algitex/cli/todo.py,629
   src/algitex/cli/workflow.py,39
   src/algitex/config.py,170
+  src/algitex/metrics.py,337
   src/algitex/microtask/__init__.py,196
   src/algitex/microtask/classifier.py,185
   src/algitex/microtask/executor.py,421
   src/algitex/microtask/prompts.py,126
   src/algitex/microtask/slicer.py,121
   src/algitex/nlp/__init__.py,331
+  src/algitex/prefact_integration.py,276
   src/algitex/project/__init__.py,439
   src/algitex/project/autofix.py,52
   src/algitex/project/batch.py,60
@@ -181,6 +184,7 @@ M[223]:
   src/algitex/project/services.py,28
   src/algitex/propact/__init__.py,419
   src/algitex/propact/workflow.py,2
+  src/algitex/shared_rules.py,275
   src/algitex/todo/__init__.py,130
   src/algitex/todo/audit.py,286
   src/algitex/todo/benchmark.py,244
@@ -194,7 +198,7 @@ M[223]:
   src/algitex/tools/autofix/__init__.py,306
   src/algitex/tools/autofix/aider_backend.py,164
   src/algitex/tools/autofix/base.py,52
-  src/algitex/tools/autofix/batch_backend.py,699
+  src/algitex/tools/autofix/batch_backend.py,778
   src/algitex/tools/autofix/batch_logger.py,213
   src/algitex/tools/autofix/fallback_backend.py,191
   src/algitex/tools/autofix/ollama_backend.py,126
@@ -211,6 +215,7 @@ M[223]:
   src/algitex/tools/logging.py,157
   src/algitex/tools/mcp.py,448
   src/algitex/tools/ollama.py,400
+  src/algitex/tools/ollama_cache.py,238
   src/algitex/tools/parallel/__init__.py,38
   src/algitex/tools/parallel/executor.py,260
   src/algitex/tools/parallel/extractor.py,156
@@ -240,7 +245,7 @@ D:
     todo_fix(file;tool;task_id;limit;dry_run;algo;micro;all_phases;workers;micro_workers;model;backend;rate_limit;proxy_url)
     todo_benchmark(limit;file;workers;compare)
     todo_hybrid(file;backend;tool;workers;rate_limit;proxy_url;hybrid;fallback;verbose;dry_run)
-    todo_batch(file;backend;batch_size;parallel;dry_run;verbose;prune;limit;no_log)
+    todo_batch(file;backend;model;batch_size;parallel;dry_run;verbose;prune;limit;no_log)
     todo_verify_prefact(file;prune)
   src/algitex/todo/tiering.py:
     e: TaskTriage,TierSummary,_first_int,_normalise_task_message,classify_message,classify_task,summarise_tasks,load_todo_tasks,filter_tasks,partition_tasks
@@ -315,6 +320,13 @@ D:
     get_logger()
     start_session(backend;batch_size;parallel)
     end_session()
+  src/algitex/tools/autofix/batch_backend.py:
+    e: TaskGroup,BatchFixBackend
+    TaskGroup:  # Grupa podobnych zadań do batch fix...
+    BatchFixBackend: __init__(5),fix_batch(2),_update_todo_mark_completed(3),_create_backup(0),_preflight_syntax_check(1),_verify_tasks_exist(1),_group_tasks(1),_process_group(3),_fix_batch_group(1),_fix_individual(1),_fix_single(1),_build_batch_prompt(1),_call_llm(3),_parse_batch_response(2),_validate_and_rollback(2),_ensure_model(0)  # Backend do optymalizacji fixów przez grupowanie.
+
+Args:
+    ...
   .algitex/backups/batch_20260328_142940/src/algitex/tools/benchmark.py:
     e: Task,TaskResult,BenchmarkResults,ModelBenchmark
     Task: evaluate_quality(1)  # Benchmark task definition...
@@ -375,14 +387,14 @@ D:
     github_action(task)
     get_action_handler(tool)
     determine_action(task;tool)
-  .algitex/backups/batch_20260328_143434/src/algitex/tools/todo_runner.py:
-    e: TaskResult,TodoRunner
-    TaskResult:  # Result of executing a single task...
-    TodoRunner: __init__(2),__enter__(0),__exit__(3),run_from_file(4),run(3),_execute_local(2),_execute_ollama(2),_build_ollama_prompt(2),_call_ollama_api(1),_execute_task(3),_format_output(1),get_summary(0)  # Execute todo tasks using Docker MCP tools with local fallbac...
   .algitex/backups/batch_20260328_143434/src/algitex/tools/todo_executor.py:
     e: TaskResult,TodoExecutor
     TaskResult:  # Result of executing a single task...
     TodoExecutor: __init__(2),__enter__(0),__exit__(3),run(3),_execute_task(3),_parse_action(1),_parse_fix_action(1),_parse_create_action(1),_parse_delete_action(1),_parse_read_action(1),_extract_output(1),get_summary(0)  # Execute todo tasks using Docker MCP tools...
+  .algitex/backups/batch_20260328_143434/src/algitex/tools/todo_runner.py:
+    e: TaskResult,TodoRunner
+    TaskResult:  # Result of executing a single task...
+    TodoRunner: __init__(2),__enter__(0),__exit__(3),run_from_file(4),run(3),_execute_local(2),_execute_ollama(2),_build_ollama_prompt(2),_call_ollama_api(1),_execute_task(3),_format_output(1),get_summary(0)  # Execute todo tasks using Docker MCP tools with local fallbac...
   .algitex/backups/batch_20260328_143434/src/algitex/tools/todo_actions.py:
     e: nap_action,aider_action,ollama_action,filesystem_action,github_action,get_action_handler,determine_action
     nap_action(task)
@@ -436,6 +448,22 @@ D:
   .algitex/backups/batch_20260328_143434/src/algitex/tools/parallel/extractor.py:
     e: RegionExtractor
     RegionExtractor: __init__(1),extract_all(0),_should_skip_file(1),_extract_from_toon(1),_extract_from_file(1),_find_calls(1),_detect_shadow_conflicts(1)  # Extract lockable AST regions from Python files using map.too...
+  src/algitex/shared_rules.py:
+    e: RuleContext,RuleViolation,FixStrategy,SharedRule,SortedImportsRule,RelativeImportRule,RuleRegistry,get_registry,reset_registry
+    RuleContext: __post_init__(0)  # Context for rule execution...
+    RuleViolation: __post_init__(0),to_dict(0)  # Single rule violation...
+    FixStrategy(Protocol): apply(2),is_safe(2)  # Protocol for auto-fix implementations...
+    SharedRule(ABC): check(1),fix(2),_apply_fix(2)  # Abstract base class for rules shared between algitex and pre...
+    SortedImportsRule(SharedRule): check(1),_apply_fix(2)  # Rule: imports should be sorted (stdlib, third-party, local)...
+    RelativeImportRule(SharedRule): check(1)  # Rule: prefer absolute imports over relative...
+    RuleRegistry: __init__(0),register(1),get(1),list_rules(1),check_file(2)  # Registry of shared rules...
+    get_registry()
+    reset_registry()
+  src/algitex/tools/ollama_cache.py:
+    e: CacheEntry,LLMCache,CachedOllamaClient
+    CacheEntry: to_dict(0),from_dict(1)  # Single cache entry with metadata...
+    LLMCache: __init__(2),_hash_prompt(2),_cache_path(1),get(2),set(5),clear(0),stats(0),list_entries(0)  # Disk-based cache for LLM responses...
+    CachedOllamaClient(OllamaClient): __init__(6),generate(2),get_metrics(0),clear_cache(0)  # OllamaClient with automatic response caching...
   src/algitex/tools/autofix/__init__.py:
     e: AutoFix
     AutoFix: __init__(5),check_backends(0),choose_backend(0),_convert_task(1),mark_task_done(1),fix_with_ollama(1),fix_with_aider(1),fix_with_proxy(1),fix_task(2),fix_all(3),fix_issue(2),print_summary(1),list_tasks(0),get_stats(0)  # Automated code fixing using various backends...
@@ -530,13 +558,6 @@ Args:
     _execute_parallel(project_path;open_tickets;agents;tool)
     _display_results(results;verbose)
     parallel(path;agents;tool;dry_run;verbose)
-  src/algitex/tools/autofix/batch_backend.py:
-    e: TaskGroup,BatchFixBackend
-    TaskGroup:  # Grupa podobnych zadań do batch fix...
-    BatchFixBackend: __init__(5),fix_batch(2),_update_todo_mark_completed(3),_create_backup(0),_preflight_syntax_check(1),_verify_tasks_exist(1),_group_tasks(1),_process_group(3),_fix_batch_group(1),_fix_individual(1),_fix_single(1),_build_batch_prompt(1),_call_llm(3),_parse_batch_response(2),_validate_and_rollback(2),_ensure_model(0)  # Backend do optymalizacji fixów przez grupowanie.
-
-Args:
-    ...
   .algitex/backups/batch_20260328_142940/src/algitex/config.py:
     e: ProxyConfig,TicketConfig,AnalysisConfig,Config,_find_config,_merge_yaml
     ProxyConfig: from_env(0)  # Proxym gateway settings...
@@ -619,6 +640,12 @@ Usage:
     OllamaResponse: __str__(0)  # Response from Ollama API...
     OllamaClient: __init__(3),health(0),list_models(0),pull_model(1),generate(7),chat(6),fix_code(4),analyze_code(3),close(0),__enter__(0),__exit__(0)  # Client for interacting with Ollama API...
     OllamaService: __init__(1),ensure_model(1),get_recommended_models(0),auto_fix_file(4)  # High-level service for Ollama operations...
+  src/algitex/cli/metrics.py:
+    e: metrics_show,metrics_clear,metrics_cache,metrics_compare
+    metrics_show(storage;export)
+    metrics_clear(storage;cache_dir)
+    metrics_cache(cache_dir;list_entries;clear)
+    metrics_compare(storage)
   src/algitex/propact/__init__.py:
     e: WorkflowStep,WorkflowResult,Workflow
     WorkflowStep: to_dict(0)  # Single executable step in a Propact workflow...
@@ -680,6 +707,14 @@ Usage:
   docker/vallm/vallm_server.py:
     e: VallmServer
     VallmServer: __init__(0),create_fastapi_app(0),_run_validate(1),_validate_static(1),_validate_runtime(1),_validate_security(1),_analyze_complexity(1),_parse_radon_complexities(1),run(0)  # Validation server with multiple validation levels...
+  src/algitex/metrics.py:
+    e: LLMCall,FixResult,MetricsCollector,MetricsReporter,get_metrics,reset_metrics
+    LLMCall: to_dict(0)  # Single LLM call record...
+    FixResult:  # Single fix execution record...
+    MetricsCollector: __init__(1),record_llm_call(8),record_fix(7),get_tier_stats(0),estimate_cost(0),get_summary(0),save(0),load(0),reset(0)  # Collect metrics during algitex operations...
+    MetricsReporter: __init__(1),print_dashboard(1),export_csv(1)  # Generate reports and dashboards from metrics...
+    get_metrics()
+    reset_metrics()
   src/algitex/algo/__init__.py:
     e: TraceEntry,Pattern,Rule,LoopState,Loop
     TraceEntry: to_dict(0)  # Single LLM interaction trace...
@@ -816,6 +851,13 @@ Usage:
     RateLimiter: __init__(2),acquire(0)  # Token bucket rate limiter for LLM calls...
     LLMTask:  # Task for LLM-based fixing...
     HybridAutofix: __init__(9),fix_mechanical(1),fix_complex(1),_process_llm_parallel(1),_fix_file_llm(2),_call_llm_backend(2),fix_all(1),print_summary(1)  # Hybrid autofix: parallel mechanical + rate-limited parallel ...
+  src/algitex/prefact_integration.py:
+    e: PrefactIssue,PrefactRuleAdapter,SharedRuleEngine,run_prefact_check,check_file_with_prefact
+    PrefactIssue: to_dict(0)  # Issue found by prefact rule...
+    PrefactRuleAdapter: __init__(1),_find_prefact(0),is_available(0),scan_file(1),scan_directory(1),_parse_issues(2),check_sorted_imports(1),check_relative_imports(1),get_rules_info(0)  # Adapter to run prefact rules from algitex...
+    SharedRuleEngine: __init__(0),_register_builtin_rules(0),_check_unused_import_native(1),_check_return_type_native(1),analyze(1),get_all_issues(1)  # Unified rule engine combining algitex and prefact rules...
+    run_prefact_check(file_path)
+    check_file_with_prefact(file_path;rule)
   src/algitex/tools/docker_transport.py:
     e: StdioTransport,spawn_stdio,spawn_sse,spawn_rest,spawn_cli,call_stdio,call_sse,call_rest,call_cli
     StdioTransport: __init__(1),send(2),_serialize(1),_write(2),_read_with_timeout(1),_wait_for_ready(2),_check_process_alive(1),_extract_length(1),_parse(1)  # Transport layer for JSON-RPC over stdin/stdout communication...
@@ -974,7 +1016,7 @@ Usage:
     _shorten_path(path;max_len)
   src/algitex/microtask/prompts.py:
     e: _SafeDict,PromptBuilder
-    _SafeDict(<ast.Subscript object at 0x7dbc1c6758d0>): __missing__(1)
+    _SafeDict(<ast.Subscript object at 0x79164360ad10>): __missing__(1)
     PromptBuilder: __init__(1),build(1),_select_model(1),_build_instruction(1),_build_user_prompt(2)  # Build compact chat prompts for local LLMs...
   .algitex/backups/batch_20260328_142940/src/algitex/project/__init__.py:
     e: Project
@@ -1032,16 +1074,16 @@ Usage:
     CICDGenerator: __init__(1),_load_config(0),generate_github_actions(1),generate_gitlab_ci(1),_get_complexity_check(0),generate_dockerfile(1),generate_precommit_config(1),generate_all(4),update_config(1)  # Generate CI/CD pipelines for algitex projects...
     init_ci_cd(project_path;platform)
     create_quality_gate_config(max_cc;require_tests;security_scan)
-  .algitex/backups/batch_20260328_142940/src/algitex/tools/tickets.py:
-    e: Ticket,Tickets
-    Ticket: to_dict(0)  # A single work item...
-    Tickets: __init__(2),add(1),from_analysis(1),list(1),update(1),sync(0),board(0),_load(0),_save(0),_planfile_add(1)  # Manage project tickets via planfile or local YAML...
   .algitex/backups/batch_20260328_142940/src/algitex/tools/workspace.py:
     e: RepoConfig,Workspace,create_workspace_template,init_workspace
     RepoConfig: __post_init__(0)  # Configuration for a single repository in the workspace...
     Workspace: __init__(1),_load_config(0),_validate_dependencies(0),_topo_sort(0),clone_all(1),pull_all(0),analyze_all(1),plan_all(1),execute_all(2),validate_all(0),status(0),_get_repo_status(1),_get_git_status(1),_check_algitex_files(1),get_dependency_graph(0),find_repos_by_tag(1),get_execution_plan(0)  # Manage multiple repos as a single workspace...
     create_workspace_template(name;repos)
     init_workspace(name;config_path)
+  .algitex/backups/batch_20260328_142940/src/algitex/tools/tickets.py:
+    e: Ticket,Tickets
+    Ticket: to_dict(0)  # A single work item...
+    Tickets: __init__(2),add(1),from_analysis(1),list(1),update(1),sync(0),board(0),_load(0),_save(0),_planfile_add(1)  # Manage project tickets via planfile or local YAML...
   .algitex/backups/batch_20260328_142940/src/algitex/cli/core.py:
     e: init,_init_project_dir,_init_config,_print_tools_status,analyze,plan,go,status,tools,ask,sync
     init(path)
@@ -1410,8 +1452,8 @@ Usage:
     TaskAssignment:  # A ticket assigned to a specific agent with locked regions...
     MergeResult:  # Result of merging agent worktrees back to main...
   .algitex/backups/batch_20260328_142940/src/algitex/cli/__init__.py:
-  .algitex/backups/batch_20260328_142940/src/algitex/__init__.py:
   .algitex/backups/batch_20260328_142940/src/algitex/algo/loop.py:
+  .algitex/backups/batch_20260328_142940/src/algitex/__init__.py:
   .algitex/backups/batch_20260328_142940/src/algitex/tools/parallel/__init__.py:
   .algitex/backups/batch_20260328_142940/src/algitex/propact/workflow.py:
   .algitex/backups/batch_20260328_142940/src/algitex/workflows/pipeline.py:

@@ -1,16 +1,16 @@
-# vallm batch | 355f | 184✓ 9⚠ 15✗ | 2026-03-28
+# vallm batch | 367f | 192✓ 10⚠ 17✗ | 2026-03-28
 
 SUMMARY:
-  scanned: 355  passed: 184 (51.8%)  warnings: 9  errors: 15  unsupported: 156
+  scanned: 367  passed: 192 (52.3%)  warnings: 10  errors: 17  unsupported: 158
 
-WARNINGS[9]{path,score}:
+WARNINGS[10]{path,score}:
   src/algitex/cli/todo.py,0.90
     issues[5]{rule,severity,message,line}:
       complexity.cyclomatic,warning,todo_fix has cyclomatic complexity 50 (max: 15),157
-      complexity.cyclomatic,warning,todo_verify_prefact has cyclomatic complexity 29 (max: 15),495
+      complexity.cyclomatic,warning,todo_verify_prefact has cyclomatic complexity 29 (max: 15),497
       complexity.lizard_cc,warning,todo_fix: CC=50 exceeds limit 15,157
       complexity.lizard_length,warning,todo_fix: 115 lines exceeds limit 100,157
-      complexity.lizard_cc,warning,todo_verify_prefact: CC=29 exceeds limit 15,495
+      complexity.lizard_cc,warning,todo_verify_prefact: CC=29 exceeds limit 15,497
   src/algitex/microtask/executor.py,0.93
     issues[5]{rule,severity,message,line}:
       complexity.cyclomatic,warning,_process_algorithmic_batch has cyclomatic complexity 27 (max: 15),116
@@ -38,6 +38,9 @@ WARNINGS[9]{path,score}:
   src/algitex/todo/micro.py,0.98
     issues[1]{rule,severity,message,line}:
       complexity.maintainability,warning,Low maintainability index: 9.9 (threshold: 20),
+  src/algitex/tools/autofix/batch_backend.py,0.98
+    issues[1]{rule,severity,message,line}:
+      complexity.cyclomatic,warning,_parse_batch_response has cyclomatic complexity 16 (max: 15),642
   src/algitex/tools/autofix/batch_logger.py,0.98
     issues[1]{rule,severity,message,line}:
       complexity.cyclomatic,warning,to_markdown has cyclomatic complexity 22 (max: 15),47
@@ -45,7 +48,7 @@ WARNINGS[9]{path,score}:
     issues[1]{rule,severity,message,line}:
       complexity.cyclomatic,warning,test_extract_functions_and_classes has cyclomatic complexity 19 (max: 15),14
 
-ERRORS[15]{path,score}:
+ERRORS[17]{path,score}:
   docker/code2llm/code2llm_mcp_server.py,0.00
     issues[1]{rule,severity,message,line}:
       syntax.parse,error,SyntaxError: invalid syntax,9
@@ -93,12 +96,18 @@ ERRORS[15]{path,score}:
     issues[2]{rule,severity,message,line}:
       python.import.resolvable,error,Module 'fastapi' not found,14
       python.import.resolvable,error,Module 'uvicorn' not found,15
+  tests/test_shared_rules.py,0.93
+    issues[1]{rule,severity,message,line}:
+      python.import.resolvable,error,Module 'isort' not found,129
   src/algitex/tools/context.py,0.94
     issues[1]{rule,severity,message,line}:
       python.import.resolvable,error,Module 'qdrant_client' not found,178
   src/algitex/nlp/__init__.py,0.95
     issues[1]{rule,severity,message,line}:
       python.import.resolvable,error,Module 'isort' not found,264
+  src/algitex/shared_rules.py,0.95
+    issues[1]{rule,severity,message,line}:
+      python.import.resolvable,error,Module 'isort' not found,176
   src/algitex/tools/telemetry.py,0.95
     issues[1]{rule,severity,message,line}:
       python.import.resolvable,error,Module 'langfuse' not found,97
@@ -107,7 +116,7 @@ ERRORS[15]{path,score}:
       python.import.resolvable,error,Module 'tqdm' not found,34
 
 UNSUPPORTED[5]{bucket,count}:
-  *.md,78
+  *.md,80
   Dockerfile*,31
   *.txt,2
   *.yml,3

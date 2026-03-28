@@ -1,7 +1,7 @@
-# code2llm | 223f 48391L | python:222,shell:1 | 2026-03-28
-# CC̄=3.5 | critical:9/2657 | dups:183 | cycles:0
+# code2llm | 228f 49779L | python:227,shell:1 | 2026-03-28
+# CC̄=3.5 | critical:10/2726 | dups:183 | cycles:0
 
-HEALTH[11]:
+HEALTH[12]:
   🔴 DUP   183 classes duplicated
   🔴 GOD   src/algitex/todo/micro.py = 605L, 5 classes, 19m, max CC=12
   🟡 CC    todo_verify_prefact CC=29 (limit:15)
@@ -13,13 +13,14 @@ HEALTH[11]:
   🟡 CC    _process_algorithmic_batch CC=27 (limit:15)
   🟡 CC    _apply_magic_name CC=16 (limit:15)
   🟡 CC    to_markdown CC=22 (limit:15)
+  🟡 CC    _parse_batch_response CC=16 (limit:15)
 
 REFACTOR[3]:
   1. rm duplicates  (-183 dup classes)
   2. split src/algitex/todo/micro.py  (god module)
-  3. split 9 high-CC methods  (CC>15)
+  3. split 10 high-CC methods  (CC>15)
 
-PIPELINES[2097]:
+PIPELINES[2149]:
   [1] Src [fix_readme]: fix_readme
       PURITY: 100% pure
   [2] Src [run_rest_server]: run_rest_server → create_rest_api → aider_ai_code
@@ -33,9 +34,9 @@ PIPELINES[2097]:
 
 LAYERS:
   src/                            CC̄=3.7    ←in:0  →out:0  ×DUP
-  │ !! fixer                      724L  2C   24m  CC=30     ←1
-  │ !! batch_backend              699L  2C   16m  CC=11     ←0  ×DUP
-  │ !! todo                       627L  0C   11m  CC=50     ←0
+  │ !! batch_backend              778L  2C   16m  CC=16     ←0  ×DUP
+  │ !! fixer                      724L  2C   24m  CC=30     ←2
+  │ !! todo                       629L  0C   11m  CC=50     ←0
   │ !! micro                      605L  5C   19m  CC=12     ←0
   │ hybrid                     479L  4C   10m  CC=12     ←0  ×DUP
   │ benchmark                  464L  4C   19m  CC=14     ←0  ×DUP
@@ -52,6 +53,7 @@ LAYERS:
   │ __init__                   367L  5C   12m  CC=9      ←0  ×DUP
   │ todo_runner                363L  2C   12m  CC=13     ←0  ×DUP
   │ workspace                  344L  2C   20m  CC=5      ←0  ×DUP
+  │ metrics                    337L  4C   15m  CC=9      ←0
   │ __init__                   331L  5C   19m  CC=14     ←2
   │ __init__                   320L  3C   19m  CC=4      ←0  ×DUP
   │ __init__                   306L  1C   14m  CC=12     ←0  ×DUP
@@ -60,11 +62,14 @@ LAYERS:
   │ audit                      286L  3C   13m  CC=10     ←0  ×DUP
   │ todo_local                 283L  2C   11m  CC=11     ←0  ×DUP
   │ !! tiering                    279L  2C   11m  CC=50     ←3
+  │ prefact_integration        276L  3C   18m  CC=8      ←0
+  │ shared_rules               275L  7C   18m  CC=12     ←0
   │ executor                   260L  1C   11m  CC=6      ←0  ×DUP
   │ feedback                   252L  4C   12m  CC=8      ←0  ×DUP
   │ tickets                    247L  2C   11m  CC=5      ←0  ×DUP
   │ benchmark                  244L  1C    6m  CC=6      ←0  ×DUP
   │ todo_executor              240L  2C   12m  CC=13     ←0  ×DUP
+  │ ollama_cache               238L  3C   14m  CC=12     ←40
   │ !! batch_logger               213L  3C   13m  CC=22     ←0
   │ todo_parser                207L  2C    8m  CC=7      ←0  ×DUP
   │ context                    207L  3C   14m  CC=7      ←0  ×DUP
@@ -76,6 +81,7 @@ LAYERS:
   │ core                       188L  0C   11m  CC=5      ←0
   │ !! classifier                 185L  0C    8m  CC=48     ←1
   │ analysis                   183L  3C    8m  CC=7      ←0  ×DUP
+  │ metrics                    171L  0C    4m  CC=10     ←0
   │ config                     170L  4C    7m  CC=10     ←0
   │ aider_backend              164L  1C   11m  CC=3      ←0  ×DUP
   │ proxy_backend              161L  1C   12m  CC=3      ←0  ×DUP
@@ -83,9 +89,9 @@ LAYERS:
   │ extractor                  156L  1C    7m  CC=12     ←0  ×DUP
   │ telemetry                  152L  2C    9m  CC=4      ←0  ×DUP
   │ parallel                   149L  0C    6m  CC=11     ←0
+  │ __init__                   147L  0C    0m  CC=0.0    ←0
   │ proxy                      145L  2C    9m  CC=9      ←0  ×DUP
   │ nlp                        143L  0C    8m  CC=4      ←0
-  │ __init__                   137L  0C    0m  CC=0.0    ←0
   │ __init__                   130L  0C    1m  CC=1      ←0
   │ prompts                    126L  2C    6m  CC=7      ←0
   │ ollama_backend             126L  1C    7m  CC=6      ←0  ×DUP
@@ -112,7 +118,7 @@ LAYERS:
   │ loop                         4L  0C    0m  CC=0.0    ←0
   │ workflow                     2L  0C    0m  CC=0.0    ←0
   │
-  .algitex/                       CC̄=3.4    ←in:63  →out:0  ×DUP
+  .algitex/                       CC̄=3.4    ←in:68  →out:35  !! split  ×DUP
   │ !! batch_backend              667L  2C   16m  CC=11     ←0  ×DUP
   │ !! batch_backend              631L  2C   15m  CC=11     ←0  ×DUP
   │ !! todo                       476L  0C    9m  CC=29     ←1
@@ -167,13 +173,13 @@ LAYERS:
   │ executor                   260L  1C   11m  CC=6      ←0  ×DUP
   │ feedback                   252L  4C   12m  CC=8      ←0  ×DUP
   │ feedback                   252L  4C   12m  CC=8      ←0  ×DUP
-  │ tickets                    247L  2C   11m  CC=5      ←32  ×DUP
+  │ tickets                    247L  2C   11m  CC=5      ←34  ×DUP
   │ tickets                    247L  2C   11m  CC=5      ←0  ×DUP
   │ benchmark                  244L  1C    6m  CC=6      ←7  ×DUP
   │ benchmark                  244L  1C    6m  CC=6      ←0  ×DUP
   │ todo_executor              240L  2C   12m  CC=13     ←0  ×DUP
   │ todo_executor              240L  2C   12m  CC=13     ←0  ×DUP
-  │ todo_parser                207L  2C    8m  CC=7      ←0  ×DUP
+  │ todo_parser                207L  2C    8m  CC=7      ←1  ×DUP
   │ context                    207L  3C   14m  CC=7      ←0  ×DUP
   │ todo_parser                207L  2C    8m  CC=7      ←0  ×DUP
   │ context                    207L  3C   14m  CC=7      ←0  ×DUP
@@ -268,12 +274,14 @@ LAYERS:
 
 COUPLING:
                                   .algitex          src.algitex  docker.planfile-mcp
-             .algitex                   ──                  ←60                   ←3  hub
-          src.algitex                   60                   ──                       !! fan-out
+             .algitex                   ──                   35                   ←3  hub
+          src.algitex                   65                   ──                       hub
   docker.planfile-mcp                    3                                        ──
   CYCLES: none
-  HUB: .algitex/ (fan-in=63)
-  SMELL: src.algitex/ fan-out=60 → split needed
+  HUB: .algitex/ (fan-in=68)
+  HUB: src.algitex/ (fan-in=35)
+  SMELL: .algitex/ fan-out=35 → split needed
+  SMELL: src.algitex/ fan-out=65 → split needed
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon

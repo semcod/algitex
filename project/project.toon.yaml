@@ -1,7 +1,7 @@
-# algitex | 2105 func | 204f | 64481L | python | 2026-03-28
+# algitex | 2174 func | 209f | 66816L | python | 2026-03-28
 
 HEALTH:
-  CC̄=3.5  critical=108 (limit:10)  dup=107  cycles=0
+  CC̄=3.5  critical=112 (limit:10)  dup=107  cycles=0
 
 ALERTS[20]:
   !!! cc_exceeded      todo_fix = 50 (limit:15)
@@ -15,12 +15,12 @@ ALERTS[20]:
   !!! high_fan_out     todo_verify_prefact = 21 (limit:10)
   !!! high_fan_out     DocstringShortener.fix_file = 21 (limit:10)
 
-MODULES[223] (top by size):
-  M[src/algitex/todo/fixer.py] 724L C:2 F:24 CC↑30 D:1 (python)
-  M[src/algitex/tools/autofix/batch_backend.py] 699L C:2 F:16 CC↑11 D:0 (python)
+MODULES[228] (top by size):
+  M[src/algitex/tools/autofix/batch_backend.py] 778L C:2 F:16 CC↑16 D:0 (python)
+  M[src/algitex/todo/fixer.py] 724L C:2 F:24 CC↑30 D:2 (python)
   M[.algitex/backups/batch_20260328_143434/src/algitex/tools/autofix/batch_backend.py] 667L C:2 F:16 CC↑11 D:0 (python)
   M[.algitex/backups/batch_20260328_142940/src/algitex/tools/autofix/batch_backend.py] 631L C:2 F:15 CC↑11 D:0 (python)
-  M[src/algitex/cli/todo.py] 627L C:0 F:11 CC↑50 D:0 (python)
+  M[src/algitex/cli/todo.py] 629L C:0 F:11 CC↑50 D:0 (python)
   M[src/algitex/todo/micro.py] 605L C:5 F:19 CC↑12 D:0 (python)
   M[src/algitex/todo/hybrid.py] 479L C:4 F:10 CC↑12 D:0 (python)
   M[.algitex/backups/batch_20260328_143434/src/algitex/cli/todo.py] 476L C:0 F:9 CC↑29 D:0 (python)
@@ -31,7 +31,7 @@ MODULES[223] (top by size):
   M[src/algitex/tools/benchmark.py] 464L C:4 F:19 CC↑14 D:0 (python)
   M[.algitex/backups/batch_20260328_142940/src/algitex/tools/mcp.py] 448L C:2 F:18 CC↑11 D:0 (python)
   M[.algitex/backups/batch_20260328_143434/src/algitex/tools/mcp.py] 448L C:2 F:18 CC↑11 D:0 (python)
-  LANGS: python:222/shell:1
+  LANGS: python:227/shell:1
 
 HOTSPOTS[10]:
   ★ todo_fix fan=23  // Execute fix tasks (prefact-style) via Docker MCP.
@@ -55,4 +55,4 @@ REFACTOR[15]:
   [5] H/L Split fix_file (CC=30 → target CC<10)
 
 EVOLUTION:
-  2026-03-28 CC̄=3.5 crit=108 64481L // Automated analysis
+  2026-03-28 CC̄=3.5 crit=112 66816L // Automated analysis

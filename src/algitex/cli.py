@@ -16,6 +16,7 @@ from algitex.cli import (
     todo_list, todo_run, todo_stats, todo_fix, todo_verify, todo_fix_parallel, todo_benchmark, todo_hybrid,
     microtask_app, microtask_classify, microtask_plan, microtask_run,
     nlp_app, nlp_docstrings, nlp_imports, nlp_dead_code, nlp_duplicates,
+    metrics_app, metrics_show, metrics_clear, metrics_cache, metrics_compare,
 )
 
 if __name__ == "__main__":
@@ -31,4 +32,5 @@ __all__ = [
     "todo_list", "todo_run", "todo_stats", "todo_fix", "todo_verify", "todo_fix_parallel", "todo_benchmark", "todo_hybrid",
     "microtask_app", "microtask_classify", "microtask_plan", "microtask_run",
     "nlp_app", "nlp_docstrings", "nlp_imports", "nlp_dead_code", "nlp_duplicates",
+    "metrics_app", "metrics_show", "metrics_clear", "metrics_cache", "metrics_compare",
 ]

@@ -566,11 +566,6 @@ src/algitex/
 │  redup      strategy   models      rules →          │
 │                                    hybrid routing   │
 │                                                     │
-│  Three-Tier TODO Fixing:                            │
-│    todo fix --algo     → Tier 0: Deterministic      │
-│    todo fix --micro    → Tier 1: Ollama 7B          │
-│    todo fix --all      → All tiers in sequence      │
-│                                                     │
 │  MicroTask Pipeline:                                │
 │    microtask classify → atomic task decomposition   │
 │    microtask plan     → execution strategy          │

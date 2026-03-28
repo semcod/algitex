@@ -4,12 +4,12 @@
 
 - **Project**: /home/tom/github/semcod/algitex
 - **Primary Language**: python
-- **Languages**: python: 387, shell: 26
+- **Languages**: python: 392, shell: 26
 - **Analysis Mode**: static
-- **Total Functions**: 2657
-- **Total Classes**: 383
-- **Modules**: 413
-- **Entry Points**: 2329
+- **Total Functions**: 2726
+- **Total Classes**: 400
+- **Modules**: 418
+- **Entry Points**: 2397
 
 ## Architecture by Module
 
@@ -145,6 +145,10 @@ Main execution flows into the system:
 > Demonstrate parallel execution with region-based coordination.
 - **Calls**: print, print, print, str, Project, print, p.analyze, print
 
+### src.algitex.cli.metrics.metrics_compare
+> Compare tier performance (algorithm vs micro vs big LLM).
+- **Calls**: typer.Option, MetricsCollector, collector.load, collector.get_tier_stats, collector.estimate_cost, Table, table.add_column, table.add_column
+
 ### .algitex.backups.batch_20260328_142940.examples.20-self-hosted-pipeline.main.main
 > Main demo function.
 - **Calls**: print, print, print, print, print, print, print, print
@@ -169,6 +173,13 @@ Main execution flows into the system:
 > Demonstrate parallel refactoring of a real-world project.
 - **Calls**: tempfile.TemporaryDirectory, Path, print, examples.30-parallel-execution.parallel_real_world.setup_sample_project, Project, print, p.analyze, print
 
+### src.algitex.cli.todo.todo_batch
+> BatchFix: grupowanie i optymalizacja podobnych zadań.
+
+Zamiast wykonywać każde zadanie osobno, BatchFix grupuje podobne problemy
+(np. "f-string", "mag
+- **Calls**: typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option
+
 ### .algitex.backups.batch_20260328_142940.examples.14-docker-mcp.main.demo_docker_operations
 > Demonstrate real Docker operations.
 - **Calls**: print, .algitex.backups.batch_20260328_142940.examples.14-docker-mcp.main.create_sample_docker_project, print, print, project_dir.iterdir, print, print, print
@@ -183,12 +194,9 @@ Main execution flows into the system:
 ### .algitex.backups.batch_20260328_143434.examples.05-cost-tracking.main.main
 - **Calls**: print, Tickets, print, print, print, sorted, print, Loop
 
-### src.algitex.cli.todo.todo_batch
-> BatchFix: grupowanie i optymalizacja podobnych zadań.
-
-Zamiast wykonywać każde zadanie osobno, BatchFix grupuje podobne problemy
-(np. "f-string", "mag
-- **Calls**: typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option
+### src.algitex.tools.autofix.batch_backend.BatchFixBackend._parse_batch_response
+> Parsuj odpowiedź batch i zastosuj fixy.
+- **Calls**: print, print, re.findall, print, enumerate, sum, print, filepath.strip
 
 ### examples.14-docker-mcp.main.demo_docker_operations
 > Demonstrate real Docker operations.
@@ -229,14 +237,6 @@ Zamiast wykonywać każde zadanie osobno, BatchFix grupuje podobne problemy
 > Autofix: LLM-based code fixes (use --hybrid for mechanical + LLM).
 - **Calls**: typer.Argument, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option
 
-### .algitex.backups.batch_20260328_142940.examples.13-vallm.main.demo_validation
-> Demonstrate real code validation.
-- **Calls**: print, .algitex.backups.batch_20260328_142940.examples.13-vallm.main.create_sample_code, print, print, print, print, print, print
-
-### .algitex.backups.batch_20260328_143434.src.algitex.cli.todo.todo_hybrid
-> Autofix: LLM-based code fixes (use --hybrid for mechanical + LLM).
-- **Calls**: typer.Argument, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option, typer.Option
-
 ## Process Flows
 
 Key execution flows identified:
@@ -251,15 +251,25 @@ main [.algitex.backups.batch_20260328_142940.examples.31-abpr-workflow.main]
 todo_fix [src.algitex.cli.todo]
 ```
 
-### Flow 3: demo_docker_operations
+### Flow 3: metrics_compare
 ```
-demo_docker_operations [.algitex.backups.batch_20260328_142940.examples.14-docker-mcp.main]
-  └─> create_sample_docker_project
+metrics_compare [src.algitex.cli.metrics]
 ```
 
 ### Flow 4: todo_batch
 ```
 todo_batch [src.algitex.cli.todo]
+```
+
+### Flow 5: demo_docker_operations
+```
+demo_docker_operations [.algitex.backups.batch_20260328_142940.examples.14-docker-mcp.main]
+  └─> create_sample_docker_project
+```
+
+### Flow 6: _parse_batch_response
+```
+_parse_batch_response [src.algitex.tools.autofix.batch_backend.BatchFixBackend]
 ```
 
 ## Key Classes
@@ -409,15 +419,15 @@ Key functions that process and transform data:
 
 ### .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_parser.TodoParser._parse_prefact
 > Parse prefact-style: `file.py:10 - description`.
-- **Output to**: set, self.PREFACT_PATTERN.finditer, match.group, int, None.strip
+- **Output to**: src.algitex.tools.ollama_cache.LLMCache.set, self.PREFACT_PATTERN.finditer, match.group, int, None.strip
 
 ### .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_parser.TodoParser._parse_github
 > Parse GitHub-style checkboxes.
-- **Output to**: set, self.GITHUB_PATTERN.finditer, None.lower, None.strip, seen.add
+- **Output to**: src.algitex.tools.ollama_cache.LLMCache.set, self.GITHUB_PATTERN.finditer, None.lower, None.strip, seen.add
 
 ### .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_parser.TodoParser._parse_generic
 > Parse generic list items.
-- **Output to**: set, self.GENERIC_PATTERN.finditer, match.group, None.strip, seen.add
+- **Output to**: src.algitex.tools.ollama_cache.LLMCache.set, self.GENERIC_PATTERN.finditer, match.group, None.strip, seen.add
 
 ### .algitex.backups.batch_20260328_142940.src.algitex.tools.context.ContextBuilder._format_ticket
 > Format ticket information.
@@ -425,7 +435,7 @@ Key functions that process and transform data:
 
 ### .algitex.backups.batch_20260328_142940.src.algitex.tools.workspace.Workspace._validate_dependencies
 > Validate that all dependencies exist.
-- **Output to**: set, self.repos.items, self.repos.keys, ValueError
+- **Output to**: src.algitex.tools.ollama_cache.LLMCache.set, self.repos.items, self.repos.keys, ValueError
 
 ### .algitex.backups.batch_20260328_142940.src.algitex.tools.workspace.Workspace.validate_all
 > Run validation across all repositories.
@@ -433,18 +443,6 @@ Key functions that process and transform data:
 
 ### .algitex.backups.batch_20260328_142940.src.algitex.tools.services.ServiceChecker._format_status_line
 > Format a single status line.
-
-### .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.format_args
-> Format arguments for display.
-- **Output to**: kwargs.items, None.join, parts.append, parts.append, .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.format_value
-
-### .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.format_value
-> Format a value for display.
-- **Output to**: repr, len
-
-### .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.format_result
-> Format a result for display.
-- **Output to**: repr, len
 
 ### .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_executor.TodoExecutor._parse_action
 > Parse task description to determine MCP action and arguments.
@@ -465,6 +463,18 @@ Key functions that process and transform data:
 ### .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_executor.TodoExecutor._parse_read_action
 > Parse a read/view task.
 - **Output to**: str, str
+
+### .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.format_args
+> Format arguments for display.
+- **Output to**: kwargs.items, None.join, parts.append, parts.append, .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.format_value
+
+### .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.format_value
+> Format a value for display.
+- **Output to**: repr, len
+
+### .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.format_result
+> Format a result for display.
+- **Output to**: repr, len
 
 ### .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_runner.TodoRunner._format_output
 > Extract meaningful output from MCP result.
@@ -537,15 +547,15 @@ Key functions that process and transform data:
 - **Confidence**: 0.70
 - **Functions**: .algitex.backups.batch_20260328_142940.src.algitex.tools.services.ServiceChecker.__init__, .algitex.backups.batch_20260328_142940.src.algitex.tools.services.ServiceChecker.check_http_service, .algitex.backups.batch_20260328_142940.src.algitex.tools.services.ServiceChecker.check_ollama, .algitex.backups.batch_20260328_142940.src.algitex.tools.services.ServiceChecker.check_litellm_proxy, .algitex.backups.batch_20260328_142940.src.algitex.tools.services.ServiceChecker.check_mcp_service
 
-### state_machine_VerboseContext
-- **Type**: state_machine
-- **Confidence**: 0.70
-- **Functions**: .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.VerboseContext.__init__, .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.VerboseContext.__enter__, .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.VerboseContext.__exit__
-
 ### state_machine_TodoExecutor
 - **Type**: state_machine
 - **Confidence**: 0.70
 - **Functions**: .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_executor.TodoExecutor.__init__, .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_executor.TodoExecutor.__enter__, .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_executor.TodoExecutor.__exit__, .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_executor.TodoExecutor.run, .algitex.backups.batch_20260328_142940.src.algitex.tools.todo_executor.TodoExecutor._execute_task
+
+### state_machine_VerboseContext
+- **Type**: state_machine
+- **Confidence**: 0.70
+- **Functions**: .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.VerboseContext.__init__, .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.VerboseContext.__enter__, .algitex.backups.batch_20260328_142940.src.algitex.tools.logging.VerboseContext.__exit__
 
 ## Public API Surface
 
@@ -558,6 +568,7 @@ Functions exposed as public API (no underscore prefix):
 - `.algitex.backups.batch_20260328_142940.examples.30-parallel-execution.main.main` - 55 calls
 - `.algitex.backups.batch_20260328_143434.examples.30-parallel-execution.main.main` - 55 calls
 - `examples.30-parallel-execution.main.main` - 55 calls
+- `src.algitex.cli.metrics.metrics_compare` - 53 calls
 - `.algitex.backups.batch_20260328_142940.examples.20-self-hosted-pipeline.main.main` - 49 calls
 - `.algitex.backups.batch_20260328_143434.src.algitex.cli.todo.todo_verify_prefact` - 49 calls
 - `.algitex.backups.batch_20260328_143434.examples.20-self-hosted-pipeline.main.main` - 49 calls
@@ -566,11 +577,11 @@ Functions exposed as public API (no underscore prefix):
 - `.algitex.backups.batch_20260328_142940.examples.30-parallel-execution.parallel_real_world.main` - 43 calls
 - `.algitex.backups.batch_20260328_143434.examples.30-parallel-execution.parallel_real_world.main` - 43 calls
 - `examples.30-parallel-execution.parallel_real_world.main` - 43 calls
+- `src.algitex.cli.todo.todo_batch` - 41 calls
 - `.algitex.backups.batch_20260328_142940.examples.14-docker-mcp.main.demo_docker_operations` - 40 calls
 - `.algitex.backups.batch_20260328_142940.examples.05-cost-tracking.main.main` - 40 calls
 - `.algitex.backups.batch_20260328_143434.examples.14-docker-mcp.main.demo_docker_operations` - 40 calls
 - `.algitex.backups.batch_20260328_143434.examples.05-cost-tracking.main.main` - 40 calls
-- `src.algitex.cli.todo.todo_batch` - 40 calls
 - `examples.14-docker-mcp.main.demo_docker_operations` - 40 calls
 - `examples.05-cost-tracking.main.main` - 40 calls
 - `.algitex.backups.batch_20260328_142940.examples.18-ollama-local.main.main` - 39 calls
@@ -590,7 +601,6 @@ Functions exposed as public API (no underscore prefix):
 - `.algitex.backups.batch_20260328_142940.examples.07-context.main.basic_context_example` - 34 calls
 - `.algitex.backups.batch_20260328_143434.examples.07-context.main.basic_context_example` - 34 calls
 - `examples.07-context.main.basic_context_example` - 34 calls
-- `.algitex.backups.batch_20260328_142940.examples.02-algo-loop.main.main` - 33 calls
 
 ## System Interactions
 
@@ -603,13 +613,15 @@ graph TD
     todo_fix --> Option
     main --> str
     main --> Project
+    metrics_compare --> Option
+    metrics_compare --> MetricsCollector
+    metrics_compare --> load
+    metrics_compare --> get_tier_stats
+    metrics_compare --> estimate_cost
     main --> TemporaryDirectory
     main --> Path
     main --> setup_sample_project
-    demo_docker_operatio --> print
-    demo_docker_operatio --> create_sample_docker
-    demo_docker_operatio --> iterdir
-    main --> Tickets
+    todo_batch --> Option
 ```
 
 ## Reverse Engineering Guidelines
