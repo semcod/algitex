@@ -33,6 +33,7 @@ algitex todo batch -b ollama -s 5 --execute
 | Flaga | Opis | Domyślnie |
 |-------|------|-----------|
 | `-b, --backend` | Backend: ollama, litellm-proxy | ollama |
+| `-m, --model` | Model Ollama (np. qwen2.5-coder:7b, qwen3:8b) | qwen3:8b |
 | `-s, --batch-size` | Max plików w batchu | 5 |
 | `-p, --parallel` | Równoległe grupy (workers) | 3 |
 | `--execute` | Wykonaj naprawdę (domyślnie dry-run) | False |

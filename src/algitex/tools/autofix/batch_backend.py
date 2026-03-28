@@ -156,7 +156,7 @@ class BatchFixBackend:
     
     def _update_todo_mark_completed(self, tasks: list[Task], results: list[FixResult], elapsed: float) -> None:
         """Oznacz naprawione zadania jako zrobione w TODO.md."""
-        from algitex.todo.fixer import TodoTask, parse_todo
+        from algitex.tools.todo_parser import TodoParser, Task as TodoTask
         
         # Znajdź zadania które zostały naprawione (success=True)
         completed_task_ids = set()
@@ -169,8 +169,9 @@ class BatchFixBackend:
             print("\n⚠️  Żadne zadania nie zostały naprawione - TODO.md nie zostanie zaktualizowane")
             return
         
-        # Konwertuj Task (z autofix) na TodoTask (z fixer)
-        todo_tasks = parse_todo("TODO.md")
+        # Parse TODO.md using TodoParser which has id field
+        parser = TodoParser("TODO.md")
+        todo_tasks = parser.parse()
         completed_todo_tasks = []
         
         print(f"     🔍 Szukam {len(completed_task_ids)} zadań w {len(todo_tasks)} taskach z TODO.md")

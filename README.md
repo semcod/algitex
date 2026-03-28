@@ -709,15 +709,7 @@ src/algitex/
 
 Licensed under Apache-2.0.
 
-
-Licensed under Apache-2.0.
-
 ## Author
-
-Tom Sapletta
-
-
-Tom Sapletta
 
 Created by **Tom Sapletta** — [tom@sapletta.com](mailto:tom@sapletta.com).
 
