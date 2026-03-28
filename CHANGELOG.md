@@ -5,7 +5,78 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.10] - 2026-03-28
+
+### Fixed
+- Fix smart-return-type issues (ticket-f6ffd00c)
+- Fix ai-boilerplate issues (ticket-5f6d2bb9)
+- Fix smart-return-type issues (ticket-edda477b)
+- Fix ai-boilerplate issues (ticket-5d8cd642)
+- Fix smart-return-type issues (ticket-65ae462d)
+- Fix string-concat issues (ticket-e7fbfdd2)
+- Fix unused-imports issues (ticket-3c679ed7)
+- Fix magic-numbers issues (ticket-bce07d8b)
+- Fix ai-boilerplate issues (ticket-7e6b6909)
+- Fix smart-return-type issues (ticket-f579ee2c)
+- Fix ai-boilerplate issues (ticket-a86c0a0f)
+- Fix smart-return-type issues (ticket-763c4b4a)
+- Fix unused-imports issues (ticket-a00d5c32)
+- Fix magic-numbers issues (ticket-0e9e1fd8)
+- Fix ai-boilerplate issues (ticket-61628f98)
+- Fix string-concat issues (ticket-09c76d5a)
+- Fix unused-imports issues (ticket-fdd57ff3)
+- Fix duplicate-imports issues (ticket-b9307f1c)
+- Fix magic-numbers issues (ticket-e75db84e)
+- Fix llm-generated-code issues (ticket-53aa4149)
+- Fix unused-imports issues (ticket-0b69fe53)
+- Fix duplicate-imports issues (ticket-0881e1ec)
+- Fix magic-numbers issues (ticket-90e4c458)
+- Fix smart-return-type issues (ticket-d62ff71a)
+- Fix unused-imports issues (ticket-249d0030)
+- Fix duplicate-imports issues (ticket-feebc64a)
+- Fix magic-numbers issues (ticket-7afb0b4b)
+- Fix ai-boilerplate issues (ticket-52a20c29)
+- Fix unused-imports issues (ticket-6d026742)
+- Fix magic-numbers issues (ticket-d8280a0f)
+- Fix string-concat issues (ticket-ba67a7a7)
+- Fix unused-imports issues (ticket-709e5ed5)
+- Fix duplicate-imports issues (ticket-1536df46)
+- Fix magic-numbers issues (ticket-c8be0bb3)
+- Fix smart-return-type issues (ticket-75439d0a)
+- Fix unused-imports issues (ticket-febc2f13)
+- Fix unused-imports issues (ticket-bfa0cec6)
+- Fix magic-numbers issues (ticket-248c4802)
+- Fix unused-imports issues (ticket-508f9f81)
+- Fix unused-imports issues (ticket-b3538f7a)
+- Fix smart-return-type issues (ticket-a37790e3)
+- Fix unused-imports issues (ticket-0a62b41d)
+- Fix magic-numbers issues (ticket-1fde141f)
+- Fix llm-generated-code issues (ticket-06d0712f)
+
 ## [Unreleased]
+
+## [0.1.5] - 2026-03-28
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update TODO.md
+- Update docs/README.md
+- Update project/README.md
+- Update project/context.md
+
+### Other
+- Update planfile.yaml
+- Update prefact.yaml
+- Update project.sh
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- Update project/calls.png
+- Update project/compact_flow.mmd
+- Update project/compact_flow.png
+- Update project/duplication.toon.yaml
+- Update project/evolution.toon.yaml
+- ... and 7 more files
 
 ## [0.1.4] - 2026-03-28
 

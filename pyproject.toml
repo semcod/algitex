@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "algitex"
-version = "0.1.4"
+version = "0.1.5"
 description = "Progressive algorithmization toolchain — from LLM to deterministic code, from proxy to tickets"
 readme = "README.md"
-license = {text = "Apache-2.0"}
+license = "Apache-2.0"
 requires-python = ">=3.10"
 authors = [{name = "Tom Sapletta", email = "tom@sapletta.com"}]
 keywords = [
@@ -17,7 +17,6 @@ keywords = [
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python :: 3",
     "Topic :: Software Development :: Quality Assurance",
 ]

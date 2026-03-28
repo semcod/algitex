@@ -15,6 +15,29 @@ algitex go
 
 The name reflects the core cycle: **analyze → plan → execute → validate → repeat**. Each iteration makes your codebase healthier and your LLM usage cheaper. The progressive algorithmization loop gradually replaces LLM calls with deterministic rules.
 
+**Algitex = Algorithmic + Intelligence + Execution + Engine**
+
+Semantically:
+- **Alg-** → algorithms, logic, determinism
+- **-i-** → intelligence layer
+- **-tex** → texture / system / framework / execution layer
+
+Algitex is the **intelligence compilation engine** that transforms LLM-driven behavior into deterministic, cost-efficient algorithmic systems. It enables progressive algorithmization from probabilistic AI reasoning to structured, deterministic logic.
+
+### Progressive Algorithmization
+
+The 5-stage transition from LLM to deterministic:
+
+```
+Stage 1: Discovery    → LLM performs tasks, collect traces
+Stage 2: Extraction   → Identify recurring patterns
+Stage 3: Rules        → Generate deterministic replacements
+Stage 4: Hybrid       → Route by confidence: rules vs LLM
+Stage 5: Optimization → Minimize LLM dependency, reduce costs
+```
+
+**Result:** Systems that start with LLM flexibility but evolve into efficient, deterministic engines—maintaining AI reasoning benefits with traditional software performance.
+
 ## Name alternatives considered
 
 | Name | Why it works | Why we picked algitex |
@@ -177,10 +200,18 @@ make run
 ```
 
 Each example has:
-- `README.md` — what it demonstrates
+- [01-quickstart/README.md](examples/01-quickstart/README.md) — Project, Loop, Workflow basics
+- [02-algo-loop/README.md](examples/02-algo-loop/README.md) — Progressive algorithmization
+- [03-pipeline/README.md](examples/03-pipeline/README.md) — Composable fluent API
+- [04-ide-integration/README.md](examples/04-ide-integration/README.md) — IDE configs
+- [05-cost-tracking/README.md](examples/05-cost-tracking/README.md) — Cost tracking
 - `run.sh` — executable script
 - `Makefile` — `make run`, `make setup`, `make clean`
 - `.env.example` — configuration template (where applicable)
+
+## Additional Documentation
+
+- [README2.md](./README2.md) — Detailed conceptual overview of Algitex as intelligence compilation engine
 
 ## Architecture
 
@@ -219,7 +250,7 @@ src/algitex/
 │  code2llm   planfile   proxym      trace →          │
 │  vallm      tickets    llx         patterns →       │
 │  redup      strategy   models      rules →          │
-│                                    hybrid routing    │
+│                                    hybrid routing   │
 │                                                     │
 │  run_workflow("fix.md")                             │
 │     │                                               │

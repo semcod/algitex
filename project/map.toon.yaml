@@ -1,0 +1,93 @@
+# algitex | 15f 2332L | python:14,shell:1 | 2026-03-28
+# stats: 97 func | 0 cls | 15 mod | CC̄=3.0 | critical:0 | cycles:0
+# alerts[5]: fan-out init=16; fan-out Project.status=15; fan-out Workflow._exec_rest=13; fan-out Workflow.parse=13; fan-out Loop.extract=10
+# hotspots[5]: init fan=16; Project.status fan=15; Workflow.parse fan=13; Workflow._exec_rest fan=13; go fan=10
+# evolution: baseline
+# Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
+M[15]:
+  project.sh,24
+  src/algitex/__init__.py,36
+  src/algitex/algo/__init__.py,369
+  src/algitex/algo/loop.py,4
+  src/algitex/cli.py,358
+  src/algitex/config.py,169
+  src/algitex/project.py,283
+  src/algitex/propact/__init__.py,317
+  src/algitex/propact/workflow.py,2
+  src/algitex/tools/__init__.py,102
+  src/algitex/tools/analysis.py,182
+  src/algitex/tools/proxy.py,145
+  src/algitex/tools/tickets.py,246
+  src/algitex/workflows/__init__.py,90
+  src/algitex/workflows/pipeline.py,5
+D:
+  src/algitex/propact/__init__.py:
+    e: WorkflowStep,WorkflowResult,Workflow
+    WorkflowStep: to_dict(0)  # Single executable step in a Propact workflow...
+    WorkflowResult:  # Result of workflow execution...
+    Workflow: __init__(1),parse(0),validate(0),execute(0),status(0),_exec_shell(1),_exec_rest(2),_exec_mcp(2),_exec_llm(2)  # Parse and execute Propact Markdown workflows...
+  src/algitex/config.py:
+    e: ProxyConfig,TicketConfig,AnalysisConfig,Config,_find_config,_merge_yaml
+    ProxyConfig: from_env(0)  # Proxym gateway settings...
+    TicketConfig: from_env(0)  # Planfile ticket system settings...
+    AnalysisConfig: from_env(0)  # Code analysis tool settings...
+    Config: load(1),save(1)  # Unified config for the entire algitex stack...
+    _find_config(explicit)
+    _merge_yaml(cfg;path)
+  src/algitex/tools/proxy.py:
+    e: LLMResponse,Proxy
+    LLMResponse: __str__(0)  # Simplified LLM response...
+    Proxy: __init__(1),ask(1),budget(0),models(0),health(0),close(0),__enter__(0),__exit__(0)  # Simple wrapper around proxym gateway...
+  src/algitex/algo/__init__.py:
+    e: TraceEntry,Pattern,Rule,LoopState,Loop
+    TraceEntry: to_dict(0)  # Single LLM interaction trace...
+    Pattern:  # Extracted repeating pattern from traces...
+    Rule:  # Deterministic replacement for an LLM pattern...
+    LoopState:  # Current state of the progressive algorithmization loop...
+    Loop: __init__(1),discover(1),add_trace(2),extract(1),generate_rules(1),_llm_generate_rule(2),route(1),optimize(0),report(0),_load(0),_save(0)  # The progressive algorithmization engine...
+  src/algitex/tools/analysis.py:
+    e: HealthReport,Analyzer,CLIResult,_run_cli
+    HealthReport: summary(0)  # Combined analysis result from all tools...
+    Analyzer: __init__(1),health(0),full(0),_run_code2llm(1),_run_vallm(1),_run_redup(1)  # Unified interface for code analysis tools...
+    CLIResult:
+    _run_cli(cmd;cwd)
+  src/algitex/project.py:
+    e: Project
+    Project: __init__(2),analyze(1),plan(3),execute(1),status(0),run_workflow(1),ask(1),add_ticket(1),sync(0),_build_prompt(1),_select_tier(1),_generate_strategy(2)  # One project, all tools, zero boilerplate...
+  src/algitex/cli.py:
+    e: init,analyze,plan,go,status,tools,ask,sync,ticket_add,ticket_list,ticket_board,algo_discover,algo_extract,algo_rules,algo_report,workflow_run,workflow_validate
+    init(path)
+    analyze(path;quick)
+    plan(path;sprints;focus)
+    go(path;dry_run)
+    status(path)
+    tools()
+    ask(prompt;tier)
+    sync()
+    ticket_add(title;priority;type)
+    ticket_list(status)
+    ticket_board()
+    algo_discover(path)
+    algo_extract(path;min_freq)
+    algo_rules(path;no_llm)
+    algo_report(path)
+    workflow_run(path;dry_run)
+    workflow_validate(path)
+  src/algitex/tools/tickets.py:
+    e: Ticket,Tickets
+    Ticket: to_dict(0)  # A single work item...
+    Tickets: __init__(2),add(1),from_analysis(1),list(1),update(1),sync(0),board(0),_load(0),_save(0),_planfile_add(1)  # Manage project tickets via planfile or local YAML...
+  src/algitex/tools/__init__.py:
+    e: ToolStatus,discover_tools,require_tool,get_tool_module
+    ToolStatus: __str__(0)
+    discover_tools()
+    require_tool(name)
+    get_tool_module(name)
+  src/algitex/workflows/__init__.py:
+    e: Pipeline
+    Pipeline: __init__(2),analyze(1),create_tickets(0),execute(1),validate(0),sync(1),report(0)  # Composable workflow: chain steps fluently...
+  src/algitex/__init__.py:
+  src/algitex/algo/loop.py:
+  src/algitex/propact/workflow.py:
+  src/algitex/workflows/pipeline.py:
+  project.sh:

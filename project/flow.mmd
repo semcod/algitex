@@ -1,0 +1,25 @@
+flowchart TD
+
+    %% Entry points (blue)
+    classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
+
+    subgraph Core
+        src__algitex__cli__init["init"]
+        src__algitex__cli__analyze["analyze"]
+        src__algitex__cli__plan["plan"]
+        src__algitex__cli__go["go"]
+        src__algitex__cli__status["status"]
+        src__algitex__cli__tools["tools"]
+        src__algitex__cli__ask["ask"]
+        src__algitex__cli__sync["sync"]
+        src__algitex__cli__ticket_add["ticket_add"]
+        src__algitex__cli__ticket_list["ticket_list"]
+        src__algitex__cli__ticket_board["ticket_board"]
+        src__algitex__cli__algo_discover["algo_discover"]
+        src__algitex__cli__algo_extract["algo_extract"]
+        src__algitex__cli__algo_rules["algo_rules"]
+        src__algitex__cli__algo_report["algo_report"]
+        ...["+71 more"]
+    end
+
+    class src__algitex__cli__init,src__algitex__cli__analyze,src__algitex__cli__plan,src__algitex__cli__go,src__algitex__cli__status,src__algitex__cli__tools,src__algitex__cli__ask,src__algitex__cli__sync,src__algitex__cli__ticket_add,src__algitex__cli__ticket_list entry
