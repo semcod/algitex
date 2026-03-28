@@ -1,5 +1,9 @@
 # Example 01: Quickstart
 
+```bash
+cd examples/01-quickstart
+```
+
 Pokazuje trzy główne obiekty: Project, Loop, Workflow.
 Działa nawet bez zainstalowanych narzędzi — gracefully degrades.
 

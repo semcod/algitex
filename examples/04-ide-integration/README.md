@@ -1,5 +1,9 @@
 # Example 04: IDE Integration
 
+```bash
+cd examples/04-ide-integration
+```
+
 Konfiguracja popularnych IDE/agentów do pracy z algitex + proxym.
 Generuje fragmenty konfiguracji dla:
 

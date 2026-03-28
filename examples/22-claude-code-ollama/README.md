@@ -1,5 +1,9 @@
 # Example 22: Claude Code + Ollama - Local AI Assistant
 
+```bash
+cd examples/22-claude-code-ollama
+```
+
 Użycie **Claude Code** z **lokalnym Ollama** - refactoring kodu bez API keys.
 
 ## Wymagania

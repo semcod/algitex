@@ -1,5 +1,9 @@
 # Example 24: Ollama Batch Processing - Parallel Code Analysis
 
+```bash
+cd examples/24-ollama-batch
+```
+
 Przetwarzanie wsadowe wielu plików przez **Ollama** z **równoległością**.
 
 ## Problem

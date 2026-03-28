@@ -1,5 +1,9 @@
 # Example 03: Composable Pipeline
 
+```bash
+cd examples/03-pipeline
+```
+
 Łączenie kroków fluentnie: analyze → tickets → execute → validate → sync.
 Każdy krok jest opcjonalny — pomijaj to, czego nie potrzebujesz.
 

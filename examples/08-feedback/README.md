@@ -1,5 +1,9 @@
 # Feedback Examples
 
+```bash
+cd examples/08-feedback
+```
+
 This example demonstrates how to use the feedback module for intelligent retry and escalation in algitex pipelines.
 
 ## Features Demonstrated

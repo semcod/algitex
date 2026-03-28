@@ -1,5 +1,9 @@
 # Workspace Examples
 
+```bash
+cd examples/09-workspace
+```
+
 This example demonstrates how to use the workspace module to orchestrate multiple repositories as a single ecosystem.
 
 ## Features Demonstrated

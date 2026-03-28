@@ -1,5 +1,9 @@
 # Example 18: Ollama Local
 
+```bash
+cd examples/18-ollama-local
+```
+
 Lokalne modele LLM przez Ollama - 100% offline, zero kosztów API.
 
 ## Wymagania

@@ -1,5 +1,9 @@
 # Context Examples
 
+```bash
+cd examples/07-context
+```
+
 This example demonstrates how to use the context module to build rich prompts for LLM coding tasks.
 
 ## Features Demonstrated

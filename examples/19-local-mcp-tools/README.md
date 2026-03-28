@@ -1,5 +1,9 @@
 # Example 19: Local MCP Tools
 
+```bash
+cd examples/19-local-mcp-tools
+```
+
 Self-hosted MCP tools działające lokalnie przez Docker.
 
 ## Wymagania

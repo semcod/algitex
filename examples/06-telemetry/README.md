@@ -1,5 +1,9 @@
 # Telemetry Examples
 
+```bash
+cd examples/06-telemetry
+```
+
 This example demonstrates how to use the telemetry module to track costs and performance in algitex pipelines.
 
 ## Features Demonstrated

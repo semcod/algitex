@@ -1,5 +1,9 @@
 # Example 11: Aider MCP - Code Refactoring
 
+```bash
+cd examples/11-aider-mcp
+```
+
 Demonstruje użycie aider-mcp przez algitex Docker tool orchestration do refaktoryzacji kodu.
 
 ## Możliwości

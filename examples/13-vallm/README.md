@@ -1,5 +1,9 @@
 # Example 13: Vallm - Code Validation
 
+```bash
+cd examples/13-vallm
+```
+
 Demonstruje użycie vallm przez algitex Docker tool orchestration do walidacji kodu.
 
 ## Możliwości

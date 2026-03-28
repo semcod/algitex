@@ -1,5 +1,9 @@
 # Example 26: LiteLLM Proxy + Ollama - Native Algitex Integration
 
+```bash
+cd examples/26-litellm-proxy-ollama
+```
+
 **Własne proxy liteLLM** wbudowane w algitex - lepsze niż aider do pracy z Ollama.
 
 ## Dlaczego nie aider?

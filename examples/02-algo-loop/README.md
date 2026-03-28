@@ -1,5 +1,9 @@
 # Example 02: Progressive Algorithmization Loop
 
+```bash
+cd examples/02-algo-loop
+```
+
 Demonstruje 5-etapową podróż od "LLM obsługuje wszystko" do "większość ruchu działa deterministycznie".
 
 Ten przykład symuluje zbieranie trace'ów i ekstrakcję wzorców bez potrzeby posiadania live proxym.

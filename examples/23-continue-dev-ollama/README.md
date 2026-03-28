@@ -1,5 +1,9 @@
 # Example 23: Continue.dev + Ollama - VS Code Extension
 
+```bash
+cd examples/23-continue-dev-ollama
+```
+
 Konfiguracja **Continue.dev** (VS Code extension) do pracy z **lokalnym Ollama**.
 
 ## Co to jest Continue.dev?

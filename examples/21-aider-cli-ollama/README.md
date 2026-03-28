@@ -1,15 +1,19 @@
 # Example 21: Aider CLI + Ollama - Local Code Refactoring
 
+```bash
+cd examples/21-aider-cli-ollama
+```
+
 Kompletny workflow refaktoryzacji kodu używający **aider CLI** z **lokalnym Ollama** (bez API keys).
 
-Czyta zadania z `TODO.md` (stworzone przez `prefact -a`) i naprawia kod automatycznie.
+Czyta zadania z `TODO.md` (stworzone przez `algitex analyze`) i naprawia kod automatycznie.
 
 ## Workflow
 
 ```
-prefact -a                    # Analiza kodu + tworzenie TODO.md
-python auto_fix.py            # Naprawa wszystkich zadań przez aider + ollama
-python auto_fix.py -l 5       # Naprawa pierwszych 5 zadań
+algitex analyze               # Analiza kodu + tworzenie TODO.md
+python main.py                # Sprawdź status i wygeneruj TODO
+algitex todo fix              # Naprawa wszystkich zadań
 ```
 
 ## Wymagania
@@ -17,7 +21,7 @@ python auto_fix.py -l 5       # Naprawa pierwszych 5 zadań
 - **Ollama** zainstalowany i uruchomiony: `ollama serve`
 - **Model** `qwen2.5-coder:7b` pobrany: `ollama pull qwen2.5-coder:7b`
 - **aider**: `pip install aider-chat`
-- **prefact**: `pip install prefact`
+- **algitex**: `pip install -e ../../`
 - **git** (wymagane przez aider): `sudo apt-get install git` lub `brew install git`
 
 ## Instalacja
@@ -31,25 +35,24 @@ make setup    # Sprawdź zależności
 ### Krok 1: Analiza kodu i stworzenie TODO.md
 
 ```bash
-prefact -a
+algitex analyze
+# lub
+python -c "from algitex import Project; p = Project('.'); p.generate_todo()"
 ```
 
 To stworzy `TODO.md` z listą problemów (unused imports, complex functions, etc.).
 
-### Krok 2: Auto-fix przez aider + ollama
+### Krok 2: Auto-fix przez algitex
 
 ```bash
 # Napraw wszystko
-python auto_fix.py
+algitex todo fix
 
 # Napraw tylko pierwsze 5 zadań
-python auto_fix.py --limit 5
+algitex todo fix --limit 5
 
-# Dry-run (pokaż co by zrobił, bez zmian)
-python auto_fix.py --dry-run
-
-# Użyj innego modelu
-python auto_fix.py --model ollama/codellama:7b
+# Użyj Python API
+python -c "from algitex import Project; p = Project('.'); p.fix_issues()"
 ```
 
 ### Ręczne użycie aider z ollama
@@ -63,16 +66,10 @@ aider --model ollama/qwen2.5-coder:7b \
 
 ## Co się dzieje pod spodem
 
-1. `auto_fix.py` czyta `TODO.md` z sekcji "Current Issues"
-2. Dla każdego zadania wywołuje:
-   ```bash
-   aider --model ollama/qwen2.5-coder:7b \
-         --no-git --yes \
-         --message "Fix: {description}" \
-         {file_path}
-   ```
-3. Aider komunikuje się z lokalnym Ollama (port 11434)
-4. Kod jest modyfikowany bezpośrednio w plikach
+1. `main.py` używa `algitex.Project` do sprawdzenia usług
+2. `p.generate_todo()` tworzy `TODO.md` z wyników analizy
+3. `p.fix_issues()` lub `algitex todo fix` naprawiają automatycznie
+4. Algitex wybiera najlepszy backend (Ollama, Aider, lub LiteLLM)
 
 ## Przykładowe błędy w `buggy_code.py`
 
@@ -93,10 +90,10 @@ aider --model ollama/qwen2.5-coder:7b \
 
 | Komenda | Opis |
 |---------|------|
-| `make run` | Pełny demo workflow |
+| `make run` | Sprawdź status usług |
 | `make setup` | Sprawdź zależności |
-| `make todo` | Uruchom `prefact -a` |
-| `make fix` | Uruchom `auto_fix.py` |
+| `make todo` | Wygeneruj TODO.md |
+| `make fix` | Napraw przez algitex |
 | `make clean` | Wyczyść zmiany |
 
 ## Troubleshooting
@@ -111,10 +108,10 @@ aider --model ollama/qwen2.5-coder:7b \
 **Rozwiązanie**: `ollama pull qwen2.5-coder:7b`
 
 **Problem**: Timeout przy naprawie
-**Rozwiązanie**: Użyj mniejszego modelu (3B zamiast 7B) lub zwiększ timeout w `auto_fix.py`
+**Rozwiązanie**: Użyj mniejszego modelu (3B zamiast 7B) lub zmniejsz limit w `p.fix_issues(limit=3)`
 
 **Problem**: Aider wyświetla warningi "Unknown context window size and token costs"
-**Rozwiązanie**: To normalne - aider nie zna domyślnie modeli Ollama, ale działa z nimi poprawnie. Warningi są teraz filtrowane w `auto_fix.py`.
+**Rozwiązanie**: To normalne - aider nie zna domyślnie modeli Ollama, ale działa z nimi poprawnie.
 
 **Problem**: `Did you mean one of these?` lub `Missing environment variables`
 **Rozwiązanie**: Te warningi są normalne przy użyciu Ollama. Aider działa poprawnie mimo nich.

@@ -1,5 +1,9 @@
 # Example 12: Filesystem MCP - File Operations
 
+```bash
+cd examples/12-filesystem-mcp
+```
+
 Demonstruje użycie filesystem-mcp przez algitex Docker tool orchestration do operacji na plikach.
 
 ## Możliwości

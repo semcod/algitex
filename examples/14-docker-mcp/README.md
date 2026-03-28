@@ -1,5 +1,9 @@
 # Example 14: Docker MCP - Container Management
 
+```bash
+cd examples/14-docker-mcp
+```
+
 Demonstruje użycie docker-mcp przez algitex Docker tool orchestration do zarządzania kontenerami.
 
 ## Możliwości

@@ -1,5 +1,9 @@
 # Example 05: Cost Tracking & Budget
 
+```bash
+cd examples/05-cost-tracking
+```
+
 Pokazuje jak algitex śledzi koszty LLM per-ticket
 i jak algo loop redukuje wydatki w czasie.
 

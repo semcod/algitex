@@ -1,5 +1,9 @@
 # Example 20: Self-Hosted Pipeline - Full Local Setup
 
+```bash
+cd examples/20-self-hosted-pipeline
+```
+
 Kompletny pipeline CI/CD działający w 100% lokalnie bez zewnętrznych API keys.
 
 ## Wymagania

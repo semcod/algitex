@@ -1,5 +1,9 @@
 # Example 15: GitHub MCP - Repository Management
 
+```bash
+cd examples/15-github-mcp
+```
+
 Demonstruje użycie github-mcp przez algitex Docker tool orchestration do operacji na repozytoriach GitHub.
 
 ## Możliwości

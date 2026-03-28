@@ -1,5 +1,9 @@
 # Example 16: Comprehensive Test Workflow
 
+```bash
+cd examples/16-test-workflow
+```
+
 Pełny pipeline testowy demonstrujący moc algitex Docker tool orchestration - łączy analizę, refaktoryzację, testy i deployment.
 
 ## Scenariusz: Automated Code Quality Improvement Pipeline

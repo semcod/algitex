@@ -1,5 +1,9 @@
 # Example 17: Docker Workflow
 
+```bash
+cd examples/17-docker-workflow
+```
+
 Workflow refaktoryzacji używający algitex Docker tool orchestration do pełnego cyklu refactoringu.
 
 ## Kroki workflow

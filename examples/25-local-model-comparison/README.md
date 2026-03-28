@@ -1,5 +1,9 @@
 # Example 25: Local Model Comparison
 
+```bash
+cd examples/25-local-model-comparison
+```
+
 Porównanie różnych modeli **Ollama** na tym samym zadaniu.
 
 ## Problem

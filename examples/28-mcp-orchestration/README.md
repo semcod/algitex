@@ -1,5 +1,9 @@
 # Example 28: MCP Service Orchestration
 
+```bash
+cd examples/28-mcp-orchestration
+```
+
 This example demonstrates how to use algitex's MCP (Model Context Protocol) service orchestration capabilities to manage multiple MCP services.
 
 ## Overview

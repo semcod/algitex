@@ -1,5 +1,9 @@
 # CI/CD Examples
 
+```bash
+cd examples/10-cicd
+```
+
 This example demonstrates how to use the cicd module to generate automated quality gates for algitex projects.
 
 ## Features Demonstrated
