@@ -22,6 +22,48 @@ from typing import List, Dict, Any
 TODO_FILE = "TODO.md"
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "ollama/qwen2.5-coder:7b")
 
+
+def ensure_git_repo():
+    """Ensure we're in a git repo (aider requires it even with --no-git)."""
+    if not os.path.exists(".git"):
+        print("📁 Initializing git repository (required by aider)...")
+        try:
+            subprocess.run(["git", "init"], capture_output=True, check=True)
+            subprocess.run(["git", "config", "user.email", "auto@fix.local"], capture_output=True, check=True)
+            subprocess.run(["git", "config", "user.name", "Auto Fix"], capture_output=True, check=True)
+            print("✅ Git repository initialized")
+        except FileNotFoundError:
+            print("❌ Git not found. Please install git:")
+            print("   Ubuntu/Debian: sudo apt-get install git")
+            print("   Mac: brew install git")
+            return False
+        except Exception as e:
+            print(f"⚠️  Could not initialize git: {e}")
+            return False
+    return True
+
+
+def mark_issue_done(issue: Dict[str, Any]) -> bool:
+    """Mark an issue as done in TODO.md by changing - [ ] to - [x]."""
+    try:
+        with open(TODO_FILE, 'r') as f:
+            content = f.read()
+        
+        # Find the line to update
+        search_line = f"- [ ] {issue['full']}"
+        replace_line = f"- [x] {issue['full']}"
+        
+        if search_line in content:
+            content = content.replace(search_line, replace_line, 1)
+            with open(TODO_FILE, 'w') as f:
+                f.write(content)
+            return True
+        return False
+    except Exception as e:
+        print(f"   ⚠️  Could not update TODO.md: {e}")
+        return False
+
+
 def parse_todo_issues(limit: int = None) -> List[Dict[str, Any]]:
     """Parse TODO.md and extract issues from Current Issues section."""
     issues = []
@@ -95,7 +137,9 @@ Make minimal changes to fix only this specific issue. Keep the code style consis
     cmd = [
         "aider",
         "--model", OLLAMA_MODEL,
+        "--openai-api-key", "dummy",  # Required even for Ollama
         "--no-git",
+        "--no-commit",  # Don't commit changes
         "--yes",
         "--no-check-version",  # Skip version check
         "--message", prompt,
@@ -187,6 +231,10 @@ def main():
         print("   Run: prefact -a")
         return 1
     
+    # Ensure git repo exists (aider requires it)
+    if not ensure_git_repo():
+        return 1
+    
     # Check if ollama is running
     try:
         import requests
@@ -215,6 +263,10 @@ def main():
         
         if fix_with_aider(issue, dry_run=args.dry_run):
             fixed += 1
+            # Mark as done in TODO.md
+            if not args.dry_run:
+                if mark_issue_done(issue):
+                    print(f"   ✅ Marked as done in TODO.md")
         else:
             failed += 1
     

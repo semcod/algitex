@@ -229,6 +229,11 @@ python batch_analyze.py --dir ./src
 # Local Model Comparison — benchmark Ollama models
 cd examples/25-local-model-comparison
 make benchmark
+
+# LiteLLM Proxy + Ollama — native algitex integration (better than aider)
+cd examples/26-litellm-proxy-ollama
+make setup && make proxy  # Terminal 1
+make fix                  # Terminal 2
 ```
 
 Each example has:
@@ -257,6 +262,7 @@ Each example has:
 - [23-continue-dev-ollama/README.md](examples/23-continue-dev-ollama/README.md) — Continue.dev VS Code extension + Ollama
 - [24-ollama-batch/README.md](examples/24-ollama-batch/README.md) — Parallel batch processing with Ollama
 - [25-local-model-comparison/README.md](examples/25-local-model-comparison/README.md) — Benchmark Ollama models
+- [26-litellm-proxy-ollama/README.md](examples/26-litellm-proxy-ollama/README.md) — LiteLLM Proxy + Ollama (native algitex)
 - `run.sh` — executable script
 - `Makefile` — `make run`, `make setup`, `make clean`
 - `.env.example` — configuration template (where applicable)
@@ -356,7 +362,13 @@ Licensed under Apache-2.0.
 
 Licensed under Apache-2.0.
 
+
+Licensed under Apache-2.0.
+
 ## Author
+
+Tom Sapletta
+
 
 Tom Sapletta
 

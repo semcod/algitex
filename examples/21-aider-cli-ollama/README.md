@@ -18,6 +18,7 @@ python auto_fix.py -l 5       # Naprawa pierwszych 5 zadań
 - **Model** `qwen2.5-coder:7b` pobrany: `ollama pull qwen2.5-coder:7b`
 - **aider**: `pip install aider-chat`
 - **prefact**: `pip install prefact`
+- **git** (wymagane przez aider): `sudo apt-get install git` lub `brew install git`
 
 ## Instalacja
 

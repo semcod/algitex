@@ -213,6 +213,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.15] - 2026-03-28
+
+### Docs
+- Update .aider.chat.history.md
+- Update examples/21-aider-cli-ollama/README.md
+- Update examples/26-litellm-proxy-ollama/README.md
+
+### Other
+- Update examples/21-aider-cli-ollama/auto_fix.py
+- Update examples/21-aider-cli-ollama/main.py
+- Update examples/26-litellm-proxy-ollama/Makefile
+- Update examples/26-litellm-proxy-ollama/auto_fix.py
+- Update examples/26-litellm-proxy-ollama/buggy_code.py
+- Update examples/26-litellm-proxy-ollama/litellm_config.yaml
+- Update examples/26-litellm-proxy-ollama/main.py
+- Update examples/26-litellm-proxy-ollama/run.sh
+
 ## [0.1.14] - 2026-03-28
 
 ### Docs

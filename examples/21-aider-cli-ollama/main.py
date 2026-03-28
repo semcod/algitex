@@ -3,6 +3,7 @@
 
 import os
 import sys
+from typing import Any
 
 
 def check_prerequisites() -> int:
@@ -91,7 +92,7 @@ def check_prerequisites() -> int:
     return 0
 
 
-def main():
+def main() -> Any:
     return check_prerequisites()
 
 
