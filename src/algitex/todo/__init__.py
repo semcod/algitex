@@ -35,6 +35,22 @@ from algitex.todo.fixer import (
     mark_tasks_completed,
     parallel_fix_and_update,
 )
+from algitex.todo.tiering import (
+    ALGO_CATEGORIES,
+    BIG_CATEGORIES,
+    MICRO_CATEGORIES,
+    KNOWN_MAGIC_CONSTANTS,
+    TaskTriage,
+    TierSummary,
+    classify_message,
+    classify_task,
+    filter_tasks,
+    load_todo_tasks,
+    partition_tasks,
+    summarise_tasks,
+    summarize_tasks,
+)
+from algitex.todo.micro import FunctionExtractor, FunctionSnippet, MicroFixResult, MicroFixer
 from algitex.todo.benchmark import (
     benchmark_fix,
     benchmark_sequential,
@@ -55,6 +71,23 @@ __all__ = [
     "FIXERS",
     "mark_tasks_completed",
     "parallel_fix_and_update",
+    "ALGO_CATEGORIES",
+    "MICRO_CATEGORIES",
+    "BIG_CATEGORIES",
+    "KNOWN_MAGIC_CONSTANTS",
+    "TaskTriage",
+    "TierSummary",
+    "classify_message",
+    "classify_task",
+    "filter_tasks",
+    "load_todo_tasks",
+    "partition_tasks",
+    "summarise_tasks",
+    "summarize_tasks",
+    "FunctionExtractor",
+    "FunctionSnippet",
+    "MicroFixResult",
+    "MicroFixer",
     "benchmark_fix",
     "benchmark_sequential",
     "benchmark_parallel",
@@ -70,7 +103,9 @@ def fix_todos(
     todo_path: str = "TODO.md",
     workers: int = 8,
     dry_run: bool = True,
-    category: str | None = None
+    category: str | None = None,
+    categories: set[str] | None = None,
+    tasks: list[TodoTask] | None = None,
 ) -> dict[str, int]:
     """Convenience wrapper for parallel_fix.
 
@@ -79,8 +114,17 @@ def fix_todos(
         workers: Number of parallel workers
         dry_run: If True, only preview changes
         category: Filter to specific category
+        categories: Optional set of categories to include
+        tasks: Optional pre-parsed task list to use
 
     Returns:
         Dict with fixed, skipped, errors counts
     """
-    return parallel_fix(todo_path, workers=workers, dry_run=dry_run, category_filter=category)
+    return parallel_fix(
+        todo_path,
+        workers=workers,
+        dry_run=dry_run,
+        category_filter=category,
+        categories=categories,
+        tasks=tasks,
+    )

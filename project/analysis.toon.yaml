@@ -1,11 +1,22 @@
-# code2llm | 71f 14672L | python:70,shell:1 | 2026-03-28
-# CC̄=3.3 | critical:0/834 | dups:0 | cycles:0
+# code2llm | 214f 46402L | python:213,shell:1 | 2026-03-28
+# CC̄=3.4 | critical:6/2568 | dups:183 | cycles:0
 
-HEALTH[0]: ok
+HEALTH[8]:
+  🔴 DUP   183 classes duplicated
+  🔴 GOD   src/algitex/todo/micro.py = 560L, 5 classes, 17m, max CC=19
+  🟡 CC    todo_verify_prefact CC=29 (limit:15)
+  🟡 CC    todo_verify_prefact CC=29 (limit:15)
+  🟡 CC    fix_file CC=30 (limit:15)
+  🟡 CC    fix_tasks CC=19 (limit:15)
+  🟡 CC    classify_message CC=50 (limit:15)
+  🟡 CC    to_markdown CC=22 (limit:15)
 
-REFACTOR[0]: none needed
+REFACTOR[3]:
+  1. rm duplicates  (-183 dup classes)
+  2. split src/algitex/todo/micro.py  (god module)
+  3. split 6 high-CC methods  (CC>15)
 
-PIPELINES[659]:
+PIPELINES[2045]:
   [1] Src [run_rest_server]: run_rest_server → create_rest_api → aider_ai_code
       PURITY: 100% pure
   [2] Src [__init__]: __init__
@@ -18,78 +29,223 @@ PIPELINES[659]:
       PURITY: 100% pure
 
 LAYERS:
-  src/                            CC̄=3.3    ←in:0  →out:0
-  │ hybrid                     467L  4C   10m  CC=8      ←0
-  │ benchmark                  464L  4C   19m  CC=14     ←0
-  │ mcp                        448L  2C   18m  CC=11     ←0
-  │ __init__                   439L  1C   22m  CC=6      ←0
-  │ ide                        430L  6C   22m  CC=8      ←0
-  │ batch                      421L  4C   20m  CC=7      ←0
-  │ __init__                   419L  3C   18m  CC=10     ←0
-  │ batch_backend              419L  2C   11m  CC=11     ←0
-  │ services                   413L  3C   20m  CC=9      ←0
-  │ fixer                      409L  2C   14m  CC=8      ←5
-  │ cicd                       403L  1C   11m  CC=5      ←1
-  │ ollama                     400L  4C   16m  CC=10     ←0
-  │ config                     388L  1C   16m  CC=7      ←0
-  │ __init__                   367L  5C   12m  CC=9      ←0
-  │ todo_runner                363L  2C   12m  CC=13     ←0
-  │ workspace                  344L  2C   20m  CC=5      ←1
-  │ todo                       327L  0C    8m  CC=14     ←0
-  │ __init__                   320L  3C   19m  CC=4      ←0
-  │ __init__                   306L  1C   14m  CC=12     ←0
-  │ docker                     298L  3C   20m  CC=8      ←0
-  │ docker_transport           294L  1C   17m  CC=8      ←1
-  │ audit                      286L  3C   13m  CC=10     ←0
-  │ todo_local                 283L  2C   11m  CC=11     ←0
-  │ executor                   260L  1C   11m  CC=6      ←0
-  │ feedback                   252L  4C   12m  CC=8      ←0
-  │ tickets                    247L  2C   11m  CC=5      ←9
-  │ benchmark                  244L  1C    6m  CC=6      ←2
-  │ todo_executor              240L  2C   12m  CC=13     ←0
-  │ todo_parser                207L  2C    8m  CC=7      ←0
-  │ context                    207L  3C   14m  CC=7      ←0
-  │ todo_actions               200L  0C    7m  CC=13     ←1
-  │ verifier                   195L  3C    8m  CC=12     ←1
-  │ fallback_backend           191L  2C    7m  CC=10     ←0
+  src/                            CC̄=3.6    ←in:0  →out:0  ×DUP
+  │ !! batch_backend              699L  2C   16m  CC=11     ←0  ×DUP
+  │ !! fixer                      690L  2C   23m  CC=30     ←1
+  │ !! micro                      560L  5C   17m  CC=19     ←0
+  │ !! todo                       479L  0C    9m  CC=29     ←0
+  │ hybrid                     478L  4C   10m  CC=11     ←0  ×DUP
+  │ benchmark                  464L  4C   19m  CC=14     ←0  ×DUP
+  │ mcp                        448L  2C   18m  CC=11     ←0  ×DUP
+  │ __init__                   440L  1C   22m  CC=6      ←0  ×DUP
+  │ ide                        430L  6C   22m  CC=8      ←0  ×DUP
+  │ batch                      421L  4C   20m  CC=7      ←0  ×DUP
+  │ __init__                   419L  3C   18m  CC=10     ←0  ×DUP
+  │ services                   413L  3C   20m  CC=9      ←0  ×DUP
+  │ cicd                       403L  1C   11m  CC=5      ←0  ×DUP
+  │ ollama                     400L  4C   16m  CC=10     ←0  ×DUP
+  │ config                     388L  1C   16m  CC=7      ←0  ×DUP
+  │ __init__                   367L  5C   12m  CC=9      ←0  ×DUP
+  │ todo_runner                363L  2C   12m  CC=13     ←0  ×DUP
+  │ workspace                  344L  2C   20m  CC=5      ←0  ×DUP
+  │ __init__                   320L  3C   19m  CC=4      ←0  ×DUP
+  │ __init__                   306L  1C   14m  CC=12     ←0  ×DUP
+  │ docker                     298L  3C   20m  CC=8      ←0  ×DUP
+  │ docker_transport           294L  1C   17m  CC=8      ←0  ×DUP
+  │ audit                      286L  3C   13m  CC=10     ←0  ×DUP
+  │ todo_local                 283L  2C   11m  CC=11     ←0  ×DUP
+  │ !! tiering                    279L  2C   11m  CC=50     ←2
+  │ executor                   260L  1C   11m  CC=6      ←0  ×DUP
+  │ feedback                   252L  4C   12m  CC=8      ←0  ×DUP
+  │ tickets                    247L  2C   11m  CC=5      ←0  ×DUP
+  │ benchmark                  244L  1C    6m  CC=6      ←0  ×DUP
+  │ todo_executor              240L  2C   12m  CC=13     ←0  ×DUP
+  │ !! batch_logger               213L  3C   13m  CC=22     ←0
+  │ todo_parser                207L  2C    8m  CC=7      ←0  ×DUP
+  │ context                    207L  3C   14m  CC=7      ←0  ×DUP
+  │ todo_actions               200L  0C    7m  CC=13     ←0
+  │ verifier                   195L  3C    8m  CC=12     ←0  ×DUP
+  │ fallback_backend           191L  2C    7m  CC=10     ←0  ×DUP
   │ core                       188L  0C   11m  CC=5      ←0
-  │ analysis                   183L  3C    8m  CC=7      ←0
-  │ config                     170L  4C    7m  CC=10     ←9
-  │ aider_backend              164L  1C   11m  CC=3      ←0
-  │ proxy_backend              161L  1C   12m  CC=3      ←0
-  │ logging                    157L  1C   11m  CC=3      ←2
-  │ extractor                  156L  1C    7m  CC=12     ←0
-  │ telemetry                  152L  2C    9m  CC=4      ←0
+  │ analysis                   183L  3C    8m  CC=7      ←0  ×DUP
+  │ config                     170L  4C    7m  CC=10     ←0
+  │ aider_backend              164L  1C   11m  CC=3      ←0  ×DUP
+  │ proxy_backend              161L  1C   12m  CC=3      ←0  ×DUP
+  │ logging                    157L  1C   11m  CC=3      ←0  ×DUP
+  │ extractor                  156L  1C    7m  CC=12     ←0  ×DUP
+  │ telemetry                  152L  2C    9m  CC=4      ←0  ×DUP
   │ parallel                   149L  0C    6m  CC=11     ←0
-  │ proxy                      145L  2C    9m  CC=9      ←0
-  │ ollama_backend             126L  1C    7m  CC=6      ←0
-  │ partitioner                118L  1C    7m  CC=10     ←0
+  │ proxy                      145L  2C    9m  CC=9      ←0  ×DUP
+  │ __init__                   127L  0C    1m  CC=1      ←0
+  │ ollama_backend             126L  1C    7m  CC=6      ←0  ×DUP
+  │ partitioner                118L  1C    7m  CC=10     ←0  ×DUP
   │ __init__                   117L  0C    0m  CC=0.0    ←0
-  │ __init__                   115L  1C    4m  CC=4      ←3
+  │ __init__                   115L  1C    4m  CC=4      ←0
   │ docker                      96L  0C    5m  CC=3      ←0
-  │ __init__                    86L  0C    1m  CC=1      ←2
   │ algo                        63L  0C    4m  CC=3      ←0
-  │ batch                       60L  1C    3m  CC=8      ←0
-  │ benchmark                   58L  1C    4m  CC=2      ←0
+  │ batch                       60L  1C    3m  CC=8      ←0  ×DUP
+  │ benchmark                   58L  1C    4m  CC=2      ←0  ×DUP
   │ models                      57L  4C    1m  CC=1      ←0
-  │ autofix                     52L  1C    5m  CC=8      ←1
-  │ base                        52L  3C    2m  CC=1      ←0
-  │ ide                         47L  1C    6m  CC=1      ←1
+  │ base                        54L  3C    2m  CC=1      ←0
+  │ autofix                     52L  1C    5m  CC=8      ←0  ×DUP
+  │ ide                         47L  1C    6m  CC=1      ←0  ×DUP
   │ ticket                      46L  0C    3m  CC=4      ←0
-  │ mcp                         46L  1C    8m  CC=2      ←1
+  │ mcp                         46L  1C    8m  CC=2      ←0  ×DUP
+  │ ollama                      44L  1C    5m  CC=3      ←0  ×DUP
   │ workflow                    39L  0C    2m  CC=3      ←0
-  │ ollama                      39L  1C    5m  CC=2      ←0
   │ __init__                    38L  0C    0m  CC=0.0    ←0
-  │ config                      36L  1C    5m  CC=2      ←1
+  │ config                      36L  1C    5m  CC=2      ←0  ×DUP
   │ __init__                    36L  0C    0m  CC=0.0    ←0
-  │ services                    28L  1C    4m  CC=2      ←1
+  │ services                    28L  1C    4m  CC=2      ←0  ×DUP
   │ pipeline                     5L  0C    0m  CC=0.0    ←0
   │ loop                         4L  0C    0m  CC=0.0    ←0
   │ workflow                     2L  0C    0m  CC=0.0    ←0
   │
-  docker/                         CC̄=3.1    ←in:0  →out:0
+  .algitex/                       CC̄=3.4    ←in:55  →out:0  ×DUP
+  │ !! batch_backend              667L  2C   16m  CC=11     ←0  ×DUP
+  │ !! batch_backend              631L  2C   15m  CC=11     ←0  ×DUP
+  │ !! todo                       476L  0C    9m  CC=29     ←1
+  │ hybrid                     467L  4C   10m  CC=8      ←0  ×DUP
+  │ hybrid                     467L  4C   10m  CC=8      ←0  ×DUP
+  │ benchmark                  464L  4C   19m  CC=14     ←0  ×DUP
+  │ benchmark                  464L  4C   19m  CC=14     ←0  ×DUP
+  │ mcp                        448L  2C   18m  CC=11     ←0  ×DUP
+  │ mcp                        448L  2C   18m  CC=11     ←0  ×DUP
+  │ __init__                   439L  1C   22m  CC=6      ←0  ×DUP
+  │ __init__                   439L  1C   22m  CC=6      ←0  ×DUP
+  │ ide                        430L  6C   22m  CC=8      ←0  ×DUP
+  │ ide                        430L  6C   22m  CC=8      ←0  ×DUP
+  │ batch                      421L  4C   20m  CC=7      ←0  ×DUP
+  │ batch                      421L  4C   20m  CC=7      ←0  ×DUP
+  │ __init__                   419L  3C   18m  CC=10     ←0  ×DUP
+  │ __init__                   419L  3C   18m  CC=10     ←0  ×DUP
+  │ services                   413L  3C   20m  CC=9      ←0  ×DUP
+  │ services                   413L  3C   20m  CC=9      ←0  ×DUP
+  │ fixer                      409L  2C   14m  CC=8      ←18
+  │ fixer                      409L  2C   14m  CC=8      ←0
+  │ cicd                       403L  1C   11m  CC=5      ←3  ×DUP
+  │ cicd                       403L  1C   11m  CC=5      ←0  ×DUP
+  │ ollama                     400L  4C   16m  CC=10     ←0  ×DUP
+  │ ollama                     400L  4C   16m  CC=10     ←0  ×DUP
+  │ config                     388L  1C   16m  CC=7      ←0  ×DUP
+  │ config                     388L  1C   16m  CC=7      ←0  ×DUP
+  │ __init__                   367L  5C   12m  CC=9      ←0  ×DUP
+  │ __init__                   367L  5C   12m  CC=9      ←0  ×DUP
+  │ todo_runner                363L  2C   12m  CC=13     ←0  ×DUP
+  │ todo_runner                363L  2C   12m  CC=13     ←0  ×DUP
+  │ workspace                  344L  2C   20m  CC=5      ←4  ×DUP
+  │ workspace                  344L  2C   20m  CC=5      ←0  ×DUP
+  │ todo                       327L  0C    8m  CC=14     ←0
+  │ __init__                   320L  3C   19m  CC=4      ←0  ×DUP
+  │ __init__                   320L  3C   19m  CC=4      ←0  ×DUP
+  │ __init__                   306L  1C   14m  CC=12     ←0  ×DUP
+  │ __init__                   306L  1C   14m  CC=12     ←0  ×DUP
+  │ docker                     298L  3C   20m  CC=8      ←0  ×DUP
+  │ docker                     298L  3C   20m  CC=8      ←0  ×DUP
+  │ docker_transport           294L  1C   17m  CC=8      ←3  ×DUP
+  │ docker_transport           294L  1C   17m  CC=8      ←0  ×DUP
+  │ audit                      286L  3C   13m  CC=10     ←0  ×DUP
+  │ audit                      286L  3C   13m  CC=10     ←0  ×DUP
+  │ todo_local                 283L  2C   11m  CC=11     ←0  ×DUP
+  │ todo_local                 283L  2C   11m  CC=11     ←0  ×DUP
+  │ planfile_mcp_server        276L  0C   10m  CC=7      ←1
   │ planfile_mcp_server        276L  0C   10m  CC=7      ←0
-  │ vallm_server               274L  1C    9m  CC=9      ←0
+  │ vallm_server               274L  1C    9m  CC=9      ←0  ×DUP
+  │ vallm_server               274L  1C    9m  CC=9      ←0  ×DUP
+  │ executor                   260L  1C   11m  CC=6      ←0  ×DUP
+  │ executor                   260L  1C   11m  CC=6      ←0  ×DUP
+  │ feedback                   252L  4C   12m  CC=8      ←0  ×DUP
+  │ feedback                   252L  4C   12m  CC=8      ←0  ×DUP
+  │ tickets                    247L  2C   11m  CC=5      ←31  ×DUP
+  │ tickets                    247L  2C   11m  CC=5      ←0  ×DUP
+  │ benchmark                  244L  1C    6m  CC=6      ←7  ×DUP
+  │ benchmark                  244L  1C    6m  CC=6      ←0  ×DUP
+  │ todo_executor              240L  2C   12m  CC=13     ←0  ×DUP
+  │ todo_executor              240L  2C   12m  CC=13     ←0  ×DUP
+  │ todo_parser                207L  2C    8m  CC=7      ←0  ×DUP
+  │ context                    207L  3C   14m  CC=7      ←0  ×DUP
+  │ todo_parser                207L  2C    8m  CC=7      ←0  ×DUP
+  │ context                    207L  3C   14m  CC=7      ←0  ×DUP
+  │ todo_actions               200L  0C    7m  CC=13     ←4
+  │ todo_actions               200L  0C    7m  CC=13     ←0
+  │ verifier                   195L  3C    8m  CC=12     ←3  ×DUP
+  │ verifier                   195L  3C    8m  CC=12     ←0  ×DUP
+  │ fallback_backend           191L  2C    7m  CC=10     ←0  ×DUP
+  │ fallback_backend           191L  2C    7m  CC=10     ←0  ×DUP
+  │ core                       188L  0C   11m  CC=5      ←1
+  │ core                       188L  0C   11m  CC=5      ←0
+  │ analysis                   183L  3C    8m  CC=7      ←2  ×DUP
+  │ analysis                   183L  3C    8m  CC=7      ←0  ×DUP
+  │ config                     170L  4C    7m  CC=10     ←29
+  │ config                     170L  4C    7m  CC=10     ←1
+  │ aider_backend              164L  1C   11m  CC=3      ←0  ×DUP
+  │ aider_backend              164L  1C   11m  CC=3      ←0  ×DUP
+  │ proxy_backend              161L  1C   12m  CC=3      ←0  ×DUP
+  │ proxy_backend              161L  1C   12m  CC=3      ←0  ×DUP
+  │ logging                    157L  1C   11m  CC=3      ←7  ×DUP
+  │ logging                    157L  1C   11m  CC=3      ←0  ×DUP
+  │ aider_mcp_server           156L  0C    5m  CC=2      ←1
+  │ extractor                  156L  1C    7m  CC=12     ←0  ×DUP
+  │ aider_mcp_server           156L  0C    5m  CC=2      ←0
+  │ extractor                  156L  1C    7m  CC=12     ←0  ×DUP
+  │ telemetry                  152L  2C    9m  CC=4      ←0  ×DUP
+  │ telemetry                  152L  2C    9m  CC=4      ←0  ×DUP
+  │ parallel                   149L  0C    6m  CC=11     ←1
+  │ parallel                   149L  0C    6m  CC=11     ←0
+  │ proxy                      145L  2C    9m  CC=9      ←0  ×DUP
+  │ proxy                      145L  2C    9m  CC=9      ←0  ×DUP
+  │ ollama_backend             126L  1C    7m  CC=6      ←0  ×DUP
+  │ ollama_backend             126L  1C    7m  CC=6      ←0  ×DUP
+  │ partitioner                118L  1C    7m  CC=10     ←0  ×DUP
+  │ partitioner                118L  1C    7m  CC=10     ←0  ×DUP
+  │ __init__                   117L  0C    0m  CC=0.0    ←0
+  │ __init__                   117L  0C    0m  CC=0.0    ←0
+  │ __init__                   115L  1C    4m  CC=4      ←10
+  │ __init__                   115L  1C    4m  CC=4      ←0
+  │ docker                      96L  0C    5m  CC=3      ←0
+  │ docker                      96L  0C    5m  CC=3      ←0
+  │ __init__                    86L  0C    1m  CC=1      ←6
+  │ __init__                    86L  0C    1m  CC=1      ←0
+  │ algo                        63L  0C    4m  CC=3      ←0
+  │ algo                        63L  0C    4m  CC=3      ←0
+  │ batch                       60L  1C    3m  CC=8      ←0  ×DUP
+  │ batch                       60L  1C    3m  CC=8      ←0  ×DUP
+  │ benchmark                   58L  1C    4m  CC=2      ←0  ×DUP
+  │ benchmark                   58L  1C    4m  CC=2      ←0  ×DUP
+  │ models                      57L  4C    1m  CC=1      ←0
+  │ models                      57L  4C    1m  CC=1      ←0
+  │ autofix                     52L  1C    5m  CC=8      ←3  ×DUP
+  │ base                        52L  3C    2m  CC=1      ←0
+  │ autofix                     52L  1C    5m  CC=8      ←0  ×DUP
+  │ base                        52L  3C    2m  CC=1      ←0
+  │ ide                         47L  1C    6m  CC=1      ←3  ×DUP
+  │ ide                         47L  1C    6m  CC=1      ←0  ×DUP
+  │ ticket                      46L  0C    3m  CC=4      ←0
+  │ mcp                         46L  1C    8m  CC=2      ←3  ×DUP
+  │ ticket                      46L  0C    3m  CC=4      ←0
+  │ mcp                         46L  1C    8m  CC=2      ←0  ×DUP
+  │ workflow                    39L  0C    2m  CC=3      ←0
+  │ ollama                      39L  1C    5m  CC=2      ←1  ×DUP
+  │ workflow                    39L  0C    2m  CC=3      ←0
+  │ ollama                      39L  1C    5m  CC=2      ←0  ×DUP
+  │ __init__                    38L  0C    0m  CC=0.0    ←0
+  │ __init__                    38L  0C    0m  CC=0.0    ←0
+  │ config                      36L  1C    5m  CC=2      ←3  ×DUP
+  │ config                      36L  1C    5m  CC=2      ←0  ×DUP
+  │ __init__                    36L  0C    0m  CC=0.0    ←0
+  │ __init__                    36L  0C    0m  CC=0.0    ←0
+  │ services                    28L  1C    4m  CC=2      ←3  ×DUP
+  │ services                    28L  1C    4m  CC=2      ←0  ×DUP
+  │ pipeline                     5L  0C    0m  CC=0.0    ←0
+  │ pipeline                     5L  0C    0m  CC=0.0    ←0
+  │ loop                         4L  0C    0m  CC=0.0    ←0
+  │ loop                         4L  0C    0m  CC=0.0    ←0
+  │ workflow                     2L  0C    0m  CC=0.0    ←0
+  │ workflow                     2L  0C    0m  CC=0.0    ←0
+  │
+  docker/                         CC̄=3.1    ←in:0  →out:0  ×DUP
+  │ planfile_mcp_server        276L  0C   10m  CC=7      ←0
+  │ vallm_server               274L  1C    9m  CC=9      ←0  ×DUP
   │ aider_mcp_server           156L  0C    5m  CC=2      ←0
   │
   ./                              CC̄=0.0    ←in:0  →out:0
@@ -97,10 +253,13 @@ LAYERS:
   │
 
 COUPLING:
-                       docker.planfile-mcp          src.algitex
-  docker.planfile-mcp                   ──                    3
-          src.algitex                   ←3                   ──
+                                  .algitex          src.algitex  docker.planfile-mcp
+             .algitex                   ──                  ←52                   ←3  hub
+          src.algitex                   52                   ──                       !! fan-out
+  docker.planfile-mcp                    3                                        ──
   CYCLES: none
+  HUB: .algitex/ (fan-in=55)
+  SMELL: src.algitex/ fan-out=52 → split needed
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon

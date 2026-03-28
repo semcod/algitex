@@ -177,7 +177,13 @@ class HybridAutofix:
 
         return result
 
-    def fix_complex(self, todo_path: str | Path) -> dict:
+    def fix_complex(
+        self,
+        todo_path: str | Path,
+        include_categories: set[str] | None = None,
+        exclude_categories: set[str] | None = None,
+        tasks: list[TodoTask] | None = None,
+    ) -> dict:
         """Phase 2: Rate-limited parallel LLM fixes.
 
         Uses ThreadPoolExecutor with rate limiting for LLM calls.
@@ -190,10 +196,16 @@ class HybridAutofix:
         start = time.perf_counter()
 
         # Parse and categorize tasks
-        all_tasks = parse_todo(todo_path)
+        all_tasks = tasks if tasks is not None else parse_todo(todo_path)
 
         # Filter to LLM-handled categories (not in FIXERS)
         llm_tasks = [t for t in all_tasks if t.category not in FIXERS]
+
+        if include_categories is not None:
+            llm_tasks = [t for t in llm_tasks if t.category in include_categories]
+
+        if exclude_categories is not None:
+            llm_tasks = [t for t in llm_tasks if t.category not in exclude_categories]
 
         if not llm_tasks:
             print("   ℹ️  No complex tasks requiring LLM")

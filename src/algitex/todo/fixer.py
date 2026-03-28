@@ -13,6 +13,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Callable
 
+from algitex.todo.tiering import KNOWN_MAGIC_CONSTANTS, classify_message
+
 
 @dataclass
 class TodoTask:
@@ -70,22 +72,178 @@ def parse_todo(todo_path: str | Path) -> list[TodoTask]:
 
 def _categorize(message: str) -> str:
     """Categorize a task message."""
-    if "Unused import" in message or "Unused " in message:
-        return "unused_import"
-    if "f-string" in message:
-        return "fstring"
-    if "Magic number" in message:
-        return "magic"
-    if "missing return type" in message:
-        return "return_type"
-    if "LLM-style docstring" in message:
-        return "docstring"
-    if "module execution block" in message:
-        return "exec_block"
-    return "other"
+    return classify_message(message).category
 
 
 # ─── Fixers per category ─────────────────────────────────
+
+
+def _simple_fstring_rewrite(line: str) -> str:
+    """Rewrite one simple string concatenation into an f-string."""
+    pattern = re.compile(
+        r'(?P<quote>["\'])'
+        r'(?P<prefix>[^"\']*)'
+        r'(?P=quote)\s*\+\s*'
+        r'(?P<expr>[A-Za-z_][A-Za-z0-9_\.]*)\s*\+\s*'
+        r'(?P<suffix>["\'])(?P<tail>[^"\']*)\4'
+    )
+
+    def _replace(match: re.Match[str]) -> str:
+        prefix = match.group("prefix")
+        expr = match.group("expr")
+        tail = match.group("tail")
+        return f'f"{prefix}{{{expr}}}{tail}"'
+
+    return pattern.sub(_replace, line, count=1)
+
+
+def _find_import_insert_point(lines: list[str]) -> int:
+    """Find the insert point just after the last import statement."""
+    last_import = 0
+    for i, line in enumerate(lines):
+        stripped = line.strip()
+        if stripped.startswith(("import ", "from ")):
+            last_import = i + 1
+    return last_import
+
+
+def _extract_magic_number(task: TodoTask) -> int | None:
+    """Extract the numeric literal for a magic-number task."""
+    match = re.search(r"\b(\d+)\b", task.message)
+    if match:
+        try:
+            return int(match.group(1))
+        except ValueError:
+            return None
+
+    line_index = task.line - 1
+    try:
+        line = Path(task.file).read_text().splitlines()[line_index]
+    except Exception:
+        return None
+
+    match = re.search(r"\b(\d+)\b", line)
+    if match:
+        try:
+            return int(match.group(1))
+        except ValueError:
+            return None
+    return None
+
+
+def _apply_magic_number_fixes(path: Path, tasks: list[TodoTask]) -> tuple[int, int]:
+    """Apply known magic-number replacements in one pass."""
+    if not tasks:
+        return 0, 0
+
+    lines = path.read_text().splitlines()
+    replacements: list[tuple[int, int, str]] = []
+    constants_needed: dict[str, int] = {}
+    fixed = 0
+    skipped = 0
+
+    for task in sorted(tasks, key=lambda t: t.line, reverse=True):
+        number = _extract_magic_number(task)
+        if number is None or number not in KNOWN_MAGIC_CONSTANTS:
+            skipped += 1
+            continue
+
+        const_name = KNOWN_MAGIC_CONSTANTS[number]
+        constants_needed[const_name] = number
+
+        if task.line - 1 >= len(lines):
+            skipped += 1
+            continue
+
+        line = lines[task.line - 1]
+        new_line = re.sub(
+            rf'(?<!["\'])\b{number}\b(?!["\'])',
+            const_name,
+            line,
+            count=1,
+        )
+        if new_line == line:
+            skipped += 1
+            continue
+
+        lines[task.line - 1] = new_line
+        fixed += 1
+
+    if fixed == 0:
+        return 0, skipped
+
+    existing_constants = set()
+    for line in lines:
+        match = re.match(r"^([A-Z][A-Z0-9_]+)\s*=\s*\d+\s*$", line.strip())
+        if match:
+            existing_constants.add(match.group(1))
+
+    missing_constants = {
+        name: value
+        for name, value in constants_needed.items()
+        if name not in existing_constants
+    }
+
+    if missing_constants:
+        insert_at = _find_import_insert_point(lines)
+        const_block = ["", "# Constants"]
+        const_block.extend(f"{name} = {value}" for name, value in missing_constants.items())
+        const_block.append("")
+        lines[insert_at:insert_at] = const_block
+
+    path.write_text("\n".join(lines) + "\n")
+    return fixed, skipped
+
+
+def _apply_fstring_fix(path: Path) -> bool:
+    """Convert simple string concatenations to f-strings."""
+    try:
+        import shutil
+        import subprocess
+
+        if shutil.which("flynt"):
+            result = subprocess.run(
+                ["flynt", str(path), "--transform-concats", "--quiet"],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            if result.returncode == 0:
+                return True
+    except Exception:
+        pass
+
+    lines = path.read_text().splitlines()
+    changed = False
+    for index, line in enumerate(lines):
+        new_line = _simple_fstring_rewrite(line)
+        if new_line != line:
+            lines[index] = new_line
+            changed = True
+
+    if changed:
+        path.write_text("\n".join(lines) + "\n")
+    return changed
+
+
+def _apply_module_block_fix(path: Path) -> bool:
+    """Add a module execution block if one is missing."""
+    text = path.read_text()
+    if "if __name__ == '__main__':" in text or 'if __name__ == "__main__":' in text:
+        return False
+
+    stripped = text.rstrip()
+    if not stripped:
+        return False
+
+    if stripped.endswith("main()"):
+        stripped += "\n"
+    else:
+        stripped += "\n\n"
+
+    stripped += "if __name__ == '__main__':\n    main()\n"
+    path.write_text(stripped)
+    return True
 
 def fix_unused_import(path: Path, task: TodoTask) -> bool:
     """Remove unused import line."""
@@ -127,17 +285,37 @@ def fix_unused_import(path: Path, task: TodoTask) -> bool:
 
 def fix_fstring(path: Path, task: TodoTask) -> bool:
     """Convert string concatenation to f-string (simple cases only)."""
-    # Too complex for regex — delegate to flynt
-    return False
+    return _apply_fstring_fix(path)
+
+
+def fix_magic_number(path: Path, task: TodoTask) -> bool:
+    """Replace a known magic number with a named constant."""
+    fixed, _ = _apply_magic_number_fixes(path, [task])
+    return fixed > 0
+
+
+def fix_module_block(path: Path, task: TodoTask) -> bool:
+    """Add a standard `if __name__ == '__main__'` guard."""
+    return _apply_module_block_fix(path)
 
 
 def fix_return_type(path: Path, task: TodoTask) -> bool:
     """Add return type annotation based on suggestion."""
-    match = re.search(r"suggested: (-> \w+)", task.message)
-    if not match:
-        return False
+    suggested = None
+    match = re.search(r"suggested:\s*(->\s*\w+)", task.message)
+    if match:
+        suggested = match.group(1)
+    else:
+        explicit = re.search(r"(->\s*[A-Za-z_][A-Za-z0-9_\[\], ]*)", task.message)
+        if explicit:
+            suggested = explicit.group(1).strip()
 
-    suggested = match.group(1)
+    if not suggested:
+        if any(key in task.message.lower() for key in ("return type", "missing return", "-> none", "-> bool", "-> str", "-> int")):
+            suggested = "-> None"
+        else:
+            return False
+
     lines = path.read_text().splitlines()
     if task.line - 1 >= len(lines):
         return False
@@ -158,6 +336,9 @@ FIXERS: dict[str, Callable[[Path, TodoTask], bool]] = {
     "unused_import": fix_unused_import,
     "return_type": fix_return_type,
     "fstring": fix_fstring,
+    "magic": fix_magic_number,
+    "exec_block": fix_module_block,
+    "module_block": fix_module_block,
 }
 
 
@@ -177,6 +358,15 @@ def _compute_category_stats(tasks: list[TodoTask]) -> dict[str, int]:
     return cats
 
 
+def _compute_tier_stats(tasks: list[TodoTask]) -> dict[str, int]:
+    """Compute tier statistics for tasks."""
+    tiers: dict[str, int] = {"algorithm": 0, "micro": 0, "big": 0}
+    for task in tasks:
+        tier = classify_message(task.message).tier
+        tiers[tier] = tiers.get(tier, 0) + 1
+    return tiers
+
+
 def _print_pre_execution_summary(
     tasks: list[TodoTask],
     by_file: dict[str, list[TodoTask]],
@@ -185,11 +375,23 @@ def _print_pre_execution_summary(
 ) -> None:
     """Print pre-execution summary with category stats."""
     cats = _compute_category_stats(tasks)
+    tiers = _compute_tier_stats(tasks)
 
     print("Categories:")
     for cat, count in sorted(cats.items(), key=lambda x: -x[1]):
         fixable = "✓ auto" if cat in FIXERS else "○ manual"
         print(f"  {count:>4} {cat:<20} {fixable}")
+
+    print("\nTiers:")
+    for tier, count in sorted(tiers.items(), key=lambda x: (-x[1], x[0])):
+        if count == 0:
+            continue
+        label = {
+            "algorithm": "Algorithm",
+            "micro": "Small LLM",
+            "big": "Big LLM",
+        }.get(tier, tier.title())
+        print(f"  {count:>4} {label:<20}")
 
     auto_fixable = sum(1 for t in tasks if t.category in FIXERS)
     if tasks:
@@ -275,7 +477,25 @@ def fix_file(file_path: str, tasks: list[TodoTask], dry_run: bool = True) -> Fix
     # Sort tasks by line number DESCENDING — fix bottom-up to preserve line numbers
     sorted_tasks = sorted(tasks, key=lambda t: t.line, reverse=True)
 
+    line_tasks: list[TodoTask] = []
+    magic_tasks: list[TodoTask] = []
+    fstring_tasks: list[TodoTask] = []
+    exec_tasks: list[TodoTask] = []
+    other_tasks: list[TodoTask] = []
+
     for task in sorted_tasks:
+        if task.category in {"unused_import", "return_type"}:
+            line_tasks.append(task)
+        elif task.category in {"magic"}:
+            magic_tasks.append(task)
+        elif task.category in {"fstring"}:
+            fstring_tasks.append(task)
+        elif task.category in {"exec_block", "module_block"}:
+            exec_tasks.append(task)
+        else:
+            other_tasks.append(task)
+
+    for task in line_tasks:
         fixer = FIXERS.get(task.category)
         if not fixer:
             result.skipped += 1
@@ -295,6 +515,59 @@ def fix_file(file_path: str, tasks: list[TodoTask], dry_run: bool = True) -> Fix
             result.errors.append(f"L{task.line}: {e}")
             result.skipped += 1
 
+    if other_tasks:
+        for task in other_tasks:
+            result.skipped += 1
+
+    if magic_tasks:
+        if dry_run:
+            for task in magic_tasks:
+                number = _extract_magic_number(task)
+                status = "fixed" if number in KNOWN_MAGIC_CONSTANTS else "skipped"
+                print(f"  [DRY] {task.file}:{task.line} — magic: {task.message[:60]} ({status})")
+                if status == "fixed":
+                    result.fixed += 1
+                else:
+                    result.skipped += 1
+        else:
+            try:
+                fixed, skipped = _apply_magic_number_fixes(path, magic_tasks)
+                result.fixed += fixed
+                result.skipped += skipped
+            except Exception as e:
+                result.errors.append(f"magic: {e}")
+                result.skipped += len(magic_tasks)
+
+    if fstring_tasks:
+        if dry_run:
+            for task in fstring_tasks:
+                print(f"  [DRY] {task.file}:{task.line} — fstring: {task.message[:60]}")
+            result.fixed += len(fstring_tasks)
+        else:
+            try:
+                if _apply_fstring_fix(path):
+                    result.fixed += len(fstring_tasks)
+                else:
+                    result.skipped += len(fstring_tasks)
+            except Exception as e:
+                result.errors.append(f"fstring: {e}")
+                result.skipped += len(fstring_tasks)
+
+    if exec_tasks:
+        if dry_run:
+            for task in exec_tasks:
+                print(f"  [DRY] {task.file}:{task.line} — exec_block: {task.message[:60]}")
+            result.fixed += len(exec_tasks)
+        else:
+            try:
+                if _apply_module_block_fix(path):
+                    result.fixed += len(exec_tasks)
+                else:
+                    result.skipped += len(exec_tasks)
+            except Exception as e:
+                result.errors.append(f"exec_block: {e}")
+                result.skipped += len(exec_tasks)
+
     return result
 
 
@@ -302,7 +575,9 @@ def parallel_fix(
     todo_path: str | Path,
     workers: int = 8,
     dry_run: bool = True,
-    category_filter: str | None = None
+    category_filter: str | None = None,
+    categories: set[str] | None = None,
+    tasks: list[TodoTask] | None = None,
 ) -> dict[str, int]:
     """Fix all TODO tasks in parallel, one worker per file.
 
@@ -311,17 +586,26 @@ def parallel_fix(
         workers: Number of parallel workers
         dry_run: If True, only show what would be fixed
         category_filter: If set, only fix this category
+        categories: Optional set of categories to include
+        tasks: Optional pre-parsed task list to use instead of reading TODO.md
 
     Returns:
         Dict with counts: fixed, skipped, errors
     """
-    tasks = parse_todo(todo_path)
-    print(f"Parsed {len(tasks)} tasks (excluding worktree duplicates)\n")
+    if tasks is None:
+        tasks = parse_todo(todo_path)
+        print(f"Parsed {len(tasks)} tasks (excluding worktree duplicates)\n")
+    else:
+        print(f"Using {len(tasks)} preselected tasks\n")
 
     # Filter by category if requested
     if category_filter:
         tasks = [t for t in tasks if t.category == category_filter]
         print(f"Filtered to {len(tasks)} tasks of category '{category_filter}'\n")
+
+    if categories:
+        tasks = [t for t in tasks if t.category in categories]
+        print(f"Filtered to {len(tasks)} tasks in categories: {', '.join(sorted(categories))}\n")
 
     # Group by file
     by_file = _group_tasks_by_file(tasks)
@@ -383,7 +667,9 @@ def parallel_fix_and_update(
     todo_path: str | Path,
     workers: int = 8,
     dry_run: bool = True,
-    category_filter: str | None = None
+    category_filter: str | None = None,
+    categories: set[str] | None = None,
+    tasks: list[TodoTask] | None = None,
 ) -> dict[str, int]:
     """Fix tasks and update TODO.md to mark completed tasks.
     
@@ -391,7 +677,14 @@ def parallel_fix_and_update(
     to mark successfully fixed tasks as completed.
     """
     # First, run the fix
-    result = parallel_fix(todo_path, workers, dry_run, category_filter)
+    result = parallel_fix(
+        todo_path,
+        workers,
+        dry_run,
+        category_filter=category_filter,
+        categories=categories,
+        tasks=tasks,
+    )
     
     # If not dry run and we fixed something, mark tasks as completed
     if not dry_run and result["fixed"] > 0:
@@ -399,6 +692,8 @@ def parallel_fix_and_update(
         tasks = parse_todo(todo_path)
         if category_filter:
             tasks = [t for t in tasks if t.category == category_filter]
+        if categories:
+            tasks = [t for t in tasks if t.category in categories]
         
         # Filter to only FIXERS categories (mechanical fixes)
         fixable_tasks = [t for t in tasks if t.category in FIXERS]

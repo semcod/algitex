@@ -23,6 +23,7 @@ from typing import Optional
 from algitex.tools.autofix.base import FixResult, Task
 from algitex.todo.fixer import mark_tasks_completed
 from algitex.tools.ollama import OllamaService, OllamaClient
+from algitex.tools.autofix.batch_logger import BatchLogger
 
 
 @dataclass
@@ -52,12 +53,15 @@ class BatchFixBackend:
         base_url: str = "http://localhost:11434",
         model: Optional[str] = None,
         dry_run: bool = True,
-        timeout: float = DEFAULT_TIMEOUT
+        timeout: float = DEFAULT_TIMEOUT,
+        enable_logging: bool = True
     ):
         self.base_url = base_url
         self.model = model
         self.dry_run = dry_run
         self.timeout = timeout
+        self.enable_logging = enable_logging
+        self._logger = None
         
         if not dry_run:
             client = OllamaClient(host=base_url, timeout=timeout)
@@ -89,6 +93,13 @@ class BatchFixBackend:
         total_groups = len(groups)
         print(f"📦 BatchFix: {len(tasks)} zadań → {total_groups} grup")
         print(f"⚡ Równoległość: {max_parallel} grup na raz\n")
+        
+        # Inicjalizacja loggera markdown (po grupowaniu, gdy znamy total_groups)
+        if self.enable_logging:
+            self._logger = BatchLogger(backend="ollama", batch_size=self.MAX_FILES_PER_BATCH, parallel=max_parallel)
+            self._logger.set_totals(len(tasks), total_groups)
+        else:
+            self._logger = None
         
         # Weryfikacja: sprawdź które zadania są nadal aktualne
         print("🔍 Weryfikacja TODO: Sprawdzam które problemy nadal istnieją...")
@@ -135,6 +146,11 @@ class BatchFixBackend:
         # Aktualizacja TODO.md - oznacz naprawione zadania jako zrobione
         if not self.dry_run:
             self._update_todo_mark_completed(tasks, results, elapsed)
+        
+        # Zapisz log markdown
+        if hasattr(self, '_logger') and self._logger:
+            log_path = self._logger.finalize()
+            print(f"\nLog zapisany: {log_path}")
         
         return results
     
@@ -370,6 +386,11 @@ class BatchFixBackend:
             print(f"     ... i {len(group.files) - 3} więcej")
         
         if self.dry_run:
+            # Log dry run
+            if hasattr(self, '_logger') and self._logger:
+                files = [t.file_path for t in group.tasks]
+                self._logger.start_group(group_idx, total_groups, group.category, files)
+                self._logger.end_group("dry-run")
             return [
                 FixResult(
                     task_id=t.id,
@@ -406,6 +427,12 @@ class BatchFixBackend:
             elapsed = time.time() - start
             print(f"     ✓ Batch fix: {len(fixes)} plików w {elapsed:.1f}s")
             
+            # Log success
+            if hasattr(self, '_logger') and self._logger:
+                files = [t.file_path for t in group.tasks]
+                self._logger.start_group(0, 1, group.category, files)
+                self._logger.end_group("success")
+            
             return [
                 FixResult(
                     task_id=t.id,
@@ -420,6 +447,11 @@ class BatchFixBackend:
             
         except Exception as e:
             print(f"     ✗ Batch fix failed: {e}")
+            # Log failure
+            if hasattr(self, '_logger') and self._logger:
+                files = [t.file_path for t in group.tasks]
+                self._logger.start_group(0, 1, group.category, files)
+                self._logger.end_group("failed", str(e))
             return [
                 FixResult(
                     task_id=t.id,

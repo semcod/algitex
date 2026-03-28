@@ -49,8 +49,9 @@ def main() -> int:
     results = p.benchmark_models(models_to_test)
 
     # Show results
-    print(f"\nResults: {results['total']} comparisons")
-    for r in results["results"]:
+    summary = results.get("summary", {})
+    print(f"\nResults: {summary.get('total_runs', 0)} comparisons")
+    for r in results.get("results", []):
         status = "✅" if r["success"] else "❌"
         print(f"  {status} {r['model']}: {r['task_id']} ({r['time_seconds']:.1f}s)")
 

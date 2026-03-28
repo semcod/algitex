@@ -12,6 +12,50 @@ from rich.table import Table
 console = Console()
 
 
+def _render_todo_stats(file: str, tasks) -> None:
+    """Render tier and category stats for a TODO file."""
+    from algitex.todo import summarize_tasks
+
+    summary = summarize_tasks(tasks)
+
+    tier_table = Table(title=f"TODO Stats: {file}")
+    tier_table.add_column("Tier", style="bold")
+    tier_table.add_column("Count", justify="right")
+    tier_table.add_column("Share", justify="right")
+    for tier, label in (("algorithm", "Algorithm"), ("micro", "Small LLM"), ("big", "Big LLM")):
+        count = summary.tier_counts.get(tier, 0)
+        share = f"{summary.tier_percent(tier)}%"
+        tier_table.add_row(label, str(count), share)
+
+    console.print(tier_table)
+
+    category_table = Table(title="Top Categories")
+    category_table.add_column("Category", style="bold")
+    category_table.add_column("Count", justify="right")
+    for category, count in summary.top_categories(limit=12):
+        category_table.add_row(category, str(count))
+
+    console.print(category_table)
+    console.print(
+        f"\n[bold]Total:[/] {summary.total} | "
+        f"Algorithm: {summary.algorithmic} | Micro: {summary.micro} | Big: {summary.big}"
+    )
+
+
+def todo_stats(
+    file: str = typer.Argument("TODO.md", help="Path to todo file"),
+):
+    """Show tier and category stats for a TODO file."""
+    from algitex.todo import parse_todo
+
+    tasks = parse_todo(file)
+    if not tasks:
+        console.print(f"[yellow]No pending tasks found in {file}[/]")
+        return
+
+    _render_todo_stats(file, tasks)
+
+
 def todo_verify(
     file: str = typer.Argument("TODO.md", help="Path to todo file"),
 ):
@@ -249,6 +293,9 @@ def todo_batch(
     parallel: int = typer.Option(3, "--parallel", "-p", help="Parallel groups (default: 3)"),
     dry_run: bool = typer.Option(True, "--dry-run/--execute", help="Dry run or execute"),
     verbose: bool = typer.Option(False, "--verbose", "-v", help="Verbose logging"),
+    prune: bool = typer.Option(False, "--prune", help="Remove outdated tasks from TODO.md before batch"),
+    limit: int = typer.Option(0, "--limit", "-l", help="Limit number of tasks (0 = all)"),
+    no_log: bool = typer.Option(False, "--no-log", help="Disable markdown logging"),
 ):
     """BatchFix: grupowanie i optymalizacja podobnych zadań.
     
@@ -256,9 +303,11 @@ def todo_batch(
     (np. "f-string", "magic number") i wykonuje je za jednym razem.
     
     Przykłady:
-        algitex todo batch --dry-run        # Symulacja
-        algitex todo batch --execute       # Wykonaj fixy
-        algitex todo batch -b ollama -s 3  # Ollama, max 3 pliki/batch
+        algitex todo batch --dry-run              # Symulacja
+        algitex todo batch --execute             # Wykonaj fixy
+        algitex todo batch -b ollama -s 3        # Ollama, max 3 pliki/batch
+        algitex todo batch --execute --prune     # Wyczyść nieaktualne zadania
+        algitex todo batch --execute --no-log   # Wyłącz logowanie markdown
     """
     from algitex.todo import parse_todo
     from algitex.tools.autofix.batch_backend import BatchFixBackend, Task
@@ -276,8 +325,21 @@ def todo_batch(
     else:
         console.print(f"\n[bold red]⚡ EXECUTE — Fixy zostaną zastosowane[/]")
     
+    # Prune outdated tasks if requested
+    if prune:
+        console.print(f"\n[bold]🧹 Prune: Czyszczę nieaktualne zadania z {file}...[/]")
+        # Call the verify-prefact logic with prune
+        from algitex.cli.todo import todo_verify_prefact
+        todo_verify_prefact(file=str(file), prune=True)
+        console.print(f"[dim]Prune zakończony. Kontynuuję batch...[/]\n")
+    
     # Parse TODO
     todo_tasks = parse_todo(file)
+    
+    # Apply limit if specified
+    if limit > 0:
+        todo_tasks = todo_tasks[:limit]
+        console.print(f"[dim]Limit: Przetwarzam tylko pierwsze {limit} zadań[/]")
     
     # Convert to Task objects
     tasks = [
@@ -300,7 +362,8 @@ def todo_batch(
     # Initialize backend
     backend_fixer = BatchFixBackend(
         base_url="http://localhost:11434",
-        dry_run=dry_run
+        dry_run=dry_run,
+        enable_logging=not no_log
     )
     backend_fixer.MAX_FILES_PER_BATCH = batch_size
     
