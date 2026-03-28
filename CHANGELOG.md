@@ -8,6 +8,60 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.10] - 2026-03-28
 
 ### Fixed
+- Fix smart-return-type issues (ticket-eef315cb)
+- Fix magic-numbers issues (ticket-5491c7c9)
+- Fix ai-boilerplate issues (ticket-ad5d767e)
+- Fix string-concat issues (ticket-e1784c47)
+- Fix string-concat issues (ticket-7eb7c882)
+- Fix string-concat issues (ticket-dd836c37)
+- Fix smart-return-type issues (ticket-0cd95c88)
+- Fix ai-boilerplate issues (ticket-52f2a6ff)
+- Fix unused-imports issues (ticket-c8d5b6df)
+- Fix smart-return-type issues (ticket-a4f383cd)
+- Fix unused-imports issues (ticket-9c12f3f8)
+- Fix duplicate-imports issues (ticket-d5dba0cd)
+- Fix smart-return-type issues (ticket-402e55b1)
+- Fix unused-imports issues (ticket-e2a924b9)
+- Fix duplicate-imports issues (ticket-81b6d986)
+- Fix magic-numbers issues (ticket-e4b09f35)
+- Fix smart-return-type issues (ticket-0fc969d5)
+- Fix unused-imports issues (ticket-76226b75)
+- Fix duplicate-imports issues (ticket-5d746631)
+- Fix smart-return-type issues (ticket-53cd7f32)
+- Fix unused-imports issues (ticket-fae5230c)
+- Fix duplicate-imports issues (ticket-0d7c2732)
+- Fix smart-return-type issues (ticket-13901a2d)
+- Fix string-concat issues (ticket-3eaea30e)
+- Fix unused-imports issues (ticket-ac10a655)
+- Fix duplicate-imports issues (ticket-1f2bd517)
+- Fix magic-numbers issues (ticket-a51ddc66)
+- Fix smart-return-type issues (ticket-b287ebbf)
+- Fix unused-imports issues (ticket-4a1d1389)
+- Fix unused-imports issues (ticket-b715e59f)
+- Fix smart-return-type issues (ticket-906a2f79)
+- Fix unused-imports issues (ticket-3c77e301)
+- Fix unused-imports issues (ticket-8fddf687)
+- Fix duplicate-imports issues (ticket-13cc9472)
+- Fix magic-numbers issues (ticket-3e043589)
+- Fix unused-imports issues (ticket-ea5caa52)
+- Fix duplicate-imports issues (ticket-923944b9)
+- Fix unused-imports issues (ticket-e7d7bdf7)
+- Fix unused-imports issues (ticket-951a2aa9)
+- Fix smart-return-type issues (ticket-3fbf0da2)
+- Fix unused-imports issues (ticket-1aee2a16)
+- Fix unused-imports issues (ticket-c16c113b)
+- Fix smart-return-type issues (ticket-66950c46)
+- Fix unused-imports issues (ticket-9ad5d7dd)
+- Fix smart-return-type issues (ticket-363b30cc)
+- Fix string-concat issues (ticket-3126f20d)
+- Fix unused-imports issues (ticket-63d30144)
+- Fix magic-numbers issues (ticket-6837d33c)
+- Fix unused-imports issues (ticket-62e135a0)
+- Fix magic-numbers issues (ticket-bdd36919)
+
+## [0.1.10] - 2026-03-28
+
+### Fixed
 - Fix unused-imports issues (ticket-85d535bc)
 - Fix magic-numbers issues (ticket-79ce8321)
 - Fix unused-imports issues (ticket-db7b0350)
@@ -400,6 +454,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix llm-generated-code issues (ticket-06d0712f)
 
 ## [Unreleased]
+
+## [0.1.20] - 2026-03-28
+
+### Docs
+- Update CHANGELOG.md
+- Update TODO.md
+
+### Other
+- Update examples/20-self-hosted-pipeline/main.py
+- Update examples/21-aider-cli-ollama/Makefile
+- Update examples/21-aider-cli-ollama/auto_fix.py
+- Update examples/21-aider-cli-ollama/auto_fix_simplified.py
+- Update examples/21-aider-cli-ollama/generate_todo.py
+- Update examples/21-aider-cli-ollama/main.py
+- Update examples/22-claude-code-ollama/main.py
+- Update examples/24-ollama-batch/main.py
+- Update examples/25-local-model-comparison/main.py
+- Update examples/26-litellm-proxy-ollama/main.py
+- ... and 2 more files
 
 ## [0.1.19] - 2026-03-28
 

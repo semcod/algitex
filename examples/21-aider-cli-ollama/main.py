@@ -1,99 +1,49 @@
 #!/usr/bin/env python3
-"""Example 21: Aider CLI + Ollama - Local Code Refactoring"""
+"""Example 21: Aider CLI + Ollama - Simplified using algitex library."""
 
-import os
 import sys
-from typing import Any
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
+
+from algitex import Project
 
 
-def check_prerequisites() -> int:
-    """Check if all required tools are installed."""
+def main():
     print("=" * 60)
-    print("Example 21: Aider CLI + Ollama")
+    print("Example 21: Aider CLI + Ollama (Simplified)")
     print("=" * 60)
     print()
-    
-    issues = []
-    
-    # Check algitex
-    try:
-        import algitex
-        print("✅ algitex installed")
-    except ImportError:
-        print("❌ algitex not found")
-        print("   Install: pip install -e ../../")
-        issues.append("algitex")
-    
-    # Check aider
-    import subprocess
-    result = subprocess.run(["which", "aider"], capture_output=True)
-    if result.returncode == 0:
-        print("✅ aider installed")
-    else:
-        print("❌ aider not found")
-        print("   Install: pip install aider-chat")
-        issues.append("aider")
-    
-    # Check Ollama
-    try:
-        import requests
-        r = requests.get("http://localhost:11434/api/tags", timeout=2)
-        if r.status_code == 200:
-            models = [m['name'] for m in r.json().get('models', [])]
-            print(f"✅ Ollama running ({len(models)} models)")
-            
-            # Check for qwen2.5-coder:7b
-            target = "qwen2.5-coder:7b"
-            if any(target in m for m in models):
-                print(f"✅ Model {target} available")
-            else:
-                print(f"⚠️  Model {target} not found")
-                print(f"   Pull: ollama pull {target}")
-        else:
-            print("❌ Ollama not responding")
-            issues.append("ollama")
-    except Exception as e:
-        print("❌ Ollama not running")
-        print("   Start: ollama serve")
-        issues.append("ollama")
-    
-    # Check TODO.md
-    if os.path.exists("TODO.md"):
-        with open("TODO.md") as f:
-            content = f.read()
-            # Count issues
-            current_issues = content.count("- [ ]")
-            completed = content.count("- [x]")
-            print(f"✅ TODO.md found ({current_issues} open, {completed} completed)")
-    else:
-        print("⚠️  TODO.md not found")
-        print("   Create: python generate_todo.py")
-    
+
+    # Initialize project
+    p = Project(".")
+
+    # Check services
+    print("Checking services...")
+    p.print_service_status()
+
+    # Analyze and generate TODO
+    print("\nAnalyzing code and generating TODO.md...")
+    result = p.generate_todo()
+    print(f"✅ Created {result['filename']} with {result['count']} issues")
+    print(f"   Project grade: {result['grade']}")
+
+    # Show available backends
+    print("\nAvailable fix backends:")
+    backends = p.autofix.check_backends()
+    for name, available in backends.items():
+        icon = "✅" if available else "❌"
+        print(f"  {icon} {name}")
+
+    print("\nNext steps:")
+    print("  p.fix_issues()                    # Fix all issues")
+    print("  p.fix_issues(limit=3)             # Fix first 3 issues")
+    print("  p.fix_issues(backend='ollama')    # Use specific backend")
     print()
-    
-    if issues:
-        print("❌ Missing prerequisites:")
-        for issue in issues:
-            print(f"   - {issue}")
-        print()
-        print("Run: make setup")
-        return 1
-    
-    print("✅ All prerequisites satisfied!")
-    print()
-    print("Next steps:")
-    print("  1. python generate_todo.py   # Create TODO.md")
-    print("  2. python auto_fix.py        # Fix all issues")
-    print("  3. python auto_fix.py -l 3   # Fix first 3 issues")
-    print()
-    print("Or run full demo:")
-    print("  make run")
-    
+    print("Or use CLI:")
+    print("  algitex todo fix TODO.md")
+
     return 0
-
-
-def main() -> Any:
-    return check_prerequisites()
 
 
 if __name__ == "__main__":

@@ -4567,3 +4567,653 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
+  - id: ticket-eef315cb
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in examples/21-aider-cli-ollama/generate_todo.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/21-aider-cli-ollama/generate_todo.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-5491c7c9
+    name: Fix magic-numbers issues
+    description: Resolve 3 magic-numbers issues in examples/21-aider-cli-ollama/generate_todo.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/21-aider-cli-ollama/generate_todo.py
+    rule_id: magic-numbers
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-ad5d767e
+    name: Fix ai-boilerplate issues
+    description: Resolve 2 ai-boilerplate issues in examples/21-aider-cli-ollama/generate_todo.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/21-aider-cli-ollama/generate_todo.py
+    rule_id: ai-boilerplate
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-e1784c47
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in examples/22-claude-code-ollama/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/22-claude-code-ollama/main.py
+    rule_id: string-concat
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-7eb7c882
+    name: Fix string-concat issues
+    description: Resolve 2 string-concat issues in examples/24-ollama-batch/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/24-ollama-batch/main.py
+    rule_id: string-concat
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-dd836c37
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in examples/25-local-model-comparison/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/25-local-model-comparison/main.py
+    rule_id: string-concat
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-0cd95c88
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in examples/28-mcp-orchestration/mcp_orchestrator.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/28-mcp-orchestration/mcp_orchestrator.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-52f2a6ff
+    name: Fix ai-boilerplate issues
+    description: Resolve 2 ai-boilerplate issues in examples/28-mcp-orchestration/mcp_orchestrator.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/28-mcp-orchestration/mcp_orchestrator.py
+    rule_id: ai-boilerplate
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-c8d5b6df
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/algitex/cli/__init__.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/cli/__init__.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-a4f383cd
+    name: Fix smart-return-type issues
+    description: Resolve 4 smart-return-type issues in src/algitex/cli/algo.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - src/algitex/cli/algo.py
+    rule_id: smart-return-type
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-9c12f3f8
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/algitex/cli/algo.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/cli/algo.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-d5dba0cd
+    name: Fix duplicate-imports issues
+    description: Resolve 3 duplicate-imports issues in src/algitex/cli/algo.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/cli/algo.py
+    rule_id: duplicate-imports
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-402e55b1
+    name: Fix smart-return-type issues
+    description: Resolve 7 smart-return-type issues in src/algitex/cli/core.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - src/algitex/cli/core.py
+    rule_id: smart-return-type
+    count: 7
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-e2a924b9
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/algitex/cli/core.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/cli/core.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-81b6d986
+    name: Fix duplicate-imports issues
+    description: Resolve 4 duplicate-imports issues in src/algitex/cli/core.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - src/algitex/cli/core.py
+    rule_id: duplicate-imports
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-e4b09f35
+    name: Fix magic-numbers issues
+    description: Resolve 1 magic-numbers issues in src/algitex/cli/core.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/cli/core.py
+    rule_id: magic-numbers
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-0fc969d5
+    name: Fix smart-return-type issues
+    description: Resolve 3 smart-return-type issues in src/algitex/cli/ticket.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/cli/ticket.py
+    rule_id: smart-return-type
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-76226b75
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/algitex/cli/ticket.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/cli/ticket.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-5d746631
+    name: Fix duplicate-imports issues
+    description: Resolve 2 duplicate-imports issues in src/algitex/cli/ticket.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/cli/ticket.py
+    rule_id: duplicate-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-53cd7f32
+    name: Fix smart-return-type issues
+    description: Resolve 5 smart-return-type issues in src/algitex/cli/docker.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - src/algitex/cli/docker.py
+    rule_id: smart-return-type
+    count: 5
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-fae5230c
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/algitex/cli/docker.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/cli/docker.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-0d7c2732
+    name: Fix duplicate-imports issues
+    description: Resolve 8 duplicate-imports issues in src/algitex/cli/docker.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - src/algitex/cli/docker.py
+    rule_id: duplicate-imports
+    count: 8
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-13901a2d
+    name: Fix smart-return-type issues
+    description: Resolve 3 smart-return-type issues in src/algitex/cli/todo.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/cli/todo.py
+    rule_id: smart-return-type
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-3eaea30e
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in src/algitex/cli/todo.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/cli/todo.py
+    rule_id: string-concat
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-ac10a655
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/algitex/cli/todo.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/cli/todo.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-1f2bd517
+    name: Fix duplicate-imports issues
+    description: Resolve 2 duplicate-imports issues in src/algitex/cli/todo.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/cli/todo.py
+    rule_id: duplicate-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-a51ddc66
+    name: Fix magic-numbers issues
+    description: Resolve 2 magic-numbers issues in src/algitex/cli/todo.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/cli/todo.py
+    rule_id: magic-numbers
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b287ebbf
+    name: Fix smart-return-type issues
+    description: Resolve 2 smart-return-type issues in src/algitex/cli/workflow.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/cli/workflow.py
+    rule_id: smart-return-type
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-4a1d1389
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/algitex/cli/workflow.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/cli/workflow.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-b715e59f
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/algitex/project/autofix.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/project/autofix.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-906a2f79
+    name: Fix smart-return-type issues
+    description: Resolve 2 smart-return-type issues in src/algitex/project/benchmark.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/project/benchmark.py
+    rule_id: smart-return-type
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-3c77e301
+    name: Fix unused-imports issues
+    description: Resolve 6 unused-imports issues in src/algitex/project/benchmark.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - src/algitex/project/benchmark.py
+    rule_id: unused-imports
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-8fddf687
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/algitex/project/__init__.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/project/__init__.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-13cc9472
+    name: Fix duplicate-imports issues
+    description: Resolve 2 duplicate-imports issues in src/algitex/project/__init__.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/project/__init__.py
+    rule_id: duplicate-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-3e043589
+    name: Fix magic-numbers issues
+    description: Resolve 2 magic-numbers issues in src/algitex/project/__init__.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/project/__init__.py
+    rule_id: magic-numbers
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-ea5caa52
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/algitex/project/batch.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/project/batch.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-923944b9
+    name: Fix duplicate-imports issues
+    description: Resolve 1 duplicate-imports issues in src/algitex/project/batch.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/project/batch.py
+    rule_id: duplicate-imports
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-e7d7bdf7
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/algitex/project/config.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/project/config.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-951a2aa9
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/algitex/project/ide.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/project/ide.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-3fbf0da2
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in src/algitex/project/services.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/project/services.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-1aee2a16
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/algitex/project/services.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/project/services.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-c16c113b
+    name: Fix unused-imports issues
+    description: Resolve 10 unused-imports issues in src/algitex/project/ollama.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - src/algitex/project/ollama.py
+    rule_id: unused-imports
+    count: 10
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-66950c46
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in src/algitex/project/mcp.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/project/mcp.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-9ad5d7dd
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/algitex/project/mcp.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/project/mcp.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-363b30cc
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in src/algitex/tools/autofix/__init__.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/autofix/__init__.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-3126f20d
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in src/algitex/tools/autofix/__init__.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/autofix/__init__.py
+    rule_id: string-concat
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-63d30144
+    name: Fix unused-imports issues
+    description: Resolve 6 unused-imports issues in src/algitex/tools/autofix/__init__.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - src/algitex/tools/autofix/__init__.py
+    rule_id: unused-imports
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-6837d33c
+    name: Fix magic-numbers issues
+    description: Resolve 3 magic-numbers issues in src/algitex/tools/autofix/__init__.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/autofix/__init__.py
+    rule_id: magic-numbers
+    count: 3
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-62e135a0
+    name: Fix unused-imports issues
+    description: Resolve 2 unused-imports issues in src/algitex/tools/autofix/proxy_backend.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/autofix/proxy_backend.py
+    rule_id: unused-imports
+    count: 2
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-bdd36919
+    name: Fix magic-numbers issues
+    description: Resolve 4 magic-numbers issues in src/algitex/tools/autofix/proxy_backend.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - src/algitex/tools/autofix/proxy_backend.py
+    rule_id: magic-numbers
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced

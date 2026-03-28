@@ -178,7 +178,7 @@ class ModelBenchmark:
             prompt="""Complete this Python function:
 
 def fibonacci(n):
-    \"\"\"Generate Fibonacci sequence.\"\"\"",
+    """Generate Fibonacci sequence."""',
             expected_keywords=["def", "fibonacci", "return", "sequence"]
         )
         

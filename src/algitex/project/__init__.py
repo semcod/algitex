@@ -277,6 +277,65 @@ class Project(ServiceMixin, AutoFixMixin, OllamaMixin, BatchMixin, BenchmarkMixi
     def add_ticket(self, title: str, **kwargs) -> Ticket:
         return self._tickets.add(title, **kwargs)
 
+    def generate_todo(self, filename: str = "TODO.md") -> dict:
+        """Generate TODO.md from analysis results.
+        
+        Creates a TODO.md file with code issues found during analysis.
+        Uses the last analysis report if available, otherwise runs a new analysis.
+        
+        Args:
+            filename: Name of the TODO file to create (default: TODO.md)
+            
+        Returns:
+            dict with count of issues created and the filename
+        """
+        from pathlib import Path
+        
+        # Get analysis report
+        if not self._last_report:
+            self.analyze()
+        
+        report = self._last_report
+        issues = []
+        
+        # Add issues from complexity hotspots
+        for hotspot in report.complexity_hotspots[:5]:
+            issues.append({
+                "description": f"Refactor high complexity function {hotspot['function']} (CC={hotspot['complexity']})",
+                "file": hotspot["file"],
+                "line": hotspot.get("line", 1),
+                "priority": "high" if hotspot["complexity"] > 10 else "normal"
+            })
+        
+        # Add generic code quality issues
+        generic_issues = [
+            {"description": "Add type hints to all public functions", "file": "main.py", "line": 1, "priority": "normal"},
+            {"description": "Add docstrings to all public functions", "file": "main.py", "line": 1, "priority": "normal"},
+        ]
+        
+        for issue in generic_issues:
+            if not any(i["file"] == issue["file"] and i["line"] == issue["line"] for i in issues):
+                issues.append(issue)
+        
+        # Write TODO.md
+        todo_path = self.path / filename
+        with open(todo_path, 'w') as f:
+            f.write("# TODO - Code Issues\n\n")
+            f.write(f"Generated from analysis (Grade: {report.grade})\n\n")
+            f.write("## Current Issues\n\n")
+            for i, issue in enumerate(issues, 1):
+                priority = issue.get("priority", "normal")
+                file_path = issue.get("file", "")
+                line = issue.get("line", "")
+                desc = issue["description"]
+                f.write(f"- [ ] {file_path}:{line} - {desc} [priority:{priority}]\n")
+        
+        return {
+            "filename": str(todo_path),
+            "count": len(issues),
+            "grade": report.grade
+        }
+
     # ── Private helpers ───────────────────────────────────
 
     def _build_prompt(self, ticket: Ticket) -> str:
