@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.3] - 2026-03-28
+
+### Docs
+- Update examples/01-quickstart/README.md
+- Update examples/02-algo-loop/README.md
+- Update examples/03-pipeline/README.md
+- Update examples/04-ide-integration/README.md
+- Update examples/05-cost-tracking/README.md
+
+### Other
+- Update examples/01-quickstart/main.py
+- Update examples/01-quickstart/run.sh
+- Update examples/02-algo-loop/main.py
+- Update examples/02-algo-loop/run.sh
+- Update examples/03-pipeline/main.py
+- Update examples/03-pipeline/run.sh
+- Update examples/04-ide-integration/main.py
+- Update examples/04-ide-integration/run.sh
+- Update examples/05-cost-tracking/main.py
+- Update examples/05-cost-tracking/run.sh
+
 ## [0.1.2] - 2026-03-28
 
 ### Docs
