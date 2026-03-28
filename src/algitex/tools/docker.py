@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import json
 import os
-import select
 import subprocess
 import time
 from dataclasses import dataclass, field
@@ -15,6 +14,7 @@ import httpx
 import yaml
 
 from algitex.config import Config
+from algitex.tools import docker_transport
 
 
 # ─── Models ───────────────────────────────────────────────
@@ -159,135 +159,15 @@ class DockerToolManager:
         env = {**tool.env, **overrides.get("env", {})}
 
         if tool.transport == "mcp-stdio":
-            return self._spawn_stdio(tool, env)
+            return docker_transport.spawn_stdio(tool, env, self._running, self._save_state)
         elif tool.transport == "mcp-sse":
-            return self._spawn_sse(tool, env)
+            return docker_transport.spawn_sse(tool, env, self._running, self._save_state, self._wait_healthy)
         elif tool.transport == "rest":
-            return self._spawn_rest(tool, env)
+            return docker_transport.spawn_rest(tool, env, self._running, self._save_state)
         elif tool.transport == "cli":
-            return self._spawn_cli(tool, env)
+            return docker_transport.spawn_cli(tool, env, self._running, self._save_state)
         else:
             raise ValueError(f"Unknown transport: {tool.transport}")
-
-    def _spawn_stdio(self, tool: DockerTool, env: dict) -> RunningTool:
-        """docker run -i → persistent subprocess with stdin/stdout MCP."""
-        cmd = ["docker", "run", "-i"]
-        if tool.auto_remove:
-            cmd.append("--rm")
-        for k, v in env.items():
-            cmd.extend(["-e", f"{k}={v}"])
-        for vol in tool.volumes:
-            cmd.extend(["-v", vol])
-        
-        # Special handling for filesystem-mcp which needs directory argument
-        if tool.name == "filesystem-mcp":
-            # Extract the workspace directory from volumes
-            workspace_dir = "/workspace"
-            for vol in tool.volumes:
-                if ":/workspace" in vol:
-                    workspace_dir = "/workspace"
-                    break
-            cmd.extend([tool.image, workspace_dir])
-        else:
-            cmd.append(tool.image)
-
-        proc = subprocess.Popen(
-            cmd,
-            stdin=subprocess.PIPE,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-        )
-        
-        # Give the server a moment to start up
-        time.sleep(1.0)
-        
-        # Check if process crashed immediately
-        if proc.poll() is not None:
-            stderr_output = proc.stderr.read() if proc.stderr else ""
-            stdout_output = proc.stdout.read() if proc.stdout else ""
-            raise RuntimeError(
-                f"MCP container '{tool.name}' exited immediately with code {proc.poll()}. "
-                f"Image: {tool.image}. "
-                f"Stderr: {stderr_output[:1000]}. "
-                f"Stdout: {stdout_output[:500]}"
-            )
-        
-        rt = RunningTool(
-            tool=tool,
-            container_id=f"stdio-{tool.name}-{proc.pid}",
-            process=proc,
-            pid=proc.pid,
-        )
-        self._running[tool.name] = rt
-        self._save_state()
-        return rt
-
-    def _spawn_sse(self, tool: DockerTool, env: dict) -> RunningTool:
-        """docker run -d -p PORT → SSE/HTTP MCP endpoint."""
-        port = tool.port or 8080
-        cmd = ["docker", "run", "-d", "-p", f"{port}:{port}"]
-        for k, v in env.items():
-            cmd.extend(["-e", f"{k}={v}"])
-        for vol in tool.volumes:
-            cmd.extend(["-v", vol])
-        cmd.append(tool.image)
-
-        result = subprocess.run(cmd, capture_output=True, text=True, check=True)
-        container_id = result.stdout.strip()[:12]
-
-        rt = RunningTool(
-            tool=tool,
-            container_id=container_id,
-            endpoint=f"http://localhost:{port}/mcp",
-        )
-        self._running[tool.name] = rt
-        self._save_state()
-
-        # Wait for health
-        if tool.health_check:
-            self._wait_healthy(tool.health_check)
-
-        return rt
-
-    def _spawn_rest(self, tool: DockerTool, env: dict) -> RunningTool:
-        """docker run -d -p PORT → REST/OpenAI-compatible endpoint."""
-        port = tool.port or 4000
-        cmd = ["docker", "run", "-d", "-p", f"{port}:{port}"]
-        for k, v in env.items():
-            cmd.extend(["-e", f"{k}={v}"])
-        for vol in tool.volumes:
-            cmd.extend(["-v", vol])
-        cmd.append(tool.image)
-
-        result = subprocess.run(cmd, capture_output=True, text=True, check=True)
-        container_id = result.stdout.strip()[:12]
-
-        rt = RunningTool(
-            tool=tool,
-            container_id=container_id,
-            endpoint=f"http://localhost:{port}",
-        )
-        self._running[tool.name] = rt
-        self._save_state()
-        return rt
-
-    def _spawn_cli(self, tool: DockerTool, env: dict) -> RunningTool:
-        """CLI tool — run on demand via docker exec, no persistent container."""
-        cmd = ["docker", "run", "-d"]
-        for k, v in env.items():
-            cmd.extend(["-e", f"{k}={v}"])
-        for vol in tool.volumes:
-            cmd.extend(["-v", vol])
-        cmd.extend([tool.image, "sleep", "infinity"])
-
-        result = subprocess.run(cmd, capture_output=True, text=True, check=True)
-        container_id = result.stdout.strip()[:12]
-
-        rt = RunningTool(tool=tool, container_id=container_id)
-        self._running[tool.name] = rt
-        self._save_state()
-        return rt
 
     def _wait_healthy(self, check: str, timeout: int = 30):
         """Poll health endpoint until ready."""
@@ -318,114 +198,15 @@ class DockerToolManager:
             rt = self.spawn(tool_name)
 
         if rt.tool.transport == "mcp-stdio":
-            return self._call_stdio(rt, mcp_tool, arguments)
+            return docker_transport.call_stdio(rt, mcp_tool, arguments, self._get_http_client)
         elif rt.tool.transport == "mcp-sse":
-            return self._call_sse(rt, mcp_tool, arguments)
+            return docker_transport.call_sse(rt, mcp_tool, arguments, self._get_http_client)
         elif rt.tool.transport == "rest":
-            return self._call_rest(rt, mcp_tool, arguments)
+            return docker_transport.call_rest(rt, mcp_tool, arguments, self._get_http_client)
         elif rt.tool.transport == "cli":
-            return self._call_cli(rt, mcp_tool, arguments)
+            return docker_transport.call_cli(rt, mcp_tool, arguments, self._get_http_client)
         else:
             raise ValueError(f"Cannot call tool on transport: {rt.tool.transport}")
-
-    def _call_stdio(self, rt: RunningTool, tool: str, args: dict) -> dict:
-        """Send JSON-RPC over stdin, read from stdout with timeout."""
-        if not rt.process or not rt.process.stdin:
-            raise RuntimeError("stdio process not available")
-
-        request = {
-            "jsonrpc": "2.0",
-            "id": 1,
-            "method": "tools/call",
-            "params": {"name": tool, "arguments": args},
-        }
-        
-        # Send JSON-RPC with Content-Length header (MCP protocol)
-        content = json.dumps(request)
-        message = f"Content-Length: {len(content)}\r\n\r\n{content}"
-        
-        # Send the message
-        try:
-            rt.process.stdin.write(message)
-            rt.process.stdin.flush()
-        except BrokenPipeError:
-            return {"error": "MCP server process crashed or closed connection"}
-        
-        # Read response with timeout using select
-        import select
-        try:
-            timeout = 30
-            start_time = time.time()
-            response_lines = []
-            
-            while time.time() - start_time < timeout:
-                # Use select to check if stdout has data with timeout
-                ready, _, _ = select.select([rt.process.stdout], [], [], 1.0)
-                if not ready:
-                    # Check if process died
-                    if rt.process.poll() is not None:
-                        return {"error": f"MCP server exited with code {rt.process.poll()}"}
-                    continue
-                
-                line = rt.process.stdout.readline()
-                if not line:
-                    if rt.process.poll() is not None:
-                        return {"error": f"MCP server exited with code {rt.process.poll()}"}
-                    break
-                
-                response_lines.append(line)
-                
-                # Parse Content-Length header
-                if line.startswith("Content-Length:"):
-                    content_length = int(line.split(":")[1].strip())
-                    # Read empty line
-                    rt.process.stdout.readline()
-                    # Read the JSON response
-                    response_data = rt.process.stdout.read(content_length)
-                    return json.loads(response_data)
-            
-            # Timeout reached
-            return {"error": f"MCP server timeout after {timeout}s"}
-            
-        except json.JSONDecodeError as e:
-            return {"error": "Invalid JSON response", "raw": ''.join(response_lines)}
-        except Exception as e:
-            return {"error": f"Communication error: {str(e)}"}
-
-    def _call_sse(self, rt: RunningTool, tool: str, args: dict) -> dict:
-        """POST to SSE/HTTP MCP endpoint."""
-        client = self._get_http_client()
-        response = client.post(
-            rt.endpoint,
-            json={
-                "jsonrpc": "2.0",
-                "id": 1,
-                "method": "tools/call",
-                "params": {"name": tool, "arguments": args},
-            },
-        )
-        response.raise_for_status()
-        return response.json()
-
-    def _call_rest(self, rt: RunningTool, tool: str, args: dict) -> dict:
-        """Call REST endpoint using action name as path."""
-        client = self._get_http_client()
-        # Use the action name as the endpoint path
-        endpoint = f"{rt.endpoint}/{tool}"
-        # Use GET for endpoints without arguments, POST otherwise
-        if args:
-            response = client.post(endpoint, json=args)
-        else:
-            response = client.get(endpoint)
-        response.raise_for_status()
-        return response.json()
-
-    def _call_cli(self, rt: RunningTool, cmd: str, args: dict) -> dict:
-        """docker exec on persistent container."""
-        # For CLI tools, cmd is the actual command to run
-        full_cmd = ["docker", "exec", rt.container_id] + cmd.split()
-        result = subprocess.run(full_cmd, capture_output=True, text=True)
-        return {"stdout": result.stdout, "stderr": result.stderr, "rc": result.returncode}
 
     # ─── Teardown ─────────────────────────────────────────
 
@@ -502,3 +283,7 @@ class DockerToolManager:
             data = json.loads(response)
             return [t["name"] for t in data.get("result", {}).get("tools", [])]
         return self._tools[tool_name].capabilities
+
+
+# Backward compatibility exports
+__all__ = ["DockerTool", "RunningTool", "DockerToolManager"]

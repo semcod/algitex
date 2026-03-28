@@ -5217,3 +5217,81 @@ sprints:
     model_hints:
       planning: balanced
       implementation: balanced
+  - id: ticket-c01fdadf
+    name: Fix smart-return-type issues
+    description: Resolve 1 smart-return-type issues in examples/21-aider-cli-ollama/main.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - examples/21-aider-cli-ollama/main.py
+    rule_id: smart-return-type
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-822d060b
+    name: Fix llm-generated-code issues
+    description: Resolve 1 llm-generated-code issues in src/algitex/project/__init__.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/project/__init__.py
+    rule_id: llm-generated-code
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-0ae15f2b
+    name: Fix smart-return-type issues
+    description: Resolve 4 smart-return-type issues in src/algitex/tools/benchmark.py
+    task_type: prefactor
+    priority: medium
+    estimate: 2d
+    files:
+    - src/algitex/tools/benchmark.py
+    rule_id: smart-return-type
+    count: 4
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-828ee8ac
+    name: Fix string-concat issues
+    description: Resolve 1 string-concat issues in src/algitex/tools/benchmark.py
+    task_type: prefactor
+    priority: medium
+    estimate: 1d
+    files:
+    - src/algitex/tools/benchmark.py
+    rule_id: string-concat
+    count: 1
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-c1f22143
+    name: Fix unused-imports issues
+    description: Resolve 6 unused-imports issues in src/algitex/tools/benchmark.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - src/algitex/tools/benchmark.py
+    rule_id: unused-imports
+    count: 6
+    model_hints:
+      planning: balanced
+      implementation: balanced
+  - id: ticket-95c263d1
+    name: Fix magic-numbers issues
+    description: Resolve 7 magic-numbers issues in src/algitex/tools/benchmark.py
+    task_type: prefactor
+    priority: high
+    estimate: 2d
+    files:
+    - src/algitex/tools/benchmark.py
+    rule_id: magic-numbers
+    count: 7
+    model_hints:
+      planning: balanced
+      implementation: balanced

@@ -175,10 +175,7 @@ class ModelBenchmark:
         self.tasks["code_completion"] = Task(
             id="code_completion",
             name="Code Completion",
-            prompt="""Complete this Python function:
-
-def fibonacci(n):
-    """Generate Fibonacci sequence."""',
+            prompt="Complete this Python function:\n\ndef fibonacci(n):\n    pass",
             expected_keywords=["def", "fibonacci", "return", "sequence"]
         )
         

@@ -1,8 +1,8 @@
-# algitex | 58f 12220L | python:57,shell:1 | 2026-03-28
-# stats: 536 func | 0 cls | 58 mod | CC̄=3.2 | critical:0 | cycles:0
-# alerts[5]: fan-out DockerToolManager._call_stdio=18; fan-out Project.__init__=18; fan-out Project.status=18; fan-out BatchProcessor.process=17; fan-out DockerToolManager.get_capabilities=16
-# hotspots[5]: Project.__init__ fan=18; Project.status fan=18; DockerToolManager._call_stdio fan=18; BatchProcessor.process fan=17; DockerToolManager.get_capabilities fan=16
-# evolution: CC̄ 3.4→3.2 (improved -0.2)
+# algitex | 58f 12017L | python:57,shell:1 | 2026-03-28
+# stats: 505 func | 0 cls | 58 mod | CC̄=3.3 | critical:0 | cycles:0
+# alerts[5]: fan-out DockerToolManager._call_stdio=18; fan-out Project.status=18; fan-out BatchProcessor.process=17; fan-out DockerToolManager.get_capabilities=16; fan-out Project.__init__=16
+# hotspots[5]: DockerToolManager._call_stdio fan=18; Project.status fan=18; BatchProcessor.process fan=17; DockerToolManager.get_capabilities fan=16; Project.__init__ fan=16
+# evolution: CC̄ 3.2→3.3 (regressed +0.1)
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
 M[58]:
   docker/aider-mcp/aider_mcp_server.py,156
@@ -25,7 +25,7 @@ M[58]:
   src/algitex/cli/todo.py,120
   src/algitex/cli/workflow.py,39
   src/algitex/config.py,170
-  src/algitex/project.py,581
+  src/algitex/project/__init__.py,378
   src/algitex/project/autofix.py,52
   src/algitex/project/batch.py,60
   src/algitex/project/benchmark.py,58
@@ -135,6 +135,16 @@ D:
   docker/vallm/vallm_server.py:
     e: VallmServer
     VallmServer: __init__(0),create_fastapi_app(0),_validate_static(1),_validate_runtime(1),_validate_security(1),_analyze_complexity(1),run(0)  # Validation server with multiple validation levels...
+  docker/vallm/vallm_mcp_server.py:
+    e: validate_static,validate_runtime,validate_security,validate_all,analyze_complexity,calculate_quality_score,create_rest_api,run_rest_server
+    validate_static(path)
+    validate_runtime(path)
+    validate_security(path)
+    validate_all(path)
+    analyze_complexity(path)
+    calculate_quality_score(path)
+    create_rest_api()
+    run_rest_server()
   docker/proxym/proxym_mcp_server.py:
     e: count_tokens,list_models,chat_completion,_call_anthropic,_call_openai,_call_gemini,simple_prompt,get_budget_status,create_rest_api,run_rest_server
     count_tokens(text)
@@ -147,16 +157,9 @@ D:
     get_budget_status()
     create_rest_api()
     run_rest_server()
-  docker/vallm/vallm_mcp_server.py:
-    e: validate_static,validate_runtime,validate_security,validate_all,analyze_complexity,calculate_quality_score,create_rest_api,run_rest_server
-    validate_static(path)
-    validate_runtime(path)
-    validate_security(path)
-    validate_all(path)
-    analyze_complexity(path)
-    calculate_quality_score(path)
-    create_rest_api()
-    run_rest_server()
+  src/algitex/project/__init__.py:
+    e: Project
+    Project(ServiceMixin,AutoFixMixin,OllamaMixin,BatchMixin,BenchmarkMixin,IDEMixin,ConfigMixin,MCPMixin): __init__(2),analyze(1),plan(3),execute(1),status(0),run_workflow(1),ask(1),add_ticket(1),generate_todo(1),_build_prompt(1),_select_tier(1),_generate_strategy(2)  # One project, all tools, zero boilerplate...
   src/algitex/tools/proxy.py:
     e: LLMResponse,Proxy
     LLMResponse: __str__(0)  # Simplified LLM response...
@@ -176,9 +179,6 @@ D:
   src/algitex/tools/config.py:
     e: ConfigManager
     ConfigManager: __init__(1),_ensure_dir(1),_backup_file(1),install_config(3),generate_continue_config(3),install_continue_config(2),generate_vscode_settings(2),install_vscode_settings(2),generate_env_file(2),generate_docker_compose(2),setup_project_configs(2),list_configs(1)  # Manages configuration files for various IDEs and tools...
-  src/algitex/project.py:
-    e: Project
-    Project: __init__(2),analyze(1),plan(3),execute(1),status(0),run_workflow(1),ask(1),add_ticket(1),sync(0),check_services(1),print_service_status(1),ensure_service(2),fix_issues(3),fix_issue(2),list_todo_tasks(0),check_ollama(0),list_ollama_models(0),pull_ollama_model(1),generate_with_ollama(3),batch_analyze(4),create_batch_processor(3),benchmark_models(2),add_benchmark_task(4),print_benchmark_results(2),setup_ide(1),fix_with_claude(3),fix_with_aider(3),detect_editor(0),get_ide_status(0),setup_configs(1),install_continue_config(1),install_vscode_settings(0),generate_env_file(1),start_mcp_services(1),stop_mcp_services(0),restart_mcp_service(1),wait_for_mcp_ready(1),get_mcp_status(0),print_mcp_status(0),generate_mcp_config(0),_build_prompt(1),_select_tier(1),_generate_strategy(2)  # One project, all tools, zero boilerplate...
   src/algitex/tools/ide.py:
     e: IDETool,IDEHelper,ClaudeCodeHelper,AiderHelper,VSCodeHelper,EditorIntegration
     IDETool: __post_init__(0)  # IDE tool configuration...
@@ -307,12 +307,12 @@ D:
     aider_chat(message;context)
     create_rest_api()
     run_rest_server()
-  src/algitex/project/mcp.py:
-    e: MCPMixin
-    MCPMixin: __init__(0),start_mcp_services(1),stop_mcp_services(0),restart_mcp_service(1),wait_for_mcp_ready(1),get_mcp_status(0),print_mcp_status(0),generate_mcp_config(0)  # MCP service orchestration functionality for Project...
   src/algitex/project/config.py:
     e: ConfigMixin
     ConfigMixin: __init__(0),setup_configs(1),install_continue_config(1),install_vscode_settings(0),generate_env_file(1)  # Configuration management functionality for Project...
+  src/algitex/project/mcp.py:
+    e: MCPMixin
+    MCPMixin: __init__(0),start_mcp_services(1),stop_mcp_services(0),restart_mcp_service(1),wait_for_mcp_ready(1),get_mcp_status(0),print_mcp_status(0),generate_mcp_config(0)  # MCP service orchestration functionality for Project...
   src/algitex/project/ollama.py:
     e: OllamaMixin
     OllamaMixin: __init__(0),check_ollama(0),list_ollama_models(0),pull_ollama_model(1),generate_with_ollama(3)  # Ollama integration functionality for Project...

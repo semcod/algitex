@@ -4,19 +4,14 @@
 
 - **Project**: /home/tom/github/semcod/algitex
 - **Primary Language**: python
-- **Languages**: python: 118, shell: 26
+- **Languages**: python: 102, shell: 26
 - **Analysis Mode**: static
-- **Total Functions**: 760
-- **Total Classes**: 93
-- **Modules**: 144
-- **Entry Points**: 639
+- **Total Functions**: 674
+- **Total Classes**: 92
+- **Modules**: 128
+- **Entry Points**: 588
 
 ## Architecture by Module
-
-### src.algitex.project
-- **Functions**: 43
-- **Classes**: 1
-- **File**: `project.py`
 
 ### src.algitex.tools.docker
 - **Functions**: 23
@@ -78,6 +73,11 @@
 - **Classes**: 4
 - **File**: `batch.py`
 
+### src.algitex.project
+- **Functions**: 12
+- **Classes**: 1
+- **File**: `__init__.py`
+
 ### src.algitex.tools.config
 - **Functions**: 12
 - **Classes**: 1
@@ -117,11 +117,9 @@
 
 Main execution flows into the system:
 
-### examples.24-ollama-batch.batch_analyze.main
-- **Calls**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_argument, parser.parse_args, print, print
-
-### examples.26-litellm-proxy-ollama.main.main
-- **Calls**: print, print, print, print, examples.26-litellm-proxy-ollama.main.check_litellm, examples.26-litellm-proxy-ollama.main.check_ollama, print, examples.26-litellm-proxy-ollama.main.test_proxy
+### examples.20-self-hosted-pipeline.main.main
+> Main demo function.
+- **Calls**: print, print, print, print, print, print, print, print
 
 ### examples.14-docker-mcp.main.demo_docker_operations
 > Demonstrate real Docker operations.
@@ -130,24 +128,8 @@ Main execution flows into the system:
 ### examples.05-cost-tracking.main.main
 - **Calls**: print, Tickets, print, print, print, sorted, print, Loop
 
-### examples.26-litellm-proxy-ollama.auto_fix.main
-- **Calls**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.parse_args, print, print, print
-
 ### examples.18-ollama-local.main.main
 - **Calls**: print, print, print, print, print, examples.18-ollama-local.main.list_models, examples.18-ollama-local.main.demo_code_generation, examples.18-ollama-local.main.demo_code_analysis
-
-### examples.25-local-model-comparison.benchmark.main
-- **Calls**: print, print, print, print, examples.25-local-model-comparison.benchmark.check_ollama, print, print, examples.25-local-model-comparison.benchmark.check_models_available
-
-### examples.21-aider-cli-ollama.auto_fix.main
-- **Calls**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.parse_args, print, print, print
-
-### examples.22-claude-code-ollama.main.main
-- **Calls**: print, print, print, print, print, examples.22-claude-code-ollama.main.check_claude_code, examples.22-claude-code-ollama.main.check_ollama, print
-
-### examples.20-self-hosted-pipeline.main.main
-> Main demo function.
-- **Calls**: print, print, print, print, print, print, print, print
 
 ### examples.13-vallm.main.demo_validation
 > Demonstrate real code validation.
@@ -159,19 +141,6 @@ Main execution flows into the system:
 
 ### examples.02-algo-loop.main.main
 - **Calls**: print, Loop, print, loop.discover, loop.report, print, print, print
-
-### examples.26-litellm-proxy-ollama.auto_fix_simplified.main
-- **Calls**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_argument, parser.parse_args, print, print
-
-### examples.22-claude-code-ollama.batch_fix_simplified.main
-- **Calls**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.parse_args, print, print, print
-
-### examples.26-litellm-proxy-ollama.main_simplified.main
-> Simplified version using algitex Project class.
-- **Calls**: print, print, print, print, Project, print, p.print_service_status, p.check_ollama
-
-### examples.24-ollama-batch.batch_simplified.main
-- **Calls**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_argument, parser.parse_args, print
 
 ### src.algitex.tools.batch.BatchProcessor.process
 > Process items in parallel.
@@ -185,9 +154,6 @@ Main execution flows into the system:
 > Demonstrate GitHub workflow.
 - **Calls**: print, examples.15-github-mcp.main.create_sample_project, print, print, project_dir.iterdir, print, print, print
 
-### examples.21-aider-cli-ollama.auto_fix_simplified.main
-- **Calls**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.add_argument, parser.parse_args, print, print
-
 ### examples.12-filesystem-mcp.main.demo_file_operations
 > Demonstrate real filesystem operations.
 - **Calls**: print, examples.12-filesystem-mcp.main.create_sample_files, print, print, files_dir.rglob, print, print, print
@@ -200,13 +166,6 @@ Main execution flows into the system:
 > Main workflow.
 - **Calls**: print, print, print, examples.20-self-hosted-pipeline.auto_fix_todos.get_last_todo_issues, print, enumerate, print, print
 
-### examples.22-claude-code-ollama.main_simplified.main
-> Simplified version using algitex Project class.
-- **Calls**: print, print, print, print, Project, print, p.print_service_status, p.get_ide_status
-
-### examples.25-local-model-comparison.benchmark_simplified.main
-- **Calls**: argparse.ArgumentParser, parser.add_argument, parser.add_argument, parser.add_argument, parser.parse_args, print, print, print
-
 ### examples.19-local-mcp-tools.main.main
 - **Calls**: print, print, print, print, print, print, print, print
 
@@ -217,9 +176,58 @@ Main execution flows into the system:
 ### examples.03-pipeline.main.main
 - **Calls**: print, print, None.report, print, None.report, None.get, hasattr, print
 
-### examples.24-ollama-batch.batch_analyze.BatchProcessor.process_files
-> Process multiple files in parallel.
-- **Calls**: print, print, print, time.time, print, print, print, print
+### examples.04-ide-integration.main.main
+- **Calls**: print, print, None.items, print, None.items, print, print, print
+
+### examples.07-context.main.prompt_engineering_example
+> Example of how context improves prompt engineering.
+- **Calls**: print, Path, project_dir.mkdir, None.write_text, None.write_text, None.write_text, ContextBuilder, builder.build
+
+### docker.vallm.vallm_server.VallmServer.create_fastapi_app
+> Create FastAPI application.
+- **Calls**: FastAPI, app.get, app.post, app.post, app.post, request.get, all, request.get
+
+### examples.21-aider-cli-ollama.main_simplified.main
+> Simplified version using algitex Project class.
+- **Calls**: print, print, print, print, Project, print, p.print_service_status, p.check_ollama
+
+### examples.07-context.main.context_optimization_example
+> Example of optimizing context for different use cases.
+- **Calls**: print, Path, project_dir.mkdir, None.mkdir, None.write_text, None.write_text, None.mkdir, None.write_text
+
+### docker.proxym.proxym_server.ProxymServer._call_anthropic
+> Call Anthropic Claude API.
+- **Calls**: resp.raise_for_status, resp.json, self._mock_response, self.http_client.post, data.get, logger.error, msg.get, msg.get
+
+### examples.08-feedback.main.feedback_loop_simulation
+> Simulate complete feedback loop with mock execution.
+- **Calls**: print, MockDockerManager, MockTickets, FeedbackController, FeedbackLoop, print, print, loop.execute_with_feedback
+
+### src.algitex.tools.docker.DockerToolManager._call_stdio
+> Send JSON-RPC over stdin, read from stdout with timeout.
+- **Calls**: json.dumps, RuntimeError, rt.process.stdin.write, rt.process.stdin.flush, time.time, len, select.select, rt.process.stdout.readline
+
+### examples.23-continue-dev-ollama.main.main
+- **Calls**: print, print, print, print, Project, p.check_ollama, print, print
+
+### examples.25-local-model-comparison.main.main
+- **Calls**: print, print, print, print, Project, print, p.print_service_status, p.check_ollama
+
+### docker.code2llm.code2llm_server.Code2LLMServer.create_fastapi_app
+> Create FastAPI application.
+- **Calls**: FastAPI, app.get, app.post, app.post, app.post, app.post, request.get, self._analyze_project
+
+### src.algitex.tools.config.ConfigManager.list_configs
+> List available configuration files.
+- **Calls**: None.expanduser, continue_config.exists, vscode_workspace.exists, vscode_global.exists, None.glob, None.glob, None.append, Path.cwd
+
+### src.algitex.tools.ollama.OllamaClient.chat
+> Chat with Ollama using message format.
+- **Calls**: ValueError, self._client.post, response.raise_for_status, response.iter_lines, response.json, data.get, OllamaResponse, OllamaResponse
+
+### src.algitex.cli.core.init
+> Initialize algitex for a project.
+- **Calls**: typer.Argument, None.resolve, project_path.mkdir, None.mkdir, Config.load, cfg.save, console.print, console.print
 
 ## Process Flows
 
@@ -227,7 +235,7 @@ Key execution flows identified:
 
 ### Flow 1: main
 ```
-main [examples.24-ollama-batch.batch_analyze]
+main [examples.20-self-hosted-pipeline.main]
 ```
 
 ### Flow 2: demo_docker_operations
@@ -263,12 +271,23 @@ demo_github_workflow [examples.15-github-mcp.main]
   └─> create_sample_project
 ```
 
-## Key Classes
+### Flow 8: demo_file_operations
+```
+demo_file_operations [examples.12-filesystem-mcp.main]
+  └─> create_sample_files
+```
 
-### src.algitex.project.Project
-> One project, all tools, zero boilerplate.
-- **Methods**: 43
-- **Key Methods**: src.algitex.project.Project.__init__, src.algitex.project.Project.analyze, src.algitex.project.Project.plan, src.algitex.project.Project.execute, src.algitex.project.Project.status, src.algitex.project.Project.run_workflow, src.algitex.project.Project.ask, src.algitex.project.Project.add_ticket, src.algitex.project.Project.sync, src.algitex.project.Project.check_services
+### Flow 9: complete_ci_cd_setup
+```
+complete_ci_cd_setup [examples.10-cicd.main]
+```
+
+### Flow 10: status
+```
+status [src.algitex.project.Project]
+```
+
+## Key Classes
 
 ### src.algitex.tools.docker.DockerToolManager
 > Spawn Docker containers, connect via MCP/REST, call tools, teardown.
@@ -319,6 +338,12 @@ demo_github_workflow [examples.15-github-mcp.main]
 > Fix issues using LiteLLM proxy.
 - **Methods**: 12
 - **Key Methods**: src.algitex.tools.autofix.proxy_backend.ProxyBackend.__init__, src.algitex.tools.autofix.proxy_backend.ProxyBackend.fix, src.algitex.tools.autofix.proxy_backend.ProxyBackend._validate, src.algitex.tools.autofix.proxy_backend.ProxyBackend._execute_fix, src.algitex.tools.autofix.proxy_backend.ProxyBackend._read_file, src.algitex.tools.autofix.proxy_backend.ProxyBackend._build_prompt, src.algitex.tools.autofix.proxy_backend.ProxyBackend._call_api, src.algitex.tools.autofix.proxy_backend.ProxyBackend._extract_code, src.algitex.tools.autofix.proxy_backend.ProxyBackend._write_file, src.algitex.tools.autofix.proxy_backend.ProxyBackend._success_result
+
+### src.algitex.project.Project
+> One project, all tools, zero boilerplate.
+- **Methods**: 12
+- **Key Methods**: src.algitex.project.Project.__init__, src.algitex.project.Project.analyze, src.algitex.project.Project.plan, src.algitex.project.Project.execute, src.algitex.project.Project.status, src.algitex.project.Project.run_workflow, src.algitex.project.Project.ask, src.algitex.project.Project.add_ticket, src.algitex.project.Project.generate_todo, src.algitex.project.Project._build_prompt
+- **Inherits**: ServiceMixin, AutoFixMixin, OllamaMixin, BatchMixin, BenchmarkMixin, IDEMixin, ConfigMixin, MCPMixin
 
 ### src.algitex.algo.Loop
 > The progressive algorithmization engine.
@@ -440,10 +465,6 @@ Args:
 > Run validation across all repositories.
 - **Output to**: self._topo_sort, print, Pipeline, pipeline.validate, pipeline._results.get
 
-### src.algitex.project.Project.create_batch_processor
-> Create a custom batch processor.
-- **Output to**: BatchProcessor, str
-
 ### src.algitex.tools.context.ContextBuilder._format_ticket
 > Format ticket information.
 - **Output to**: ticket.get, ticket.get, ticket.get, ticket.get
@@ -486,6 +507,10 @@ Args:
 ### src.algitex.tools.batch.FileBatchProcessor.process_directory
 > Process all files in directory.
 - **Output to**: self.find_files, self.process
+
+### src.algitex.cli.workflow.workflow_validate
+> Check a Propact workflow for errors.
+- **Output to**: typer.Argument, Workflow, wf.validate, console.print, wf.parse
 
 ## Behavioral Patterns
 
@@ -548,46 +573,46 @@ Args:
 
 Functions exposed as public API (no underscore prefix):
 
-- `examples.21-aider-cli-ollama.main.check_prerequisites` - 49 calls
-- `examples.24-ollama-batch.batch_analyze.main` - 44 calls
-- `examples.26-litellm-proxy-ollama.main.main` - 43 calls
+- `examples.20-self-hosted-pipeline.main.main` - 49 calls
 - `examples.14-docker-mcp.main.demo_docker_operations` - 40 calls
 - `examples.05-cost-tracking.main.main` - 40 calls
-- `examples.26-litellm-proxy-ollama.auto_fix.main` - 40 calls
 - `examples.18-ollama-local.main.main` - 39 calls
-- `examples.25-local-model-comparison.benchmark.main` - 39 calls
-- `examples.21-aider-cli-ollama.auto_fix.main` - 38 calls
-- `examples.22-claude-code-ollama.main.main` - 36 calls
-- `examples.20-self-hosted-pipeline.main.main` - 36 calls
 - `examples.13-vallm.main.demo_validation` - 35 calls
 - `examples.07-context.main.basic_context_example` - 34 calls
 - `examples.02-algo-loop.main.main` - 33 calls
-- `examples.26-litellm-proxy-ollama.auto_fix_simplified.main` - 33 calls
-- `examples.22-claude-code-ollama.batch_fix_simplified.main` - 32 calls
-- `examples.26-litellm-proxy-ollama.main_simplified.main` - 32 calls
-- `examples.24-ollama-batch.batch_simplified.main` - 31 calls
 - `src.algitex.tools.batch.BatchProcessor.process` - 30 calls
 - `examples.06-telemetry.main.basic_telemetry_example` - 30 calls
 - `examples.15-github-mcp.main.demo_github_workflow` - 30 calls
-- `examples.21-aider-cli-ollama.auto_fix_simplified.main` - 30 calls
 - `examples.12-filesystem-mcp.main.demo_file_operations` - 30 calls
 - `examples.10-cicd.main.complete_ci_cd_setup` - 29 calls
 - `examples.20-self-hosted-pipeline.auto_fix_todos.main` - 29 calls
-- `examples.22-claude-code-ollama.main_simplified.main` - 28 calls
-- `examples.25-local-model-comparison.benchmark_simplified.main` - 28 calls
 - `examples.19-local-mcp-tools.main.main` - 28 calls
 - `src.algitex.project.Project.status` - 27 calls
 - `examples.03-pipeline.main.main` - 27 calls
-- `examples.24-ollama-batch.batch_analyze.BatchProcessor.process_files` - 27 calls
-- `examples.25-local-model-comparison.main_simplified.main` - 27 calls
 - `examples.04-ide-integration.main.main` - 26 calls
-- `examples.26-litellm-proxy-ollama.install.main` - 26 calls
 - `examples.07-context.main.prompt_engineering_example` - 26 calls
 - `docker.vallm.vallm_server.VallmServer.create_fastapi_app` - 25 calls
-- `examples.20-self-hosted-pipeline.auto_fix_todos.analyze_buggy_code` - 25 calls
 - `examples.21-aider-cli-ollama.main_simplified.main` - 25 calls
-- `examples.21-aider-cli-ollama.auto_fix.fix_with_aider` - 25 calls
+- `examples.20-self-hosted-pipeline.auto_fix_todos.analyze_buggy_code` - 25 calls
 - `examples.07-context.main.context_optimization_example` - 25 calls
+- `examples.08-feedback.main.feedback_loop_simulation` - 24 calls
+- `examples.23-continue-dev-ollama.main.main` - 23 calls
+- `examples.25-local-model-comparison.main.main` - 23 calls
+- `docker.code2llm.code2llm_server.Code2LLMServer.create_fastapi_app` - 22 calls
+- `src.algitex.tools.config.ConfigManager.list_configs` - 22 calls
+- `src.algitex.tools.ollama.OllamaClient.chat` - 22 calls
+- `src.algitex.cli.core.init` - 22 calls
+- `examples.11-aider-mcp.main.demo_refactoring` - 22 calls
+- `examples.21-aider-cli-ollama.main.main` - 22 calls
+- `examples.27-unified-autofix.main.main` - 22 calls
+- `examples.28-mcp-orchestration.main.main` - 22 calls
+- `examples.08-feedback.main.basic_feedback_example` - 22 calls
+- `examples.20-self-hosted-pipeline.auto_fix_todos.validate_buggy_code` - 22 calls
+- `src.algitex.tools.feedback.FeedbackLoop.execute_with_feedback` - 21 calls
+- `examples.01-quickstart.main.main` - 21 calls
+- `examples.27-unified-autofix.main.execute_fixes` - 21 calls
+- `examples.28-mcp-orchestration.mcp_orchestrator.main` - 21 calls
+- `src.algitex.tools.mcp.MCPOrchestrator.wait_for_ready` - 20 calls
 
 ## System Interactions
 
@@ -595,16 +620,11 @@ How components interact:
 
 ```mermaid
 graph TD
-    main --> ArgumentParser
-    main --> add_argument
     main --> print
-    main --> check_litellm
     demo_docker_operatio --> print
     demo_docker_operatio --> create_sample_docker
     demo_docker_operatio --> iterdir
     main --> Tickets
-    main --> parse_args
-    main --> check_ollama
     demo_validation --> print
     demo_validation --> create_sample_code
     basic_context_exampl --> print
@@ -614,6 +634,22 @@ graph TD
     main --> Loop
     main --> discover
     main --> report
+    process --> print
+    process --> time
+    process --> update
+    basic_telemetry_exam --> print
+    basic_telemetry_exam --> Telemetry
+    basic_telemetry_exam --> span
+    basic_telemetry_exam --> sleep
+    demo_github_workflow --> print
+    demo_github_workflow --> create_sample_projec
+    demo_github_workflow --> iterdir
+    demo_file_operations --> print
+    demo_file_operations --> create_sample_files
+    demo_file_operations --> rglob
+    complete_ci_cd_setup --> print
+    complete_ci_cd_setup --> Path
+    complete_ci_cd_setup --> mkdir
 ```
 
 ## Reverse Engineering Guidelines

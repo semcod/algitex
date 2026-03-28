@@ -63,6 +63,10 @@ p.fix_issue("TASK-001", backend="ollama")
 
 # List TODO tasks
 tasks = p.list_todo_tasks()
+
+# Generate TODO.md from analysis
+result = p.generate_todo()  # Creates TODO.md with issues from analysis
+print(f"Created {result['filename']} with {result['count']} issues")
 ```
 
 ### Batch Processing
@@ -175,15 +179,15 @@ p.stop_mcp_services()
 ### Example 21 - Aider CLI + Ollama
 
 Original: 289 lines of complex code
-Simplified: 50 lines using algitex
+Simplified: 15 lines using algitex
 
 ```python
 from algitex import Project
 
 p = Project(".")
 p.print_service_status()
-tasks = p.list_todo_tasks()
-print(f"Found {len(tasks)} tasks")
+result = p.generate_todo()  # Creates TODO.md
+p.fix_issues()  # Auto-fix all issues
 ```
 
 ### Example 22 - Claude Code + Ollama
@@ -320,8 +324,8 @@ Auto backend selection:
 ### Quick Start
 
 ```bash
-# 1. Create TODO issues
-prefact -a
+# 1. Generate TODO from analysis
+python -c "from algitex import Project; p = Project('.'); p.generate_todo()"
 
 # 2. Fix with algitex (auto-selects best backend)
 python -c "

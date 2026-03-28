@@ -1,13 +1,11 @@
-# code2llm | 58f 12220L | python:57,shell:1 | 2026-03-28
-# CC̄=3.2 | critical:0/760 | dups:0 | cycles:0
+# code2llm | 58f 12017L | python:57,shell:1 | 2026-03-28
+# CC̄=3.3 | critical:0/674 | dups:0 | cycles:0
 
-HEALTH[1]:
-  🟡 CC    fix_with_aider CC=18 (limit:15)
+HEALTH[0]: ok
 
-REFACTOR[1]:
-  1. split 1 high-CC methods  (CC>15)
+REFACTOR[0]: none needed
 
-PIPELINES[572]:
+PIPELINES[522]:
   [1] Src [__init__]: __init__
       PURITY: 100% pure
   [2] Src [create_fastapi_app]: create_fastapi_app → validate
@@ -30,8 +28,7 @@ LAYERS:
   │ proxym_server              257L  1C    7m  CC=6      ←0
   │ aider_mcp_server           156L  0C    5m  CC=2      ←0
   │
-  src/                            CC̄=3.2    ←in:0  →out:0
-  │ !! project                    581L  1C   43m  CC=8      ←0
+  src/                            CC̄=3.3    ←in:0  →out:0
   │ !! todo_runner                526L  2C   16m  CC=13     ←0
   │ !! docker                     504L  3C   23m  CC=12     ←0
   │ mcp                        448L  2C   18m  CC=11     ←0
@@ -41,6 +38,7 @@ LAYERS:
   │ cicd                       405L  1C   11m  CC=5      ←1
   │ config                     386L  1C   12m  CC=8      ←0
   │ ollama                     383L  4C   16m  CC=11     ←0
+  │ __init__                   378L  1C   12m  CC=9      ←0
   │ __init__                   369L  5C   12m  CC=9      ←0
   │ batch                      364L  4C   13m  CC=14     ←0
   │ workspace                  338L  2C   17m  CC=6      ←1
@@ -48,7 +46,7 @@ LAYERS:
   │ __init__                   306L  1C   14m  CC=12     ←0
   │ todo_local                 282L  2C   11m  CC=11     ←0
   │ feedback                   252L  4C   12m  CC=8      ←0
-  │ tickets                    246L  2C   11m  CC=5      ←8
+  │ tickets                    246L  2C   11m  CC=5      ←7
   │ todo_executor              240L  2C   12m  CC=13     ←0
   │ todo_parser                206L  2C    8m  CC=7      ←0
   │ context                    206L  3C   14m  CC=7      ←0
@@ -65,18 +63,18 @@ LAYERS:
   │ docker                      96L  0C    5m  CC=3      ←0
   │ ollama_backend              80L  1C    6m  CC=4      ←0
   │ algo                        63L  0C    4m  CC=3      ←0
-  │ batch                       60L  1C    3m  CC=8      ←0
-  │ benchmark                   58L  1C    4m  CC=2      ←0
-  │ autofix                     52L  1C    5m  CC=8      ←0
-  │ ide                         47L  1C    6m  CC=1      ←0
+  │ batch                       60L  1C    3m  CC=8      ←1
+  │ benchmark                   58L  1C    4m  CC=2      ←1
+  │ autofix                     52L  1C    5m  CC=8      ←1
+  │ ide                         47L  1C    6m  CC=1      ←1
   │ ticket                      46L  0C    3m  CC=4      ←0
-  │ mcp                         46L  1C    8m  CC=2      ←0
+  │ mcp                         46L  1C    8m  CC=2      ←1
   │ base                        44L  2C    1m  CC=1      ←0
   │ workflow                    39L  0C    2m  CC=3      ←0
-  │ ollama                      39L  1C    5m  CC=2      ←0
-  │ config                      36L  1C    5m  CC=2      ←0
+  │ ollama                      39L  1C    5m  CC=2      ←1
+  │ config                      36L  1C    5m  CC=2      ←1
   │ __init__                    36L  0C    0m  CC=0.0    ←0
-  │ services                    28L  1C    4m  CC=2      ←0
+  │ services                    28L  1C    4m  CC=2      ←1
   │ pipeline                     5L  0C    0m  CC=0.0    ←0
   │ loop                         4L  0C    0m  CC=0.0    ←0
   │ workflow                     2L  0C    0m  CC=0.0    ←0

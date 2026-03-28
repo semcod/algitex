@@ -8,6 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.10] - 2026-03-28
 
 ### Fixed
+- Fix smart-return-type issues (ticket-c01fdadf)
+- Fix llm-generated-code issues (ticket-822d060b)
+- Fix smart-return-type issues (ticket-0ae15f2b)
+- Fix string-concat issues (ticket-828ee8ac)
+- Fix unused-imports issues (ticket-c1f22143)
+- Fix magic-numbers issues (ticket-95c263d1)
+
+## [0.1.10] - 2026-03-28
+
+### Fixed
 - Fix smart-return-type issues (ticket-eef315cb)
 - Fix magic-numbers issues (ticket-5491c7c9)
 - Fix ai-boilerplate issues (ticket-ad5d767e)
@@ -454,6 +464,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix llm-generated-code issues (ticket-06d0712f)
 
 ## [Unreleased]
+
+## [0.1.21] - 2026-03-28
+
+### Docs
+- Update CHANGELOG.md
+- Update TODO.md
+- Update docs/README.md
+- Update examples/NEW_FEATURES.md
+- Update project/README.md
+- Update project/context.md
+
+### Other
+- Update examples/20-self-hosted-pipeline/auto_fix_todos.py
+- Update examples/21-aider-cli-ollama/main_simplified.py
+- Update examples/22-claude-code-ollama/main.py
+- Update examples/23-continue-dev-ollama/main.py
+- Update examples/24-ollama-batch/main.py
+- Update examples/25-local-model-comparison/main.py
+- Update examples/27-unified-autofix/main.py
+- Update planfile.yaml
+- Update project/analysis.toon.yaml
+- Update project/calls.mmd
+- ... and 12 more files
 
 ## [0.1.20] - 2026-03-28
 

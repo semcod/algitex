@@ -17,13 +17,13 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional
 import json
-import re
 import httpx
 
 from algitex.config import Config
 from algitex.tools.todo_parser import Task, TodoParser
 from algitex.tools.docker import DockerToolManager
 from algitex.tools.todo_local import LocalExecutor, LocalTaskResult
+from algitex.tools.todo_actions import determine_action
 
 
 @dataclass
@@ -263,7 +263,7 @@ Provide ONLY the fixed code, no explanations."""
             )
 
         # Determine best action based on task description
-        action, args = self._determine_action(task, tool)
+        action, args = determine_action(task, tool)
 
         try:
             result = self.docker.call_tool(tool, action, args)
@@ -318,173 +318,6 @@ Provide ONLY the fixed code, no explanations."""
                 tool_used=tool,
             )
 
-    def _determine_action(self, task: Task, tool: str) -> tuple[str, dict]:
-        """Determine MCP action and arguments for the task."""
-        desc = task.description.lower()
-
-        # Map tool to appropriate action
-        if tool == "nap":
-            return self._nap_action(task)
-        elif tool == "aider-mcp":
-            return self._aider_action(task)
-        elif tool == "ollama-mcp":
-            return self._ollama_action(task)
-        elif tool == "filesystem-mcp":
-            return self._filesystem_action(task)
-        elif tool == "github-mcp":
-            return self._github_action(task)
-        else:
-            # Generic action
-            return ("process", {"task": task.description})
-
-    def _nap_action(self, task: Task) -> tuple[str, dict]:
-        """Generate nap action for automated code repair."""
-        desc = task.description.lower()
-
-        # Determine fix type based on description
-        if any(kw in desc for kw in ["import", "unused import"]):
-            return ("fix_imports", {
-                "file_path": task.file_path,
-                "line": task.line_number,
-                "description": task.description,
-            })
-
-        if any(kw in desc for kw in ["return type", "missing return", "->"]):
-            return ("fix_types", {
-                "file_path": task.file_path,
-                "line": task.line_number,
-                "description": task.description,
-            })
-
-        if any(kw in desc for kw in ["style", "format", "whitespace", "f-string"]):
-            return ("fix_style", {
-                "file_path": task.file_path,
-                "line": task.line_number,
-                "description": task.description,
-            })
-
-        # Generic fix_issue for everything else
-        return ("fix_issue", {
-            "file_path": task.file_path,
-            "line": task.line_number,
-            "description": task.description,
-            "issue_type": "auto",
-        })
-
-    def _aider_action(self, task: Task) -> tuple[str, dict]:
-        """Generate aider-mcp action for code tasks."""
-        desc = task.description
-
-        # Extract file path and what needs to be done
-        file_path = task.file_path
-        line_hint = task.line_number
-
-        # Build prompt for aider
-        prompt = f"{desc}"
-        if file_path:
-            prompt = f"In {file_path}"
-            if line_hint:
-                prompt += f" at line {line_hint}"
-            prompt += f": {desc}"
-
-        return ("aider_ai_code", {
-            "prompt": prompt,
-            "file_path": file_path or ".",
-        })
-
-    def _ollama_action(self, task: Task) -> tuple[str, dict]:
-        """Generate ollama-mcp action for code fixing with local LLM."""
-        desc = task.description.lower()
-        file_path = task.file_path
-        line_hint = task.line_number
-
-        # Determine fix type based on description
-        if any(kw in desc for kw in ["import", "unused import"]):
-            return ("remove_unused_imports", {
-                "file_path": file_path,
-                "line": line_hint,
-                "description": task.description,
-                "model": "codellama",
-            })
-
-        if any(kw in desc for kw in ["return type", "missing return", "->"]):
-            return ("add_types", {
-                "file_path": file_path,
-                "line": line_hint,
-                "description": task.description,
-                "model": "codellama",
-            })
-
-        if any(kw in desc for kw in ["style", "format", "whitespace", "f-string"]):
-            return ("refactor_code", {
-                "file_path": file_path,
-                "line": line_hint,
-                "description": task.description,
-                "refactor_type": "style_fix",
-                "model": "codellama",
-            })
-
-        # Generic fix_code for everything else
-        return ("fix_code", {
-            "file_path": file_path,
-            "line": line_hint,
-            "description": task.description,
-            "issue_type": "auto",
-            "model": "codellama",
-        })
-
-    def _filesystem_action(self, task: Task) -> tuple[str, dict]:
-        """Generate filesystem-mcp action."""
-        desc = task.description.lower()
-
-        # Determine operation type
-        if any(kw in desc for kw in ["read", "show", "view", "get"]):
-            return ("read_file", {
-                "path": task.file_path or "."
-            })
-        elif any(kw in desc for kw in ["write", "create", "add", "save"]):
-            return ("write_file", {
-                "path": task.file_path or "output.txt",
-                "content": ""
-            })
-        elif any(kw in desc for kw in ["list", "ls", "dir"]):
-            return ("list_directory", {
-                "path": task.file_path or "."
-            })
-        elif any(kw in desc for kw in ["search", "find", "grep"]):
-            return ("search_files", {
-                "path": ".",
-                "pattern": task.description
-            })
-        else:
-            # Default to read
-            return ("read_file", {
-                "path": task.file_path or "."
-            })
-
-    def _github_action(self, task: Task) -> tuple[str, dict]:
-        """Generate github-mcp action."""
-        desc = task.description.lower()
-
-        if any(kw in desc for kw in ["issue", "bug", "ticket"]):
-            return ("create_issue", {
-                "title": task.description[:100],
-                "body": task.description,
-            })
-        elif any(kw in desc for kw in ["pr", "pull request", "merge"]):
-            return ("create_pull_request", {
-                "title": task.description[:100],
-                "body": task.description,
-            })
-        elif any(kw in desc for kw in ["commit", "push", "code"]):
-            return ("search_code", {
-                "query": task.description,
-            })
-        else:
-            return ("get_file_contents", {
-                "path": task.file_path or "README.md"
-            })
-
     def _format_output(self, result: dict) -> str:
         """Extract meaningful output from MCP result."""
         if "result" in result:
@@ -524,3 +357,7 @@ Provide ONLY the fixed code, no explanations."""
             "failed": failed,
             "success_rate": success / len(self._results) if self._results else 0,
         }
+
+
+# Backward compatibility exports
+__all__ = ["TodoRunner", "TaskResult"]
