@@ -213,6 +213,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.13] - 2026-03-28
+
+### Docs
+- Update README.md
+- Update examples/11-aider-mcp/sample_project/TODO.md
+- Update examples/12-filesystem-mcp/sample_files/README.md
+- Update examples/12-filesystem-mcp/sample_files/TODO.md
+- Update examples/12-filesystem-mcp/sample_files/docs/guide.md
+- Update examples/13-vallm/sample_code/TODO.md
+
+### Other
+- Update examples/11-aider-mcp/main.py
+- Update examples/11-aider-mcp/sample_project/calculator.py
+- Update examples/12-filesystem-mcp/main.py
+- Update examples/12-filesystem-mcp/sample_files/src/main.py
+- Update examples/13-vallm/main.py
+- Update examples/13-vallm/sample_code/complex_module.py
+
 ## [0.1.12] - 2026-03-28
 
 ### Docs

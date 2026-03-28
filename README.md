@@ -197,6 +197,18 @@ make setup && make run
 # Cost Tracking — per-ticket cost ledger
 cd examples/05-cost-tracking
 make run
+
+# Local LLM with Ollama — 100% offline, zero API costs
+cd examples/18-ollama-local
+make setup && make run
+
+# Local MCP Tools — self-hosted code analysis & validation
+cd examples/19-local-mcp-tools
+make up && make run
+
+# Self-Hosted Pipeline — complete local CI/CD stack
+cd examples/20-self-hosted-pipeline
+make build && make up && make run
 ```
 
 Each example has:
@@ -217,6 +229,9 @@ Each example has:
 - [15-github-mcp/README.md](examples/15-github-mcp/README.md) — GitHub repository operations
 - [16-test-workflow/README.md](examples/16-test-workflow/README.md) — Comprehensive test pipeline
 - [17-docker-workflow/README.md](examples/17-docker-workflow/README.md) — Refactoring workflow
+- [18-ollama-local/README.md](examples/18-ollama-local/README.md) — Local LLM with Ollama (100% offline)
+- [19-local-mcp-tools/README.md](examples/19-local-mcp-tools/README.md) — Self-hosted MCP tools (Docker)
+- [20-self-hosted-pipeline/README.md](examples/20-self-hosted-pipeline/README.md) — Complete local CI/CD pipeline
 - `run.sh` — executable script
 - `Makefile` — `make run`, `make setup`, `make clean`
 - `.env.example` — configuration template (where applicable)
@@ -310,7 +325,13 @@ Licensed under Apache-2.0.
 
 Licensed under Apache-2.0.
 
+
+Licensed under Apache-2.0.
+
 ## Author
+
+Tom Sapletta
+
 
 Tom Sapletta
 
