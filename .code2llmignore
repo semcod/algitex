@@ -1,0 +1,6 @@
+.algitex/worktrees/
+my-app/
+htmlcov/
+*.egg-info/
+__pycache__/
+.pytest_cache/

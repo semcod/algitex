@@ -11,6 +11,30 @@ from rich.table import Table
 console = Console()
 
 
+def todo_verify(
+    file: str = typer.Argument("TODO.md", help="Path to todo file"),
+):
+    """Verify which TODO tasks are still valid vs already fixed."""
+    from algitex.todo import TodoVerifier
+
+    verifier = TodoVerifier(file)
+    result = verifier.verify()
+    verifier.print_report()
+
+
+def todo_fix_parallel(
+    file: str = typer.Argument("TODO.md", help="Path to todo file"),
+    workers: int = typer.Option(8, "--workers", "-w", help="Number of parallel workers"),
+    dry_run: bool = typer.Option(True, "--dry-run/--execute", help="Dry run or actually apply"),
+    category: Optional[str] = typer.Option(None, "--category", "-c", help="Filter to specific category"),
+):
+    """Auto-fix mechanical TODO tasks in parallel."""
+    from algitex.todo import fix_todos
+
+    result = fix_todos(file, workers=workers, dry_run=dry_run, category=category)
+    console.print(f"\n[bold]Results:[/] Fixed: {result['fixed']}, Skipped: {result['skipped']}, Errors: {result['errors']}")
+
+
 def todo_list(
     file: str = typer.Argument("TODO.md", help="Path to todo file"),
 ):
@@ -118,3 +142,21 @@ def todo_fix(
             console.print(f"[{color}]{icon}[/] {r.task.description[:60]}")
             if r.error:
                 console.print(f"   [red]Error: {r.error}[/]")
+
+
+def todo_benchmark(
+    limit: int = typer.Argument(10, help="Number of tasks to benchmark"),
+    file: str = typer.Option("TODO.md", "--file", "-f", help="Path to todo file"),
+    workers: int = typer.Option(8, "--workers", "-w", help="Number of parallel workers"),
+    compare: bool = typer.Option(False, "--compare", "-c", help="Compare parallel vs sequential"),
+):
+    """Benchmark TODO fix performance."""
+    from algitex.todo import benchmark_fix, compare_modes
+
+    if compare:
+        compare_modes(file, limit=limit, workers=workers)
+    else:
+        result = benchmark_fix(file, limit=limit, workers=workers, mode="parallel")
+        result.print_report(detailed=True)
+        console.print(f"\n[dim]Tip: Use --compare to see parallel vs sequential comparison[/]")
+

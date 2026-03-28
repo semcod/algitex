@@ -226,7 +226,7 @@ class ParallelExecutor:
     def _parse_diff_ranges(self, diff_output: str) -> List[Tuple[int, int]]:
         """Extract line ranges from unified diff."""
         ranges = []
-        for match in re.finditer(r'@@ -(\d+)(?:(\d+))? \+(\d+)(?:(\d+))? @@', diff_output):
+        for match in re.finditer(r'@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@', diff_output):
             start = int(match.group(3))
             count = int(match.group(4) or 1)
             ranges.append((start, start + count - 1))

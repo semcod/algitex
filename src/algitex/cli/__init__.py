@@ -34,7 +34,7 @@ from algitex.cli.ticket import ticket_add, ticket_list, ticket_board
 from algitex.cli.algo import algo_discover, algo_extract, algo_rules, algo_report
 from algitex.cli.workflow import workflow_run, workflow_validate
 from algitex.cli.docker import docker_list, docker_spawn, docker_call, docker_teardown, docker_caps
-from algitex.cli.todo import todo_list, todo_run, todo_fix
+from algitex.cli.todo import todo_list, todo_run, todo_fix, todo_verify, todo_fix_parallel, todo_benchmark
 from algitex.cli.parallel import parallel
 
 # Main app
@@ -96,6 +96,9 @@ docker_app.command("caps")(docker_caps)
 todo_app.command("list")(todo_list)
 todo_app.command("run")(todo_run)
 todo_app.command("fix")(todo_fix)
+todo_app.command("verify")(todo_verify)
+todo_app.command("fix-auto")(todo_fix_parallel)
+todo_app.command("benchmark")(todo_benchmark)
 
 # Backward compatibility
 __all__ = [
@@ -105,5 +108,5 @@ __all__ = [
     "algo_discover", "algo_extract", "algo_rules", "algo_report",
     "workflow_run", "workflow_validate",
     "docker_list", "docker_spawn", "docker_call", "docker_teardown", "docker_caps",
-    "todo_list", "todo_run", "todo_fix",
+    "todo_list", "todo_run", "todo_fix", "todo_verify", "todo_fix_parallel", "todo_benchmark",
 ]

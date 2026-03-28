@@ -187,8 +187,8 @@ class TestTaskPartitioner:
 class TestParallelExecutor:
     """Test parallel execution orchestration."""
     
-    @patch('algitex.tools.parallel.subprocess.run')
-    @patch('algitex.tools.parallel.ThreadPoolExecutor')
+    @patch('algitex.tools.parallel.executor.subprocess.run')
+    @patch('algitex.tools.parallel.executor.ThreadPoolExecutor')
     def test_git_worktree_creation(self, mock_executor, mock_subprocess):
         """Test git worktree creation for agents."""
         mock_subprocess.return_value = Mock(returncode=0)
