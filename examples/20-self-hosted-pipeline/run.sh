@@ -2,50 +2,35 @@
 set -e
 cd "$(dirname "$0")"
 
-echo "========================================"
-echo "Self-Hosted Pipeline Example"
-echo "========================================"
+echo "=== Self-Hosted Pipeline Example ==="
+echo "Full local CI/CD pipeline using MCP tools"
 echo ""
 
-# Check if running from repo root or example dir
-if [ -f "../../docker-compose.yml" ]; then
-    COMPOSE_DIR="../.."
-elif [ -f "docker-compose.yml" ]; then
-    COMPOSE_DIR="."
-else
-    echo "⚠️  Cannot find docker-compose.yml"
-    echo "   Run from repo root or examples/20-self-hosted-pipeline/"
+# Check if .env exists
+if [ ! -f .env ]; then
+    echo "⚠️  .env not found. Creating from .env.example..."
+    cp .env.example .env
+    echo "✅ Created .env - edit with your configuration"
+fi
+
+# Check services
+echo "Checking MCP services..."
+CODE2LLM_OK=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8081/health || echo "000")
+VALLM_OK=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/health || echo "000")
+PLANFILE_OK=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8201/health || echo "000")
+
+if [ "$CODE2LLM_OK" != "200" ] || [ "$VALLM_OK" != "200" ] || [ "$PLANFILE_OK" != "200" ]; then
+    echo "❌ Some MCP services are not running"
+    echo "   Start them with: make up"
+    echo ""
+    echo "Current status:"
+    echo "  code2llm: $CODE2LLM_OK"
+    echo "  vallm: $VALLM_OK"
+    echo "  planfile: $PLANFILE_OK"
     exit 1
 fi
 
-echo "Checking stack status..."
+echo "✅ All MCP services are running"
 echo ""
-
-# Count running services
-RUNNING=$(docker ps --filter "name=-mcp\|proxym\|redis" --format "{{.Names}}" 2>/dev/null | wc -l)
-
-if [ "$RUNNING" -eq 0 ]; then
-    echo "🔴 No services running"
-    echo ""
-    echo "To start the full stack:"
-    echo "  cd $COMPOSE_DIR"
-    echo "  make up"
-    echo "  # or: docker compose --profile tools up -d"
-    echo ""
-else
-    echo "🟢 $RUNNING services running"
-    echo ""
-    docker ps --filter "name=-mcp\|proxym\|redis" --format "table {{.Names}}\t{{.Status}}" 2>/dev/null || true
-    echo ""
-fi
-
-echo "Running Python demo..."
+echo "Running pipeline demo..."
 python3 main.py
-
-echo ""
-echo "========================================"
-echo "Quick commands:"
-echo "  make up     - Start all services"
-echo "  make down   - Stop all services"
-echo "  make status - Check status"
-echo "========================================"

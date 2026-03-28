@@ -1,60 +1,42 @@
-# Example 18: Ollama Local - Local LLM Integration
+# Example 18: Ollama Local
 
-Demonstruje użycie lokalnego LLM przez Ollama bez potrzeby zewnętrznych API keys.
+Lokalne modele LLM przez Ollama - 100% offline, zero kosztów API.
 
 ## Wymagania
 
-- Ollama zainstalowane lokalnie: https://ollama.com
-- Model `qwen2.5-coder:7b` (lub podobny) pobrany:
-  ```bash
-  ollama pull qwen2.5-coder:7b
-  ```
+- Ollama zainstalowany: https://ollama.com
+- Minimum 8GB RAM (16GB rekomendowane)
+- Model `qwen2.5-coder:7b` pobrany
 
-## Możliwości
-
-- Lokalna analiza kodu bez wysyłania danych do chmury
-- Generowanie kodu offline
-- Zero kosztów API
-- Prywatność kodu źródłowego
-
-## Uruchomienie
+## Szybki Start
 
 ```bash
-cd examples/18-ollama-local
-make setup  # Sprawdza czy Ollama jest dostępne
-make run
+make setup    # Sprawdź Ollama i utwórz .env
+make run      # Uruchom przykład
 ```
 
-## CLI Commands
+## Instalacja Ollama
 
 ```bash
-# Sprawdź dostępne modele
-ollama list
+# Linux/Mac
+curl -fsSL https://ollama.com/install.sh | sh
 
-# Uruchom interaktywną sesję
-ollama run qwen2.5-coder:7b
-
-# Użyj przez proxym (jeśli skonfigurowany)
-algitex ask "Explain this code" --model ollama/qwen2.5-coder:7b
+# Pobierz model
+dollama pull qwen2.5-coder:7b
 ```
 
-## Dostępne Modele
+## Użycie
 
-| Model | Rozmiar | Przeznaczenie |
-|-------|---------|---------------|
-| qwen2.5-coder:7b | 4.7GB | Kod, refactoring |
-| qwen2.5-coder:14b | 9GB | Złożone zadania |
-| llama3.2:3b | 2.0GB | Szybkie odpowiedzi |
-| codellama:7b | 3.8GB | Specjalizacja w kodzie |
+```python
+# Użyj lokalnego modelu z Algitex
+export DEFAULT_MODEL=ollama/qwen2.5-coder:7b
 
-## Konfiguracja proxym
-
-```yaml
-# proxym-config.yaml
-providers:
-  ollama:
-    base_url: http://localhost:11434
-    models:
-      - qwen2.5-coder:7b
-      - llama3.2:3b
+algitex analyze --model ollama/qwen2.5-coder:7b
+algitex ask "Refactor this function" --model ollama/qwen2.5-coder:7b
 ```
+
+## Zalety
+
+- 🔒 Prywatność kodu
+- 💰 Zero kosztów
+- 🌐 Działa offline

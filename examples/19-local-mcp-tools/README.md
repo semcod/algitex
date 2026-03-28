@@ -1,49 +1,41 @@
-# Example 19: Local MCP Tools - Self-Hosted Analysis
+# Example 19: Local MCP Tools
 
-Demonstruje użycie lokalnych MCP tools (code2llm, vallm, planfile) zbudowanych z lokalnych Dockerfile.
+Self-hosted MCP tools działające lokalnie przez Docker.
 
 ## Wymagania
 
 - Docker i Docker Compose
-- Lokalne Dockerfile w `docker/`
+- Porty: 8080, 8081, 8201 wolne
 
-## Uruchomienie
+## Szybki Start
 
 ```bash
-# Zbuduj lokalne obrazy
-docker compose --profile tools build
-
-# Uruchom narzędzia
-docker compose --profile tools up -d
-
-# Uruchom przykład
-cd examples/19-local-mcp-tools
-make run
+make setup    # Utwórz .env
+make up       # Uruchom MCP services
+make run      # Uruchom przykład
+make down     # Zatrzymaj services
 ```
 
-## Dostępne Lokalne Tools
+## Dostępne Usługi
 
-| Tool | Port | Funkcja |
-|------|------|---------|
-| code2llm-mcp | 8081 | Analiza kodu, generowanie .toon |
-| vallm-mcp | 8080 | Walidacja kodu, scoring |
+| Usługa | Port | Opis |
+|--------|------|------|
+| code2llm-mcp | 8081 | Analiza kodu |
+| vallm-mcp | 8080 | Walidacja |
 | planfile-mcp | 8201 | Zarządzanie ticketami |
-| aider-mcp | 3000 | Refaktoryzacja kodu |
-| proxym | 4000 | LLM gateway (opcjonalnie) |
 
-## Architektura
+## Użycie
 
+```bash
+# Analiza kodu
+curl -X POST http://localhost:8081/analyze \
+  -d '{"path": "/workspace"}'
+
+# Walidacja
+curl -X POST http://localhost:8080/validate \
+  -d '{"path": "/workspace"}'
+
+# Tworzenie ticketu
+curl -X POST http://localhost:8201/tickets \
+  -d '{"title": "Fix bug", "priority": "high"}'
 ```
-┌─────────────┐     ┌─────────────┐     ┌─────────────┐
-│ code2llm    │────→│  vallm      │────→│  planfile   │
-│  (analiza)  │     │ (walidacja) │     │  (tickets)  │
-└─────────────┘     └─────────────┘     └─────────────┘
-        │                   │                   │
-        └───────────────────┴───────────────────┘
-                            │
-                    ┌───────▼───────┐
-                    │  algitex CLI  │
-                    └───────────────┘
-```
-
-Wszystko działa lokalnie - żadnych zewnętrznych API!

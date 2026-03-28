@@ -127,11 +127,11 @@ services:
     image: algitex/planfile-mcp:latest
     profiles: ["tools", "full"]
     environment:
-      - TRANSPORT=stdio
-      - MCP_TRANSPORT=stdio
+      - TRANSPORT=http
+      - PORT=8201
       - DATA_DIR=/data
-    stdin_open: true
-    tty: true
+    ports:
+      - "8201:8201"
     volumes:
       - ./data/planfile:/data
     restart: unless-stopped

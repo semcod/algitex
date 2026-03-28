@@ -202,6 +202,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.11] - 2026-03-28
+
+### Docs
+- Update README.md
+- Update examples/18-ollama-local/README.md
+- Update examples/19-local-mcp-tools/README.md
+
+### Other
+- Update examples/18-ollama-local/Makefile
+- Update examples/18-ollama-local/main.py
+- Update examples/18-ollama-local/run.sh
+- Update examples/19-local-mcp-tools/Makefile
+- Update examples/19-local-mcp-tools/main.py
+- Update examples/19-local-mcp-tools/run.sh
+- Update examples/20-self-hosted-pipeline/Makefile
+- Update examples/20-self-hosted-pipeline/auto_fix_todos.py
+- Update examples/20-self-hosted-pipeline/main.py
+- Update examples/20-self-hosted-pipeline/run.sh
+
 ## [0.1.10] - 2026-03-28
 
 ### Docs

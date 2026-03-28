@@ -217,9 +217,6 @@ Each example has:
 - [15-github-mcp/README.md](examples/15-github-mcp/README.md) — GitHub repository operations
 - [16-test-workflow/README.md](examples/16-test-workflow/README.md) — Comprehensive test pipeline
 - [17-docker-workflow/README.md](examples/17-docker-workflow/README.md) — Refactoring workflow
-- [18-ollama-local/README.md](examples/18-ollama-local/README.md) — Local LLM with Ollama
-- [19-local-mcp-tools/README.md](examples/19-local-mcp-tools/README.md) — Self-hosted MCP tools
-- [20-self-hosted-pipeline/README.md](examples/20-self-hosted-pipeline/README.md) — Full local CI/CD pipeline
 - `run.sh` — executable script
 - `Makefile` — `make run`, `make setup`, `make clean`
 - `.env.example` — configuration template (where applicable)

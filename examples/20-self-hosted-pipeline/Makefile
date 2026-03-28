@@ -1,65 +1,42 @@
-.PHONY: help run setup up down status logs test clean
+.PHONY: help run setup clean test status
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | \
 		awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
 
-run: ## Run the example
+run: ## Run the self-hosted pipeline example
 	./run.sh
 
-setup: ## Setup complete local stack
-	@echo "Building and starting self-hosted stack..."
-	@cd ../.. && make setup || docker compose --profile tools build
+setup: ## Create .env from .env.example and check dependencies
+	@if [ ! -f .env ]; then \
+		cp .env.example .env; \
+		echo "Created .env - edit with your configuration"; \
+	else \
+		echo ".env already exists"; \
+	fi
+	@echo "Checking Docker..."
+	@docker --version || (echo "❌ Docker not installed" && exit 1)
+	@echo "Checking Docker Compose..."
+	@docker compose version || (echo "❌ Docker Compose not installed" && exit 1)
+	@echo "✅ All dependencies OK"
 
-up: ## Start all services
-	@echo "Starting self-hosted stack..."
-	@cd ../.. && docker compose --profile tools up -d
-	@echo ""
-	@echo "✅ Stack started!"
-	@echo "Services:"
-	@echo "  - code2llm-mcp: http://localhost:8081"
-	@echo "  - vallm-mcp:    http://localhost:8080"
-	@echo "  - planfile-mcp: http://localhost:8201"
-	@echo "  - aider-mcp:    http://localhost:3000"
-	@echo "  - proxym:       http://localhost:4000"
-	@echo ""
-	@echo "Check status: make status"
+test: ## Test MCP services connectivity
+	@echo "Testing MCP services..."
+	@curl -s http://localhost:8081/health && echo " ✅ code2llm"
+	@curl -s http://localhost:8080/health && echo " ✅ vallm"
+	@curl -s http://localhost:8201/health && echo " ✅ planfile"
+	@curl -s http://localhost:4000/health && echo " ✅ proxym"
 
-down: ## Stop all services
-	@cd ../.. && docker compose --profile tools down
-	@echo "⏹️  Stack stopped"
-
-status: ## Check all services status
+status: ## Check stack status
 	@echo "=== Self-Hosted Stack Status ==="
-	@echo ""
-	@docker ps --filter "name=-mcp\|proxym\|redis" --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" 2>/dev/null || echo "No services running"
+	@docker compose ps 2>/dev/null || echo "Stack not running. Run: make up"
 
-logs: ## View all logs
-	@cd ../.. && docker compose --profile tools logs -f
+up: ## Start the MCP stack
+	cd ../.. && docker compose up -d code2llm-mcp vallm-mcp planfile-mcp proxym
 
-logs-%: ## View specific service logs (e.g., logs-code2llm)
-	@cd ../.. && docker compose logs -f $*
+down: ## Stop the MCP stack
+	cd ../.. && docker compose down
 
-test: ## Test all endpoints
-	@echo "Testing endpoints..."
-	@echo ""
-	@echo "code2llm-mcp (8081):"
-	@curl -s http://localhost:8081/health 2>/dev/null && echo " ✅" || echo " ❌"
-	@echo "vallm-mcp (8080):"
-	@curl -s http://localhost:8080/health 2>/dev/null && echo " ✅" || echo " ❌"
-	@echo "planfile-mcp (8201):"
-	@curl -s http://localhost:8201/health 2>/dev/null && echo " ✅" || echo " ❌"
-	@echo "aider-mcp (3000):"
-	@curl -s http://localhost:3000/health 2>/dev/null && echo " ✅" || echo " ❌"
-	@echo "proxym (4000):"
-	@curl -s http://localhost:4000/health 2>/dev/null && echo " ✅" || echo " ❌"
-
-clean: ## Clean everything (DANGER: removes data)
-	@cd ../.. && docker compose --profile tools down -v --rmi local
-	@echo "🧹 Stack cleaned (volumes removed)"
-
-restart: down up ## Restart all services
-
-build: ## Rebuild all images
-	@cd ../.. && docker compose --profile tools build --no-cache
-	@echo "🔨 Images rebuilt"
+clean: ## Remove generated files
+	rm -f .env
+	@echo "Cleaned up"

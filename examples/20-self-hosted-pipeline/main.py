@@ -1,306 +1,210 @@
 #!/usr/bin/env python3
-"""Example 20: Self-Hosted Pipeline - Full Local Setup Demo.
+"""
+Example 20: Self-Hosted Pipeline - Full Local CI/CD
 
-Demonstrates a complete CI/CD pipeline running 100% locally.
+Kompletny pipeline działający w 100% lokalnie z wykorzystaniem:
+- code2llm-mcp: analiza kodu
+- vallm-mcp: walidacja
+- planfile-mcp: zarządzanie ticketami
+- proxym-mcp (opcjonalnie): proxy do Ollama
 """
 
 import os
-import subprocess
-from pathlib import Path
+import sys
+import requests
+from typing import Dict, Any
+
+# Load environment
+from dotenv import load_dotenv
+load_dotenv()
+
+# Configuration
+CODE2LLM_URL = os.getenv("CODE2LLM_URL", "http://localhost:8081")
+VALLM_URL = os.getenv("VALLM_URL", "http://localhost:8080")
+PLANFILE_URL = os.getenv("PLANFILE_URL", "http://localhost:8201")
 
 
-def load_env():
-    """Load .env file if present."""
-    env_file = Path(__file__).parent / ".env"
-    if env_file.exists():
-        with open(env_file) as f:
-            for line in f:
-                line = line.strip()
-                if line and not line.startswith("#") and "=" in line:
-                    key, val = line.split("=", 1)
-                    if key not in os.environ:
-                        os.environ[key] = val
-
-
-def check_stack_status():
-    """Check status of self-hosted stack."""
+def check_services() -> Dict[str, bool]:
+    """Check if all MCP services are running."""
     services = {
-        "code2llm-mcp": 8081,
-        "vallm-mcp": 8080,
-        "planfile-mcp": 8201,
-        "aider-mcp": 3000,
-        "proxym": 4000,
+        "code2llm": False,
+        "vallm": False,
+        "planfile": False,
     }
     
-    status = []
-    for service, port in services.items():
-        result = subprocess.run(
-            ["docker", "ps", "--filter", f"name={service}", "--format", "{{.Names}}"],
-            capture_output=True,
-            text=True
+    try:
+        r = requests.get(f"{CODE2LLM_URL}/health", timeout=2)
+        services["code2llm"] = r.status_code == 200
+    except:
+        pass
+    
+    try:
+        r = requests.get(f"{VALLM_URL}/health", timeout=2)
+        services["vallm"] = r.status_code == 200
+    except:
+        pass
+    
+    try:
+        r = requests.get(f"{PLANFILE_URL}/health", timeout=2)
+        services["planfile"] = r.status_code == 200
+    except:
+        pass
+    
+    return services
+
+
+def demo_code_analysis():
+    """Demonstrate code analysis with code2llm."""
+    print("\n📊 Step 1: Code Analysis (code2llm-mcp)")
+    print("-" * 50)
+    
+    try:
+        response = requests.post(
+            f"{CODE2LLM_URL}/analyze",
+            json={"path": "/app", "format": "toon"},
+            timeout=30
         )
-        is_running = service in result.stdout
-        status.append((service, port, is_running))
-    
-    return status
-
-
-def demo_full_pipeline():
-    """Demonstrate complete local pipeline."""
-    print("\n" + "=" * 70)
-    print("SELF-HOSTED PIPELINE - Full Local CI/CD")
-    print("=" * 70)
-    
-    steps = [
-        {
-            "phase": "1. Source Analysis",
-            "tool": "code2llm",
-            "action": "Static analysis",
-            "input": "src/",
-            "output": "analysis.toon",
-            "time": "30s",
-        },
-        {
-            "phase": "2. Quality Validation",
-            "tool": "vallm",
-            "action": "Code validation",
-            "input": "analysis.toon",
-            "output": "quality_report.json",
-            "time": "15s",
-        },
-        {
-            "phase": "3. Ticket Generation",
-            "tool": "planfile",
-            "action": "Create tickets",
-            "input": "quality_report.json",
-            "output": "tickets/",
-            "time": "5s",
-        },
-        {
-            "phase": "4. Code Refactoring",
-            "tool": "aider-mcp",
-            "action": "Apply fixes",
-            "input": "tickets/high-priority.md",
-            "output": "src/ (modified)",
-            "time": "2m",
-        },
-        {
-            "phase": "5. Verification",
-            "tool": "vallm",
-            "action": "Validate fixes",
-            "input": "src/",
-            "output": "validation.json",
-            "time": "15s",
-        },
-        {
-            "phase": "6. Documentation",
-            "tool": "code2llm",
-            "action": "Generate docs",
-            "input": "src/",
-            "output": "docs/",
-            "time": "20s",
-        },
-    ]
-    
-    print("\n📊 Pipeline Steps:\n")
-    print(f"{'Phase':<25} {'Tool':<12} {'Action':<20} {'Time':<8}")
-    print("-" * 70)
-    
-    total_time = 0
-    for step in steps:
-        print(f"{step['phase']:<25} {step['tool']:<12} {step['action']:<20} {step['time']:<8}")
-        # Rough time calculation
-        if 'm' in step['time']:
-            total_time += int(step['time'].replace('m', '')) * 60
+        
+        if response.status_code == 200:
+            data = response.json()
+            print(f"✅ Analysis complete")
+            print(f"   Files: {data.get('total_files', 'N/A')}")
+            print(f"   Functions: {data.get('total_functions', 'N/A')}")
+            print(f"   Avg Complexity: {data.get('average_cc', 'N/A')}")
+            if data.get('hotspots'):
+                print(f"   Hotspots: {len(data['hotspots'])} high-complexity areas")
         else:
-            total_time += int(step['time'].replace('s', ''))
-    
-    print("-" * 70)
-    print(f"Total pipeline time: ~{total_time // 60}m {total_time % 60}s")
-    print(f"Total cost: $0.00 (self-hosted)")
+            print(f"⚠️  Analysis returned: {response.status_code}")
+    except Exception as e:
+        print(f"❌ Analysis failed: {e}")
 
 
-def demo_workflow_scenarios():
-    """Show different workflow scenarios."""
-    print("\n" + "=" * 70)
-    print("WORKFLOW SCENARIOS")
-    print("=" * 70)
+def demo_validation():
+    """Demonstrate validation with vallm."""
+    print("\n🔍 Step 2: Validation (vallm-mcp)")
+    print("-" * 50)
     
-    scenarios = [
-        {
-            "name": "Daily Development",
-            "trigger": "git commit",
-            "steps": ["validate", "quick-fix"],
-            "time": "1m",
-        },
-        {
-            "name": "Code Review",
-            "trigger": "pull request",
-            "steps": ["analyze", "validate", "generate-tickets"],
-            "time": "3m",
-        },
-        {
-            "name": "Release Preparation",
-            "trigger": "tag push",
-            "steps": ["full-analysis", "validate", "refactor", "docs", "verify"],
-            "time": "10m",
-        },
-        {
-            "name": "Legacy Refactoring",
-            "trigger": "manual",
-            "steps": ["analyze", "batch-refactor", "validate", "docs"],
-            "time": "30m",
-        },
-    ]
+    try:
+        response = requests.post(
+            f"{VALLM_URL}/validate",
+            json={"path": "/app"},
+            timeout=30
+        )
+        
+        if response.status_code == 200:
+            data = response.json()
+            print(f"✅ Validation complete")
+            print(f"   Static: {'✅' if data.get('static_passed') else '❌'}")
+            print(f"   Runtime: {'✅' if data.get('runtime_passed') else '❌'}")
+            print(f"   Security: {'✅' if data.get('security_passed') else '❌'}")
+            print(f"   Overall Score: {data.get('score', 'N/A'):.1f}/10")
+        else:
+            print(f"⚠️  Validation returned: {response.status_code}")
+    except Exception as e:
+        print(f"❌ Validation failed: {e}")
+
+
+def demo_ticket_management():
+    """Demonstrate ticket management with planfile-mcp."""
+    print("\n🎫 Step 3: Ticket Management (planfile-mcp)")
+    print("-" * 50)
     
+    try:
+        # Create a ticket
+        response = requests.post(
+            f"{PLANFILE_URL}/tickets",
+            json={
+                "title": "Demo: Refactor main.py",
+                "description": "Example ticket from self-hosted pipeline demo",
+                "priority": "normal",
+                "tags": ["demo", "refactor"]
+            },
+            timeout=10
+        )
+        
+        if response.status_code == 200:
+            data = response.json()
+            ticket_id = data.get('ticket_id', 'N/A')
+            print(f"✅ Created ticket: {ticket_id}")
+        else:
+            print(f"⚠️  Ticket creation returned: {response.status_code}")
+        
+        # List tickets
+        response = requests.get(f"{PLANFILE_URL}/tickets", timeout=10)
+        if response.status_code == 200:
+            data = response.json()
+            print(f"   Total tickets: {data.get('count', 0)}")
+    except Exception as e:
+        print(f"❌ Ticket management failed: {e}")
+
+
+def demo_sprint_status():
+    """Demonstrate sprint status."""
+    print("\n📈 Step 4: Sprint Status")
+    print("-" * 50)
+    
+    try:
+        response = requests.get(f"{PLANFILE_URL}/sprint", timeout=10)
+        if response.status_code == 200:
+            data = response.json()
+            print(f"✅ Sprint status")
+            print(f"   Total tickets: {data.get('total', 0)}")
+            print(f"   By status: {data.get('by_status', {})}")
+            print(f"   Completion: {data.get('completion_rate', 0)*100:.1f}%")
+    except Exception as e:
+        print(f"❌ Sprint status failed: {e}")
+
+
+def main():
+    """Main demo function."""
+    print("=" * 60)
+    print("Example 20: Self-Hosted Pipeline - Full Local CI/CD")
+    print("=" * 60)
     print()
-    for s in scenarios:
-        print(f"📋 {s['name']}")
-        print(f"   Trigger: {s['trigger']}")
-        print(f"   Steps: {' → '.join(s['steps'])}")
-        print(f"   Time: {s['time']}")
-        print()
-
-
-def demo_api_examples():
-    """Show API usage examples."""
-    print("\n" + "=" * 70)
-    print("API EXAMPLES")
-    print("=" * 70)
+    print("This example demonstrates a complete local pipeline using:")
+    print("  • code2llm-mcp  :8081 - Code analysis")
+    print("  • vallm-mcp     :8080 - Validation")
+    print("  • planfile-mcp  :8201 - Ticket management")
+    print()
     
-    examples = [
-        {
-            "desc": "Analyze project",
-            "cmd": "curl -X POST http://localhost:8081/analyze \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"path\": \"/workspace\", \"format\": \"toon\"}'"
-        },
-        {
-            "desc": "Validate code",
-            "cmd": "curl -X POST http://localhost:8080/validate \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"path\": \"/workspace/src\", \"recursive\": true}'"
-        },
-        {
-            "desc": "Create ticket",
-            "cmd": "curl -X POST http://localhost:8201/tickets \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"title\": \"Refactor\", \"priority\": \"high\"}'"
-        },
-        {
-            "desc": "Check health",
-            "cmd": "curl http://localhost:8081/health"
-        },
-    ]
+    # Check services
+    print("Checking services...")
+    services = check_services()
     
-    for ex in examples:
-        print(f"\n{ex['desc']}:")
-        print(f"  {ex['cmd']}")
-
-
-def show_resource_usage():
-    """Show estimated resource usage."""
-    print("\n" + "=" * 70)
-    print("RESOURCE USAGE (Estimated)")
-    print("=" * 70)
+    for name, status in services.items():
+        icon = "✅" if status else "❌"
+        print(f"  {icon} {name}")
     
-    resources = [
-        ("code2llm-mcp", "512MB", "Low", "Analysis"),
-        ("vallm-mcp", "512MB", "Low", "Validation"),
-        ("planfile-mcp", "256MB", "Minimal", "Tickets"),
-        ("aider-mcp", "1GB", "High", "Refactoring"),
-        ("proxym", "512MB", "Medium", "LLM Gateway"),
-        ("Redis", "256MB", "Minimal", "Cache"),
-    ]
+    if not all(services.values()):
+        print("\n⚠️  Some services are not running!")
+        print("   Start them with: make up")
+        return 1
     
-    print(f"\n{'Service':<20} {'Memory':<10} {'CPU':<10} {'Purpose':<20}")
-    print("-" * 70)
-    total_ram = 0
-    for service, mem, cpu, purpose in resources:
-        print(f"{service:<20} {mem:<10} {cpu:<10} {purpose:<20}")
-        # Parse memory
-        if 'GB' in mem:
-            total_ram += int(mem.replace('GB', '')) * 1024
-        else:
-            total_ram += int(mem.replace('MB', ''))
+    print("\n✅ All services ready!")
     
-    print("-" * 70)
-    print(f"Total RAM needed: ~{total_ram}MB ({total_ram/1024:.1f}GB)")
-    print(f"Disk space: ~5GB (images)")
-
-
-def show_deployment_options():
-    """Show deployment options."""
-    print("\n" + "=" * 70)
-    print("DEPLOYMENT OPTIONS")
-    print("=" * 70)
+    # Run demo steps
+    demo_code_analysis()
+    demo_validation()
+    demo_ticket_management()
+    demo_sprint_status()
     
-    options = [
-        {
-            "name": "Local Dev Machine",
-            "specs": "16GB RAM, 4 cores",
-            "best_for": "Development, testing",
-            "pros": "Simple, fast",
-            "cons": "Resource limited",
-        },
-        {
-            "name": "Homelab Server",
-            "specs": "32GB RAM, 8 cores",
-            "best_for": "Team of 5-10",
-            "pros": "Always on, shared",
-            "cons": "Setup complexity",
-        },
-        {
-            "name": "VPS Cloud",
-            "specs": "4 vCPU, 16GB RAM",
-            "best_for": "Remote access",
-            "pros": "Accessible anywhere",
-            "cons": "~$40/month",
-        },
-        {
-            "name": "Bare Metal",
-            "specs": "64GB RAM, GPU",
-            "best_for": "Large teams",
-            "pros": "Maximum performance",
-            "cons": "High upfront cost",
-        },
-    ]
+    print("\n" + "=" * 60)
+    print("Demo complete!")
+    print("=" * 60)
+    print()
+    print("Next steps:")
+    print("  1. Run auto-fix workflow:")
+    print("     python auto_fix_todos.py")
+    print()
+    print("  2. Use CLI with local model:")
+    print("     export DEFAULT_MODEL=ollama/qwen2.5-coder:7b")
+    print("     algitex analyze --model ollama/qwen2.5-coder:7b")
+    print()
+    print("  3. Stop services:")
+    print("     make down")
     
-    for opt in options:
-        print(f"\n🏠 {opt['name']}")
-        print(f"   Specs: {opt['specs']}")
-        print(f"   Best for: {opt['best_for']}")
-        print(f"   Pros: {opt['pros']}")
-        print(f"   Cons: {opt['cons']}")
+    return 0
 
 
 if __name__ == "__main__":
-    load_env()
-    
-    print("\n" + "=" * 70)
-    print("Example 20: Self-Hosted Pipeline - Full Local Setup")
-    print("=" * 70)
-    
-    # Check stack
-    status = check_stack_status()
-    running = sum(1 for _, _, r in status if r)
-    total = len(status)
-    
-    print(f"\n📊 Stack Status: {running}/{total} services running")
-    for service, port, is_running in status:
-        icon = "🟢" if is_running else "🔴"
-        print(f"   {icon} {service} (port {port})")
-    
-    if running == 0:
-        print("\n⚠️  No services running!")
-        print("   Start with: make up (from repo root)")
-    elif running < total:
-        print("\n⚠️  Some services not running")
-        print("   Check: make status")
-    else:
-        print("\n✅ All services running!")
-    
-    # Run demos
-    demo_full_pipeline()
-    demo_workflow_scenarios()
-    demo_api_examples()
-    show_resource_usage()
-    show_deployment_options()
-    
-    print("\n" + "=" * 70)
-    print("🎯 Complete autonomy - no external dependencies!")
-    print("=" * 70)
+    sys.exit(main())
