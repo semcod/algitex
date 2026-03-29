@@ -1,27 +1,24 @@
 flowchart TD
-    M___algitex[".algitex<br/>1678 funcs"]
     docker__code2llm["docker.code2llm<br/>18 funcs"]
     docker__planfile_mcp["docker.planfile-mcp<br/>10 funcs"]
     examples__01_quickstart["examples.01-quickstart<br/>1 funcs"]
     examples__09_workspace["examples.09-workspace<br/>11 funcs"]
     examples__10_cicd["examples.10-cicd<br/>8 funcs"]
+    examples__17_docker_workflow["examples.17-docker-workflow<br/>5 funcs"]
     examples__30_parallel_execution["examples.30-parallel-execution<br/>5 funcs"]
     examples__33_hybrid_autofix["examples.33-hybrid-autofix<br/>10 funcs"]
     examples__35_sprint3_patterns["examples.35-sprint3-patterns<br/>5 funcs"]
     examples__38_new_modules["examples.38-new-modules<br/>5 funcs"]
     scripts__generate_lib_docs["scripts.generate_lib_docs<br/>7 funcs"]
-    src__algitex["src.algitex<br/>916 funcs"]
-    src__algitex ==>|72| M___algitex
-    M___algitex ==>|43| src__algitex
-    docker__planfile_mcp -->|3| M___algitex
+    src__algitex["src.algitex<br/>937 funcs"]
+    docker__planfile_mcp -->|3| src__algitex
     examples__30_parallel_execution -->|3| src__algitex
-    examples__33_hybrid_autofix -->|3| M___algitex
+    examples__33_hybrid_autofix -->|3| src__algitex
     docker__code2llm -->|2| src__algitex
-    scripts__generate_lib_docs -->|1| M___algitex
-    examples__01_quickstart -->|1| M___algitex
-    examples__10_cicd -->|1| M___algitex
-    examples__38_new_modules -->|1| src__algitex
-    examples__38_new_modules -->|1| M___algitex
+    examples__38_new_modules -->|2| src__algitex
+    examples__09_workspace -->|2| src__algitex
+    scripts__generate_lib_docs -->|1| src__algitex
+    examples__01_quickstart -->|1| src__algitex
+    examples__10_cicd -->|1| src__algitex
+    examples__17_docker_workflow -->|1| src__algitex
     examples__35_sprint3_patterns -->|1| src__algitex
-    examples__09_workspace -->|1| M___algitex
-    examples__09_workspace -->|1| src__algitex

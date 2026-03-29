@@ -1,18 +1,18 @@
-# vallm batch | 491f | 208✓ 9⚠ 17✗ | 2026-03-28
+# vallm batch | 493f | 211✓ 9⚠ 16✗ | 2026-03-29
 
 SUMMARY:
-  scanned: 491  passed: 208 (42.4%)  warnings: 9  errors: 17  unsupported: 266
+  scanned: 493  passed: 211 (42.8%)  warnings: 9  errors: 16  unsupported: 266
 
 WARNINGS[9]{path,score}:
   src/algitex/cli/todo.py,0.87
     issues[7]{rule,severity,message,line}:
-      complexity.cyclomatic,warning,_tf_execute_phased has cyclomatic complexity 25 (max: 15),586
-      complexity.cyclomatic,warning,todo_verify_prefact has cyclomatic complexity 29 (max: 15),955
-      complexity.maintainability,warning,Low maintainability index: 14.5 (threshold: 20),
+      complexity.cyclomatic,warning,_tf_execute_phased has cyclomatic complexity 25 (max: 15),626
+      complexity.cyclomatic,warning,todo_verify_prefact has cyclomatic complexity 29 (max: 15),1027
+      complexity.maintainability,warning,Low maintainability index: 12.7 (threshold: 20),
       complexity.lizard_cc,warning,_run_with_dashboard.run_phases: CC=27 exceeds limit 15,101
       complexity.lizard_cc,warning,_run_with_dashboard: CC=16 exceeds limit 15,45
-      complexity.lizard_cc,warning,_tf_execute_phased: CC=25 exceeds limit 15,586
-      complexity.lizard_cc,warning,todo_verify_prefact: CC=29 exceeds limit 15,955
+      complexity.lizard_cc,warning,_tf_execute_phased: CC=25 exceeds limit 15,626
+      complexity.lizard_cc,warning,todo_verify_prefact: CC=29 exceeds limit 15,1027
   src/algitex/microtask/executor.py,0.96
     issues[3]{rule,severity,message,line}:
       complexity.cyclomatic,warning,_apply_magic_name has cyclomatic complexity 16 (max: 15),372
@@ -28,8 +28,8 @@ WARNINGS[9]{path,score}:
       complexity.lizard_cc,warning,_classify_message: CC=48 exceeds limit 15,105
   src/algitex/todo/fixer.py,0.97
     issues[2]{rule,severity,message,line}:
-      complexity.cyclomatic,warning,fix_file has cyclomatic complexity 24 (max: 15),164
-      complexity.lizard_cc,warning,fix_file: CC=24 exceeds limit 15,164
+      complexity.cyclomatic,warning,fix_file has cyclomatic complexity 25 (max: 15),201
+      complexity.lizard_cc,warning,fix_file: CC=25 exceeds limit 15,201
   tests/test_e2e_integration.py,0.97
     issues[2]{rule,severity,message,line}:
       complexity.cyclomatic,warning,test_complete_pipeline_flow has cyclomatic complexity 16 (max: 15),167
@@ -44,10 +44,7 @@ WARNINGS[9]{path,score}:
     issues[1]{rule,severity,message,line}:
       complexity.cyclomatic,warning,test_extract_functions_and_classes has cyclomatic complexity 19 (max: 15),14
 
-ERRORS[17]{path,score}:
-  examples/19-local-mcp-tools/buggy_code.py,0.00
-    issues[1]{rule,severity,message,line}:
-      syntax.parse,error,SyntaxError: invalid syntax,6
+ERRORS[16]{path,score}:
   tests/test_examples_30_32.py,0.76
     issues[9]{rule,severity,message,line}:
       python.import.resolvable,error,Module 'parallel_refactoring' not found,53

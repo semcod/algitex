@@ -3,7 +3,7 @@
 Przykładowy kod z celowymi błędami do naprawy przez lokalne MCP tools.
 """
 
-from,import  timedelta  # Błąd: nieużywane
+from datetime import  timedelta  # Błąd: nieużywane
 
 def process_items(items) -> Any:
     """Process a list of items."""

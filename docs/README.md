@@ -1,7 +1,7 @@
 <!-- code2docs:start --># algitex
 
-![version](https://img.shields.io/badge/version-0.1.0-blue) ![python](https://img.shields.io/badge/python-%3E%3D3.10-blue) ![coverage](https://img.shields.io/badge/coverage-unknown-lightgrey) ![functions](https://img.shields.io/badge/functions-1207-green)
-> **1207** functions | **174** classes | **192** files | CC̄ = 3.5
+![version](https://img.shields.io/badge/version-0.1.0-blue) ![python](https://img.shields.io/badge/python-%3E%3D3.10-blue) ![coverage](https://img.shields.io/badge/coverage-unknown-lightgrey) ![functions](https://img.shields.io/badge/functions-1236-green)
+> **1236** functions | **176** classes | **193** files | CC̄ = 3.4
 
 > Auto-generated project documentation from source code analysis.
 
@@ -151,7 +151,7 @@ Content outside the markers is preserved when regenerating. Enable this with `sy
 
 ```
 algitex/
-    ├── fix_readme        ├── vallm_server        ├── vallm_mcp_server        ├── proxym_server    ├── generate_lib_docs        ├── planfile_mcp_server        ├── proxym_mcp_server        ├── code2llm_server        ├── code2llm_mcp_server        ├── aider_mcp_server        ├── project/        ├── cli/    ├── algitex/        ├── config        ├── metrics        ├── dashboard        ├── prefact_integration            ├── loop        ├── shared_rules        ├── nlp/        ├── benchmark            ├── ollama_cache            ├── config            ├── cicd            ├── proxy            ├── autofix/            ├── mcp        ├── algo/            ├── todo_parser            ├── docker_transport            ├── ollama            ├── parallel/            ├── workspace        ├── tools/            ├── docker            ├── telemetry            ├── ide            ├── context            ├── tickets            ├── todo_executor            ├── services            ├── logging            ├── todo_runner            ├── todo_actions            ├── todo_local            ├── feedback            ├── dashboard            ├── benchmark            ├── batch            ├── docker            ├── ticket            ├── microtask            ├── parallel            ├── metrics            ├── algo            ├── core            ├── benchmark            ├── workflow            ├── nlp            ├── workflow            ├── config            ├── mcp            ├── autofix            ├── ollama        ├── propact/            ├── ide            ├── services            ├── benchmark            ├── batch            ├── todo            ├── pipeline            ├── analysis        ├── todo/            ├── micro        ├── workflows/            ├── classify            ├── fixer            ├── tiering            ├── repair            ├── benchmark            ├── verify            ├── prompts            ├── verifier            ├── audit            ├── classifier        ├── microtask/            ├── slicer                ├── base            ├── hybrid                ├── aider_backend                ├── fallback_backend                ├── proxy_backend            ├── executor                ├── ollama_backend                ├── partitioner                ├── batch_logger                ├── executor                ├── batch_backend        ├── buggy_code        ├── main        ├── buggy_code        ├── main        ├── main                ├── extractor                ├── models        ├── main        ├── main        ├── parallel_multi_tool        ├── workspace_parallel        ├── parallel_refactoring        ├── parallel_real_world        ├── main        ├── main        ├── main        ├── main        ├── main        ├── main        ├── main        ├── main        ├── file3        ├── main        ├── file2        ├── main        ├── file1        ├── buggy_code        ├── main        ├── main        ├── main        ├── main        ├── main        ├── main        ├── main        ├── main        ├── main        ├── buggy_code        ├── main        ├── buggy_code        ├── main        ├── main        ├── buggy_code        ├── main        ├── main        ├── main        ├── main        ├── mcp_orchestrator        ├── main        ├── main        ├── main        ├── abpr_pipeline        ├── main        ├── main        ├── main                ├── main            ├── main            ├── calculator            ├── complex_module            ├── file3            ├── file2├── project        ├── run            ├── file1        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── main        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run            ├── app```
+        ├── vallm_server    ├── fix_readme        ├── vallm_mcp_server        ├── proxym_server    ├── generate_lib_docs        ├── planfile_mcp_server        ├── proxym_mcp_server        ├── aider_mcp_server        ├── code2llm_server        ├── cli/        ├── project/    ├── algitex/        ├── code2llm_mcp_server        ├── config        ├── dashboard        ├── metrics        ├── prefact_integration            ├── loop        ├── shared_rules        ├── benchmark            ├── ollama_cache        ├── algo/        ├── nlp/            ├── config            ├── proxy            ├── autofix/            ├── todo_parser            ├── cicd            ├── mcp            ├── docker_transport            ├── ollama            ├── parallel/            ├── workspace            ├── docker        ├── tools/            ├── telemetry            ├── context            ├── ide            ├── tickets            ├── services            ├── todo_executor            ├── logging            ├── todo_runner            ├── todo_actions            ├── todo_local            ├── feedback            ├── batch            ├── dashboard            ├── docker            ├── benchmark            ├── ticket            ├── microtask            ├── parallel            ├── metrics            ├── algo            ├── benchmark            ├── workflow            ├── core            ├── nlp            ├── workflow            ├── config            ├── mcp            ├── autofix            ├── ollama        ├── propact/            ├── ide            ├── services            ├── benchmark            ├── batch            ├── todo            ├── pipeline        ├── workflows/        ├── todo/            ├── micro            ├── classify            ├── fixer            ├── analysis            ├── tiering            ├── benchmark            ├── verify            ├── repair            ├── verifier            ├── prompts            ├── audit            ├── classifier            ├── slicer            ├── hybrid                ├── base                ├── openrouter_backend                ├── fallback_backend            ├── executor                ├── aider_backend                ├── proxy_backend                ├── ollama_backend        ├── microtask/                ├── partitioner                ├── batch_logger                ├── extractor                ├── executor                ├── models        ├── main        ├── buggy_code        ├── buggy_code        ├── main        ├── main        ├── main                ├── batch_backend        ├── workspace_parallel        ├── main        ├── parallel_multi_tool        ├── parallel_refactoring        ├── parallel_real_world        ├── main        ├── main        ├── main        ├── main        ├── main        ├── main        ├── file3        ├── main        ├── main        ├── file2        ├── main        ├── file1        ├── main        ├── main        ├── main        ├── buggy_code        ├── main        ├── main        ├── main        ├── main        ├── main        ├── main        ├── buggy_code        ├── buggy_code        ├── main        ├── main        ├── main        ├── main        ├── buggy_code        ├── main        ├── main        ├── main        ├── mcp_orchestrator        ├── main        ├── main        ├── main        ├── main        ├── abpr_pipeline        ├── main        ├── buggy_code                ├── main        ├── main            ├── main        ├── main            ├── complex_module            ├── file3            ├── calculator            ├── file2├── project            ├── file1        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── main        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run            ├── app```
 
 ## API Overview
 
@@ -164,14 +164,14 @@ algitex/
 - **`TicketConfig`** — Planfile ticket system settings.
 - **`AnalysisConfig`** — Code analysis tool settings.
 - **`Config`** — Unified config for the entire algitex stack.
-- **`LLMCall`** — Single LLM call record.
-- **`FixResult`** — Single fix execution record.
-- **`MetricsCollector`** — Collect metrics during algitex operations.
-- **`MetricsReporter`** — Generate reports and dashboards from metrics.
 - **`TierState`** — State tracking for a single tier.
 - **`CacheState`** — State tracking for cache metrics.
 - **`LiveDashboard`** — Live Rich dashboard for monitoring algitex operations.
 - **`SimpleProgressTracker`** — Simplified progress tracking without full dashboard.
+- **`LLMCall`** — Single LLM call record.
+- **`FixResult`** — Single fix execution record.
+- **`MetricsCollector`** — Collect metrics during algitex operations.
+- **`MetricsReporter`** — Generate reports and dashboards from metrics.
 - **`PrefactIssue`** — Issue found by prefact rule.
 - **`PrefactRuleAdapter`** — Adapter to run prefact rules from algitex.
 - **`SharedRuleEngine`** — Unified rule engine combining algitex and prefact rules.
@@ -182,9 +182,6 @@ algitex/
 - **`SortedImportsRule`** — Rule: imports should be sorted (stdlib, third-party, local).
 - **`RelativeImportRule`** — Rule: prefer absolute imports over relative.
 - **`RuleRegistry`** — Registry of shared rules.
-- **`DocstringChange`** — Single docstring rewrite.
-- **`DocstringShortener`** — Shorten verbose docstrings to one or two lines.
-- **`DeadCodeDetector`** — Detect top-level functions that appear unused.
 - **`BenchmarkResult`** — Single benchmark run result.
 - **`BenchmarkSuite`** — Collection of benchmark results.
 - **`BenchmarkRunner`** — Main benchmark runner with memory tracking.
@@ -194,19 +191,22 @@ algitex/
 - **`CacheEntry`** — Single cache entry with metadata.
 - **`LLMCache`** — Disk-based cache for LLM responses.
 - **`CachedOllamaClient`** — OllamaClient with automatic response caching.
-- **`ConfigManager`** — Manages configuration files for various IDEs and tools.
-- **`CICDGenerator`** — Generate CI/CD pipelines for algitex projects.
-- **`LLMResponse`** — Simplified LLM response.
-- **`Proxy`** — Simple wrapper around proxym gateway.
-- **`MCPService`** — Definition of an MCP service.
-- **`MCPOrchestrator`** — Orchestrates multiple MCP services.
 - **`TraceEntry`** — Single LLM interaction trace.
 - **`Pattern`** — Extracted repeating pattern from traces.
 - **`Rule`** — Deterministic replacement for an LLM pattern.
 - **`LoopState`** — Current state of the progressive algorithmization loop.
 - **`Loop`** — The progressive algorithmization engine.
+- **`DocstringChange`** — Single docstring rewrite.
+- **`DocstringShortener`** — Shorten verbose docstrings to one or two lines.
+- **`DeadCodeDetector`** — Detect top-level functions that appear unused.
+- **`ConfigManager`** — Manages configuration files for various IDEs and tools.
+- **`LLMResponse`** — Simplified LLM response.
+- **`Proxy`** — Simple wrapper around proxym gateway.
 - **`Task`** — Single todo task extracted from file.
 - **`TodoParser`** — Parse todo lists from Markdown and text files.
+- **`CICDGenerator`** — Generate CI/CD pipelines for algitex projects.
+- **`MCPService`** — Definition of an MCP service.
+- **`MCPOrchestrator`** — Orchestrates multiple MCP services.
 - **`StdioTransport`** — Transport layer for JSON-RPC over stdin/stdout communication.
 - **`OllamaModel`** — Information about an Ollama model.
 - **`OllamaResponse`** — Response from Ollama API.
@@ -214,28 +214,28 @@ algitex/
 - **`OllamaService`** — High-level service for Ollama operations.
 - **`RepoConfig`** — Configuration for a single repository in the workspace.
 - **`Workspace`** — Manage multiple repos as a single workspace.
-- **`ToolStatus`** — —
 - **`DockerTool`** — Single Docker-based tool declaration from docker-tools.yaml.
 - **`RunningTool`** — A spawned Docker container with connection info.
 - **`DockerToolManager`** — Spawn Docker containers, connect via MCP/REST, call tools, teardown.
+- **`ToolStatus`** — —
 - **`TraceSpan`** — Single operation span.
 - **`Telemetry`** — Track costs, tokens, time across an algitex pipeline run.
+- **`CodeContext`** — Assembled context for an LLM coding task.
+- **`ContextBuilder`** — Build rich context for LLM coding tasks from .toon files + git + planfile.
+- **`SemanticCache`** — Optional semantic caching using Qdrant for context retrieval.
 - **`IDETool`** — IDE tool configuration.
 - **`IDEHelper`** — Base class for IDE integrations.
 - **`ClaudeCodeHelper`** — Helper for Claude Code (anthropic-curl) integration.
 - **`AiderHelper`** — Helper for Aider integration.
 - **`VSCodeHelper`** — Helper for VS Code integration.
 - **`EditorIntegration`** — High-level editor integration manager.
-- **`CodeContext`** — Assembled context for an LLM coding task.
-- **`ContextBuilder`** — Build rich context for LLM coding tasks from .toon files + git + planfile.
-- **`SemanticCache`** — Optional semantic caching using Qdrant for context retrieval.
 - **`Ticket`** — A single work item.
 - **`Tickets`** — Manage project tickets via planfile or local YAML.
-- **`TaskResult`** — Result of executing a single task.
-- **`TodoExecutor`** — Execute todo tasks using Docker MCP tools.
 - **`ServiceStatus`** — Status of a single service.
 - **`ServiceChecker`** — Checker for various services used by algitex.
 - **`ServiceDependency`** — Manage service dependencies and startup order.
+- **`TaskResult`** — Result of executing a single task.
+- **`TodoExecutor`** — Execute todo tasks using Docker MCP tools.
 - **`VerboseContext`** — Context manager for verbose logging in a block.
 - **`TaskResult`** — Result of executing a single task.
 - **`TodoRunner`** — Execute todo tasks using Docker MCP tools with local fallback.
@@ -245,14 +245,14 @@ algitex/
 - **`FeedbackPolicy`** — Policy configuration for feedback handling.
 - **`FeedbackController`** — Orchestrate retry/replan/escalate decisions.
 - **`FeedbackLoop`** — Integrates feedback controller into the pipeline execution.
-- **`Task`** — Benchmark task definition.
-- **`TaskResult`** — Result for a single model on a single task.
-- **`BenchmarkResults`** — Complete benchmark results.
-- **`ModelBenchmark`** — Benchmark models on standardized tasks.
 - **`BatchResult`** — Result from batch processing.
 - **`BatchStats`** — Statistics for batch processing.
 - **`BatchProcessor`** — Generic batch processor with rate limiting and retries.
 - **`FileBatchProcessor`** — Specialized batch processor for files.
+- **`Task`** — Benchmark task definition.
+- **`TaskResult`** — Result for a single model on a single task.
+- **`BenchmarkResults`** — Complete benchmark results.
+- **`ModelBenchmark`** — Benchmark models on standardized tasks.
 - **`ConfigMixin`** — Configuration management functionality for Project.
 - **`MCPMixin`** — MCP service orchestration functionality for Project.
 - **`AutoFixMixin`** — AutoFix integration functionality for Project.
@@ -265,68 +265,70 @@ algitex/
 - **`BenchmarkMixin`** — Model benchmarking functionality for Project.
 - **`BatchMixin`** — Batch processing functionality for Project.
 - **`Project`** — One project, all tools, zero boilerplate.
-- **`HealthReport`** — Combined analysis result from all tools.
-- **`Analyzer`** — Unified interface for code analysis tools.
-- **`CLIResult`** — —
+- **`Pipeline`** — Composable workflow: chain steps fluently.
+- **`TicketExecutor`** — Handles ticket execution with Docker tools, telemetry, context, and feedback.
+- **`TicketValidator`** — Multi-level validation: static analysis, runtime tests, security scanning.
 - **`FunctionSnippet`** — Minimal source slice around a function or method.
 - **`MicroFixResult`** — Result of a micro-LLM fix.
 - **`FunctionExtractor`** — Extract a single function or method around a task line.
 - **`MicroPromptBuilder`** — Build narrow prompts for micro-LLM fixes.
 - **`MicroFixer`** — Execute micro-LLM fixes on a TODO file.
-- **`Pipeline`** — Composable workflow: chain steps fluently.
-- **`TicketExecutor`** — Handles ticket execution with Docker tools, telemetry, context, and feedback.
-- **`TicketValidator`** — Multi-level validation: static analysis, runtime tests, security scanning.
 - **`TaskTriage`** — Classification result for a single TODO task.
 - **`TodoTask`** — Single TODO task.
 - **`FixResult`** — Result of fixing a file.
+- **`HealthReport`** — Combined analysis result from all tools.
+- **`Analyzer`** — Unified interface for code analysis tools.
+- **`CLIResult`** — —
 - **`TierSummary`** — Aggregated classification summary for a TODO list.
 - **`BenchmarkResult`** — Benchmark results for fix operations.
 - **`VerifyResult`** — Result of TODO verification.
 - **`TodoTask`** — Single TODO task entry.
-- **`PromptBuilder`** — Build compact chat prompts for local LLMs.
 - **`TodoTask`** — Single TODO task from prefact output.
 - **`VerificationResult`** — Result of TODO verification.
 - **`TodoVerifier`** — Verify which TODO tasks from prefact are still valid.
+- **`PromptBuilder`** — Build compact chat prompts for local LLMs.
 - **`AuditEntry`** — Single audit entry for an operation.
 - **`ChangeRecord`** — Record of a single file change for rollback.
 - **`AuditLogger`** — Comprehensive audit logging with rollback support.
-- **`TaskType`** — Classification tiers for micro tasks.
-- **`MicroTask`** — Atomic unit of work for a single file change.
-- **`MicroTaskBatch`** — Tasks grouped by file for execution.
 - **`ContextSlicer`** — Extract the smallest useful context for a micro task.
-- **`FixResult`** — Result of fixing an issue.
-- **`Task`** — Minimal task representation for backends.
-- **`AutoFixBackend`** — Base class for autofix backends.
 - **`HybridResult`** — Result of hybrid fix operation.
 - **`RateLimiter`** — Token bucket rate limiter for LLM calls.
 - **`LLMTask`** — Task for LLM-based fixing.
 - **`HybridAutofix`** — Hybrid autofix: parallel mechanical + rate-limited parallel LLM.
-- **`AiderBackend`** — Fix issues using Aider CLI.
+- **`FixResult`** — Result of fixing an issue.
+- **`Task`** — Minimal task representation for backends.
+- **`AutoFixBackend`** — Base class for autofix backends.
+- **`OpenRouterBackend`** — Fix issues using OpenRouter API directly.
+- **`AutoFix`** — Automated code fixing using various backends.
 - **`BackendStatus`** — Status of a backend.
 - **`FallbackBackend`** — Backend with automatic failover to alternative LLM services.
-- **`AutoFix`** — Automated code fixing using various backends.
-- **`ProxyBackend`** — Fix issues using LiteLLM proxy.
 - **`PhaseResult`** — Summary for a single execution phase.
 - **`MicroTaskExecutor`** — Execute micro tasks in three tiers: algorithmic, small LLM, big LLM.
+- **`AiderBackend`** — Fix issues using Aider CLI.
+- **`ProxyBackend`** — Fix issues using LiteLLM proxy.
 - **`OllamaBackend`** — Fix issues using Ollama local models.
+- **`TaskType`** — Classification tiers for micro tasks.
+- **`MicroTask`** — Atomic unit of work for a single file change.
+- **`MicroTaskBatch`** — Tasks grouped by file for execution.
 - **`TaskPartitioner`** — Partition tickets into non-conflicting groups for parallel execution.
 - **`BatchLogEntry`** — Single entry in batch log.
 - **`BatchSessionLog`** — Complete log of batch session.
 - **`BatchLogger`** — Logger for batch operations with markdown output.
-- **`ParallelExecutor`** — Execute tickets in parallel using git worktrees + region locking.
-- **`TaskGroup`** — Grupa podobnych zadań do batch fix.
-- **`BatchFixBackend`** — Backend do optymalizacji fixów przez grupowanie.
-- **`Manager`** — —
 - **`RegionExtractor`** — Extract lockable AST regions from Python files using map.toon.
+- **`ParallelExecutor`** — Execute tickets in parallel using git worktrees + region locking.
 - **`RegionType`** — Types of code regions that can be locked.
 - **`CodeRegion`** — An AST-level lockable region within a file.
 - **`TaskAssignment`** — A ticket assigned to a specific agent with locked regions.
 - **`MergeResult`** — Result of merging agent worktrees back to main.
+- **`Manager`** — —
+- **`TaskGroup`** — Grupa podobnych zadań do batch fix.
+- **`BatchFixBackend`** — Backend do optymalizacji fixów przez grupowanie.
 - **`BadClass`** — —
 - **`DataManager`** — —
-- **`UserManager`** — Manages user operations.
 - **`DataManager`** — —
+- **`UserManager`** — Manages user operations.
 - **`UserManager`** — Manage users.
+- **`BadClass`** — Class with multiple issues.
 - **`Handler`** — —
 
 ### Functions
@@ -362,27 +364,27 @@ algitex/
 - `get_budget_status()` — Get current budget/usage status (placeholder for budget tracking).
 - `create_rest_api()` — Create FastAPI application for REST mode.
 - `run_rest_server()` — Run as REST API server.
+- `aider_ai_code(prompt, relative_editable_files, model)` — Edit code using AI via Aider.
+- `aider_list_models()` — List available AI models for Aider.
+- `aider_chat(message, context)` — Chat with Aider AI about code.
+- `create_rest_api()` — Create FastAPI application for REST mode.
+- `run_rest_server()` — Run as REST API server.
 - `analyze_project(path)` — Analyze a Python project and return metrics.
 - `generate_toon(path)` — Generate Toon notation report for a project.
 - `generate_readme(path)` — Generate README.md content from code analysis.
 - `evolution_export(path)` — Export evolution report with modules, dependencies, and hotspots.
 - `create_rest_api()` — Create FastAPI application for REST mode.
 - `run_rest_server()` — Run as REST API server.
-- `aider_ai_code(prompt, relative_editable_files, model)` — Edit code using AI via Aider.
-- `aider_list_models()` — List available AI models for Aider.
-- `aider_chat(message, context)` — Chat with Aider AI about code.
-- `create_rest_api()` — Create FastAPI application for REST mode.
-- `run_rest_server()` — Run as REST API server.
+- `show_quick_dashboard(duration)` — Show a quick demo dashboard for a specified duration.
 - `get_metrics()` — Get or create global metrics collector.
 - `reset_metrics()` — Reset global metrics.
-- `show_quick_dashboard(duration)` — Show a quick demo dashboard for a specified duration.
 - `run_prefact_check(file_path)` — Quick check if prefact is available and can scan a file.
 - `check_file_with_prefact(file_path, rule)` — Check a file and return issues as plain dicts for CLI output.
 - `get_registry()` — Get or create global rule registry.
 - `reset_registry()` — Reset the global registry (useful for testing).
+- `run_quick_benchmark()` — Run quick benchmark suite.
 - `sort_imports_in_path(path, apply)` — Sort imports in a file or directory tree, preferring isort when available.
 - `find_duplicate_blocks(project_path, min_lines)` — Find repeated code blocks with a rolling hash over line windows.
-- `run_quick_benchmark()` — Run quick benchmark suite.
 - `init_ci_cd(project_path, platform)` — Initialize CI/CD for a project.
 - `create_quality_gate_config(max_cc, require_tests, security_scan)` — Create a quality gate configuration.
 - `spawn_stdio(tool, env, running, save_state)` — docker run -i → persistent subprocess with stdin/stdout MCP.
@@ -414,11 +416,11 @@ algitex/
 - `get_action_handler(tool)` — Get the appropriate action handler for a tool.
 - `determine_action(task, tool)` — Determine MCP action and arguments for the task.
 - `dashboard_live(duration, refresh, demo)` — Launch live TUI dashboard for real-time monitoring.
-- `dashboard_monitor(cache_dir, metrics_file)` — Monitor existing cache and metrics files.
+- `dashboard_monitor(cache, metrics)` — Monitor existing cache and metrics files.
 - `dashboard_export(format, output, duration)` — Export dashboard data to file (JSON or Prometheus format).
 - `docker_list()` — List available Docker tools from docker-tools.yaml.
 - `docker_spawn(tool_name)` — Start a Docker tool container.
-- `docker_call(tool_name, action, input_json)` — Call an MCP tool on a running Docker container.
+- `docker_call(tool_name, action, input)` — Call an MCP tool on a running Docker container.
 - `docker_teardown(tool_name)` — Stop Docker tool containers.
 - `docker_caps(tool_name)` — List MCP capabilities of a Docker tool.
 - `ticket_add(title, priority, type)` — Add a new ticket.
@@ -428,23 +430,25 @@ algitex/
 - `microtask_plan(todo_path)` — Show execution plan, tiers, and model hints.
 - `microtask_run(todo_path, algo_only, tier, dry_run)` — Execute the three-phase microtask pipeline.
 - `parallel(path, agents, tool, dry_run)` — Execute tickets in parallel with conflict-free coordination.
-- `init_cmd(path)` — Initialize with markdown help.
+- `app(ctx)` — Algitex CLI main group.
+- `ticket()` — Ticket management commands.
+- `algo()` — Algorithmization commands.
+- `workflow()` — Workflow commands.
+- `docker()` — Docker management commands.
+- `todo()` — Todo execution commands.
+- `microtask()` — Microtask pipeline commands.
+- `nlp()` — NLP helper commands.
+- `metrics()` — Metrics commands.
+- `benchmark()` — Benchmark commands.
+- `dashboard()` — Dashboard commands.
 - `metrics_show(storage, export)` — Show metrics dashboard.
-- `metrics_clear(storage, cache_dir)` — Clear all metrics and cache.
-- `metrics_cache(cache_dir, list_entries, clear)` — Manage LLM response cache.
+- `metrics_clear(storage, cache)` — Clear all metrics and cache.
+- `metrics_cache(dir, list_entries, clear_cache)` — Manage LLM response cache.
 - `metrics_compare(storage)` — Compare tier performance (algorithm vs micro vs big LLM).
 - `algo_discover(path)` — Stage 1: Start trace collection from proxym.
 - `algo_extract(path, min_freq)` — Stage 2: Extract repeating patterns from traces.
 - `algo_rules(path, no_llm)` — Stage 3: Generate deterministic rules for top patterns.
 - `algo_report(path)` — Show algorithmization progress.
-- `init(path)` — Initialize algitex for a project.
-- `analyze(path, quick)` — Analyze project health.
-- `plan(path, sprints, focus)` — Generate sprint plan with auto-tickets.
-- `go(path, dry_run)` — Full pipeline: analyze → plan → execute → validate.
-- `status(path)` — Show project status dashboard.
-- `tools()` — Show available tools and their status.
-- `ask(prompt, tier)` — Quick LLM query via proxym.
-- `sync()` — Sync tickets to external backend.
 - `benchmark_cache(entries, lookups)` — Benchmark LLM cache performance.
 - `benchmark_tiers()` — Benchmark all three tiers (algorithm, micro, big).
 - `benchmark_memory(lines)` — Benchmark memory usage for large file processing.
@@ -452,10 +456,18 @@ algitex/
 - `benchmark_quick()` — Quick benchmark (30 seconds).
 - `workflow_run(path, dry_run)` — Execute a Propact Markdown workflow.
 - `workflow_validate(path)` — Check a Propact workflow for errors.
+- `init(path)` — Initialize algitex for a project.
+- `analyze(path, quick)` — Analyze project health.
+- `plan(path, sprints, focus)` — Generate sprint plan with auto-tickets.
+- `go(path, dry_run)` — Full pipeline: analyze -> plan -> execute -> validate.
+- `status(path)` — Show project status dashboard.
+- `tools()` — Show available tools and their status.
+- `ask(prompt, tier)` — Quick LLM query via proxym.
+- `sync()` — Sync tickets to external backend.
 - `nlp_docstrings(path, fix)` — Shorten verbose docstrings using pattern-based rewriting.
 - `nlp_imports(path, sort)` — Sort imports with isort when available, otherwise use a deterministic fallback.
-- `nlp_dead_code(path)` — Detect top-level functions that are never referenced.
 - `nlp_duplicates(path, min_lines)` — Detect repeated code blocks with a rolling hash window.
+- `nlp_dead_code(path)` — Detect top-level functions that are never referenced.
 - `todo_stats(file)` — Show tier and category stats for a TODO file.
 - `todo_verify(file)` — Verify which TODO tasks are still valid vs already fixed.
 - `todo_fix_parallel(file, workers, dry_run, category)` — Auto-fix mechanical TODO tasks in parallel.
@@ -478,17 +490,17 @@ algitex/
 - `load_todo_tasks(todo_path)` — Parse TODO tasks from a file.
 - `filter_tasks(tasks)` — Filter tasks by tier and/or category.
 - `partition_tasks(tasks)` — Partition tasks by tier.
-- `repair_unused_import(path, name, line_idx)` — Remove unused import from file.
-- `repair_return_type(path, suggested, line_idx)` — Add return type annotation to function.
-- `repair_fstring(path, _unused, _unused2)` — Convert string concatenations to f-strings using flynt or simple rewrite.
-- `repair_magic_number(path, number, line_idx, const_name)` — Replace magic number with named constant.
-- `repair_module_block(path, _unused, _unused2)` — Add standard module execution block.
 - `benchmark_sequential(tasks, dry_run)` — Run sequential benchmark.
 - `benchmark_parallel(tasks, workers, dry_run)` — Run parallel benchmark.
 - `benchmark_fix(todo_path, limit, workers, dry_run)` — Run benchmark on TODO tasks.
 - `compare_modes(todo_path, limit, workers, dry_run)` — Compare parallel vs sequential execution.
 - `verify_todos(todo_path, project_path)` — Pipeline: scan → parse → diff → result.
 - `prune_outdated_tasks(todo_path, result)` — Remove outdated tasks from TODO.md.
+- `repair_unused_import(path, name, line_idx)` — Remove unused import from file.
+- `repair_return_type(path, suggested, line_idx)` — Add return type annotation to function.
+- `repair_fstring(path, _unused, _unused2)` — Convert string concatenations to f-strings using flynt or simple rewrite.
+- `repair_magic_number(path, number, line_idx, const_name)` — Replace magic number with named constant.
+- `repair_module_block(path, _unused, _unused2)` — Add standard module execution block.
 - `verify_todos(todo_path)` — Quick verification function.
 - `classify_prefact_line(line, task_id, base_dir)` — Convert one prefact-style TODO line into a MicroTask.
 - `classify_todo_file(path)` — Parse a TODO file and return the MicroTask view.
@@ -496,11 +508,11 @@ algitex/
 - `get_logger()` — Get current logger instance.
 - `start_session(backend, batch_size, parallel)` — Start new logging session.
 - `end_session()` — End session and save log.
+- `main()` — —
 - `calc(x, y, op)` — —
 - `process(items)` — —
 - `load(path)` — —
 - `divide(a, b)` — —
-- `main()` — —
 - `calculate_statistics(data)` — Calculate basic statistics for a dataset.
 - `find_user(users, name)` — Find user by name.
 - `process_file(filename)` — Process a file.
@@ -508,6 +520,7 @@ algitex/
 - `get_config(key)` — Get config value.
 - `complex_function(data)` — A complex function with multiple issues.
 - `bad_error_handling()` — Function with bad error handling.
+- `main()` — —
 - `check_ollama()` — Check if Ollama is running.
 - `list_models()` — List available local models.
 - `generate_code(prompt, model)` — Generate code using local Ollama model.
@@ -516,6 +529,8 @@ algitex/
 - `demo_code_analysis()` — Demo: Analyze code using local LLM.
 - `demo_cost_comparison()` — Demo: Compare local vs cloud costs.
 - `main()` — —
+- `create_sample_project()` — Create sample project with code to refactor.
+- `demo_refactoring()` — Demonstrate real refactoring workflow.
 - `main()` — —
 - `basic_github_actions_example()` — Generate basic GitHub Actions workflow.
 - `gitlab_ci_example()` — Generate GitLab CI configuration.
@@ -525,18 +540,10 @@ algitex/
 - `complete_ci_cd_setup()` — Example of complete CI/CD setup.
 - `multi_platform_ci_example()` — Example of multi-platform CI/CD.
 - `cleanup_ci_projects()` — Clean up all sample CI projects.
-- `create_sample_project()` — Create sample project with code to refactor.
-- `demo_refactoring()` — Demonstrate real refactoring workflow.
-- `main()` — —
 - `main()` — —
 - `main()` — —
 - `setup_sample_project(base_dir)` — Create a sample project structure for demonstration.
 - `main()` — Demonstrate parallel refactoring of a real-world project.
-- `demo_batch_dry_run()` — Demonstracja trybu dry-run.
-- `demo_batch_execute()` — Demonstracja trybu execute.
-- `demo_custom_batch_size()` — Demonstracja niestandardowego rozmiaru batch.
-- `demo_comparison()` — Porównanie podejść.
-- `main()` — —
 - `main()` — —
 - `load_workspace_config()` — Load the workspace configuration.
 - `main()` — Demonstrate workspace coordination across multiple repositories.
@@ -547,14 +554,14 @@ algitex/
 - `create_sample_code()` — Create sample Python code with issues to validate.
 - `run_local_validation(code_dir)` — Run local validation tools if available.
 - `demo_validation()` — Demonstrate real code validation.
+- `main()` — —
+- `complex_logic(n)` — —
 - `demo_benchmark_quick()` — Demo: Quick benchmark (30 seconds).
 - `demo_benchmark_cache()` — Demo: Cache performance testing.
 - `demo_benchmark_tiers()` — Demo: Tier throughput comparison.
 - `demo_benchmark_memory()` — Demo: Memory profiling for large files.
 - `demo_benchmark_full()` — Demo: Full benchmark suite with export.
 - `main()` — Run all benchmark demos.
-- `main()` — —
-- `complex_logic(n)` — —
 - `load_env()` — Load .env file if present.
 - `check_required_env()` — Check required environment variables.
 - `show_workflow()` — Display the 7-step refactoring workflow.
@@ -567,10 +574,6 @@ algitex/
 - `bad_function_1(x, y)` — —
 - `bad_function_2(data)` — —
 - `bad_function_3(a, b, c, d)` — —
-- `calculate(x, y, operation)` — —
-- `process_items(data)` — —
-- `load_file(path)` — —
-- `divide_numbers(a, b)` — —
 - `main()` — —
 - `load_env()` — Load .env file if present.
 - `roo_code_config()` — Settings for Roo Code (VS Code extension).
@@ -581,24 +584,35 @@ algitex/
 - `claude_code_env()` — Environment variables for Claude Code.
 - `main()` — —
 - `main()` — —
+- `calculate(x, y, operation)` — —
+- `process_items(data)` — —
+- `load_file(path)` — —
+- `divide_numbers(a, b)` — —
+- `demo_batch_dry_run()` — Demonstracja trybu dry-run.
+- `demo_batch_execute()` — Demonstracja trybu execute.
+- `demo_custom_batch_size()` — Demonstracja niestandardowego rozmiaru batch.
+- `demo_comparison()` — Porównanie podejść.
+- `main()` — —
+- `basic_telemetry_example()` — Basic telemetry tracking example.
+- `context_manager_example()` — Using telemetry as a context manager.
+- `multi_model_comparison()` — Compare costs across different models.
+- `budget_tracking_example()` — Track spending against a budget.
 - `demo_dashboard_live()` — Demo: Live dashboard with auto-refresh.
 - `demo_dashboard_monitor()` — Demo: Monitor existing cache and metrics.
 - `demo_dashboard_export()` — Demo: Export metrics to various formats.
 - `demo_dashboard_with_todo()` — Demo: Dashboard integration with TODO commands.
 - `main()` — Run all dashboard demos.
-- `main()` — —
 - `demo_classify_module()` — Demo: Using algitex.todo.classify directly.
 - `demo_repair_module()` — Demo: Using algitex.todo.repair directly.
 - `demo_verify_module()` — Demo: Using algitex.todo.verify directly.
 - `demo_combined_workflow()` — Demo: Combining all three modules.
 - `main()` — Run all module demos.
-- `create_sample_project()` — Create sample project for GitHub workflow.
-- `demo_github_workflow()` — Demonstrate GitHub workflow.
+- `main()` — —
 - `main()` — Main demo function.
-- `basic_telemetry_example()` — Basic telemetry tracking example.
-- `context_manager_example()` — Using telemetry as a context manager.
-- `multi_model_comparison()` — Compare costs across different models.
-- `budget_tracking_example()` — Track spending against a budget.
+- `calculate(x, y, operation)` — —
+- `process_items(data)` — —
+- `load_file(path)` — —
+- `divide_numbers(a, b)` — —
 - `fetch_user_data(user_id, db_connection)` — Fetch user data from database.
 - `calculate_discount(price, user_type)` — Calculate discounted price.
 - `log_activity(user_id, action)` — Log user activity.
@@ -608,11 +622,9 @@ algitex/
 - `process_large_file(filepath)` — Process large file.
 - `generate_report(data, format)` — Generate report in various formats.
 - `cleanup_old_files(directory, days)` — Clean up old files.
+- `create_sample_project()` — Create sample project for GitHub workflow.
+- `demo_github_workflow()` — Demonstrate GitHub workflow.
 - `main()` — —
-- `calculate(x, y, operation)` — —
-- `process_items(data)` — —
-- `load_file(path)` — —
-- `divide_numbers(a, b)` — —
 - `demo_microtask_classify()` — Demo: Microtask classification.
 - `demo_microtask_plan()` — Demo: Microtask planning.
 - `demo_microtask_run()` — Demo: Microtask execution.
@@ -626,7 +638,6 @@ algitex/
 - `divide(a, b)` — Divide two numbers.
 - `complex_function(data, threshold, multiplier, offset)` — Process data with many parameters.
 - `bad_error_handling()` — Example of bad error handling.
-- `main()` — —
 - `demo_dry_run(todo_file)` — Demo: Dry run to preview what would be fixed.
 - `demo_verify_first(todo_file)` — Demo: Verify TODO tasks before fixing.
 - `demo_benchmark(todo_file)` — Demo: Benchmark performance.
@@ -634,42 +645,48 @@ algitex/
 - `demo_full_hybrid(todo_file, workers, rate_limit)` — Demo: Full hybrid with LLM backend.
 - `demo_ollama_local(todo_file)` — Demo: 100% offline with Ollama.
 - `main()` — Main entry point for Hybrid AutoFix example.
+- `main()` — —
 - `demo_tier_algorithm()` — Demo: Algorithm tier (deterministic fixes).
 - `demo_tier_micro()` — Demo: Micro tier (small LLM fixes).
 - `demo_tier_big()` — Demo: Big tier (large LLM fixes).
 - `demo_all_tiers()` — Demo: Running all three tiers.
 - `demo_dashboard_integration()` — Demo: Dashboard with 3-tier system.
 - `main()` — Run all 3-tier demos.
-- `main()` — Demonstrate MCP service orchestration.
 - `main()` — —
+- `main()` — Demonstrate MCP service orchestration.
 - `demo_dict_dispatch()` — Demo: Dict dispatch pattern from classify.py
 - `demo_strategy_pattern()` — Demo: Strategy pattern from repair.py
 - `demo_pipeline_pattern()` — Demo: Pipeline pattern from verify.py
 - `demo_orchestrator_pattern()` — Demo: Orchestrator pattern from fixer.py
 - `main()` — Run all Sprint 3 pattern demos.
+- `create_sample_files()` — Create sample files for demonstration.
+- `demo_file_operations()` — Demonstrate real filesystem operations.
 - `basic_feedback_example()` — Basic feedback controller example.
 - `custom_policy_example()` — Example with custom feedback policy.
 - `feedback_extraction_example()` — Example of extracting actionable feedback.
 - `feedback_loop_simulation()` — Simulate complete feedback loop with mock execution.
 - `escalation_scenarios()` — Different escalation scenarios.
 - `cost_optimization_example()` — Example of optimizing costs with feedback policies.
-- `create_sample_files()` — Create sample files for demonstration.
-- `demo_file_operations()` — Demonstrate real filesystem operations.
 - `abpr_pipeline(project_path)` — ABPR loop: Execute → Trace → Conflict → Rule → Validate → Repeat.
-- `main()` — Demonstrate ABPR pipeline: Execute → Trace → Conflict → Rule → Validate → Repeat.
-- `check_services()` — Check if all MCP services are running.
-- `main()` — —
 - `basic_context_example()` — Basic context building example.
 - `context_optimization_example()` — Example of optimizing context for different use cases.
 - `semantic_search_example()` — Example of semantic search for related code (placeholder).
 - `prompt_engineering_example()` — Example of how context improves prompt engineering.
 - `cleanup_example_projects()` — Clean up example projects.
+- `process_items(items)` — Process a list of items.
+- `load_data(source)` — Load data from source.
+- `cache_result(func)` — Decorator with issues.
+- `parse_date(date_string)` — Parse date string.
+- `recursive_function(n)` — Recursive function without proper termination.
 - `main()` — —
+- `main()` — Demonstrate ABPR pipeline: Execute → Trace → Conflict → Rule → Validate → Repeat.
 - `calculate(x, y)` — Calculate sum.
-- `calc(a, b, op)` — —
+- `check_services()` — Check if all MCP services are running.
+- `main()` — —
 - `process_data(data)` — Process data with nested logic.
 - `calculate(x, y, operation)` — —
 - `hello()` — —
+- `calc(a, b, op)` — —
 - `connect()` — —
 - `retry()` — —
 - `calculate()` — —
@@ -735,6 +752,7 @@ algitex/
 📄 `examples.18-ollama-local.buggy_code` (7 functions)
 📄 `examples.18-ollama-local.main` (8 functions)
 📄 `examples.18-ollama-local.run`
+📄 `examples.19-local-mcp-tools.buggy_code` (8 functions, 1 classes)
 📄 `examples.19-local-mcp-tools.main` (2 functions)
 📄 `examples.19-local-mcp-tools.run`
 📄 `examples.20-self-hosted-pipeline.buggy_code` (12 functions, 1 classes)
@@ -788,7 +806,7 @@ algitex/
 📦 `src.algitex.algo` (12 functions, 5 classes)
 📄 `src.algitex.algo.loop`
 📄 `src.algitex.benchmark` (17 functions, 6 classes)
-📦 `src.algitex.cli` (2 functions)
+📦 `src.algitex.cli` (11 functions)
 📄 `src.algitex.cli.algo` (4 functions)
 📄 `src.algitex.cli.benchmark` (5 functions)
 📄 `src.algitex.cli.core` (11 functions)
@@ -796,7 +814,7 @@ algitex/
 📄 `src.algitex.cli.docker` (5 functions)
 📄 `src.algitex.cli.metrics` (4 functions)
 📄 `src.algitex.cli.microtask` (10 functions)
-📄 `src.algitex.cli.nlp` (8 functions)
+📄 `src.algitex.cli.nlp` (7 functions)
 📄 `src.algitex.cli.parallel` (6 functions)
 📄 `src.algitex.cli.ticket` (3 functions)
 📄 `src.algitex.cli.todo` (21 functions)
@@ -827,7 +845,7 @@ algitex/
 📄 `src.algitex.todo.audit` (13 functions, 3 classes)
 📄 `src.algitex.todo.benchmark` (6 functions, 1 classes)
 📄 `src.algitex.todo.classify` (3 functions, 1 classes)
-📄 `src.algitex.todo.fixer` (16 functions, 2 classes)
+📄 `src.algitex.todo.fixer` (17 functions, 2 classes)
 📄 `src.algitex.todo.hybrid` (10 functions, 4 classes)
 📄 `src.algitex.todo.micro` (19 functions, 5 classes)
 📄 `src.algitex.todo.repair` (7 functions)
@@ -843,6 +861,7 @@ algitex/
 📄 `src.algitex.tools.autofix.batch_logger` (17 functions, 3 classes)
 📄 `src.algitex.tools.autofix.fallback_backend` (7 functions, 2 classes)
 📄 `src.algitex.tools.autofix.ollama_backend` (7 functions, 1 classes)
+📄 `src.algitex.tools.autofix.openrouter_backend` (12 functions, 1 classes)
 📄 `src.algitex.tools.autofix.proxy_backend` (12 functions, 1 classes)
 📄 `src.algitex.tools.batch` (20 functions, 4 classes)
 📄 `src.algitex.tools.benchmark` (19 functions, 4 classes)
@@ -878,7 +897,7 @@ algitex/
 ## Requirements
 
 - Python >= >=3.10
-- pyyaml >=6.0- httpx >=0.27- rich >=13.0- typer >=0.12- pydantic >=2.0- tabulate >=0.9
+- pyyaml >=6.0- httpx >=0.27- rich >=13.0- clickmd >=1.0- pydantic >=2.0- tabulate >=0.9
 
 ## Contributing
 
