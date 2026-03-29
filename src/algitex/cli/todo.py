@@ -518,7 +518,7 @@ Limited tasks with workers:
 @option("--workers", "-w", default=8)
 @option("--micro-workers", default=4)
 @option("--model", default="qwen3-coder:latest")
-@option("--backend", "-b", default="litellm-proxy")
+@option("--backend", "-b", default="openrouter")
 @option("--rate-limit", "-r", default=10)
 @option("--proxy-url", "-p", default="http://localhost:4000")
 @option("--verbose", "-v", is_flag=True, help="Enable verbose logging")

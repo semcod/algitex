@@ -25,6 +25,7 @@ from algitex.tools.autofix.base import AutoFixBackend, Task, FixResult
 from algitex.tools.autofix.proxy_backend import ProxyBackend
 from algitex.tools.autofix.ollama_backend import OllamaBackend
 from algitex.tools.autofix.aider_backend import AiderBackend
+from algitex.tools.autofix.openrouter_backend import OpenRouterBackend
 from algitex.tools.logging import verbose, verbose_print
 
 
@@ -90,6 +91,10 @@ class FallbackBackend(AutoFixBackend):
                 )
             elif name == "aider":
                 self._backend_instances[name] = AiderBackend(
+                    dry_run=self.dry_run
+                )
+            elif name == "openrouter":
+                self._backend_instances[name] = OpenRouterBackend(
                     dry_run=self.dry_run
                 )
             else:

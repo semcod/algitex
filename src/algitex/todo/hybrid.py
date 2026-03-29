@@ -343,6 +343,8 @@ class HybridAutofix:
                 fallbacks = ["aider"]
             elif self.backend == "aider":
                 fallbacks = ["ollama"]
+            elif self.backend == "openrouter":
+                fallbacks = ["ollama", "aider"]
             else:
                 fallbacks = ["litellm-proxy", "ollama", "aider"]
 

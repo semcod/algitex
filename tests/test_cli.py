@@ -2,7 +2,7 @@
 
 import json
 import pytest
-from click.testing import CliRunner
+from typer.testing import CliRunner
 
 from algitex.cli import app
 
