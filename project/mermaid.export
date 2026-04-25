@@ -388,6 +388,47 @@ flowchart TD
         examples__40_three_tier_autofix__main__demo_dashboard_integration["demo_dashboard_integration"]
         examples__40_three_tier_autofix__main__main["main"]
     end
+    subgraph examples__41_god_module_splitting
+        examples__41_god_module_splitting__main__demo_god_module_problem["demo_god_module_problem"]
+        examples__41_god_module_splitting__main__demo_split_strategy["demo_split_strategy"]
+        examples__41_god_module_splitting__main__demo_before_and_after["demo_before_and_after"]
+        examples__41_god_module_splitting__main__demo_import_compatibility["demo_import_compatibility"]
+        examples__41_god_module_splitting__main__demo_real_metrics["demo_real_metrics"]
+        examples__41_god_module_splitting__main__demo_how_to_split_your_module["demo_how_to_split_your_module"]
+        examples__41_god_module_splitting__main__main["main"]
+    end
+    subgraph examples__42_duplicate_removal
+        examples__42_duplicate_removal__main__demo_duplicate_problem["demo_duplicate_problem"]
+        examples__42_duplicate_removal__main__demo_detection_with_redup["demo_detection_with_redup"]
+        examples__42_duplicate_removal__main__demo_extraction_strategy["demo_extraction_strategy"]
+        examples__42_duplicate_removal__main__demo_algitex_integration["demo_algitex_integration"]
+        examples__42_duplicate_removal__main__demo_real_world_example["demo_real_world_example"]
+        examples__42_duplicate_removal__main__demo_prevention_strategies["demo_prevention_strategies"]
+        examples__42_duplicate_removal__main__demo_metrics_and_roi["demo_metrics_and_roi"]
+        examples__42_duplicate_removal__main__main["main"]
+    end
+    subgraph examples__43_code_health
+        examples__43_code_health__main__demo_health_metrics["demo_health_metrics"]
+        examples__43_code_health__main__demo_analysis_pipeline["demo_analysis_pipeline"]
+        examples__43_code_health__main__demo_health_report["demo_health_report"]
+        examples__43_code_health__main__demo_historical_tracking["demo_historical_tracking"]
+        examples__43_code_health__main__demo_ci_integration["demo_ci_integration"]
+        examples__43_code_health__main__demo_regression_prevention["demo_regression_prevention"]
+        examples__43_code_health__main__demo_health_improvement_workflow["demo_health_improvement_workflow"]
+        examples__43_code_health__main__main["main"]
+    end
+    subgraph examples__44_plugin_system
+        examples__44_plugin_system__main__ToolPlugin__execute["execute"]
+        examples__44_plugin_system__main__BackendPlugin__generate["generate"]
+        examples__44_plugin_system__main__demo_plugin_architecture["demo_plugin_architecture"]
+        examples__44_plugin_system__main__demo_builtin_plugins["demo_builtin_plugins"]
+        examples__44_plugin_system__main__demo_creating_tool_plugin["demo_creating_tool_plugin"]
+        examples__44_plugin_system__main__demo_creating_backend_plugin["demo_creating_backend_plugin"]
+        examples__44_plugin_system__main__demo_hook_system["demo_hook_system"]
+        examples__44_plugin_system__main__demo_plugin_configuration["demo_plugin_configuration"]
+        examples__44_plugin_system__main__demo_plugin_marketplace["demo_plugin_marketplace"]
+        examples__44_plugin_system__main__main["main"]
+    end
     subgraph project__map
         project__map__toon__aider_ai_code["aider_ai_code"]
         project__map__toon__aider_list_models["aider_list_models"]
@@ -1101,6 +1142,29 @@ flowchart TD
     scripts__generate_lib_docs__generate_index --> Taskfile__print
     scripts__generate_lib_docs__main --> Taskfile__print
     scripts__generate_lib_docs__main --> scripts__generate_lib_docs__scan_package
+    examples__41_god_module_splitting__main__demo_god_module_problem --> Taskfile__print
+    examples__41_god_module_splitting__main__demo_split_strategy --> Taskfile__print
+    examples__41_god_module_splitting__main__demo_before_and_after --> Taskfile__print
+    examples__41_god_module_splitting__main__demo_import_compatibility --> Taskfile__print
+    examples__41_god_module_splitting__main__demo_real_metrics --> Taskfile__print
+    examples__41_god_module_splitting__main__demo_how_to_split_your_module --> Taskfile__print
+    examples__41_god_module_splitting__main__main --> Taskfile__print
+    examples__41_god_module_splitting__main__main --> examples__41_god_module_splitting__main__demo_god_module_problem
+    examples__41_god_module_splitting__main__main --> examples__41_god_module_splitting__main__demo_split_strategy
+    examples__41_god_module_splitting__main__main --> examples__41_god_module_splitting__main__demo_before_and_after
+    examples__41_god_module_splitting__main__main --> examples__41_god_module_splitting__main__demo_import_compatibility
+    examples__41_god_module_splitting__main__main --> examples__41_god_module_splitting__main__demo_real_metrics
+    examples__41_god_module_splitting__main__main --> examples__41_god_module_splitting__main__demo_how_to_split_your_module
+    examples__42_duplicate_removal__main__demo_duplicate_problem --> Taskfile__print
+    examples__42_duplicate_removal__main__demo_detection_with_redup --> Taskfile__print
+    examples__42_duplicate_removal__main__demo_extraction_strategy --> Taskfile__print
+    examples__42_duplicate_removal__main__demo_algitex_integration --> Taskfile__print
+    examples__42_duplicate_removal__main__demo_real_world_example --> Taskfile__print
+    examples__42_duplicate_removal__main__demo_prevention_strategies --> Taskfile__print
+    examples__42_duplicate_removal__main__demo_metrics_and_roi --> Taskfile__print
+    examples__42_duplicate_removal__main__main --> Taskfile__print
+    examples__42_duplicate_removal__main__main --> examples__42_duplicate_removal__main__demo_duplicate_problem
+    examples__42_duplicate_removal__main__main --> examples__42_duplicate_removal__main__demo_detection_with_redup
 
     classDef highCC fill:#ff6b6b,stroke:#c92a2a,color:#fff
     classDef medCC fill:#ffd43b,stroke:#f08c00,color:#000

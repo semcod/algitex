@@ -1,4 +1,4 @@
-# algitex | 1727 func | 184f | 91544L | python | 2026-04-25
+# algitex | 1760 func | 188f | 93021L | python | 2026-04-25
 
 HEALTH:
   CC̄=2.6  critical=78 (limit:10)  dup=17  cycles=0
@@ -15,23 +15,23 @@ ALERTS[20]:
   !!! high_fan_out     BatchFixBackend.fix_batch = 20 (limit:10)
   !!  cc_exceeded      parse_file = 24 (limit:15)
 
-MODULES[311] (top by size):
+MODULES[319] (top by size):
   M[planfile.yaml] 20325L C:0 F:0 CC↑0 D:0 (yaml)
-  M[project/calls.yaml] 6564L C:0 F:0 CC↑0 D:0 (yaml)
+  M[project/calls.yaml] 6492L C:0 F:0 CC↑0 D:0 (yaml)
   M[project/map.toon.yaml] 1389L C:0 F:424 CC↑0 D:0 (yaml)
   M[src/algitex/cli/todo.py] 1159L C:0 F:21 CC↑29 D:0 (python)
   M[src/algitex/tools/autofix/batch_backend.py] 826L C:2 F:16 CC↑16 D:0 (python)
-  M[project/calls.toon.yaml] 653L C:0 F:0 CC↑0 D:0 (yaml)
+  M[project/calls.toon.yaml] 633L C:0 F:0 CC↑0 D:0 (yaml)
   M[src/algitex/todo/fixer.py] 550L C:1 F:17 CC↑25 D:7 (python)
   M[goal.yaml] 513L C:0 F:0 CC↑0 D:0 (yaml)
   M[src/algitex/microtask/executor.py] 497L C:2 F:29 CC↑16 D:0 (python)
-  M[project/analysis.toon.yaml] 492L C:0 F:0 CC↑0 D:0 (yaml)
+  M[project/analysis.toon.yaml] 491L C:0 F:0 CC↑0 D:0 (yaml)
   M[docker-tools.yaml] 489L C:0 F:0 CC↑0 D:0 (yaml)
   M[src/algitex/todo/hybrid.py] 479L C:4 F:10 CC↑12 D:0 (python)
   M[src/algitex/tools/benchmark.py] 464L C:4 F:19 CC↑14 D:0 (python)
   M[src/algitex/tools/mcp.py] 448L C:2 F:18 CC↑11 D:0 (python)
   M[src/algitex/project/__init__.py] 439L C:1 F:22 CC↑6 D:0 (python)
-  LANGS: python:191/other:66/shell:27/yaml:20/yml:4/txt:2/toml:1
+  LANGS: python:195/other:70/shell:27/yaml:20/yml:4/txt:2/toml:1
 
 HOTSPOTS[10]:
   ★ _run_with_dashboard fan=29  // Run todo fix with live dashboard.
@@ -53,4 +53,4 @@ REFACTOR[15]:
   [5] H/H Split god module src/algitex/cli/todo.py (1159L, 0 classes)
 
 EVOLUTION:
-  2026-04-25 CC̄=2.6 crit=78 91544L // Automated analysis
+  2026-04-25 CC̄=2.6 crit=78 93021L // Automated analysis

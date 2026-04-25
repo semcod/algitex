@@ -4,12 +4,12 @@
 
 - **Project**: /home/tom/github/semcod/algitex
 - **Primary Language**: python
-- **Languages**: python: 189, shell: 27, yaml: 20, yml: 4, txt: 2
+- **Languages**: python: 193, shell: 27, yaml: 20, yml: 4, txt: 2
 - **Analysis Mode**: static
-- **Total Functions**: 1727
-- **Total Classes**: 185
-- **Modules**: 309
-- **Entry Points**: 1493
+- **Total Functions**: 1760
+- **Total Classes**: 187
+- **Modules**: 317
+- **Entry Points**: 1499
 
 ## Architecture by Module
 

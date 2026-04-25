@@ -1,23 +1,29 @@
-# redup/duplication | 50 groups | 193f 32646L | 2026-04-25
+# redup/duplication | 53 groups | 197f 33774L | 2026-04-25
 
 SUMMARY:
-  files_scanned: 193
-  total_lines:   32646
-  dup_groups:    50
-  dup_fragments: 126
-  saved_lines:   795
-  scan_ms:       5183
+  files_scanned: 197
+  total_lines:   33774
+  dup_groups:    53
+  dup_fragments: 136
+  saved_lines:   963
+  scan_ms:       4969
 
 HOTSPOTS[7] (files with most duplication):
   examples/34-batch-fix/main.py  dup=131L  groups=1  frags=3  (0.4%)
+  examples/44-plugin-system/main.py  dup=89L  groups=2  frags=3  (0.3%)
   src/algitex/tools/autofix/openrouter_backend.py  dup=87L  groups=9  frags=9  (0.3%)
   src/algitex/tools/autofix/proxy_backend.py  dup=87L  groups=9  frags=9  (0.3%)
+  examples/43-code-health/main.py  dup=80L  groups=2  frags=3  (0.2%)
   src/algitex/tools/ide.py  dup=77L  groups=7  frags=9  (0.2%)
-  examples/40-three-tier-autofix/main.py  dup=70L  groups=3  frags=4  (0.2%)
-  examples/36-dashboard/main.py  dup=69L  groups=4  frags=4  (0.2%)
-  examples/39-microtask-pipeline/main.py  dup=61L  groups=4  frags=4  (0.2%)
+  examples/42-duplicate-removal/main.py  dup=71L  groups=2  frags=3  (0.2%)
 
-DUPLICATES[50] (ranked by impact):
+DUPLICATES[53] (ranked by impact):
+  [ca1e6dbe10b6ef80] !! STRU  demo_split_strategy  L=27 N=5 saved=108 sim=1.00
+      examples/41-god-module-splitting/main.py:62-88  (demo_split_strategy)
+      examples/43-code-health/main.py:46-74  (demo_analysis_pipeline)
+      examples/43-code-health/main.py:245-276  (demo_health_improvement_workflow)
+      examples/44-plugin-system/main.py:35-60  (demo_plugin_architecture)
+      examples/44-plugin-system/main.py:231-274  (demo_plugin_configuration)
   [d05413b8b4b40ceb] ! STRU  demo_batch_dry_run  L=44 N=3 saved=88 sim=1.00
       examples/34-batch-fix/main.py:15-58  (demo_batch_dry_run)
       examples/34-batch-fix/main.py:61-120  (demo_batch_execute)
@@ -34,6 +40,10 @@ DUPLICATES[50] (ranked by impact):
       examples/37-benchmarks/main.py:55-67  (demo_benchmark_memory)
       examples/39-microtask-pipeline/main.py:46-58  (demo_microtask_run)
       examples/40-three-tier-autofix/main.py:96-108  (demo_dashboard_integration)
+  [710a27b3c2b3101b] ! STRU  main  L=19 N=3 saved=38 sim=1.00
+      examples/42-duplicate-removal/main.py:252-270  (main)
+      examples/43-code-health/main.py:279-297  (main)
+      examples/44-plugin-system/main.py:312-330  (main)
   [709c400dfaedb8df] ! EXAC  stop_service  L=36 N=2 saved=36 sim=1.00
       src/algitex/tools/mcp.py:179-214  (stop_service)
       src/algitex/tools/mcp_lifecycle.py:79-108  (stop_service)
@@ -70,6 +80,9 @@ DUPLICATES[50] (ranked by impact):
   [6d2cf7e32322cdcc]   EXAC  setup_tool  L=22 N=2 saved=22 sim=1.00
       src/algitex/tools/ide.py:93-114  (setup_tool)
       src/algitex/tools/ide_base.py:66-85  (setup_tool)
+  [5107e45da0c04760]   STRU  demo_detection_with_redup  L=22 N=2 saved=22 sim=1.00
+      examples/42-duplicate-removal/main.py:63-84  (demo_detection_with_redup)
+      examples/42-duplicate-removal/main.py:134-163  (demo_algitex_integration)
   [596ac93ad0a535f0]   STRU  _dry_run_result  L=11 N=3 saved=22 sim=1.00
       src/algitex/tools/autofix/aider_backend.py:130-140  (_dry_run_result)
       src/algitex/tools/autofix/openrouter_backend.py:146-156  (_dry_run_result)
@@ -195,193 +208,202 @@ DUPLICATES[50] (ranked by impact):
       src/algitex/tools/services/models.py:19-21  (status_icon)
       src/algitex/tools/services.py:34-36  (status_icon)
 
-REFACTOR[50] (ranked by priority):
-  [1] ○ extract_function   → examples/34-batch-fix/utils/demo_batch_dry_run.py
+REFACTOR[53] (ranked by priority):
+  [1] ○ extract_function   → examples/utils/demo_split_strategy.py
+      WHY: 5 occurrences of 27-line block across 3 files — saves 108 lines
+      FILES: examples/41-god-module-splitting/main.py, examples/43-code-health/main.py, examples/44-plugin-system/main.py
+  [2] ○ extract_function   → examples/34-batch-fix/utils/demo_batch_dry_run.py
       WHY: 3 occurrences of 44-line block across 1 files — saves 88 lines
       FILES: examples/34-batch-fix/main.py
-  [2] ○ extract_function   → examples/utils/demo_orchestrator_pattern.py
+  [3] ○ extract_function   → examples/utils/demo_orchestrator_pattern.py
       WHY: 5 occurrences of 21-line block across 4 files — saves 84 lines
       FILES: examples/35-sprint3-patterns/main.py, examples/36-dashboard/main.py, examples/37-benchmarks/main.py, examples/39-microtask-pipeline/main.py
-  [3] ○ extract_function   → examples/utils/demo_dashboard_monitor.py
+  [4] ○ extract_function   → examples/utils/demo_dashboard_monitor.py
       WHY: 5 occurrences of 13-line block across 4 files — saves 52 lines
       FILES: examples/36-dashboard/main.py, examples/37-benchmarks/main.py, examples/39-microtask-pipeline/main.py, examples/40-three-tier-autofix/main.py
-  [4] ◐ extract_function   → src/algitex/tools/utils/stop_service.py
+  [5] ○ extract_function   → examples/utils/main.py
+      WHY: 3 occurrences of 19-line block across 3 files — saves 38 lines
+      FILES: examples/42-duplicate-removal/main.py, examples/43-code-health/main.py, examples/44-plugin-system/main.py
+  [6] ◐ extract_function   → src/algitex/tools/utils/stop_service.py
       WHY: 2 occurrences of 36-line block across 2 files — saves 36 lines
       FILES: src/algitex/tools/mcp.py, src/algitex/tools/mcp_lifecycle.py
-  [5] ◐ extract_class      → src/algitex/tools/utils/_register_default_tools.py
+  [7] ◐ extract_class      → src/algitex/tools/utils/_register_default_tools.py
       WHY: 2 occurrences of 34-line block across 2 files — saves 34 lines
       FILES: src/algitex/tools/ide.py, src/algitex/tools/ide_base.py
-  [6] ○ extract_function   → examples/utils/main.py
+  [8] ○ extract_function   → examples/utils/main.py
       WHY: 3 occurrences of 17-line block across 3 files — saves 34 lines
       FILES: examples/36-dashboard/main.py, examples/38-new-modules/main.py, examples/39-microtask-pipeline/main.py
-  [7] ○ extract_function   → docker/utils/run_rest_server.py
+  [9] ○ extract_function   → docker/utils/run_rest_server.py
       WHY: 5 occurrences of 8-line block across 5 files — saves 32 lines
       FILES: docker/aider-mcp/aider_mcp_server.py, docker/code2llm/code2llm_mcp_server.py, docker/planfile-mcp/planfile_mcp_server.py, docker/proxym/proxym_mcp_server.py, docker/vallm/vallm_mcp_server.py
-  [8] ◐ extract_function   → examples/utils/create_sample_project.py
+  [10] ◐ extract_function   → examples/utils/create_sample_project.py
       WHY: 2 occurrences of 32-line block across 2 files — saves 32 lines
       FILES: examples/11-aider-mcp/main.py, examples/13-vallm/main.py
-  [9] ○ extract_function   → src/algitex/cli/utils/ticket.py
+  [11] ○ extract_function   → src/algitex/cli/utils/ticket.py
       WHY: 10 occurrences of 3-line block across 1 files — saves 27 lines
       FILES: src/algitex/cli/__init__.py
-  [10] ○ extract_function   → src/algitex/todo/utils/_process_fstring_batch.py
+  [12] ○ extract_function   → src/algitex/todo/utils/_process_fstring_batch.py
       WHY: 2 occurrences of 26-line block across 1 files — saves 26 lines
       FILES: src/algitex/todo/fixer.py
-  [11] ○ extract_class      → src/algitex/tools/utils/setup_tool.py
+  [13] ○ extract_class      → src/algitex/tools/utils/setup_tool.py
       WHY: 2 occurrences of 22-line block across 2 files — saves 22 lines
       FILES: src/algitex/tools/ide.py, src/algitex/tools/ide_base.py
-  [12] ○ extract_function   → src/algitex/tools/autofix/utils/_dry_run_result.py
+  [14] ○ extract_function   → examples/42-duplicate-removal/utils/demo_detection_with_redup.py
+      WHY: 2 occurrences of 22-line block across 1 files — saves 22 lines
+      FILES: examples/42-duplicate-removal/main.py
+  [15] ○ extract_function   → src/algitex/tools/autofix/utils/_dry_run_result.py
       WHY: 3 occurrences of 11-line block across 3 files — saves 22 lines
       FILES: src/algitex/tools/autofix/aider_backend.py, src/algitex/tools/autofix/openrouter_backend.py, src/algitex/tools/autofix/proxy_backend.py
-  [13] ○ extract_function   → src/algitex/tools/autofix/utils/_error_result.py
+  [16] ○ extract_function   → src/algitex/tools/autofix/utils/_error_result.py
       WHY: 3 occurrences of 11-line block across 3 files — saves 22 lines
       FILES: src/algitex/tools/autofix/aider_backend.py, src/algitex/tools/autofix/openrouter_backend.py, src/algitex/tools/autofix/proxy_backend.py
-  [14] ○ extract_function   → examples/40-three-tier-autofix/utils/demo_tier_micro.py
+  [17] ○ extract_function   → examples/40-three-tier-autofix/utils/demo_tier_micro.py
       WHY: 2 occurrences of 20-line block across 1 files — saves 20 lines
       FILES: examples/40-three-tier-autofix/main.py
-  [15] ○ extract_function   → src/algitex/todo/utils/_first_int.py
+  [18] ○ extract_function   → src/algitex/todo/utils/_first_int.py
       WHY: 3 occurrences of 9-line block across 3 files — saves 18 lines
       FILES: src/algitex/todo/classify.py, src/algitex/todo/micro_utils.py, src/algitex/todo/tiering.py
-  [16] ○ extract_function   → src/algitex/tools/autofix/utils/_execute_fix.py
+  [19] ○ extract_function   → src/algitex/tools/autofix/utils/_execute_fix.py
       WHY: 2 occurrences of 17-line block across 2 files — saves 17 lines
       FILES: src/algitex/tools/autofix/openrouter_backend.py, src/algitex/tools/autofix/proxy_backend.py
-  [17] ○ extract_function   → examples/utils/demo_microtask_plan.py
+  [20] ○ extract_function   → examples/utils/demo_microtask_plan.py
       WHY: 2 occurrences of 16-line block across 2 files — saves 16 lines
       FILES: examples/39-microtask-pipeline/main.py, examples/40-three-tier-autofix/main.py
-  [18] ○ extract_function   → src/algitex/tools/autofix/utils/_build_prompt.py
+  [21] ○ extract_function   → src/algitex/tools/autofix/utils/_build_prompt.py
       WHY: 2 occurrences of 14-line block across 2 files — saves 14 lines
       FILES: src/algitex/tools/autofix/openrouter_backend.py, src/algitex/tools/autofix/proxy_backend.py
-  [19] ○ extract_function   → docker/utils/run.py
+  [22] ○ extract_function   → docker/utils/run.py
       WHY: 3 occurrences of 7-line block across 3 files — saves 14 lines
       FILES: docker/code2llm/code2llm_server.py, docker/proxym/proxym_server.py, docker/vallm/vallm_server.py
-  [20] ○ extract_function   → examples/utils/calculate.py
+  [23] ○ extract_function   → examples/utils/calculate.py
       WHY: 2 occurrences of 13-line block across 2 files — saves 13 lines
       FILES: examples/23-continue-dev-ollama/buggy_code.py, examples/26-litellm-proxy-ollama/buggy_code.py
-  [21] ○ extract_function   → src/algitex/tools/autofix/utils/fix.py
+  [24] ○ extract_function   → src/algitex/tools/autofix/utils/fix.py
       WHY: 2 occurrences of 12-line block across 2 files — saves 12 lines
       FILES: src/algitex/tools/autofix/openrouter_backend.py, src/algitex/tools/autofix/proxy_backend.py
-  [22] ○ extract_function   → src/algitex/tools/utils/__init__.py
+  [25] ○ extract_function   → src/algitex/tools/utils/__init__.py
       WHY: 5 occurrences of 3-line block across 3 files — saves 12 lines
       FILES: src/algitex/tools/ide.py, src/algitex/tools/ide_aider.py, src/algitex/tools/ide_claude.py
-  [23] ○ extract_function   → examples/utils/load_env.py
+  [26] ○ extract_function   → examples/utils/load_env.py
       WHY: 2 occurrences of 11-line block across 2 files — saves 11 lines
       FILES: examples/04-ide-integration/main.py, examples/17-docker-workflow/main.py
-  [24] ○ extract_function   → src/algitex/tools/autofix/utils/_ensure_model.py
+  [27] ○ extract_function   → src/algitex/tools/autofix/utils/_ensure_model.py
       WHY: 2 occurrences of 10-line block across 2 files — saves 10 lines
       FILES: src/algitex/tools/autofix/batch_backend.py, src/algitex/tools/autofix/ollama_backend.py
-  [25] ○ extract_function   → src/algitex/tools/autofix/utils/_success_result.py
+  [28] ○ extract_function   → src/algitex/tools/autofix/utils/_success_result.py
       WHY: 2 occurrences of 10-line block across 2 files — saves 10 lines
       FILES: src/algitex/tools/autofix/openrouter_backend.py, src/algitex/tools/autofix/proxy_backend.py
-  [26] ○ extract_function   → examples/utils/process_items.py
+  [29] ○ extract_function   → examples/utils/process_items.py
       WHY: 2 occurrences of 8-line block across 2 files — saves 8 lines
       FILES: examples/23-continue-dev-ollama/buggy_code.py, examples/26-litellm-proxy-ollama/buggy_code.py
-  [27] ○ extract_function   → src/algitex/microtask/utils/_resolve_path.py
+  [30] ○ extract_function   → src/algitex/microtask/utils/_resolve_path.py
       WHY: 2 occurrences of 8-line block across 2 files — saves 8 lines
       FILES: src/algitex/microtask/executor.py, src/algitex/microtask/slicer.py
-  [28] ○ extract_class      → src/algitex/tools/utils/_setup_signal_handlers.py
+  [31] ○ extract_class      → src/algitex/tools/utils/_setup_signal_handlers.py
       WHY: 2 occurrences of 8-line block across 2 files — saves 8 lines
       FILES: src/algitex/tools/mcp.py, src/algitex/tools/mcp_orchestrator.py
-  [29] ○ extract_function   → examples/utils/show_cli_usage.py
+  [32] ○ extract_function   → examples/utils/show_cli_usage.py
       WHY: 2 occurrences of 8-line block across 2 files — saves 8 lines
       FILES: examples/17-docker-workflow/main.py, examples/36-dashboard/main.py
-  [30] ○ extract_function   → src/algitex/todo/utils/find_import_insert_point.py
+  [33] ○ extract_function   → src/algitex/todo/utils/find_import_insert_point.py
       WHY: 2 occurrences of 8-line block across 2 files — saves 8 lines
       FILES: src/algitex/todo/micro_utils.py, src/algitex/todo/repair.py
-  [31] ○ extract_function   → examples/utils/bad_error_handling.py
+  [34] ○ extract_function   → examples/utils/bad_error_handling.py
       WHY: 2 occurrences of 6-line block across 2 files — saves 6 lines
       FILES: examples/18-ollama-local/buggy_code.py, examples/21-aider-cli-ollama/buggy_code.py
-  [32] ○ extract_function   → src/algitex/tools/autofix/utils/_extract_code.py
+  [35] ○ extract_function   → src/algitex/tools/autofix/utils/_extract_code.py
       WHY: 2 occurrences of 6-line block across 2 files — saves 6 lines
       FILES: src/algitex/tools/autofix/openrouter_backend.py, src/algitex/tools/autofix/proxy_backend.py
-  [33] ○ extract_function   → src/algitex/tools/utils/restart_service.py
+  [36] ○ extract_function   → src/algitex/tools/utils/restart_service.py
       WHY: 2 occurrences of 6-line block across 2 files — saves 6 lines
       FILES: src/algitex/tools/mcp.py, src/algitex/tools/mcp_lifecycle.py
-  [34] ○ extract_function   → src/algitex/tools/utils/format_value.py
+  [37] ○ extract_function   → src/algitex/tools/utils/format_value.py
       WHY: 2 occurrences of 6-line block across 1 files — saves 6 lines
       FILES: src/algitex/tools/logging.py
-  [35] ○ extract_function   → examples/utils/divide.py
+  [38] ○ extract_function   → examples/utils/divide.py
       WHY: 2 occurrences of 4-line block across 2 files — saves 4 lines
       FILES: examples/21-aider-cli-ollama/buggy_code.py, examples/22-claude-code-ollama/buggy_code.py
-  [36] ○ extract_function   → src/algitex/tools/utils/check_mcp_service.py
+  [39] ○ extract_function   → src/algitex/tools/utils/check_mcp_service.py
       WHY: 2 occurrences of 4-line block across 2 files — saves 4 lines
       FILES: src/algitex/tools/services.py, src/algitex/tools/services/http_checks.py
-  [37] ○ extract_function   → docker/utils/__init__.py
+  [40] ○ extract_function   → docker/utils/__init__.py
       WHY: 2 occurrences of 4-line block across 2 files — saves 4 lines
       FILES: docker/code2llm/code2llm_server.py, docker/vallm/vallm_server.py
-  [38] ○ extract_function   → examples/utils/load.py
+  [41] ○ extract_function   → examples/utils/load.py
       WHY: 2 occurrences of 4-line block across 2 files — saves 4 lines
       FILES: examples/22-claude-code-ollama/buggy_code.py, examples/26-litellm-proxy-ollama/buggy_code.py
-  [39] ○ extract_function   → examples/34-batch-fix/sample_code/utils/connect.py
+  [42] ○ extract_function   → examples/34-batch-fix/sample_code/utils/connect.py
       WHY: 2 occurrences of 4-line block across 1 files — saves 4 lines
       FILES: examples/34-batch-fix/sample_code/file2.py
-  [40] ○ extract_function   → examples/utils/divide_numbers.py
+  [43] ○ extract_function   → examples/utils/divide_numbers.py
       WHY: 2 occurrences of 3-line block across 2 files — saves 3 lines
       FILES: examples/18-ollama-local/buggy_code.py, examples/26-litellm-proxy-ollama/buggy_code.py
-  [41] ○ extract_function   → src/algitex/utils/__enter__.py
+  [44] ○ extract_function   → src/algitex/utils/__enter__.py
       WHY: 2 occurrences of 3-line block across 1 files — saves 3 lines
       FILES: src/algitex/dashboard.py
-  [42] ○ extract_function   → src/algitex/tools/autofix/utils/_read_file.py
+  [45] ○ extract_function   → src/algitex/tools/autofix/utils/_read_file.py
       WHY: 2 occurrences of 3-line block across 2 files — saves 3 lines
       FILES: src/algitex/tools/autofix/openrouter_backend.py, src/algitex/tools/autofix/proxy_backend.py
-  [43] ○ extract_function   → src/algitex/tools/autofix/utils/_write_file.py
+  [46] ○ extract_function   → src/algitex/tools/autofix/utils/_write_file.py
       WHY: 2 occurrences of 3-line block across 2 files — saves 3 lines
       FILES: src/algitex/tools/autofix/openrouter_backend.py, src/algitex/tools/autofix/proxy_backend.py
-  [44] ○ extract_class      → src/algitex/tools/utils/__post_init__.py
+  [47] ○ extract_class      → src/algitex/tools/utils/__post_init__.py
       WHY: 2 occurrences of 3-line block across 2 files — saves 3 lines
       FILES: src/algitex/tools/ide.py, src/algitex/tools/ide_models.py
-  [45] ○ extract_class      → src/algitex/tools/utils/__init__.py
+  [48] ○ extract_class      → src/algitex/tools/utils/__init__.py
       WHY: 2 occurrences of 3-line block across 2 files — saves 3 lines
       FILES: src/algitex/tools/ide.py, src/algitex/tools/ide_base.py
-  [46] ○ extract_class      → src/algitex/tools/utils/list_tools.py
+  [49] ○ extract_class      → src/algitex/tools/utils/list_tools.py
       WHY: 2 occurrences of 3-line block across 2 files — saves 3 lines
       FILES: src/algitex/tools/ide.py, src/algitex/tools/ide_base.py
-  [47] ○ extract_class      → src/algitex/tools/utils/setup_environment.py
+  [50] ○ extract_class      → src/algitex/tools/utils/setup_environment.py
       WHY: 2 occurrences of 3-line block across 2 files — saves 3 lines
       FILES: src/algitex/tools/ide.py, src/algitex/tools/ide_claude.py
-  [48] ○ extract_function   → src/algitex/tools/utils/handler.py
+  [51] ○ extract_function   → src/algitex/tools/utils/handler.py
       WHY: 2 occurrences of 3-line block across 2 files — saves 3 lines
       FILES: src/algitex/tools/mcp.py, src/algitex/tools/mcp_orchestrator.py
-  [49] ○ extract_function   → src/algitex/tools/utils/close.py
+  [52] ○ extract_function   → src/algitex/tools/utils/close.py
       WHY: 2 occurrences of 3-line block across 2 files — saves 3 lines
       FILES: src/algitex/tools/ollama.py, src/algitex/tools/services.py
-  [50] ○ extract_class      → src/algitex/tools/utils/status_icon.py
+  [53] ○ extract_class      → src/algitex/tools/utils/status_icon.py
       WHY: 2 occurrences of 3-line block across 2 files — saves 3 lines
       FILES: src/algitex/tools/services.py, src/algitex/tools/services/models.py
 
-QUICK_WINS[31] (low risk, high savings — do first):
-  [1] extract_function   saved=88L  → examples/34-batch-fix/utils/demo_batch_dry_run.py
-      FILES: main.py
-  [2] extract_function   saved=84L  → examples/utils/demo_orchestrator_pattern.py
-      FILES: main.py, main.py, main.py +1
-  [3] extract_function   saved=52L  → examples/utils/demo_dashboard_monitor.py
-      FILES: main.py, main.py, main.py +1
-  [6] extract_function   saved=34L  → examples/utils/main.py
+QUICK_WINS[34] (low risk, high savings — do first):
+  [1] extract_function   saved=108L  → examples/utils/demo_split_strategy.py
       FILES: main.py, main.py, main.py
-  [7] extract_function   saved=32L  → docker/utils/run_rest_server.py
+  [2] extract_function   saved=88L  → examples/34-batch-fix/utils/demo_batch_dry_run.py
+      FILES: main.py
+  [3] extract_function   saved=84L  → examples/utils/demo_orchestrator_pattern.py
+      FILES: main.py, main.py, main.py +1
+  [4] extract_function   saved=52L  → examples/utils/demo_dashboard_monitor.py
+      FILES: main.py, main.py, main.py +1
+  [5] extract_function   saved=38L  → examples/utils/main.py
+      FILES: main.py, main.py, main.py
+  [8] extract_function   saved=34L  → examples/utils/main.py
+      FILES: main.py, main.py, main.py
+  [9] extract_function   saved=32L  → docker/utils/run_rest_server.py
       FILES: aider_mcp_server.py, code2llm_mcp_server.py, planfile_mcp_server.py +2
-  [9] extract_function   saved=27L  → src/algitex/cli/utils/ticket.py
+  [11] extract_function   saved=27L  → src/algitex/cli/utils/ticket.py
       FILES: __init__.py
-  [10] extract_function   saved=26L  → src/algitex/todo/utils/_process_fstring_batch.py
+  [12] extract_function   saved=26L  → src/algitex/todo/utils/_process_fstring_batch.py
       FILES: fixer.py
-  [11] extract_class      saved=22L  → src/algitex/tools/utils/setup_tool.py
+  [13] extract_class      saved=22L  → src/algitex/tools/utils/setup_tool.py
       FILES: ide.py, ide_base.py
-  [12] extract_function   saved=22L  → src/algitex/tools/autofix/utils/_dry_run_result.py
-      FILES: aider_backend.py, openrouter_backend.py, proxy_backend.py
-  [13] extract_function   saved=22L  → src/algitex/tools/autofix/utils/_error_result.py
-      FILES: aider_backend.py, openrouter_backend.py, proxy_backend.py
 
-EFFORT_ESTIMATE (total ≈ 29.7h):
+EFFORT_ESTIMATE (total ≈ 35.3h):
+  hard   demo_split_strategy                 saved=108L  ~216min
   hard   demo_batch_dry_run                  saved=88L  ~264min
   hard   demo_orchestrator_pattern           saved=84L  ~168min
   hard   demo_dashboard_monitor              saved=52L  ~104min
+  medium main                                saved=38L  ~76min
   hard   stop_service                        saved=36L  ~108min
   hard   _register_default_tools             saved=34L  ~102min
   medium main                                saved=34L  ~68min
   medium run_rest_server                     saved=32L  ~64min
   hard   create_sample_project               saved=32L  ~96min
-  medium ticket                              saved=27L  ~54min
-  medium _process_fstring_batch              saved=26L  ~52min
-  ... +40 more (~700min)
+  ... +43 more (~850min)
 
 METRICS-TARGET:
-  dup_groups:  50 → 0
-  saved_lines: 795 lines recoverable
+  dup_groups:  53 → 0
+  saved_lines: 963 lines recoverable

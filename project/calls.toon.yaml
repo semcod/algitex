@@ -4,7 +4,7 @@
 
 HUBS[20]:
   Taskfile.print
-    CC=0  in:1870  out:0  total:1870
+    CC=0  in:2106  out:0  total:2106
   examples.31-abpr-workflow.main.main
     CC=12  in:0  out:77  total:77
   examples.30-parallel-execution.main.main
@@ -13,34 +13,34 @@ HUBS[20]:
     CC=2  in:0  out:49  total:49
   examples.30-parallel-execution.parallel_real_world.main
     CC=13  in:0  out:43  total:43
-  src.algitex.tools.autofix.batch_backend.BatchFixBackend._parse_batch_response
-    CC=16  in:0  out:40  total:40
-  examples.05-cost-tracking.main.main
-    CC=8  in:0  out:40  total:40
   examples.14-docker-mcp.main.demo_docker_operations
     CC=7  in:0  out:40  total:40
+  src.algitex.tools.autofix.batch_backend.BatchFixBackend._parse_batch_response
+    CC=16  in:0  out:40  total:40
   src.algitex.tools.ollama_cache.LLMCache.set
     CC=1  in:33  out:7  total:40
+  examples.05-cost-tracking.main.main
+    CC=8  in:0  out:40  total:40
   examples.18-ollama-local.main.main
     CC=7  in:0  out:39  total:39
-  src.algitex.tools.tickets.Tickets.list
-    CC=4  in:36  out:1  total:37
   examples.16-test-workflow.main.demo_test_workflow
     CC=5  in:0  out:37  total:37
+  src.algitex.tools.tickets.Tickets.list
+    CC=4  in:36  out:1  total:37
   examples.31-abpr-workflow.abpr_pipeline.abpr_pipeline
     CC=10  in:0  out:36  total:36
+  examples.13-vallm.main.demo_validation
+    CC=5  in:0  out:35  total:35
   src.algitex.tools.autofix.batch_backend.backend.BatchFixBackend.fix_batch
     CC=10  in:0  out:35  total:35
   src.algitex.tools.autofix.batch_backend.BatchFixBackend.fix_batch
     CC=11  in:0  out:35  total:35
-  examples.13-vallm.main.demo_validation
-    CC=5  in:0  out:35  total:35
   examples.07-context.main.basic_context_example
     CC=2  in:0  out:34  total:34
-  examples.27-unified-autofix.main.main
-    CC=4  in:0  out:33  total:33
   examples.02-algo-loop.main.main
     CC=11  in:0  out:33  total:33
+  examples.27-unified-autofix.main.main
+    CC=4  in:0  out:33  total:33
   src.algitex.todo.hybrid.HybridAutofix.fix_all
     CC=3  in:0  out:31  total:31
 

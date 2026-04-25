@@ -21,53 +21,6 @@ CONSTANT_8002 = 8002
 CONSTANT_8080 = 8080
 CONSTANT_11434 = 11434
 
-
-CONSTANT_30 = CONSTANT_30
-CONSTANT_120 = CONSTANT_120
-CONSTANT_150 = CONSTANT_150
-CONSTANT_200 = CONSTANT_200
-CONSTANT_404 = CONSTANT_404
-CONSTANT_429 = CONSTANT_429
-CONSTANT_500 = CONSTANT_500
-CONSTANT_4000 = CONSTANT_4000
-CONSTANT_5000 = CONSTANT_5000
-CONSTANT_8001 = CONSTANT_8001
-CONSTANT_8002 = CONSTANT_8002
-CONSTANT_8080 = CONSTANT_8080
-CONSTANT_11434 = CONSTANT_11434
-
-
-CONSTANT_30 = CONSTANT_30
-CONSTANT_120 = CONSTANT_120
-CONSTANT_150 = CONSTANT_150
-CONSTANT_200 = CONSTANT_200
-CONSTANT_404 = CONSTANT_404
-CONSTANT_429 = CONSTANT_429
-CONSTANT_500 = CONSTANT_500
-CONSTANT_4000 = CONSTANT_4000
-CONSTANT_5000 = CONSTANT_5000
-CONSTANT_8001 = CONSTANT_8001
-CONSTANT_8002 = CONSTANT_8002
-CONSTANT_8080 = CONSTANT_8080
-CONSTANT_11434 = CONSTANT_11434
-
-
-CONSTANT_30 = CONSTANT_30
-CONSTANT_120 = CONSTANT_120
-CONSTANT_150 = CONSTANT_150
-CONSTANT_200 = CONSTANT_200
-CONSTANT_404 = CONSTANT_404
-CONSTANT_429 = CONSTANT_429
-CONSTANT_500 = CONSTANT_500
-CONSTANT_4000 = CONSTANT_4000
-CONSTANT_5000 = CONSTANT_5000
-CONSTANT_8001 = CONSTANT_8001
-CONSTANT_8002 = CONSTANT_8002
-CONSTANT_8080 = CONSTANT_8080
-CONSTANT_11434 = CONSTANT_11434
-
-
-
 KNOWN_MAGIC_NUMBERS: set[int] = {
     CONSTANT_200,
     CONSTANT_404,
@@ -162,47 +115,68 @@ def classify_todo_file(path: str | Path) -> list[MicroTask]:
     return tasks
 
 
+# Dispatch table: (pattern, TaskType)
+_CLASSIFY_PATTERNS: list[tuple[str, TaskType]] = [
+    ("unused import", TaskType.UNUSED_IMPORT),
+    ("return type", TaskType.RETURN_TYPE),
+    ("missing return", TaskType.RETURN_TYPE),
+    ("type annotation", TaskType.RETURN_TYPE),
+    ("f-string", TaskType.FSTRING),
+    ("string concatenation", TaskType.FSTRING),
+    ("module execution block", TaskType.FSTRING),
+    ("if __name__", TaskType.FSTRING),
+    ("magic number", TaskType.KNOWN_MAGIC),
+    ("named constant", TaskType.KNOWN_MAGIC),
+    ("sort import", TaskType.SORT_IMPORTS),
+    ("import order", TaskType.SORT_IMPORTS),
+    ("reorder imports", TaskType.SORT_IMPORTS),
+    ("trailing whitespace", TaskType.TRAILING_WHITESPACE),
+    ("strip whitespace", TaskType.TRAILING_WHITESPACE),
+    ("docstring", TaskType.DOCSTRING_FIX),
+    ("sphinx", TaskType.DOCSTRING_FIX),
+    ("rename", TaskType.VARIABLE_RENAME),
+    ("descriptive name", TaskType.VARIABLE_RENAME),
+    ("variable name", TaskType.VARIABLE_RENAME),
+    ("guard clause", TaskType.GUARD_CLAUSE),
+    ("input validation", TaskType.GUARD_CLAUSE),
+    ("type hint", TaskType.TYPE_INFERENCE),
+    ("type inference", TaskType.TYPE_INFERENCE),
+    ("annotation", TaskType.TYPE_INFERENCE),
+    ("dispatch", TaskType.DICT_DISPATCH),
+    ("if/elif", TaskType.DICT_DISPATCH),
+    ("dictionary", TaskType.DICT_DISPATCH),
+    ("extract method", TaskType.EXTRACT_METHOD),
+    ("helper", TaskType.EXTRACT_METHOD),
+    ("repeated block", TaskType.EXTRACT_METHOD),
+    ("error handling", TaskType.ERROR_HANDLING),
+    ("try/except", TaskType.ERROR_HANDLING),
+    ("exception", TaskType.ERROR_HANDLING),
+    ("split", TaskType.SPLIT_FUNCTION),
+    ("god function", TaskType.SPLIT_FUNCTION),
+    ("too large", TaskType.SPLIT_FUNCTION),
+    ("dependency cycle", TaskType.DEPENDENCY_CYCLE),
+    ("circular dependency", TaskType.DEPENDENCY_CYCLE),
+    ("api redesign", TaskType.API_REDESIGN),
+    ("redesign", TaskType.API_REDESIGN),
+]
+
+
 def _classify_message(message: str) -> TaskType:
+    """Classify a TODO message using pattern dispatch.
+
+    CC: 4 (1 loop + 3 branches in fallback)
+    Was: CC ~48 (25+ if/elif branches)
+    """
     lowered = message.lower()
 
-    if "unused import" in lowered or ("unused" in lowered and "import" in lowered):
-        return TaskType.UNUSED_IMPORT
-    if "return type" in lowered or "missing return" in lowered or "type annotation" in lowered:
-        return TaskType.RETURN_TYPE
-    if (
-        "f-string" in lowered
-        or "string concatenation" in lowered
-        or "can be converted to f-string" in lowered
-        or "module execution block" in lowered
-        or "if __name__" in lowered
-    ):
-        return TaskType.FSTRING
-    if "magic number" in lowered or "named constant" in lowered or ("constant" in lowered and _first_int(message) is not None):
+    for pattern, task_type in _CLASSIFY_PATTERNS:
+        if pattern in lowered:
+            return task_type
+
+    # Fallback: magic number detection via "constant" keyword
+    if "constant" in lowered and _first_int(message) is not None:
         return TaskType.KNOWN_MAGIC
-    if "sort import" in lowered or "import order" in lowered or "reorder imports" in lowered:
-        return TaskType.SORT_IMPORTS
-    if "trailing whitespace" in lowered or "strip whitespace" in lowered:
-        return TaskType.TRAILING_WHITESPACE
-    if "docstring" in lowered or "sphinx" in lowered:
-        return TaskType.DOCSTRING_FIX
-    if "rename" in lowered or "descriptive name" in lowered or "variable name" in lowered:
-        return TaskType.VARIABLE_RENAME
-    if "guard clause" in lowered or "input validation" in lowered or "validate" in lowered:
-        return TaskType.GUARD_CLAUSE
-    if "type hint" in lowered or "type inference" in lowered or "annotation" in lowered:
-        return TaskType.TYPE_INFERENCE
-    if "dispatch" in lowered or "if/elif" in lowered or "dictionary" in lowered:
-        return TaskType.DICT_DISPATCH
-    if "extract method" in lowered or "helper" in lowered or "repeated block" in lowered:
-        return TaskType.EXTRACT_METHOD
-    if "error handling" in lowered or "try/except" in lowered or "exception" in lowered:
-        return TaskType.ERROR_HANDLING
-    if "split" in lowered or "god function" in lowered or "too large" in lowered:
-        return TaskType.SPLIT_FUNCTION
-    if "dependency cycle" in lowered or "circular dependency" in lowered:
-        return TaskType.DEPENDENCY_CYCLE
-    if "api redesign" in lowered or "redesign" in lowered:
-        return TaskType.API_REDESIGN
+
     return TaskType.FSTRING
 
 

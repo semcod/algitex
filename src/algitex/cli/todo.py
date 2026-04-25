@@ -638,73 +638,93 @@ def _tf_execute_phased(
     dry_run: bool,
 ) -> list[tuple[str, dict]]:
     """Step 3: Execute fixes per tier.
-    
-    CC: 5 (3 phase handlers + 2 conditionals)
-    """
-    from algitex.todo import (
-        BIG_CATEGORIES,
-        HybridAutofix,
-        MicroFixer,
-        mark_tasks_completed,
-        parallel_fix_and_update,
-    )
 
+    CC: 2 (dispatch loop)
+    Was: CC 25 (nested phase logic)
+    """
     results: list[tuple[str, dict]] = []
 
+    phases = _tf_build_phases(classified, algo, micro, all_phases)
+    for name, tasks, runner in phases:
+        result = runner(file, tasks, workers, micro_workers, model, backend, proxy_url, rate_limit, dry_run)
+        results.append((name, result))
+
+    return results
+
+
+def _tf_build_phases(
+    classified: dict[str, list],
+    algo: bool,
+    micro: bool,
+    all_phases: bool,
+) -> list[tuple[str, list, callable]]:
+    """Build the list of (name, tasks, runner) tuples."""
+    from algitex.todo import parallel_fix_and_update, MicroFixer, HybridAutofix, BIG_CATEGORIES
+
+    phases = []
     if all_phases:
         algo = True
         micro = True
 
-    # Phase 1: Algorithm
-    if algo and classified["algorithm"]:
-        algo_tasks = classified["algorithm"]
-        console.print(f"\n[green]Phase 1: Algorithm[/] — {len(algo_tasks)} tasks")
-        result = parallel_fix_and_update(file, workers=workers, dry_run=dry_run, tasks=algo_tasks)
-        results.append(("Algorithm", result))
+    if algo and classified.get("algorithm"):
+        phases.append(("Algorithm", classified["algorithm"], _tf_run_algorithm))
+    if micro and classified.get("micro"):
+        phases.append(("Small LLM", classified["micro"], _tf_run_micro))
+    if all_phases and classified.get("big"):
+        phases.append(("Big LLM", classified["big"], _tf_run_big))
 
-    # Phase 2: Small LLM
-    if micro and classified["micro"]:
-        micro_tasks = classified["micro"]
-        console.print(f"\n[cyan]Phase 2: Small LLM[/] — {len(micro_tasks)} tasks")
-        micro_fixer = MicroFixer(
-            ollama_url="http://localhost:11434",
-            model=model,
-            workers=micro_workers,
-            dry_run=dry_run,
-        )
-        micro_results = micro_fixer.fix_tasks_detailed(micro_tasks)
-        result = {
-            "fixed": sum(1 for item in micro_results if item.success),
-            "skipped": sum(1 for item in micro_results if not item.success and not item.error),
-            "errors": sum(1 for item in micro_results if item.error),
-        }
-        results.append(("Small LLM", result))
+    return phases
 
-        if not dry_run and result.get("fixed", 0) > 0:
-            completed_ids = {item.task_id for item in micro_results if item.success}
-            completed_tasks = [t for t in micro_tasks if f"{t.file}:{t.line}" in completed_ids]
-            if completed_tasks:
-                mark_tasks_completed(file, completed_tasks)
 
-    # Phase 3: Big LLM
-    if all_phases and classified["big"]:
-        big_tasks = classified["big"]
-        console.print(f"\n[magenta]Phase 3: Big LLM[/] — {len(big_tasks)} tasks")
-        fixer = HybridAutofix(
-            backend=backend,
-            tool="ollama-mcp",
-            proxy_url=proxy_url,
-            workers=workers,
-            rate_limit=rate_limit,
-            dry_run=dry_run,
-        )
-        result = fixer.fix_complex(file, include_categories=set(BIG_CATEGORIES), tasks=big_tasks)
-        results.append(("Big LLM", result))
+def _tf_run_algorithm(file: str, tasks: list, workers: int, *_args) -> dict:
+    """Run algorithmic fixes."""
+    from algitex.todo import parallel_fix_and_update
+    console.print(f"\n[green]Phase 1: Algorithm[/] — {len(tasks)} tasks")
+    return parallel_fix_and_update(file, workers=workers, dry_run=_args[-1], tasks=tasks)
 
-        if not dry_run and result.get("fixed", 0) == len(big_tasks) and big_tasks:
-            mark_tasks_completed(file, big_tasks)
 
-    return results
+def _tf_run_micro(file: str, tasks: list, _workers: int, micro_workers: int, model: str, *_args) -> dict:
+    """Run micro-LLM fixes."""
+    from algitex.todo import MicroFixer, mark_tasks_completed
+    dry_run = _args[-1]
+    console.print(f"\n[cyan]Phase 2: Small LLM[/] — {len(tasks)} tasks")
+    micro_fixer = MicroFixer(
+        ollama_url="http://localhost:11434",
+        model=model,
+        workers=micro_workers,
+        dry_run=dry_run,
+    )
+    micro_results = micro_fixer.fix_tasks_detailed(tasks)
+    result = {
+        "fixed": sum(1 for item in micro_results if item.success),
+        "skipped": sum(1 for item in micro_results if not item.success and not item.error),
+        "errors": sum(1 for item in micro_results if item.error),
+    }
+    if not dry_run and result.get("fixed", 0) > 0:
+        completed_ids = {item.task_id for item in micro_results if item.success}
+        completed_tasks = [t for t in tasks if f"{t.file}:{t.line}" in completed_ids]
+        if completed_tasks:
+            mark_tasks_completed(file, completed_tasks)
+    return result
+
+
+def _tf_run_big(file: str, tasks: list, workers: int, _micro_workers: int, _model: str,
+                backend: str, proxy_url: str, rate_limit: int, dry_run: bool) -> dict:
+    """Run big-LLM fixes."""
+    from algitex.todo import HybridAutofix, BIG_CATEGORIES, mark_tasks_completed
+    console.print(f"\n[magenta]Phase 3: Big LLM[/] — {len(tasks)} tasks")
+    fixer = HybridAutofix(
+        backend=backend,
+        tool="ollama-mcp",
+        proxy_url=proxy_url,
+        workers=workers,
+        rate_limit=rate_limit,
+        dry_run=dry_run,
+    )
+    result = fixer.fix_complex(file, include_categories=set(BIG_CATEGORIES), tasks=tasks)
+    if not dry_run and result.get("fixed", 0) == len(tasks) and tasks:
+        mark_tasks_completed(file, tasks)
+    return result
 
 
 def _tf_validate_results(results: list[tuple[str, dict]]) -> dict:
@@ -956,8 +976,8 @@ def todo_batch(
     if prune:
         console.print(f"\n[bold]🧹 Prune: Czyszczę nieaktualne zadania z {file}...[/]")
         # Call the verify-prefact logic with prune
-        from algitex.cli.todo import todo_verify_prefact
-        todo_verify_prefact(file=str(file), prune=True)
+        from algitex.cli.todo_verify import todo_verify_prefact as _verify_prefact
+        _verify_prefact(file=str(file), prune=True)
         console.print(f"[dim]Prune zakończony. Kontynuuję batch...[/]\n")
     
     # Parse TODO
@@ -1035,125 +1055,5 @@ def todo_verify_prefact(
     
     With --prune: removes outdated tasks from TODO.md
     """
-    from pathlib import Path
-    import subprocess
-    import re
-    import tempfile
-    
-    console.print(f"[bold]Verify TODO.md with prefact[/]: {file}")
-    
-    # Run prefact scan
-    console.print("\n🔍 Running prefact scan...")
-    try:
-        result = subprocess.run(
-            ["prefact", "scan", "--format", "json"],
-            capture_output=True,
-            text=True,
-            cwd="."
-        )
-        if result.returncode != 0:
-            console.print(f"[yellow]⚠️  Prefact scan failed: {result.stderr}[/]")
-            return
-    except FileNotFoundError:
-        console.print("[red]✗ prefact not installed. Install with: pip install prefact[/]")
-        return
-    
-    # Parse current TODO.md
-    todo_path = Path(file)
-    if not todo_path.exists():
-        console.print(f"[red]✗ {file} not found[/]")
-        return
-    
-    todo_content = todo_path.read_text()
-    todo_tasks = []
-    
-    for line in todo_content.splitlines():
-        match = re.match(r"- \[([ x])\] (.+):(\d+) - (.+)", line)
-        if match:
-            status, filepath, lineno, message = match.groups()
-            todo_tasks.append({
-                "status": status,
-                "file": filepath,
-                "line": int(lineno),
-                "message": message,
-                "original_line": line
-            })
-    
-    console.print(f"📋 Found {len(todo_tasks)} tasks in TODO.md")
-    
-    # Simple validation: check if files/lines still exist
-    valid_tasks = []
-    outdated_tasks = []
-    
-    for task in todo_tasks:
-        filepath = task["file"]
-        try:
-            path = Path(filepath)
-            if not path.exists():
-                outdated_tasks.append(task)
-                continue
-            
-            # Check if line still exists
-            lines = path.read_text().splitlines()
-            line_no = task["line"] - 1
-            
-            if line_no >= len(lines):
-                outdated_tasks.append(task)
-                continue
-            
-            # Check if the issue keywords are still in the line
-            line_content = lines[line_no] if line_no < len(lines) else ""
-            
-            # Heuristics for different issue types
-            is_valid = True
-            msg_lower = task["message"].lower()
-            
-            if "unused" in msg_lower and "import" in msg_lower:
-                # Check if import is still in the line
-                if "import" not in line_content:
-                    is_valid = False
-            elif "f-string" in msg_lower or "string concatenation" in msg_lower:
-                # Check for string concatenation patterns
-                if "\"" not in line_content and "'" not in line_content:
-                    is_valid = False
-            elif "magic number" in msg_lower:
-                # Check for numeric literals
-                if not re.search(r'\b\d+\b', line_content):
-                    is_valid = False
-            
-            if is_valid:
-                valid_tasks.append(task)
-            else:
-                outdated_tasks.append(task)
-                
-        except Exception as e:
-            console.print(f"[yellow]⚠️  Error checking {filepath}: {e}[/]")
-            valid_tasks.append(task)  # Assume valid if we can't check
-    
-    # Show results
-    console.print(f"\n[green]✓ Valid tasks: {len(valid_tasks)}[/]")
-    if outdated_tasks:
-        console.print(f"[yellow]⚠️  Outdated tasks: {len(outdated_tasks)}[/]")
-        for task in outdated_tasks[:5]:
-            console.print(f"   - {task['file']}:{task['line']} - {task['message'][:50]}")
-        if len(outdated_tasks) > 5:
-            console.print(f"   ... and {len(outdated_tasks) - 5} more")
-    
-    # Prune if requested
-    if prune and outdated_tasks:
-        console.print(f"\n[bold]Pruning {len(outdated_tasks)} outdated tasks...[/]")
-        
-        # Remove outdated lines from TODO.md
-        new_content = todo_content
-        for task in outdated_tasks:
-            new_content = new_content.replace(task["original_line"] + "\n", "")
-        
-        # Write back
-        todo_path.write_text(new_content)
-        console.print(f"[green]✓ Removed {len(outdated_tasks)} outdated tasks from {file}[/]")
-    elif prune and not outdated_tasks:
-        console.print("\n[green]✓ No outdated tasks to remove[/]")
-    else:
-        console.print(f"\n[dim]Run with --prune to remove outdated tasks[/]")
-    
-    console.print(f"\n[bold]{'═' * 60}[/]")
+    from algitex.cli.todo_verify import todo_verify_prefact as _verify_prefact
+    _verify_prefact(file, prune)

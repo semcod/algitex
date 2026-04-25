@@ -23,7 +23,7 @@ Progressive algorithmization toolchain — from LLM to deterministic code, from 
 ## Metadata
 
 - **name**: `algitex`
-- **version**: `0.1.60`
+- **version**: `0.1.61`
 - **python_requires**: `>=3.10`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -43,7 +43,7 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: algitex;
-  version: 0.1.60;
+  version: 0.1.61;
 }
 
 dependencies {
@@ -772,7 +772,7 @@ pipeline:
 ```yaml
 project:
   name: algitex
-  version: 0.1.60
+  version: 0.1.61
   env: local
 ```
 
@@ -850,7 +850,7 @@ pip install -e .[dev]
 - **commits**: `conventional` scope=`algitex`
 - **changelog**: `keep-a-changelog`
 - **build strategies**: `python`, `nodejs`, `rust`
-- **version files**: `VERSION`, `pyproject.toml:version`, `venv/lib/python3.13/site-packages/httpcore/__init__.py:__version__`
+- **version files**: `VERSION`, `pyproject.toml:version`, `venv/lib/python3.13/site-packages/matplotlib/__init__.py:__version__`
 
 ## Makefile Targets
 
@@ -882,13 +882,13 @@ pip install -e .[dev]
 ### `project/map.toon.yaml`
 
 ```toon markpact:analysis path=project/map.toon.yaml
-# algitex | 235f 38171L | python:207,shell:27,less:1 | 2026-04-25
-# stats: 490 func | 253 cls | 235 mod | CC̄=3.8 | critical:35 | cycles:0
+# algitex | 239f 39303L | python:211,shell:27,less:1 | 2026-04-25
+# stats: 521 func | 255 cls | 239 mod | CC̄=3.6 | critical:35 | cycles:0
 # alerts[5]: CC _classify_message=48; CC todo_verify_prefact=29; CC _tf_execute_phased=25; CC fix_file=25; CC parse_file=24
 # hotspots[5]: _run_with_dashboard fan=27; main fan=18; main fan=18; dashboard_export fan=17; todo_verify_prefact fan=17
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[235]:
+M[239]:
   app.doql.less,334
   docker/aider-mcp/aider_mcp_server.py,157
   docker/code2llm/code2llm_mcp_server.py,324
@@ -989,6 +989,10 @@ M[235]:
   examples/38-new-modules/main.py,141
   examples/39-microtask-pipeline/main.py,104
   examples/40-three-tier-autofix/main.py,134
+  examples/41-god-module-splitting/main.py,220
+  examples/42-duplicate-removal/main.py,275
+  examples/43-code-health/main.py,302
+  examples/44-plugin-system/main.py,335
   project.sh,47
   scripts/fix_readme.py,34
   scripts/generate_lib_docs.py,277
@@ -1541,6 +1545,47 @@ D:
     demo_tier_big()
     demo_all_tiers()
     demo_dashboard_integration()
+    main()
+  examples/41-god-module-splitting/main.py:
+    e: demo_god_module_problem,demo_split_strategy,demo_before_and_after,demo_import_compatibility,demo_real_metrics,demo_how_to_split_your_module,main
+    demo_god_module_problem()
+    demo_split_strategy()
+    demo_before_and_after()
+    demo_import_compatibility()
+    demo_real_metrics()
+    demo_how_to_split_your_module()
+    main()
+  examples/42-duplicate-removal/main.py:
+    e: demo_duplicate_problem,demo_detection_with_redup,demo_extraction_strategy,demo_algitex_integration,demo_real_world_example,demo_prevention_strategies,demo_metrics_and_roi,main
+    demo_duplicate_problem()
+    demo_detection_with_redup()
+    demo_extraction_strategy()
+    demo_algitex_integration()
+    demo_real_world_example()
+    demo_prevention_strategies()
+    demo_metrics_and_roi()
+    main()
+  examples/43-code-health/main.py:
+    e: demo_health_metrics,demo_analysis_pipeline,demo_health_report,demo_historical_tracking,demo_ci_integration,demo_regression_prevention,demo_health_improvement_workflow,main
+    demo_health_metrics()
+    demo_analysis_pipeline()
+    demo_health_report()
+    demo_historical_tracking()
+    demo_ci_integration()
+    demo_regression_prevention()
+    demo_health_improvement_workflow()
+    main()
+  examples/44-plugin-system/main.py:
+    e: demo_plugin_architecture,demo_builtin_plugins,demo_creating_tool_plugin,demo_creating_backend_plugin,demo_hook_system,demo_plugin_configuration,demo_plugin_marketplace,main,ToolPlugin,BackendPlugin
+    ToolPlugin: execute(1)  # Protocol for tool plugins.
+    BackendPlugin: generate(1)  # Protocol for LLM backend plugins.
+    demo_plugin_architecture()
+    demo_builtin_plugins()
+    demo_creating_tool_plugin()
+    demo_creating_backend_plugin()
+    demo_hook_system()
+    demo_plugin_configuration()
+    demo_plugin_marketplace()
     main()
   scripts/fix_readme.py:
     e: fix_readme
@@ -2281,14 +2326,14 @@ D:
 
 | Function | CC | in | out | total |
 |----------|----|----|-----|-------|
-| `print` *(in Taskfile)* | 0 | 1870 | 0 | **1870** |
+| `print` *(in Taskfile)* | 0 | 2106 | 0 | **2106** |
 | `main` *(in examples.31-abpr-workflow.main)* | 12 ⚠ | 0 | 77 | **77** |
 | `main` *(in examples.30-parallel-execution.main)* | 13 ⚠ | 0 | 55 | **55** |
 | `main` *(in examples.20-self-hosted-pipeline.main)* | 2 | 0 | 49 | **49** |
 | `main` *(in examples.30-parallel-execution.parallel_real_world)* | 13 ⚠ | 0 | 43 | **43** |
-| `_parse_batch_response` *(in src.algitex.tools.autofix.batch_backend.BatchFixBackend)* | 16 ⚠ | 0 | 40 | **40** |
-| `main` *(in examples.05-cost-tracking.main)* | 8 | 0 | 40 | **40** |
 | `demo_docker_operations` *(in examples.14-docker-mcp.main)* | 7 | 0 | 40 | **40** |
+| `_parse_batch_response` *(in src.algitex.tools.autofix.batch_backend.BatchFixBackend)* | 16 ⚠ | 0 | 40 | **40** |
+| `set` *(in src.algitex.tools.ollama_cache.LLMCache)* | 1 | 33 | 7 | **40** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/semcod/algitex
@@ -2297,7 +2342,7 @@ D:
 
 HUBS[20]:
   Taskfile.print
-    CC=0  in:1870  out:0  total:1870
+    CC=0  in:2106  out:0  total:2106
   examples.31-abpr-workflow.main.main
     CC=12  in:0  out:77  total:77
   examples.30-parallel-execution.main.main
@@ -2306,34 +2351,34 @@ HUBS[20]:
     CC=2  in:0  out:49  total:49
   examples.30-parallel-execution.parallel_real_world.main
     CC=13  in:0  out:43  total:43
-  src.algitex.tools.autofix.batch_backend.BatchFixBackend._parse_batch_response
-    CC=16  in:0  out:40  total:40
-  examples.05-cost-tracking.main.main
-    CC=8  in:0  out:40  total:40
   examples.14-docker-mcp.main.demo_docker_operations
     CC=7  in:0  out:40  total:40
+  src.algitex.tools.autofix.batch_backend.BatchFixBackend._parse_batch_response
+    CC=16  in:0  out:40  total:40
   src.algitex.tools.ollama_cache.LLMCache.set
     CC=1  in:33  out:7  total:40
+  examples.05-cost-tracking.main.main
+    CC=8  in:0  out:40  total:40
   examples.18-ollama-local.main.main
     CC=7  in:0  out:39  total:39
-  src.algitex.tools.tickets.Tickets.list
-    CC=4  in:36  out:1  total:37
   examples.16-test-workflow.main.demo_test_workflow
     CC=5  in:0  out:37  total:37
+  src.algitex.tools.tickets.Tickets.list
+    CC=4  in:36  out:1  total:37
   examples.31-abpr-workflow.abpr_pipeline.abpr_pipeline
     CC=10  in:0  out:36  total:36
+  examples.13-vallm.main.demo_validation
+    CC=5  in:0  out:35  total:35
   src.algitex.tools.autofix.batch_backend.backend.BatchFixBackend.fix_batch
     CC=10  in:0  out:35  total:35
   src.algitex.tools.autofix.batch_backend.BatchFixBackend.fix_batch
     CC=11  in:0  out:35  total:35
-  examples.13-vallm.main.demo_validation
-    CC=5  in:0  out:35  total:35
   examples.07-context.main.basic_context_example
     CC=2  in:0  out:34  total:34
-  examples.27-unified-autofix.main.main
-    CC=4  in:0  out:33  total:33
   examples.02-algo-loop.main.main
     CC=11  in:0  out:33  total:33
+  examples.27-unified-autofix.main.main
+    CC=4  in:0  out:33  total:33
   src.algitex.todo.hybrid.HybridAutofix.fix_all
     CC=3  in:0  out:31  total:31
 

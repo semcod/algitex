@@ -16,29 +16,11 @@ import os
 import signal
 import subprocess
 import time
-from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
 
+from algitex.tools.mcp_models import MCPService
 from algitex.tools.services import ServiceChecker, ServiceStatus
-
-
-@dataclass
-class MCPService:
-    """Definition of an MCP service."""
-    name: str
-    command: List[str]
-    port: Optional[int] = None
-    health_endpoint: Optional[str] = None
-    env: Dict[str, str] = field(default_factory=dict)
-    working_dir: Optional[str] = None
-    dependencies: List[str] = field(default_factory=list)
-    process: Optional[subprocess.Popen] = field(default=None, init=False)
-    ready: bool = field(default=False, init=False)
-    
-    def __post_init__(self):
-        if self.port and not self.health_endpoint:
-            self.health_endpoint = f"http://localhost:{self.port}/health"
 
 
 class MCPOrchestrator:

@@ -1,5 +1,5 @@
-# code2llm | 311f 65722L | python:189,shell:27,yaml:20,yml:4,txt:2,toml:1 | 2026-04-25
-# CC̄=2.6 | critical:10/1727 | dups:3 | cycles:0
+# code2llm | 319f 66757L | python:193,shell:27,yaml:20,yml:4,txt:2,toml:1 | 2026-04-25
+# CC̄=2.6 | critical:10/1760 | dups:3 | cycles:0
 
 HEALTH[11]:
   🔴 DUP   3 classes duplicated
@@ -18,7 +18,7 @@ REFACTOR[2]:
   1. rm duplicates  (-3 dup classes)
   2. split 10 high-CC methods  (CC>15)
 
-PIPELINES[952]:
+PIPELINES[956]:
   [1] Src [main]: main → print
       PURITY: 100% pure
   [2] Src [format_price]: format_price
@@ -194,14 +194,18 @@ LAYERS:
   │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
   │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
   │
-  examples/                       CC̄=2.8    ←in:0  →out:0
+  examples/                       CC̄=2.7    ←in:0  →out:0
   │ main                       438L  0C    6m  CC=8      ←0
   │ main                       411L  0C    8m  CC=3      ←0
   │ main                       404L  0C   11m  CC=9      ←0
   │ main                       397L  0C    5m  CC=5      ←0
+  │ main                       334L  2C   10m  CC=2      ←0
+  │ main                       301L  0C    8m  CC=4      ←0
+  │ main                       274L  0C    8m  CC=2      ←0
   │ main                       241L  0C    8m  CC=7      ←0
   │ main                       240L  0C    5m  CC=6      ←0
   │ main                       224L  0C   10m  CC=10     ←0
+  │ main                       219L  0C    7m  CC=6      ←0
   │ main                       206L  0C    4m  CC=3      ←0
   │ parallel_real_world        201L  0C    2m  CC=13     ←0
   │ main                       195L  0C    9m  CC=8      ←0
@@ -324,12 +328,16 @@ LAYERS:
   │ Makefile                     0L  0C    0m  CC=0.0    ←0
   │ Makefile                     0L  0C    0m  CC=0.0    ←0
   │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
   │
   ./                              CC̄=0.0    ←in:0  →out:0
   │ !! planfile.yaml            20325L  0C    0m  CC=0.0    ←0
   │ !! goal.yaml                  513L  0C    0m  CC=0.0    ←0
   │ docker-tools.yaml          489L  0C    0m  CC=0.0    ←0
-  │ Taskfile.yml               274L  0C    1m  CC=0.0    ←82
+  │ Taskfile.yml               274L  0C    1m  CC=0.0    ←86
   │ docker-compose.yml         192L  0C    0m  CC=0.0    ←0
   │ docker-compose.mcp.yml     156L  0C    0m  CC=0.0    ←0
   │ prefact.yaml                82L  0C    0m  CC=0.0    ←0
@@ -340,10 +348,10 @@ LAYERS:
   │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
   │
   project/                        CC̄=0.0    ←in:0  →out:0
-  │ !! calls.yaml                6564L  0C    0m  CC=0.0    ←0
+  │ !! calls.yaml                6492L  0C    0m  CC=0.0    ←0
   │ !! map.toon.yaml             1389L  0C  424m  CC=0.0    ←0
-  │ !! calls.toon.yaml            653L  0C    0m  CC=0.0    ←0
-  │ analysis.toon.yaml         492L  0C    0m  CC=0.0    ←0
+  │ !! calls.toon.yaml            633L  0C    0m  CC=0.0    ←0
+  │ analysis.toon.yaml         491L  0C    0m  CC=0.0    ←0
   │ duplication.toon.yaml      387L  0C    0m  CC=0.0    ←0
   │ validation.toon.yaml       126L  0C    0m  CC=0.0    ←0
   │ analysis_refactored.toon.yaml   121L  0C    0m  CC=0.0    ←0
@@ -423,68 +431,76 @@ LAYERS:
      examples/38-new-modules/Makefile          0L
      examples/39-microtask-pipeline/Makefile   0L
      examples/40-three-tier-autofix/Makefile   0L
+     examples/41-god-module-splitting/Makefile  0L
+     examples/42-duplicate-removal/Makefile    0L
+     examples/43-code-health/Makefile          0L
+     examples/44-plugin-system/Makefile        0L
 
 COUPLING:
-                                                                Taskfile                         src.algitex           examples.31-abpr-workflow               examples.09-workspace  examples.32-workspace-coordination                    examples.10-cicd            examples.18-ollama-local              examples.37-benchmarks      examples.40-three-tier-autofix      examples.30-parallel-execution                examples.08-feedback                 examples.07-context          examples.33-hybrid-autofix      examples.39-microtask-pipeline    examples.20-self-hosted-pipeline
-                            Taskfile                                  ──                                ←516                                 ←81                                 ←71                                 ←68                                 ←65                                 ←61                                 ←60                                 ←60                                 ←56                                 ←57                                 ←53                                 ←45                                 ←46                                 ←45  hub
-                         src.algitex                                 516                                  ──                                                                      ←2                                                                      ←1                                                                                                                                              ←3                                                                                                          ←3                                                                          hub
+                                                                Taskfile                         src.algitex           examples.31-abpr-workflow               examples.09-workspace  examples.32-workspace-coordination       examples.42-duplicate-removal                    examples.10-cicd           examples.44-plugin-system            examples.18-ollama-local              examples.37-benchmarks      examples.40-three-tier-autofix      examples.30-parallel-execution                examples.08-feedback                 examples.07-context    examples.41-god-module-splitting
+                            Taskfile                                  ──                                ←516                                 ←81                                 ←71                                 ←68                                 ←68                                 ←65                                 ←64                                 ←61                                 ←60                                 ←60                                 ←56                                 ←57                                 ←53                                 ←53  hub
+                         src.algitex                                 516                                  ──                                                                      ←2                                                                                                          ←1                                                                                                                                                                                  ←3                                                                                                              hub
            examples.31-abpr-workflow                                  81                                                                      ──                                                                                                                                                                                                                                                                                                                                                                                                                                                  !! fan-out
                examples.09-workspace                                  71                                   2                                                                      ──                                                                                                                                                                                                                                                                                                                                                                                                              !! fan-out
   examples.32-workspace-coordination                                  68                                                                                                                                              ──                                                                                                                                                                                                                                                                                                                                                                          !! fan-out
-                    examples.10-cicd                                  65                                   1                                                                                                                                              ──                                                                                                                                                                                                                                                                                                                                      !! fan-out
-            examples.18-ollama-local                                  61                                                                                                                                                                                                                      ──                                                                                                                                                                                                                                                                                                  !! fan-out
-              examples.37-benchmarks                                  60                                                                                                                                                                                                                                                          ──                                                                                                                                                                                                                                                              !! fan-out
-      examples.40-three-tier-autofix                                  60                                                                                                                                                                                                                                                                                              ──                                                                                                                                                                                                                          !! fan-out
-      examples.30-parallel-execution                                  56                                   3                                                                                                                                                                                                                                                                                              ──                                                                                                                                                                                      !! fan-out
-                examples.08-feedback                                  57                                                                                                                                                                                                                                                                                                                                                                      ──                                                                                                                                                  !! fan-out
-                 examples.07-context                                  53                                                                                                                                                                                                                                                                                                                                                                                                          ──                                                                                                              !! fan-out
-          examples.33-hybrid-autofix                                  45                                   3                                                                                                                                                                                                                                                                                                                                                                                                          ──                                                                          !! fan-out
-      examples.39-microtask-pipeline                                  46                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ──                                      !! fan-out
-    examples.20-self-hosted-pipeline                                  45                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ──  !! fan-out
+       examples.42-duplicate-removal                                  68                                                                                                                                                                                  ──                                                                                                                                                                                                                                                                                                                                      !! fan-out
+                    examples.10-cicd                                  65                                   1                                                                                                                                                                                  ──                                                                                                                                                                                                                                                                                                  !! fan-out
+           examples.44-plugin-system                                  64                                                                                                                                                                                                                                                          ──                                                                                                                                                                                                                                                              !! fan-out
+            examples.18-ollama-local                                  61                                                                                                                                                                                                                                                                                              ──                                                                                                                                                                                                                          !! fan-out
+              examples.37-benchmarks                                  60                                                                                                                                                                                                                                                                                                                                  ──                                                                                                                                                                                      !! fan-out
+      examples.40-three-tier-autofix                                  60                                                                                                                                                                                                                                                                                                                                                                      ──                                                                                                                                                  !! fan-out
+      examples.30-parallel-execution                                  56                                   3                                                                                                                                                                                                                                                                                                                                                                      ──                                                                                                              !! fan-out
+                examples.08-feedback                                  57                                                                                                                                                                                                                                                                                                                                                                                                                                              ──                                                                          !! fan-out
+                 examples.07-context                                  53                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ──                                      !! fan-out
+    examples.41-god-module-splitting                                  53                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ──  !! fan-out
   CYCLES: none
-  HUB: Taskfile/ (fan-in=1870)
+  HUB: Taskfile/ (fan-in=2106)
   HUB: src.algitex/ (fan-in=20)
-  SMELL: examples.35-sprint3-patterns/ fan-out=36 → split needed
-  SMELL: examples.24-ollama-batch/ fan-out=13 → split needed
-  SMELL: examples.02-algo-loop/ fan-out=22 → split needed
-  SMELL: examples.03-pipeline/ fan-out=10 → split needed
-  SMELL: examples.22-claude-code-ollama/ fan-out=12 → split needed
-  SMELL: examples.05-cost-tracking/ fan-out=14 → split needed
-  SMELL: examples.08-feedback/ fan-out=57 → split needed
-  SMELL: examples.28-mcp-orchestration/ fan-out=26 → split needed
-  SMELL: examples.40-three-tier-autofix/ fan-out=60 → split needed
-  SMELL: examples.20-self-hosted-pipeline/ fan-out=45 → split needed
-  SMELL: examples.07-context/ fan-out=53 → split needed
-  SMELL: examples.09-workspace/ fan-out=73 → split needed
-  SMELL: scripts/ fan-out=10 → split needed
-  SMELL: examples.25-local-model-comparison/ fan-out=16 → split needed
-  SMELL: examples.10-cicd/ fan-out=66 → split needed
-  SMELL: examples.18-ollama-local/ fan-out=61 → split needed
-  SMELL: examples.12-filesystem-mcp/ fan-out=22 → split needed
-  SMELL: examples.33-hybrid-autofix/ fan-out=48 → split needed
-  SMELL: examples.04-ide-integration/ fan-out=17 → split needed
-  SMELL: examples.26-litellm-proxy-ollama/ fan-out=11 → split needed
-  SMELL: examples.11-aider-mcp/ fan-out=17 → split needed
-  SMELL: examples.06-telemetry/ fan-out=31 → split needed
-  SMELL: examples.15-github-mcp/ fan-out=24 → split needed
-  SMELL: examples.21-aider-cli-ollama/ fan-out=17 → split needed
-  SMELL: examples.30-parallel-execution/ fan-out=59 → split needed
-  SMELL: examples.19-local-mcp-tools/ fan-out=22 → split needed
-  SMELL: examples.38-new-modules/ fan-out=37 → split needed
-  SMELL: examples.36-dashboard/ fan-out=45 → split needed
-  SMELL: examples.13-vallm/ fan-out=23 → split needed
-  SMELL: examples.16-test-workflow/ fan-out=28 → split needed
-  SMELL: examples.34-batch-fix/ fan-out=30 → split needed
   SMELL: examples.01-quickstart/ fan-out=15 → split needed
-  SMELL: examples.14-docker-mcp/ fan-out=27 → split needed
+  SMELL: examples.04-ide-integration/ fan-out=17 → split needed
+  SMELL: examples.35-sprint3-patterns/ fan-out=36 → split needed
+  SMELL: examples.06-telemetry/ fan-out=31 → split needed
+  SMELL: examples.22-claude-code-ollama/ fan-out=12 → split needed
+  SMELL: examples.08-feedback/ fan-out=57 → split needed
+  SMELL: examples.12-filesystem-mcp/ fan-out=22 → split needed
+  SMELL: examples.42-duplicate-removal/ fan-out=68 → split needed
+  SMELL: examples.21-aider-cli-ollama/ fan-out=17 → split needed
   SMELL: examples.27-unified-autofix/ fan-out=21 → split needed
-  SMELL: src.algitex/ fan-out=516 → split needed
-  SMELL: examples.39-microtask-pipeline/ fan-out=46 → split needed
-  SMELL: examples.32-workspace-coordination/ fan-out=68 → split needed
-  SMELL: examples.31-abpr-workflow/ fan-out=81 → split needed
-  SMELL: examples.17-docker-workflow/ fan-out=28 → split needed
+  SMELL: examples.43-code-health/ fan-out=51 → split needed
+  SMELL: examples.16-test-workflow/ fan-out=28 → split needed
+  SMELL: examples.30-parallel-execution/ fan-out=59 → split needed
+  SMELL: examples.11-aider-mcp/ fan-out=17 → split needed
+  SMELL: examples.19-local-mcp-tools/ fan-out=22 → split needed
+  SMELL: examples.25-local-model-comparison/ fan-out=16 → split needed
   SMELL: examples.37-benchmarks/ fan-out=60 → split needed
+  SMELL: examples.02-algo-loop/ fan-out=22 → split needed
+  SMELL: examples.33-hybrid-autofix/ fan-out=48 → split needed
+  SMELL: examples.40-three-tier-autofix/ fan-out=60 → split needed
+  SMELL: examples.41-god-module-splitting/ fan-out=53 → split needed
+  SMELL: examples.31-abpr-workflow/ fan-out=81 → split needed
+  SMELL: examples.44-plugin-system/ fan-out=64 → split needed
+  SMELL: examples.13-vallm/ fan-out=23 → split needed
+  SMELL: examples.05-cost-tracking/ fan-out=14 → split needed
+  SMELL: examples.14-docker-mcp/ fan-out=27 → split needed
+  SMELL: examples.36-dashboard/ fan-out=45 → split needed
   SMELL: examples.23-continue-dev-ollama/ fan-out=18 → split needed
+  SMELL: examples.38-new-modules/ fan-out=37 → split needed
+  SMELL: examples.39-microtask-pipeline/ fan-out=46 → split needed
+  SMELL: examples.18-ollama-local/ fan-out=61 → split needed
+  SMELL: examples.03-pipeline/ fan-out=10 → split needed
+  SMELL: examples.17-docker-workflow/ fan-out=28 → split needed
+  SMELL: scripts/ fan-out=10 → split needed
+  SMELL: examples.07-context/ fan-out=53 → split needed
+  SMELL: examples.34-batch-fix/ fan-out=30 → split needed
+  SMELL: examples.10-cicd/ fan-out=66 → split needed
+  SMELL: examples.09-workspace/ fan-out=73 → split needed
+  SMELL: examples.20-self-hosted-pipeline/ fan-out=45 → split needed
+  SMELL: src.algitex/ fan-out=516 → split needed
+  SMELL: examples.26-litellm-proxy-ollama/ fan-out=11 → split needed
+  SMELL: examples.32-workspace-coordination/ fan-out=68 → split needed
+  SMELL: examples.24-ollama-batch/ fan-out=13 → split needed
+  SMELL: examples.15-github-mcp/ fan-out=24 → split needed
+  SMELL: examples.28-mcp-orchestration/ fan-out=26 → split needed
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon

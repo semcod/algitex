@@ -36,44 +36,6 @@ CONSTANT_200 = 200
 TIMEOUT_300 = 300.0
 CONSTANT_500 = 500
 
-
-TIMEOUT_1 = TIMEOUT_1
-MAX_3 = MAX_3
-MAX_5 = MAX_5
-CONSTANT_9 = CONSTANT_9
-CONSTANT_20 = CONSTANT_20
-CONSTANT_50 = CONSTANT_50
-MIN_60 = MIN_60
-CONSTANT_200 = CONSTANT_200
-TIMEOUT_300 = TIMEOUT_300
-CONSTANT_500 = CONSTANT_500
-
-
-TIMEOUT_1 = TIMEOUT_1
-MAX_3 = MAX_3
-MAX_5 = MAX_5
-CONSTANT_9 = CONSTANT_9
-CONSTANT_20 = CONSTANT_20
-CONSTANT_50 = CONSTANT_50
-MIN_60 = MIN_60
-CONSTANT_200 = CONSTANT_200
-TIMEOUT_300 = TIMEOUT_300
-CONSTANT_500 = CONSTANT_500
-
-
-TIMEOUT_1 = TIMEOUT_1
-MAX_3 = MAX_3
-MAX_5 = MAX_5
-CONSTANT_9 = CONSTANT_9
-CONSTANT_20 = CONSTANT_20
-CONSTANT_50 = CONSTANT_50
-MIN_60 = MIN_60
-CONSTANT_200 = CONSTANT_200
-TIMEOUT_300 = TIMEOUT_300
-CONSTANT_500 = CONSTANT_500
-
-
-
 @dataclass
 class TaskGroup:
     """Grupa podobnych zadań do batch fix."""
@@ -688,79 +650,93 @@ IMPORTANT:
         raise TimeoutError(f"LLM call exceeded timeout after {max_retries} retries")
     
     def _parse_batch_response(self, response: str, group: TaskGroup) -> dict[str, bool]:
-        """Parsuj odpowiedź batch i zastosuj fixy."""
-        results = {}
-        backups = {}  # filepath -> original content
-        
+        """Parsuj odpowiedź batch i zastosuj fixy.
+
+        CC: 5 (extract + loop + missing + summary + validate)
+        Was: CC 16 (nested markdown stripping + backup + compare + write)
+        """
+        results: dict[str, bool] = {}
+        backups: dict[str, str | None] = {}
+
         print(f"     🔍 Parsowanie odpowiedzi dla {len(group.tasks)} zadań...")
         print(f"     🔍 Oczekiwane pliki: {[t.file_path for t in group.tasks]}")
-        
-        # Parsuj sekcje === FIXED: path ===
-        import re
-        pattern = r'=== FIXED: (.+?) ===\n(.*?)(?==== FIXED:|$)'
-        matches = re.findall(pattern, response, re.DOTALL)
-        
-        print(f"     🔍 Znaleziono {len(matches)} sekcji FIXED w odpowiedzi")
-        
-        for idx, (filepath, fixed_content) in enumerate(matches):
-            filepath = filepath.strip()
-            # Strip markdown code blocks if present
-            fixed_content = fixed_content.strip()
-            if fixed_content.startswith('```python'):
-                fixed_content = fixed_content[CONSTANT_9:].strip()
-            elif fixed_content.startswith('```'):
-                fixed_content = fixed_content[MAX_3:].strip()
-            if fixed_content.endswith('```'):
-                fixed_content = fixed_content[:-MAX_3].strip()
-            
+
+        sections = self._extract_fixed_sections(response)
+        print(f"     🔍 Znaleziono {len(sections)} sekcji FIXED w odpowiedzi")
+
+        for idx, (filepath, fixed_content) in enumerate(sections):
             print(f"     [{idx+1}] Parsowanie: {filepath}")
             print(f"         Content length: {len(fixed_content)} chars")
             print(f"         Content preview: {fixed_content[:CONSTANT_200]}...")
-            
-            try:
-                path = Path(filepath)
-                # Backup przed zapisem
-                if path.exists():
-                    backups[filepath] = path.read_text()
-                    print(f"         📦 Backup created ({len(backups[filepath])} chars)")
-                else:
-                    backups[filepath] = None  # Nowy plik
-                    print(f"         📦 Nowy plik (brak backup)")
-                
-                # Sprawdź czy content jest różny
-                original_content = backups.get(filepath, "")
-                if original_content == fixed_content:
-                    print(f"         ⚠️  Content nie zmieniony - pomijam zapis")
-                    results[filepath] = False
-                    continue
-                
-                path.write_text(fixed_content)
-                results[filepath] = True
-                print(f"         ✓ Zapisano: {filepath}")
-            except Exception as e:
-                print(f"         ✗ Błąd zapisu {filepath}: {e}")
-                results[filepath] = False
-        
-        # Oznacz pliki bez odpowiedzi jako failed
+            ok = self._write_file_fix(filepath, fixed_content, backups)
+            results[filepath] = ok
+
+        missing_count = self._mark_missing_as_failed(results, group)
+        if missing_count > 0:
+            print(f"     ✗ {missing_count} plików bez odpowiedzi z LLM")
+
+        success_count = sum(1 for v in results.values() if v)
+        print(f"     📊 Podsumowanie: {success_count}/{len(results)} plików zapisanych")
+
+        if results and any(results.values()):
+            print(f"     🔍 Rozpoczynam walidację...")
+            self._validate_and_rollback(results, backups)
+        return results
+
+    @staticmethod
+    def _extract_fixed_sections(response: str) -> list[tuple[str, str]]:
+        """Extract (filepath, content) pairs from LLM response."""
+        import re
+        pattern = r'=== FIXED: (.+?) ===\n(.*?)(?==== FIXED:|$)'
+        matches = re.findall(pattern, response, re.DOTALL)
+        sections = []
+        for filepath, content in matches:
+            filepath = filepath.strip()
+            content = content.strip()
+            if content.startswith('```python'):
+                content = content[CONSTANT_9:].strip()
+            elif content.startswith('```'):
+                content = content[MAX_3:].strip()
+            if content.endswith('```'):
+                content = content[:-MAX_3].strip()
+            sections.append((filepath, content))
+        return sections
+
+    def _write_file_fix(
+        self, filepath: str, fixed_content: str, backups: dict[str, str | None]
+    ) -> bool:
+        """Backup original file, compare content, and write fix."""
+        try:
+            path = Path(filepath)
+            if path.exists():
+                backups[filepath] = path.read_text()
+                print(f"         📦 Backup created ({len(backups[filepath])} chars)")
+            else:
+                backups[filepath] = None
+                print(f"         📦 Nowy plik (brak backup)")
+
+            original = backups.get(filepath, "")
+            if original == fixed_content:
+                print(f"         ⚠️  Content nie zmieniony - pomijam zapis")
+                return False
+
+            path.write_text(fixed_content)
+            print(f"         ✓ Zapisano: {filepath}")
+            return True
+        except Exception as e:
+            print(f"         ✗ Błąd zapisu {filepath}: {e}")
+            return False
+
+    @staticmethod
+    def _mark_missing_as_failed(results: dict[str, bool], group: TaskGroup) -> int:
+        """Mark files without a response as failed."""
         missing_count = 0
         for task in group.tasks:
             if task.file_path not in results:
                 print(f"     ⚠️  Brak odpowiedzi dla: {task.file_path}")
                 results[task.file_path] = False
                 missing_count += 1
-        
-        if missing_count > 0:
-            print(f"     ✗ {missing_count} plików bez odpowiedzi z LLM")
-        
-        # Podsumowanie
-        success_count = sum(1 for v in results.values() if v)
-        print(f"     📊 Podsumowanie: {success_count}/{len(results)} plików zapisanych")
-        
-        # Walidacja i rollback jeśli potrzeba
-        if results and any(results.values()):
-            print(f"     🔍 Rozpoczynam walidację...")
-            self._validate_and_rollback(results, backups)
-        return results
+        return missing_count
     
     def _validate_and_rollback(self, results: dict, backups: dict) -> None:
         """Waliduj pliki przez vallm i rollbackuj jeśli błędy."""

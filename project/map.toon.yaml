@@ -1,10 +1,10 @@
-# algitex | 235f 38171L | python:207,shell:27,less:1 | 2026-04-25
-# stats: 490 func | 253 cls | 235 mod | CC̄=3.8 | critical:35 | cycles:0
+# algitex | 239f 39303L | python:211,shell:27,less:1 | 2026-04-25
+# stats: 521 func | 255 cls | 239 mod | CC̄=3.6 | critical:35 | cycles:0
 # alerts[5]: CC _classify_message=48; CC todo_verify_prefact=29; CC _tf_execute_phased=25; CC fix_file=25; CC parse_file=24
 # hotspots[5]: _run_with_dashboard fan=27; main fan=18; main fan=18; dashboard_export fan=17; todo_verify_prefact fan=17
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[235]:
+M[239]:
   app.doql.less,334
   docker/aider-mcp/aider_mcp_server.py,157
   docker/code2llm/code2llm_mcp_server.py,324
@@ -105,6 +105,10 @@ M[235]:
   examples/38-new-modules/main.py,141
   examples/39-microtask-pipeline/main.py,104
   examples/40-three-tier-autofix/main.py,134
+  examples/41-god-module-splitting/main.py,220
+  examples/42-duplicate-removal/main.py,275
+  examples/43-code-health/main.py,302
+  examples/44-plugin-system/main.py,335
   project.sh,47
   scripts/fix_readme.py,34
   scripts/generate_lib_docs.py,277
@@ -657,6 +661,47 @@ D:
     demo_tier_big()
     demo_all_tiers()
     demo_dashboard_integration()
+    main()
+  examples/41-god-module-splitting/main.py:
+    e: demo_god_module_problem,demo_split_strategy,demo_before_and_after,demo_import_compatibility,demo_real_metrics,demo_how_to_split_your_module,main
+    demo_god_module_problem()
+    demo_split_strategy()
+    demo_before_and_after()
+    demo_import_compatibility()
+    demo_real_metrics()
+    demo_how_to_split_your_module()
+    main()
+  examples/42-duplicate-removal/main.py:
+    e: demo_duplicate_problem,demo_detection_with_redup,demo_extraction_strategy,demo_algitex_integration,demo_real_world_example,demo_prevention_strategies,demo_metrics_and_roi,main
+    demo_duplicate_problem()
+    demo_detection_with_redup()
+    demo_extraction_strategy()
+    demo_algitex_integration()
+    demo_real_world_example()
+    demo_prevention_strategies()
+    demo_metrics_and_roi()
+    main()
+  examples/43-code-health/main.py:
+    e: demo_health_metrics,demo_analysis_pipeline,demo_health_report,demo_historical_tracking,demo_ci_integration,demo_regression_prevention,demo_health_improvement_workflow,main
+    demo_health_metrics()
+    demo_analysis_pipeline()
+    demo_health_report()
+    demo_historical_tracking()
+    demo_ci_integration()
+    demo_regression_prevention()
+    demo_health_improvement_workflow()
+    main()
+  examples/44-plugin-system/main.py:
+    e: demo_plugin_architecture,demo_builtin_plugins,demo_creating_tool_plugin,demo_creating_backend_plugin,demo_hook_system,demo_plugin_configuration,demo_plugin_marketplace,main,ToolPlugin,BackendPlugin
+    ToolPlugin: execute(1)  # Protocol for tool plugins.
+    BackendPlugin: generate(1)  # Protocol for LLM backend plugins.
+    demo_plugin_architecture()
+    demo_builtin_plugins()
+    demo_creating_tool_plugin()
+    demo_creating_backend_plugin()
+    demo_hook_system()
+    demo_plugin_configuration()
+    demo_plugin_marketplace()
     main()
   scripts/fix_readme.py:
     e: fix_readme

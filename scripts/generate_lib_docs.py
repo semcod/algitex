@@ -49,72 +49,112 @@ def get_function_signature(node: ast.FunctionDef | ast.AsyncFunctionDef) -> str:
     return sig
 
 
+def _parse_function_node(node: ast.FunctionDef | ast.AsyncFunctionDef) -> dict[str, Any] | None:
+    """Extract function info from an AST node."""
+    if node.name.startswith('_'):
+        return None
+    return {
+        "name": node.name,
+        "signature": get_function_signature(node),
+        "docstring": extract_docstring(node),
+        "lineno": node.lineno,
+    }
+
+
+def _parse_class_node(node: ast.ClassDef) -> dict[str, Any] | None:
+    """Extract class info from an AST node."""
+    if node.name.startswith('_'):
+        return None
+    methods = []
+    for item in node.body:
+        if isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            if not item.name.startswith('_') or item.name == '__init__':
+                methods.append({
+                    "name": item.name,
+                    "signature": get_function_signature(item),
+                    "docstring": extract_docstring(item),
+                    "lineno": item.lineno,
+                })
+    return {
+        "name": node.name,
+        "docstring": extract_docstring(node),
+        "lineno": node.lineno,
+        "methods": methods,
+        "bases": [ast.unparse(base) for base in node.bases],
+    }
+
+
+def _parse_import_node(node: ast.Import | ast.ImportFrom) -> str | None:
+    """Extract import statement string from an AST node."""
+    if isinstance(node, ast.ImportFrom) and node.module:
+        names = [alias.name for alias in node.names]
+        return f"from {node.module} import {', '.join(names)}"
+    elif isinstance(node, ast.Import):
+        names = [alias.name for alias in node.names]
+        return f"import {', '.join(names)}"
+    return None
+
+
+def _parse_export_node(node: ast.Assign) -> list[str] | None:
+    """Extract __all__ exports from an AST assign node."""
+    for target in node.targets:
+        if isinstance(target, ast.Name) and target.id == "__all__":
+            if isinstance(node.value, (ast.List, ast.Tuple)):
+                return [ast.unparse(elt).strip('"\'') for elt in node.value.elts]
+    return None
+
+
+# Node type → handler mapping
+_NODE_HANDLERS: dict[type, callable] = {
+    ast.FunctionDef: _parse_function_node,
+    ast.AsyncFunctionDef: _parse_function_node,
+    ast.ClassDef: _parse_class_node,
+    ast.Import: _parse_import_node,
+    ast.ImportFrom: _parse_import_node,
+    ast.Assign: _parse_export_node,
+}
+
+
 def parse_file(filepath: Path) -> dict[str, Any]:
-    """Parse Python file and extract documentation."""
+    """Parse Python file and extract documentation.
+
+    CC: 5 (init + loop + 4 handler branches via dispatch)
+    Was: CC ~24 (nested if/elif per node type)
+    """
     try:
         source = filepath.read_text(encoding='utf-8')
         tree = ast.parse(source)
     except (SyntaxError, UnicodeDecodeError) as e:
         return {"error": str(e)}
-    
-    result = {
+
+    result: dict[str, Any] = {
         "module_docstring": None,
         "functions": [],
         "classes": [],
         "imports": [],
         "exports": []
     }
-    
-    # Module docstring
+
     result["module_docstring"] = extract_docstring(tree)
-    
+
     for node in ast.iter_child_nodes(tree):
+        handler = _NODE_HANDLERS.get(type(node))
+        if handler is None:
+            continue
+
+        parsed = handler(node)
+        if parsed is None:
+            continue
+
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
-            if not node.name.startswith('_'):  # Skip private
-                func_info = {
-                    "name": node.name,
-                    "signature": get_function_signature(node),
-                    "docstring": extract_docstring(node),
-                    "lineno": node.lineno
-                }
-                result["functions"].append(func_info)
-        
+            result["functions"].append(parsed)
         elif isinstance(node, ast.ClassDef):
-            if not node.name.startswith('_'):
-                class_info = {
-                    "name": node.name,
-                    "docstring": extract_docstring(node),
-                    "lineno": node.lineno,
-                    "methods": [],
-                    "bases": [ast.unparse(base) for base in node.bases]
-                }
-                for item in node.body:
-                    if isinstance(item, (ast.FunctionDef, ast.AsyncFunctionDef)):
-                        if not item.name.startswith('_') or item.name == '__init__':
-                            method_info = {
-                                "name": item.name,
-                                "signature": get_function_signature(item),
-                                "docstring": extract_docstring(item),
-                                "lineno": item.lineno
-                            }
-                            class_info["methods"].append(method_info)
-                result["classes"].append(class_info)
-        
+            result["classes"].append(parsed)
         elif isinstance(node, (ast.Import, ast.ImportFrom)):
-            if isinstance(node, ast.ImportFrom) and node.module:
-                names = [alias.name for alias in node.names]
-                result["imports"].append(f"from {node.module} import {', '.join(names)}")
-            elif isinstance(node, ast.Import):
-                names = [alias.name for alias in node.names]
-                result["imports"].append(f"import {', '.join(names)}")
-        
+            result["imports"].append(parsed)
         elif isinstance(node, ast.Assign):
-            for target in node.targets:
-                if isinstance(target, ast.Name) and target.id == "__all__":
-                    if isinstance(node.value, (ast.List, ast.Tuple)):
-                        exports = [ast.unparse(elt).strip('"\'') for elt in node.value.elts]
-                        result["exports"] = exports
-    
+            result["exports"] = parsed
+
     return result
 
 

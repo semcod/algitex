@@ -50,26 +50,42 @@ def todo_verify_prefact(file: str, prune: bool):
         console.print("\n[green]✓ No outdated tasks to remove[/]")
     console.print(f"\n[bold]{'═' * 60}[/]")
 
+# Dispatch table: (keyword_tuple) → validator function
+_VALIDATORS: list[tuple[tuple[str, ...], callable]] = [
+    (("unused", "import"), lambda line: "import" in line),
+    (("f-string",), lambda line: '"' in line or "'" in line),
+    (("string concatenation",), lambda line: '"' in line or "'" in line),
+    (("magic number",), lambda line: bool(re.search(r'\b\d+\b', line))),
+]
+
+
 def _validate_tasks(tasks):
+    """Validate tasks against current file content.
+
+    CC: 4 (loop + path check + line check + dispatch)
+    Was: CC 15 (nested if/elif per type)
+    """
     valid, outdated = [], []
     for task in tasks:
         try:
             path = Path(task["file"])
             if not path.exists():
-                outdated.append(task); continue
+                outdated.append(task)
+                continue
             lines = path.read_text().splitlines()
             line_no = task["line"] - 1
-            if line_no >= len(lines): 
-                outdated.append(task); continue
+            if line_no >= len(lines):
+                outdated.append(task)
+                continue
             line_content = lines[line_no]
             msg_lower = task["message"].lower()
+
             is_valid = True
-            if "unused" in msg_lower and "import" in msg_lower and "import" not in line_content:
-                is_valid = False
-            elif ("f-string" in msg_lower or "string concatenation" in msg_lower) and not any(c in line_content for c in ['"', "'"]):
-                is_valid = False
-            elif "magic number" in msg_lower and not re.search(r'\b\d+\b', line_content):
-                is_valid = False
+            for keywords, check in _VALIDATORS:
+                if all(kw in msg_lower for kw in keywords):
+                    is_valid = check(line_content)
+                    break
+
             (valid if is_valid else outdated).append(task)
         except Exception:
             valid.append(task)

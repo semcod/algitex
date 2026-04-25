@@ -376,29 +376,49 @@ class MicroTaskExecutor:
             return False
         const_name = self._sanitize_constant_name(content, number)
 
+        replaced = self._replace_magic_number(lines, task, number, const_name)
+        if not replaced:
+            return False
+
+        self._insert_constant(lines, const_name, number)
+        return self._write_if_valid(path, lines, source)
+
+    def _replace_magic_number(
+        self, lines: list[str], task: MicroTask, number: int, const_name: str
+    ) -> bool:
+        """Replace the first magic number occurrence and return True if changed."""
+        pattern = rf"(?<![\"\'])\b{number}\b(?![\"\'])"
         if task.context_start and task.context_end:
             snippet = "\n".join(lines[task.context_start - 1 : task.context_end])
-            new_snippet = re.sub(rf"(?<![\"\'])\b{number}\b(?![\"\'])", const_name, snippet, count=1)
+            new_snippet = re.sub(pattern, const_name, snippet, count=1)
             if new_snippet == snippet:
                 return False
             lines[task.context_start - 1 : task.context_end] = new_snippet.splitlines()
-            if not any(re.match(rf"^{re.escape(const_name)}\s*=\s*\d+\s*$", existing.strip()) for existing in lines):
-                insert_at = self._find_import_insert_point(lines)
-                lines[insert_at:insert_at] = ["", "# Constants", f"{const_name} = {number}", ""]
-            candidate = "\n".join(lines) + ("\n" if source.endswith("\n") else "")
-            if not self._validate_python(candidate):
-                return False
-            path.write_text(candidate, encoding="utf-8")
             return True
 
         target_line = task.line_start
         if target_line <= 0 or target_line > len(lines):
             return False
-        new_line = re.sub(rf"(?<![\"\'])\b{number}\b(?![\"\'])", const_name, lines[target_line - 1], count=1)
+        new_line = re.sub(pattern, const_name, lines[target_line - 1], count=1)
         if new_line == lines[target_line - 1]:
             return False
         lines[target_line - 1] = new_line
-        candidate = "\n".join(lines) + ("\n" if source.endswith("\n") else "")
+        return True
+
+    def _insert_constant(self, lines: list[str], const_name: str, number: int) -> None:
+        """Insert constant definition if it does not already exist."""
+        exists = any(
+            re.match(rf"^{re.escape(const_name)}\s*=\s*\d+\s*$", existing.strip())
+            for existing in lines
+        )
+        if exists:
+            return
+        insert_at = self._find_import_insert_point(lines)
+        lines[insert_at:insert_at] = ["", "# Constants", f"{const_name} = {number}", ""]
+
+    def _write_if_valid(self, path: Path, lines: list[str], original: str) -> bool:
+        """Join lines, validate Python, and write to path."""
+        candidate = "\n".join(lines) + ("\n" if original.endswith("\n") else "")
         if not self._validate_python(candidate):
             return False
         path.write_text(candidate, encoding="utf-8")
