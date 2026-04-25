@@ -3,7 +3,7 @@
 
 ## AI Cost Tracking
 
-![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.60-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.61-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
 ![AI Cost](https://img.shields.io/badge/AI%20Cost-$11.69-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-13.4h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
 
 - 🤖 **LLM usage:** $11.6877 (67 commits)
@@ -539,11 +539,21 @@ Each example has:
 - [32-workspace-coordination/README.md](examples/32-workspace-coordination/README.md) — Multi-Repo Workspace Coordination
 - [33-hybrid-autofix/README.md](examples/33-hybrid-autofix/README.md) — Fast parallel + LLM with rate limiting
 - [34-batch-fix/README.md](examples/34-batch-fix/README.md) — BatchFix: grupowanie i optymalizacja fixów
+- [35-sprint3-patterns/README.md](examples/35-sprint3-patterns/README.md) — Sprint 3 CC Reduction Patterns
+- [36-dashboard/README.md](examples/36-dashboard/README.md) — Live Dashboard TUI
+- [37-benchmarks/README.md](examples/37-benchmarks/README.md) — Performance Benchmarks
+- [38-new-modules/README.md](examples/38-new-modules/README.md) — New Module Usage
+- [39-microtask-pipeline/README.md](examples/39-microtask-pipeline/README.md) — MicroTask Pipeline
+- [40-three-tier-autofix/README.md](examples/40-three-tier-autofix/README.md) — Three-Tier AutoFix
+- [41-god-module-splitting/README.md](examples/41-god-module-splitting/README.md) — God Module Splitting
+- [42-duplicate-removal/README.md](examples/42-duplicate-removal/README.md) — Duplicate Code Removal
+- [43-code-health/README.md](examples/43-code-health/README.md) — Code Health Monitoring
+- [44-plugin-system/README.md](examples/44-plugin-system/README.md) — Plugin System Architecture
 - `run.sh` — executable script
 - `Makefile` — `make run`, `make setup`, `make clean`
 - `.env.example` — configuration template (where applicable)
 
-> ✅ **All 34 examples tested and verified working** (2026-03-28). Examples 01-34 (except 29) execute without errors.
+> ✅ **44 examples available** (2026-04-25). Examples 01-34 tested and verified working.
 
 ## Additional Documentation
 

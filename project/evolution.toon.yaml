@@ -1,17 +1,17 @@
-# code2llm/evolution | 1004 func | 94f | 2026-03-29
+# code2llm/evolution | 1488 func | 118f | 2026-04-25
 
 NEXT[10] (ranked by impact):
   [1] !! SPLIT           src/algitex/cli/todo.py
       WHY: 1159L, 0 classes, max CC=29
       EFFORT: ~4h  IMPACT: 33611
 
-  [2] !! SPLIT           src/algitex/tools/autofix/batch_backend.py
-      WHY: 778L, 2 classes, max CC=16
-      EFFORT: ~4h  IMPACT: 12448
+  [2] !! SPLIT           src/algitex/todo/fixer.py
+      WHY: 550L, 1 classes, max CC=25
+      EFFORT: ~4h  IMPACT: 13750
 
-  [3] !! SPLIT           src/algitex/todo/micro.py
-      WHY: 605L, 5 classes, max CC=12
-      EFFORT: ~4h  IMPACT: 7260
+  [3] !! SPLIT           src/algitex/tools/autofix/batch_backend.py
+      WHY: 826L, 2 classes, max CC=16
+      EFFORT: ~4h  IMPACT: 13216
 
   [4] !! SPLIT-FUNC      todo_verify_prefact  CC=29  fan=22
       WHY: CC=29 exceeds 15
@@ -45,13 +45,13 @@ NEXT[10] (ranked by impact):
 RISKS[3]:
   ⚠ Splitting src/algitex/cli/todo.py may break 21 import paths
   ⚠ Splitting src/algitex/tools/autofix/batch_backend.py may break 16 import paths
-  ⚠ Splitting src/algitex/todo/micro.py may break 19 import paths
+  ⚠ Splitting src/algitex/todo/fixer.py may break 17 import paths
 
 METRICS-TARGET:
-  CC̄:          3.5 → ≤2.4
+  CC̄:          2.5 → ≤1.8
   max-CC:      48 → ≤20
-  god-modules: 4 → 0
-  high-CC(≥15): 8 → ≤4
+  god-modules: 3 → 0
+  high-CC(≥15): 9 → ≤4
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -79,4 +79,4 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=3.4 → now CC̄=3.5
+  prev CC̄=2.5 → now CC̄=2.5

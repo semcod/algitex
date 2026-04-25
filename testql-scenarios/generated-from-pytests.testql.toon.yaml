@@ -1,0 +1,22 @@
+# SCENARIO: Auto-generated from Python Tests
+# TYPE: integration
+# GENERATED: true
+
+LOG[48]{message}:
+  "Test: TestConfig_test_default"
+  "Test: TestConfig_test_env_override"
+  "Test: TestAlgoLoop_test_add_trace"
+  "Test: TestAlgoLoop_test_report"
+  "Test: TestAlgoLoop_test_persistence"
+  "Test: TestPropactWorkflow_test_parse"
+  "Test: TestPropactWorkflow_test_validate_good"
+  "Test: test_default"
+  "Test: test_env_override"
+  "Test: test_add_trace"
+
+INCLUDE[52]{file}:
+  "/home/tom/github/semcod/algitex/tests/test_integration_extended.py"
+  "/home/tom/github/semcod/algitex/tests/test_integration_extended.py"
+  "/home/tom/github/semcod/algitex/tests/test_integration_extended.py"
+  "/home/tom/github/semcod/algitex/tests/test_integration_extended.py"
+  "/home/tom/github/semcod/algitex/tests/test_integration_extended.py"

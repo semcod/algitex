@@ -5,6 +5,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Dict, Optional, Union
 
+from algitex.tools.todo_parser import Task
+
 
 @dataclass
 class FixResult:
@@ -29,16 +31,6 @@ class FixResult:
             "error": self.error,
             "file_path": self.file_path
         }
-
-
-@dataclass
-class Task:
-    """Minimal task representation for backends."""
-    id: str
-    description: str
-    file_path: Optional[str] = None
-    line_number: Optional[int] = None
-    status: str = "pending"
 
 
 class AutoFixBackend:

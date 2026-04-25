@@ -24,17 +24,7 @@ from algitex.tools.todo_parser import Task, TodoParser
 from algitex.tools.docker import DockerToolManager
 from algitex.tools.todo_local import LocalExecutor
 from algitex.tools.todo_actions import determine_action
-
-
-@dataclass
-class TaskResult:
-    """Result of executing a single task."""
-    task: Task
-    success: bool
-    action: str
-    output: str = ""
-    error: Optional[str] = None
-    tool_used: str = ""
+from algitex.tools.todo_executor import TaskResult
 
 
 class TodoRunner:

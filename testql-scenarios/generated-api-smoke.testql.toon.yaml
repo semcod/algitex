@@ -1,0 +1,32 @@
+# SCENARIO: Auto-generated API Smoke Tests
+# TYPE: api
+# GENERATED: true
+
+CONFIG[2]{key, value}:
+  base_url, http://localhost:8101
+  timeout_ms, 5000
+
+API[21]{method, endpoint, expected_status}:
+  GET, /health, 200
+  POST, /validate, 201
+  POST, /batch, 201
+  POST, /score, 201
+  POST, /validate/static, 201
+  POST, /validate/runtime, 201
+  POST, /validate/security, 201
+  GET, /v1/models, 200
+  POST, /v1/chat/completions, 201
+  GET, /budget, 200
+  GET, /models, 200
+  POST, /chat, 201
+  POST, /prompt, 201
+  GET, /tickets, 200
+  POST, /tickets, 201
+  GET, /sprint, 200
+  POST, /analyze, 201
+  POST, /toon-export, 201
+  POST, /evolution-export, 201
+  POST, /generate-readme, 201
+
+ASSERT[1]{field, operator, expected}:
+  status, <, 400

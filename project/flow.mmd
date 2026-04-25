@@ -4,28 +4,31 @@ flowchart TD
     classDef entry fill:#4dabf7,stroke:#1971c2,color:#fff
 
     subgraph Core
-        docker__vallm__vallm_server__VallmServer__create_fastapi_app["create_fastapi_app"]
-        docker__vallm__vallm_server__VallmServer___run_validate["_run_validate"]
-        docker__vallm__vallm_server__VallmServer___validate_static["_validate_static"]
-        docker__vallm__vallm_server__VallmServer___validate_runtime["_validate_runtime"]
-        docker__vallm__vallm_server__VallmServer___validate_security["_validate_security"]
-        docker__vallm__vallm_server__VallmServer___analyze_complexity["_analyze_complexity"]
-        docker__vallm__vallm_server__VallmServer___parse_radon_complexities["_parse_radon_complexities"]
-        docker__vallm__vallm_server__VallmServer__run["run"]
-        docker__proxym__proxym_server__ProxymServer__create_fastapi_app["create_fastapi_app"]
-        docker__proxym__proxym_server__ProxymServer___call_anthropic["_call_anthropic"]
-        docker__proxym__proxym_server__ProxymServer___call_openai["_call_openai"]
-        docker__proxym__proxym_server__ProxymServer___mock_response["_mock_response"]
-        docker__proxym__proxym_server__ProxymServer___track_cost["_track_cost"]
-        docker__proxym__proxym_server__ProxymServer__run["run"]
-        docker__vallm__vallm_mcp_server__run_rest_server["run_rest_server"]
-        ...["+803 more"]
+        src__algitex__config__ProxyConfig__from_env["from_env"]
+        src__algitex__config__TicketConfig__from_env["from_env"]
+        src__algitex__config__AnalysisConfig__from_env["from_env"]
+        src__algitex__config__Config__load["load"]
+        src__algitex__config__Config__save["save"]
+        src__algitex__dashboard__LiveDashboard___create_layout["_create_layout"]
+        src__algitex__dashboard__LiveDashboard___render_header["_render_header"]
+        src__algitex__dashboard__LiveDashboard___render_cache_panel["_render_cache_panel"]
+        src__algitex__dashboard__LiveDashboard___render_tiers_panel["_render_tiers_panel"]
+        src__algitex__dashboard__LiveDashboard___render_footer["_render_footer"]
+        src__algitex__dashboard__LiveDashboard___render["_render"]
+        src__algitex__dashboard__LiveDashboard___update_loop["_update_loop"]
+        src__algitex__dashboard__LiveDashboard__start["start"]
+        src__algitex__dashboard__LiveDashboard___run_live["_run_live"]
+        src__algitex__dashboard__LiveDashboard__stop["stop"]
+        ...["+1269 more"]
     end
 
     subgraph Exporters
         src__algitex__metrics__MetricsReporter__export_csv["export_csv"]
         src__algitex__benchmark__BenchmarkRunner__export_json["export_json"]
         src__algitex__cli__dashboard__dashboard_export["dashboard_export"]
+        project__map__toon__evolution_export["evolution_export"]
+        project__map__toon__demo_dashboard_export["demo_dashboard_export"]
+        project__map__toon__dashboard_export["dashboard_export"]
     end
 
-    class docker__vallm__vallm_server__VallmServer__create_fastapi_app,docker__vallm__vallm_server__VallmServer___run_validate,docker__vallm__vallm_server__VallmServer___validate_static,docker__vallm__vallm_server__VallmServer___validate_runtime,docker__vallm__vallm_server__VallmServer___validate_security,docker__vallm__vallm_server__VallmServer___analyze_complexity,docker__vallm__vallm_server__VallmServer___parse_radon_complexities,docker__vallm__vallm_server__VallmServer__run,docker__proxym__proxym_server__ProxymServer__create_fastapi_app,docker__proxym__proxym_server__ProxymServer___call_anthropic entry
+    class src__algitex__config__ProxyConfig__from_env,src__algitex__config__TicketConfig__from_env,src__algitex__config__AnalysisConfig__from_env,src__algitex__config__Config__load,src__algitex__config__Config__save,src__algitex__dashboard__LiveDashboard___create_layout,src__algitex__dashboard__LiveDashboard___render_header,src__algitex__dashboard__LiveDashboard___render_cache_panel,src__algitex__dashboard__LiveDashboard___render_tiers_panel,src__algitex__dashboard__LiveDashboard___render_footer entry

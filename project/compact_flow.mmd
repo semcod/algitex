@@ -1,24 +1,98 @@
 flowchart TD
+    Taskfile["Taskfile<br/>1 funcs"]
     docker__code2llm["docker.code2llm<br/>18 funcs"]
     docker__planfile_mcp["docker.planfile-mcp<br/>10 funcs"]
     examples__01_quickstart["examples.01-quickstart<br/>1 funcs"]
+    examples__02_algo_loop["examples.02-algo-loop<br/>1 funcs"]
+    examples__03_pipeline["examples.03-pipeline<br/>1 funcs"]
+    examples__04_ide_integration["examples.04-ide-integration<br/>8 funcs"]
+    examples__05_cost_tracking["examples.05-cost-tracking<br/>1 funcs"]
+    examples__06_telemetry["examples.06-telemetry<br/>4 funcs"]
+    examples__07_context["examples.07-context<br/>5 funcs"]
+    examples__08_feedback["examples.08-feedback<br/>6 funcs"]
     examples__09_workspace["examples.09-workspace<br/>11 funcs"]
     examples__10_cicd["examples.10-cicd<br/>8 funcs"]
+    examples__11_aider_mcp["examples.11-aider-mcp<br/>3 funcs"]
+    examples__12_filesystem_mcp["examples.12-filesystem-mcp<br/>3 funcs"]
+    examples__13_vallm["examples.13-vallm<br/>5 funcs"]
+    examples__14_docker_mcp["examples.14-docker-mcp<br/>4 funcs"]
+    examples__15_github_mcp["examples.15-github-mcp<br/>3 funcs"]
+    examples__16_test_workflow["examples.16-test-workflow<br/>7 funcs"]
     examples__17_docker_workflow["examples.17-docker-workflow<br/>5 funcs"]
+    examples__18_ollama_local["examples.18-ollama-local<br/>15 funcs"]
+    examples__19_local_mcp_tools["examples.19-local-mcp-tools<br/>10 funcs"]
+    examples__20_self_hosted_pipeline["examples.20-self-hosted-pipeline<br/>13 funcs"]
+    examples__21_aider_cli_ollama["examples.21-aider-cli-ollama<br/>11 funcs"]
+    examples__22_claude_code_ollama["examples.22-claude-code-ollama<br/>7 funcs"]
+    examples__23_continue_dev_ollama["examples.23-continue-dev-ollama<br/>7 funcs"]
+    examples__24_ollama_batch["examples.24-ollama-batch<br/>10 funcs"]
+    examples__25_local_model_comparison["examples.25-local-model-comparison<br/>1 funcs"]
+    examples__26_litellm_proxy_ollama["examples.26-litellm-proxy-ollama<br/>7 funcs"]
+    examples__27_unified_autofix["examples.27-unified-autofix<br/>1 funcs"]
+    examples__28_mcp_orchestration["examples.28-mcp-orchestration<br/>2 funcs"]
     examples__30_parallel_execution["examples.30-parallel-execution<br/>5 funcs"]
+    examples__31_abpr_workflow["examples.31-abpr-workflow<br/>2 funcs"]
+    examples__32_workspace_coordination["examples.32-workspace-coordination<br/>10 funcs"]
     examples__33_hybrid_autofix["examples.33-hybrid-autofix<br/>10 funcs"]
+    examples__34_batch_fix["examples.34-batch-fix<br/>12 funcs"]
     examples__35_sprint3_patterns["examples.35-sprint3-patterns<br/>5 funcs"]
+    examples__36_dashboard["examples.36-dashboard<br/>5 funcs"]
+    examples__37_benchmarks["examples.37-benchmarks<br/>6 funcs"]
     examples__38_new_modules["examples.38-new-modules<br/>5 funcs"]
+    examples__39_microtask_pipeline["examples.39-microtask-pipeline<br/>5 funcs"]
+    examples__40_three_tier_autofix["examples.40-three-tier-autofix<br/>6 funcs"]
+    scripts__fix_readme["scripts.fix_readme<br/>1 funcs"]
     scripts__generate_lib_docs["scripts.generate_lib_docs<br/>7 funcs"]
-    src__algitex["src.algitex<br/>937 funcs"]
-    docker__planfile_mcp -->|3| src__algitex
+    src__algitex["src.algitex<br/>996 funcs"]
+    src__algitex ==>|516| Taskfile
+    examples__31_abpr_workflow ==>|81| Taskfile
+    examples__09_workspace ==>|71| Taskfile
+    examples__32_workspace_coordination ==>|68| Taskfile
+    examples__10_cicd ==>|65| Taskfile
+    examples__18_ollama_local ==>|61| Taskfile
+    examples__37_benchmarks ==>|60| Taskfile
+    examples__40_three_tier_autofix ==>|60| Taskfile
+    examples__08_feedback ==>|57| Taskfile
+    examples__30_parallel_execution ==>|56| Taskfile
+    examples__07_context ==>|53| Taskfile
+    examples__39_microtask_pipeline ==>|46| Taskfile
+    examples__36_dashboard ==>|45| Taskfile
+    examples__20_self_hosted_pipeline ==>|45| Taskfile
+    examples__33_hybrid_autofix ==>|45| Taskfile
+    examples__38_new_modules ==>|35| Taskfile
+    examples__35_sprint3_patterns ==>|35| Taskfile
+    examples__06_telemetry ==>|31| Taskfile
+    examples__34_batch_fix ==>|30| Taskfile
+    examples__16_test_workflow ==>|28| Taskfile
+    examples__14_docker_mcp ==>|27| Taskfile
+    examples__17_docker_workflow ==>|27| Taskfile
+    examples__28_mcp_orchestration ==>|26| Taskfile
+    examples__15_github_mcp ==>|24| Taskfile
+    examples__13_vallm ==>|23| Taskfile
+    examples__02_algo_loop ==>|22| Taskfile
+    examples__12_filesystem_mcp ==>|22| Taskfile
+    examples__19_local_mcp_tools ==>|22| Taskfile
+    examples__27_unified_autofix ==>|21| Taskfile
+    examples__23_continue_dev_ollama ==>|18| Taskfile
+    examples__11_aider_mcp ==>|17| Taskfile
+    examples__04_ide_integration ==>|17| Taskfile
+    examples__21_aider_cli_ollama ==>|17| Taskfile
+    examples__25_local_model_comparison ==>|16| Taskfile
+    examples__01_quickstart ==>|14| Taskfile
+    examples__05_cost_tracking ==>|14| Taskfile
+    examples__24_ollama_batch ==>|13| Taskfile
+    examples__22_claude_code_ollama ==>|12| Taskfile
+    examples__26_litellm_proxy_ollama ==>|11| Taskfile
+    examples__03_pipeline ==>|10| Taskfile
+    scripts__generate_lib_docs ==>|8| Taskfile
     examples__30_parallel_execution -->|3| src__algitex
     examples__33_hybrid_autofix -->|3| src__algitex
-    docker__code2llm -->|2| src__algitex
+    docker__planfile_mcp -->|3| src__algitex
     examples__38_new_modules -->|2| src__algitex
     examples__09_workspace -->|2| src__algitex
-    scripts__generate_lib_docs -->|1| src__algitex
+    docker__code2llm -->|2| src__algitex
     examples__01_quickstart -->|1| src__algitex
     examples__10_cicd -->|1| src__algitex
-    examples__17_docker_workflow -->|1| src__algitex
     examples__35_sprint3_patterns -->|1| src__algitex
+    scripts__fix_readme -->|1| Taskfile
+    scripts__generate_lib_docs -->|1| src__algitex

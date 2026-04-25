@@ -17,6 +17,7 @@ from typing import TYPE_CHECKING
 
 from algitex.todo.classify import classify_message
 from algitex.todo.repair import REPAIRERS, repair_fstring, repair_magic_number, repair_module_block
+from algitex.todo.verifier import TodoTask
 
 CONSTANT_3 = 3
 CONSTANT_6 = 6
@@ -47,15 +48,6 @@ if TYPE_CHECKING:
 
 # FIXERS is an alias for REPAIRERS for backward compatibility
 FIXERS = REPAIRERS
-
-
-@dataclass
-class TodoTask:
-    """Single TODO task."""
-    file: str
-    line: int
-    message: str
-    category: str = ""  # Set by _categorize()
 
 
 @dataclass

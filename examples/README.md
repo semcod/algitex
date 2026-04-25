@@ -6,8 +6,8 @@ cd examples
 
 This directory contains example scripts and workflows demonstrating various algitex features.
 
-> ✅ **Testing Status (2026-03-28)**: All 33 examples tested and verified working.  
-> Examples 01-34 (except 29) execute without errors.
+> ✅ **Testing Status (2026-04-25)**: All 44 examples available.  
+> Examples 01-34 (except 29) tested and verified working.
 
 ### 🚀 Parallel Execution (30-32)
 - **[30-parallel-execution](30-parallel-execution/)** - Region-based parallel execution without conflicts
@@ -141,6 +141,32 @@ make run
    - Big tier (large LLM)
    - Dashboard integration
 
+### Refactoring & Code Quality (41-44)
+
+10. **God Module Splitting** (41)
+    - Split 1159-line modules into focused submodules
+    - Preserve backward compatibility with re-exports
+    - Real metrics: CC 50→4, 724L→450L
+    - Step-by-step splitting workflow
+
+11. **Duplicate Removal** (42)
+    - Detect duplicates with redup
+    - Extraction strategies (exact, near, structural)
+    - Automated and LLM-assisted fixing
+    - CI integration for prevention
+
+12. **Code Health Monitoring** (43)
+    - Continuous CC and duplication tracking
+    - Historical trends and regression prevention
+    - CI/CD health gates
+    - Automated improvement workflows
+
+13. **Plugin System** (44)
+    - Create custom tool plugins
+    - Add new LLM backends
+    - Hook into workflow events
+    - Plugin marketplace concept
+
 ## Running Examples
 
 Most examples can be run directly:
@@ -160,7 +186,7 @@ Each numbered example follows a consistent structure:
 ## Contributing
 
 When adding new examples:
-1. Use the next available number (41, 42, etc.)
+1. Use the next available number (45, 46, etc.)
 2. Follow the established structure
 3. Include a comprehensive README
 4. Add a Makefile with standard targets

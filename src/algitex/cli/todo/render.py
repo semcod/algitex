@@ -25,6 +25,6 @@ def render_todo_stats(file: str, tasks) -> None:
     console.print(category_table)
 
     console.print(
-        f'\[bold\]Total:\/[/] {summary.total} | '
+        rf'\[bold\]Total:\/[/] {summary.total} | '
         f'Algorithm: {summary.algorithmic} | Micro: {summary.micro} | Big: {summary.big}'
     )

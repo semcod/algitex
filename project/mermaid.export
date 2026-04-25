@@ -1,0 +1,1108 @@
+flowchart TD
+    subgraph Taskfile
+        Taskfile__print["print"]
+    end
+    subgraph docker__aider_mcp
+        docker__aider_mcp__aider_mcp_server__aider_ai_code["aider_ai_code"]
+        docker__aider_mcp__aider_mcp_server__aider_list_models["aider_list_models"]
+        docker__aider_mcp__aider_mcp_server__aider_chat["aider_chat"]
+        docker__aider_mcp__aider_mcp_server__create_rest_api["create_rest_api"]
+        docker__aider_mcp__aider_mcp_server__run_rest_server["run_rest_server"]
+    end
+    subgraph docker__code2llm
+        docker__code2llm__code2llm_server__Code2LLMServer____init__["__init__"]
+        docker__code2llm__code2llm_server__Code2LLMServer__create_fastapi_app["create_fastapi_app"]
+        docker__code2llm__code2llm_server__Code2LLMServer___analyze_python_file("_analyze_python_file CC=10")
+        docker__code2llm__code2llm_server__Code2LLMServer___calculate_complexity_metrics["_calculate_complexity_metrics"]
+        docker__code2llm__code2llm_server__Code2LLMServer___collect_project_metrics["_collect_project_metrics"]
+        docker__code2llm__code2llm_server__Code2LLMServer___analyze_project["_analyze_project"]
+        docker__code2llm__code2llm_server__Code2LLMServer___generate_toon["_generate_toon"]
+        docker__code2llm__code2llm_server__Code2LLMServer___generate_readme["_generate_readme"]
+        docker__code2llm__code2llm_server__Code2LLMServer__run["run"]
+        docker__code2llm__code2llm_mcp_server___analyze_python_file("_analyze_python_file CC=10")
+        docker__code2llm__code2llm_mcp_server___calculate_complexity_metrics["_calculate_complexity_metrics"]
+        docker__code2llm__code2llm_mcp_server___collect_project_metrics["_collect_project_metrics"]
+        docker__code2llm__code2llm_mcp_server__analyze_project["analyze_project"]
+        docker__code2llm__code2llm_mcp_server__generate_toon["generate_toon"]
+        docker__code2llm__code2llm_mcp_server__generate_readme["generate_readme"]
+        docker__code2llm__code2llm_mcp_server__evolution_export["evolution_export"]
+        docker__code2llm__code2llm_mcp_server__create_rest_api["create_rest_api"]
+        docker__code2llm__code2llm_mcp_server__run_rest_server["run_rest_server"]
+    end
+    subgraph docker__planfile_mcp
+        docker__planfile_mcp__planfile_mcp_server___load_tickets["_load_tickets"]
+        docker__planfile_mcp__planfile_mcp_server___save_tickets["_save_tickets"]
+        docker__planfile_mcp__planfile_mcp_server__planfile_create_ticket["planfile_create_ticket"]
+        docker__planfile_mcp__planfile_mcp_server__planfile_list_tickets["planfile_list_tickets"]
+        docker__planfile_mcp__planfile_mcp_server__planfile_update_ticket["planfile_update_ticket"]
+        docker__planfile_mcp__planfile_mcp_server__planfile_create_tickets_bulk["planfile_create_tickets_bulk"]
+        docker__planfile_mcp__planfile_mcp_server__planfile_sprint_status["planfile_sprint_status"]
+        docker__planfile_mcp__planfile_mcp_server__planfile_sync["planfile_sync"]
+        docker__planfile_mcp__planfile_mcp_server__create_rest_api["create_rest_api"]
+        docker__planfile_mcp__planfile_mcp_server__run_rest_server["run_rest_server"]
+    end
+    subgraph docker__proxym
+        docker__proxym__proxym_server__ProxymServer____init__["__init__"]
+        docker__proxym__proxym_server__ProxymServer__create_fastapi_app["create_fastapi_app"]
+        docker__proxym__proxym_server__ProxymServer___call_anthropic["_call_anthropic"]
+        docker__proxym__proxym_server__ProxymServer___call_openai["_call_openai"]
+        docker__proxym__proxym_server__ProxymServer___mock_response["_mock_response"]
+        docker__proxym__proxym_server__ProxymServer___track_cost["_track_cost"]
+        docker__proxym__proxym_server__ProxymServer__run["run"]
+        docker__proxym__proxym_mcp_server__count_tokens["count_tokens"]
+        docker__proxym__proxym_mcp_server__list_models["list_models"]
+        docker__proxym__proxym_mcp_server__chat_completion("chat_completion CC=9")
+        docker__proxym__proxym_mcp_server___call_anthropic["_call_anthropic"]
+        docker__proxym__proxym_mcp_server___call_openai["_call_openai"]
+        docker__proxym__proxym_mcp_server___call_gemini["_call_gemini"]
+        docker__proxym__proxym_mcp_server__simple_prompt["simple_prompt"]
+        docker__proxym__proxym_mcp_server__get_budget_status["get_budget_status"]
+        docker__proxym__proxym_mcp_server__create_rest_api["create_rest_api"]
+        docker__proxym__proxym_mcp_server__run_rest_server["run_rest_server"]
+    end
+    subgraph docker__vallm
+        docker__vallm__vallm_server__VallmServer____init__["__init__"]
+        docker__vallm__vallm_server__VallmServer__create_fastapi_app["create_fastapi_app"]
+        docker__vallm__vallm_server__VallmServer___run_validate["_run_validate"]
+        docker__vallm__vallm_server__VallmServer___validate_static("_validate_static CC=9")
+        docker__vallm__vallm_server__VallmServer___validate_runtime("_validate_runtime CC=9")
+        docker__vallm__vallm_server__VallmServer___validate_security["_validate_security"]
+        docker__vallm__vallm_server__VallmServer___analyze_complexity["_analyze_complexity"]
+        docker__vallm__vallm_server__VallmServer___parse_radon_complexities("_parse_radon_complexities CC=8")
+        docker__vallm__vallm_server__VallmServer__run["run"]
+        docker__vallm__vallm_mcp_server__validate_static("validate_static CC=9")
+        docker__vallm__vallm_mcp_server__validate_runtime("validate_runtime CC=9")
+        docker__vallm__vallm_mcp_server__validate_security["validate_security"]
+        docker__vallm__vallm_mcp_server__validate_all["validate_all"]
+        docker__vallm__vallm_mcp_server__analyze_complexity("analyze_complexity CC=9")
+        docker__vallm__vallm_mcp_server__calculate_quality_score["calculate_quality_score"]
+        docker__vallm__vallm_mcp_server__create_rest_api["create_rest_api"]
+        docker__vallm__vallm_mcp_server__run_rest_server["run_rest_server"]
+    end
+    subgraph examples__01_quickstart
+        examples__01_quickstart__main__main["main"]
+    end
+    subgraph examples__02_algo_loop
+        examples__02_algo_loop__main__main("main CC=11")
+    end
+    subgraph examples__03_pipeline
+        examples__03_pipeline__main__main["main"]
+    end
+    subgraph examples__04_ide_integration
+        examples__04_ide_integration__main__load_env["load_env"]
+        examples__04_ide_integration__main__roo_code_config["roo_code_config"]
+        examples__04_ide_integration__main__cline_config["cline_config"]
+        examples__04_ide_integration__main__continuedev_config["continuedev_config"]
+        examples__04_ide_integration__main__aider_env["aider_env"]
+        examples__04_ide_integration__main__cursor_config["cursor_config"]
+        examples__04_ide_integration__main__claude_code_env["claude_code_env"]
+        examples__04_ide_integration__main__main["main"]
+    end
+    subgraph examples__05_cost_tracking
+        examples__05_cost_tracking__main__main("main CC=8")
+    end
+    subgraph examples__06_telemetry
+        examples__06_telemetry__main__basic_telemetry_example["basic_telemetry_example"]
+        examples__06_telemetry__main__context_manager_example["context_manager_example"]
+        examples__06_telemetry__main__multi_model_comparison["multi_model_comparison"]
+        examples__06_telemetry__main__budget_tracking_example["budget_tracking_example"]
+    end
+    subgraph examples__07_context
+        examples__07_context__main__basic_context_example["basic_context_example"]
+        examples__07_context__main__context_optimization_example["context_optimization_example"]
+        examples__07_context__main__semantic_search_example["semantic_search_example"]
+        examples__07_context__main__prompt_engineering_example["prompt_engineering_example"]
+        examples__07_context__main__cleanup_example_projects["cleanup_example_projects"]
+    end
+    subgraph examples__08_feedback
+        examples__08_feedback__main__basic_feedback_example["basic_feedback_example"]
+        examples__08_feedback__main__custom_policy_example["custom_policy_example"]
+        examples__08_feedback__main__feedback_extraction_example["feedback_extraction_example"]
+        examples__08_feedback__main__feedback_loop_simulation["feedback_loop_simulation"]
+        examples__08_feedback__main__escalation_scenarios("escalation_scenarios CC=8")
+        examples__08_feedback__main__cost_optimization_example["cost_optimization_example"]
+    end
+    subgraph examples__09_workspace
+        examples__09_workspace__main__create_sample_workspace["create_sample_workspace"]
+        examples__09_workspace__main__workspace_management_example["workspace_management_example"]
+        examples__09_workspace__main__cross_repo_analysis_example("cross_repo_analysis_example CC=9")
+        examples__09_workspace__main__cross_repo_planning_example["cross_repo_planning_example"]
+        examples__09_workspace__main__workspace_execution_example("workspace_execution_example CC=8")
+        examples__09_workspace__main___analyze_workspace_structure("_analyze_workspace_structure CC=8")
+        examples__09_workspace__main___analyze_impact["_analyze_impact"]
+        examples__09_workspace__main___analyze_parallel_execution["_analyze_parallel_execution"]
+        examples__09_workspace__main___calculate_metrics["_calculate_metrics"]
+        examples__09_workspace__main__advanced_workspace_features["advanced_workspace_features"]
+        examples__09_workspace__main__cleanup_sample_workspace["cleanup_sample_workspace"]
+    end
+    subgraph examples__10_cicd
+        examples__10_cicd__main__basic_github_actions_example["basic_github_actions_example"]
+        examples__10_cicd__main__gitlab_ci_example["gitlab_ci_example"]
+        examples__10_cicd__main__quality_gates_example["quality_gates_example"]
+        examples__10_cicd__main__dockerfile_example["dockerfile_example"]
+        examples__10_cicd__main__precommit_hooks_example["precommit_hooks_example"]
+        examples__10_cicd__main__complete_ci_cd_setup["complete_ci_cd_setup"]
+        examples__10_cicd__main__multi_platform_ci_example["multi_platform_ci_example"]
+        examples__10_cicd__main__cleanup_ci_projects["cleanup_ci_projects"]
+    end
+    subgraph examples__11_aider_mcp
+        examples__11_aider_mcp__main__create_sample_project["create_sample_project"]
+        examples__11_aider_mcp__main__demo_refactoring["demo_refactoring"]
+        examples__11_aider_mcp__sample_project__calculator__calc["calc"]
+    end
+    subgraph examples__12_filesystem_mcp
+        examples__12_filesystem_mcp__main__create_sample_files["create_sample_files"]
+        examples__12_filesystem_mcp__main__demo_file_operations["demo_file_operations"]
+        examples__12_filesystem_mcp__sample_files__src__main__main["main"]
+    end
+    subgraph examples__13_vallm
+        examples__13_vallm__main__create_sample_code["create_sample_code"]
+        examples__13_vallm__main__run_local_validation["run_local_validation"]
+        examples__13_vallm__main__demo_validation["demo_validation"]
+        examples__13_vallm__sample_code__complex_module__process_data("process_data CC=8")
+        examples__13_vallm__sample_code__complex_module__calculate["calculate"]
+    end
+    subgraph examples__14_docker_mcp
+        examples__14_docker_mcp__main__create_sample_docker_project["create_sample_docker_project"]
+        examples__14_docker_mcp__main__run_docker_command["run_docker_command"]
+        examples__14_docker_mcp__main__demo_docker_operations["demo_docker_operations"]
+        examples__14_docker_mcp__sample_docker_project__app__Handler__do_GET["do_GET"]
+    end
+    subgraph examples__15_github_mcp
+        examples__15_github_mcp__main__create_sample_project["create_sample_project"]
+        examples__15_github_mcp__main__demo_github_workflow["demo_github_workflow"]
+        examples__15_github_mcp__sample_github_project__main__calculate["calculate"]
+    end
+    subgraph examples__16_test_workflow
+        examples__16_test_workflow__main__create_sample_project["create_sample_project"]
+        examples__16_test_workflow__main__run_tests["run_tests"]
+        examples__16_test_workflow__main__demo_test_workflow["demo_test_workflow"]
+        examples__16_test_workflow__sample_test_project__src__calculator__add["add"]
+        examples__16_test_workflow__sample_test_project__src__calculator__subtract["subtract"]
+        examples__16_test_workflow__sample_test_project__src__calculator__multiply["multiply"]
+        examples__16_test_workflow__sample_test_project__src__calculator__divide["divide"]
+    end
+    subgraph examples__17_docker_workflow
+        examples__17_docker_workflow__main__load_env["load_env"]
+        examples__17_docker_workflow__main__check_required_env["check_required_env"]
+        examples__17_docker_workflow__main__show_workflow["show_workflow"]
+        examples__17_docker_workflow__main__demo_with_docker_tools["demo_with_docker_tools"]
+        examples__17_docker_workflow__main__show_cli_usage["show_cli_usage"]
+    end
+    subgraph examples__18_ollama_local
+        examples__18_ollama_local__buggy_code__calculate_statistics["calculate_statistics"]
+        examples__18_ollama_local__buggy_code__find_user["find_user"]
+        examples__18_ollama_local__buggy_code__process_file["process_file"]
+        examples__18_ollama_local__buggy_code__divide_numbers["divide_numbers"]
+        examples__18_ollama_local__buggy_code__get_config["get_config"]
+        examples__18_ollama_local__buggy_code__complex_function["complex_function"]
+        examples__18_ollama_local__buggy_code__bad_error_handling["bad_error_handling"]
+        examples__18_ollama_local__main__check_ollama["check_ollama"]
+        examples__18_ollama_local__main__list_models["list_models"]
+        examples__18_ollama_local__main__generate_code["generate_code"]
+        examples__18_ollama_local__main__analyze_code["analyze_code"]
+        examples__18_ollama_local__main__demo_code_generation["demo_code_generation"]
+        examples__18_ollama_local__main__demo_code_analysis["demo_code_analysis"]
+        examples__18_ollama_local__main__demo_cost_comparison["demo_cost_comparison"]
+        examples__18_ollama_local__main__main["main"]
+    end
+    subgraph examples__19_local_mcp_tools
+        examples__19_local_mcp_tools__buggy_code__process_items["process_items"]
+        examples__19_local_mcp_tools__buggy_code__load_data["load_data"]
+        examples__19_local_mcp_tools__buggy_code__cache_result["cache_result"]
+        examples__19_local_mcp_tools__buggy_code__parse_date["parse_date"]
+        examples__19_local_mcp_tools__buggy_code__BadClass____init__["__init__"]
+        examples__19_local_mcp_tools__buggy_code__BadClass__add_item["add_item"]
+        examples__19_local_mcp_tools__buggy_code__BadClass____eq__["__eq__"]
+        examples__19_local_mcp_tools__buggy_code__recursive_function["recursive_function"]
+        examples__19_local_mcp_tools__main__check_services["check_services"]
+        examples__19_local_mcp_tools__main__main["main"]
+    end
+    subgraph examples__20_self_hosted_pipeline
+        examples__20_self_hosted_pipeline__buggy_code__fetch_user_data["fetch_user_data"]
+        examples__20_self_hosted_pipeline__buggy_code__calculate_discount["calculate_discount"]
+        examples__20_self_hosted_pipeline__buggy_code__log_activity["log_activity"]
+        examples__20_self_hosted_pipeline__buggy_code__parse_config["parse_config"]
+        examples__20_self_hosted_pipeline__buggy_code__authenticate_user["authenticate_user"]
+        examples__20_self_hosted_pipeline__buggy_code__get_stored_password["get_stored_password"]
+        examples__20_self_hosted_pipeline__buggy_code__process_large_file["process_large_file"]
+        examples__20_self_hosted_pipeline__buggy_code__UserManager____init__["__init__"]
+        examples__20_self_hosted_pipeline__buggy_code__UserManager__add_user["add_user"]
+        examples__20_self_hosted_pipeline__buggy_code__UserManager__get_user["get_user"]
+        examples__20_self_hosted_pipeline__buggy_code__generate_report["generate_report"]
+        examples__20_self_hosted_pipeline__buggy_code__cleanup_old_files["cleanup_old_files"]
+        examples__20_self_hosted_pipeline__main__main["main"]
+    end
+    subgraph examples__21_aider_cli_ollama
+        examples__21_aider_cli_ollama__buggy_code__calculate_price["calculate_price"]
+        examples__21_aider_cli_ollama__buggy_code__process_users["process_users"]
+        examples__21_aider_cli_ollama__buggy_code__format_message["format_message"]
+        examples__21_aider_cli_ollama__buggy_code__load_data["load_data"]
+        examples__21_aider_cli_ollama__buggy_code__divide["divide"]
+        examples__21_aider_cli_ollama__buggy_code__UserManager____init__["__init__"]
+        examples__21_aider_cli_ollama__buggy_code__UserManager__add["add"]
+        examples__21_aider_cli_ollama__buggy_code__UserManager__get["get"]
+        examples__21_aider_cli_ollama__buggy_code__complex_function["complex_function"]
+        examples__21_aider_cli_ollama__buggy_code__bad_error_handling["bad_error_handling"]
+        examples__21_aider_cli_ollama__main__main["main"]
+    end
+    subgraph examples__22_claude_code_ollama
+        examples__22_claude_code_ollama__buggy_code__calc["calc"]
+        examples__22_claude_code_ollama__buggy_code__process["process"]
+        examples__22_claude_code_ollama__buggy_code__load["load"]
+        examples__22_claude_code_ollama__buggy_code__divide["divide"]
+        examples__22_claude_code_ollama__buggy_code__Manager____init__["__init__"]
+        examples__22_claude_code_ollama__buggy_code__Manager__add["add"]
+        examples__22_claude_code_ollama__main__main["main"]
+    end
+    subgraph examples__23_continue_dev_ollama
+        examples__23_continue_dev_ollama__buggy_code__calculate["calculate"]
+        examples__23_continue_dev_ollama__buggy_code__process_items["process_items"]
+        examples__23_continue_dev_ollama__buggy_code__load_file["load_file"]
+        examples__23_continue_dev_ollama__buggy_code__divide_numbers["divide_numbers"]
+        examples__23_continue_dev_ollama__buggy_code__DataManager____init__["__init__"]
+        examples__23_continue_dev_ollama__buggy_code__DataManager__add["add"]
+        examples__23_continue_dev_ollama__main__main["main"]
+    end
+    subgraph examples__24_ollama_batch
+        examples__24_ollama_batch__file3__BadClass____init__["__init__"]
+        examples__24_ollama_batch__file3__BadClass__process["process"]
+        examples__24_ollama_batch__file3__complex_logic["complex_logic"]
+        examples__24_ollama_batch__main__main["main"]
+        examples__24_ollama_batch__file2__unused_imports["unused_imports"]
+        examples__24_ollama_batch__file2__magic_numbers["magic_numbers"]
+        examples__24_ollama_batch__file2__no_error_handling["no_error_handling"]
+        examples__24_ollama_batch__file1__bad_function_1["bad_function_1"]
+        examples__24_ollama_batch__file1__bad_function_2["bad_function_2"]
+        examples__24_ollama_batch__file1__bad_function_3["bad_function_3"]
+    end
+    subgraph examples__25_local_model_comparison
+        examples__25_local_model_comparison__main__main("main CC=9")
+    end
+    subgraph examples__26_litellm_proxy_ollama
+        examples__26_litellm_proxy_ollama__buggy_code__calculate["calculate"]
+        examples__26_litellm_proxy_ollama__buggy_code__process_items["process_items"]
+        examples__26_litellm_proxy_ollama__buggy_code__load_file["load_file"]
+        examples__26_litellm_proxy_ollama__buggy_code__divide_numbers["divide_numbers"]
+        examples__26_litellm_proxy_ollama__buggy_code__DataManager____init__["__init__"]
+        examples__26_litellm_proxy_ollama__buggy_code__DataManager__add["add"]
+        examples__26_litellm_proxy_ollama__main__main["main"]
+    end
+    subgraph examples__27_unified_autofix
+        examples__27_unified_autofix__main__main["main"]
+    end
+    subgraph examples__28_mcp_orchestration
+        examples__28_mcp_orchestration__mcp_orchestrator__main("main CC=9")
+        examples__28_mcp_orchestration__main__main["main"]
+    end
+    subgraph examples__30_parallel_execution
+        examples__30_parallel_execution__parallel_multi_tool__main["main"]
+        examples__30_parallel_execution__parallel_real_world__setup_sample_project["setup_sample_project"]
+        examples__30_parallel_execution__parallel_real_world__main("main CC=13")
+        examples__30_parallel_execution__parallel_refactoring__main("main CC=10")
+        examples__30_parallel_execution__main__main("main CC=13")
+    end
+    subgraph examples__31_abpr_workflow
+        examples__31_abpr_workflow__abpr_pipeline__abpr_pipeline("abpr_pipeline CC=10")
+        examples__31_abpr_workflow__main__main("main CC=12")
+    end
+    subgraph examples__32_workspace_coordination
+        examples__32_workspace_coordination__workspace_parallel__main["main"]
+        examples__32_workspace_coordination__main__load_workspace_config["load_workspace_config"]
+        examples__32_workspace_coordination__main__main["main"]
+        examples__32_workspace_coordination__main___print_repo_overview["_print_repo_overview"]
+        examples__32_workspace_coordination__main___group_repos_by_priority["_group_repos_by_priority"]
+        examples__32_workspace_coordination__main___show_analysis_phase["_show_analysis_phase"]
+        examples__32_workspace_coordination__main___check_quality_gates("_check_quality_gates CC=8")
+        examples__32_workspace_coordination__main___show_planning_phase["_show_planning_phase"]
+        examples__32_workspace_coordination__main___show_execution_phase["_show_execution_phase"]
+        examples__32_workspace_coordination__main___show_execution_summary["_show_execution_summary"]
+    end
+    subgraph examples__33_hybrid_autofix
+        examples__33_hybrid_autofix__main__demo_dry_run["demo_dry_run"]
+        examples__33_hybrid_autofix__main__demo_verify_first["demo_verify_first"]
+        examples__33_hybrid_autofix__main__demo_benchmark["demo_benchmark"]
+        examples__33_hybrid_autofix__main__demo_mechanical_only["demo_mechanical_only"]
+        examples__33_hybrid_autofix__main__demo_full_hybrid["demo_full_hybrid"]
+        examples__33_hybrid_autofix__main__demo_ollama_local["demo_ollama_local"]
+        examples__33_hybrid_autofix__main__main["main"]
+        examples__33_hybrid_autofix__main___parse_args["_parse_args"]
+        examples__33_hybrid_autofix__main___validate_env["_validate_env"]
+        examples__33_hybrid_autofix__main___run_demos("_run_demos CC=10")
+    end
+    subgraph examples__34_batch_fix
+        examples__34_batch_fix__main__demo_batch_dry_run["demo_batch_dry_run"]
+        examples__34_batch_fix__main__demo_batch_execute["demo_batch_execute"]
+        examples__34_batch_fix__main__demo_custom_batch_size["demo_custom_batch_size"]
+        examples__34_batch_fix__main__demo_comparison["demo_comparison"]
+        examples__34_batch_fix__main__main["main"]
+        examples__34_batch_fix__sample_code__file3__hello["hello"]
+        examples__34_batch_fix__sample_code__file2__connect["connect"]
+        examples__34_batch_fix__sample_code__file2__retry["retry"]
+        examples__34_batch_fix__sample_code__file2__calculate["calculate"]
+        examples__34_batch_fix__sample_code__file1__greet["greet"]
+        examples__34_batch_fix__sample_code__file1__format_price["format_price"]
+        examples__34_batch_fix__sample_code__file1__build_path["build_path"]
+    end
+    subgraph examples__35_sprint3_patterns
+        examples__35_sprint3_patterns__main__demo_dict_dispatch["demo_dict_dispatch"]
+        examples__35_sprint3_patterns__main__demo_strategy_pattern["demo_strategy_pattern"]
+        examples__35_sprint3_patterns__main__demo_pipeline_pattern["demo_pipeline_pattern"]
+        examples__35_sprint3_patterns__main__demo_orchestrator_pattern["demo_orchestrator_pattern"]
+        examples__35_sprint3_patterns__main__main["main"]
+    end
+    subgraph examples__36_dashboard
+        examples__36_dashboard__main__demo_dashboard_live["demo_dashboard_live"]
+        examples__36_dashboard__main__demo_dashboard_monitor["demo_dashboard_monitor"]
+        examples__36_dashboard__main__demo_dashboard_export["demo_dashboard_export"]
+        examples__36_dashboard__main__demo_dashboard_with_todo["demo_dashboard_with_todo"]
+        examples__36_dashboard__main__main["main"]
+    end
+    subgraph examples__37_benchmarks
+        examples__37_benchmarks__main__demo_benchmark_quick["demo_benchmark_quick"]
+        examples__37_benchmarks__main__demo_benchmark_cache["demo_benchmark_cache"]
+        examples__37_benchmarks__main__demo_benchmark_tiers["demo_benchmark_tiers"]
+        examples__37_benchmarks__main__demo_benchmark_memory["demo_benchmark_memory"]
+        examples__37_benchmarks__main__demo_benchmark_full["demo_benchmark_full"]
+        examples__37_benchmarks__main__main["main"]
+    end
+    subgraph examples__38_new_modules
+        examples__38_new_modules__main__demo_classify_module["demo_classify_module"]
+        examples__38_new_modules__main__demo_repair_module["demo_repair_module"]
+        examples__38_new_modules__main__demo_verify_module["demo_verify_module"]
+        examples__38_new_modules__main__demo_combined_workflow["demo_combined_workflow"]
+        examples__38_new_modules__main__main["main"]
+    end
+    subgraph examples__39_microtask_pipeline
+        examples__39_microtask_pipeline__main__demo_microtask_classify["demo_microtask_classify"]
+        examples__39_microtask_pipeline__main__demo_microtask_plan["demo_microtask_plan"]
+        examples__39_microtask_pipeline__main__demo_microtask_run["demo_microtask_run"]
+        examples__39_microtask_pipeline__main__demo_workflow["demo_workflow"]
+        examples__39_microtask_pipeline__main__main["main"]
+    end
+    subgraph examples__40_three_tier_autofix
+        examples__40_three_tier_autofix__main__demo_tier_algorithm["demo_tier_algorithm"]
+        examples__40_three_tier_autofix__main__demo_tier_micro["demo_tier_micro"]
+        examples__40_three_tier_autofix__main__demo_tier_big["demo_tier_big"]
+        examples__40_three_tier_autofix__main__demo_all_tiers["demo_all_tiers"]
+        examples__40_three_tier_autofix__main__demo_dashboard_integration["demo_dashboard_integration"]
+        examples__40_three_tier_autofix__main__main["main"]
+    end
+    subgraph project__map
+        project__map__toon__aider_ai_code["aider_ai_code"]
+        project__map__toon__aider_list_models["aider_list_models"]
+        project__map__toon__aider_chat["aider_chat"]
+        project__map__toon__create_rest_api["create_rest_api"]
+        project__map__toon__run_rest_server["run_rest_server"]
+        project__map__toon___analyze_python_file["_analyze_python_file"]
+        project__map__toon___calculate_complexity_metrics["_calculate_complexity_metrics"]
+        project__map__toon___collect_project_metrics["_collect_project_metrics"]
+        project__map__toon__analyze_project["analyze_project"]
+        project__map__toon__generate_toon["generate_toon"]
+        project__map__toon__generate_readme["generate_readme"]
+        project__map__toon__evolution_export["evolution_export"]
+        project__map__toon___load_tickets["_load_tickets"]
+        project__map__toon___save_tickets["_save_tickets"]
+        project__map__toon__planfile_create_ticket["planfile_create_ticket"]
+        project__map__toon__planfile_list_tickets["planfile_list_tickets"]
+        project__map__toon__planfile_update_ticket["planfile_update_ticket"]
+        project__map__toon__planfile_create_tickets_bulk["planfile_create_tickets_bulk"]
+        project__map__toon__planfile_sprint_status["planfile_sprint_status"]
+        project__map__toon__planfile_sync["planfile_sync"]
+        project__map__toon__count_tokens["count_tokens"]
+        project__map__toon__list_models["list_models"]
+        project__map__toon__chat_completion["chat_completion"]
+        project__map__toon___call_anthropic["_call_anthropic"]
+        project__map__toon___call_openai["_call_openai"]
+        project__map__toon___call_gemini["_call_gemini"]
+        project__map__toon__simple_prompt["simple_prompt"]
+        project__map__toon__get_budget_status["get_budget_status"]
+        project__map__toon__validate_static["validate_static"]
+        project__map__toon__validate_runtime["validate_runtime"]
+        project__map__toon__validate_security["validate_security"]
+        project__map__toon__validate_all["validate_all"]
+        project__map__toon__analyze_complexity["analyze_complexity"]
+        project__map__toon__calculate_quality_score["calculate_quality_score"]
+        project__map__toon__main["main"]
+        project__map__toon__load_env["load_env"]
+        project__map__toon__roo_code_config["roo_code_config"]
+        project__map__toon__cline_config["cline_config"]
+        project__map__toon__continuedev_config["continuedev_config"]
+        project__map__toon__aider_env["aider_env"]
+        project__map__toon__cursor_config["cursor_config"]
+        project__map__toon__claude_code_env["claude_code_env"]
+        project__map__toon__basic_telemetry_example["basic_telemetry_example"]
+        project__map__toon__context_manager_example["context_manager_example"]
+        project__map__toon__multi_model_comparison["multi_model_comparison"]
+        project__map__toon__budget_tracking_example["budget_tracking_example"]
+        project__map__toon__basic_context_example["basic_context_example"]
+        project__map__toon__context_optimization_example["context_optimization_example"]
+        project__map__toon__semantic_search_example["semantic_search_example"]
+        project__map__toon__prompt_engineering_example["prompt_engineering_example"]
+        project__map__toon__cleanup_example_projects["cleanup_example_projects"]
+        project__map__toon__basic_feedback_example["basic_feedback_example"]
+        project__map__toon__custom_policy_example["custom_policy_example"]
+        project__map__toon__feedback_extraction_example["feedback_extraction_example"]
+        project__map__toon__feedback_loop_simulation["feedback_loop_simulation"]
+        project__map__toon__escalation_scenarios["escalation_scenarios"]
+        project__map__toon__cost_optimization_example["cost_optimization_example"]
+        project__map__toon__create_sample_workspace["create_sample_workspace"]
+        project__map__toon__workspace_management_example["workspace_management_example"]
+        project__map__toon__cross_repo_analysis_example["cross_repo_analysis_example"]
+    end
+    subgraph scripts__fix_readme
+        scripts__fix_readme__fix_readme["fix_readme"]
+    end
+    subgraph scripts__generate_lib_docs
+        scripts__generate_lib_docs__extract_docstring["extract_docstring"]
+        scripts__generate_lib_docs__get_function_signature("get_function_signature CC=9")
+        scripts__generate_lib_docs__parse_file{{parse_file CC=24}}
+        scripts__generate_lib_docs__generate_module_doc("generate_module_doc CC=13")
+        scripts__generate_lib_docs__scan_package("scan_package CC=10")
+        scripts__generate_lib_docs__generate_index["generate_index"]
+        scripts__generate_lib_docs__main["main"]
+    end
+    subgraph src__algitex
+        src__algitex__config__ProxyConfig__from_env["from_env"]
+        src__algitex__config__TicketConfig__from_env["from_env"]
+        src__algitex__config__AnalysisConfig__from_env["from_env"]
+        src__algitex__config__Config__load["load"]
+        src__algitex__config__Config__save["save"]
+        src__algitex__config___find_config["_find_config"]
+        src__algitex__config___merge_yaml("_merge_yaml CC=10")
+        src__algitex__dashboard__LiveDashboard____init__["__init__"]
+        src__algitex__dashboard__LiveDashboard___create_layout["_create_layout"]
+        src__algitex__dashboard__LiveDashboard___render_header["_render_header"]
+        src__algitex__dashboard__LiveDashboard___render_cache_panel["_render_cache_panel"]
+        src__algitex__dashboard__LiveDashboard___render_tiers_panel["_render_tiers_panel"]
+        src__algitex__dashboard__LiveDashboard___render_footer["_render_footer"]
+        src__algitex__dashboard__LiveDashboard___render["_render"]
+        src__algitex__dashboard__LiveDashboard___update_loop["_update_loop"]
+        src__algitex__dashboard__LiveDashboard__start["start"]
+        src__algitex__dashboard__LiveDashboard___run_live["_run_live"]
+        src__algitex__dashboard__LiveDashboard__stop["stop"]
+        src__algitex__dashboard__LiveDashboard__update_cache_stats["update_cache_stats"]
+        src__algitex__dashboard__LiveDashboard__update_tier_progress("update_tier_progress CC=8")
+        src__algitex__dashboard__LiveDashboard__set_on_update["set_on_update"]
+        src__algitex__dashboard__LiveDashboard____enter__["__enter__"]
+        src__algitex__dashboard__LiveDashboard____exit__["__exit__"]
+        src__algitex__dashboard__SimpleProgressTracker____init__["__init__"]
+        src__algitex__dashboard__SimpleProgressTracker__start["start"]
+        src__algitex__dashboard__SimpleProgressTracker__add_task["add_task"]
+        src__algitex__dashboard__SimpleProgressTracker__update["update"]
+        src__algitex__dashboard__SimpleProgressTracker__stop["stop"]
+        src__algitex__dashboard__SimpleProgressTracker____enter__["__enter__"]
+        src__algitex__dashboard__SimpleProgressTracker____exit__["__exit__"]
+        src__algitex__dashboard__show_quick_dashboard["show_quick_dashboard"]
+        src__algitex__metrics__LLMCall__to_dict["to_dict"]
+        src__algitex__metrics__MetricsCollector____init__["__init__"]
+        src__algitex__metrics__MetricsCollector__record_llm_call["record_llm_call"]
+        src__algitex__metrics__MetricsCollector__record_fix["record_fix"]
+        src__algitex__metrics__MetricsCollector__get_tier_stats["get_tier_stats"]
+        src__algitex__metrics__MetricsCollector__estimate_cost["estimate_cost"]
+        src__algitex__metrics__MetricsCollector__get_summary("get_summary CC=9")
+        src__algitex__metrics__MetricsCollector__save["save"]
+        src__algitex__metrics__MetricsCollector__load["load"]
+        src__algitex__metrics__MetricsCollector__reset["reset"]
+        src__algitex__metrics__MetricsReporter____init__["__init__"]
+        src__algitex__metrics__MetricsReporter__print_dashboard["print_dashboard"]
+        src__algitex__metrics__MetricsReporter__export_csv["export_csv"]
+        src__algitex__metrics__get_metrics["get_metrics"]
+        src__algitex__metrics__reset_metrics["reset_metrics"]
+        src__algitex__shared_rules__RuleContext____post_init__["__post_init__"]
+        src__algitex__shared_rules__RuleViolation____post_init__["__post_init__"]
+        src__algitex__shared_rules__RuleViolation__to_dict["to_dict"]
+        src__algitex__shared_rules__FixStrategy__apply["apply"]
+        src__algitex__shared_rules__FixStrategy__is_safe["is_safe"]
+        src__algitex__shared_rules__SharedRule__check["check"]
+        src__algitex__shared_rules__SharedRule__fix["fix"]
+        src__algitex__shared_rules__SharedRule___apply_fix["_apply_fix"]
+        src__algitex__shared_rules__SortedImportsRule__check("check CC=12")
+        src__algitex__shared_rules__SortedImportsRule___apply_fix["_apply_fix"]
+        src__algitex__shared_rules__RelativeImportRule__check["check"]
+        src__algitex__shared_rules__RuleRegistry____init__["__init__"]
+        src__algitex__shared_rules__RuleRegistry__register["register"]
+        src__algitex__shared_rules__RuleRegistry__get["get"]
+    end
+    examples__34_batch_fix__main__demo_batch_dry_run --> Taskfile__print
+    examples__34_batch_fix__main__demo_batch_execute --> Taskfile__print
+    examples__34_batch_fix__main__demo_custom_batch_size --> Taskfile__print
+    examples__34_batch_fix__main__demo_comparison --> Taskfile__print
+    examples__34_batch_fix__main__main --> Taskfile__print
+    examples__34_batch_fix__main__main --> examples__34_batch_fix__main__demo_batch_dry_run
+    examples__22_claude_code_ollama__main__main --> Taskfile__print
+    examples__18_ollama_local__buggy_code__complex_function --> Taskfile__print
+    examples__18_ollama_local__main__list_models --> Taskfile__print
+    examples__18_ollama_local__main__demo_code_generation --> Taskfile__print
+    examples__18_ollama_local__main__demo_code_generation --> examples__18_ollama_local__main__generate_code
+    examples__18_ollama_local__main__demo_code_analysis --> Taskfile__print
+    examples__18_ollama_local__main__demo_code_analysis --> examples__18_ollama_local__main__analyze_code
+    examples__18_ollama_local__main__demo_cost_comparison --> Taskfile__print
+    examples__18_ollama_local__main__main --> Taskfile__print
+    examples__18_ollama_local__main__main --> examples__18_ollama_local__main__list_models
+    examples__18_ollama_local__main__main --> examples__18_ollama_local__main__demo_code_generation
+    examples__18_ollama_local__main__main --> examples__18_ollama_local__main__demo_code_analysis
+    examples__18_ollama_local__main__main --> examples__18_ollama_local__main__demo_cost_comparison
+    examples__01_quickstart__main__main --> Taskfile__print
+    examples__01_quickstart__main__main --> src__algitex__tools__discover_tools
+    examples__10_cicd__main__basic_github_actions_example --> Taskfile__print
+    examples__10_cicd__main__gitlab_ci_example --> Taskfile__print
+    examples__10_cicd__main__quality_gates_example --> Taskfile__print
+    examples__10_cicd__main__quality_gates_example --> src__algitex__tools__cicd__create_quality_gate_config
+    examples__10_cicd__main__dockerfile_example --> Taskfile__print
+    examples__10_cicd__main__precommit_hooks_example --> Taskfile__print
+    examples__10_cicd__main__complete_ci_cd_setup --> Taskfile__print
+    examples__10_cicd__main__multi_platform_ci_example --> Taskfile__print
+    examples__10_cicd__main__cleanup_ci_projects --> Taskfile__print
+    examples__11_aider_mcp__main__demo_refactoring --> Taskfile__print
+    examples__11_aider_mcp__main__demo_refactoring --> examples__11_aider_mcp__main__create_sample_project
+    examples__32_workspace_coordination__workspace_parallel__main --> Taskfile__print
+    examples__32_workspace_coordination__main__main --> Taskfile__print
+    examples__32_workspace_coordination__main__main --> examples__32_workspace_coordination__main__load_workspace_config
+    examples__32_workspace_coordination__main__main --> examples__32_workspace_coordination__main___print_repo_overview
+    examples__32_workspace_coordination__main__main --> examples__32_workspace_coordination__main___show_analysis_phase
+    examples__32_workspace_coordination__main__main --> examples__32_workspace_coordination__main___check_quality_gates
+    examples__32_workspace_coordination__main__main --> examples__32_workspace_coordination__main___group_repos_by_priority
+    examples__32_workspace_coordination__main__main --> examples__32_workspace_coordination__main___show_planning_phase
+    examples__32_workspace_coordination__main__main --> examples__32_workspace_coordination__main___show_execution_phase
+    examples__32_workspace_coordination__main__main --> examples__32_workspace_coordination__main___show_execution_summary
+    examples__32_workspace_coordination__main___print_repo_overview --> Taskfile__print
+    examples__32_workspace_coordination__main___show_analysis_phase --> Taskfile__print
+    examples__32_workspace_coordination__main___show_analysis_phase --> examples__32_workspace_coordination__main___group_repos_by_priority
+    examples__32_workspace_coordination__main___check_quality_gates --> Taskfile__print
+    examples__32_workspace_coordination__main___show_planning_phase --> Taskfile__print
+    examples__32_workspace_coordination__main___show_execution_phase --> Taskfile__print
+    examples__32_workspace_coordination__main___show_execution_summary --> Taskfile__print
+    examples__30_parallel_execution__parallel_multi_tool__main --> Taskfile__print
+    examples__30_parallel_execution__parallel_real_world__main --> Taskfile__print
+    examples__30_parallel_execution__parallel_real_world__main --> examples__30_parallel_execution__parallel_real_world__setup_sample_project
+    examples__30_parallel_execution__parallel_refactoring__main --> Taskfile__print
+    examples__30_parallel_execution__main__main --> Taskfile__print
+    examples__03_pipeline__main__main --> Taskfile__print
+    examples__14_docker_mcp__main__demo_docker_operations --> Taskfile__print
+    examples__14_docker_mcp__main__demo_docker_operations --> examples__14_docker_mcp__main__create_sample_docker_project
+    examples__14_docker_mcp__main__demo_docker_operations --> examples__14_docker_mcp__main__run_docker_command
+    examples__13_vallm__main__demo_validation --> Taskfile__print
+    examples__13_vallm__main__demo_validation --> examples__13_vallm__main__create_sample_code
+    examples__13_vallm__main__demo_validation --> examples__13_vallm__main__run_local_validation
+    examples__02_algo_loop__main__main --> Taskfile__print
+    examples__16_test_workflow__main__demo_test_workflow --> Taskfile__print
+    examples__16_test_workflow__main__demo_test_workflow --> examples__16_test_workflow__main__create_sample_project
+    examples__17_docker_workflow__main__check_required_env --> Taskfile__print
+    examples__17_docker_workflow__main__show_workflow --> Taskfile__print
+    examples__17_docker_workflow__main__demo_with_docker_tools --> Taskfile__print
+    examples__17_docker_workflow__main__show_cli_usage --> Taskfile__print
+    examples__37_benchmarks__main__demo_benchmark_quick --> Taskfile__print
+    examples__37_benchmarks__main__demo_benchmark_cache --> Taskfile__print
+    examples__37_benchmarks__main__demo_benchmark_tiers --> Taskfile__print
+    examples__37_benchmarks__main__demo_benchmark_memory --> Taskfile__print
+    examples__37_benchmarks__main__demo_benchmark_full --> Taskfile__print
+    examples__37_benchmarks__main__main --> Taskfile__print
+    examples__37_benchmarks__main__main --> examples__37_benchmarks__main__demo_benchmark_quick
+    examples__37_benchmarks__main__main --> examples__37_benchmarks__main__demo_benchmark_cache
+    examples__37_benchmarks__main__main --> examples__37_benchmarks__main__demo_benchmark_tiers
+    examples__37_benchmarks__main__main --> examples__37_benchmarks__main__demo_benchmark_memory
+    examples__37_benchmarks__main__main --> examples__37_benchmarks__main__demo_benchmark_full
+    examples__24_ollama_batch__file3__BadClass__process --> Taskfile__print
+    examples__24_ollama_batch__main__main --> Taskfile__print
+    examples__05_cost_tracking__main__main --> Taskfile__print
+    examples__06_telemetry__main__basic_telemetry_example --> Taskfile__print
+    examples__06_telemetry__main__context_manager_example --> Taskfile__print
+    examples__06_telemetry__main__multi_model_comparison --> Taskfile__print
+    examples__06_telemetry__main__budget_tracking_example --> Taskfile__print
+    examples__04_ide_integration__main__main --> Taskfile__print
+    examples__26_litellm_proxy_ollama__main__main --> Taskfile__print
+    examples__36_dashboard__main__demo_dashboard_live --> Taskfile__print
+    examples__36_dashboard__main__demo_dashboard_monitor --> Taskfile__print
+    examples__36_dashboard__main__demo_dashboard_export --> Taskfile__print
+    examples__36_dashboard__main__demo_dashboard_with_todo --> Taskfile__print
+    examples__36_dashboard__main__main --> Taskfile__print
+    examples__36_dashboard__main__main --> examples__36_dashboard__main__demo_dashboard_live
+    examples__36_dashboard__main__main --> examples__36_dashboard__main__demo_dashboard_monitor
+    examples__36_dashboard__main__main --> examples__36_dashboard__main__demo_dashboard_export
+    examples__36_dashboard__main__main --> examples__36_dashboard__main__demo_dashboard_with_todo
+    examples__38_new_modules__main__demo_classify_module --> Taskfile__print
+    examples__38_new_modules__main__demo_classify_module --> src__algitex__todo__classify__classify_message
+    examples__38_new_modules__main__demo_classify_module --> src__algitex__tools__tickets__Tickets__list
+    examples__38_new_modules__main__demo_repair_module --> Taskfile__print
+    examples__38_new_modules__main__demo_verify_module --> Taskfile__print
+    examples__38_new_modules__main__demo_combined_workflow --> Taskfile__print
+    examples__38_new_modules__main__main --> Taskfile__print
+    examples__38_new_modules__main__main --> examples__38_new_modules__main__demo_classify_module
+    examples__38_new_modules__main__main --> examples__38_new_modules__main__demo_repair_module
+    examples__38_new_modules__main__main --> examples__38_new_modules__main__demo_verify_module
+    examples__38_new_modules__main__main --> examples__38_new_modules__main__demo_combined_workflow
+    examples__27_unified_autofix__main__main --> Taskfile__print
+    examples__20_self_hosted_pipeline__buggy_code__authenticate_user --> examples__20_self_hosted_pipeline__buggy_code__get_stored_password
+    examples__20_self_hosted_pipeline__main__main --> Taskfile__print
+    examples__15_github_mcp__main__demo_github_workflow --> Taskfile__print
+    examples__15_github_mcp__main__demo_github_workflow --> examples__15_github_mcp__main__create_sample_project
+    examples__23_continue_dev_ollama__main__main --> Taskfile__print
+    examples__39_microtask_pipeline__main__demo_microtask_classify --> Taskfile__print
+    examples__39_microtask_pipeline__main__demo_microtask_plan --> Taskfile__print
+    examples__39_microtask_pipeline__main__demo_microtask_run --> Taskfile__print
+    examples__39_microtask_pipeline__main__demo_workflow --> Taskfile__print
+    examples__39_microtask_pipeline__main__main --> Taskfile__print
+    examples__39_microtask_pipeline__main__main --> examples__39_microtask_pipeline__main__demo_microtask_classify
+    examples__39_microtask_pipeline__main__main --> examples__39_microtask_pipeline__main__demo_microtask_plan
+    examples__39_microtask_pipeline__main__main --> examples__39_microtask_pipeline__main__demo_microtask_run
+    examples__39_microtask_pipeline__main__main --> examples__39_microtask_pipeline__main__demo_workflow
+    examples__33_hybrid_autofix__main__demo_dry_run --> Taskfile__print
+    examples__33_hybrid_autofix__main__demo_verify_first --> Taskfile__print
+    examples__33_hybrid_autofix__main__demo_verify_first --> src__algitex__todo__verify__verify_todos
+    examples__33_hybrid_autofix__main__demo_benchmark --> Taskfile__print
+    examples__33_hybrid_autofix__main__demo_benchmark --> src__algitex__todo__benchmark__benchmark_fix
+    examples__33_hybrid_autofix__main__demo_mechanical_only --> Taskfile__print
+    examples__33_hybrid_autofix__main__demo_full_hybrid --> Taskfile__print
+    examples__33_hybrid_autofix__main__demo_ollama_local --> Taskfile__print
+    examples__33_hybrid_autofix__main__main --> examples__33_hybrid_autofix__main___parse_args
+    examples__33_hybrid_autofix__main__main --> Taskfile__print
+    examples__33_hybrid_autofix__main__main --> examples__33_hybrid_autofix__main___run_demos
+    examples__33_hybrid_autofix__main__main --> examples__33_hybrid_autofix__main___validate_env
+    examples__33_hybrid_autofix__main___validate_env --> src__algitex__todo__fixer__parse_todo
+    examples__33_hybrid_autofix__main___validate_env --> Taskfile__print
+    examples__33_hybrid_autofix__main___run_demos --> examples__33_hybrid_autofix__main__demo_dry_run
+    examples__33_hybrid_autofix__main___run_demos --> examples__33_hybrid_autofix__main__demo_verify_first
+    examples__33_hybrid_autofix__main___run_demos --> examples__33_hybrid_autofix__main__demo_benchmark
+    examples__33_hybrid_autofix__main___run_demos --> examples__33_hybrid_autofix__main__demo_mechanical_only
+    examples__33_hybrid_autofix__main___run_demos --> examples__33_hybrid_autofix__main__demo_full_hybrid
+    examples__33_hybrid_autofix__main___run_demos --> examples__33_hybrid_autofix__main__demo_ollama_local
+    examples__08_feedback__main__basic_feedback_example --> Taskfile__print
+    examples__08_feedback__main__custom_policy_example --> Taskfile__print
+    examples__08_feedback__main__feedback_extraction_example --> Taskfile__print
+    examples__08_feedback__main__feedback_loop_simulation --> Taskfile__print
+    examples__08_feedback__main__escalation_scenarios --> Taskfile__print
+    examples__08_feedback__main__cost_optimization_example --> Taskfile__print
+    examples__21_aider_cli_ollama__main__main --> Taskfile__print
+    examples__40_three_tier_autofix__main__demo_tier_algorithm --> Taskfile__print
+    examples__40_three_tier_autofix__main__demo_tier_micro --> Taskfile__print
+    examples__40_three_tier_autofix__main__demo_tier_big --> Taskfile__print
+    examples__40_three_tier_autofix__main__demo_all_tiers --> Taskfile__print
+    examples__40_three_tier_autofix__main__demo_dashboard_integration --> Taskfile__print
+    examples__40_three_tier_autofix__main__main --> Taskfile__print
+    examples__40_three_tier_autofix__main__main --> examples__40_three_tier_autofix__main__demo_tier_algorithm
+    examples__40_three_tier_autofix__main__main --> examples__40_three_tier_autofix__main__demo_tier_micro
+    examples__40_three_tier_autofix__main__main --> examples__40_three_tier_autofix__main__demo_tier_big
+    examples__40_three_tier_autofix__main__main --> examples__40_three_tier_autofix__main__demo_all_tiers
+    examples__40_three_tier_autofix__main__main --> examples__40_three_tier_autofix__main__demo_dashboard_integration
+    examples__25_local_model_comparison__main__main --> Taskfile__print
+    examples__35_sprint3_patterns__main__demo_dict_dispatch --> Taskfile__print
+    examples__35_sprint3_patterns__main__demo_dict_dispatch --> src__algitex__todo__classify__classify_message
+    examples__35_sprint3_patterns__main__demo_strategy_pattern --> Taskfile__print
+    examples__35_sprint3_patterns__main__demo_pipeline_pattern --> Taskfile__print
+    examples__35_sprint3_patterns__main__demo_orchestrator_pattern --> Taskfile__print
+    examples__35_sprint3_patterns__main__main --> Taskfile__print
+    examples__35_sprint3_patterns__main__main --> examples__35_sprint3_patterns__main__demo_dict_dispatch
+    examples__35_sprint3_patterns__main__main --> examples__35_sprint3_patterns__main__demo_strategy_pattern
+    examples__35_sprint3_patterns__main__main --> examples__35_sprint3_patterns__main__demo_pipeline_pattern
+    examples__35_sprint3_patterns__main__main --> examples__35_sprint3_patterns__main__demo_orchestrator_pattern
+    examples__28_mcp_orchestration__mcp_orchestrator__main --> Taskfile__print
+    examples__28_mcp_orchestration__main__main --> Taskfile__print
+    examples__09_workspace__main__create_sample_workspace --> Taskfile__print
+    examples__09_workspace__main__create_sample_workspace --> src__algitex__tools__workspace__init_workspace
+    examples__09_workspace__main__workspace_management_example --> Taskfile__print
+    examples__09_workspace__main__workspace_management_example --> examples__09_workspace__main__create_sample_workspace
+    examples__09_workspace__main__cross_repo_analysis_example --> Taskfile__print
+    examples__09_workspace__main__cross_repo_analysis_example --> examples__09_workspace__main__create_sample_workspace
+    examples__09_workspace__main__cross_repo_planning_example --> Taskfile__print
+    examples__09_workspace__main__cross_repo_planning_example --> examples__09_workspace__main__create_sample_workspace
+    examples__09_workspace__main__workspace_execution_example --> Taskfile__print
+    examples__09_workspace__main__workspace_execution_example --> examples__09_workspace__main__create_sample_workspace
+    examples__09_workspace__main___analyze_workspace_structure --> Taskfile__print
+    examples__09_workspace__main___analyze_workspace_structure --> src__algitex__tools__ollama_cache__LLMCache__set
+    examples__09_workspace__main___analyze_impact --> Taskfile__print
+    examples__09_workspace__main___analyze_parallel_execution --> Taskfile__print
+    examples__09_workspace__main___calculate_metrics --> Taskfile__print
+    examples__09_workspace__main__advanced_workspace_features --> Taskfile__print
+    examples__09_workspace__main__advanced_workspace_features --> examples__09_workspace__main__create_sample_workspace
+    examples__09_workspace__main__advanced_workspace_features --> examples__09_workspace__main___analyze_workspace_structure
+    examples__09_workspace__main__advanced_workspace_features --> examples__09_workspace__main___analyze_impact
+    examples__09_workspace__main__advanced_workspace_features --> examples__09_workspace__main___analyze_parallel_execution
+    examples__09_workspace__main__advanced_workspace_features --> examples__09_workspace__main___calculate_metrics
+    examples__09_workspace__main__cleanup_sample_workspace --> Taskfile__print
+    examples__07_context__main__basic_context_example --> Taskfile__print
+    examples__07_context__main__context_optimization_example --> Taskfile__print
+    examples__07_context__main__semantic_search_example --> Taskfile__print
+    examples__07_context__main__prompt_engineering_example --> Taskfile__print
+    examples__07_context__main__cleanup_example_projects --> Taskfile__print
+    examples__12_filesystem_mcp__main__demo_file_operations --> Taskfile__print
+    examples__12_filesystem_mcp__main__demo_file_operations --> examples__12_filesystem_mcp__main__create_sample_files
+    examples__12_filesystem_mcp__sample_files__src__main__main --> Taskfile__print
+    examples__31_abpr_workflow__abpr_pipeline__abpr_pipeline --> Taskfile__print
+    examples__31_abpr_workflow__main__main --> Taskfile__print
+    examples__19_local_mcp_tools__main__main --> Taskfile__print
+    examples__19_local_mcp_tools__main__main --> examples__19_local_mcp_tools__main__check_services
+    src__algitex__config__Config__load --> src__algitex__config___find_config
+    src__algitex__config__Config__load --> src__algitex__config___merge_yaml
+    src__algitex__shared_rules__SortedImportsRule__check --> src__algitex__tools__todo_parser__TodoParser__parse
+    src__algitex__shared_rules__RelativeImportRule__check --> src__algitex__tools__todo_parser__TodoParser__parse
+    src__algitex__shared_rules__RuleRegistry__list_rules --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__shared_rules__RuleRegistry__check_file --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__benchmark__BenchmarkSuite__print_table --> Taskfile__print
+    src__algitex__benchmark__BenchmarkRunner__print_report --> Taskfile__print
+    src__algitex__benchmark__TierBenchmark__bench_algorithmic_fix --> src__algitex__shared_rules__get_registry
+    src__algitex__benchmark__run_quick_benchmark --> Taskfile__print
+    src__algitex__nlp__DocstringShortener__fix_path --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__nlp__DocstringShortener__fix_path --> src__algitex__nlp___python_files
+    src__algitex__nlp__DeadCodeDetector__scan --> src__algitex__nlp___python_files
+    src__algitex__nlp___UsageCollector____init__ --> src__algitex__tools__ollama_cache__LLMCache__set
+    src__algitex__nlp__sort_imports_in_path --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__nlp__sort_imports_in_path --> src__algitex__nlp___python_files
+    src__algitex__nlp__sort_imports_in_path --> src__algitex__nlp___sort_imports
+    src__algitex__nlp__find_duplicate_blocks --> src__algitex__nlp___python_files
+    src__algitex__nlp__find_duplicate_blocks --> src__algitex__nlp___stable_line_hash
+    src__algitex__nlp___sort_imports --> src__algitex__nlp___ensure_trailing_newline
+    src__algitex__nlp___sort_imports --> src__algitex__nlp___fallback_sort_imports
+    src__algitex__nlp___fallback_sort_imports --> src__algitex__nlp___ensure_trailing_newline
+    src__algitex__nlp___python_files --> src__algitex__nlp___is_ignored
+    src__algitex__tools__ollama_cache__LLMCache__stats --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__tools__ide_aider__AiderHelper__fix_file --> Taskfile__print
+    src__algitex__tools__config__ConfigManager__install_config --> Taskfile__print
+    src__algitex__tools__config__ConfigManager__generate_env_file --> Taskfile__print
+    src__algitex__tools__config__ConfigManager__generate_docker_compose --> Taskfile__print
+    src__algitex__tools__config__ConfigManager__setup_project_configs --> Taskfile__print
+    src__algitex__tools__mcp__MCPOrchestrator__start_service --> Taskfile__print
+    src__algitex__tools__mcp__MCPOrchestrator__stop_service --> Taskfile__print
+    src__algitex__tools__mcp__MCPOrchestrator__restart_service --> Taskfile__print
+    src__algitex__tools__mcp__MCPOrchestrator__start_all --> src__algitex__tools__ollama_cache__LLMCache__set
+    src__algitex__tools__mcp__MCPOrchestrator__start_all --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__tools__mcp__MCPOrchestrator__stop_all --> Taskfile__print
+    src__algitex__tools__mcp__MCPOrchestrator__stop_all --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__tools__mcp__MCPOrchestrator__wait_for_ready --> Taskfile__print
+    src__algitex__tools__mcp__MCPOrchestrator__wait_for_ready --> src__algitex__tools__ollama_cache__LLMCache__set
+    src__algitex__tools__mcp__MCPOrchestrator__wait_for_ready --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__tools__mcp__MCPOrchestrator__list_services --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__tools__mcp__MCPOrchestrator__print_status --> Taskfile__print
+    src__algitex__tools__mcp__MCPOrchestrator__generate_mcp_config --> Taskfile__print
+    src__algitex__tools__cicd__init_ci_cd --> Taskfile__print
+    src__algitex__tools__mcp_orchestrator__MCPOrchestrator___register_default_services --> src__algitex__tools__mcp_defaults__build_default_services
+    src__algitex__tools__mcp_orchestrator__MCPOrchestrator__start_all --> src__algitex__tools__ollama_cache__LLMCache__set
+    src__algitex__tools__mcp_orchestrator__MCPOrchestrator__start_all --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__tools__mcp_orchestrator__MCPOrchestrator__stop_all --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__tools__todo_parser__TodoParser__parse --> src__algitex__tools__ollama_cache__LLMCache__set
+    src__algitex__tools__todo_parser__TodoParser___parse_prefact --> src__algitex__tools__ollama_cache__LLMCache__set
+    src__algitex__tools__todo_parser__TodoParser___parse_github --> src__algitex__tools__ollama_cache__LLMCache__set
+    src__algitex__tools__todo_parser__TodoParser___parse_generic --> src__algitex__tools__ollama_cache__LLMCache__set
+    src__algitex__tools__workspace__Workspace___validate_dependencies --> src__algitex__tools__ollama_cache__LLMCache__set
+    src__algitex__tools__workspace__Workspace___topo_sort --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__tools__workspace__Workspace__clone_all --> Taskfile__print
+    src__algitex__tools__workspace__Workspace__pull_all --> Taskfile__print
+    src__algitex__tools__workspace__Workspace__analyze_all --> Taskfile__print
+    src__algitex__tools__workspace__Workspace__plan_all --> Taskfile__print
+    src__algitex__tools__workspace__Workspace__execute_all --> Taskfile__print
+    src__algitex__tools__workspace__Workspace__validate_all --> Taskfile__print
+    src__algitex__tools__workspace__init_workspace --> src__algitex__tools__workspace__create_workspace_template
+    src__algitex__tools__workspace__init_workspace --> Taskfile__print
+    src__algitex__tools__docker__DockerToolManager__teardown_all --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__tools__docker__DockerToolManager__list_tools --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__tools__docker__DockerToolManager__list_running --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__tools__ollama__OllamaService__ensure_model --> Taskfile__print
+    src__algitex__tools__ollama__OllamaService__auto_fix_file --> Taskfile__print
+    src__algitex__tools__analysis__Analyzer___run_code2llm --> src__algitex__tools__analysis___run_cli
+    src__algitex__tools__analysis__Analyzer___run_vallm --> src__algitex__tools__analysis___run_cli
+    src__algitex__tools__analysis__Analyzer___run_redup --> src__algitex__tools__analysis___run_cli
+    src__algitex__tools__require_tool --> src__algitex__tools__discover_tools
+    src__algitex__tools__ide__IDEHelper__setup_tool --> Taskfile__print
+    src__algitex__tools__ide__IDEHelper__list_tools --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__tools__ide__ClaudeCodeHelper__fix_file --> Taskfile__print
+    src__algitex__tools__ide__ClaudeCodeHelper__chat --> Taskfile__print
+    src__algitex__tools__ide__ClaudeCodeHelper__batch_fix --> Taskfile__print
+    src__algitex__tools__ide__AiderHelper__fix_file --> Taskfile__print
+    src__algitex__tools__ide__VSCodeHelper__install_extensions --> Taskfile__print
+    src__algitex__tools__telemetry__Telemetry__summary --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__tools__context__ContextBuilder___find_related --> src__algitex__tools__ollama_cache__LLMCache__set
+    src__algitex__tools__context__ContextBuilder___find_related --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__tools__ide_claude__ClaudeCodeHelper__fix_file --> Taskfile__print
+    src__algitex__tools__ide_claude__ClaudeCodeHelper__chat --> Taskfile__print
+    src__algitex__tools__ide_claude__ClaudeCodeHelper__batch_fix --> Taskfile__print
+    src__algitex__tools__services__ServiceChecker___print_status_details --> Taskfile__print
+    src__algitex__tools__services__ServiceChecker__print_status --> Taskfile__print
+    src__algitex__tools__services__ServiceDependency__get_startup_order --> src__algitex__tools__ollama_cache__LLMCache__set
+    src__algitex__tools__ide_base__IDEHelper__setup_tool --> Taskfile__print
+    src__algitex__tools__ide_base__IDEHelper__list_tools --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__tools__todo_runner__TodoRunner___execute_task --> src__algitex__tools__todo_actions__determine_action
+    src__algitex__tools__logging__log_calls --> Taskfile__print
+    src__algitex__tools__logging__log_calls --> src__algitex__tools__logging__format_args
+    src__algitex__tools__logging__log_calls --> src__algitex__tools__logging__format_result
+    src__algitex__tools__logging__log_time --> Taskfile__print
+    src__algitex__tools__logging__verbose --> src__algitex__tools__logging__format_args
+    src__algitex__tools__logging__verbose --> Taskfile__print
+    src__algitex__tools__logging__verbose --> src__algitex__tools__logging__format_result
+    src__algitex__tools__logging__format_args --> src__algitex__tools__logging__format_value
+    src__algitex__tools__logging__VerboseContext____enter__ --> Taskfile__print
+    src__algitex__tools__logging__VerboseContext____exit__ --> Taskfile__print
+    src__algitex__tools__logging__verbose_print --> Taskfile__print
+    src__algitex__tools__todo_actions__determine_action --> src__algitex__tools__todo_actions__get_action_handler
+    src__algitex__tools__benchmark__BenchmarkResults__get_summary --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__tools__benchmark__BenchmarkResults__get_summary --> src__algitex__tools__ollama_cache__LLMCache__set
+    src__algitex__tools__benchmark__ModelBenchmark__compare_models --> Taskfile__print
+    src__algitex__tools__benchmark__ModelBenchmark__compare_models --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__tools__benchmark__ModelBenchmark___print_table --> Taskfile__print
+    src__algitex__tools__benchmark__ModelBenchmark___print_summary --> Taskfile__print
+    src__algitex__tools__benchmark__ModelBenchmark___print_detailed --> Taskfile__print
+    src__algitex__tools__benchmark__ModelBenchmark__save_results --> Taskfile__print
+    src__algitex__tools__mcp_lifecycle__MCPLifecycleManager__start_service --> Taskfile__print
+    src__algitex__tools__mcp_lifecycle__MCPLifecycleManager__stop_service --> Taskfile__print
+    src__algitex__tools__mcp_lifecycle__MCPLifecycleManager__restart_service --> Taskfile__print
+    src__algitex__tools__batch__BatchProcessor___prepare --> Taskfile__print
+    src__algitex__tools__batch__BatchProcessor___setup_progress_bar --> Taskfile__print
+    src__algitex__tools__batch__BatchProcessor___print_summary --> Taskfile__print
+    src__algitex__tools__batch__BatchProcessor___save_results --> Taskfile__print
+    src__algitex__tools__autofix__AutoFix__mark_task_done --> Taskfile__print
+    src__algitex__tools__autofix__AutoFix__fix_all --> Taskfile__print
+    src__algitex__tools__autofix__AutoFix__fix_issue --> Taskfile__print
+    src__algitex__tools__autofix__AutoFix__print_summary --> Taskfile__print
+    src__algitex__tools__autofix__fallback_backend__FallbackBackend____init__ --> src__algitex__tools__logging__verbose_print
+    src__algitex__tools__autofix__fallback_backend__FallbackBackend___get_backend --> src__algitex__tools__logging__verbose_print
+    src__algitex__tools__autofix__fallback_backend__FallbackBackend___mark_success --> src__algitex__tools__logging__verbose_print
+    src__algitex__tools__autofix__fallback_backend__FallbackBackend___mark_failure --> src__algitex__tools__logging__verbose_print
+    src__algitex__tools__autofix__fallback_backend__FallbackBackend___try_backend --> src__algitex__tools__logging__verbose_print
+    src__algitex__tools__autofix__fallback_backend__FallbackBackend___try_backend --> Taskfile__print
+    src__algitex__tools__autofix__fallback_backend__FallbackBackend__fix --> src__algitex__tools__logging__verbose_print
+    src__algitex__tools__autofix__fallback_backend__FallbackBackend__fix --> Taskfile__print
+    src__algitex__tools__autofix__fallback_backend__FallbackBackend__print_status --> Taskfile__print
+    src__algitex__tools__autofix__batch_backend__BatchFixBackend__fix_batch --> Taskfile__print
+    src__algitex__tools__autofix__batch_backend__BatchFixBackend___update_todo_mark_completed --> src__algitex__tools__ollama_cache__LLMCache__set
+    src__algitex__tools__autofix__batch_backend__BatchFixBackend___update_todo_mark_completed --> Taskfile__print
+    src__algitex__tools__autofix__batch_backend__BatchFixBackend___update_todo_mark_completed --> src__algitex__todo__fixer__mark_tasks_completed
+    src__algitex__tools__autofix__batch_backend__BatchFixBackend___create_backup --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__tools__autofix__batch_backend__BatchFixBackend___preflight_syntax_check --> Taskfile__print
+    src__algitex__tools__autofix__batch_backend__BatchFixBackend___preflight_syntax_check --> src__algitex__tools__ollama_cache__LLMCache__set
+    src__algitex__tools__autofix__batch_backend__BatchFixBackend___verify_tasks_exist --> Taskfile__print
+    src__algitex__tools__autofix__batch_backend__BatchFixBackend___process_group --> Taskfile__print
+    src__algitex__tools__autofix__batch_backend__BatchFixBackend___fix_batch_group --> Taskfile__print
+    src__algitex__tools__autofix__batch_backend__BatchFixBackend___fix_individual --> Taskfile__print
+    src__algitex__tools__autofix__batch_backend__BatchFixBackend___build_batch_prompt --> Taskfile__print
+    src__algitex__tools__autofix__batch_backend__BatchFixBackend___call_llm --> Taskfile__print
+    src__algitex__tools__autofix__batch_backend__BatchFixBackend___parse_batch_response --> Taskfile__print
+    src__algitex__tools__autofix__batch_backend__BatchFixBackend___validate_and_rollback --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__tools__autofix__batch_backend__BatchFixBackend___validate_and_rollback --> Taskfile__print
+    src__algitex__tools__autofix__ollama_backend__OllamaBackend__fix --> Taskfile__print
+    src__algitex__tools__autofix__batch_logger__BatchLogger__print_summary --> Taskfile__print
+    src__algitex__tools__autofix__batch_backend__fs_utils__create_backup --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__tools__autofix__batch_backend__fs_utils__preflight_syntax_check --> Taskfile__print
+    src__algitex__tools__autofix__batch_backend__todo_utils__update_todo_mark_completed --> src__algitex__tools__ollama_cache__LLMCache__set
+    src__algitex__tools__autofix__batch_backend__todo_utils__update_todo_mark_completed --> Taskfile__print
+    src__algitex__tools__autofix__batch_backend__todo_utils__update_todo_mark_completed --> src__algitex__todo__fixer__mark_tasks_completed
+    src__algitex__tools__autofix__batch_backend__backend__BatchFixBackend__fix_batch --> Taskfile__print
+    src__algitex__tools__autofix__batch_backend__backend__BatchFixBackend__fix_batch --> src__algitex__tools__autofix__batch_backend__fs_utils__create_backup
+    src__algitex__tools__autofix__batch_backend__backend__BatchFixBackend__fix_batch --> src__algitex__tools__autofix__batch_backend__fs_utils__preflight_syntax_check
+    src__algitex__tools__parallel__extractor__RegionExtractor___find_calls --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__tools__parallel__extractor__RegionExtractor___find_calls --> src__algitex__tools__ollama_cache__LLMCache__set
+    src__algitex__tools__parallel__extractor__RegionExtractor___detect_shadow_conflicts --> src__algitex__tools__ollama_cache__LLMCache__set
+    src__algitex__tools__parallel__extractor__RegionExtractor___detect_shadow_conflicts --> src__algitex__tools__tickets__Tickets__list
+    src__algitex__tools__parallel__partitioner__TaskPartitioner___compute_footprints --> src__algitex__tools__ollama_cache__LLMCache__set
+    src__algitex__tools__parallel__partitioner__TaskPartitioner___build_conflict_graph --> src__algitex__tools__ollama_cache__LLMCache__set
+    src__algitex__cli__dashboard__dashboard_live --> src__algitex__dashboard__show_quick_dashboard
+    src__algitex__cli__microtask__microtask_classify --> src__algitex__microtask__classifier__classify_todo_file
+    src__algitex__cli__microtask__microtask_classify --> src__algitex__cli__microtask___print_summary
+    src__algitex__cli__microtask__microtask_classify --> src__algitex__cli__microtask___print_task_table
+    src__algitex__cli__microtask__microtask_plan --> src__algitex__microtask__classifier__classify_todo_file
+    src__algitex__cli__microtask__microtask_plan --> src__algitex__cli__microtask___print_summary
+    src__algitex__cli__microtask__microtask_plan --> src__algitex__cli__microtask___print_plan_table
+    src__algitex__cli__microtask__microtask_plan --> src__algitex__cli__microtask___print_file_batches
+    src__algitex__cli__microtask__microtask_run --> src__algitex__microtask__classifier__classify_todo_file
+    src__algitex__cli__microtask__microtask_run --> src__algitex__cli__microtask___filter_tasks
+    src__algitex__cli__microtask__microtask_run --> src__algitex__cli__microtask___print_phase_results
+    src__algitex__cli__microtask___print_task_table --> src__algitex__cli__microtask___shorten_path
+    src__algitex__cli__microtask___print_file_batches --> src__algitex__microtask__group_tasks_by_file
+    src__algitex__cli__microtask___print_file_batches --> src__algitex__cli__microtask___shorten_path
+    src__algitex__cli__todo_verify__todo_verify_prefact --> src__algitex__cli__todo_verify___validate_tasks
+    src__algitex__cli__parallel__parallel --> src__algitex__cli__parallel___load_tickets
+    src__algitex__cli__parallel__parallel --> src__algitex__cli__parallel___extract_and_partition
+    src__algitex__cli__parallel__parallel --> src__algitex__cli__parallel___display_partition_plan
+    src__algitex__cli__parallel__parallel --> src__algitex__cli__parallel___execute_parallel
+    src__algitex__cli__parallel__parallel --> src__algitex__cli__parallel___display_results
+    src__algitex__cli__todo__todo_stats --> src__algitex__cli__todo___render_todo_stats
+    src__algitex__cli__todo__todo_stats --> src__algitex__todo__fixer__parse_todo
+    src__algitex__cli__todo__todo_fix_parallel --> src__algitex__todo__fix_todos
+    src__algitex__cli__todo___tf_parse_and_filter --> src__algitex__todo__fixer__parse_todo
+    src__algitex__cli__todo___tf_classify_tasks --> src__algitex__todo__classify__classify_task
+    src__algitex__cli__todo___tf_execute_phased --> src__algitex__todo__fixer__parallel_fix_and_update
+    src__algitex__cli__todo___tf_execute_phased --> src__algitex__todo__fixer__mark_tasks_completed
+    src__algitex__cli__todo__todo_benchmark --> src__algitex__todo__benchmark__compare_modes
+    src__algitex__cli__todo__todo_benchmark --> src__algitex__todo__benchmark__benchmark_fix
+    src__algitex__cli__todo__todo_batch --> src__algitex__todo__fixer__parse_todo
+    src__algitex__cli__core__init --> src__algitex__cli__core___init_project_dir
+    src__algitex__cli__core__init --> src__algitex__cli__core___init_config
+    src__algitex__cli__core__init --> src__algitex__cli__core___print_tools_status
+    src__algitex__cli__core___print_tools_status --> src__algitex__tools__discover_tools
+    src__algitex__cli__core__tools --> src__algitex__tools__discover_tools
+    src__algitex__cli__benchmark__benchmark_full --> src__algitex__benchmark__run_quick_benchmark
+    src__algitex__cli__benchmark__benchmark_quick --> src__algitex__benchmark__run_quick_benchmark
+    src__algitex__cli__nlp__nlp_docstrings --> src__algitex__cli__nlp___print_docstring_changes
+    src__algitex__cli__nlp__nlp_imports --> src__algitex__nlp__sort_imports_in_path
+    src__algitex__cli__nlp__nlp_duplicates --> src__algitex__nlp__find_duplicate_blocks
+    src__algitex__cli__nlp__nlp_duplicates --> src__algitex__cli__nlp___print_duplicates
+    src__algitex__cli__nlp__nlp_dead_code --> src__algitex__cli__nlp___print_dead_code
+    src__algitex__cli__todo__logic__validate_task --> Taskfile__print
+    src__algitex__project__Project___check_tools_status --> src__algitex__tools__discover_tools
+    src__algitex__workflows__Pipeline__finish --> Taskfile__print
+    src__algitex__todo__micro__MicroFixer____init__ --> src__algitex__todo__micro_utils__normalise_model_name
+    src__algitex__todo__micro__MicroFixer__fix_file --> src__algitex__todo__micro_utils__coerce_task
+    src__algitex__todo__micro__MicroFixer__fix_file --> src__algitex__todo__classify__classify_task
+    src__algitex__todo__micro__MicroFixer__fix_task --> src__algitex__todo__micro_utils__coerce_task
+    src__algitex__todo__micro__MicroFixer__fix_task --> src__algitex__todo__classify__classify_task
+    src__algitex__todo__micro__MicroFixer__fix_task --> src__algitex__todo__micro_utils__strip_code_fences
+    src__algitex__todo__micro__MicroFixer__fix_tasks_detailed --> src__algitex__todo__micro_utils__coerce_task
+    src__algitex__todo__micro__MicroFixer__fix_tasks_detailed --> src__algitex__todo__classify__classify_task
+    src__algitex__todo__micro__MicroFixer__fix_tasks_detailed --> Taskfile__print
+    src__algitex__todo__micro__MicroFixer__fix_tasks --> Taskfile__print
+    src__algitex__todo__micro__MicroFixer___fix_magic_name --> src__algitex__todo__micro_utils__extract_first_int
+    src__algitex__todo__micro__MicroFixer___fix_magic_name --> src__algitex__todo__micro_utils__sanitize_constant_name
+    src__algitex__todo__micro__MicroFixer___apply_function_rewrite --> src__algitex__todo__micro_utils__validate_python
+    src__algitex__todo__micro__MicroFixer___apply_magic_name --> src__algitex__todo__micro_utils__find_import_insert_point
+    src__algitex__todo__micro__MicroFixer___apply_magic_name --> src__algitex__todo__micro_utils__validate_python
+    src__algitex__todo__fixer__parse_todo --> src__algitex__todo__fixer___categorize
+    src__algitex__todo__fixer___categorize --> src__algitex__todo__classify__classify_message
+    src__algitex__todo__fixer___compute_tier_stats --> src__algitex__todo__classify__classify_message
+    src__algitex__todo__fixer___print_pre_execution_summary --> src__algitex__todo__fixer___compute_category_stats
+    src__algitex__todo__fixer___print_pre_execution_summary --> src__algitex__todo__fixer___compute_tier_stats
+    src__algitex__todo__fixer___print_pre_execution_summary --> Taskfile__print
+    src__algitex__todo__fixer___print_execution_summary --> Taskfile__print
+    src__algitex__todo__fixer__fix_file --> src__algitex__todo__fixer___process_magic_batch
+    src__algitex__todo__fixer__fix_file --> src__algitex__todo__fixer___process_fstring_batch
+    src__algitex__todo__fixer__fix_file --> src__algitex__todo__fixer___process_exec_batch
+    src__algitex__todo__fixer__fix_file --> Taskfile__print
+    src__algitex__todo__fixer__fix_file --> src__algitex__todo__fixer___validate_file_with_vallm
+    src__algitex__todo__fixer___process_magic_batch --> Taskfile__print
+    src__algitex__todo__fixer___process_magic_batch --> src__algitex__todo__repair__repair_magic_number
+    src__algitex__todo__fixer___process_magic_batch --> src__algitex__todo__fixer___validate_file_with_vallm
+    src__algitex__todo__fixer___process_fstring_batch --> src__algitex__todo__repair__repair_fstring
+    src__algitex__todo__fixer___process_fstring_batch --> Taskfile__print
+    src__algitex__todo__fixer___process_fstring_batch --> src__algitex__todo__fixer___validate_file_with_vallm
+    src__algitex__todo__fixer___process_exec_batch --> src__algitex__todo__repair__repair_module_block
+    src__algitex__todo__fixer___process_exec_batch --> Taskfile__print
+    src__algitex__todo__fixer___process_exec_batch --> src__algitex__todo__fixer___validate_file_with_vallm
+    src__algitex__todo__fixer___execute_parallel_fixes --> Taskfile__print
+    src__algitex__todo__fixer__parallel_fix --> src__algitex__todo__fixer___group_tasks_by_file
+    src__algitex__todo__fixer__parallel_fix --> src__algitex__todo__fixer___print_pre_execution_summary
+    src__algitex__todo__fixer__parallel_fix --> src__algitex__todo__fixer___execute_parallel_fixes
+    src__algitex__todo__fixer__parallel_fix --> src__algitex__todo__fixer___print_execution_summary
+    src__algitex__todo__fixer__parallel_fix --> src__algitex__todo__fixer__parse_todo
+    src__algitex__todo__fixer__parallel_fix --> Taskfile__print
+    src__algitex__todo__fixer__mark_tasks_completed --> Taskfile__print
+    src__algitex__todo__fixer__parallel_fix_and_update --> src__algitex__todo__fixer__parallel_fix
+    src__algitex__todo__fixer__parallel_fix_and_update --> src__algitex__todo__fixer__mark_tasks_completed
+    src__algitex__todo__fixer__parallel_fix_and_update --> src__algitex__todo__fixer__parse_todo
+    src__algitex__todo__fixer__parallel_fix_and_update --> src__algitex__todo__classify__classify_message
+    src__algitex__todo__fix_todos --> src__algitex__todo__fixer__parallel_fix
+    src__algitex__todo__classify__classify_message --> src__algitex__todo__classify___first_int
+    src__algitex__todo__classify__classify_task --> src__algitex__todo__classify__classify_message
+    src__algitex__todo__tiering__summarise_tasks --> src__algitex__todo__classify__classify_task
+    src__algitex__todo__tiering__filter_tasks --> src__algitex__todo__classify__classify_task
+    src__algitex__todo__tiering__partition_tasks --> src__algitex__todo__classify__classify_task
+    src__algitex__todo__benchmark__BenchmarkResult__print_report --> Taskfile__print
+    src__algitex__todo__benchmark__benchmark_sequential --> src__algitex__todo__benchmark___benchmark_single
+    src__algitex__todo__benchmark__benchmark_fix --> src__algitex__todo__fixer__parse_todo
+    src__algitex__todo__benchmark__benchmark_fix --> src__algitex__todo__benchmark__benchmark_parallel
+    src__algitex__todo__benchmark__benchmark_fix --> src__algitex__todo__benchmark__benchmark_sequential
+    src__algitex__todo__benchmark__compare_modes --> Taskfile__print
+    src__algitex__todo__benchmark__compare_modes --> src__algitex__todo__benchmark__benchmark_sequential
+    src__algitex__todo__benchmark__compare_modes --> src__algitex__todo__benchmark__benchmark_parallel
+    src__algitex__todo__benchmark__compare_modes --> src__algitex__todo__fixer__parse_todo
+    src__algitex__todo__verify__verify_todos --> src__algitex__todo__verify___run_prefact_scan
+    src__algitex__todo__verify__verify_todos --> src__algitex__todo__verify___parse_todo_file
+    src__algitex__todo__verify__verify_todos --> src__algitex__todo__verify___diff_issues
+    src__algitex__todo__verify___diff_issues --> src__algitex__tools__ollama_cache__LLMCache__set
+    src__algitex__todo__verify___diff_issues --> src__algitex__todo__verify___validate_task_against_file
+    src__algitex__todo__verify__prune_outdated_tasks --> src__algitex__todo__verify__verify_todos
+    src__algitex__todo__repair__repair_fstring --> src__algitex__todo__repair___simple_fstring_rewrite
+    src__algitex__todo__repair__repair_magic_number --> src__algitex__tools__ollama_cache__LLMCache__set
+    src__algitex__todo__repair__repair_magic_number --> src__algitex__todo__repair___find_import_insert_point
+    src__algitex__todo__micro_prompts__MicroPromptBuilder___build_user_prompt --> src__algitex__todo__micro_utils__extract_first_int
+    src__algitex__todo__hybrid__HybridAutofix__fix_mechanical --> Taskfile__print
+    src__algitex__todo__hybrid__HybridAutofix__fix_mechanical --> src__algitex__todo__fix_todos
+    src__algitex__todo__hybrid__HybridAutofix__fix_complex --> Taskfile__print
+    src__algitex__todo__hybrid__HybridAutofix__fix_complex --> src__algitex__todo__fixer__parse_todo
+    src__algitex__todo__hybrid__HybridAutofix___process_llm_parallel --> Taskfile__print
+    src__algitex__todo__hybrid__HybridAutofix___fix_file_llm --> Taskfile__print
+    src__algitex__todo__hybrid__HybridAutofix___call_llm_backend --> Taskfile__print
+    src__algitex__todo__hybrid__HybridAutofix__fix_all --> Taskfile__print
+    src__algitex__todo__hybrid__HybridAutofix__print_summary --> Taskfile__print
+    src__algitex__todo__verifier__TodoVerifier__print_report --> Taskfile__print
+    src__algitex__todo__audit__AuditLogger__print_summary --> Taskfile__print
+    src__algitex__microtask__classifier__classify_prefact_line --> src__algitex__microtask__classifier___is_ignored_path
+    src__algitex__microtask__classifier__classify_prefact_line --> src__algitex__microtask__classifier___classify_message
+    src__algitex__microtask__classifier__classify_prefact_line --> src__algitex__microtask__classifier___first_int
+    src__algitex__microtask__classifier__classify_prefact_line --> src__algitex__microtask__classifier___resolve_file
+    src__algitex__microtask__classifier__classify_prefact_line --> src__algitex__microtask__classifier___extract_function_name
+    src__algitex__microtask__classifier__classify_prefact_line --> src__algitex__microtask__classifier___extract_suggestion
+    src__algitex__microtask__classifier__classify_todo_file --> src__algitex__tools__ollama_cache__LLMCache__set
+    src__algitex__microtask__classifier__classify_todo_file --> src__algitex__microtask__classifier__classify_prefact_line
+    src__algitex__microtask__classifier___classify_message --> src__algitex__microtask__classifier___first_int
+    src__algitex__microtask__executor__MicroTaskExecutor___phase_algorithmic --> src__algitex__microtask__group_tasks_by_file
+    src__algitex__microtask__executor__MicroTaskExecutor___handle_sort_imports --> src__algitex__nlp__sort_imports_in_path
+    src__algitex__microtask__executor__MicroTaskExecutor___phase_llm --> src__algitex__microtask__group_tasks_by_file
+    docker__vallm__vallm_mcp_server__validate_all --> docker__vallm__vallm_mcp_server__validate_static
+    docker__vallm__vallm_mcp_server__validate_all --> docker__vallm__vallm_mcp_server__validate_runtime
+    docker__vallm__vallm_mcp_server__validate_all --> docker__vallm__vallm_mcp_server__validate_security
+    docker__vallm__vallm_mcp_server__calculate_quality_score --> docker__vallm__vallm_mcp_server__validate_all
+    docker__vallm__vallm_mcp_server__calculate_quality_score --> docker__vallm__vallm_mcp_server__analyze_complexity
+    docker__vallm__vallm_mcp_server__create_rest_api --> docker__vallm__vallm_mcp_server__validate_all
+    docker__vallm__vallm_mcp_server__create_rest_api --> docker__vallm__vallm_mcp_server__validate_static
+    docker__vallm__vallm_mcp_server__create_rest_api --> docker__vallm__vallm_mcp_server__validate_runtime
+    docker__vallm__vallm_mcp_server__create_rest_api --> docker__vallm__vallm_mcp_server__validate_security
+    docker__vallm__vallm_mcp_server__run_rest_server --> docker__vallm__vallm_mcp_server__create_rest_api
+    docker__proxym__proxym_mcp_server__chat_completion --> docker__proxym__proxym_mcp_server__count_tokens
+    docker__proxym__proxym_mcp_server__chat_completion --> docker__proxym__proxym_mcp_server___call_anthropic
+    docker__proxym__proxym_mcp_server__chat_completion --> docker__proxym__proxym_mcp_server___call_openai
+    docker__proxym__proxym_mcp_server__chat_completion --> docker__proxym__proxym_mcp_server___call_gemini
+    docker__proxym__proxym_mcp_server__chat_completion --> docker__proxym__proxym_mcp_server__list_models
+    docker__proxym__proxym_mcp_server___call_anthropic --> docker__proxym__proxym_mcp_server__count_tokens
+    docker__proxym__proxym_mcp_server___call_openai --> docker__proxym__proxym_mcp_server__count_tokens
+    docker__proxym__proxym_mcp_server___call_gemini --> docker__proxym__proxym_mcp_server__count_tokens
+    docker__proxym__proxym_mcp_server__simple_prompt --> docker__proxym__proxym_mcp_server__chat_completion
+    docker__proxym__proxym_mcp_server__create_rest_api --> docker__proxym__proxym_mcp_server__list_models
+    docker__proxym__proxym_mcp_server__create_rest_api --> docker__proxym__proxym_mcp_server__chat_completion
+    docker__proxym__proxym_mcp_server__create_rest_api --> docker__proxym__proxym_mcp_server__simple_prompt
+    docker__proxym__proxym_mcp_server__run_rest_server --> docker__proxym__proxym_mcp_server__create_rest_api
+    docker__planfile_mcp__planfile_mcp_server___save_tickets --> src__algitex__tools__tickets__Tickets__list
+    docker__planfile_mcp__planfile_mcp_server__planfile_create_ticket --> docker__planfile_mcp__planfile_mcp_server___load_tickets
+    docker__planfile_mcp__planfile_mcp_server__planfile_create_ticket --> docker__planfile_mcp__planfile_mcp_server___save_tickets
+    docker__planfile_mcp__planfile_mcp_server__planfile_list_tickets --> docker__planfile_mcp__planfile_mcp_server___load_tickets
+    docker__planfile_mcp__planfile_mcp_server__planfile_list_tickets --> src__algitex__tools__tickets__Tickets__list
+    docker__planfile_mcp__planfile_mcp_server__planfile_update_ticket --> docker__planfile_mcp__planfile_mcp_server___load_tickets
+    docker__planfile_mcp__planfile_mcp_server__planfile_update_ticket --> docker__planfile_mcp__planfile_mcp_server___save_tickets
+    docker__planfile_mcp__planfile_mcp_server__planfile_create_tickets_bulk --> docker__planfile_mcp__planfile_mcp_server__planfile_create_ticket
+    docker__planfile_mcp__planfile_mcp_server__planfile_sprint_status --> docker__planfile_mcp__planfile_mcp_server___load_tickets
+    docker__planfile_mcp__planfile_mcp_server__planfile_sprint_status --> src__algitex__tools__tickets__Tickets__list
+    docker__planfile_mcp__planfile_mcp_server__planfile_sync --> docker__planfile_mcp__planfile_mcp_server___save_tickets
+    docker__planfile_mcp__planfile_mcp_server__create_rest_api --> docker__planfile_mcp__planfile_mcp_server__planfile_list_tickets
+    docker__planfile_mcp__planfile_mcp_server__create_rest_api --> docker__planfile_mcp__planfile_mcp_server__planfile_create_ticket
+    docker__planfile_mcp__planfile_mcp_server__create_rest_api --> docker__planfile_mcp__planfile_mcp_server__planfile_update_ticket
+    docker__planfile_mcp__planfile_mcp_server__create_rest_api --> docker__planfile_mcp__planfile_mcp_server__planfile_sprint_status
+    docker__planfile_mcp__planfile_mcp_server__run_rest_server --> docker__planfile_mcp__planfile_mcp_server__create_rest_api
+    docker__code2llm__code2llm_server__Code2LLMServer___analyze_project --> src__algitex__tools__ollama_cache__LLMCache__set
+    docker__code2llm__code2llm_mcp_server___collect_project_metrics --> docker__code2llm__code2llm_mcp_server___analyze_python_file
+    docker__code2llm__code2llm_mcp_server__analyze_project --> docker__code2llm__code2llm_mcp_server___collect_project_metrics
+    docker__code2llm__code2llm_mcp_server__analyze_project --> docker__code2llm__code2llm_mcp_server___calculate_complexity_metrics
+    docker__code2llm__code2llm_mcp_server__analyze_project --> src__algitex__tools__ollama_cache__LLMCache__set
+    docker__code2llm__code2llm_mcp_server__generate_toon --> docker__code2llm__code2llm_mcp_server__analyze_project
+    docker__code2llm__code2llm_mcp_server__generate_readme --> docker__code2llm__code2llm_mcp_server__analyze_project
+    docker__code2llm__code2llm_mcp_server__evolution_export --> docker__code2llm__code2llm_mcp_server__analyze_project
+    docker__code2llm__code2llm_mcp_server__create_rest_api --> docker__code2llm__code2llm_mcp_server__analyze_project
+    docker__code2llm__code2llm_mcp_server__create_rest_api --> docker__code2llm__code2llm_mcp_server__evolution_export
+    docker__code2llm__code2llm_mcp_server__create_rest_api --> docker__code2llm__code2llm_mcp_server__generate_readme
+    docker__code2llm__code2llm_mcp_server__create_rest_api --> docker__code2llm__code2llm_mcp_server__generate_toon
+    docker__code2llm__code2llm_mcp_server__run_rest_server --> docker__code2llm__code2llm_mcp_server__create_rest_api
+    docker__aider_mcp__aider_mcp_server__create_rest_api --> docker__aider_mcp__aider_mcp_server__aider_ai_code
+    docker__aider_mcp__aider_mcp_server__create_rest_api --> docker__aider_mcp__aider_mcp_server__aider_list_models
+    docker__aider_mcp__aider_mcp_server__create_rest_api --> docker__aider_mcp__aider_mcp_server__aider_chat
+    docker__aider_mcp__aider_mcp_server__run_rest_server --> docker__aider_mcp__aider_mcp_server__create_rest_api
+    scripts__fix_readme__fix_readme --> Taskfile__print
+    scripts__generate_lib_docs__parse_file --> scripts__generate_lib_docs__extract_docstring
+    scripts__generate_lib_docs__parse_file --> scripts__generate_lib_docs__get_function_signature
+    scripts__generate_lib_docs__scan_package --> scripts__generate_lib_docs__generate_index
+    scripts__generate_lib_docs__scan_package --> src__algitex__tools__tickets__Tickets__list
+    scripts__generate_lib_docs__scan_package --> Taskfile__print
+    scripts__generate_lib_docs__scan_package --> scripts__generate_lib_docs__parse_file
+    scripts__generate_lib_docs__scan_package --> scripts__generate_lib_docs__generate_module_doc
+    scripts__generate_lib_docs__generate_index --> Taskfile__print
+    scripts__generate_lib_docs__main --> Taskfile__print
+    scripts__generate_lib_docs__main --> scripts__generate_lib_docs__scan_package
+
+    classDef highCC fill:#ff6b6b,stroke:#c92a2a,color:#fff
+    classDef medCC fill:#ffd43b,stroke:#f08c00,color:#000
+    class src__algitex__tools__autofix__batch_backend__BatchFixBackend___parse_batch_response,src__algitex__cli__todo_verify___validate_tasks,src__algitex__cli__todo___run_with_dashboard,src__algitex__cli__todo___tf_execute_phased,src__algitex__cli__todo__todo_hybrid,src__algitex__cli__todo__todo_verify_prefact,src__algitex__todo__fixer__fix_file,src__algitex__microtask__classifier___classify_message,src__algitex__microtask__executor__MicroTaskExecutor___apply_magic_name,scripts__generate_lib_docs__parse_file highCC
+    class examples__32_workspace_coordination__main___check_quality_gates,examples__30_parallel_execution__parallel_real_world__main,examples__30_parallel_execution__parallel_refactoring__main,examples__30_parallel_execution__main__main,examples__13_vallm__sample_code__complex_module__process_data,examples__02_algo_loop__main__main,examples__05_cost_tracking__main__main,examples__33_hybrid_autofix__main___run_demos,examples__08_feedback__main__escalation_scenarios,examples__25_local_model_comparison__main__main,examples__28_mcp_orchestration__mcp_orchestrator__main,examples__09_workspace__main__cross_repo_analysis_example,examples__09_workspace__main__workspace_execution_example,examples__09_workspace__main___analyze_workspace_structure,examples__31_abpr_workflow__abpr_pipeline__abpr_pipeline,examples__31_abpr_workflow__main__main,src__algitex__config___merge_yaml,src__algitex__dashboard__LiveDashboard__update_tier_progress,src__algitex__metrics__MetricsCollector__get_summary,src__algitex__shared_rules__SortedImportsRule__check,src__algitex__prefact_integration__check_file_with_prefact,src__algitex__nlp__DocstringShortener__fix_file,src__algitex__nlp__find_duplicate_blocks,src__algitex__algo__Loop__route,src__algitex__tools__ollama_cache__CachedOllamaClient__generate,src__algitex__tools__mcp__MCPOrchestrator__start_service,src__algitex__tools__mcp__MCPOrchestrator__start_all,src__algitex__tools__mcp__MCPOrchestrator__wait_for_ready,src__algitex__tools__proxy__Proxy__ask,src__algitex__tools__mcp_orchestrator__MCPOrchestrator__start_all medCC

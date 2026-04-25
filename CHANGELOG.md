@@ -8,6 +8,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
+- **New Examples 41-44: Refactoring & Code Quality**
+  - `examples/41-god-module-splitting/` - Demonstrates splitting 1159L god modules
+  - `examples/42-duplicate-removal/` - Duplicate detection with redup integration
+  - `examples/43-code-health/` - Continuous health monitoring and CI gates
+  - `examples/44-plugin-system/` - Creating custom tool and backend plugins
+  - Updated `examples/README.md` with 44 total examples
+  - Added README to `examples/35-sprint3-patterns/`
+
 - **Sprint 3: Cyclomatic Complexity Reduction**
   - New module `algitex.todo.classify` - dict dispatch pattern for task classification (CC: 50→4)
   - New module `algitex.todo.repair` - Strategy pattern for repair functions (CC: 30→6)
@@ -134,6 +142,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update project/calls.png
 - Update project/compact_flow.mmd
 - ... and 10 more files
+
+## [0.1.61] - 2026-04-25
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update SUMD.md
+- Update SUMR.md
+- Update TODO.md
+- Update examples/35-sprint3-patterns/README.md
+- Update examples/41-god-module-splitting/README.md
+- Update examples/42-duplicate-removal/README.md
+- Update examples/43-code-health/README.md
+- Update examples/44-plugin-system/README.md
+- ... and 3 more files
+
+### Test
+- Update testql-scenarios/generated-api-smoke.testql.toon.yaml
+- Update testql-scenarios/generated-cli-tests.testql.toon.yaml
+- Update testql-scenarios/generated-from-pytests.testql.toon.yaml
+- Update tests/test_cli.py
+- Update tests/test_cli_metrics.py
+
+### Other
+- Update app.doql.less
+- Update examples/41-god-module-splitting/Makefile
+- Update examples/41-god-module-splitting/main.py
+- Update examples/42-duplicate-removal/Makefile
+- Update examples/42-duplicate-removal/main.py
+- Update examples/43-code-health/Makefile
+- Update examples/43-code-health/main.py
+- Update examples/44-plugin-system/Makefile
+- Update examples/44-plugin-system/main.py
+- Update project.sh
+- ... and 16 more files
 
 ## [0.1.60] - 2026-04-25
 

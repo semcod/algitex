@@ -25,7 +25,7 @@ From LLM to deterministic code. From proxy to tickets. One loop.
     wf.status()           # step-by-step progress
 """
 
-__version__ = "0.1.60"
+__version__ = "0.1.61"
 
 from algitex.project import Project
 from algitex.config import Config

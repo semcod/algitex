@@ -17,7 +17,9 @@ class TodoTask:
     file: str
     line: int
     message: str
+    status: str = "pending"
     original_line: str = ""
+    category: str = ""
 
 
 @dataclass

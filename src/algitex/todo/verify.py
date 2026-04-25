@@ -14,6 +14,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
+from algitex.todo.verifier import TodoTask
+
 
 @dataclass
 class VerifyResult:
@@ -25,16 +27,6 @@ class VerifyResult:
     details: list[dict[str, Any]] = field(default_factory=list)
     valid_tasks: list[dict[str, Any]] = field(default_factory=list)
     outdated_tasks: list[dict[str, Any]] = field(default_factory=list)
-
-
-@dataclass
-class TodoTask:
-    """Single TODO task entry."""
-    status: str
-    file: str
-    line: int
-    message: str
-    original_line: str
 
 
 def verify_todos(

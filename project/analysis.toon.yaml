@@ -1,9 +1,10 @@
-# code2llm | 102f 24157L | python:101,shell:1 | 2026-03-29
-# CC̄=3.6 | critical:9/1236 | dups:0 | cycles:0
+# code2llm | 311f 65722L | python:189,shell:27,yaml:20,yml:4,txt:2,toml:1 | 2026-04-25
+# CC̄=2.6 | critical:10/1727 | dups:3 | cycles:0
 
-HEALTH[10]:
-  🔴 GOD   src/algitex/todo/micro.py = 605L, 5 classes, 19m, max CC=12
-  🟡 CC    parse_file CC=24 (limit:15)
+HEALTH[11]:
+  🔴 DUP   3 classes duplicated
+  🟡 CC    _parse_batch_response CC=16 (limit:15)
+  🟡 CC    _validate_tasks CC=15 (limit:15)
   🟡 CC    _run_with_dashboard CC=15 (limit:15)
   🟡 CC    _tf_execute_phased CC=25 (limit:15)
   🟡 CC    todo_hybrid CC=15 (limit:15)
@@ -11,55 +12,55 @@ HEALTH[10]:
   🟡 CC    fix_file CC=25 (limit:15)
   🟡 CC    _classify_message CC=48 (limit:15)
   🟡 CC    _apply_magic_name CC=16 (limit:15)
-  🟡 CC    _parse_batch_response CC=16 (limit:15)
+  🟡 CC    parse_file CC=24 (limit:15)
 
 REFACTOR[2]:
-  1. split src/algitex/todo/micro.py  (god module)
-  2. split 9 high-CC methods  (CC>15)
+  1. rm duplicates  (-3 dup classes)
+  2. split 10 high-CC methods  (CC>15)
 
-PIPELINES[908]:
-  [1] Src [fix_readme]: fix_readme
+PIPELINES[952]:
+  [1] Src [main]: main → print
       PURITY: 100% pure
-  [2] Src [__init__]: __init__
+  [2] Src [format_price]: format_price
       PURITY: 100% pure
-  [3] Src [create_fastapi_app]: create_fastapi_app
+  [3] Src [process]: process
       PURITY: 100% pure
-  [4] Src [_run_validate]: _run_validate
+  [4] Src [load]: load
       PURITY: 100% pure
-  [5] Src [_validate_static]: _validate_static
+  [5] Src [add]: add
       PURITY: 100% pure
 
 LAYERS:
-  scripts/                        CC̄=8.2    ←in:0  →out:1
-  │ !! generate_lib_docs          278L  0C    7m  CC=24     ←0
+  scripts/                        CC̄=8.2    ←in:0  →out:10  !! split
+  │ !! generate_lib_docs          276L  0C    7m  CC=24     ←0
   │ fix_readme                  33L  0C    1m  CC=1      ←0
   │
-  src/                            CC̄=3.5    ←in:0  →out:0
+  src/                            CC̄=3.5    ←in:0  →out:0  ×DUP
   │ !! todo                      1159L  0C   21m  CC=29     ←0
-  │ !! batch_backend              778L  2C   16m  CC=16     ←0
-  │ !! micro                      605L  5C   19m  CC=12     ←0
-  │ !! fixer                      534L  2C   17m  CC=25     ←6
-  │ !! executor                   498L  2C   29m  CC=16     ←0
-  │ hybrid                     481L  4C   10m  CC=12     ←0
+  │ !! batch_backend              826L  2C   16m  CC=16     ←0
+  │ !! fixer                      550L  1C   17m  CC=25     ←7
+  │ !! executor                   497L  2C   29m  CC=16     ←0
+  │ hybrid                     479L  4C   10m  CC=12     ←0
   │ benchmark                  464L  4C   19m  CC=14     ←0
-  │ mcp                        448L  2C   18m  CC=11     ←0
+  │ mcp                        448L  2C   18m  CC=11     ←0  ×DUP
   │ __init__                   439L  1C   22m  CC=6      ←0
-  │ ide                        430L  6C   22m  CC=8      ←0
+  │ ide                        430L  6C   22m  CC=8      ←0  ×DUP
   │ batch                      421L  4C   20m  CC=7      ←0
   │ __init__                   419L  3C   18m  CC=10     ←0
-  │ dashboard                  416L  4C   24m  CC=8      ←1
+  │ dashboard                  414L  4C   24m  CC=8      ←1
   │ services                   413L  3C   20m  CC=9      ←0
+  │ micro                      406L  1C    9m  CC=12     ←0
   │ cicd                       403L  1C   11m  CC=5      ←1
   │ ollama                     400L  4C   16m  CC=10     ←0
-  │ benchmark                  394L  6C   17m  CC=5      ←1
-  │ config                     388L  1C   16m  CC=7      ←0
+  │ benchmark                  393L  6C   17m  CC=5      ←1
+  │ config                     387L  1C   16m  CC=7      ←0
   │ __init__                   367L  5C   12m  CC=9      ←0
-  │ todo_runner                363L  2C   12m  CC=13     ←0
+  │ todo_runner                353L  1C   12m  CC=13     ←0
   │ workspace                  344L  2C   20m  CC=5      ←1
   │ metrics                    337L  4C   15m  CC=9      ←0
   │ __init__                   331L  5C   19m  CC=14     ←2
   │ __init__                   320L  3C   19m  CC=4      ←0
-  │ __init__                   306L  1C   14m  CC=12     ←0
+  │ __init__                   305L  1C   14m  CC=12     ←0
   │ docker                     298L  3C   20m  CC=8      ←0
   │ docker_transport           294L  1C   17m  CC=8      ←1
   │ audit                      286L  3C   13m  CC=10     ←0
@@ -69,22 +70,22 @@ LAYERS:
   │ repair                     269L  0C    7m  CC=12     ←1
   │ executor                   260L  1C   11m  CC=6      ←0
   │ feedback                   252L  4C   12m  CC=8      ←0
-  │ tickets                    247L  2C   11m  CC=5      ←15
+  │ tickets                    247L  2C   11m  CC=5      ←19
+  │ !! classifier                 245L  0C    8m  CC=48     ←1
   │ benchmark                  244L  1C    6m  CC=6      ←2
   │ todo_executor              240L  2C   12m  CC=13     ←0
-  │ ollama_cache               238L  3C   14m  CC=12     ←19
-  │ verify                     236L  2C    7m  CC=10     ←1
+  │ ollama_cache               238L  3C   14m  CC=12     ←21
   │ batch_logger               235L  3C   17m  CC=10     ←0
   │ __init__                   232L  0C   11m  CC=2      ←0
+  │ verify                     228L  1C    7m  CC=10     ←1
   │ todo_parser                223L  2C    8m  CC=11     ←1
   │ context                    207L  3C   14m  CC=7      ←0
   │ todo_actions               200L  0C    7m  CC=13     ←1
   │ microtask                  198L  0C   10m  CC=7      ←0
-  │ __init__                   196L  3C    2m  CC=3      ←2
+  │ verifier                   197L  3C    8m  CC=12     ←0
   │ fallback_backend           196L  2C    7m  CC=10     ←0
+  │ __init__                   196L  3C    2m  CC=3      ←2
   │ core                       195L  0C   11m  CC=5      ←0
-  │ verifier                   195L  3C    8m  CC=12     ←0
-  │ !! classifier                 185L  0C    8m  CC=48     ←1
   │ analysis                   183L  3C    8m  CC=7      ←0
   │ metrics                    172L  0C    4m  CC=10     ←0
   │ config                     170L  4C    7m  CC=10     ←9
@@ -94,61 +95,396 @@ LAYERS:
   │ aider_backend              164L  1C   11m  CC=3      ←0
   │ proxy_backend              163L  1C   12m  CC=3      ←0
   │ logging                    157L  1C   11m  CC=3      ←2
+  │ extractor                  156L  1C    7m  CC=12     ←0
   │ classify                   156L  1C    3m  CC=9      ←6
   │ tiering                    156L  1C    8m  CC=6      ←0
-  │ extractor                  156L  1C    7m  CC=12     ←0
   │ telemetry                  152L  2C    9m  CC=4      ←0
   │ parallel                   152L  0C    6m  CC=11     ←0
   │ proxy                      145L  2C    9m  CC=9      ←0
   │ __init__                   134L  0C    1m  CC=1      ←2
-  │ prompts                    126L  2C    6m  CC=7      ←0
   │ ollama_backend             126L  1C    7m  CC=6      ←0
+  │ prompts                    126L  2C    6m  CC=7      ←0
+  │ http_checks                125L  1C    5m  CC=5      ←1
   │ slicer                     121L  1C    7m  CC=13     ←0
   │ partitioner                118L  1C    7m  CC=10     ←0
   │ __init__                   115L  1C    4m  CC=4      ←3
+  │ mcp_lifecycle              114L  1C    6m  CC=11     ←0
   │ docker                     104L  0C    5m  CC=3      ←0
+  │ ide_base                   103L  1C    6m  CC=5      ←0  ×DUP
+  │ backend                    103L  1C    5m  CC=10     ←0
+  │ ide_claude                 102L  1C    5m  CC=5      ←0  ×DUP
+  │ mcp_orchestrator           100L  1C   11m  CC=11     ←0  ×DUP
   │ nlp                         97L  0C    7m  CC=4      ←0
+  │ micro_utils                 90L  0C    7m  CC=11     ←2
+  │ !! todo_verify                 76L  0C    2m  CC=15     ←0
+  │ micro_prompts               69L  1C    2m  CC=9      ←0
   │ algo                        68L  0C    4m  CC=3      ←0
+  │ micro_extractor             65L  1C    1m  CC=11     ←0
+  │ ide_aider                   63L  1C    2m  CC=5      ←0
+  │ local_checks                63L  1C    3m  CC=4      ←1
   │ batch                       60L  1C    3m  CC=8      ←0
   │ benchmark                   58L  1C    4m  CC=2      ←0
+  │ fs_utils                    57L  0C    2m  CC=10     ←1
   │ models                      57L  4C    1m  CC=1      ←0
+  │ mcp_defaults                52L  0C    1m  CC=1      ←1
   │ autofix                     52L  1C    5m  CC=8      ←1
-  │ base                        52L  3C    2m  CC=1      ←0
   │ ticket                      50L  0C    3m  CC=4      ←0
   │ ide                         47L  1C    6m  CC=1      ←1
+  │ logic                       46L  0C    2m  CC=13     ←0
   │ mcp                         46L  1C    8m  CC=2      ←1
+  │ checker                     44L  1C    2m  CC=7      ←0
+  │ base                        44L  2C    2m  CC=1      ←0
   │ workflow                    42L  0C    2m  CC=3      ←0
   │ ollama                      39L  1C    5m  CC=2      ←0
+  │ micro_models                39L  2C    0m  CC=0.0    ←0
   │ __init__                    38L  0C    0m  CC=0.0    ←0
   │ config                      36L  1C    5m  CC=2      ←1
   │ __init__                    36L  0C    0m  CC=0.0    ←0
+  │ models                      32L  1C    1m  CC=1      ←0
+  │ todo_utils                  31L  0C    1m  CC=9      ←1
+  │ render                      30L  0C    1m  CC=3      ←0
   │ services                    28L  1C    4m  CC=2      ←1
+  │ mcp_models                  26L  1C    1m  CC=3      ←0
+  │ ide_models                  20L  1C    1m  CC=2      ←0
+  │ models                      13L  1C    0m  CC=0.0    ←0
+  │ file_ops                    11L  0C    2m  CC=2      ←0
   │ pipeline                     5L  0C    0m  CC=0.0    ←0
   │ loop                         4L  0C    0m  CC=0.0    ←0
+  │ __init__                     4L  0C    0m  CC=0.0    ←0
+  │ __init__                     4L  0C    0m  CC=0.0    ←0
   │ workflow                     2L  0C    0m  CC=0.0    ←0
   │
   docker/                         CC̄=3.4    ←in:0  →out:0
   │ proxym_mcp_server          387L  0C   10m  CC=9      ←0
-  │ vallm_mcp_server           359L  0C    8m  CC=9      ←0
+  │ vallm_mcp_server           361L  0C    8m  CC=9      ←0
   │ code2llm_mcp_server        323L  0C    9m  CC=10     ←0
   │ code2llm_server            283L  1C    9m  CC=10     ←0
   │ planfile_mcp_server        276L  0C   10m  CC=7      ←0
   │ vallm_server               274L  1C    9m  CC=9      ←0
   │ proxym_server              256L  1C    7m  CC=6      ←0
+  │ docker-compose.yml         182L  0C    0m  CC=0.0    ←0
   │ aider_mcp_server           156L  0C    5m  CC=2      ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
+  │
+  examples/                       CC̄=2.8    ←in:0  →out:0
+  │ main                       438L  0C    6m  CC=8      ←0
+  │ main                       411L  0C    8m  CC=3      ←0
+  │ main                       404L  0C   11m  CC=9      ←0
+  │ main                       397L  0C    5m  CC=5      ←0
+  │ main                       241L  0C    8m  CC=7      ←0
+  │ main                       240L  0C    5m  CC=6      ←0
+  │ main                       224L  0C   10m  CC=10     ←0
+  │ main                       206L  0C    4m  CC=3      ←0
+  │ parallel_real_world        201L  0C    2m  CC=13     ←0
+  │ main                       195L  0C    9m  CC=8      ←0
+  │ main                       192L  0C    3m  CC=5      ←0
+  │ main                       164L  0C    3m  CC=5      ←0
+  │ planfile.yaml              162L  0C    0m  CC=0.0    ←0
+  │ main                       159L  0C    8m  CC=7      ←0
+  │ main                       158L  0C    3m  CC=7      ←0
+  │ main                       146L  0C    1m  CC=12     ←0
+  │ main                       141L  0C    1m  CC=13     ←0
+  │ main                       140L  0C    5m  CC=2      ←0
+  │ main                       140L  0C    2m  CC=3      ←0
+  │ main                       138L  0C    5m  CC=2      ←0
+  │ parallel_refactoring       134L  0C    1m  CC=10     ←0
+  │ main                       133L  0C    6m  CC=2      ←0
+  │ buggy_code                 129L  1C   12m  CC=3      ←0
+  │ main                       125L  0C    5m  CC=7      ←0
+  │ main                       114L  0C    2m  CC=3      ←0
+  │ main                       112L  0C    5m  CC=2      ←0
+  │ main                       108L  0C    6m  CC=1      ←0
+  │ buggy_code                 108L  1C   10m  CC=7      ←0
+  │ main                       104L  0C    2m  CC=3      ←0
+  │ main                       103L  0C    5m  CC=1      ←0
+  │ main                       100L  0C    1m  CC=11     ←0
+  │ main                       100L  0C    1m  CC=8      ←0
+  │ workspace.yaml              93L  0C    0m  CC=0.0    ←0
+  │ main                        88L  0C    1m  CC=2      ←0
+  │ abpr_pipeline               88L  0C    1m  CC=10     ←0
+  │ buggy_code                  82L  1C    8m  CC=3      ←0
+  │ prefact.yaml                82L  0C    0m  CC=0.0    ←0
+  │ workspace_parallel          78L  0C    1m  CC=5      ←0
+  │ buggy_code                  76L  0C    7m  CC=6      ←0
+  │ main                        76L  0C    2m  CC=5      ←0
+  │ main                        69L  0C    1m  CC=4      ←0
+  │ parallel_multi_tool         67L  0C    1m  CC=2      ←0
+  │ main                        66L  0C    1m  CC=9      ←0
+  │ mcp_orchestrator            63L  0C    1m  CC=9      ←0
+  │ main                        62L  0C    1m  CC=6      ←0
+  │ run.sh                      61L  0C    0m  CC=0.0    ←0
+  │ buggy_code                  56L  1C    6m  CC=6      ←0
+  │ main                        53L  0C    1m  CC=2      ←0
+  │ buggy_code                  53L  1C    6m  CC=6      ←0
+  │ main                        53L  0C    1m  CC=3      ←0
+  │ buggy_code                  51L  1C    6m  CC=6      ←0
+  │ main                        50L  0C    1m  CC=3      ←0
+  │ main                        47L  0C    1m  CC=2      ←0
+  │ main                        46L  0C    1m  CC=4      ←0
+  │ main                        43L  0C    1m  CC=2      ←0
+  │ main                        38L  0C    1m  CC=1      ←0
+  │ run.sh                      36L  0C    0m  CC=0.0    ←0
+  │ file1                       31L  0C    3m  CC=6      ←0
+  │ complex_module              28L  0C    2m  CC=8      ←0
+  │ run.sh                      28L  0C    0m  CC=0.0    ←0
+  │ run.sh                      28L  0C    0m  CC=0.0    ←0
+  │ file3                       26L  1C    3m  CC=5      ←0
+  │ run.sh                      25L  0C    0m  CC=0.0    ←0
+  │ file2                       24L  0C    3m  CC=2      ←0
+  │ file2                       22L  0C    3m  CC=1      ←0
+  │ file1                       19L  0C    3m  CC=1      ←0
+  │ calculator                  18L  0C    4m  CC=2      ←0
+  │ calculator                  14L  0C    1m  CC=6      ←0
+  │ app                         14L  1C    1m  CC=1      ←0
+  │ file3                       12L  0C    1m  CC=1      ←0
+  │ main                         9L  0C    1m  CC=1      ←0
+  │ run.sh                       9L  0C    0m  CC=0.0    ←0
+  │ run.sh                       9L  0C    0m  CC=0.0    ←0
+  │ run.sh                       9L  0C    0m  CC=0.0    ←0
+  │ run.sh                       9L  0C    0m  CC=0.0    ←0
+  │ main                         6L  0C    1m  CC=1      ←0
+  │ run.sh                       6L  0C    0m  CC=0.0    ←0
+  │ run.sh                       6L  0C    0m  CC=0.0    ←0
+  │ run.sh                       6L  0C    0m  CC=0.0    ←0
+  │ run.sh                       6L  0C    0m  CC=0.0    ←0
+  │ run.sh                       6L  0C    0m  CC=0.0    ←0
+  │ run.sh                       6L  0C    0m  CC=0.0    ←0
+  │ run.sh                       6L  0C    0m  CC=0.0    ←0
+  │ run.sh                       5L  0C    0m  CC=0.0    ←0
+  │ run.sh                       5L  0C    0m  CC=0.0    ←0
+  │ run.sh                       5L  0C    0m  CC=0.0    ←0
+  │ run.sh                       5L  0C    0m  CC=0.0    ←0
+  │ run.sh                       5L  0C    0m  CC=0.0    ←0
+  │ run.sh                       5L  0C    0m  CC=0.0    ←0
+  │ run.sh                       5L  0C    0m  CC=0.0    ←0
+  │ run.sh                       5L  0C    0m  CC=0.0    ←0
+  │ run.sh                       5L  0C    0m  CC=0.0    ←0
+  │ run.sh                       3L  0C    0m  CC=0.0    ←0
+  │ requirements.txt             2L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
   │
   ./                              CC̄=0.0    ←in:0  →out:0
-  │ project.sh                  24L  0C    0m  CC=0.0    ←0
+  │ !! planfile.yaml            20325L  0C    0m  CC=0.0    ←0
+  │ !! goal.yaml                  513L  0C    0m  CC=0.0    ←0
+  │ docker-tools.yaml          489L  0C    0m  CC=0.0    ←0
+  │ Taskfile.yml               274L  0C    1m  CC=0.0    ←82
+  │ docker-compose.yml         192L  0C    0m  CC=0.0    ←0
+  │ docker-compose.mcp.yml     156L  0C    0m  CC=0.0    ←0
+  │ prefact.yaml                82L  0C    0m  CC=0.0    ←0
+  │ pyproject.toml              77L  0C    0m  CC=0.0    ←0
+  │ project.sh                  47L  0C    0m  CC=0.0    ←0
+  │ pyqual.yaml                 18L  0C    0m  CC=0.0    ←0
+  │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
   │
+  project/                        CC̄=0.0    ←in:0  →out:0
+  │ !! calls.yaml                6564L  0C    0m  CC=0.0    ←0
+  │ !! map.toon.yaml             1389L  0C  424m  CC=0.0    ←0
+  │ !! calls.toon.yaml            653L  0C    0m  CC=0.0    ←0
+  │ analysis.toon.yaml         492L  0C    0m  CC=0.0    ←0
+  │ duplication.toon.yaml      387L  0C    0m  CC=0.0    ←0
+  │ validation.toon.yaml       126L  0C    0m  CC=0.0    ←0
+  │ analysis_refactored.toon.yaml   121L  0C    0m  CC=0.0    ←0
+  │ evolution.toon.yaml         82L  0C    0m  CC=0.0    ←0
+  │ project.toon.yaml           56L  0C    0m  CC=0.0    ←0
+  │ prompt.txt                  47L  0C    0m  CC=0.0    ←0
+  │
+  testql-scenarios/               CC̄=0.0    ←in:0  →out:0
+  │ generated-api-smoke.testql.toon.yaml    32L  0C    0m  CC=0.0    ←0
+  │ generated-from-pytests.testql.toon.yaml    22L  0C    0m  CC=0.0    ←0
+  │ generated-cli-tests.testql.toon.yaml    12L  0C    0m  CC=0.0    ←0
+  │
+  ── zero ──
+     Dockerfile                                0L
+     Makefile                                  0L
+     docker/aider-mcp/Dockerfile               0L
+     docker/code2llm/Dockerfile                0L
+     docker/mcp/audio/Dockerfile               0L
+     docker/mcp/brave-search/Dockerfile        0L
+     docker/mcp/browser/Dockerfile             0L
+     docker/mcp/docker-ai/Dockerfile           0L
+     docker/mcp/duckduckgo/Dockerfile          0L
+     docker/mcp/fetch/Dockerfile               0L
+     docker/mcp/filesystem/Dockerfile          0L
+     docker/mcp/git/Dockerfile                 0L
+     docker/mcp/github/Dockerfile              0L
+     docker/mcp/image/Dockerfile               0L
+     docker/mcp/jira/Dockerfile                0L
+     docker/mcp/kubernetes/Dockerfile          0L
+     docker/mcp/mail/Dockerfile                0L
+     docker/mcp/mysql/Dockerfile               0L
+     docker/mcp/pdf/Dockerfile                 0L
+     docker/mcp/playwright/Dockerfile          0L
+     docker/mcp/postgres/Dockerfile            0L
+     docker/mcp/redis/Dockerfile               0L
+     docker/mcp/security-lint/Dockerfile       0L
+     docker/mcp/slack/Dockerfile               0L
+     docker/mcp/sqlite/Dockerfile              0L
+     docker/mcp/time/Dockerfile                0L
+     docker/mcp/video/Dockerfile               0L
+     docker/mcp/wikipedia/Dockerfile           0L
+     docker/planfile-mcp/Dockerfile            0L
+     docker/proxym/Dockerfile                  0L
+     docker/vallm/Dockerfile                   0L
+     examples/01-quickstart/Makefile           0L
+     examples/02-algo-loop/Makefile            0L
+     examples/03-pipeline/Makefile             0L
+     examples/04-ide-integration/Makefile      0L
+     examples/05-cost-tracking/Makefile        0L
+     examples/06-telemetry/Makefile            0L
+     examples/07-context/Makefile              0L
+     examples/08-feedback/Makefile             0L
+     examples/09-workspace/Makefile            0L
+     examples/10-cicd/Makefile                 0L
+     examples/11-aider-mcp/Makefile            0L
+     examples/14-docker-mcp/Makefile           0L
+     examples/14-docker-mcp/sample_docker_project/Dockerfile  0L
+     examples/15-github-mcp/Makefile           0L
+     examples/16-test-workflow/Makefile        0L
+     examples/18-ollama-local/Makefile         0L
+     examples/19-local-mcp-tools/Makefile      0L
+     examples/20-self-hosted-pipeline/Makefile  0L
+     examples/21-aider-cli-ollama/Makefile     0L
+     examples/22-claude-code-ollama/Makefile   0L
+     examples/23-continue-dev-ollama/Makefile  0L
+     examples/24-ollama-batch/Makefile         0L
+     examples/25-local-model-comparison/Makefile  0L
+     examples/26-litellm-proxy-ollama/Makefile  0L
+     examples/28-mcp-orchestration/Makefile    0L
+     examples/30-parallel-execution/Makefile   0L
+     examples/31-abpr-workflow/Makefile        0L
+     examples/32-workspace-coordination/Makefile  0L
+     examples/33-hybrid-autofix/Makefile       0L
+     examples/35-sprint3-patterns/Makefile     0L
+     examples/36-dashboard/Makefile            0L
+     examples/37-benchmarks/Makefile           0L
+     examples/38-new-modules/Makefile          0L
+     examples/39-microtask-pipeline/Makefile   0L
+     examples/40-three-tier-autofix/Makefile   0L
 
 COUPLING:
-                               src.algitex  docker.planfile-mcp      docker.code2llm              scripts
-          src.algitex                   ──                   ←3                   ←2                   ←1  hub
-  docker.planfile-mcp                    3                   ──                                          
-      docker.code2llm                    2                                        ──                     
-              scripts                    1                                                             ──
+                                                                Taskfile                         src.algitex           examples.31-abpr-workflow               examples.09-workspace  examples.32-workspace-coordination                    examples.10-cicd            examples.18-ollama-local              examples.37-benchmarks      examples.40-three-tier-autofix      examples.30-parallel-execution                examples.08-feedback                 examples.07-context          examples.33-hybrid-autofix      examples.39-microtask-pipeline    examples.20-self-hosted-pipeline
+                            Taskfile                                  ──                                ←516                                 ←81                                 ←71                                 ←68                                 ←65                                 ←61                                 ←60                                 ←60                                 ←56                                 ←57                                 ←53                                 ←45                                 ←46                                 ←45  hub
+                         src.algitex                                 516                                  ──                                                                      ←2                                                                      ←1                                                                                                                                              ←3                                                                                                          ←3                                                                          hub
+           examples.31-abpr-workflow                                  81                                                                      ──                                                                                                                                                                                                                                                                                                                                                                                                                                                  !! fan-out
+               examples.09-workspace                                  71                                   2                                                                      ──                                                                                                                                                                                                                                                                                                                                                                                                              !! fan-out
+  examples.32-workspace-coordination                                  68                                                                                                                                              ──                                                                                                                                                                                                                                                                                                                                                                          !! fan-out
+                    examples.10-cicd                                  65                                   1                                                                                                                                              ──                                                                                                                                                                                                                                                                                                                                      !! fan-out
+            examples.18-ollama-local                                  61                                                                                                                                                                                                                      ──                                                                                                                                                                                                                                                                                                  !! fan-out
+              examples.37-benchmarks                                  60                                                                                                                                                                                                                                                          ──                                                                                                                                                                                                                                                              !! fan-out
+      examples.40-three-tier-autofix                                  60                                                                                                                                                                                                                                                                                              ──                                                                                                                                                                                                                          !! fan-out
+      examples.30-parallel-execution                                  56                                   3                                                                                                                                                                                                                                                                                              ──                                                                                                                                                                                      !! fan-out
+                examples.08-feedback                                  57                                                                                                                                                                                                                                                                                                                                                                      ──                                                                                                                                                  !! fan-out
+                 examples.07-context                                  53                                                                                                                                                                                                                                                                                                                                                                                                          ──                                                                                                              !! fan-out
+          examples.33-hybrid-autofix                                  45                                   3                                                                                                                                                                                                                                                                                                                                                                                                          ──                                                                          !! fan-out
+      examples.39-microtask-pipeline                                  46                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ──                                      !! fan-out
+    examples.20-self-hosted-pipeline                                  45                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ──  !! fan-out
   CYCLES: none
-  HUB: src.algitex/ (fan-in=6)
+  HUB: Taskfile/ (fan-in=1870)
+  HUB: src.algitex/ (fan-in=20)
+  SMELL: examples.35-sprint3-patterns/ fan-out=36 → split needed
+  SMELL: examples.24-ollama-batch/ fan-out=13 → split needed
+  SMELL: examples.02-algo-loop/ fan-out=22 → split needed
+  SMELL: examples.03-pipeline/ fan-out=10 → split needed
+  SMELL: examples.22-claude-code-ollama/ fan-out=12 → split needed
+  SMELL: examples.05-cost-tracking/ fan-out=14 → split needed
+  SMELL: examples.08-feedback/ fan-out=57 → split needed
+  SMELL: examples.28-mcp-orchestration/ fan-out=26 → split needed
+  SMELL: examples.40-three-tier-autofix/ fan-out=60 → split needed
+  SMELL: examples.20-self-hosted-pipeline/ fan-out=45 → split needed
+  SMELL: examples.07-context/ fan-out=53 → split needed
+  SMELL: examples.09-workspace/ fan-out=73 → split needed
+  SMELL: scripts/ fan-out=10 → split needed
+  SMELL: examples.25-local-model-comparison/ fan-out=16 → split needed
+  SMELL: examples.10-cicd/ fan-out=66 → split needed
+  SMELL: examples.18-ollama-local/ fan-out=61 → split needed
+  SMELL: examples.12-filesystem-mcp/ fan-out=22 → split needed
+  SMELL: examples.33-hybrid-autofix/ fan-out=48 → split needed
+  SMELL: examples.04-ide-integration/ fan-out=17 → split needed
+  SMELL: examples.26-litellm-proxy-ollama/ fan-out=11 → split needed
+  SMELL: examples.11-aider-mcp/ fan-out=17 → split needed
+  SMELL: examples.06-telemetry/ fan-out=31 → split needed
+  SMELL: examples.15-github-mcp/ fan-out=24 → split needed
+  SMELL: examples.21-aider-cli-ollama/ fan-out=17 → split needed
+  SMELL: examples.30-parallel-execution/ fan-out=59 → split needed
+  SMELL: examples.19-local-mcp-tools/ fan-out=22 → split needed
+  SMELL: examples.38-new-modules/ fan-out=37 → split needed
+  SMELL: examples.36-dashboard/ fan-out=45 → split needed
+  SMELL: examples.13-vallm/ fan-out=23 → split needed
+  SMELL: examples.16-test-workflow/ fan-out=28 → split needed
+  SMELL: examples.34-batch-fix/ fan-out=30 → split needed
+  SMELL: examples.01-quickstart/ fan-out=15 → split needed
+  SMELL: examples.14-docker-mcp/ fan-out=27 → split needed
+  SMELL: examples.27-unified-autofix/ fan-out=21 → split needed
+  SMELL: src.algitex/ fan-out=516 → split needed
+  SMELL: examples.39-microtask-pipeline/ fan-out=46 → split needed
+  SMELL: examples.32-workspace-coordination/ fan-out=68 → split needed
+  SMELL: examples.31-abpr-workflow/ fan-out=81 → split needed
+  SMELL: examples.17-docker-workflow/ fan-out=28 → split needed
+  SMELL: examples.37-benchmarks/ fan-out=60 → split needed
+  SMELL: examples.23-continue-dev-ollama/ fan-out=18 → split needed
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon

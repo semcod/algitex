@@ -1,7 +1,7 @@
-# algitex | 1012 func | 96f | 29448L | python | 2026-03-29
+# algitex | 1727 func | 184f | 91544L | python | 2026-04-25
 
 HEALTH:
-  CC̄=3.6  critical=64 (limit:10)  dup=5  cycles=0
+  CC̄=2.6  critical=78 (limit:10)  dup=17  cycles=0
 
 ALERTS[20]:
   !!! cc_exceeded      _classify_message = 48 (limit:15)
@@ -12,26 +12,26 @@ ALERTS[20]:
   !!! high_fan_out     todo_verify_prefact = 22 (limit:10)
   !!! high_fan_out     DocstringShortener.fix_file = 21 (limit:10)
   !!! high_fan_out     BatchFixBackend.fix_batch = 20 (limit:10)
+  !!! high_fan_out     BatchFixBackend.fix_batch = 20 (limit:10)
   !!  cc_exceeded      parse_file = 24 (limit:15)
-  !!  high_fan_out     find_duplicate_blocks = 19 (limit:10)
 
-MODULES[102] (top by size):
+MODULES[311] (top by size):
+  M[planfile.yaml] 20325L C:0 F:0 CC↑0 D:0 (yaml)
+  M[project/calls.yaml] 6564L C:0 F:0 CC↑0 D:0 (yaml)
+  M[project/map.toon.yaml] 1389L C:0 F:424 CC↑0 D:0 (yaml)
   M[src/algitex/cli/todo.py] 1159L C:0 F:21 CC↑29 D:0 (python)
-  M[src/algitex/tools/autofix/batch_backend.py] 778L C:2 F:16 CC↑16 D:0 (python)
-  M[src/algitex/todo/micro.py] 605L C:5 F:19 CC↑12 D:0 (python)
-  M[src/algitex/todo/fixer.py] 534L C:2 F:17 CC↑25 D:6 (python)
-  M[src/algitex/microtask/executor.py] 498L C:2 F:29 CC↑16 D:0 (python)
-  M[src/algitex/todo/hybrid.py] 481L C:4 F:10 CC↑12 D:0 (python)
+  M[src/algitex/tools/autofix/batch_backend.py] 826L C:2 F:16 CC↑16 D:0 (python)
+  M[project/calls.toon.yaml] 653L C:0 F:0 CC↑0 D:0 (yaml)
+  M[src/algitex/todo/fixer.py] 550L C:1 F:17 CC↑25 D:7 (python)
+  M[goal.yaml] 513L C:0 F:0 CC↑0 D:0 (yaml)
+  M[src/algitex/microtask/executor.py] 497L C:2 F:29 CC↑16 D:0 (python)
+  M[project/analysis.toon.yaml] 492L C:0 F:0 CC↑0 D:0 (yaml)
+  M[docker-tools.yaml] 489L C:0 F:0 CC↑0 D:0 (yaml)
+  M[src/algitex/todo/hybrid.py] 479L C:4 F:10 CC↑12 D:0 (python)
   M[src/algitex/tools/benchmark.py] 464L C:4 F:19 CC↑14 D:0 (python)
   M[src/algitex/tools/mcp.py] 448L C:2 F:18 CC↑11 D:0 (python)
   M[src/algitex/project/__init__.py] 439L C:1 F:22 CC↑6 D:0 (python)
-  M[src/algitex/tools/ide.py] 430L C:6 F:22 CC↑8 D:0 (python)
-  M[src/algitex/tools/batch.py] 421L C:4 F:20 CC↑7 D:0 (python)
-  M[src/algitex/propact/__init__.py] 419L C:3 F:18 CC↑10 D:0 (python)
-  M[src/algitex/dashboard.py] 416L C:4 F:24 CC↑8 D:1 (python)
-  M[src/algitex/tools/services.py] 413L C:3 F:20 CC↑9 D:0 (python)
-  M[src/algitex/tools/cicd.py] 403L C:1 F:11 CC↑5 D:1 (python)
-  LANGS: python:101/shell:1
+  LANGS: python:191/other:66/shell:27/yaml:20/yml:4/txt:2/toml:1
 
 HOTSPOTS[10]:
   ★ _run_with_dashboard fan=29  // Run todo fix with live dashboard.
@@ -43,14 +43,14 @@ Uses prefact to scan for issu
 
 Args:
     tasks
-  ★ find_duplicate_blocks fan=19  // Find repeated code blocks with a rolling hash over line windows.
+  ★ BatchFixBackend.fix_batch fan=20  // Orchestrates 20 calls
 
 REFACTOR[15]:
-  [1] H/L Split _tf_execute_phased (CC=25 → target CC<10)
-  [2] H/L Split todo_verify_prefact (CC=29 → target CC<10)
-  [3] H/L Split fix_file (CC=25 → target CC<10)
-  [4] H/L Split _classify_message (CC=48 → target CC<10)
+  [1] H/L Split _tf_execute_phased (CC=25)
+  [2] H/L Split todo_verify_prefact (CC=29)
+  [3] H/L Split fix_file (CC=25)
+  [4] H/L Split _classify_message (CC=48)
   [5] H/H Split god module src/algitex/cli/todo.py (1159L, 0 classes)
 
 EVOLUTION:
-  2026-03-29 CC̄=3.6 crit=64 29448L // Automated analysis
+  2026-04-25 CC̄=2.6 crit=78 91544L // Automated analysis

@@ -8,7 +8,6 @@ function or a simple constant-name rewrite are handled here.
 
 from __future__ import annotations
 
-import ast
 import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field
@@ -18,191 +17,22 @@ from typing import Any, Optional
 from algitex.tools.ollama import OllamaClient
 from algitex.tools.todo_parser import TodoParser, Task
 from algitex.todo.tiering import TaskTriage, classify_task
-
-CONSTANT_3 = 3
-CONSTANT_4 = 4
-MAX_5 = 5
-MAX_40 = 40
-TIMEOUT_60 = 60.0
-TIMEOUT_90 = 90.0
-MAX_350 = 350
-
-
-CONSTANT_3 = CONSTANT_3
-CONSTANT_4 = CONSTANT_4
-MAX_5 = MAX_5
-MAX_40 = MAX_40
-TIMEOUT_60 = TIMEOUT_60
-TIMEOUT_90 = TIMEOUT_90
-MAX_350 = MAX_350
-
-
-CONSTANT_3 = CONSTANT_3
-CONSTANT_4 = CONSTANT_4
-MAX_5 = MAX_5
-MAX_40 = MAX_40
-TIMEOUT_60 = TIMEOUT_60
-TIMEOUT_90 = TIMEOUT_90
-MAX_350 = MAX_350
-
-
-CONSTANT_3 = CONSTANT_3
-CONSTANT_4 = CONSTANT_4
-MAX_5 = MAX_5
-MAX_40 = MAX_40
-TIMEOUT_60 = TIMEOUT_60
-TIMEOUT_90 = TIMEOUT_90
-MAX_350 = MAX_350
-
-
-
-@dataclass
-class FunctionSnippet:
-    """Minimal source slice around a function or method."""
-
-    file_path: str
-    name: str
-    kind: str
-    start_line: int
-    end_line: int
-    source: str
-
-    @property
-    def line_count(self) -> int:
-        """Return the number of lines in the snippet."""
-        return max(0, self.end_line - self.start_line + 1)
-
-
-@dataclass
-class MicroFixResult:
-    """Result of a micro-LLM fix."""
-
-    task_id: str
-    task_description: str
-    category: str
-    tier: str = "micro"
-    success: bool = False
-    method: str = "micro-llm"
-    file_path: Optional[str] = None
-    line_number: Optional[int] = None
-    error: Optional[str] = None
-    details: dict[str, Any] = field(default_factory=dict)
-
-
-class FunctionExtractor:
-    """Extract a single function or method around a task line."""
-
-    def extract(self, path: Path, line_number: Optional[int]) -> FunctionSnippet | None:
-        """Return the innermost function/method containing the requested line."""
-        if not line_number or not path.exists() or path.suffix != ".py":
-            return None
-
-        source = path.read_text()
-        try:
-            tree = ast.parse(source)
-        except SyntaxError:
-            return None
-
-        lines = source.splitlines()
-        candidates: list[ast.AST] = []
-        for node in ast.walk(tree):
-            if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
-                continue
-            end_line = getattr(node, "end_lineno", None)
-            if end_line is None:
-                continue
-            if node.lineno <= line_number <= end_line:
-                candidates.append(node)
-
-        if not candidates:
-            start = max(1, line_number - MAX_5)
-            end = min(len(lines), line_number + MAX_5)
-            snippet_source = "\n".join(lines[start - 1 : end])
-            return FunctionSnippet(
-                file_path=str(path),
-                name="<module>",
-                kind="module",
-                start_line=start,
-                end_line=end,
-                source=snippet_source,
-            )
-
-        node = min(
-            candidates,
-            key=lambda item: (getattr(item, "end_lineno", item.lineno) - item.lineno, item.lineno),
-        )
-        end_line = getattr(node, "end_lineno", node.lineno)
-        snippet_source = "\n".join(lines[node.lineno - 1 : end_line])
-        kind = "class" if isinstance(node, ast.ClassDef) else "function"
-        return FunctionSnippet(
-            file_path=str(path),
-            name=getattr(node, "name", "<unknown>"),
-            kind=kind,
-            start_line=node.lineno,
-            end_line=end_line,
-            source=snippet_source,
-        )
-
-
-class MicroPromptBuilder:
-    """Build narrow prompts for micro-LLM fixes."""
-
-    SYSTEM_PROMPT = (
-        "You are a precise Python refactoring assistant. "
-        "Make the smallest possible change. Return ONLY the requested content."
-    )
-
-    def build(self, triage: TaskTriage, snippet: FunctionSnippet, task: Task) -> list[dict[str, str]]:
-        """Build Ollama chat messages for the given task."""
-        prompt = self._build_user_prompt(triage, snippet, task)
-        return [
-            {"role": "system", "content": self.SYSTEM_PROMPT},
-            {"role": "user", "content": prompt},
-        ]
-
-    def _build_user_prompt(self, triage: TaskTriage, snippet: FunctionSnippet, task: Task) -> str:
-        """Create the user-facing prompt text."""
-        header = [
-            f"Task category: {triage.category}",
-            f"File: {task.file_path or snippet.file_path}",
-            f"Line: {task.line_number or snippet.start_line}",
-            f"Target: {snippet.kind} `{snippet.name}`",
-            "",
-        ]
-
-        if triage.category == "docstring":
-            instruction = (
-                "Rewrite the function docstring to be concise (1-2 lines max). "
-                "Preserve behavior and public API. Return ONLY the updated function source."
-            )
-        elif triage.category == "rename":
-            instruction = (
-                "Rename the unclear variable(s) to more descriptive names within this function. "
-                "Make the smallest safe edit and return ONLY the updated function source."
-            )
-        elif triage.category == "guard_clause":
-            instruction = (
-                "Add one guard clause for the indicated parameter or input validation path. "
-                "Do not refactor unrelated code. Return ONLY the updated function source."
-            )
-        elif triage.category == "dispatch":
-            instruction = (
-                "If appropriate, convert the branching logic to a small dictionary dispatch or lookup table. "
-                "Keep the behavior identical. Return ONLY the updated function source."
-            )
-        elif triage.category == "magic":
-            number = triage.number if triage.number is not None else _extract_first_int(task.description)
-            instruction = (
-                f"Suggest a descriptive UPPER_SNAKE_CASE constant name for the magic number {number}. "
-                "Return ONLY the name, nothing else."
-            )
-        else:
-            instruction = (
-                "Improve this function with a minimal local edit that matches the task. "
-                "Return ONLY the updated function source."
-            )
-
-        return "\n".join(header + [instruction, "", "```python", snippet.source, "```"])
+from algitex.todo.micro_models import FunctionSnippet, MicroFixResult
+from algitex.todo.micro_extractor import FunctionExtractor
+from algitex.todo.micro_prompts import MicroPromptBuilder
+from algitex.todo.micro_utils import (
+    MAX_MAGIC_TOKENS,
+    MAX_REWRITE_TOKENS,
+    TIMEOUT_SHORT,
+    TIMEOUT_LONG,
+    coerce_task,
+    extract_first_int,
+    find_import_insert_point,
+    normalise_model_name,
+    sanitize_constant_name,
+    strip_code_fences,
+    validate_python,
+)
 
 
 class MicroFixer:
@@ -212,11 +42,11 @@ class MicroFixer:
         self,
         ollama_url: str = "http://localhost:11434",
         model: str = "qwen3-coder:latest",
-        workers: int = CONSTANT_4,
+        workers: int = 4,
         dry_run: bool = True,
     ):
         self.ollama_url = ollama_url
-        self.model = _normalise_model_name(model)
+        self.model = normalise_model_name(model)
         self.workers = workers
         self.dry_run = dry_run
         self.extractor = FunctionExtractor()
@@ -241,7 +71,7 @@ class MicroFixer:
 
         results: list[MicroFixResult] = []
 
-        coerced_tasks = [_coerce_task(item) for item in tasks]
+        coerced_tasks = [coerce_task(item) for item in tasks]
         rewrite_tasks = [task for task in coerced_tasks if classify_task(task).category != "magic"]
         magic_tasks = [task for task in coerced_tasks if classify_task(task).category == "magic"]
 
@@ -254,7 +84,7 @@ class MicroFixer:
 
     def fix_task(self, task: Task) -> MicroFixResult:
         """Fix a single micro task."""
-        task = _coerce_task(task)
+        task = coerce_task(task)
         triage = classify_task(task)
         path = Path(task.file_path) if task.file_path else None
         if not path:
@@ -293,11 +123,11 @@ class MicroFixer:
                 error="no function snippet found",
             )
 
-        client = OllamaClient(host=self.ollama_url, default_model=self.model, timeout=TIMEOUT_90)
+        client = OllamaClient(host=self.ollama_url, default_model=self.model, timeout=TIMEOUT_LONG)
         try:
             messages = self.prompt_builder.build(triage, snippet, task)
-            response = client.chat(messages=messages, model=self.model, temperature=0.0, max_tokens=MAX_350)
-            content = _strip_code_fences(response.content)
+            response = client.chat(messages=messages, model=self.model, temperature=0.0, max_tokens=MAX_REWRITE_TOKENS)
+            content = strip_code_fences(response.content)
             if not content.strip():
                 return MicroFixResult(
                     task_id=task.id,
@@ -338,7 +168,7 @@ class MicroFixer:
 
     def fix_tasks_detailed(self, tasks: list[Task], categories: set[str] | None = None) -> list[MicroFixResult]:
         """Run micro fixes on an already-parsed task list and return per-task results."""
-        micro_tasks = [_coerce_task(task) for task in tasks if classify_task(task).tier == "micro"]
+        micro_tasks = [coerce_task(task) for task in tasks if classify_task(task).tier == "micro"]
         if categories:
             micro_tasks = [task for task in micro_tasks if classify_task(task).category in categories]
 
@@ -381,7 +211,7 @@ class MicroFixer:
 
     def _fix_magic_name(self, task: Task, triage: TaskTriage, path: Path) -> MicroFixResult:
         """Ask the model for a constant name and apply it."""
-        number = triage.number if triage.number is not None else _extract_first_int(task.description)
+        number = triage.number if triage.number is not None else extract_first_int(task.description)
         if number is None:
             return MicroFixResult(
                 task_id=task.id,
@@ -405,7 +235,7 @@ class MicroFixer:
                 error="no function snippet found",
             )
 
-        client = OllamaClient(host=self.ollama_url, default_model=self.model, timeout=TIMEOUT_60)
+        client = OllamaClient(host=self.ollama_url, default_model=self.model, timeout=TIMEOUT_SHORT)
         try:
             messages = [
                 {
@@ -427,8 +257,8 @@ class MicroFixer:
                     ),
                 },
             ]
-            response = client.chat(messages=messages, model=self.model, temperature=0.0, max_tokens=MAX_40)
-            const_name = _sanitize_constant_name(response.content, number)
+            response = client.chat(messages=messages, model=self.model, temperature=0.0, max_tokens=MAX_MAGIC_TOKENS)
+            const_name = sanitize_constant_name(response.content, number)
             return self._apply_magic_name(task, triage, path, number, const_name)
         except Exception as exc:
             return MicroFixResult(
@@ -469,7 +299,7 @@ class MicroFixer:
         new_lines = replacement.splitlines()
         lines[snippet.start_line - 1 : snippet.end_line] = new_lines
         candidate = "\n".join(lines) + "\n"
-        if not _validate_python(candidate):
+        if not validate_python(candidate):
             return MicroFixResult(
                 task_id=task.id,
                 task_description=task.description,
@@ -539,11 +369,11 @@ class MicroFixer:
 
         lines[task.line_number - 1] = new_line
         if not any(re.match(rf"^{re.escape(const_name)}\s*=\s*\d+\s*$", existing.strip()) for existing in lines):
-            insert_at = _find_import_insert_point(lines)
+            insert_at = find_import_insert_point(lines)
             lines[insert_at:insert_at] = ["", "# Constants", f"{const_name} = {number}", ""]
 
         candidate = "\n".join(lines) + "\n"
-        if not _validate_python(candidate):
+        if not validate_python(candidate):
             return MicroFixResult(
                 task_id=task.id,
                 task_description=task.description,
@@ -567,75 +397,10 @@ class MicroFixer:
         )
 
 
-def _find_import_insert_point(lines: list[str]) -> int:
-    """Find the line after the last import statement."""
-    last_import = 0
-    for index, line in enumerate(lines):
-        stripped = line.strip()
-        if stripped.startswith(("import ", "from ")):
-            last_import = index + 1
-    return last_import
-
-
-def _extract_first_int(text: str) -> int | None:
-    """Extract the first integer from text."""
-    match = re.search(r"\b(\d+)\b", text)
-    if not match:
-        return None
-    try:
-        return int(match.group(1))
-    except ValueError:
-        return None
-
-
-def _normalize_model_name(model: str) -> str:
-    """Convert a user-facing model string into an Ollama model name."""
-    return model.split("/", 1)[1] if model.startswith("ollama/") else model
-
-
-def _strip_code_fences(text: str) -> str:
-    """Remove markdown fences if present."""
-    stripped = text.strip()
-    if stripped.startswith("```"):
-        lines = stripped.splitlines()
-        if len(lines) >= CONSTANT_3:
-            return "\n".join(lines[1:-1]).strip()
-    return stripped
-
-
-def _sanitize_constant_name(text: str, number: int) -> str:
-    """Return a safe constant name from the model output."""
-    candidate = text.strip().splitlines()[0].strip()
-    candidate = re.sub(r"[^A-Za-z0-9_]+", "_", candidate).strip("_")
-    if re.fullmatch(r"[A-Z][A-Z0-9_]+", candidate or ""):
-        return candidate
-    return f"MAGIC_{number}"
-
-
-def _validate_python(source: str) -> bool:
-    """Validate Python source syntax."""
-    try:
-        ast.parse(source)
-        return True
-    except SyntaxError:
-        return False
-
-
-def _coerce_task(task: Any) -> Task:
-    """Convert different task dataclasses into a `todo_parser.Task`."""
-    if isinstance(task, Task):
-        return task
-
-    file_path = getattr(task, "file_path", None) or getattr(task, "file", None)
-    line_number = getattr(task, "line_number", None) or getattr(task, "line", None)
-    description = getattr(task, "description", None) or getattr(task, "message", None) or ""
-    task_id = getattr(task, "id", None) or f"{file_path}:{line_number or 0}"
-    status = getattr(task, "status", None) or "pending"
-
-    return Task(
-        id=str(task_id),
-        description=str(description),
-        file_path=str(file_path) if file_path else None,
-        line_number=int(line_number) if line_number else None,
-        status=status,
-    )
+__all__ = [
+    "MicroFixer",
+    "FunctionExtractor",
+    "FunctionSnippet",
+    "MicroFixResult",
+    "MicroPromptBuilder",
+]
