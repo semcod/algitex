@@ -1,12 +1,12 @@
-# redup/duplication | 45 groups | 196f 33332L | 2026-04-25
+# redup/duplication | 45 groups | 196f 33372L | 2026-04-25
 
 SUMMARY:
   files_scanned: 196
-  total_lines:   33332
+  total_lines:   33372
   dup_groups:    45
   dup_fragments: 119
   saved_lines:   881
-  scan_ms:       4870
+  scan_ms:       6514
 
 HOTSPOTS[7] (files with most duplication):
   examples/34-batch-fix/main.py  dup=131L  groups=1  frags=3  (0.4%)
@@ -72,8 +72,8 @@ DUPLICATES[45] (ranked by impact):
       src/algitex/cli/__init__.py:120-122  (benchmark)
       src/algitex/cli/__init__.py:126-128  (dashboard)
   [2f3dff302f70b194]   STRU  _process_fstring_batch  L=26 N=2 saved=26 sim=1.00
-      src/algitex/todo/fixer.py:341-366  (_process_fstring_batch)
-      src/algitex/todo/fixer.py:369-394  (_process_exec_batch)
+      src/algitex/todo/fixer.py:365-390  (_process_fstring_batch)
+      src/algitex/todo/fixer.py:393-418  (_process_exec_batch)
   [5107e45da0c04760]   STRU  demo_detection_with_redup  L=22 N=2 saved=22 sim=1.00
       examples/42-duplicate-removal/main.py:63-84  (demo_detection_with_redup)
       examples/42-duplicate-removal/main.py:134-163  (demo_algitex_integration)

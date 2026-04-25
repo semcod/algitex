@@ -19,31 +19,31 @@ flowchart LR
     end
     subgraph examples__06_telemetry
         examples__06_telemetry__main__budget_tracking_example["budget_tracking_example"]
-        examples__06_telemetry__main__basic_telemetry_example["basic_telemetry_example"]
         examples__06_telemetry__main__context_manager_example["context_manager_example"]
+        examples__06_telemetry__main__basic_telemetry_example["basic_telemetry_example"]
         examples__06_telemetry__main__multi_model_comparison["multi_model_comparison"]
     end
     subgraph examples__10_cicd
-        examples__10_cicd__main__gitlab_ci_example["gitlab_ci_example"]
-        examples__10_cicd__main__dockerfile_example["dockerfile_example"]
-        examples__10_cicd__main__complete_ci_cd_setup["complete_ci_cd_setup"]
         examples__10_cicd__main__quality_gates_example["quality_gates_example"]
-        examples__10_cicd__main__cleanup_ci_projects["cleanup_ci_projects"]
-        examples__10_cicd__main__multi_platform_ci_example["multi_platform_ci_example"]
+        examples__10_cicd__main__complete_ci_cd_setup["complete_ci_cd_setup"]
         examples__10_cicd__main__precommit_hooks_example["precommit_hooks_example"]
+        examples__10_cicd__main__dockerfile_example["dockerfile_example"]
         examples__10_cicd__main__basic_github_actions_example["basic_github_actions_example"]
+        examples__10_cicd__main__gitlab_ci_example["gitlab_ci_example"]
+        examples__10_cicd__main__multi_platform_ci_example["multi_platform_ci_example"]
+        examples__10_cicd__main__cleanup_ci_projects["cleanup_ci_projects"]
     end
     subgraph examples__11_aider_mcp
-        examples__11_aider_mcp__main__demo_refactoring["demo_refactoring"]
         examples__11_aider_mcp__main__create_sample_project["create_sample_project"]
+        examples__11_aider_mcp__main__demo_refactoring["demo_refactoring"]
     end
     subgraph examples__13_vallm
-        examples__13_vallm__main__create_sample_code["create_sample_code"]
         examples__13_vallm__main__demo_validation["demo_validation"]
+        examples__13_vallm__main__create_sample_code["create_sample_code"]
     end
     subgraph examples__14_docker_mcp
-        examples__14_docker_mcp__main__demo_docker_operations["demo_docker_operations"]
         examples__14_docker_mcp__main__create_sample_docker_project["create_sample_docker_project"]
+        examples__14_docker_mcp__main__demo_docker_operations["demo_docker_operations"]
     end
     subgraph examples__15_github_mcp
         examples__15_github_mcp__main__create_sample_project["create_sample_project"]
@@ -54,32 +54,32 @@ flowchart LR
         examples__16_test_workflow__main__demo_test_workflow["demo_test_workflow"]
     end
     subgraph examples__17_docker_workflow
-        examples__17_docker_workflow__main__check_required_env["check_required_env"]
-        examples__17_docker_workflow__main__show_workflow["show_workflow"]
         examples__17_docker_workflow__main__demo_with_docker_tools["demo_with_docker_tools"]
+        examples__17_docker_workflow__main__check_required_env["check_required_env"]
         examples__17_docker_workflow__main__show_cli_usage["show_cli_usage"]
+        examples__17_docker_workflow__main__show_workflow["show_workflow"]
     end
     subgraph examples__18_ollama_local
-        examples__18_ollama_local__main__list_models["list_models"]
         examples__18_ollama_local__main__demo_code_analysis["demo_code_analysis"]
-        examples__18_ollama_local__main__generate_code["generate_code"]
-        examples__18_ollama_local__main__main["main"]
         examples__18_ollama_local__main__analyze_code["analyze_code"]
-        examples__18_ollama_local__buggy_code__complex_function["complex_function"]
+        examples__18_ollama_local__main__generate_code["generate_code"]
         examples__18_ollama_local__main__demo_cost_comparison["demo_cost_comparison"]
+        examples__18_ollama_local__main__list_models["list_models"]
+        examples__18_ollama_local__buggy_code__complex_function["complex_function"]
         examples__18_ollama_local__main__demo_code_generation["demo_code_generation"]
+        examples__18_ollama_local__main__main["main"]
     end
     subgraph examples__20_self_hosted_pipeline
-        examples__20_self_hosted_pipeline__buggy_code__get_stored_password["get_stored_password"]
-        examples__20_self_hosted_pipeline__main__main["main"]
         examples__20_self_hosted_pipeline__buggy_code__authenticate_user["authenticate_user"]
+        examples__20_self_hosted_pipeline__main__main["main"]
+        examples__20_self_hosted_pipeline__buggy_code__get_stored_password["get_stored_password"]
     end
     subgraph examples__22_claude_code_ollama
         examples__22_claude_code_ollama__main__main["main"]
     end
     subgraph examples__24_ollama_batch
-        examples__24_ollama_batch__main__main["main"]
         examples__24_ollama_batch__file3__BadClass__process["process"]
+        examples__24_ollama_batch__main__main["main"]
     end
     subgraph examples__26_litellm_proxy_ollama
         examples__26_litellm_proxy_ollama__main__main["main"]
@@ -88,68 +88,68 @@ flowchart LR
         examples__27_unified_autofix__main__main["main"]
     end
     subgraph examples__30_parallel_execution
-        examples__30_parallel_execution__parallel_multi_tool__main["main"]
+        examples__30_parallel_execution__main__main["main"]
+        examples__30_parallel_execution__parallel_real_world__setup_sample_project["setup_sample_project"]
         examples__30_parallel_execution__parallel_refactoring__main["main"]
         examples__30_parallel_execution__parallel_real_world__main["main"]
-        examples__30_parallel_execution__parallel_real_world__setup_sample_project["setup_sample_project"]
-        examples__30_parallel_execution__main__main["main"]
+        examples__30_parallel_execution__parallel_multi_tool__main["main"]
     end
     subgraph examples__32_workspace_coordination
-        examples__32_workspace_coordination__main___show_analysis_phase["_show_analysis_phase"]
-        examples__32_workspace_coordination__main___print_repo_overview["_print_repo_overview"]
+        examples__32_workspace_coordination__workspace_parallel__main["main"]
         examples__32_workspace_coordination__main__load_workspace_config["load_workspace_config"]
         examples__32_workspace_coordination__main___show_execution_summary["_show_execution_summary"]
+        examples__32_workspace_coordination__main___print_repo_overview["_print_repo_overview"]
+        examples__32_workspace_coordination__main___show_analysis_phase["_show_analysis_phase"]
         examples__32_workspace_coordination__main___show_planning_phase["_show_planning_phase"]
-        examples__32_workspace_coordination__main___check_quality_gates["_check_quality_gates"]
         examples__32_workspace_coordination__main___show_execution_phase["_show_execution_phase"]
-        examples__32_workspace_coordination__workspace_parallel__main["main"]
         examples__32_workspace_coordination__main__main["main"]
         examples__32_workspace_coordination__main___group_repos_by_priority["_group_repos_by_priority"]
+        examples__32_workspace_coordination__main___check_quality_gates["_check_quality_gates"]
     end
     subgraph examples__34_batch_fix
         examples__34_batch_fix__main__demo_batch_dry_run["demo_batch_dry_run"]
-        examples__34_batch_fix__main__demo_custom_batch_size["demo_custom_batch_size"]
         examples__34_batch_fix__main__main["main"]
-        examples__34_batch_fix__main__demo_comparison["demo_comparison"]
+        examples__34_batch_fix__main__demo_custom_batch_size["demo_custom_batch_size"]
         examples__34_batch_fix__main__demo_batch_execute["demo_batch_execute"]
+        examples__34_batch_fix__main__demo_comparison["demo_comparison"]
     end
     subgraph examples__36_dashboard
-        examples__36_dashboard__main__demo_dashboard_with_todo["demo_dashboard_with_todo"]
         examples__36_dashboard__main__main["main"]
         examples__36_dashboard__main__demo_dashboard_live["demo_dashboard_live"]
-        examples__36_dashboard__main__demo_dashboard_monitor["demo_dashboard_monitor"]
         examples__36_dashboard__main__demo_dashboard_export["demo_dashboard_export"]
+        examples__36_dashboard__main__demo_dashboard_with_todo["demo_dashboard_with_todo"]
+        examples__36_dashboard__main__demo_dashboard_monitor["demo_dashboard_monitor"]
     end
     subgraph examples__37_benchmarks
+        examples__37_benchmarks__main__main["main"]
         examples__37_benchmarks__main__demo_benchmark_quick["demo_benchmark_quick"]
+        examples__37_benchmarks__main__demo_benchmark_tiers["demo_benchmark_tiers"]
         examples__37_benchmarks__main__demo_benchmark_cache["demo_benchmark_cache"]
         examples__37_benchmarks__main__demo_benchmark_full["demo_benchmark_full"]
         examples__37_benchmarks__main__demo_benchmark_memory["demo_benchmark_memory"]
-        examples__37_benchmarks__main__demo_benchmark_tiers["demo_benchmark_tiers"]
-        examples__37_benchmarks__main__main["main"]
     end
     subgraph examples__38_new_modules
+        examples__38_new_modules__main__demo_repair_module["demo_repair_module"]
         examples__38_new_modules__main__main["main"]
         examples__38_new_modules__main__demo_verify_module["demo_verify_module"]
-        examples__38_new_modules__main__demo_classify_module["demo_classify_module"]
-        examples__38_new_modules__main__demo_repair_module["demo_repair_module"]
         examples__38_new_modules__main__demo_combined_workflow["demo_combined_workflow"]
+        examples__38_new_modules__main__demo_classify_module["demo_classify_module"]
     end
     subgraph examples__43_code_health
-        examples__43_code_health__main__demo_regression_prevention["demo_regression_prevention"]
-        examples__43_code_health__main__demo_health_improvement_workflow["demo_health_improvement_workfl"]
-        examples__43_code_health__main__demo_health_metrics["demo_health_metrics"]
         examples__43_code_health__main__main["main"]
-        examples__43_code_health__main__demo_analysis_pipeline["demo_analysis_pipeline"]
-        examples__43_code_health__main__demo_historical_tracking["demo_historical_tracking"]
-        examples__43_code_health__main__demo_ci_integration["demo_ci_integration"]
         examples__43_code_health__main__demo_health_report["demo_health_report"]
+        examples__43_code_health__main__demo_analysis_pipeline["demo_analysis_pipeline"]
+        examples__43_code_health__main__demo_ci_integration["demo_ci_integration"]
+        examples__43_code_health__main__demo_health_metrics["demo_health_metrics"]
+        examples__43_code_health__main__demo_historical_tracking["demo_historical_tracking"]
+        examples__43_code_health__main__demo_health_improvement_workflow["demo_health_improvement_workfl"]
+        examples__43_code_health__main__demo_regression_prevention["demo_regression_prevention"]
     end
     subgraph src__algitex
         src__algitex__tools__cicd__create_quality_gate_config["create_quality_gate_config"]
-        src__algitex__tools__tickets__Tickets__list["list"]
-        src__algitex__tools__discover_tools["discover_tools"]
         src__algitex__todo__classify__classify_message["classify_message"]
+        src__algitex__tools__discover_tools["discover_tools"]
+        src__algitex__tools__tickets__Tickets__list["list"]
     end
     examples__34_batch_fix__main__demo_batch_dry_run --> Taskfile__print
     examples__34_batch_fix__main__demo_batch_execute --> Taskfile__print

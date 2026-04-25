@@ -28,7 +28,7 @@ class TestFeedbackPolicy:
         
         assert policy.max_retries == 3
         assert len(policy.retry_escalation) == 3
-        assert "ollama/qwen2.5-coder:7b" in policy.retry_escalation
+        assert "ollama/qwen3-coder:latest" in policy.retry_escalation
         assert "gemini/gemini-2.5-pro" in policy.retry_escalation
         assert "claude-sonnet-4-20250514" in policy.retry_escalation
         assert policy.auto_replan is True

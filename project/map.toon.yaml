@@ -1,7 +1,7 @@
-# algitex | 238f 38860L | python:210,shell:27,less:1 | 2026-04-25
-# stats: 529 func | 250 cls | 238 mod | CC̄=3.5 | critical:31 | cycles:0
-# alerts[5]: CC fix_file=25; CC _run_with_dashboard=15; CC _tf_run_micro=15; CC todo_hybrid=15; CC find_duplicate_blocks=14
-# hotspots[5]: _run_with_dashboard fan=27; main fan=18; main fan=18; dashboard_export fan=17; find_duplicate_blocks fan=17
+# algitex | 238f 38900L | python:210,shell:27,less:1 | 2026-04-25
+# stats: 541 func | 250 cls | 238 mod | CC̄=3.5 | critical:30 | cycles:0
+# alerts[5]: CC _run_micro_dashboard=17; CC find_duplicate_blocks=14; CC main=13; CC generate_module_doc=13; fan-out main=18
+# hotspots[5]: main fan=18; main fan=18; dashboard_export fan=17; find_duplicate_blocks fan=17; main fan=16
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
 M[238]:
@@ -130,7 +130,7 @@ M[238]:
   src/algitex/cli/todo/file_ops.py,11
   src/algitex/cli/todo/logic.py,46
   src/algitex/cli/todo/render.py,30
-  src/algitex/cli/todo.py,1060
+  src/algitex/cli/todo.py,1076
   src/algitex/cli/todo_verify.py,92
   src/algitex/cli/workflow.py,43
   src/algitex/cli.py,41
@@ -152,7 +152,7 @@ M[238]:
   src/algitex/todo/audit.py,287
   src/algitex/todo/benchmark.py,245
   src/algitex/todo/classify.py,157
-  src/algitex/todo/fixer.py,531
+  src/algitex/todo/fixer.py,555
   src/algitex/todo/hybrid.py,480
   src/algitex/todo/micro.py,407
   src/algitex/todo/micro_extractor.py,66
@@ -839,8 +839,12 @@ D:
     e: render_todo_stats
     render_todo_stats(file;tasks)
   src/algitex/cli/todo.py:
-    e: _render_todo_stats,_run_with_dashboard,_run_hybrid_with_dashboard,_run_batch_with_dashboard,todo_stats,todo_verify,todo_fix_parallel,todo_list,todo_run,_format_todo_help,todo_fix,_tf_parse_and_filter,_tf_classify_tasks,_tf_execute_phased,_tf_build_phases,_tf_run_algorithm,_tf_run_micro,_tf_run_big,_tf_validate_results,_tf_print_report,_tf_run_legacy,todo_benchmark,todo_hybrid,todo_batch,todo_verify_prefact
+    e: _render_todo_stats,_init_todo_dashboard,_run_algo_dashboard,_run_micro_dashboard,_run_big_dashboard,_run_with_dashboard,_run_hybrid_with_dashboard,_run_batch_with_dashboard,todo_stats,todo_verify,todo_fix_parallel,todo_list,todo_run,_format_todo_help,todo_fix,_tf_parse_and_filter,_tf_classify_tasks,_tf_execute_phased,_tf_build_phases,_tf_run_algorithm,_aggregate_micro_results,_mark_micro_completed,_tf_run_micro,_tf_run_big,_tf_validate_results,_tf_print_report,_tf_run_legacy,todo_benchmark,_print_hybrid_banner,_update_todo_hybrid,todo_hybrid,todo_batch,todo_verify_prefact
     _render_todo_stats(file;tasks)
+    _init_todo_dashboard(algo_tasks;micro_tasks;big_tasks;algo;micro;all_phases)
+    _run_algo_dashboard(dashboard;file;algo_tasks;algo;workers;dry_run;results)
+    _run_micro_dashboard(dashboard;file;micro_tasks;micro;micro_workers;model;dry_run;cache;results)
+    _run_big_dashboard(dashboard;file;big_tasks;all_phases;workers;backend;rate_limit;proxy_url;dry_run;results)
     _run_with_dashboard(file;tasks;algo;micro;all_phases;workers;micro_workers;model;backend;rate_limit;proxy_url;dry_run)
     _run_hybrid_with_dashboard(file;fixer;hybrid;dry_run)
     _run_batch_with_dashboard(backend_fixer;tasks;parallel;dry_run)
@@ -856,12 +860,16 @@ D:
     _tf_execute_phased(file;classified;algo;micro;all_phases;workers;micro_workers;model;backend;rate_limit;proxy_url;dry_run)
     _tf_build_phases(classified;algo;micro;all_phases)
     _tf_run_algorithm(file;tasks;workers)
+    _aggregate_micro_results(micro_results)
+    _mark_micro_completed(file;dry_run;micro_results;tasks)
     _tf_run_micro(file;tasks;_workers;micro_workers;model)
     _tf_run_big(file;tasks;workers;_micro_workers;_model;backend;proxy_url;rate_limit;dry_run)
     _tf_validate_results(results)
     _tf_print_report(report)
     _tf_run_legacy(file;tasks;tool;dry_run)
     todo_benchmark(limit;file;workers;compare)
+    _print_hybrid_banner(hybrid;backend;tool;workers;rate_limit;proxy_url;fallback;verbose;dry_run)
+    _update_todo_hybrid(file;dry_run;result)
     todo_hybrid(file;backend;tool;workers;rate_limit;proxy_url;hybrid;dashboard;fallback;verbose;dry_run)
     todo_batch(file;backend;model;batch_size;parallel;dry_run;verbose;prune;limit;no_log;dashboard)
     todo_verify_prefact(file;prune)
@@ -987,7 +995,7 @@ D:
     classify_message(message)
     classify_task(task)
   src/algitex/todo/fixer.py:
-    e: parse_todo,_categorize,_group_tasks_by_file,_compute_category_stats,_compute_tier_stats,_print_pre_execution_summary,_print_execution_summary,_validate_file_with_vallm,fix_file,_extract_return_type,_process_magic_batch,_process_fstring_batch,_process_exec_batch,_execute_parallel_fixes,parallel_fix,mark_tasks_completed,parallel_fix_and_update,FixResult
+    e: parse_todo,_categorize,_group_tasks_by_file,_compute_category_stats,_compute_tier_stats,_print_pre_execution_summary,_print_execution_summary,_validate_file_with_vallm,_group_tasks_by_category,_process_line_tasks,fix_file,_extract_return_type,_get_repair_param,_record_fix_result,_process_magic_batch,_process_fstring_batch,_process_exec_batch,_execute_parallel_fixes,parallel_fix,mark_tasks_completed,parallel_fix_and_update,FixResult
     FixResult:  # Result of fixing a file.
     parse_todo(todo_path)
     _categorize(message)
@@ -997,8 +1005,12 @@ D:
     _print_pre_execution_summary(tasks;by_file;workers;dry_run)
     _print_execution_summary(total_fixed;total_skipped;total_errors;dry_run)
     _validate_file_with_vallm(path;original_content)
+    _group_tasks_by_category(tasks)
+    _process_line_tasks(path;tasks;result;dry_run;original_content)
     fix_file(file_path;tasks;dry_run)
     _extract_return_type(message)
+    _get_repair_param(task)
+    _record_fix_result(task;path;original_content;ok;result)
     _process_magic_batch(path;tasks;result;dry_run;original_content)
     _process_fstring_batch(path;tasks;result;dry_run;original_content)
     _process_exec_batch(path;tasks;result;dry_run;original_content)

@@ -17,7 +17,7 @@ SUMD - Structured Unified Markdown Descriptor for AI-aware project refactorizati
 ## Metadata
 
 - **name**: `algitex`
-- **version**: `0.1.61`
+- **version**: `0.1.63`
 - **python_requires**: `>=3.10`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -37,7 +37,7 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: algitex;
-  version: 0.1.61;
+  version: 0.1.63;
 }
 
 dependencies {
@@ -695,7 +695,7 @@ mypy
 
 ## Call Graph
 
-*417 nodes · 500 edges · 122 modules · CC̄=2.5*
+*411 nodes · 500 edges · 120 modules · CC̄=2.5*
 
 ### Hubs (by degree)
 
@@ -706,13 +706,13 @@ mypy
 | `main` *(in examples.30-parallel-execution.main)* | 13 ⚠ | 0 | 55 | **55** |
 | `main` *(in examples.20-self-hosted-pipeline.main)* | 2 | 0 | 49 | **49** |
 | `main` *(in examples.30-parallel-execution.parallel_real_world)* | 13 ⚠ | 0 | 43 | **43** |
-| `main` *(in examples.05-cost-tracking.main)* | 8 | 0 | 40 | **40** |
 | `demo_docker_operations` *(in examples.14-docker-mcp.main)* | 7 | 0 | 40 | **40** |
+| `main` *(in examples.05-cost-tracking.main)* | 8 | 0 | 40 | **40** |
 | `main` *(in examples.18-ollama-local.main)* | 7 | 0 | 39 | **39** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/semcod/algitex
-# nodes: 417 | edges: 500 | modules: 122
+# nodes: 411 | edges: 500 | modules: 120
 # CC̄=2.5
 
 HUBS[20]:
@@ -726,10 +726,10 @@ HUBS[20]:
     CC=2  in:0  out:49  total:49
   examples.30-parallel-execution.parallel_real_world.main
     CC=13  in:0  out:43  total:43
-  examples.05-cost-tracking.main.main
-    CC=8  in:0  out:40  total:40
   examples.14-docker-mcp.main.demo_docker_operations
     CC=7  in:0  out:40  total:40
+  examples.05-cost-tracking.main.main
+    CC=8  in:0  out:40  total:40
   examples.18-ollama-local.main.main
     CC=7  in:0  out:39  total:39
   src.algitex.tools.ollama_cache.LLMCache.set
@@ -738,72 +738,32 @@ HUBS[20]:
     CC=5  in:0  out:37  total:37
   examples.31-abpr-workflow.abpr_pipeline.abpr_pipeline
     CC=10  in:0  out:36  total:36
-  src.algitex.tools.autofix.batch_backend.backend.BatchFixBackend.fix_batch
-    CC=10  in:0  out:35  total:35
   examples.13-vallm.main.demo_validation
     CC=5  in:0  out:35  total:35
+  src.algitex.tools.autofix.batch_backend.backend.BatchFixBackend.fix_batch
+    CC=10  in:0  out:35  total:35
+  src.algitex.tools.autofix.batch_backend.BatchFixBackend.fix_batch
+    CC=11  in:0  out:35  total:35
   examples.07-context.main.basic_context_example
     CC=2  in:0  out:34  total:34
   src.algitex.tools.tickets.Tickets.list
     CC=4  in:33  out:1  total:34
-  examples.27-unified-autofix.main.main
-    CC=4  in:0  out:33  total:33
   examples.02-algo-loop.main.main
     CC=11  in:0  out:33  total:33
+  examples.27-unified-autofix.main.main
+    CC=4  in:0  out:33  total:33
   src.algitex.todo.hybrid.HybridAutofix.fix_all
     CC=3  in:0  out:31  total:31
-  examples.06-telemetry.main.basic_telemetry_example
-    CC=2  in:0  out:30  total:30
   examples.12-filesystem-mcp.main.demo_file_operations
     CC=3  in:0  out:30  total:30
 
 MODULES:
   Taskfile  [1 funcs]
     print  CC=0  out:0
-  docker.aider-mcp.aider_mcp_server  [5 funcs]
-    aider_ai_code  CC=2  out:5
-    aider_chat  CC=1  out:2
-    aider_list_models  CC=1  out:1
-    create_rest_api  CC=1  out:13
-    run_rest_server  CC=1  out:7
-  docker.code2llm.code2llm_mcp_server  [9 funcs]
-    _analyze_python_file  CC=10  out:15
-    _calculate_complexity_metrics  CC=6  out:4
-    _collect_project_metrics  CC=4  out:8
-    analyze_project  CC=1  out:11
-    create_rest_api  CC=1  out:14
-    evolution_export  CC=1  out:7
-    generate_readme  CC=4  out:15
-    generate_toon  CC=4  out:15
-    run_rest_server  CC=1  out:7
-  docker.code2llm.code2llm_server  [1 funcs]
-    _analyze_project  CC=1  out:8
-  docker.planfile-mcp.planfile_mcp_server  [10 funcs]
-    _load_tickets  CC=6  out:7
-    _save_tickets  CC=2  out:8
-    create_rest_api  CC=1  out:16
-    planfile_create_ticket  CC=2  out:10
-    planfile_create_tickets_bulk  CC=3  out:8
-    planfile_list_tickets  CC=7  out:7
-    planfile_sprint_status  CC=3  out:9
-    planfile_sync  CC=1  out:3
-    planfile_update_ticket  CC=4  out:6
-    run_rest_server  CC=1  out:7
-  docker.proxym.proxym_mcp_server  [9 funcs]
-    _call_anthropic  CC=6  out:22
-    _call_gemini  CC=5  out:14
-    _call_openai  CC=3  out:13
-    chat_completion  CC=9  out:11
-    count_tokens  CC=2  out:4
-    create_rest_api  CC=1  out:16
-    list_models  CC=4  out:7
-    run_rest_server  CC=1  out:7
-    simple_prompt  CC=1  out:2
-  docker.vallm.vallm_mcp_server  [8 funcs]
+  docker.vallm.vallm_mcp_server  [7 funcs]
     analyze_complexity  CC=9  out:16
     calculate_quality_score  CC=1  out:12
     create_rest_api  CC=1  out:17
-    run_rest_server  CC=1  out:7
     validate_all  CC=1  out:16
     validate_runtime  CC=9  out:9
     validate_security  CC=7  out:12
@@ -1034,13 +994,10 @@ MODULES:
     demo_plugin_configuration  CC=1  out:2
     demo_plugin_marketplace  CC=2  out:17
     main  CC=1  out:15
-  project.map.toon  [4 funcs]
-    classify_todo_file  CC=0  out:0
+  project.map.toon  [3 funcs]
     mark_tasks_completed  CC=0  out:0
     parallel_fix  CC=0  out:0
     parse_todo  CC=0  out:0
-  scripts.fix_readme  [1 funcs]
-    fix_readme  CC=1  out:9
   src.algitex.benchmark  [4 funcs]
     print_report  CC=5  out:10
     print_table  CC=2  out:9
@@ -1092,9 +1049,17 @@ MODULES:
     show_quick_dashboard  CC=3  out:17
   src.algitex.microtask  [1 funcs]
     group_tasks_by_file  CC=3  out:4
-  src.algitex.microtask.classifier  [2 funcs]
+  src.algitex.microtask.classifier  [6 funcs]
+    _classify_message  CC=5  out:2
+    _first_int  CC=3  out:3
     _is_ignored_path  CC=2  out:3
+    _resolve_file  CC=3  out:4
     classify_prefact_line  CC=12  out:21
+    classify_todo_file  CC=5  out:9
+  src.algitex.microtask.executor  [3 funcs]
+    _handle_sort_imports  CC=4  out:5
+    _phase_algorithmic  CC=5  out:10
+    _phase_llm  CC=5  out:11
   src.algitex.nlp  [10 funcs]
     scan  CC=6  out:10
     fix_path  CC=3  out:6
@@ -1185,6 +1150,17 @@ MODULES:
     fix_issue  CC=6  out:8
     mark_task_done  CC=8  out:9
     print_summary  CC=12  out:16
+  src.algitex.tools.autofix.batch_backend  [13 funcs]
+    _build_batch_prompt  CC=4  out:9
+    _create_backup  CC=5  out:12
+    _fix_batch_group  CC=10  out:22
+    _fix_individual  CC=5  out:14
+    _mark_missing_as_failed  CC=3  out:1
+    _parse_batch_response  CC=8  out:22
+    _preflight_syntax_check  CC=10  out:23
+    _process_group  CC=11  out:22
+    _update_todo_mark_completed  CC=9  out:17
+    _validate_and_rollback  CC=11  out:22
   src.algitex.tools.autofix.batch_backend.backend  [1 funcs]
     fix_batch  CC=10  out:35
   src.algitex.tools.autofix.batch_backend.fs_utils  [2 funcs]
@@ -1230,6 +1206,9 @@ MODULES:
     list_running  CC=1  out:2
     list_tools  CC=1  out:2
     teardown_all  CC=2  out:2
+  src.algitex.tools.ide  [2 funcs]
+    fix_file  CC=4  out:7
+    install_extensions  CC=3  out:4
   src.algitex.tools.ide_aider  [1 funcs]
     fix_file  CC=5  out:9
   src.algitex.tools.ide_base  [2 funcs]
@@ -1249,6 +1228,16 @@ MODULES:
     log_time  CC=1  out:8
     verbose  CC=1  out:12
     verbose_print  CC=2  out:1
+  src.algitex.tools.mcp  [9 funcs]
+    generate_mcp_config  CC=4  out:6
+    list_services  CC=1  out:2
+    print_status  CC=6  out:8
+    restart_service  CC=1  out:4
+    start_all  CC=10  out:9
+    start_service  CC=11  out:15
+    stop_all  CC=3  out:5
+    stop_service  CC=6  out:11
+    wait_for_ready  CC=10  out:20
   src.algitex.tools.mcp_lifecycle  [3 funcs]
     restart_service  CC=1  out:4
     start_service  CC=11  out:15
@@ -1378,7 +1367,7 @@ EDGES:
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/semcod/algitex
-# nodes: 417 | edges: 500 | modules: 122
+# nodes: 411 | edges: 500 | modules: 120
 # CC̄=2.5
 
 HUBS[20]:
@@ -1392,10 +1381,10 @@ HUBS[20]:
     CC=2  in:0  out:49  total:49
   examples.30-parallel-execution.parallel_real_world.main
     CC=13  in:0  out:43  total:43
-  examples.05-cost-tracking.main.main
-    CC=8  in:0  out:40  total:40
   examples.14-docker-mcp.main.demo_docker_operations
     CC=7  in:0  out:40  total:40
+  examples.05-cost-tracking.main.main
+    CC=8  in:0  out:40  total:40
   examples.18-ollama-local.main.main
     CC=7  in:0  out:39  total:39
   src.algitex.tools.ollama_cache.LLMCache.set
@@ -1404,72 +1393,32 @@ HUBS[20]:
     CC=5  in:0  out:37  total:37
   examples.31-abpr-workflow.abpr_pipeline.abpr_pipeline
     CC=10  in:0  out:36  total:36
-  src.algitex.tools.autofix.batch_backend.backend.BatchFixBackend.fix_batch
-    CC=10  in:0  out:35  total:35
   examples.13-vallm.main.demo_validation
     CC=5  in:0  out:35  total:35
+  src.algitex.tools.autofix.batch_backend.backend.BatchFixBackend.fix_batch
+    CC=10  in:0  out:35  total:35
+  src.algitex.tools.autofix.batch_backend.BatchFixBackend.fix_batch
+    CC=11  in:0  out:35  total:35
   examples.07-context.main.basic_context_example
     CC=2  in:0  out:34  total:34
   src.algitex.tools.tickets.Tickets.list
     CC=4  in:33  out:1  total:34
-  examples.27-unified-autofix.main.main
-    CC=4  in:0  out:33  total:33
   examples.02-algo-loop.main.main
     CC=11  in:0  out:33  total:33
+  examples.27-unified-autofix.main.main
+    CC=4  in:0  out:33  total:33
   src.algitex.todo.hybrid.HybridAutofix.fix_all
     CC=3  in:0  out:31  total:31
-  examples.06-telemetry.main.basic_telemetry_example
-    CC=2  in:0  out:30  total:30
   examples.12-filesystem-mcp.main.demo_file_operations
     CC=3  in:0  out:30  total:30
 
 MODULES:
   Taskfile  [1 funcs]
     print  CC=0  out:0
-  docker.aider-mcp.aider_mcp_server  [5 funcs]
-    aider_ai_code  CC=2  out:5
-    aider_chat  CC=1  out:2
-    aider_list_models  CC=1  out:1
-    create_rest_api  CC=1  out:13
-    run_rest_server  CC=1  out:7
-  docker.code2llm.code2llm_mcp_server  [9 funcs]
-    _analyze_python_file  CC=10  out:15
-    _calculate_complexity_metrics  CC=6  out:4
-    _collect_project_metrics  CC=4  out:8
-    analyze_project  CC=1  out:11
-    create_rest_api  CC=1  out:14
-    evolution_export  CC=1  out:7
-    generate_readme  CC=4  out:15
-    generate_toon  CC=4  out:15
-    run_rest_server  CC=1  out:7
-  docker.code2llm.code2llm_server  [1 funcs]
-    _analyze_project  CC=1  out:8
-  docker.planfile-mcp.planfile_mcp_server  [10 funcs]
-    _load_tickets  CC=6  out:7
-    _save_tickets  CC=2  out:8
-    create_rest_api  CC=1  out:16
-    planfile_create_ticket  CC=2  out:10
-    planfile_create_tickets_bulk  CC=3  out:8
-    planfile_list_tickets  CC=7  out:7
-    planfile_sprint_status  CC=3  out:9
-    planfile_sync  CC=1  out:3
-    planfile_update_ticket  CC=4  out:6
-    run_rest_server  CC=1  out:7
-  docker.proxym.proxym_mcp_server  [9 funcs]
-    _call_anthropic  CC=6  out:22
-    _call_gemini  CC=5  out:14
-    _call_openai  CC=3  out:13
-    chat_completion  CC=9  out:11
-    count_tokens  CC=2  out:4
-    create_rest_api  CC=1  out:16
-    list_models  CC=4  out:7
-    run_rest_server  CC=1  out:7
-    simple_prompt  CC=1  out:2
-  docker.vallm.vallm_mcp_server  [8 funcs]
+  docker.vallm.vallm_mcp_server  [7 funcs]
     analyze_complexity  CC=9  out:16
     calculate_quality_score  CC=1  out:12
     create_rest_api  CC=1  out:17
-    run_rest_server  CC=1  out:7
     validate_all  CC=1  out:16
     validate_runtime  CC=9  out:9
     validate_security  CC=7  out:12
@@ -1700,13 +1649,10 @@ MODULES:
     demo_plugin_configuration  CC=1  out:2
     demo_plugin_marketplace  CC=2  out:17
     main  CC=1  out:15
-  project.map.toon  [4 funcs]
-    classify_todo_file  CC=0  out:0
+  project.map.toon  [3 funcs]
     mark_tasks_completed  CC=0  out:0
     parallel_fix  CC=0  out:0
     parse_todo  CC=0  out:0
-  scripts.fix_readme  [1 funcs]
-    fix_readme  CC=1  out:9
   src.algitex.benchmark  [4 funcs]
     print_report  CC=5  out:10
     print_table  CC=2  out:9
@@ -1758,9 +1704,17 @@ MODULES:
     show_quick_dashboard  CC=3  out:17
   src.algitex.microtask  [1 funcs]
     group_tasks_by_file  CC=3  out:4
-  src.algitex.microtask.classifier  [2 funcs]
+  src.algitex.microtask.classifier  [6 funcs]
+    _classify_message  CC=5  out:2
+    _first_int  CC=3  out:3
     _is_ignored_path  CC=2  out:3
+    _resolve_file  CC=3  out:4
     classify_prefact_line  CC=12  out:21
+    classify_todo_file  CC=5  out:9
+  src.algitex.microtask.executor  [3 funcs]
+    _handle_sort_imports  CC=4  out:5
+    _phase_algorithmic  CC=5  out:10
+    _phase_llm  CC=5  out:11
   src.algitex.nlp  [10 funcs]
     scan  CC=6  out:10
     fix_path  CC=3  out:6
@@ -1851,6 +1805,17 @@ MODULES:
     fix_issue  CC=6  out:8
     mark_task_done  CC=8  out:9
     print_summary  CC=12  out:16
+  src.algitex.tools.autofix.batch_backend  [13 funcs]
+    _build_batch_prompt  CC=4  out:9
+    _create_backup  CC=5  out:12
+    _fix_batch_group  CC=10  out:22
+    _fix_individual  CC=5  out:14
+    _mark_missing_as_failed  CC=3  out:1
+    _parse_batch_response  CC=8  out:22
+    _preflight_syntax_check  CC=10  out:23
+    _process_group  CC=11  out:22
+    _update_todo_mark_completed  CC=9  out:17
+    _validate_and_rollback  CC=11  out:22
   src.algitex.tools.autofix.batch_backend.backend  [1 funcs]
     fix_batch  CC=10  out:35
   src.algitex.tools.autofix.batch_backend.fs_utils  [2 funcs]
@@ -1896,6 +1861,9 @@ MODULES:
     list_running  CC=1  out:2
     list_tools  CC=1  out:2
     teardown_all  CC=2  out:2
+  src.algitex.tools.ide  [2 funcs]
+    fix_file  CC=4  out:7
+    install_extensions  CC=3  out:4
   src.algitex.tools.ide_aider  [1 funcs]
     fix_file  CC=5  out:9
   src.algitex.tools.ide_base  [2 funcs]
@@ -1915,6 +1883,16 @@ MODULES:
     log_time  CC=1  out:8
     verbose  CC=1  out:12
     verbose_print  CC=2  out:1
+  src.algitex.tools.mcp  [9 funcs]
+    generate_mcp_config  CC=4  out:6
+    list_services  CC=1  out:2
+    print_status  CC=6  out:8
+    restart_service  CC=1  out:4
+    start_all  CC=10  out:9
+    start_service  CC=11  out:15
+    stop_all  CC=3  out:5
+    stop_service  CC=6  out:11
+    wait_for_ready  CC=10  out:20
   src.algitex.tools.mcp_lifecycle  [3 funcs]
     restart_service  CC=1  out:4
     start_service  CC=11  out:15
@@ -2019,19 +1997,16 @@ EDGES:
 ### Code Analysis (`project/analysis.toon.yaml`)
 
 ```toon markpact:analysis path=project/analysis.toon.yaml
-# code2llm | 317f 66400L | python:192,shell:27,yaml:20,yml:4,txt:2,toml:1 | 2026-04-25
-# CC̄=2.5 | critical:4/1777 | dups:0 | cycles:0
+# code2llm | 318f 66320L | python:192,shell:27,yaml:20,yml:4,txt:2,toml:1 | 2026-04-25
+# CC̄=2.5 | critical:1/1799 | dups:0 | cycles:0
 
-HEALTH[4]:
-  🟡 CC    _run_with_dashboard CC=15 (limit:15)
-  🟡 CC    _tf_run_micro CC=15 (limit:15)
-  🟡 CC    todo_hybrid CC=15 (limit:15)
-  🟡 CC    fix_file CC=25 (limit:15)
+HEALTH[1]:
+  🟡 CC    _run_micro_dashboard CC=17 (limit:15)
 
 REFACTOR[1]:
-  1. split 4 high-CC methods  (CC>15)
+  1. split 1 high-CC methods  (CC>15)
 
-PIPELINES[952]:
+PIPELINES[951]:
   [1] Src [main]: main → print
       PURITY: 100% pure
   [2] Src [format_price]: format_price
@@ -2048,10 +2023,10 @@ LAYERS:
   │ generate_lib_docs          316L  0C   11m  CC=13     ←0
   │ fix_readme                  33L  0C    1m  CC=1      ←0
   │
-  src/                            CC̄=3.5    ←in:0  →out:0
-  │ !! todo                      1059L  0C   25m  CC=15     ←0
+  src/                            CC̄=3.4    ←in:0  →out:0
+  │ !! todo                      1075L  0C   33m  CC=17     ←0
   │ !! batch_backend              802L  2C   19m  CC=11     ←0
-  │ !! fixer                      530L  1C   17m  CC=25     ←0
+  │ !! fixer                      554L  1C   21m  CC=12     ←0
   │ !! executor                   517L  2C   32m  CC=12     ←0
   │ hybrid                     479L  4C   10m  CC=12     ←0
   │ benchmark                  464L  4C   19m  CC=14     ←0
@@ -2090,10 +2065,10 @@ LAYERS:
   │ __init__                   232L  0C   11m  CC=2      ←0
   │ verify                     228L  1C    7m  CC=10     ←1
   │ todo_parser                223L  2C    8m  CC=11     ←1
-  │ classifier                 219L  0C    8m  CC=12     ←0
+  │ classifier                 219L  0C    8m  CC=12     ←1
   │ context                    207L  3C   14m  CC=7      ←0
-  │ todo_actions               200L  0C    7m  CC=13     ←1
   │ ide                        200L  3C   10m  CC=8      ←0
+  │ todo_actions               200L  0C    7m  CC=13     ←1
   │ microtask                  198L  0C   10m  CC=7      ←0
   │ verifier                   197L  3C    8m  CC=12     ←0
   │ fallback_backend           196L  2C    7m  CC=10     ←0
@@ -2162,6 +2137,7 @@ LAYERS:
   │ file_ops                    11L  0C    2m  CC=2      ←0
   │ pipeline                     5L  0C    0m  CC=0.0    ←0
   │ loop                         4L  0C    0m  CC=0.0    ←0
+  │ __init__                     4L  0C    0m  CC=0.0    ←0
   │ __init__                     4L  0C    0m  CC=0.0    ←0
   │ workflow                     2L  0C    0m  CC=0.0    ←0
   │
@@ -2359,15 +2335,15 @@ LAYERS:
   │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
   │
   project/                        CC̄=0.0    ←in:0  →out:0
-  │ !! calls.yaml                6498L  0C    0m  CC=0.0    ←0
-  │ !! map.toon.yaml             1434L  0C  451m  CC=0.0    ←8
-  │ !! calls.toon.yaml            633L  0C    0m  CC=0.0    ←0
-  │ !! analysis.toon.yaml         507L  0C    0m  CC=0.0    ←0
-  │ duplication.toon.yaml      409L  0C    0m  CC=0.0    ←0
+  │ !! calls.yaml                6454L  0C    0m  CC=0.0    ←0
+  │ !! map.toon.yaml             1436L  0C  461m  CC=0.0    ←7
+  │ !! calls.toon.yaml            626L  0C    0m  CC=0.0    ←0
+  │ analysis.toon.yaml         499L  0C    0m  CC=0.0    ←0
+  │ duplication.toon.yaml      360L  0C    0m  CC=0.0    ←0
   │ validation.toon.yaml       126L  0C    0m  CC=0.0    ←0
   │ analysis_refactored.toon.yaml   121L  0C    0m  CC=0.0    ←0
-  │ evolution.toon.yaml         82L  0C    0m  CC=0.0    ←0
-  │ project.toon.yaml           56L  0C    0m  CC=0.0    ←0
+  │ evolution.toon.yaml         66L  0C    0m  CC=0.0    ←0
+  │ project.toon.yaml           54L  0C    0m  CC=0.0    ←0
   │ prompt.txt                  47L  0C    0m  CC=0.0    ←0
   │
   testql-scenarios/               CC̄=0.0    ←in:0  →out:0
@@ -2466,53 +2442,53 @@ COUPLING:
     examples.41-god-module-splitting                                  53                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ──  !! fan-out
   CYCLES: none
   HUB: Taskfile/ (fan-in=2092)
-  HUB: project.map/ (fan-in=21)
   HUB: src.algitex/ (fan-in=19)
-  SMELL: examples.26-litellm-proxy-ollama/ fan-out=11 → split needed
-  SMELL: examples.02-algo-loop/ fan-out=22 → split needed
-  SMELL: examples.32-workspace-coordination/ fan-out=68 → split needed
-  SMELL: examples.06-telemetry/ fan-out=31 → split needed
-  SMELL: examples.01-quickstart/ fan-out=15 → split needed
-  SMELL: examples.04-ide-integration/ fan-out=17 → split needed
-  SMELL: examples.36-dashboard/ fan-out=45 → split needed
-  SMELL: examples.21-aider-cli-ollama/ fan-out=17 → split needed
-  SMELL: examples.09-workspace/ fan-out=73 → split needed
-  SMELL: examples.30-parallel-execution/ fan-out=59 → split needed
-  SMELL: examples.40-three-tier-autofix/ fan-out=60 → split needed
-  SMELL: examples.22-claude-code-ollama/ fan-out=12 → split needed
-  SMELL: examples.10-cicd/ fan-out=66 → split needed
-  SMELL: examples.15-github-mcp/ fan-out=24 → split needed
-  SMELL: examples.39-microtask-pipeline/ fan-out=46 → split needed
-  SMELL: examples.19-local-mcp-tools/ fan-out=22 → split needed
-  SMELL: examples.43-code-health/ fan-out=51 → split needed
-  SMELL: examples.17-docker-workflow/ fan-out=28 → split needed
-  SMELL: examples.11-aider-mcp/ fan-out=17 → split needed
-  SMELL: examples.18-ollama-local/ fan-out=61 → split needed
-  SMELL: examples.35-sprint3-patterns/ fan-out=36 → split needed
-  SMELL: examples.38-new-modules/ fan-out=37 → split needed
-  SMELL: examples.33-hybrid-autofix/ fan-out=48 → split needed
-  SMELL: examples.05-cost-tracking/ fan-out=14 → split needed
-  SMELL: examples.37-benchmarks/ fan-out=60 → split needed
-  SMELL: examples.42-duplicate-removal/ fan-out=68 → split needed
-  SMELL: examples.14-docker-mcp/ fan-out=27 → split needed
-  SMELL: examples.24-ollama-batch/ fan-out=13 → split needed
-  SMELL: examples.28-mcp-orchestration/ fan-out=26 → split needed
-  SMELL: examples.08-feedback/ fan-out=57 → split needed
-  SMELL: examples.27-unified-autofix/ fan-out=21 → split needed
-  SMELL: examples.16-test-workflow/ fan-out=28 → split needed
-  SMELL: examples.12-filesystem-mcp/ fan-out=22 → split needed
-  SMELL: examples.44-plugin-system/ fan-out=64 → split needed
-  SMELL: examples.41-god-module-splitting/ fan-out=53 → split needed
-  SMELL: examples.34-batch-fix/ fan-out=30 → split needed
-  SMELL: examples.13-vallm/ fan-out=23 → split needed
-  SMELL: examples.03-pipeline/ fan-out=10 → split needed
-  SMELL: examples.20-self-hosted-pipeline/ fan-out=45 → split needed
-  SMELL: scripts/ fan-out=10 → split needed
+  HUB: project.map/ (fan-in=18)
   SMELL: examples.31-abpr-workflow/ fan-out=81 → split needed
-  SMELL: src.algitex/ fan-out=522 → split needed
-  SMELL: examples.07-context/ fan-out=53 → split needed
+  SMELL: examples.22-claude-code-ollama/ fan-out=12 → split needed
+  SMELL: examples.40-three-tier-autofix/ fan-out=60 → split needed
+  SMELL: examples.02-algo-loop/ fan-out=22 → split needed
+  SMELL: examples.35-sprint3-patterns/ fan-out=36 → split needed
+  SMELL: examples.03-pipeline/ fan-out=10 → split needed
+  SMELL: examples.13-vallm/ fan-out=23 → split needed
   SMELL: examples.25-local-model-comparison/ fan-out=16 → split needed
+  SMELL: examples.32-workspace-coordination/ fan-out=68 → split needed
+  SMELL: examples.14-docker-mcp/ fan-out=27 → split needed
+  SMELL: examples.10-cicd/ fan-out=66 → split needed
+  SMELL: examples.07-context/ fan-out=53 → split needed
+  SMELL: examples.24-ollama-batch/ fan-out=13 → split needed
+  SMELL: src.algitex/ fan-out=519 → split needed
+  SMELL: examples.43-code-health/ fan-out=51 → split needed
+  SMELL: examples.12-filesystem-mcp/ fan-out=22 → split needed
+  SMELL: examples.11-aider-mcp/ fan-out=17 → split needed
+  SMELL: examples.26-litellm-proxy-ollama/ fan-out=11 → split needed
   SMELL: examples.23-continue-dev-ollama/ fan-out=18 → split needed
+  SMELL: examples.20-self-hosted-pipeline/ fan-out=45 → split needed
+  SMELL: examples.30-parallel-execution/ fan-out=59 → split needed
+  SMELL: examples.17-docker-workflow/ fan-out=28 → split needed
+  SMELL: examples.04-ide-integration/ fan-out=17 → split needed
+  SMELL: examples.38-new-modules/ fan-out=37 → split needed
+  SMELL: examples.05-cost-tracking/ fan-out=14 → split needed
+  SMELL: examples.06-telemetry/ fan-out=31 → split needed
+  SMELL: examples.41-god-module-splitting/ fan-out=53 → split needed
+  SMELL: examples.37-benchmarks/ fan-out=60 → split needed
+  SMELL: examples.34-batch-fix/ fan-out=30 → split needed
+  SMELL: examples.39-microtask-pipeline/ fan-out=46 → split needed
+  SMELL: examples.16-test-workflow/ fan-out=28 → split needed
+  SMELL: scripts/ fan-out=10 → split needed
+  SMELL: examples.42-duplicate-removal/ fan-out=68 → split needed
+  SMELL: examples.27-unified-autofix/ fan-out=21 → split needed
+  SMELL: examples.36-dashboard/ fan-out=45 → split needed
+  SMELL: examples.18-ollama-local/ fan-out=61 → split needed
+  SMELL: examples.44-plugin-system/ fan-out=64 → split needed
+  SMELL: examples.21-aider-cli-ollama/ fan-out=17 → split needed
+  SMELL: examples.15-github-mcp/ fan-out=24 → split needed
+  SMELL: examples.09-workspace/ fan-out=73 → split needed
+  SMELL: examples.01-quickstart/ fan-out=15 → split needed
+  SMELL: examples.08-feedback/ fan-out=57 → split needed
+  SMELL: examples.28-mcp-orchestration/ fan-out=26 → split needed
+  SMELL: examples.19-local-mcp-tools/ fan-out=22 → split needed
+  SMELL: examples.33-hybrid-autofix/ fan-out=48 → split needed
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon
@@ -2522,15 +2498,15 @@ EXTERNAL:
 ### Duplication (`project/duplication.toon.yaml`)
 
 ```toon markpact:analysis path=project/duplication.toon.yaml
-# redup/duplication | 45 groups | 196f 33332L | 2026-04-25
+# redup/duplication | 45 groups | 196f 33372L | 2026-04-25
 
 SUMMARY:
   files_scanned: 196
-  total_lines:   33332
+  total_lines:   33372
   dup_groups:    45
   dup_fragments: 119
   saved_lines:   881
-  scan_ms:       4870
+  scan_ms:       6514
 
 HOTSPOTS[7] (files with most duplication):
   examples/34-batch-fix/main.py  dup=131L  groups=1  frags=3  (0.4%)
@@ -2596,8 +2572,8 @@ DUPLICATES[45] (ranked by impact):
       src/algitex/cli/__init__.py:120-122  (benchmark)
       src/algitex/cli/__init__.py:126-128  (dashboard)
   [2f3dff302f70b194]   STRU  _process_fstring_batch  L=26 N=2 saved=26 sim=1.00
-      src/algitex/todo/fixer.py:341-366  (_process_fstring_batch)
-      src/algitex/todo/fixer.py:369-394  (_process_exec_batch)
+      src/algitex/todo/fixer.py:365-390  (_process_fstring_batch)
+      src/algitex/todo/fixer.py:393-418  (_process_exec_batch)
   [5107e45da0c04760]   STRU  demo_detection_with_redup  L=22 N=2 saved=22 sim=1.00
       examples/42-duplicate-removal/main.py:63-84  (demo_detection_with_redup)
       examples/42-duplicate-removal/main.py:134-163  (demo_algitex_integration)
@@ -2887,44 +2863,36 @@ METRICS-TARGET:
 ### Evolution / Churn (`project/evolution.toon.yaml`)
 
 ```toon markpact:analysis path=project/evolution.toon.yaml
-# code2llm/evolution | 1501 func | 117f | 2026-04-25
+# code2llm/evolution | 1523 func | 117f | 2026-04-25
 
-NEXT[6] (ranked by impact):
+NEXT[4] (ranked by impact):
   [1] !! SPLIT           src/algitex/cli/todo.py
-      WHY: 1059L, 0 classes, max CC=15
-      EFFORT: ~4h  IMPACT: 15885
+      WHY: 1075L, 0 classes, max CC=17
+      EFFORT: ~4h  IMPACT: 18275
 
-  [2] !! SPLIT           src/algitex/todo/fixer.py
-      WHY: 530L, 1 classes, max CC=25
-      EFFORT: ~4h  IMPACT: 13250
-
-  [3] !! SPLIT           src/algitex/tools/autofix/batch_backend.py
+  [2] !! SPLIT           src/algitex/tools/autofix/batch_backend.py
       WHY: 802L, 2 classes, max CC=11
       EFFORT: ~4h  IMPACT: 8822
 
-  [4] !  SPLIT-FUNC      _run_with_dashboard  CC=15  fan=29
-      WHY: CC=15 exceeds 15
-      EFFORT: ~1h  IMPACT: 435
+  [3] !! SPLIT           src/algitex/todo/fixer.py
+      WHY: 554L, 1 classes, max CC=12
+      EFFORT: ~4h  IMPACT: 6648
 
-  [5] !! SPLIT-FUNC      fix_file  CC=25  fan=17
-      WHY: CC=25 exceeds 15
-      EFFORT: ~1h  IMPACT: 425
-
-  [6] !  SPLIT-FUNC      todo_hybrid  CC=15  fan=14
-      WHY: CC=15 exceeds 15
-      EFFORT: ~1h  IMPACT: 210
+  [4] !  SPLIT-FUNC      _run_micro_dashboard  CC=17  fan=13
+      WHY: CC=17 exceeds 15
+      EFFORT: ~1h  IMPACT: 221
 
 
 RISKS[3]:
-  ⚠ Splitting src/algitex/cli/todo.py may break 25 import paths
+  ⚠ Splitting src/algitex/cli/todo.py may break 33 import paths
   ⚠ Splitting src/algitex/tools/autofix/batch_backend.py may break 19 import paths
-  ⚠ Splitting src/algitex/todo/fixer.py may break 17 import paths
+  ⚠ Splitting src/algitex/todo/fixer.py may break 21 import paths
 
 METRICS-TARGET:
   CC̄:          2.4 → ≤1.7
-  max-CC:      25 → ≤12
+  max-CC:      17 → ≤8
   god-modules: 4 → 0
-  high-CC(≥15): 4 → ≤2
+  high-CC(≥15): 1 → ≤0
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -2952,7 +2920,7 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=2.5 → now CC̄=2.4
+  prev CC̄=2.4 → now CC̄=2.4
 ```
 
 ### Validation (`project/validation.toon.yaml`)

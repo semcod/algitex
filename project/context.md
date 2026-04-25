@@ -6,25 +6,25 @@
 - **Primary Language**: python
 - **Languages**: python: 192, shell: 27, yaml: 20, yml: 4, txt: 2
 - **Analysis Mode**: static
-- **Total Functions**: 1777
+- **Total Functions**: 1799
 - **Total Classes**: 182
 - **Modules**: 316
-- **Entry Points**: 1513
+- **Entry Points**: 1523
 
 ## Architecture by Module
 
 ### project.map.toon
-- **Functions**: 521
+- **Functions**: 531
 - **File**: `map.toon.yaml`
+
+### src.algitex.cli.todo
+- **Functions**: 33
+- **File**: `todo.py`
 
 ### src.algitex.microtask.executor
 - **Functions**: 32
 - **Classes**: 2
 - **File**: `executor.py`
-
-### src.algitex.cli.todo
-- **Functions**: 25
-- **File**: `todo.py`
 
 ### src.algitex.dashboard
 - **Functions**: 24
@@ -35,6 +35,11 @@
 - **Functions**: 22
 - **Classes**: 1
 - **File**: `__init__.py`
+
+### src.algitex.todo.fixer
+- **Functions**: 21
+- **Classes**: 1
+- **File**: `fixer.py`
 
 ### src.algitex.tools.workspace
 - **Functions**: 20
@@ -61,11 +66,6 @@
 - **Classes**: 4
 - **File**: `benchmark.py`
 
-### src.algitex.tools.autofix.batch_backend
-- **Functions**: 19
-- **Classes**: 2
-- **File**: `batch_backend.py`
-
 ### src.algitex.workflows
 - **Functions**: 19
 - **Classes**: 3
@@ -91,6 +91,11 @@
 - **Classes**: 6
 - **File**: `benchmark.py`
 
+### src.algitex.tools.mcp
+- **Functions**: 17
+- **Classes**: 1
+- **File**: `mcp.py`
+
 ### src.algitex.tools.docker_transport
 - **Functions**: 17
 - **Classes**: 1
@@ -101,15 +106,10 @@
 - **Classes**: 3
 - **File**: `batch_logger.py`
 
-### src.algitex.tools.mcp
-- **Functions**: 17
+### src.algitex.tools.config
+- **Functions**: 16
 - **Classes**: 1
-- **File**: `mcp.py`
-
-### src.algitex.todo.fixer
-- **Functions**: 17
-- **Classes**: 1
-- **File**: `fixer.py`
+- **File**: `config.py`
 
 ## Key Entry Points
 
@@ -152,10 +152,6 @@ Zamiast wykonywać każde zadanie osobno, BatchFix grupuje podobne problemy
 ### examples.18-ollama-local.main.main
 - **Calls**: Taskfile.print, Taskfile.print, Taskfile.print, Taskfile.print, Taskfile.print, examples.18-ollama-local.main.list_models, examples.18-ollama-local.main.demo_code_generation, examples.18-ollama-local.main.demo_code_analysis
 
-### src.algitex.cli.todo.todo_hybrid
-> Autofix: LLM-based code fixes (use --hybrid for mechanical + LLM).
-- **Calls**: command, argument, option, option, option, option, option, option
-
 ### examples.16-test-workflow.main.demo_test_workflow
 > Demonstrate test workflow.
 - **Calls**: Taskfile.print, examples.16-test-workflow.main.create_sample_project, Taskfile.print, Taskfile.print, project_dir.rglob, Taskfile.print, Taskfile.print, Taskfile.print
@@ -168,15 +164,15 @@ Zamiast wykonywać każde zadanie osobno, BatchFix grupuje podobne problemy
 > Demonstrate real code validation.
 - **Calls**: Taskfile.print, examples.13-vallm.main.create_sample_code, Taskfile.print, Taskfile.print, Taskfile.print, Taskfile.print, Taskfile.print, Taskfile.print
 
-### src.algitex.tools.autofix.batch_backend.backend.BatchFixBackend.fix_batch
-- **Calls**: time.time, self._group_tasks, len, Taskfile.print, Taskfile.print, Taskfile.print, self._verify_tasks_exist, Taskfile.print
-
 ### src.algitex.tools.autofix.batch_backend.BatchFixBackend.fix_batch
 > Wykonaj wszystkie zadania w batch z równoległym przetwarzaniem.
 
 Args:
     tasks: Lista zadań do wykonania
     max_parallel: Liczba równoległych grup 
+- **Calls**: time.time, self._group_tasks, len, Taskfile.print, Taskfile.print, Taskfile.print, self._verify_tasks_exist, Taskfile.print
+
+### src.algitex.tools.autofix.batch_backend.backend.BatchFixBackend.fix_batch
 - **Calls**: time.time, self._group_tasks, len, Taskfile.print, Taskfile.print, Taskfile.print, self._verify_tasks_exist, Taskfile.print
 
 ### examples.07-context.main.basic_context_example
@@ -247,6 +243,9 @@ W
 > Verify TODO.md against actual code using prefact.
 - **Calls**: console.print, console.print, Path, todo_path.read_text, todo_content.splitlines, console.print, src.algitex.cli.todo_verify._validate_tasks, console.print
 
+### examples.30-parallel-execution.parallel_refactoring.main
+- **Calls**: Project, p.analyze, Taskfile.print, RegionExtractor, extractor.extract_all, Taskfile.print, TaskPartitioner, partitioner.partition
+
 ## Process Flows
 
 Key execution flows identified:
@@ -276,12 +275,7 @@ demo_docker_operations [examples.14-docker-mcp.main]
   └─ →> print
 ```
 
-### Flow 5: todo_hybrid
-```
-todo_hybrid [src.algitex.cli.todo]
-```
-
-### Flow 6: demo_test_workflow
+### Flow 5: demo_test_workflow
 ```
 demo_test_workflow [examples.16-test-workflow.main]
   └─> create_sample_project
@@ -289,14 +283,14 @@ demo_test_workflow [examples.16-test-workflow.main]
   └─ →> print
 ```
 
-### Flow 7: abpr_pipeline
+### Flow 6: abpr_pipeline
 ```
 abpr_pipeline [examples.31-abpr-workflow.abpr_pipeline]
   └─ →> print
   └─ →> print
 ```
 
-### Flow 8: demo_validation
+### Flow 7: demo_validation
 ```
 demo_validation [examples.13-vallm.main]
   └─> create_sample_code
@@ -304,17 +298,22 @@ demo_validation [examples.13-vallm.main]
   └─ →> print
 ```
 
-### Flow 9: fix_batch
+### Flow 8: fix_batch
 ```
-fix_batch [src.algitex.tools.autofix.batch_backend.backend.BatchFixBackend]
+fix_batch [src.algitex.tools.autofix.batch_backend.BatchFixBackend]
   └─ →> print
   └─ →> print
 ```
 
-### Flow 10: basic_context_example
+### Flow 9: basic_context_example
 ```
 basic_context_example [examples.07-context.main]
   └─ →> print
+```
+
+### Flow 10: dashboard_monitor
+```
+dashboard_monitor [src.algitex.cli.dashboard]
 ```
 
 ## Key Classes
@@ -348,6 +347,11 @@ Args:
 - **Methods**: 18
 - **Key Methods**: src.algitex.tools.autofix.AutoFix.__init__, src.algitex.tools.autofix.AutoFix.ollama_service, src.algitex.tools.autofix.AutoFix.ollama_backend, src.algitex.tools.autofix.AutoFix.aider_backend, src.algitex.tools.autofix.AutoFix.proxy_backend, src.algitex.tools.autofix.AutoFix.check_backends, src.algitex.tools.autofix.AutoFix.choose_backend, src.algitex.tools.autofix.AutoFix._convert_task, src.algitex.tools.autofix.AutoFix.mark_task_done, src.algitex.tools.autofix.AutoFix.fix_with_ollama
 
+### src.algitex.tools.mcp.MCPOrchestrator
+> Orchestrates multiple MCP services.
+- **Methods**: 17
+- **Key Methods**: src.algitex.tools.mcp.MCPOrchestrator.__init__, src.algitex.tools.mcp.MCPOrchestrator._setup_signal_handlers, src.algitex.tools.mcp.MCPOrchestrator._register_default_services, src.algitex.tools.mcp.MCPOrchestrator.add_service, src.algitex.tools.mcp.MCPOrchestrator.add_custom_service, src.algitex.tools.mcp.MCPOrchestrator.start_service, src.algitex.tools.mcp.MCPOrchestrator.stop_service, src.algitex.tools.mcp.MCPOrchestrator.restart_service, src.algitex.tools.mcp.MCPOrchestrator.start_all, src.algitex.tools.mcp.MCPOrchestrator.stop_all
+
 ### src.algitex.tools.workspace.Workspace
 > Manage multiple repos as a single workspace.
 - **Methods**: 17
@@ -357,11 +361,6 @@ Args:
 > Parse and execute Propact Markdown workflows.
 - **Methods**: 17
 - **Key Methods**: src.algitex.propact.Workflow.__init__, src.algitex.propact.Workflow.parse, src.algitex.propact.Workflow._extract_steps_from_content, src.algitex.propact.Workflow.validate, src.algitex.propact.Workflow._execute_step, src.algitex.propact.Workflow._update_result, src.algitex.propact.Workflow._handle_step_failure, src.algitex.propact.Workflow.execute, src.algitex.propact.Workflow.status, src.algitex.propact.Workflow._exec_shell
-
-### src.algitex.tools.mcp.MCPOrchestrator
-> Orchestrates multiple MCP services.
-- **Methods**: 17
-- **Key Methods**: src.algitex.tools.mcp.MCPOrchestrator.__init__, src.algitex.tools.mcp.MCPOrchestrator._setup_signal_handlers, src.algitex.tools.mcp.MCPOrchestrator._register_default_services, src.algitex.tools.mcp.MCPOrchestrator.add_service, src.algitex.tools.mcp.MCPOrchestrator.add_custom_service, src.algitex.tools.mcp.MCPOrchestrator.start_service, src.algitex.tools.mcp.MCPOrchestrator.stop_service, src.algitex.tools.mcp.MCPOrchestrator.restart_service, src.algitex.tools.mcp.MCPOrchestrator.start_all, src.algitex.tools.mcp.MCPOrchestrator.stop_all
 
 ### src.algitex.dashboard.LiveDashboard
 > Live Rich dashboard for monitoring algitex operations.
@@ -616,12 +615,11 @@ Functions exposed as public API (no underscore prefix):
 - `examples.14-docker-mcp.main.demo_docker_operations` - 40 calls
 - `examples.05-cost-tracking.main.main` - 40 calls
 - `examples.18-ollama-local.main.main` - 39 calls
-- `src.algitex.cli.todo.todo_hybrid` - 38 calls
 - `examples.16-test-workflow.main.demo_test_workflow` - 37 calls
 - `examples.31-abpr-workflow.abpr_pipeline.abpr_pipeline` - 36 calls
 - `examples.13-vallm.main.demo_validation` - 35 calls
-- `src.algitex.tools.autofix.batch_backend.backend.BatchFixBackend.fix_batch` - 35 calls
 - `src.algitex.tools.autofix.batch_backend.BatchFixBackend.fix_batch` - 35 calls
+- `src.algitex.tools.autofix.batch_backend.backend.BatchFixBackend.fix_batch` - 35 calls
 - `examples.07-context.main.basic_context_example` - 34 calls
 - `src.algitex.cli.dashboard.dashboard_monitor` - 34 calls
 - `examples.02-algo-loop.main.main` - 33 calls
@@ -642,10 +640,11 @@ Functions exposed as public API (no underscore prefix):
 - `examples.04-ide-integration.main.main` - 26 calls
 - `examples.25-local-model-comparison.main.main` - 26 calls
 - `examples.07-context.main.prompt_engineering_example` - 26 calls
-- `src.algitex.todo.fixer.fix_file` - 26 calls
 - `examples.07-context.main.context_optimization_example` - 25 calls
 - `src.algitex.tools.ollama.OllamaClient.chat` - 25 calls
 - `src.algitex.cli.metrics.metrics_cache` - 25 calls
+- `examples.32-workspace-coordination.workspace_parallel.main` - 24 calls
+- `examples.08-feedback.main.feedback_loop_simulation` - 24 calls
 
 ## System Interactions
 
@@ -670,9 +669,6 @@ graph TD
     demo_docker_operatio --> create_sample_docker
     demo_docker_operatio --> iterdir
     main --> Tickets
-    todo_hybrid --> command
-    todo_hybrid --> argument
-    todo_hybrid --> option
     demo_test_workflow --> print
     demo_test_workflow --> create_sample_projec
     demo_test_workflow --> rglob
@@ -683,6 +679,9 @@ graph TD
     demo_validation --> print
     demo_validation --> create_sample_code
     fix_batch --> time
+    fix_batch --> _group_tasks
+    fix_batch --> len
+    fix_batch --> print
 ```
 
 ## Reverse Engineering Guidelines

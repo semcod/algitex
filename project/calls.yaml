@@ -1,199 +1,38 @@
 project: /home/tom/github/semcod/algitex
 generated_from: code2llm call graph analysis
 stats:
-  total_nodes: 417
+  total_nodes: 411
   total_edges: 500
-  modules_count: 122
+  modules_count: 120
 nodes:
-  examples.06-telemetry.main.budget_tracking_example:
-    name: budget_tracking_example
-    module: examples.06-telemetry.main
-    line: 151
-    cyclomatic_complexity: 3
-    calls_out: 10
-    calls_in: 0
-  examples.44-plugin-system.main.demo_hook_system:
-    name: demo_hook_system
-    module: examples.44-plugin-system.main
-    line: 185
-    cyclomatic_complexity: 2
-    calls_out: 5
-    calls_in: 1
-  src.algitex.todo.benchmark.BenchmarkResult.print_report:
-    name: print_report
-    module: src.algitex.todo.benchmark
-    line: 54
-    cyclomatic_complexity: 4
-    calls_out: 18
-    calls_in: 0
-  src.algitex.tools.logging.log_time:
-    name: log_time
-    module: src.algitex.tools.logging
-    line: 56
-    cyclomatic_complexity: 1
-    calls_out: 8
-    calls_in: 0
-  examples.20-self-hosted-pipeline.buggy_code.get_stored_password:
-    name: get_stored_password
-    module: examples.20-self-hosted-pipeline.buggy_code
-    line: 52
+  src.algitex.tools.cicd.create_quality_gate_config:
+    name: create_quality_gate_config
+    module: src.algitex.tools.cicd
+    line: 383
     cyclomatic_complexity: 1
     calls_out: 0
     calls_in: 1
-  src.algitex.tools.services.ServiceChecker._print_status_details:
-    name: _print_status_details
-    module: src.algitex.tools.services
-    line: 290
-    cyclomatic_complexity: 8
-    calls_out: 9
+  src.algitex.tools.autofix.fallback_backend.FallbackBackend.__init__:
+    name: __init__
+    module: src.algitex.tools.autofix.fallback_backend
+    line: 46
+    cyclomatic_complexity: 3
+    calls_out: 2
     calls_in: 0
-  examples.32-workspace-coordination.main.load_workspace_config:
-    name: load_workspace_config
-    module: examples.32-workspace-coordination.main
-    line: 17
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 1
-  src.algitex.todo.micro.MicroFixer.fix_tasks_detailed:
-    name: fix_tasks_detailed
-    module: src.algitex.todo.micro
-    line: 169
-    cyclomatic_complexity: 12
-    calls_out: 13
-    calls_in: 0
-  src.algitex.tools.autofix.batch_backend.backend.BatchFixBackend.fix_batch:
-    name: fix_batch
-    module: src.algitex.tools.autofix.batch_backend.backend
-    line: 41
-    cyclomatic_complexity: 10
-    calls_out: 35
-    calls_in: 0
-  src.algitex.todo.hybrid.HybridAutofix.fix_complex:
-    name: fix_complex
-    module: src.algitex.todo.hybrid
-    line: 178
-    cyclomatic_complexity: 12
-    calls_out: 14
-    calls_in: 0
-  src.algitex.benchmark.TierBenchmark.bench_algorithmic_fix:
-    name: bench_algorithmic_fix
-    module: src.algitex.benchmark
-    line: 261
-    cyclomatic_complexity: 2
-    calls_out: 9
-    calls_in: 0
-  examples.42-duplicate-removal.main.demo_extraction_strategy:
-    name: demo_extraction_strategy
-    module: examples.42-duplicate-removal.main
-    line: 87
-    cyclomatic_complexity: 2
-    calls_out: 9
-    calls_in: 1
-  examples.18-ollama-local.main.demo_code_analysis:
-    name: demo_code_analysis
-    module: examples.18-ollama-local.main
-    line: 130
-    cyclomatic_complexity: 5
-    calls_out: 17
-    calls_in: 1
-  examples.08-feedback.main.feedback_loop_simulation:
-    name: feedback_loop_simulation
-    module: examples.08-feedback.main
-    line: 167
-    cyclomatic_complexity: 2
-    calls_out: 24
-    calls_in: 0
-  src.algitex.cli.microtask._print_task_table:
-    name: _print_task_table
+  src.algitex.cli.microtask._print_plan_table:
+    name: _print_plan_table
     module: src.algitex.cli.microtask
-    line: 119
-    cyclomatic_complexity: 4
+    line: 142
+    cyclomatic_complexity: 3
     calls_out: 12
     calls_in: 1
-  src.algitex.todo.micro_utils.normalise_model_name:
-    name: normalise_model_name
-    module: src.algitex.todo.micro_utils
-    line: 40
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 1
-  src.algitex.tools.cicd.init_ci_cd:
-    name: init_ci_cd
-    module: src.algitex.tools.cicd
-    line: 359
-    cyclomatic_complexity: 3
-    calls_out: 13
-    calls_in: 0
-  src.algitex.benchmark.BenchmarkRunner.print_report:
-    name: print_report
-    module: src.algitex.benchmark
-    line: 155
-    cyclomatic_complexity: 5
-    calls_out: 10
-    calls_in: 0
-  examples.32-workspace-coordination.main._show_planning_phase:
-    name: _show_planning_phase
-    module: examples.32-workspace-coordination.main
-    line: 122
-    cyclomatic_complexity: 6
-    calls_out: 16
-    calls_in: 1
-  src.algitex.microtask.group_tasks_by_file:
-    name: group_tasks_by_file
-    module: src.algitex.microtask
-    line: 183
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 3
-  examples.38-new-modules.main.main:
-    name: main
-    module: examples.38-new-modules.main
-    line: 120
-    cyclomatic_complexity: 1
-    calls_out: 13
-    calls_in: 0
-  examples.08-feedback.main.escalation_scenarios:
-    name: escalation_scenarios
-    module: examples.08-feedback.main
-    line: 245
-    cyclomatic_complexity: 8
-    calls_out: 16
-    calls_in: 0
-  src.algitex.cli.microtask._shorten_path:
-    name: _shorten_path
-    module: src.algitex.cli.microtask
-    line: 192
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 2
-  examples.18-ollama-local.main.main:
-    name: main
-    module: examples.18-ollama-local.main
-    line: 190
-    cyclomatic_complexity: 7
-    calls_out: 39
-    calls_in: 0
-  docker.planfile-mcp.planfile_mcp_server.planfile_list_tickets:
-    name: planfile_list_tickets
-    module: docker.planfile-mcp.planfile_mcp_server
-    line: 102
-    cyclomatic_complexity: 7
+  src.algitex.todo.classify.classify_message:
+    name: classify_message
+    module: src.algitex.todo.classify
+    line: 121
+    cyclomatic_complexity: 9
     calls_out: 7
-    calls_in: 1
-  src.algitex.tools.require_tool:
-    name: require_tool
-    module: src.algitex.tools
-    line: 96
-    cyclomatic_complexity: 4
-    calls_out: 2
-    calls_in: 0
-  examples.09-workspace.main.cross_repo_planning_example:
-    name: cross_repo_planning_example
-    module: examples.09-workspace.main
-    line: 176
-    cyclomatic_complexity: 6
-    calls_out: 19
-    calls_in: 0
+    calls_in: 7
   examples.17-docker-workflow.main.check_required_env:
     name: check_required_env
     module: examples.17-docker-workflow.main
@@ -201,180 +40,26 @@ nodes:
     cyclomatic_complexity: 3
     calls_out: 6
     calls_in: 0
-  examples.07-context.main.prompt_engineering_example:
-    name: prompt_engineering_example
-    module: examples.07-context.main
-    line: 287
-    cyclomatic_complexity: 1
-    calls_out: 26
-    calls_in: 0
-  src.algitex.tools.analysis.Analyzer._run_code2llm:
-    name: _run_code2llm
-    module: src.algitex.tools.analysis
-    line: 93
+  src.algitex.todo.benchmark.benchmark_sequential:
+    name: benchmark_sequential
+    module: src.algitex.todo.benchmark
+    line: 108
     cyclomatic_complexity: 4
-    calls_out: 13
-    calls_in: 0
-  examples.37-benchmarks.main.demo_benchmark_memory:
-    name: demo_benchmark_memory
-    module: examples.37-benchmarks.main
-    line: 55
-    cyclomatic_complexity: 1
-    calls_out: 10
-    calls_in: 1
-  examples.35-sprint3-patterns.main.demo_dict_dispatch:
-    name: demo_dict_dispatch
-    module: examples.35-sprint3-patterns.main
-    line: 14
-    cyclomatic_complexity: 2
     calls_out: 6
-    calls_in: 1
-  src.algitex.todo.tiering.summarise_tasks:
-    name: summarise_tasks
-    module: src.algitex.todo.tiering
-    line: 114
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 0
-  src.algitex.tools.logging.verbose:
-    name: verbose
-    module: src.algitex.tools.logging
-    line: 79
-    cyclomatic_complexity: 1
-    calls_out: 12
-    calls_in: 0
-  src.algitex.tools.ide_claude.ClaudeCodeHelper.batch_fix:
-    name: batch_fix
-    module: src.algitex.tools.ide_claude
-    line: 82
-    cyclomatic_complexity: 3
-    calls_out: 6
-    calls_in: 0
-  src.algitex.tools.parallel.extractor.RegionExtractor._detect_shadow_conflicts:
-    name: _detect_shadow_conflicts
-    module: src.algitex.tools.parallel.extractor
-    line: 123
-    cyclomatic_complexity: 12
-    calls_out: 14
-    calls_in: 0
-  src.algitex.todo.micro.MicroFixer._apply_magic_name:
-    name: _apply_magic_name
-    module: src.algitex.todo.micro
-    line: 330
-    cyclomatic_complexity: 7
-    calls_out: 20
-    calls_in: 0
-  docker.vallm.vallm_mcp_server.validate_security:
-    name: validate_security
-    module: docker.vallm.vallm_mcp_server
-    line: 132
-    cyclomatic_complexity: 7
-    calls_out: 12
-    calls_in: 2
-  examples.33-hybrid-autofix.main._validate_env:
-    name: _validate_env
-    module: examples.33-hybrid-autofix.main
-    line: 168
-    cyclomatic_complexity: 7
-    calls_out: 20
-    calls_in: 1
-  src.algitex.tools.autofix.fallback_backend.FallbackBackend._mark_success:
-    name: _mark_success
-    module: src.algitex.tools.autofix.fallback_backend
-    line: 105
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 0
-  docker.proxym.proxym_mcp_server._call_openai:
-    name: _call_openai
-    module: docker.proxym.proxym_mcp_server
-    line: 194
-    cyclomatic_complexity: 3
-    calls_out: 13
-    calls_in: 1
-  src.algitex.cli.core._init_project_dir:
-    name: _init_project_dir
-    module: src.algitex.cli.core
-    line: 29
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 1
-  examples.39-microtask-pipeline.main.demo_microtask_classify:
-    name: demo_microtask_classify
-    module: examples.39-microtask-pipeline.main
-    line: 11
-    cyclomatic_complexity: 1
-    calls_out: 12
-    calls_in: 1
-  examples.32-workspace-coordination.main._show_execution_phase:
-    name: _show_execution_phase
-    module: examples.32-workspace-coordination.main
-    line: 140
-    cyclomatic_complexity: 4
-    calls_out: 13
-    calls_in: 1
-  examples.37-benchmarks.main.demo_benchmark_tiers:
-    name: demo_benchmark_tiers
-    module: examples.37-benchmarks.main
-    line: 40
-    cyclomatic_complexity: 1
-    calls_out: 10
-    calls_in: 1
-  src.algitex.tools.workspace.create_workspace_template:
-    name: create_workspace_template
-    module: src.algitex.tools.workspace
-    line: 298
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 1
-  examples.44-plugin-system.main.demo_creating_backend_plugin:
-    name: demo_creating_backend_plugin
-    module: examples.44-plugin-system.main
-    line: 139
-    cyclomatic_complexity: 1
-    calls_out: 11
-    calls_in: 1
-  src.algitex.todo.verify.verify_todos:
-    name: verify_todos
-    module: src.algitex.todo.verify
-    line: 32
-    cyclomatic_complexity: 1
-    calls_out: 3
     calls_in: 2
   project.map.toon.parse_todo:
     name: parse_todo
     module: project.map.toon
-    line: 985
+    line: 992
     cyclomatic_complexity: 0
     calls_out: 0
     calls_in: 8
-  examples.05-cost-tracking.main.main:
-    name: main
-    module: examples.05-cost-tracking.main
-    line: 15
-    cyclomatic_complexity: 8
-    calls_out: 40
-    calls_in: 0
-  docker.aider-mcp.aider_mcp_server.create_rest_api:
-    name: create_rest_api
-    module: docker.aider-mcp.aider_mcp_server
-    line: 97
-    cyclomatic_complexity: 1
-    calls_out: 13
-    calls_in: 1
-  docker.planfile-mcp.planfile_mcp_server.run_rest_server:
-    name: run_rest_server
-    module: docker.planfile-mcp.planfile_mcp_server
-    line: 255
-    cyclomatic_complexity: 1
-    calls_out: 7
-    calls_in: 0
-  src.algitex.shared_rules.SortedImportsRule.check:
-    name: check
-    module: src.algitex.shared_rules
-    line: 126
-    cyclomatic_complexity: 12
-    calls_out: 8
+  src.algitex.microtask.executor.MicroTaskExecutor._phase_llm:
+    name: _phase_llm
+    module: src.algitex.microtask.executor
+    line: 259
+    cyclomatic_complexity: 5
+    calls_out: 11
     calls_in: 0
   Taskfile.print:
     name: print
@@ -383,118 +68,125 @@ nodes:
     cyclomatic_complexity: 0
     calls_out: 0
     calls_in: 2092
-  src.algitex.tools.cicd.create_quality_gate_config:
-    name: create_quality_gate_config
-    module: src.algitex.tools.cicd
-    line: 383
-    cyclomatic_complexity: 1
-    calls_out: 0
+  src.algitex.tools.autofix.ollama_backend.OllamaBackend.fix:
+    name: fix
+    module: src.algitex.tools.autofix.ollama_backend
+    line: 35
+    cyclomatic_complexity: 6
+    calls_out: 18
+    calls_in: 0
+  examples.09-workspace.main._analyze_impact:
+    name: _analyze_impact
+    module: examples.09-workspace.main
+    line: 313
+    cyclomatic_complexity: 3
+    calls_out: 4
     calls_in: 1
-  src.algitex.tools.docker.DockerToolManager.list_tools:
-    name: list_tools
-    module: src.algitex.tools.docker
-    line: 259
+  examples.09-workspace.main.create_sample_workspace:
+    name: create_sample_workspace
+    module: examples.09-workspace.main
+    line: 17
     cyclomatic_complexity: 1
+    calls_out: 17
+    calls_in: 5
+  src.algitex.tools.logging.VerboseContext.__enter__:
+    name: __enter__
+    module: src.algitex.tools.logging
+    line: 138
+    cyclomatic_complexity: 2
     calls_out: 2
     calls_in: 0
-  docker.vallm.vallm_mcp_server.run_rest_server:
-    name: run_rest_server
-    module: docker.vallm.vallm_mcp_server
-    line: 340
-    cyclomatic_complexity: 1
-    calls_out: 7
+  src.algitex.cli.dashboard.dashboard_live:
+    name: dashboard_live
+    module: src.algitex.cli.dashboard
+    line: 21
+    cyclomatic_complexity: 6
+    calls_out: 13
     calls_in: 0
-  examples.42-duplicate-removal.main.demo_duplicate_problem:
-    name: demo_duplicate_problem
-    module: examples.42-duplicate-removal.main
-    line: 13
+  examples.04-ide-integration.main.main:
+    name: main
+    module: examples.04-ide-integration.main
+    line: 123
+    cyclomatic_complexity: 4
+    calls_out: 26
+    calls_in: 0
+  src.algitex.tools.discover_tools:
+    name: discover_tools
+    module: src.algitex.tools
+    line: 80
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 5
+  examples.32-workspace-coordination.main.load_workspace_config:
+    name: load_workspace_config
+    module: examples.32-workspace-coordination.main
+    line: 17
     cyclomatic_complexity: 1
-    calls_out: 11
+    calls_out: 3
     calls_in: 1
-  src.algitex.config._find_config:
-    name: _find_config
-    module: src.algitex.config
-    line: 133
-    cyclomatic_complexity: 5
+  src.algitex.tools.analysis.Analyzer._run_vallm:
+    name: _run_vallm
+    module: src.algitex.tools.analysis
+    line: 114
+    cyclomatic_complexity: 4
+    calls_out: 8
+    calls_in: 0
+  examples.39-microtask-pipeline.main.demo_microtask_plan:
+    name: demo_microtask_plan
+    module: examples.39-microtask-pipeline.main
+    line: 28
+    cyclomatic_complexity: 1
+    calls_out: 13
+    calls_in: 1
+  examples.43-code-health.main.demo_ci_integration:
+    name: demo_ci_integration
+    module: examples.43-code-health.main
+    line: 156
+    cyclomatic_complexity: 1
     calls_out: 5
     calls_in: 1
-  examples.09-workspace.main.cross_repo_analysis_example:
-    name: cross_repo_analysis_example
-    module: examples.09-workspace.main
-    line: 131
+  src.algitex.tools.autofix.batch_backend.BatchFixBackend._update_todo_mark_completed:
+    name: _update_todo_mark_completed
+    module: src.algitex.tools.autofix.batch_backend
+    line: 167
     cyclomatic_complexity: 9
-    calls_out: 16
-    calls_in: 0
-  src.algitex.tools.benchmark.ModelBenchmark._print_detailed:
-    name: _print_detailed
-    module: src.algitex.tools.benchmark
-    line: 416
-    cyclomatic_complexity: 4
-    calls_out: 10
-    calls_in: 0
-  src.algitex.benchmark.run_quick_benchmark:
-    name: run_quick_benchmark
-    module: src.algitex.benchmark
-    line: 363
-    cyclomatic_complexity: 3
-    calls_out: 19
-    calls_in: 2
-  src.algitex.tools.benchmark.BenchmarkResults.get_summary:
-    name: get_summary
-    module: src.algitex.tools.benchmark
-    line: 125
-    cyclomatic_complexity: 14
     calls_out: 17
     calls_in: 0
-  examples.12-filesystem-mcp.main.create_sample_files:
-    name: create_sample_files
-    module: examples.12-filesystem-mcp.main
-    line: 12
+  examples.41-god-module-splitting.main.demo_god_module_problem:
+    name: demo_god_module_problem
+    module: examples.41-god-module-splitting.main
+    line: 17
     cyclomatic_complexity: 1
-    calls_out: 7
+    calls_out: 9
     calls_in: 1
-  examples.09-workspace.main._analyze_parallel_execution:
-    name: _analyze_parallel_execution
-    module: examples.09-workspace.main
-    line: 322
+  src.algitex.tools.autofix.batch_backend.BatchFixBackend._build_batch_prompt:
+    name: _build_batch_prompt
+    module: src.algitex.tools.autofix.batch_backend
+    line: 534
     cyclomatic_complexity: 4
-    calls_out: 7
-    calls_in: 1
-  src.algitex.todo.verify._validate_task_against_file:
-    name: _validate_task_against_file
-    module: src.algitex.todo.verify
-    line: 136
-    cyclomatic_complexity: 10
-    calls_out: 8
-    calls_in: 1
-  project.map.toon.mark_tasks_completed:
-    name: mark_tasks_completed
-    module: project.map.toon
-    line: 1000
-    cyclomatic_complexity: 0
-    calls_out: 0
-    calls_in: 7
-  docker.vallm.vallm_mcp_server.validate_all:
-    name: validate_all
-    module: docker.vallm.vallm_mcp_server
-    line: 180
-    cyclomatic_complexity: 1
-    calls_out: 16
-    calls_in: 2
-  docker.code2llm.code2llm_mcp_server.generate_toon:
-    name: generate_toon
-    module: docker.code2llm.code2llm_mcp_server
-    line: 168
-    cyclomatic_complexity: 4
-    calls_out: 15
-    calls_in: 1
-  examples.44-plugin-system.main.demo_builtin_plugins:
-    name: demo_builtin_plugins
-    module: examples.44-plugin-system.main
-    line: 63
+    calls_out: 9
+    calls_in: 0
+  examples.35-sprint3-patterns.main.demo_dict_dispatch:
+    name: demo_dict_dispatch
+    module: examples.35-sprint3-patterns.main
+    line: 14
     cyclomatic_complexity: 2
-    calls_out: 7
+    calls_out: 6
     calls_in: 1
+  src.algitex.todo.benchmark.BenchmarkResult.print_report:
+    name: print_report
+    module: src.algitex.todo.benchmark
+    line: 54
+    cyclomatic_complexity: 4
+    calls_out: 18
+    calls_in: 0
+  src.algitex.tools.autofix.batch_backend.BatchFixBackend._create_backup:
+    name: _create_backup
+    module: src.algitex.tools.autofix.batch_backend
+    line: 205
+    cyclomatic_complexity: 5
+    calls_out: 12
+    calls_in: 0
   src.algitex.todo.tiering.partition_tasks:
     name: partition_tasks
     module: src.algitex.todo.tiering
@@ -502,47 +194,201 @@ nodes:
     cyclomatic_complexity: 2
     calls_out: 3
     calls_in: 0
-  examples.39-microtask-pipeline.main.main:
-    name: main
-    module: examples.39-microtask-pipeline.main
-    line: 83
-    cyclomatic_complexity: 1
-    calls_out: 13
+  src.algitex.cli.nlp.nlp_imports:
+    name: nlp_imports
+    module: src.algitex.cli.nlp
+    line: 31
+    cyclomatic_complexity: 2
+    calls_out: 15
     calls_in: 0
-  examples.41-god-module-splitting.main.demo_split_strategy:
-    name: demo_split_strategy
-    module: examples.41-god-module-splitting.main
-    line: 62
+  src.algitex.tools.config.ConfigManager.install_config:
+    name: install_config
+    module: src.algitex.tools.config
+    line: 43
+    cyclomatic_complexity: 5
+    calls_out: 12
+    calls_in: 0
+  examples.14-docker-mcp.main.create_sample_docker_project:
+    name: create_sample_docker_project
+    module: examples.14-docker-mcp.main
+    line: 13
     cyclomatic_complexity: 1
+    calls_out: 5
+    calls_in: 1
+  src.algitex.todo.micro_utils.find_import_insert_point:
+    name: find_import_insert_point
+    module: src.algitex.todo.micro_utils
+    line: 19
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 1
+  examples.38-new-modules.main.demo_combined_workflow:
+    name: demo_combined_workflow
+    module: examples.38-new-modules.main
+    line: 87
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 1
+  examples.33-hybrid-autofix.main.demo_dry_run:
+    name: demo_dry_run
+    module: examples.33-hybrid-autofix.main
+    line: 27
+    cyclomatic_complexity: 1
+    calls_out: 8
+    calls_in: 1
+  examples.08-feedback.main.escalation_scenarios:
+    name: escalation_scenarios
+    module: examples.08-feedback.main
+    line: 245
+    cyclomatic_complexity: 8
+    calls_out: 16
+    calls_in: 0
+  examples.28-mcp-orchestration.main.main:
+    name: main
+    module: examples.28-mcp-orchestration.main
+    line: 13
+    cyclomatic_complexity: 2
+    calls_out: 22
+    calls_in: 0
+  src.algitex.tools.logging.log_calls:
+    name: log_calls
+    module: src.algitex.tools.logging
+    line: 35
+    cyclomatic_complexity: 1
+    calls_out: 9
+    calls_in: 0
+  src.algitex.nlp.find_duplicate_blocks:
+    name: find_duplicate_blocks
+    module: src.algitex.nlp
+    line: 212
+    cyclomatic_complexity: 14
+    calls_out: 24
+    calls_in: 1
+  examples.36-dashboard.main.demo_dashboard_live:
+    name: demo_dashboard_live
+    module: examples.36-dashboard.main
+    line: 13
+    cyclomatic_complexity: 1
+    calls_out: 12
+    calls_in: 1
+  src.algitex.todo.verify._parse_todo_file:
+    name: _parse_todo_file
+    module: src.algitex.todo.verify
+    line: 67
+    cyclomatic_complexity: 4
+    calls_out: 9
+    calls_in: 1
+  examples.06-telemetry.main.context_manager_example:
+    name: context_manager_example
+    module: examples.06-telemetry.main
+    line: 88
+    cyclomatic_complexity: 2
+    calls_out: 11
+    calls_in: 0
+  src.algitex.todo.benchmark.compare_modes:
+    name: compare_modes
+    module: src.algitex.todo.benchmark
+    line: 201
+    cyclomatic_complexity: 4
+    calls_out: 15
+    calls_in: 1
+  src.algitex.tools.todo_parser.TodoParser._parse_prefact:
+    name: _parse_prefact
+    module: src.algitex.tools.todo_parser
+    line: 108
+    cyclomatic_complexity: 5
+    calls_out: 12
+    calls_in: 0
+  examples.28-mcp-orchestration.mcp_orchestrator.main:
+    name: main
+    module: examples.28-mcp-orchestration.mcp_orchestrator
+    line: 16
+    cyclomatic_complexity: 9
+    calls_out: 21
+    calls_in: 0
+  src.algitex.microtask.classifier._first_int:
+    name: _first_int
+    module: src.algitex.microtask.classifier
+    line: 195
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 2
+  examples.09-workspace.main._calculate_metrics:
+    name: _calculate_metrics
+    module: examples.09-workspace.main
+    line: 340
+    cyclomatic_complexity: 3
+    calls_out: 14
+    calls_in: 1
+  src.algitex.todo.hybrid.HybridAutofix.fix_complex:
+    name: fix_complex
+    module: src.algitex.todo.hybrid
+    line: 178
+    cyclomatic_complexity: 12
+    calls_out: 14
+    calls_in: 0
+  src.algitex.tools.todo_actions.determine_action:
+    name: determine_action
+    module: src.algitex.tools.todo_actions
+    line: 183
+    cyclomatic_complexity: 2
     calls_out: 2
     calls_in: 1
-  src.algitex.tools.context.ContextBuilder._find_related:
-    name: _find_related
-    module: src.algitex.tools.context
-    line: 106
+  src.algitex.tools.analysis._run_cli:
+    name: _run_cli
+    module: src.algitex.tools.analysis
+    line: 154
+    cyclomatic_complexity: 7
+    calls_out: 8
+    calls_in: 3
+  src.algitex.tools.config.ConfigManager.generate_env_file:
+    name: generate_env_file
+    module: src.algitex.tools.config
+    line: 231
     cyclomatic_complexity: 7
     calls_out: 12
     calls_in: 0
-  docker.code2llm.code2llm_mcp_server.run_rest_server:
-    name: run_rest_server
-    module: docker.code2llm.code2llm_mcp_server
-    line: 300
-    cyclomatic_complexity: 1
-    calls_out: 7
+  src.algitex.todo.micro.MicroFixer._apply_magic_name:
+    name: _apply_magic_name
+    module: src.algitex.todo.micro
+    line: 330
+    cyclomatic_complexity: 7
+    calls_out: 20
     calls_in: 0
-  src.algitex.config._merge_yaml:
-    name: _merge_yaml
-    module: src.algitex.config
-    line: 147
-    cyclomatic_complexity: 10
-    calls_out: 7
-    calls_in: 1
-  examples.08-feedback.main.basic_feedback_example:
-    name: basic_feedback_example
-    module: examples.08-feedback.main
-    line: 17
+  src.algitex.tools.ide_base.IDEHelper.setup_tool:
+    name: setup_tool
+    module: src.algitex.tools.ide_base
+    line: 66
+    cyclomatic_complexity: 5
+    calls_out: 8
+    calls_in: 0
+  src.algitex.cli.benchmark.benchmark_full:
+    name: benchmark_full
+    module: src.algitex.cli.benchmark
+    line: 119
+    cyclomatic_complexity: 3
+    calls_out: 16
+    calls_in: 0
+  src.algitex.tools.services.ServiceDependency.get_startup_order:
+    name: get_startup_order
+    module: src.algitex.tools.services
+    line: 379
+    cyclomatic_complexity: 2
+    calls_out: 6
+    calls_in: 0
+  docker.vallm.vallm_mcp_server.calculate_quality_score:
+    name: calculate_quality_score
+    module: docker.vallm.vallm_mcp_server
+    line: 270
     cyclomatic_complexity: 1
-    calls_out: 22
+    calls_out: 12
+    calls_in: 1
+  examples.13-vallm.main.demo_validation:
+    name: demo_validation
+    module: examples.13-vallm.main
+    line: 95
+    cyclomatic_complexity: 5
+    calls_out: 35
     calls_in: 0
   examples.36-dashboard.main.demo_dashboard_monitor:
     name: demo_dashboard_monitor
@@ -551,11 +397,431 @@ nodes:
     cyclomatic_complexity: 1
     calls_out: 10
     calls_in: 1
-  examples.44-plugin-system.main.demo_plugin_marketplace:
-    name: demo_plugin_marketplace
-    module: examples.44-plugin-system.main
-    line: 277
+  examples.03-pipeline.main.main:
+    name: main
+    module: examples.03-pipeline.main
+    line: 14
+    cyclomatic_complexity: 6
+    calls_out: 27
+    calls_in: 0
+  src.algitex.nlp.DocstringShortener.fix_path:
+    name: fix_path
+    module: src.algitex.nlp
+    line: 98
+    cyclomatic_complexity: 3
+    calls_out: 6
+    calls_in: 0
+  src.algitex.cli.nlp._print_dead_code:
+    name: _print_dead_code
+    module: src.algitex.cli.nlp
+    line: 77
     cyclomatic_complexity: 2
+    calls_out: 8
+    calls_in: 1
+  src.algitex.tools.ollama_cache.LLMCache.stats:
+    name: stats
+    module: src.algitex.tools.ollama_cache
+    line: 130
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 0
+  src.algitex.tools.context.ContextBuilder._find_related:
+    name: _find_related
+    module: src.algitex.tools.context
+    line: 106
+    cyclomatic_complexity: 7
+    calls_out: 12
+    calls_in: 0
+  src.algitex.cli.microtask._print_summary:
+    name: _print_summary
+    module: src.algitex.cli.microtask
+    line: 104
+    cyclomatic_complexity: 3
+    calls_out: 23
+    calls_in: 2
+  src.algitex.cli.nlp.nlp_dead_code:
+    name: nlp_dead_code
+    module: src.algitex.cli.nlp
+    line: 58
+    cyclomatic_complexity: 2
+    calls_out: 6
+    calls_in: 0
+  src.algitex.todo.verify._validate_task_against_file:
+    name: _validate_task_against_file
+    module: src.algitex.todo.verify
+    line: 136
+    cyclomatic_complexity: 10
+    calls_out: 8
+    calls_in: 1
+  src.algitex.tools.autofix.batch_backend.todo_utils.update_todo_mark_completed:
+    name: update_todo_mark_completed
+    module: src.algitex.tools.autofix.batch_backend.todo_utils
+    line: 7
+    cyclomatic_complexity: 9
+    calls_out: 17
+    calls_in: 1
+  examples.02-algo-loop.main.main:
+    name: main
+    module: examples.02-algo-loop.main
+    line: 17
+    cyclomatic_complexity: 11
+    calls_out: 33
+    calls_in: 0
+  src.algitex.tools.mcp.MCPOrchestrator.start_all:
+    name: start_all
+    module: src.algitex.tools.mcp
+    line: 205
+    cyclomatic_complexity: 10
+    calls_out: 9
+    calls_in: 0
+  src.algitex.tools.autofix.batch_backend.BatchFixBackend._validate_and_rollback:
+    name: _validate_and_rollback
+    module: src.algitex.tools.autofix.batch_backend
+    line: 741
+    cyclomatic_complexity: 11
+    calls_out: 22
+    calls_in: 0
+  src.algitex.nlp._ensure_trailing_newline:
+    name: _ensure_trailing_newline
+    module: src.algitex.nlp
+    line: 317
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 2
+  examples.33-hybrid-autofix.main.demo_benchmark:
+    name: demo_benchmark
+    module: examples.33-hybrid-autofix.main
+    line: 60
+    cyclomatic_complexity: 1
+    calls_out: 5
+    calls_in: 1
+  examples.37-benchmarks.main.demo_benchmark_full:
+    name: demo_benchmark_full
+    module: examples.37-benchmarks.main
+    line: 70
+    cyclomatic_complexity: 1
+    calls_out: 12
+    calls_in: 1
+  src.algitex.cli.microtask.microtask_run:
+    name: microtask_run
+    module: src.algitex.cli.microtask
+    line: 64
+    cyclomatic_complexity: 2
+    calls_out: 17
+    calls_in: 0
+  src.algitex.tools.todo_actions.get_action_handler:
+    name: get_action_handler
+    module: src.algitex.tools.todo_actions
+    line: 164
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  examples.40-three-tier-autofix.main.demo_tier_big:
+    name: demo_tier_big
+    module: examples.40-three-tier-autofix.main
+    line: 55
+    cyclomatic_complexity: 2
+    calls_out: 9
+    calls_in: 1
+  examples.35-sprint3-patterns.main.demo_pipeline_pattern:
+    name: demo_pipeline_pattern
+    module: examples.35-sprint3-patterns.main
+    line: 70
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 1
+  src.algitex.tools.autofix.fallback_backend.FallbackBackend.fix:
+    name: fix
+    module: src.algitex.tools.autofix.fallback_backend
+    line: 147
+    cyclomatic_complexity: 10
+    calls_out: 16
+    calls_in: 0
+  src.algitex.todo.repair._simple_fstring_rewrite:
+    name: _simple_fstring_rewrite
+    module: src.algitex.todo.repair
+    line: 102
+    cyclomatic_complexity: 1
+    calls_out: 13
+    calls_in: 1
+  src.algitex.cli.microtask._print_file_batches:
+    name: _print_file_batches
+    module: src.algitex.cli.microtask
+    line: 154
+    cyclomatic_complexity: 2
+    calls_out: 14
+    calls_in: 1
+  examples.43-code-health.main.demo_historical_tracking:
+    name: demo_historical_tracking
+    module: examples.43-code-health.main
+    line: 121
+    cyclomatic_complexity: 2
+    calls_out: 18
+    calls_in: 1
+  examples.30-parallel-execution.parallel_multi_tool.main:
+    name: main
+    module: examples.30-parallel-execution.parallel_multi_tool
+    line: 10
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 0
+  src.algitex.cli.core._print_tools_status:
+    name: _print_tools_status
+    module: src.algitex.cli.core
+    line: 42
+    cyclomatic_complexity: 5
+    calls_out: 14
+    calls_in: 1
+  src.algitex.tools.benchmark.ModelBenchmark._print_detailed:
+    name: _print_detailed
+    module: src.algitex.tools.benchmark
+    line: 416
+    cyclomatic_complexity: 4
+    calls_out: 10
+    calls_in: 0
+  src.algitex.dashboard.show_quick_dashboard:
+    name: show_quick_dashboard
+    module: src.algitex.dashboard
+    line: 378
+    cyclomatic_complexity: 3
+    calls_out: 17
+    calls_in: 1
+  src.algitex.tools.mcp.MCPOrchestrator.stop_service:
+    name: stop_service
+    module: src.algitex.tools.mcp
+    line: 161
+    cyclomatic_complexity: 6
+    calls_out: 11
+    calls_in: 0
+  src.algitex.todo.verify.verify_todos:
+    name: verify_todos
+    module: src.algitex.todo.verify
+    line: 32
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 2
+  src.algitex.cli.microtask.microtask_plan:
+    name: microtask_plan
+    module: src.algitex.cli.microtask
+    line: 38
+    cyclomatic_complexity: 3
+    calls_out: 11
+    calls_in: 0
+  src.algitex.todo.verifier.TodoVerifier.print_report:
+    name: print_report
+    module: src.algitex.todo.verifier
+    line: 159
+    cyclomatic_complexity: 4
+    calls_out: 11
+    calls_in: 0
+  src.algitex.tools.workspace.init_workspace:
+    name: init_workspace
+    module: src.algitex.tools.workspace
+    line: 309
+    cyclomatic_complexity: 1
+    calls_out: 8
+    calls_in: 1
+  examples.33-hybrid-autofix.main.demo_verify_first:
+    name: demo_verify_first
+    module: examples.33-hybrid-autofix.main
+    line: 48
+    cyclomatic_complexity: 1
+    calls_out: 7
+    calls_in: 1
+  src.algitex.todo.micro_utils.validate_python:
+    name: validate_python
+    module: src.algitex.todo.micro_utils
+    line: 64
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 2
+  src.algitex.tools.mcp.MCPOrchestrator.list_services:
+    name: list_services
+    module: src.algitex.tools.mcp
+    line: 354
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  src.algitex.tools.todo_runner.TodoRunner._execute_task:
+    name: _execute_task
+    module: src.algitex.tools.todo_runner
+    line: 239
+    cyclomatic_complexity: 6
+    calls_out: 16
+    calls_in: 0
+  src.algitex.cli.nlp.nlp_docstrings:
+    name: nlp_docstrings
+    module: src.algitex.cli.nlp
+    line: 21
+    cyclomatic_complexity: 1
+    calls_out: 6
+    calls_in: 0
+  examples.40-three-tier-autofix.main.demo_dashboard_integration:
+    name: demo_dashboard_integration
+    module: examples.40-three-tier-autofix.main
+    line: 96
+    cyclomatic_complexity: 1
+    calls_out: 10
+    calls_in: 1
+  src.algitex.microtask.classifier.classify_todo_file:
+    name: classify_todo_file
+    module: src.algitex.microtask.classifier
+    line: 96
+    cyclomatic_complexity: 5
+    calls_out: 9
+    calls_in: 3
+  examples.18-ollama-local.buggy_code.complex_function:
+    name: complex_function
+    module: examples.18-ollama-local.buggy_code
+    line: 49
+    cyclomatic_complexity: 6
+    calls_out: 6
+    calls_in: 0
+  examples.42-duplicate-removal.main.demo_prevention_strategies:
+    name: demo_prevention_strategies
+    module: examples.42-duplicate-removal.main
+    line: 191
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 1
+  docker.vallm.vallm_mcp_server.validate_security:
+    name: validate_security
+    module: docker.vallm.vallm_mcp_server
+    line: 132
+    cyclomatic_complexity: 7
+    calls_out: 12
+    calls_in: 2
+  examples.44-plugin-system.main.demo_hook_system:
+    name: demo_hook_system
+    module: examples.44-plugin-system.main
+    line: 185
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 1
+  src.algitex.cli.core._init_config:
+    name: _init_config
+    module: src.algitex.cli.core
+    line: 36
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 1
+  examples.39-microtask-pipeline.main.demo_microtask_run:
+    name: demo_microtask_run
+    module: examples.39-microtask-pipeline.main
+    line: 46
+    cyclomatic_complexity: 1
+    calls_out: 10
+    calls_in: 1
+  src.algitex.tools.workspace.Workspace.pull_all:
+    name: pull_all
+    module: src.algitex.tools.workspace
+    line: 103
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 0
+  src.algitex.config.Config.load:
+    name: load
+    module: src.algitex.config
+    line: 94
+    cyclomatic_complexity: 2
+    calls_out: 8
+    calls_in: 0
+  src.algitex.tools.workspace.Workspace._validate_dependencies:
+    name: _validate_dependencies
+    module: src.algitex.tools.workspace
+    line: 61
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 0
+  examples.18-ollama-local.main.demo_code_generation:
+    name: demo_code_generation
+    module: examples.18-ollama-local.main
+    line: 112
+    cyclomatic_complexity: 3
+    calls_out: 13
+    calls_in: 1
+  examples.07-context.main.basic_context_example:
+    name: basic_context_example
+    module: examples.07-context.main
+    line: 15
+    cyclomatic_complexity: 2
+    calls_out: 34
+    calls_in: 0
+  src.algitex.tools.workspace.Workspace.analyze_all:
+    name: analyze_all
+    module: src.algitex.tools.workspace
+    line: 117
+    cyclomatic_complexity: 5
+    calls_out: 9
+    calls_in: 0
+  src.algitex.tools.parallel.extractor.RegionExtractor._find_calls:
+    name: _find_calls
+    module: src.algitex.tools.parallel.extractor
+    line: 108
+    cyclomatic_complexity: 6
+    calls_out: 10
+    calls_in: 0
+  examples.14-docker-mcp.main.demo_docker_operations:
+    name: demo_docker_operations
+    module: examples.14-docker-mcp.main
+    line: 78
+    cyclomatic_complexity: 7
+    calls_out: 40
+    calls_in: 0
+  src.algitex.cli.parallel.parallel:
+    name: parallel
+    module: src.algitex.cli.parallel
+    line: 111
+    cyclomatic_complexity: 7
+    calls_out: 23
+    calls_in: 0
+  src.algitex.todo.fix_todos:
+    name: fix_todos
+    module: src.algitex.todo
+    line: 106
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 2
+  src.algitex.tools.mcp.MCPOrchestrator.generate_mcp_config:
+    name: generate_mcp_config
+    module: src.algitex.tools.mcp
+    line: 399
+    cyclomatic_complexity: 4
+    calls_out: 6
+    calls_in: 0
+  examples.43-code-health.main.demo_regression_prevention:
+    name: demo_regression_prevention
+    module: examples.43-code-health.main
+    line: 213
+    cyclomatic_complexity: 2
+    calls_out: 5
+    calls_in: 1
+  src.algitex.tools.analysis.Analyzer._run_redup:
+    name: _run_redup
+    module: src.algitex.tools.analysis
+    line: 130
+    cyclomatic_complexity: 4
+    calls_out: 7
+    calls_in: 0
+  src.algitex.nlp._UsageCollector.__init__:
+    name: __init__
+    module: src.algitex.nlp
+    line: 163
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 0
+  examples.21-aider-cli-ollama.main.main:
+    name: main
+    module: examples.21-aider-cli-ollama.main
+    line: 12
+    cyclomatic_complexity: 3
+    calls_out: 22
+    calls_in: 0
+  examples.18-ollama-local.main.demo_code_analysis:
+    name: demo_code_analysis
+    module: examples.18-ollama-local.main
+    line: 130
+    cyclomatic_complexity: 5
     calls_out: 17
     calls_in: 1
   examples.09-workspace.main.cleanup_sample_workspace:
@@ -565,12 +831,68 @@ nodes:
     cyclomatic_complexity: 2
     calls_out: 4
     calls_in: 0
-  src.algitex.tools.autofix.fallback_backend.FallbackBackend.__init__:
-    name: __init__
-    module: src.algitex.tools.autofix.fallback_backend
-    line: 46
-    cyclomatic_complexity: 3
+  src.algitex.tools.todo_parser.TodoParser._parse_generic:
+    name: _parse_generic
+    module: src.algitex.tools.todo_parser
+    line: 164
+    cyclomatic_complexity: 6
+    calls_out: 12
+    calls_in: 0
+  examples.38-new-modules.main.main:
+    name: main
+    module: examples.38-new-modules.main
+    line: 120
+    cyclomatic_complexity: 1
+    calls_out: 13
+    calls_in: 0
+  src.algitex.todo.tiering.filter_tasks:
+    name: filter_tasks
+    module: src.algitex.todo.tiering
+    line: 132
+    cyclomatic_complexity: 6
     calls_out: 2
+    calls_in: 0
+  examples.34-batch-fix.main.main:
+    name: main
+    module: examples.34-batch-fix.main
+    line: 180
+    cyclomatic_complexity: 6
+    calls_out: 22
+    calls_in: 0
+  examples.35-sprint3-patterns.main.main:
+    name: main
+    module: examples.35-sprint3-patterns.main
+    line: 117
+    cyclomatic_complexity: 1
+    calls_out: 14
+    calls_in: 0
+  src.algitex.shared_rules.RelativeImportRule.check:
+    name: check
+    module: src.algitex.shared_rules
+    line: 191
+    cyclomatic_complexity: 6
+    calls_out: 4
+    calls_in: 0
+  src.algitex.tools.autofix.batch_backend.fs_utils.preflight_syntax_check:
+    name: preflight_syntax_check
+    module: src.algitex.tools.autofix.batch_backend.fs_utils
+    line: 27
+    cyclomatic_complexity: 10
+    calls_out: 15
+    calls_in: 1
+  examples.09-workspace.main.advanced_workspace_features:
+    name: advanced_workspace_features
+    module: examples.09-workspace.main
+    line: 354
+    cyclomatic_complexity: 1
+    calls_out: 7
+    calls_in: 0
+  examples.05-cost-tracking.main.main:
+    name: main
+    module: examples.05-cost-tracking.main
+    line: 15
+    cyclomatic_complexity: 8
+    calls_out: 40
     calls_in: 0
   examples.37-benchmarks.main.main:
     name: main
@@ -579,95 +901,46 @@ nodes:
     cyclomatic_complexity: 1
     calls_out: 14
     calls_in: 0
-  examples.36-dashboard.main.demo_dashboard_export:
-    name: demo_dashboard_export
-    module: examples.36-dashboard.main
-    line: 46
-    cyclomatic_complexity: 1
-    calls_out: 6
-    calls_in: 1
-  src.algitex.nlp._ensure_trailing_newline:
-    name: _ensure_trailing_newline
-    module: src.algitex.nlp
-    line: 317
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 2
-  src.algitex.tools.docker.DockerToolManager.teardown_all:
-    name: teardown_all
-    module: src.algitex.tools.docker
-    line: 252
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 0
-  src.algitex.tools.docker.DockerToolManager.list_running:
-    name: list_running
-    module: src.algitex.tools.docker
-    line: 263
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 0
-  examples.23-continue-dev-ollama.main.main:
-    name: main
-    module: examples.23-continue-dev-ollama.main
-    line: 12
-    cyclomatic_complexity: 3
-    calls_out: 23
-    calls_in: 0
-  src.algitex.tools.autofix.fallback_backend.FallbackBackend.print_status:
-    name: print_status
-    module: src.algitex.tools.autofix.fallback_backend
-    line: 184
-    cyclomatic_complexity: 4
-    calls_out: 7
-    calls_in: 0
-  src.algitex.cli.todo.logic.validate_task:
-    name: validate_task
-    module: src.algitex.cli.todo.logic
-    line: 21
-    cyclomatic_complexity: 13
-    calls_out: 8
-    calls_in: 0
-  examples.17-docker-workflow.main.show_cli_usage:
-    name: show_cli_usage
-    module: examples.17-docker-workflow.main
-    line: 101
-    cyclomatic_complexity: 1
-    calls_out: 6
-    calls_in: 0
-  examples.13-vallm.main.demo_validation:
-    name: demo_validation
-    module: examples.13-vallm.main
-    line: 95
-    cyclomatic_complexity: 5
-    calls_out: 35
-    calls_in: 0
-  examples.33-hybrid-autofix.main._run_demos:
-    name: _run_demos
+  examples.33-hybrid-autofix.main.demo_mechanical_only:
+    name: demo_mechanical_only
     module: examples.33-hybrid-autofix.main
-    line: 202
-    cyclomatic_complexity: 10
+    line: 71
+    cyclomatic_complexity: 1
     calls_out: 6
     calls_in: 1
-  examples.08-feedback.main.feedback_extraction_example:
-    name: feedback_extraction_example
-    module: examples.08-feedback.main
-    line: 123
+  examples.33-hybrid-autofix.main.demo_full_hybrid:
+    name: demo_full_hybrid
+    module: examples.33-hybrid-autofix.main
+    line: 84
+    cyclomatic_complexity: 1
+    calls_out: 9
+    calls_in: 1
+  src.algitex.shared_rules.get_registry:
+    name: get_registry
+    module: src.algitex.shared_rules
+    line: 261
     cyclomatic_complexity: 2
     calls_out: 5
-    calls_in: 0
-  src.algitex.tools.autofix.batch_backend.todo_utils.update_todo_mark_completed:
-    name: update_todo_mark_completed
-    module: src.algitex.tools.autofix.batch_backend.todo_utils
-    line: 7
-    cyclomatic_complexity: 9
-    calls_out: 17
     calls_in: 1
-  src.algitex.cli.core._init_config:
-    name: _init_config
-    module: src.algitex.cli.core
-    line: 36
+  src.algitex.tools.docker.DockerToolManager.list_tools:
+    name: list_tools
+    module: src.algitex.tools.docker
+    line: 259
     cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  src.algitex.todo.hybrid.HybridAutofix._call_llm_backend:
+    name: _call_llm_backend
+    module: src.algitex.todo.hybrid
+    line: 316
+    cyclomatic_complexity: 7
+    calls_out: 6
+    calls_in: 0
+  examples.18-ollama-local.main.generate_code:
+    name: generate_code
+    module: examples.18-ollama-local.main
+    line: 37
+    cyclomatic_complexity: 4
     calls_out: 3
     calls_in: 1
   examples.39-microtask-pipeline.main.demo_workflow:
@@ -677,19 +950,341 @@ nodes:
     cyclomatic_complexity: 1
     calls_out: 2
     calls_in: 1
-  src.algitex.tools.mcp_lifecycle.MCPLifecycleManager.stop_service:
-    name: stop_service
-    module: src.algitex.tools.mcp_lifecycle
-    line: 79
-    cyclomatic_complexity: 6
-    calls_out: 11
+  src.algitex.todo.micro.MicroFixer.fix_tasks_detailed:
+    name: fix_tasks_detailed
+    module: src.algitex.todo.micro
+    line: 169
+    cyclomatic_complexity: 12
+    calls_out: 13
     calls_in: 0
-  src.algitex.todo.classify._first_int:
-    name: _first_int
-    module: src.algitex.todo.classify
+  examples.07-context.main.cleanup_example_projects:
+    name: cleanup_example_projects
+    module: examples.07-context.main
+    line: 358
+    cyclomatic_complexity: 4
+    calls_out: 3
+    calls_in: 0
+  src.algitex.todo.verify._run_prefact_scan:
+    name: _run_prefact_scan
+    module: src.algitex.todo.verify
+    line: 45
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 1
+  src.algitex.todo.micro.MicroFixer.fix_tasks:
+    name: fix_tasks
+    module: src.algitex.todo.micro
+    line: 198
+    cyclomatic_complexity: 9
+    calls_out: 6
+    calls_in: 0
+  src.algitex.todo.micro_utils.normalise_model_name:
+    name: normalise_model_name
+    module: src.algitex.todo.micro_utils
+    line: 40
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 1
+  src.algitex.todo.hybrid.HybridAutofix.fix_all:
+    name: fix_all
+    module: src.algitex.todo.hybrid
+    line: 366
+    cyclomatic_complexity: 3
+    calls_out: 31
+    calls_in: 0
+  examples.44-plugin-system.main.demo_builtin_plugins:
+    name: demo_builtin_plugins
+    module: examples.44-plugin-system.main
+    line: 63
+    cyclomatic_complexity: 2
+    calls_out: 7
+    calls_in: 1
+  examples.32-workspace-coordination.main._show_execution_summary:
+    name: _show_execution_summary
+    module: examples.32-workspace-coordination.main
+    line: 164
+    cyclomatic_complexity: 3
+    calls_out: 24
+    calls_in: 1
+  src.algitex.tools.workspace.Workspace.validate_all:
+    name: validate_all
+    module: src.algitex.tools.workspace
+    line: 196
+    cyclomatic_complexity: 3
+    calls_out: 10
+    calls_in: 0
+  examples.10-cicd.main.complete_ci_cd_setup:
+    name: complete_ci_cd_setup
+    module: examples.10-cicd.main
+    line: 200
+    cyclomatic_complexity: 2
+    calls_out: 29
+    calls_in: 0
+  examples.37-benchmarks.main.demo_benchmark_quick:
+    name: demo_benchmark_quick
+    module: examples.37-benchmarks.main
+    line: 12
+    cyclomatic_complexity: 1
+    calls_out: 7
+    calls_in: 1
+  src.algitex.todo.micro_prompts.MicroPromptBuilder._build_user_prompt:
+    name: _build_user_prompt
+    module: src.algitex.todo.micro_prompts
+    line: 27
+    cyclomatic_complexity: 9
+    calls_out: 2
+    calls_in: 0
+  project.map.toon.mark_tasks_completed:
+    name: mark_tasks_completed
+    module: project.map.toon
+    line: 1009
+    cyclomatic_complexity: 0
+    calls_out: 0
+    calls_in: 7
+  examples.08-feedback.main.basic_feedback_example:
+    name: basic_feedback_example
+    module: examples.08-feedback.main
+    line: 17
+    cyclomatic_complexity: 1
+    calls_out: 22
+    calls_in: 0
+  src.algitex.tools.benchmark.ModelBenchmark.save_results:
+    name: save_results
+    module: src.algitex.tools.benchmark
+    line: 433
+    cyclomatic_complexity: 2
+    calls_out: 4
+    calls_in: 0
+  src.algitex.cli.todo_verify._validate_tasks:
+    name: _validate_tasks
+    module: src.algitex.cli.todo_verify
+    line: 62
+    cyclomatic_complexity: 9
+    calls_out: 12
+    calls_in: 1
+  src.algitex.microtask.classifier.classify_prefact_line:
+    name: classify_prefact_line
+    module: src.algitex.microtask.classifier
+    line: 50
+    cyclomatic_complexity: 12
+    calls_out: 21
+    calls_in: 1
+  examples.34-batch-fix.main.demo_custom_batch_size:
+    name: demo_custom_batch_size
+    module: examples.34-batch-fix.main
+    line: 123
+    cyclomatic_complexity: 1
+    calls_out: 5
+    calls_in: 1
+  src.algitex.tools.autofix.batch_backend.BatchFixBackend._parse_batch_response:
+    name: _parse_batch_response
+    module: src.algitex.tools.autofix.batch_backend
+    line: 652
+    cyclomatic_complexity: 8
+    calls_out: 22
+    calls_in: 0
+  examples.30-parallel-execution.parallel_real_world.main:
+    name: main
+    module: examples.30-parallel-execution.parallel_real_world
+    line: 126
+    cyclomatic_complexity: 13
+    calls_out: 43
+    calls_in: 0
+  src.algitex.tools.mcp_lifecycle.MCPLifecycleManager.restart_service:
+    name: restart_service
+    module: src.algitex.tools.mcp_lifecycle
     line: 110
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 0
+  src.algitex.tools.mcp.MCPOrchestrator.wait_for_ready:
+    name: wait_for_ready
+    module: src.algitex.tools.mcp
+    line: 252
+    cyclomatic_complexity: 10
+    calls_out: 20
+    calls_in: 0
+  examples.17-docker-workflow.main.show_cli_usage:
+    name: show_cli_usage
+    module: examples.17-docker-workflow.main
+    line: 101
+    cyclomatic_complexity: 1
+    calls_out: 6
+    calls_in: 0
+  examples.37-benchmarks.main.demo_benchmark_cache:
+    name: demo_benchmark_cache
+    module: examples.37-benchmarks.main
+    line: 23
+    cyclomatic_complexity: 1
+    calls_out: 12
+    calls_in: 1
+  src.algitex.cli.microtask.microtask_classify:
+    name: microtask_classify
+    module: src.algitex.cli.microtask
+    line: 23
+    cyclomatic_complexity: 2
+    calls_out: 6
+    calls_in: 0
+  examples.07-context.main.context_optimization_example:
+    name: context_optimization_example
+    module: examples.07-context.main
+    line: 133
+    cyclomatic_complexity: 5
+    calls_out: 25
+    calls_in: 0
+  src.algitex.tools.tickets.Tickets.list:
+    name: list
+    module: src.algitex.tools.tickets
+    line: 151
+    cyclomatic_complexity: 4
+    calls_out: 1
+    calls_in: 33
+  src.algitex.tools.mcp.MCPOrchestrator.start_service:
+    name: start_service
+    module: src.algitex.tools.mcp
+    line: 109
+    cyclomatic_complexity: 11
+    calls_out: 15
+    calls_in: 0
+  src.algitex.tools.autofix.fallback_backend.FallbackBackend._get_backend:
+    name: _get_backend
+    module: src.algitex.tools.autofix.fallback_backend
+    line: 77
+    cyclomatic_complexity: 6
+    calls_out: 6
+    calls_in: 0
+  examples.10-cicd.main.basic_github_actions_example:
+    name: basic_github_actions_example
+    module: examples.10-cicd.main
+    line: 17
+    cyclomatic_complexity: 2
+    calls_out: 16
+    calls_in: 0
+  examples.12-filesystem-mcp.main.demo_file_operations:
+    name: demo_file_operations
+    module: examples.12-filesystem-mcp.main
+    line: 48
+    cyclomatic_complexity: 3
+    calls_out: 30
+    calls_in: 0
+  examples.08-feedback.main.feedback_loop_simulation:
+    name: feedback_loop_simulation
+    module: examples.08-feedback.main
+    line: 167
+    cyclomatic_complexity: 2
+    calls_out: 24
+    calls_in: 0
+  src.algitex.cli.microtask._shorten_path:
+    name: _shorten_path
+    module: src.algitex.cli.microtask
+    line: 192
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 2
+  src.algitex.todo.repair._find_import_insert_point:
+    name: _find_import_insert_point
+    module: src.algitex.todo.repair
+    line: 20
     cyclomatic_complexity: 3
     calls_out: 3
+    calls_in: 1
+  src.algitex.tools.require_tool:
+    name: require_tool
+    module: src.algitex.tools
+    line: 96
+    cyclomatic_complexity: 4
+    calls_out: 2
+    calls_in: 0
+  examples.24-ollama-batch.file3.BadClass.process:
+    name: process
+    module: examples.24-ollama-batch.file3
+    line: 9
+    cyclomatic_complexity: 5
+    calls_out: 1
+    calls_in: 0
+  src.algitex.nlp.DeadCodeDetector.scan:
+    name: scan
+    module: src.algitex.nlp
+    line: 125
+    cyclomatic_complexity: 6
+    calls_out: 10
+    calls_in: 0
+  examples.13-vallm.main.create_sample_code:
+    name: create_sample_code
+    module: examples.13-vallm.main
+    line: 13
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 1
+  src.algitex.nlp._is_ignored:
+    name: _is_ignored
+    module: src.algitex.nlp
+    line: 313
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 1
+  examples.40-three-tier-autofix.main.demo_all_tiers:
+    name: demo_all_tiers
+    module: examples.40-three-tier-autofix.main
+    line: 77
+    cyclomatic_complexity: 1
+    calls_out: 13
+    calls_in: 1
+  examples.33-hybrid-autofix.main._validate_env:
+    name: _validate_env
+    module: examples.33-hybrid-autofix.main
+    line: 168
+    cyclomatic_complexity: 7
+    calls_out: 20
+    calls_in: 1
+  src.algitex.tools.autofix.fallback_backend.FallbackBackend._mark_failure:
+    name: _mark_failure
+    module: src.algitex.tools.autofix.fallback_backend
+    line: 114
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  examples.37-benchmarks.main.demo_benchmark_memory:
+    name: demo_benchmark_memory
+    module: examples.37-benchmarks.main
+    line: 55
+    cyclomatic_complexity: 1
+    calls_out: 10
+    calls_in: 1
+  src.algitex.tools.autofix.AutoFix.print_summary:
+    name: print_summary
+    module: src.algitex.tools.autofix
+    line: 259
+    cyclomatic_complexity: 12
+    calls_out: 16
+    calls_in: 0
+  examples.20-self-hosted-pipeline.main.main:
+    name: main
+    module: examples.20-self-hosted-pipeline.main
+    line: 17
+    cyclomatic_complexity: 2
+    calls_out: 49
+    calls_in: 0
+  src.algitex.tools.cicd.init_ci_cd:
+    name: init_ci_cd
+    module: src.algitex.tools.cicd
+    line: 359
+    cyclomatic_complexity: 3
+    calls_out: 13
+    calls_in: 0
+  examples.10-cicd.main.cleanup_ci_projects:
+    name: cleanup_ci_projects
+    module: examples.10-cicd.main
+    line: 376
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 0
+  examples.43-code-health.main.demo_health_improvement_workflow:
+    name: demo_health_improvement_workflow
+    module: examples.43-code-health.main
+    line: 245
+    cyclomatic_complexity: 1
+    calls_out: 2
     calls_in: 1
   examples.41-god-module-splitting.main.demo_before_and_after:
     name: demo_before_and_after
@@ -698,587 +1293,20 @@ nodes:
     cyclomatic_complexity: 6
     calls_out: 15
     calls_in: 1
-  examples.43-code-health.main.demo_health_report:
-    name: demo_health_report
-    module: examples.43-code-health.main
-    line: 77
-    cyclomatic_complexity: 4
-    calls_out: 10
-    calls_in: 1
-  src.algitex.tools.autofix.fallback_backend.FallbackBackend._try_backend:
-    name: _try_backend
-    module: src.algitex.tools.autofix.fallback_backend
-    line: 124
-    cyclomatic_complexity: 4
-    calls_out: 10
-    calls_in: 0
-  examples.09-workspace.main.workspace_execution_example:
-    name: workspace_execution_example
-    module: examples.09-workspace.main
-    line: 232
-    cyclomatic_complexity: 8
-    calls_out: 17
-    calls_in: 0
-  examples.26-litellm-proxy-ollama.main.main:
-    name: main
-    module: examples.26-litellm-proxy-ollama.main
-    line: 12
-    cyclomatic_complexity: 1
-    calls_out: 14
-    calls_in: 0
-  src.algitex.nlp._sort_imports:
-    name: _sort_imports
-    module: src.algitex.nlp
-    line: 262
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 1
-  src.algitex.todo.tiering.filter_tasks:
-    name: filter_tasks
-    module: src.algitex.todo.tiering
-    line: 132
-    cyclomatic_complexity: 6
-    calls_out: 2
-    calls_in: 0
-  examples.32-workspace-coordination.main._print_repo_overview:
-    name: _print_repo_overview
-    module: examples.32-workspace-coordination.main
-    line: 55
-    cyclomatic_complexity: 3
-    calls_out: 9
-    calls_in: 1
-  docker.vallm.vallm_mcp_server.validate_static:
-    name: validate_static
-    module: docker.vallm.vallm_mcp_server
-    line: 33
-    cyclomatic_complexity: 9
-    calls_out: 15
-    calls_in: 2
-  src.algitex.todo.hybrid.HybridAutofix.print_summary:
-    name: print_summary
-    module: src.algitex.todo.hybrid
-    line: 438
-    cyclomatic_complexity: 4
-    calls_out: 29
-    calls_in: 0
-  src.algitex.nlp._UsageCollector.__init__:
-    name: __init__
-    module: src.algitex.nlp
-    line: 163
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 0
-  src.algitex.config.Config.load:
-    name: load
-    module: src.algitex.config
-    line: 94
-    cyclomatic_complexity: 2
-    calls_out: 8
-    calls_in: 0
-  src.algitex.tools.todo_parser.TodoParser.parse:
-    name: parse
-    module: src.algitex.tools.todo_parser
-    line: 69
-    cyclomatic_complexity: 11
-    calls_out: 13
-    calls_in: 2
-  examples.43-code-health.main.demo_health_improvement_workflow:
-    name: demo_health_improvement_workflow
-    module: examples.43-code-health.main
-    line: 245
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 1
-  project.map.toon.classify_todo_file:
-    name: classify_todo_file
-    module: project.map.toon
-    line: 902
-    cyclomatic_complexity: 0
-    calls_out: 0
-    calls_in: 3
-  src.algitex.todo.hybrid.HybridAutofix._fix_file_llm:
-    name: _fix_file_llm
-    module: src.algitex.todo.hybrid
-    line: 267
-    cyclomatic_complexity: 8
-    calls_out: 10
-    calls_in: 0
-  src.algitex.todo.repair.repair_magic_number:
-    name: repair_magic_number
-    module: src.algitex.todo.repair
-    line: 165
-    cyclomatic_complexity: 8
-    calls_out: 13
-    calls_in: 1
-  src.algitex.todo.benchmark.benchmark_sequential:
-    name: benchmark_sequential
-    module: src.algitex.todo.benchmark
-    line: 108
-    cyclomatic_complexity: 4
-    calls_out: 6
-    calls_in: 2
-  src.algitex.shared_rules.RelativeImportRule.check:
-    name: check
-    module: src.algitex.shared_rules
-    line: 191
-    cyclomatic_complexity: 6
-    calls_out: 4
-    calls_in: 0
-  src.algitex.tools.telemetry.Telemetry.summary:
-    name: summary
-    module: src.algitex.tools.telemetry
-    line: 79
-    cyclomatic_complexity: 4
-    calls_out: 5
-    calls_in: 0
-  src.algitex.cli.dashboard.dashboard_live:
-    name: dashboard_live
-    module: src.algitex.cli.dashboard
-    line: 21
-    cyclomatic_complexity: 6
-    calls_out: 13
-    calls_in: 0
-  docker.vallm.vallm_mcp_server.validate_runtime:
-    name: validate_runtime
-    module: docker.vallm.vallm_mcp_server
-    line: 85
-    cyclomatic_complexity: 9
-    calls_out: 9
-    calls_in: 2
-  examples.41-god-module-splitting.main.demo_how_to_split_your_module:
-    name: demo_how_to_split_your_module
-    module: examples.41-god-module-splitting.main
-    line: 175
-    cyclomatic_complexity: 2
-    calls_out: 6
-    calls_in: 1
-  docker.aider-mcp.aider_mcp_server.aider_ai_code:
-    name: aider_ai_code
-    module: docker.aider-mcp.aider_mcp_server
-    line: 29
-    cyclomatic_complexity: 2
-    calls_out: 5
-    calls_in: 1
-  src.algitex.todo.micro_utils.validate_python:
-    name: validate_python
-    module: src.algitex.todo.micro_utils
-    line: 64
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 2
-  src.algitex.todo.micro.MicroFixer.fix_task:
-    name: fix_task
-    module: src.algitex.todo.micro
-    line: 85
-    cyclomatic_complexity: 8
-    calls_out: 22
-    calls_in: 0
-  src.algitex.cli.microtask._print_file_batches:
-    name: _print_file_batches
-    module: src.algitex.cli.microtask
-    line: 154
-    cyclomatic_complexity: 2
-    calls_out: 14
-    calls_in: 1
-  examples.10-cicd.main.dockerfile_example:
-    name: dockerfile_example
-    module: examples.10-cicd.main
-    line: 134
-    cyclomatic_complexity: 1
-    calls_out: 14
-    calls_in: 0
-  examples.33-hybrid-autofix.main._parse_args:
-    name: _parse_args
-    module: examples.33-hybrid-autofix.main
-    line: 145
-    cyclomatic_complexity: 1
-    calls_out: 10
-    calls_in: 1
-  src.algitex.tools.autofix.AutoFix.fix_all:
-    name: fix_all
-    module: src.algitex.tools.autofix
-    line: 191
-    cyclomatic_complexity: 11
-    calls_out: 14
-    calls_in: 0
-  docker.proxym.proxym_mcp_server._call_anthropic:
-    name: _call_anthropic
-    module: docker.proxym.proxym_mcp_server
-    line: 126
-    cyclomatic_complexity: 6
-    calls_out: 22
-    calls_in: 1
-  examples.09-workspace.main._analyze_impact:
-    name: _analyze_impact
-    module: examples.09-workspace.main
-    line: 313
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 1
-  src.algitex.todo.verify._parse_todo_file:
-    name: _parse_todo_file
-    module: src.algitex.todo.verify
-    line: 67
-    cyclomatic_complexity: 4
-    calls_out: 9
-    calls_in: 1
-  docker.planfile-mcp.planfile_mcp_server._load_tickets:
-    name: _load_tickets
-    module: docker.planfile-mcp.planfile_mcp_server
-    line: 34
-    cyclomatic_complexity: 6
-    calls_out: 7
-    calls_in: 4
-  examples.10-cicd.main.complete_ci_cd_setup:
-    name: complete_ci_cd_setup
-    module: examples.10-cicd.main
-    line: 200
-    cyclomatic_complexity: 2
-    calls_out: 29
-    calls_in: 0
-  examples.27-unified-autofix.main.main:
-    name: main
-    module: examples.27-unified-autofix.main
-    line: 13
-    cyclomatic_complexity: 4
-    calls_out: 33
-    calls_in: 0
-  src.algitex.todo.repair.repair_fstring:
-    name: repair_fstring
-    module: src.algitex.todo.repair
-    line: 119
-    cyclomatic_complexity: 12
-    calls_out: 12
-    calls_in: 1
-  examples.41-god-module-splitting.main.demo_real_metrics:
-    name: demo_real_metrics
-    module: examples.41-god-module-splitting.main
-    line: 148
-    cyclomatic_complexity: 2
-    calls_out: 10
-    calls_in: 1
-  examples.42-duplicate-removal.main.demo_real_world_example:
-    name: demo_real_world_example
-    module: examples.42-duplicate-removal.main
-    line: 166
-    cyclomatic_complexity: 2
-    calls_out: 11
-    calls_in: 1
-  src.algitex.cli.microtask._print_summary:
-    name: _print_summary
-    module: src.algitex.cli.microtask
-    line: 104
-    cyclomatic_complexity: 3
-    calls_out: 23
-    calls_in: 2
-  examples.39-microtask-pipeline.main.demo_microtask_run:
-    name: demo_microtask_run
-    module: examples.39-microtask-pipeline.main
-    line: 46
-    cyclomatic_complexity: 1
-    calls_out: 10
-    calls_in: 1
-  src.algitex.cli.core._print_tools_status:
-    name: _print_tools_status
-    module: src.algitex.cli.core
-    line: 42
-    cyclomatic_complexity: 5
-    calls_out: 14
-    calls_in: 1
-  src.algitex.todo.benchmark.compare_modes:
-    name: compare_modes
-    module: src.algitex.todo.benchmark
-    line: 201
-    cyclomatic_complexity: 4
-    calls_out: 15
-    calls_in: 1
-  src.algitex.cli.microtask.microtask_plan:
-    name: microtask_plan
-    module: src.algitex.cli.microtask
-    line: 38
-    cyclomatic_complexity: 3
-    calls_out: 11
-    calls_in: 0
-  examples.35-sprint3-patterns.main.demo_strategy_pattern:
-    name: demo_strategy_pattern
-    module: examples.35-sprint3-patterns.main
-    line: 52
-    cyclomatic_complexity: 2
-    calls_out: 7
-    calls_in: 1
-  src.algitex.tools.logging.format_args:
-    name: format_args
-    module: src.algitex.tools.logging
-    line: 105
-    cyclomatic_complexity: 3
-    calls_out: 6
-    calls_in: 2
-  src.algitex.cli.microtask.microtask_run:
-    name: microtask_run
-    module: src.algitex.cli.microtask
-    line: 64
-    cyclomatic_complexity: 2
-    calls_out: 17
-    calls_in: 0
-  src.algitex.cli.nlp.nlp_imports:
-    name: nlp_imports
-    module: src.algitex.cli.nlp
-    line: 31
-    cyclomatic_complexity: 2
-    calls_out: 15
-    calls_in: 0
-  examples.15-github-mcp.main.create_sample_project:
-    name: create_sample_project
-    module: examples.15-github-mcp.main
-    line: 13
-    cyclomatic_complexity: 1
-    calls_out: 6
-    calls_in: 1
-  src.algitex.todo.micro_utils.coerce_task:
-    name: coerce_task
-    module: src.algitex.todo.micro_utils
-    line: 73
-    cyclomatic_complexity: 11
-    calls_out: 14
-    calls_in: 3
-  examples.16-test-workflow.main.create_sample_project:
-    name: create_sample_project
-    module: examples.16-test-workflow.main
-    line: 13
-    cyclomatic_complexity: 1
-    calls_out: 8
-    calls_in: 1
-  docker.planfile-mcp.planfile_mcp_server.planfile_create_tickets_bulk:
-    name: planfile_create_tickets_bulk
-    module: docker.planfile-mcp.planfile_mcp_server
-    line: 162
-    cyclomatic_complexity: 3
-    calls_out: 8
-    calls_in: 0
-  examples.42-duplicate-removal.main.demo_detection_with_redup:
-    name: demo_detection_with_redup
-    module: examples.42-duplicate-removal.main
-    line: 63
-    cyclomatic_complexity: 1
-    calls_out: 9
-    calls_in: 1
-  src.algitex.tools.config.ConfigManager.generate_docker_compose:
-    name: generate_docker_compose
-    module: src.algitex.tools.config
-    line: 262
-    cyclomatic_complexity: 7
-    calls_out: 5
-    calls_in: 0
-  examples.08-feedback.main.cost_optimization_example:
-    name: cost_optimization_example
-    module: examples.08-feedback.main
-    line: 323
-    cyclomatic_complexity: 7
-    calls_out: 19
-    calls_in: 0
-  src.algitex.tools.analysis._run_cli:
-    name: _run_cli
+  src.algitex.tools.analysis.Analyzer._run_code2llm:
+    name: _run_code2llm
     module: src.algitex.tools.analysis
-    line: 154
-    cyclomatic_complexity: 7
-    calls_out: 8
-    calls_in: 3
-  src.algitex.dashboard.show_quick_dashboard:
-    name: show_quick_dashboard
-    module: src.algitex.dashboard
-    line: 378
-    cyclomatic_complexity: 3
-    calls_out: 17
-    calls_in: 1
-  examples.36-dashboard.main.main:
-    name: main
-    module: examples.36-dashboard.main
-    line: 92
-    cyclomatic_complexity: 1
+    line: 93
+    cyclomatic_complexity: 4
     calls_out: 13
     calls_in: 0
-  src.algitex.tools.todo_actions.determine_action:
-    name: determine_action
-    module: src.algitex.tools.todo_actions
-    line: 183
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 1
-  examples.07-context.main.cleanup_example_projects:
-    name: cleanup_example_projects
-    module: examples.07-context.main
-    line: 358
-    cyclomatic_complexity: 4
-    calls_out: 3
-    calls_in: 0
-  examples.34-batch-fix.main.demo_custom_batch_size:
-    name: demo_custom_batch_size
-    module: examples.34-batch-fix.main
+  src.algitex.tools.parallel.extractor.RegionExtractor._detect_shadow_conflicts:
+    name: _detect_shadow_conflicts
+    module: src.algitex.tools.parallel.extractor
     line: 123
-    cyclomatic_complexity: 1
-    calls_out: 5
-    calls_in: 1
-  examples.07-context.main.semantic_search_example:
-    name: semantic_search_example
-    module: examples.07-context.main
-    line: 229
-    cyclomatic_complexity: 1
-    calls_out: 18
+    cyclomatic_complexity: 12
+    calls_out: 14
     calls_in: 0
-  examples.36-dashboard.main.demo_dashboard_live:
-    name: demo_dashboard_live
-    module: examples.36-dashboard.main
-    line: 13
-    cyclomatic_complexity: 1
-    calls_out: 12
-    calls_in: 1
-  examples.07-context.main.context_optimization_example:
-    name: context_optimization_example
-    module: examples.07-context.main
-    line: 133
-    cyclomatic_complexity: 5
-    calls_out: 25
-    calls_in: 0
-  examples.40-three-tier-autofix.main.demo_all_tiers:
-    name: demo_all_tiers
-    module: examples.40-three-tier-autofix.main
-    line: 77
-    cyclomatic_complexity: 1
-    calls_out: 13
-    calls_in: 1
-  src.algitex.todo.micro.MicroFixer._apply_function_rewrite:
-    name: _apply_function_rewrite
-    module: src.algitex.todo.micro
-    line: 276
-    cyclomatic_complexity: 3
-    calls_out: 13
-    calls_in: 0
-  src.algitex.todo.micro.MicroFixer._fix_magic_name:
-    name: _fix_magic_name
-    module: src.algitex.todo.micro
-    line: 212
-    cyclomatic_complexity: 5
-    calls_out: 15
-    calls_in: 0
-  src.algitex.tools.ollama_cache.LLMCache.stats:
-    name: stats
-    module: src.algitex.tools.ollama_cache
-    line: 130
-    cyclomatic_complexity: 3
-    calls_out: 5
-    calls_in: 0
-  examples.08-feedback.main.custom_policy_example:
-    name: custom_policy_example
-    module: examples.08-feedback.main
-    line: 86
-    cyclomatic_complexity: 1
-    calls_out: 12
-    calls_in: 0
-  src.algitex.tools.todo_runner.TodoRunner._execute_task:
-    name: _execute_task
-    module: src.algitex.tools.todo_runner
-    line: 239
-    cyclomatic_complexity: 6
-    calls_out: 16
-    calls_in: 0
-  docker.aider-mcp.aider_mcp_server.aider_list_models:
-    name: aider_list_models
-    module: docker.aider-mcp.aider_mcp_server
-    line: 61
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 1
-  examples.33-hybrid-autofix.main.main:
-    name: main
-    module: examples.33-hybrid-autofix.main
-    line: 125
-    cyclomatic_complexity: 2
-    calls_out: 10
-    calls_in: 0
-  docker.proxym.proxym_mcp_server.run_rest_server:
-    name: run_rest_server
-    module: docker.proxym.proxym_mcp_server
-    line: 366
-    cyclomatic_complexity: 1
-    calls_out: 7
-    calls_in: 0
-  src.algitex.tools.workspace.Workspace.analyze_all:
-    name: analyze_all
-    module: src.algitex.tools.workspace
-    line: 117
-    cyclomatic_complexity: 5
-    calls_out: 9
-    calls_in: 0
-  examples.21-aider-cli-ollama.main.main:
-    name: main
-    module: examples.21-aider-cli-ollama.main
-    line: 12
-    cyclomatic_complexity: 3
-    calls_out: 22
-    calls_in: 0
-  examples.32-workspace-coordination.workspace_parallel.main:
-    name: main
-    module: examples.32-workspace-coordination.workspace_parallel
-    line: 15
-    cyclomatic_complexity: 5
-    calls_out: 24
-    calls_in: 0
-  examples.33-hybrid-autofix.main.demo_mechanical_only:
-    name: demo_mechanical_only
-    module: examples.33-hybrid-autofix.main
-    line: 71
-    cyclomatic_complexity: 1
-    calls_out: 6
-    calls_in: 1
-  docker.aider-mcp.aider_mcp_server.aider_chat:
-    name: aider_chat
-    module: docker.aider-mcp.aider_mcp_server
-    line: 79
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 1
-  examples.09-workspace.main._analyze_workspace_structure:
-    name: _analyze_workspace_structure
-    module: examples.09-workspace.main
-    line: 293
-    cyclomatic_complexity: 8
-    calls_out: 10
-    calls_in: 1
-  src.algitex.todo.audit.AuditLogger.print_summary:
-    name: print_summary
-    module: src.algitex.todo.audit
-    line: 271
-    cyclomatic_complexity: 6
-    calls_out: 8
-    calls_in: 0
-  examples.43-code-health.main.demo_analysis_pipeline:
-    name: demo_analysis_pipeline
-    module: examples.43-code-health.main
-    line: 46
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 1
-  src.algitex.tools.analysis.Analyzer._run_redup:
-    name: _run_redup
-    module: src.algitex.tools.analysis
-    line: 130
-    cyclomatic_complexity: 4
-    calls_out: 7
-    calls_in: 0
-  docker.planfile-mcp.planfile_mcp_server.planfile_create_ticket:
-    name: planfile_create_ticket
-    module: docker.planfile-mcp.planfile_mcp_server
-    line: 65
-    cyclomatic_complexity: 2
-    calls_out: 10
-    calls_in: 2
-  src.algitex.nlp._fallback_sort_imports:
-    name: _fallback_sort_imports
-    module: src.algitex.nlp
-    line: 275
-    cyclomatic_complexity: 6
-    calls_out: 16
-    calls_in: 2
   examples.32-workspace-coordination.main.main:
     name: main
     module: examples.32-workspace-coordination.main
@@ -1286,179 +1314,46 @@ nodes:
     cyclomatic_complexity: 1
     calls_out: 13
     calls_in: 0
-  src.algitex.cli.parallel._load_tickets:
-    name: _load_tickets
-    module: src.algitex.cli.parallel
-    line: 12
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 1
-  src.algitex.tools.autofix.batch_logger.BatchLogger.print_summary:
-    name: print_summary
-    module: src.algitex.tools.autofix.batch_logger
-    line: 201
-    cyclomatic_complexity: 1
-    calls_out: 8
-    calls_in: 0
-  docker.proxym.proxym_mcp_server.chat_completion:
-    name: chat_completion
-    module: docker.proxym.proxym_mcp_server
-    line: 88
-    cyclomatic_complexity: 9
-    calls_out: 11
-    calls_in: 2
-  examples.34-batch-fix.main.main:
-    name: main
-    module: examples.34-batch-fix.main
-    line: 180
+  examples.09-workspace.main.cross_repo_planning_example:
+    name: cross_repo_planning_example
+    module: examples.09-workspace.main
+    line: 176
     cyclomatic_complexity: 6
-    calls_out: 22
+    calls_out: 19
     calls_in: 0
-  examples.10-cicd.main.precommit_hooks_example:
-    name: precommit_hooks_example
-    module: examples.10-cicd.main
-    line: 172
+  examples.20-self-hosted-pipeline.buggy_code.get_stored_password:
+    name: get_stored_password
+    module: examples.20-self-hosted-pipeline.buggy_code
+    line: 52
     cyclomatic_complexity: 1
-    calls_out: 15
-    calls_in: 0
-  examples.17-docker-workflow.main.demo_with_docker_tools:
-    name: demo_with_docker_tools
-    module: examples.17-docker-workflow.main
-    line: 76
-    cyclomatic_complexity: 4
-    calls_out: 8
-    calls_in: 0
-  src.algitex.tools.autofix.fallback_backend.FallbackBackend._mark_failure:
-    name: _mark_failure
-    module: src.algitex.tools.autofix.fallback_backend
-    line: 114
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 0
-  src.algitex.cli.nlp.nlp_duplicates:
-    name: nlp_duplicates
-    module: src.algitex.cli.nlp
-    line: 47
-    cyclomatic_complexity: 2
-    calls_out: 6
-    calls_in: 0
-  src.algitex.tools.analysis.Analyzer._run_vallm:
-    name: _run_vallm
-    module: src.algitex.tools.analysis
-    line: 114
-    cyclomatic_complexity: 4
-    calls_out: 8
-    calls_in: 0
-  examples.18-ollama-local.main.demo_cost_comparison:
-    name: demo_cost_comparison
-    module: examples.18-ollama-local.main
-    line: 167
-    cyclomatic_complexity: 2
-    calls_out: 7
+    calls_out: 0
     calls_in: 1
-  docker.code2llm.code2llm_mcp_server.evolution_export:
-    name: evolution_export
-    module: docker.code2llm.code2llm_mcp_server
-    line: 249
-    cyclomatic_complexity: 1
-    calls_out: 7
-    calls_in: 1
-  examples.18-ollama-local.main.demo_code_generation:
-    name: demo_code_generation
-    module: examples.18-ollama-local.main
-    line: 112
-    cyclomatic_complexity: 3
-    calls_out: 13
-    calls_in: 1
-  docker.code2llm.code2llm_server.Code2LLMServer._analyze_project:
-    name: _analyze_project
-    module: docker.code2llm.code2llm_server
-    line: 194
-    cyclomatic_complexity: 1
-    calls_out: 8
-    calls_in: 0
-  src.algitex.tools.logging.verbose_print:
-    name: verbose_print
-    module: src.algitex.tools.logging
-    line: 154
-    cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 9
-  docker.planfile-mcp.planfile_mcp_server.planfile_sync:
-    name: planfile_sync
-    module: docker.planfile-mcp.planfile_mcp_server
-    line: 208
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 0
-  src.algitex.tools.logging.VerboseContext.__enter__:
-    name: __enter__
-    module: src.algitex.tools.logging
-    line: 138
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 0
-  src.algitex.todo.micro_utils.find_import_insert_point:
-    name: find_import_insert_point
-    module: src.algitex.todo.micro_utils
-    line: 19
-    cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 1
-  examples.40-three-tier-autofix.main.main:
-    name: main
-    module: examples.40-three-tier-autofix.main
-    line: 111
-    cyclomatic_complexity: 1
-    calls_out: 15
-    calls_in: 0
-  examples.28-mcp-orchestration.main.main:
-    name: main
-    module: examples.28-mcp-orchestration.main
-    line: 13
-    cyclomatic_complexity: 2
-    calls_out: 22
-    calls_in: 0
-  src.algitex.todo.classify.classify_task:
-    name: classify_task
-    module: src.algitex.todo.classify
-    line: 150
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 15
-  docker.proxym.proxym_mcp_server.count_tokens:
-    name: count_tokens
-    module: docker.proxym.proxym_mcp_server
-    line: 44
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 5
-  examples.40-three-tier-autofix.main.demo_dashboard_integration:
-    name: demo_dashboard_integration
-    module: examples.40-three-tier-autofix.main
-    line: 96
-    cyclomatic_complexity: 1
-    calls_out: 10
-    calls_in: 1
-  examples.42-duplicate-removal.main.demo_metrics_and_roi:
-    name: demo_metrics_and_roi
-    module: examples.42-duplicate-removal.main
-    line: 227
-    cyclomatic_complexity: 2
-    calls_out: 10
-    calls_in: 1
-  src.algitex.tools.ide_base.IDEHelper.setup_tool:
-    name: setup_tool
-    module: src.algitex.tools.ide_base
-    line: 66
+  src.algitex.tools.autofix.batch_backend.fs_utils.create_backup:
+    name: create_backup
+    module: src.algitex.tools.autofix.batch_backend.fs_utils
+    line: 10
     cyclomatic_complexity: 5
-    calls_out: 8
+    calls_out: 12
+    calls_in: 1
+  examples.08-feedback.main.feedback_extraction_example:
+    name: feedback_extraction_example
+    module: examples.08-feedback.main
+    line: 123
+    cyclomatic_complexity: 2
+    calls_out: 5
     calls_in: 0
-  src.algitex.todo.micro_utils.sanitize_constant_name:
-    name: sanitize_constant_name
-    module: src.algitex.todo.micro_utils
-    line: 55
-    cyclomatic_complexity: 3
+  src.algitex.cli.core._init_project_dir:
+    name: _init_project_dir
+    module: src.algitex.cli.core
+    line: 29
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 1
+  examples.33-hybrid-autofix.main._run_demos:
+    name: _run_demos
+    module: examples.33-hybrid-autofix.main
+    line: 202
+    cyclomatic_complexity: 10
     calls_out: 6
     calls_in: 1
   src.algitex.shared_rules.RuleRegistry.list_rules:
@@ -1468,426 +1363,20 @@ nodes:
     cyclomatic_complexity: 4
     calls_out: 2
     calls_in: 0
-  examples.42-duplicate-removal.main.main:
-    name: main
-    module: examples.42-duplicate-removal.main
-    line: 252
-    cyclomatic_complexity: 1
-    calls_out: 15
-    calls_in: 0
-  examples.19-local-mcp-tools.main.check_services:
-    name: check_services
-    module: examples.19-local-mcp-tools.main
-    line: 15
-    cyclomatic_complexity: 4
-    calls_out: 3
-    calls_in: 1
-  examples.32-workspace-coordination.main._show_analysis_phase:
-    name: _show_analysis_phase
-    module: examples.32-workspace-coordination.main
-    line: 73
-    cyclomatic_complexity: 4
-    calls_out: 15
-    calls_in: 1
-  examples.43-code-health.main.demo_regression_prevention:
-    name: demo_regression_prevention
-    module: examples.43-code-health.main
-    line: 213
-    cyclomatic_complexity: 2
-    calls_out: 5
-    calls_in: 1
-  src.algitex.shared_rules.get_registry:
-    name: get_registry
-    module: src.algitex.shared_rules
-    line: 261
-    cyclomatic_complexity: 2
-    calls_out: 5
-    calls_in: 1
-  examples.30-parallel-execution.parallel_multi_tool.main:
-    name: main
-    module: examples.30-parallel-execution.parallel_multi_tool
-    line: 10
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 0
-  src.algitex.tools.todo_parser.TodoParser._parse_github:
-    name: _parse_github
-    module: src.algitex.tools.todo_parser
-    line: 136
-    cyclomatic_complexity: 4
-    calls_out: 10
-    calls_in: 0
-  src.algitex.tools.benchmark.ModelBenchmark.save_results:
-    name: save_results
-    module: src.algitex.tools.benchmark
-    line: 433
-    cyclomatic_complexity: 2
-    calls_out: 4
-    calls_in: 0
-  src.algitex.tools.logging.VerboseContext.__exit__:
-    name: __exit__
-    module: src.algitex.tools.logging
-    line: 144
-    cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 0
-  examples.37-benchmarks.main.demo_benchmark_quick:
-    name: demo_benchmark_quick
-    module: examples.37-benchmarks.main
-    line: 12
-    cyclomatic_complexity: 1
-    calls_out: 7
-    calls_in: 1
-  src.algitex.cli.nlp._print_docstring_changes:
-    name: _print_docstring_changes
-    module: src.algitex.cli.nlp
-    line: 68
-    cyclomatic_complexity: 2
-    calls_out: 8
-    calls_in: 1
-  examples.24-ollama-batch.main.main:
-    name: main
-    module: examples.24-ollama-batch.main
-    line: 12
-    cyclomatic_complexity: 2
-    calls_out: 16
-    calls_in: 0
-  examples.40-three-tier-autofix.main.demo_tier_micro:
-    name: demo_tier_micro
-    module: examples.40-three-tier-autofix.main
-    line: 33
-    cyclomatic_complexity: 2
-    calls_out: 9
-    calls_in: 1
-  examples.37-benchmarks.main.demo_benchmark_cache:
-    name: demo_benchmark_cache
-    module: examples.37-benchmarks.main
-    line: 23
-    cyclomatic_complexity: 1
-    calls_out: 12
-    calls_in: 1
-  docker.vallm.vallm_mcp_server.analyze_complexity:
-    name: analyze_complexity
-    module: docker.vallm.vallm_mcp_server
-    line: 220
-    cyclomatic_complexity: 9
-    calls_out: 16
-    calls_in: 1
-  src.algitex.todo.micro.MicroFixer.__init__:
-    name: __init__
+  src.algitex.todo.micro.MicroFixer._fix_magic_name:
+    name: _fix_magic_name
     module: src.algitex.todo.micro
-    line: 41
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 0
-  examples.33-hybrid-autofix.main.demo_verify_first:
-    name: demo_verify_first
-    module: examples.33-hybrid-autofix.main
-    line: 48
-    cyclomatic_complexity: 1
-    calls_out: 7
-    calls_in: 1
-  src.algitex.tools.todo_actions.get_action_handler:
-    name: get_action_handler
-    module: src.algitex.tools.todo_actions
-    line: 164
-    cyclomatic_complexity: 1
-    calls_out: 1
-    calls_in: 1
-  examples.14-docker-mcp.main.demo_docker_operations:
-    name: demo_docker_operations
-    module: examples.14-docker-mcp.main
-    line: 78
-    cyclomatic_complexity: 7
-    calls_out: 40
-    calls_in: 0
-  examples.37-benchmarks.main.demo_benchmark_full:
-    name: demo_benchmark_full
-    module: examples.37-benchmarks.main
-    line: 70
-    cyclomatic_complexity: 1
-    calls_out: 12
-    calls_in: 1
-  docker.code2llm.code2llm_mcp_server.create_rest_api:
-    name: create_rest_api
-    module: docker.code2llm.code2llm_mcp_server
-    line: 269
-    cyclomatic_complexity: 1
-    calls_out: 14
-    calls_in: 1
-  src.algitex.todo.benchmark._benchmark_single:
-    name: _benchmark_single
-    module: src.algitex.todo.benchmark
-    line: 79
-    cyclomatic_complexity: 6
-    calls_out: 11
-    calls_in: 1
-  src.algitex.cli.nlp.nlp_dead_code:
-    name: nlp_dead_code
-    module: src.algitex.cli.nlp
-    line: 58
-    cyclomatic_complexity: 2
-    calls_out: 6
-    calls_in: 0
-  examples.03-pipeline.main.main:
-    name: main
-    module: examples.03-pipeline.main
-    line: 14
-    cyclomatic_complexity: 6
-    calls_out: 27
-    calls_in: 0
-  src.algitex.cli.nlp.nlp_docstrings:
-    name: nlp_docstrings
-    module: src.algitex.cli.nlp
-    line: 21
-    cyclomatic_complexity: 1
-    calls_out: 6
-    calls_in: 0
-  docker.planfile-mcp.planfile_mcp_server.planfile_update_ticket:
-    name: planfile_update_ticket
-    module: docker.planfile-mcp.planfile_mcp_server
-    line: 128
-    cyclomatic_complexity: 4
-    calls_out: 6
-    calls_in: 1
-  src.algitex.tools.workspace.Workspace._validate_dependencies:
-    name: _validate_dependencies
-    module: src.algitex.tools.workspace
-    line: 61
-    cyclomatic_complexity: 4
-    calls_out: 4
-    calls_in: 0
-  src.algitex.tools.mcp_lifecycle.MCPLifecycleManager.restart_service:
-    name: restart_service
-    module: src.algitex.tools.mcp_lifecycle
-    line: 110
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 0
-  examples.30-parallel-execution.parallel_real_world.main:
-    name: main
-    module: examples.30-parallel-execution.parallel_real_world
-    line: 126
-    cyclomatic_complexity: 13
-    calls_out: 43
-    calls_in: 0
-  examples.35-sprint3-patterns.main.demo_orchestrator_pattern:
-    name: demo_orchestrator_pattern
-    module: examples.35-sprint3-patterns.main
-    line: 94
-    cyclomatic_complexity: 1
-    calls_out: 12
-    calls_in: 1
-  examples.18-ollama-local.main.analyze_code:
-    name: analyze_code
-    module: examples.18-ollama-local.main
-    line: 65
-    cyclomatic_complexity: 5
-    calls_out: 5
-    calls_in: 1
-  src.algitex.cli.parallel._extract_and_partition:
-    name: _extract_and_partition
-    module: src.algitex.cli.parallel
-    line: 25
-    cyclomatic_complexity: 7
-    calls_out: 14
-    calls_in: 1
-  src.algitex.shared_rules.RuleRegistry.check_file:
-    name: check_file
-    module: src.algitex.shared_rules
-    line: 237
-    cyclomatic_complexity: 6
-    calls_out: 9
-    calls_in: 0
-  src.algitex.cli.benchmark.benchmark_quick:
-    name: benchmark_quick
-    module: src.algitex.cli.benchmark
-    line: 161
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 0
-  src.algitex.tools.workspace.Workspace.pull_all:
-    name: pull_all
-    module: src.algitex.tools.workspace
-    line: 103
-    cyclomatic_complexity: 3
-    calls_out: 5
-    calls_in: 0
-  src.algitex.tools.config.ConfigManager.install_config:
-    name: install_config
-    module: src.algitex.tools.config
-    line: 43
-    cyclomatic_complexity: 5
-    calls_out: 12
-    calls_in: 0
-  src.algitex.cli.core.tools:
-    name: tools
-    module: src.algitex.cli.core
-    line: 157
-    cyclomatic_complexity: 5
-    calls_out: 11
-    calls_in: 0
-  src.algitex.microtask.classifier.classify_prefact_line:
-    name: classify_prefact_line
-    module: src.algitex.microtask.classifier
-    line: 50
-    cyclomatic_complexity: 12
-    calls_out: 21
-    calls_in: 1
-  examples.38-new-modules.main.demo_verify_module:
-    name: demo_verify_module
-    module: examples.38-new-modules.main
-    line: 63
-    cyclomatic_complexity: 2
-    calls_out: 8
-    calls_in: 1
-  examples.33-hybrid-autofix.main.demo_dry_run:
-    name: demo_dry_run
-    module: examples.33-hybrid-autofix.main
-    line: 27
-    cyclomatic_complexity: 1
-    calls_out: 8
-    calls_in: 1
-  src.algitex.todo.micro_prompts.MicroPromptBuilder._build_user_prompt:
-    name: _build_user_prompt
-    module: src.algitex.todo.micro_prompts
-    line: 27
-    cyclomatic_complexity: 9
-    calls_out: 2
-    calls_in: 0
-  examples.44-plugin-system.main.main:
-    name: main
-    module: examples.44-plugin-system.main
-    line: 312
-    cyclomatic_complexity: 1
-    calls_out: 15
-    calls_in: 0
-  src.algitex.tools.autofix.AutoFix.mark_task_done:
-    name: mark_task_done
-    module: src.algitex.tools.autofix
-    line: 130
-    cyclomatic_complexity: 8
-    calls_out: 9
-    calls_in: 0
-  src.algitex.tools.workspace.Workspace.validate_all:
-    name: validate_all
-    module: src.algitex.tools.workspace
-    line: 196
-    cyclomatic_complexity: 3
-    calls_out: 10
-    calls_in: 0
-  src.algitex.nlp.find_duplicate_blocks:
-    name: find_duplicate_blocks
-    module: src.algitex.nlp
     line: 212
-    cyclomatic_complexity: 14
-    calls_out: 24
-    calls_in: 1
-  examples.02-algo-loop.main.main:
-    name: main
-    module: examples.02-algo-loop.main
-    line: 17
-    cyclomatic_complexity: 11
-    calls_out: 33
-    calls_in: 0
-  examples.06-telemetry.main.context_manager_example:
-    name: context_manager_example
-    module: examples.06-telemetry.main
-    line: 88
-    cyclomatic_complexity: 2
-    calls_out: 11
-    calls_in: 0
-  src.algitex.tools.logging.format_value:
-    name: format_value
-    module: src.algitex.tools.logging
-    line: 115
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 2
-  src.algitex.todo.micro.MicroFixer.fix_tasks:
-    name: fix_tasks
-    module: src.algitex.todo.micro
-    line: 198
-    cyclomatic_complexity: 9
-    calls_out: 6
-    calls_in: 0
-  examples.41-god-module-splitting.main.demo_import_compatibility:
-    name: demo_import_compatibility
-    module: examples.41-god-module-splitting.main
-    line: 122
-    cyclomatic_complexity: 1
-    calls_out: 11
-    calls_in: 1
-  examples.40-three-tier-autofix.main.demo_tier_big:
-    name: demo_tier_big
-    module: examples.40-three-tier-autofix.main
-    line: 55
-    cyclomatic_complexity: 2
-    calls_out: 9
-    calls_in: 1
-  docker.planfile-mcp.planfile_mcp_server.planfile_sprint_status:
-    name: planfile_sprint_status
-    module: docker.planfile-mcp.planfile_mcp_server
-    line: 186
-    cyclomatic_complexity: 3
-    calls_out: 9
-    calls_in: 1
-  scripts.fix_readme.fix_readme:
-    name: fix_readme
-    module: scripts.fix_readme
-    line: 9
-    cyclomatic_complexity: 1
-    calls_out: 9
-    calls_in: 0
-  src.algitex.tools.autofix.ollama_backend.OllamaBackend.fix:
-    name: fix
-    module: src.algitex.tools.autofix.ollama_backend
-    line: 35
-    cyclomatic_complexity: 6
-    calls_out: 18
-    calls_in: 0
-  src.algitex.tools.parallel.partitioner.TaskPartitioner._build_conflict_graph:
-    name: _build_conflict_graph
-    module: src.algitex.tools.parallel.partitioner
-    line: 54
     cyclomatic_complexity: 5
+    calls_out: 15
+    calls_in: 0
+  src.algitex.tools.mcp.MCPOrchestrator.restart_service:
+    name: restart_service
+    module: src.algitex.tools.mcp
+    line: 198
+    cyclomatic_complexity: 1
     calls_out: 4
     calls_in: 0
-  examples.18-ollama-local.buggy_code.complex_function:
-    name: complex_function
-    module: examples.18-ollama-local.buggy_code
-    line: 49
-    cyclomatic_complexity: 6
-    calls_out: 6
-    calls_in: 0
-  docker.code2llm.code2llm_mcp_server.analyze_project:
-    name: analyze_project
-    module: docker.code2llm.code2llm_mcp_server
-    line: 132
-    cyclomatic_complexity: 1
-    calls_out: 11
-    calls_in: 4
-  examples.44-plugin-system.main.demo_plugin_configuration:
-    name: demo_plugin_configuration
-    module: examples.44-plugin-system.main
-    line: 231
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 1
-  src.algitex.todo.benchmark.benchmark_parallel:
-    name: benchmark_parallel
-    module: src.algitex.todo.benchmark
-    line: 139
-    cyclomatic_complexity: 5
-    calls_out: 9
-    calls_in: 2
-  src.algitex.nlp.sort_imports_in_path:
-    name: sort_imports_in_path
-    module: src.algitex.nlp
-    line: 191
-    cyclomatic_complexity: 6
-    calls_out: 8
-    calls_in: 2
   examples.06-telemetry.main.multi_model_comparison:
     name: multi_model_comparison
     module: examples.06-telemetry.main
@@ -1895,418 +1384,12 @@ nodes:
     cyclomatic_complexity: 2
     calls_out: 10
     calls_in: 0
-  examples.33-hybrid-autofix.main.demo_benchmark:
-    name: demo_benchmark
-    module: examples.33-hybrid-autofix.main
-    line: 60
-    cyclomatic_complexity: 1
-    calls_out: 5
-    calls_in: 1
-  src.algitex.cli.todo_verify.todo_verify_prefact:
-    name: todo_verify_prefact
-    module: src.algitex.cli.todo_verify
-    line: 8
-    cyclomatic_complexity: 12
-    calls_out: 28
-    calls_in: 0
-  src.algitex.tools.workspace.Workspace.plan_all:
-    name: plan_all
-    module: src.algitex.tools.workspace
-    line: 141
-    cyclomatic_complexity: 4
-    calls_out: 6
-    calls_in: 0
-  examples.43-code-health.main.main:
-    name: main
-    module: examples.43-code-health.main
-    line: 279
-    cyclomatic_complexity: 1
-    calls_out: 15
-    calls_in: 0
-  src.algitex.tools.ollama_cache.LLMCache.set:
-    name: set
-    module: src.algitex.tools.ollama_cache
-    line: 97
-    cyclomatic_complexity: 1
-    calls_out: 7
-    calls_in: 32
-  examples.28-mcp-orchestration.mcp_orchestrator.main:
-    name: main
-    module: examples.28-mcp-orchestration.mcp_orchestrator
-    line: 16
-    cyclomatic_complexity: 9
-    calls_out: 21
-    calls_in: 0
-  src.algitex.cli.microtask.microtask_classify:
-    name: microtask_classify
-    module: src.algitex.cli.microtask
-    line: 23
-    cyclomatic_complexity: 2
-    calls_out: 6
-    calls_in: 0
-  src.algitex.cli.microtask._filter_tasks:
-    name: _filter_tasks
-    module: src.algitex.cli.microtask
-    line: 96
-    cyclomatic_complexity: 7
-    calls_out: 0
-    calls_in: 1
-  examples.13-vallm.main.create_sample_code:
-    name: create_sample_code
-    module: examples.13-vallm.main
-    line: 13
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 1
-  src.algitex.todo.verify._run_prefact_scan:
-    name: _run_prefact_scan
-    module: src.algitex.todo.verify
-    line: 45
-    cyclomatic_complexity: 4
-    calls_out: 4
-    calls_in: 1
-  examples.43-code-health.main.demo_ci_integration:
-    name: demo_ci_integration
-    module: examples.43-code-health.main
-    line: 156
-    cyclomatic_complexity: 1
-    calls_out: 5
-    calls_in: 1
-  docker.planfile-mcp.planfile_mcp_server.create_rest_api:
-    name: create_rest_api
-    module: docker.planfile-mcp.planfile_mcp_server
-    line: 219
-    cyclomatic_complexity: 1
-    calls_out: 16
-    calls_in: 1
-  examples.39-microtask-pipeline.main.demo_microtask_plan:
-    name: demo_microtask_plan
-    module: examples.39-microtask-pipeline.main
-    line: 28
-    cyclomatic_complexity: 1
-    calls_out: 13
-    calls_in: 1
-  src.algitex.todo.repair._simple_fstring_rewrite:
-    name: _simple_fstring_rewrite
-    module: src.algitex.todo.repair
-    line: 102
-    cyclomatic_complexity: 1
-    calls_out: 13
-    calls_in: 1
-  src.algitex.tools.ollama.OllamaService.ensure_model:
-    name: ensure_model
-    module: src.algitex.tools.ollama
-    line: 349
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 0
-  src.algitex.tools.autofix.AutoFix.fix_issue:
-    name: fix_issue
-    module: src.algitex.tools.autofix
-    line: 237
-    cyclomatic_complexity: 6
-    calls_out: 8
-    calls_in: 0
-  examples.30-parallel-execution.main.main:
-    name: main
-    module: examples.30-parallel-execution.main
-    line: 16
-    cyclomatic_complexity: 13
-    calls_out: 55
-    calls_in: 0
-  examples.34-batch-fix.main.demo_comparison:
-    name: demo_comparison
-    module: examples.34-batch-fix.main
-    line: 152
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 1
-  src.algitex.tools.logging.log_calls:
-    name: log_calls
-    module: src.algitex.tools.logging
-    line: 35
-    cyclomatic_complexity: 1
-    calls_out: 9
-    calls_in: 0
-  src.algitex.todo.micro_utils.extract_first_int:
-    name: extract_first_int
-    module: src.algitex.todo.micro_utils
-    line: 29
-    cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 2
-  src.algitex.cli.nlp._print_duplicates:
-    name: _print_duplicates
-    module: src.algitex.cli.nlp
-    line: 87
-    cyclomatic_complexity: 4
-    calls_out: 11
-    calls_in: 1
-  examples.11-aider-mcp.main.create_sample_project:
-    name: create_sample_project
-    module: examples.11-aider-mcp.main
-    line: 13
-    cyclomatic_complexity: 1
-    calls_out: 4
-    calls_in: 1
-  src.algitex.todo.hybrid.HybridAutofix._call_llm_backend:
-    name: _call_llm_backend
-    module: src.algitex.todo.hybrid
-    line: 316
-    cyclomatic_complexity: 7
-    calls_out: 6
-    calls_in: 0
-  examples.32-workspace-coordination.main._group_repos_by_priority:
-    name: _group_repos_by_priority
-    module: examples.32-workspace-coordination.main
-    line: 65
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 2
-  src.algitex.tools.services.ServiceChecker.print_status:
-    name: print_status
-    module: src.algitex.tools.services
-    line: 305
-    cyclomatic_complexity: 6
-    calls_out: 12
-    calls_in: 0
-  src.algitex.tools.workspace.init_workspace:
-    name: init_workspace
-    module: src.algitex.tools.workspace
-    line: 309
-    cyclomatic_complexity: 1
-    calls_out: 8
-    calls_in: 1
-  src.algitex.tools.benchmark.ModelBenchmark._print_summary:
-    name: _print_summary
-    module: src.algitex.tools.benchmark
-    line: 385
-    cyclomatic_complexity: 5
-    calls_out: 22
-    calls_in: 0
-  docker.vallm.vallm_mcp_server.create_rest_api:
-    name: create_rest_api
-    module: docker.vallm.vallm_mcp_server
-    line: 304
-    cyclomatic_complexity: 1
-    calls_out: 17
-    calls_in: 1
-  examples.38-new-modules.main.demo_repair_module:
-    name: demo_repair_module
-    module: examples.38-new-modules.main
-    line: 36
-    cyclomatic_complexity: 2
-    calls_out: 12
-    calls_in: 1
-  examples.38-new-modules.main.demo_combined_workflow:
-    name: demo_combined_workflow
-    module: examples.38-new-modules.main
-    line: 87
-    cyclomatic_complexity: 1
-    calls_out: 3
-    calls_in: 1
-  src.algitex.tools.parallel.extractor.RegionExtractor._find_calls:
-    name: _find_calls
-    module: src.algitex.tools.parallel.extractor
-    line: 108
-    cyclomatic_complexity: 6
-    calls_out: 10
-    calls_in: 0
-  docker.proxym.proxym_mcp_server._call_gemini:
-    name: _call_gemini
-    module: docker.proxym.proxym_mcp_server
-    line: 243
-    cyclomatic_complexity: 5
-    calls_out: 14
-    calls_in: 1
-  docker.aider-mcp.aider_mcp_server.run_rest_server:
-    name: run_rest_server
-    module: docker.aider-mcp.aider_mcp_server
-    line: 135
-    cyclomatic_complexity: 1
-    calls_out: 7
-    calls_in: 0
-  examples.22-claude-code-ollama.main.main:
-    name: main
-    module: examples.22-claude-code-ollama.main
-    line: 12
-    cyclomatic_complexity: 4
-    calls_out: 18
-    calls_in: 0
-  examples.18-ollama-local.main.list_models:
-    name: list_models
-    module: examples.18-ollama-local.main
-    line: 24
-    cyclomatic_complexity: 4
-    calls_out: 4
-    calls_in: 1
-  examples.41-god-module-splitting.main.demo_god_module_problem:
-    name: demo_god_module_problem
-    module: examples.41-god-module-splitting.main
-    line: 17
-    cyclomatic_complexity: 1
-    calls_out: 9
-    calls_in: 1
-  examples.30-parallel-execution.parallel_refactoring.main:
-    name: main
-    module: examples.30-parallel-execution.parallel_refactoring
-    line: 20
-    cyclomatic_complexity: 10
-    calls_out: 27
-    calls_in: 0
-  docker.code2llm.code2llm_mcp_server._collect_project_metrics:
-    name: _collect_project_metrics
-    module: docker.code2llm.code2llm_mcp_server
-    line: 102
-    cyclomatic_complexity: 4
-    calls_out: 8
-    calls_in: 1
-  examples.04-ide-integration.main.main:
-    name: main
-    module: examples.04-ide-integration.main
-    line: 123
-    cyclomatic_complexity: 4
-    calls_out: 26
-    calls_in: 0
-  src.algitex.todo.benchmark.benchmark_fix:
-    name: benchmark_fix
-    module: src.algitex.todo.benchmark
-    line: 174
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 2
-  src.algitex.tools.batch.BatchProcessor._save_results:
-    name: _save_results
-    module: src.algitex.tools.batch
-    line: 304
-    cyclomatic_complexity: 3
-    calls_out: 9
-    calls_in: 0
-  docker.proxym.proxym_mcp_server.create_rest_api:
-    name: create_rest_api
-    module: docker.proxym.proxym_mcp_server
-    line: 333
-    cyclomatic_complexity: 1
-    calls_out: 16
-    calls_in: 1
-  examples.10-cicd.main.gitlab_ci_example:
-    name: gitlab_ci_example
-    module: examples.10-cicd.main
-    line: 59
-    cyclomatic_complexity: 2
-    calls_out: 13
-    calls_in: 0
-  docker.proxym.proxym_mcp_server.list_models:
-    name: list_models
-    module: docker.proxym.proxym_mcp_server
-    line: 52
-    cyclomatic_complexity: 4
-    calls_out: 7
-    calls_in: 2
-  examples.20-self-hosted-pipeline.main.main:
-    name: main
-    module: examples.20-self-hosted-pipeline.main
-    line: 17
-    cyclomatic_complexity: 2
-    calls_out: 49
-    calls_in: 0
-  src.algitex.tools.config.ConfigManager.generate_env_file:
-    name: generate_env_file
+  src.algitex.tools.config.ConfigManager.setup_project_configs:
+    name: setup_project_configs
     module: src.algitex.tools.config
-    line: 231
-    cyclomatic_complexity: 7
+    line: 313
+    cyclomatic_complexity: 6
     calls_out: 12
-    calls_in: 0
-  examples.36-dashboard.main.demo_dashboard_with_todo:
-    name: demo_dashboard_with_todo
-    module: examples.36-dashboard.main
-    line: 71
-    cyclomatic_complexity: 2
-    calls_out: 8
-    calls_in: 1
-  src.algitex.tools.autofix.batch_backend.fs_utils.create_backup:
-    name: create_backup
-    module: src.algitex.tools.autofix.batch_backend.fs_utils
-    line: 10
-    cyclomatic_complexity: 5
-    calls_out: 12
-    calls_in: 1
-  examples.18-ollama-local.main.generate_code:
-    name: generate_code
-    module: examples.18-ollama-local.main
-    line: 37
-    cyclomatic_complexity: 4
-    calls_out: 3
-    calls_in: 1
-  examples.32-workspace-coordination.main._show_execution_summary:
-    name: _show_execution_summary
-    module: examples.32-workspace-coordination.main
-    line: 164
-    cyclomatic_complexity: 3
-    calls_out: 24
-    calls_in: 1
-  examples.43-code-health.main.demo_health_metrics:
-    name: demo_health_metrics
-    module: examples.43-code-health.main
-    line: 14
-    cyclomatic_complexity: 3
-    calls_out: 5
-    calls_in: 1
-  src.algitex.tools.ide_claude.ClaudeCodeHelper.chat:
-    name: chat
-    module: src.algitex.tools.ide_claude
-    line: 56
-    cyclomatic_complexity: 5
-    calls_out: 5
-    calls_in: 0
-  project.map.toon.parallel_fix:
-    name: parallel_fix
-    module: project.map.toon
-    line: 999
-    cyclomatic_complexity: 0
-    calls_out: 0
-    calls_in: 1
-  examples.19-local-mcp-tools.main.main:
-    name: main
-    module: examples.19-local-mcp-tools.main
-    line: 40
-    cyclomatic_complexity: 5
-    calls_out: 28
-    calls_in: 0
-  examples.07-context.main.basic_context_example:
-    name: basic_context_example
-    module: examples.07-context.main
-    line: 15
-    cyclomatic_complexity: 2
-    calls_out: 34
-    calls_in: 0
-  examples.31-abpr-workflow.abpr_pipeline.abpr_pipeline:
-    name: abpr_pipeline
-    module: examples.31-abpr-workflow.abpr_pipeline
-    line: 15
-    cyclomatic_complexity: 10
-    calls_out: 36
-    calls_in: 0
-  src.algitex.tools.batch.BatchProcessor._prepare:
-    name: _prepare
-    module: src.algitex.tools.batch
-    line: 185
-    cyclomatic_complexity: 5
-    calls_out: 10
-    calls_in: 0
-  src.algitex.tools.batch.BatchProcessor._setup_progress_bar:
-    name: _setup_progress_bar
-    module: src.algitex.tools.batch
-    line: 246
-    cyclomatic_complexity: 5
-    calls_out: 2
-    calls_in: 0
-  examples.35-sprint3-patterns.main.main:
-    name: main
-    module: examples.35-sprint3-patterns.main
-    line: 117
-    cyclomatic_complexity: 1
-    calls_out: 14
     calls_in: 0
   examples.32-workspace-coordination.main._check_quality_gates:
     name: _check_quality_gates
@@ -2315,173 +1398,96 @@ nodes:
     cyclomatic_complexity: 8
     calls_out: 9
     calls_in: 1
-  src.algitex.benchmark.BenchmarkSuite.print_table:
-    name: print_table
-    module: src.algitex.benchmark
-    line: 72
-    cyclomatic_complexity: 2
+  src.algitex.tools.parallel.partitioner.TaskPartitioner._build_conflict_graph:
+    name: _build_conflict_graph
+    module: src.algitex.tools.parallel.partitioner
+    line: 54
+    cyclomatic_complexity: 5
+    calls_out: 4
+    calls_in: 0
+  src.algitex.tools.services.ServiceChecker._print_status_details:
+    name: _print_status_details
+    module: src.algitex.tools.services
+    line: 290
+    cyclomatic_complexity: 8
     calls_out: 9
     calls_in: 0
-  examples.35-sprint3-patterns.main.demo_pipeline_pattern:
-    name: demo_pipeline_pattern
-    module: examples.35-sprint3-patterns.main
-    line: 70
+  examples.09-workspace.main.cross_repo_analysis_example:
+    name: cross_repo_analysis_example
+    module: examples.09-workspace.main
+    line: 131
+    cyclomatic_complexity: 9
+    calls_out: 16
+    calls_in: 0
+  src.algitex.todo.benchmark.benchmark_parallel:
+    name: benchmark_parallel
+    module: src.algitex.todo.benchmark
+    line: 139
+    cyclomatic_complexity: 5
+    calls_out: 9
+    calls_in: 2
+  src.algitex.cli.parallel._load_tickets:
+    name: _load_tickets
+    module: src.algitex.cli.parallel
+    line: 12
     cyclomatic_complexity: 2
     calls_out: 4
     calls_in: 1
-  src.algitex.cli.nlp._print_dead_code:
-    name: _print_dead_code
-    module: src.algitex.cli.nlp
-    line: 77
-    cyclomatic_complexity: 2
-    calls_out: 8
-    calls_in: 1
-  src.algitex.tools.mcp_lifecycle.MCPLifecycleManager.start_service:
-    name: start_service
-    module: src.algitex.tools.mcp_lifecycle
-    line: 33
-    cyclomatic_complexity: 11
-    calls_out: 15
-    calls_in: 0
-  docker.code2llm.code2llm_mcp_server.generate_readme:
-    name: generate_readme
-    module: docker.code2llm.code2llm_mcp_server
-    line: 206
-    cyclomatic_complexity: 4
-    calls_out: 15
-    calls_in: 1
-  src.algitex.cli.benchmark.benchmark_full:
-    name: benchmark_full
-    module: src.algitex.cli.benchmark
-    line: 119
+  src.algitex.microtask.group_tasks_by_file:
+    name: group_tasks_by_file
+    module: src.algitex.microtask
+    line: 183
     cyclomatic_complexity: 3
-    calls_out: 16
-    calls_in: 0
-  src.algitex.todo.micro.MicroFixer.fix_file:
-    name: fix_file
-    module: src.algitex.todo.micro
-    line: 55
-    cyclomatic_complexity: 12
-    calls_out: 14
-    calls_in: 0
-  examples.06-telemetry.main.basic_telemetry_example:
-    name: basic_telemetry_example
-    module: examples.06-telemetry.main
-    line: 15
-    cyclomatic_complexity: 2
-    calls_out: 30
-    calls_in: 0
-  src.algitex.tools.todo_parser.TodoParser._parse_prefact:
-    name: _parse_prefact
-    module: src.algitex.tools.todo_parser
-    line: 108
-    cyclomatic_complexity: 5
-    calls_out: 12
-    calls_in: 0
-  src.algitex.tools.ide_claude.ClaudeCodeHelper.fix_file:
-    name: fix_file
-    module: src.algitex.tools.ide_claude
-    line: 23
-    cyclomatic_complexity: 5
-    calls_out: 9
-    calls_in: 0
-  examples.10-cicd.main.quality_gates_example:
-    name: quality_gates_example
-    module: examples.10-cicd.main
-    line: 83
-    cyclomatic_complexity: 2
-    calls_out: 16
-    calls_in: 0
-  src.algitex.tools.todo_parser.TodoParser._parse_generic:
-    name: _parse_generic
-    module: src.algitex.tools.todo_parser
-    line: 164
+    calls_out: 4
+    calls_in: 3
+  src.algitex.todo.benchmark._benchmark_single:
+    name: _benchmark_single
+    module: src.algitex.todo.benchmark
+    line: 79
     cyclomatic_complexity: 6
+    calls_out: 11
+    calls_in: 1
+  src.algitex.config._find_config:
+    name: _find_config
+    module: src.algitex.config
+    line: 133
+    cyclomatic_complexity: 5
+    calls_out: 5
+    calls_in: 1
+  src.algitex.tools.workspace.Workspace.clone_all:
+    name: clone_all
+    module: src.algitex.tools.workspace
+    line: 86
+    cyclomatic_complexity: 3
+    calls_out: 8
+    calls_in: 0
+  examples.18-ollama-local.main.main:
+    name: main
+    module: examples.18-ollama-local.main
+    line: 190
+    cyclomatic_complexity: 7
+    calls_out: 39
+    calls_in: 0
+  src.algitex.cli.nlp._print_duplicates:
+    name: _print_duplicates
+    module: src.algitex.cli.nlp
+    line: 87
+    cyclomatic_complexity: 4
+    calls_out: 11
+    calls_in: 1
+  src.algitex.tools.logging.verbose:
+    name: verbose
+    module: src.algitex.tools.logging
+    line: 79
+    cyclomatic_complexity: 1
     calls_out: 12
     calls_in: 0
-  docker.proxym.proxym_mcp_server.simple_prompt:
-    name: simple_prompt
-    module: docker.proxym.proxym_mcp_server
-    line: 302
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 1
-  src.algitex.cli.parallel.parallel:
-    name: parallel
-    module: src.algitex.cli.parallel
-    line: 111
-    cyclomatic_complexity: 7
-    calls_out: 23
-    calls_in: 0
-  examples.34-batch-fix.main.demo_batch_dry_run:
-    name: demo_batch_dry_run
-    module: examples.34-batch-fix.main
-    line: 15
-    cyclomatic_complexity: 1
-    calls_out: 5
-    calls_in: 1
-  src.algitex.tools.benchmark.ModelBenchmark._print_table:
-    name: _print_table
-    module: src.algitex.tools.benchmark
-    line: 333
-    cyclomatic_complexity: 7
-    calls_out: 18
-    calls_in: 0
-  src.algitex.tools.ide_base.IDEHelper.list_tools:
-    name: list_tools
-    module: src.algitex.tools.ide_base
-    line: 87
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 0
-  src.algitex.tools.autofix.batch_backend.fs_utils.preflight_syntax_check:
-    name: preflight_syntax_check
-    module: src.algitex.tools.autofix.batch_backend.fs_utils
-    line: 27
-    cyclomatic_complexity: 10
-    calls_out: 15
-    calls_in: 1
-  docker.code2llm.code2llm_mcp_server._analyze_python_file:
-    name: _analyze_python_file
-    module: docker.code2llm.code2llm_mcp_server
-    line: 33
-    cyclomatic_complexity: 10
-    calls_out: 15
-    calls_in: 1
-  src.algitex.todo.hybrid.HybridAutofix.fix_all:
+  src.algitex.tools.autofix.AutoFix.fix_all:
     name: fix_all
-    module: src.algitex.todo.hybrid
-    line: 366
-    cyclomatic_complexity: 3
-    calls_out: 31
-    calls_in: 0
-  examples.14-docker-mcp.main.create_sample_docker_project:
-    name: create_sample_docker_project
-    module: examples.14-docker-mcp.main
-    line: 13
-    cyclomatic_complexity: 1
-    calls_out: 5
-    calls_in: 1
-  examples.09-workspace.main._calculate_metrics:
-    name: _calculate_metrics
-    module: examples.09-workspace.main
-    line: 340
-    cyclomatic_complexity: 3
+    module: src.algitex.tools.autofix
+    line: 191
+    cyclomatic_complexity: 11
     calls_out: 14
-    calls_in: 1
-  examples.44-plugin-system.main.demo_plugin_architecture:
-    name: demo_plugin_architecture
-    module: examples.44-plugin-system.main
-    line: 35
-    cyclomatic_complexity: 1
-    calls_out: 2
-    calls_in: 1
-  examples.09-workspace.main.advanced_workspace_features:
-    name: advanced_workspace_features
-    module: examples.09-workspace.main
-    line: 354
-    cyclomatic_complexity: 1
-    calls_out: 7
     calls_in: 0
   src.algitex.todo.verify._diff_issues:
     name: _diff_issues
@@ -2490,179 +1496,53 @@ nodes:
     cyclomatic_complexity: 8
     calls_out: 12
     calls_in: 1
-  examples.41-god-module-splitting.main.main:
-    name: main
-    module: examples.41-god-module-splitting.main
-    line: 198
-    cyclomatic_complexity: 1
-    calls_out: 14
-    calls_in: 0
-  examples.01-quickstart.main.main:
-    name: main
-    module: examples.01-quickstart.main
-    line: 15
-    cyclomatic_complexity: 2
-    calls_out: 21
-    calls_in: 0
-  examples.11-aider-mcp.main.demo_refactoring:
-    name: demo_refactoring
-    module: examples.11-aider-mcp.main
-    line: 47
-    cyclomatic_complexity: 3
-    calls_out: 22
-    calls_in: 0
-  src.algitex.cli.todo_verify._validate_tasks:
-    name: _validate_tasks
-    module: src.algitex.cli.todo_verify
-    line: 62
-    cyclomatic_complexity: 9
-    calls_out: 12
-    calls_in: 1
-  src.algitex.tools.benchmark.ModelBenchmark.compare_models:
-    name: compare_models
-    module: src.algitex.tools.benchmark
-    line: 283
-    cyclomatic_complexity: 8
-    calls_out: 16
-    calls_in: 0
-  src.algitex.tools.autofix.AutoFix.print_summary:
-    name: print_summary
-    module: src.algitex.tools.autofix
-    line: 259
-    cyclomatic_complexity: 12
-    calls_out: 16
-    calls_in: 0
-  src.algitex.tools.autofix.fallback_backend.FallbackBackend.fix:
-    name: fix
-    module: src.algitex.tools.autofix.fallback_backend
-    line: 147
-    cyclomatic_complexity: 10
-    calls_out: 16
-    calls_in: 0
-  examples.33-hybrid-autofix.main.demo_ollama_local:
-    name: demo_ollama_local
-    module: examples.33-hybrid-autofix.main
-    line: 107
-    cyclomatic_complexity: 1
-    calls_out: 6
-    calls_in: 1
-  src.algitex.todo.repair._find_import_insert_point:
-    name: _find_import_insert_point
-    module: src.algitex.todo.repair
-    line: 20
-    cyclomatic_complexity: 3
-    calls_out: 3
-    calls_in: 1
-  examples.31-abpr-workflow.main.main:
-    name: main
-    module: examples.31-abpr-workflow.main
-    line: 15
-    cyclomatic_complexity: 12
-    calls_out: 77
-    calls_in: 0
-  examples.38-new-modules.main.demo_classify_module:
-    name: demo_classify_module
-    module: examples.38-new-modules.main
-    line: 12
-    cyclomatic_complexity: 2
-    calls_out: 13
-    calls_in: 1
-  examples.12-filesystem-mcp.main.demo_file_operations:
-    name: demo_file_operations
-    module: examples.12-filesystem-mcp.main
-    line: 48
-    cyclomatic_complexity: 3
-    calls_out: 30
-    calls_in: 0
-  src.algitex.microtask.classifier._is_ignored_path:
-    name: _is_ignored_path
-    module: src.algitex.microtask.classifier
-    line: 190
-    cyclomatic_complexity: 2
-    calls_out: 3
-    calls_in: 1
-  docker.planfile-mcp.planfile_mcp_server._save_tickets:
-    name: _save_tickets
-    module: docker.planfile-mcp.planfile_mcp_server
-    line: 49
-    cyclomatic_complexity: 2
-    calls_out: 8
-    calls_in: 3
-  examples.10-cicd.main.cleanup_ci_projects:
-    name: cleanup_ci_projects
-    module: examples.10-cicd.main
-    line: 376
-    cyclomatic_complexity: 3
-    calls_out: 4
-    calls_in: 0
-  src.algitex.tools.tickets.Tickets.list:
-    name: list
-    module: src.algitex.tools.tickets
-    line: 151
+  examples.17-docker-workflow.main.demo_with_docker_tools:
+    name: demo_with_docker_tools
+    module: examples.17-docker-workflow.main
+    line: 76
     cyclomatic_complexity: 4
-    calls_out: 1
-    calls_in: 33
-  src.algitex.nlp._python_files:
-    name: _python_files
-    module: src.algitex.nlp
-    line: 305
+    calls_out: 8
+    calls_in: 0
+  src.algitex.todo.audit.AuditLogger.print_summary:
+    name: print_summary
+    module: src.algitex.todo.audit
+    line: 271
     cyclomatic_complexity: 6
-    calls_out: 4
-    calls_in: 4
-  examples.44-plugin-system.main.demo_creating_tool_plugin:
-    name: demo_creating_tool_plugin
-    module: examples.44-plugin-system.main
-    line: 92
-    cyclomatic_complexity: 1
-    calls_out: 12
-    calls_in: 1
-  examples.12-filesystem-mcp.sample_files.src.main.main:
-    name: main
-    module: examples.12-filesystem-mcp.sample_files.src.main
-    line: 2
-    cyclomatic_complexity: 1
-    calls_out: 1
+    calls_out: 8
     calls_in: 0
-  examples.33-hybrid-autofix.main.demo_full_hybrid:
-    name: demo_full_hybrid
-    module: examples.33-hybrid-autofix.main
-    line: 84
-    cyclomatic_complexity: 1
-    calls_out: 9
-    calls_in: 1
-  examples.15-github-mcp.main.demo_github_workflow:
-    name: demo_github_workflow
-    module: examples.15-github-mcp.main
-    line: 66
+  src.algitex.todo.classify.classify_task:
+    name: classify_task
+    module: src.algitex.todo.classify
+    line: 150
     cyclomatic_complexity: 3
-    calls_out: 30
-    calls_in: 0
-  examples.10-cicd.main.multi_platform_ci_example:
-    name: multi_platform_ci_example
-    module: examples.10-cicd.main
-    line: 306
-    cyclomatic_complexity: 3
-    calls_out: 15
-    calls_in: 0
-  examples.42-duplicate-removal.main.demo_prevention_strategies:
-    name: demo_prevention_strategies
-    module: examples.42-duplicate-removal.main
-    line: 191
-    cyclomatic_complexity: 1
     calls_out: 4
-    calls_in: 1
-  src.algitex.tools.parallel.partitioner.TaskPartitioner._compute_footprints:
-    name: _compute_footprints
-    module: src.algitex.tools.parallel.partitioner
-    line: 31
-    cyclomatic_complexity: 10
-    calls_out: 10
+    calls_in: 15
+  src.algitex.todo.verify.prune_outdated_tasks:
+    name: prune_outdated_tasks
+    module: src.algitex.todo.verify
+    line: 194
+    cyclomatic_complexity: 4
+    calls_out: 8
     calls_in: 0
-  docker.vallm.vallm_mcp_server.calculate_quality_score:
-    name: calculate_quality_score
-    module: docker.vallm.vallm_mcp_server
-    line: 270
+  src.algitex.todo.micro.MicroFixer.__init__:
+    name: __init__
+    module: src.algitex.todo.micro
+    line: 41
     cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 0
+  examples.16-test-workflow.main.create_sample_project:
+    name: create_sample_project
+    module: examples.16-test-workflow.main
+    line: 13
+    cyclomatic_complexity: 1
+    calls_out: 8
+    calls_in: 1
+  examples.38-new-modules.main.demo_repair_module:
+    name: demo_repair_module
+    module: examples.38-new-modules.main
+    line: 36
+    cyclomatic_complexity: 2
     calls_out: 12
     calls_in: 1
   src.algitex.workflows.Pipeline.finish:
@@ -2672,48 +1552,629 @@ nodes:
     cyclomatic_complexity: 1
     calls_out: 4
     calls_in: 0
-  examples.16-test-workflow.main.demo_test_workflow:
-    name: demo_test_workflow
-    module: examples.16-test-workflow.main
-    line: 121
-    cyclomatic_complexity: 5
-    calls_out: 37
+  src.algitex.cli.microtask._filter_tasks:
+    name: _filter_tasks
+    module: src.algitex.cli.microtask
+    line: 96
+    cyclomatic_complexity: 7
+    calls_out: 0
+    calls_in: 1
+  docker.vallm.vallm_mcp_server.validate_all:
+    name: validate_all
+    module: docker.vallm.vallm_mcp_server
+    line: 180
+    cyclomatic_complexity: 1
+    calls_out: 16
+    calls_in: 2
+  examples.12-filesystem-mcp.sample_files.src.main.main:
+    name: main
+    module: examples.12-filesystem-mcp.sample_files.src.main
+    line: 2
+    cyclomatic_complexity: 1
+    calls_out: 1
     calls_in: 0
-  examples.09-workspace.main.workspace_management_example:
-    name: workspace_management_example
-    module: examples.09-workspace.main
-    line: 92
-    cyclomatic_complexity: 6
-    calls_out: 19
-    calls_in: 0
-  src.algitex.nlp.DeadCodeDetector.scan:
-    name: scan
-    module: src.algitex.nlp
-    line: 125
-    cyclomatic_complexity: 6
+  examples.11-aider-mcp.main.create_sample_project:
+    name: create_sample_project
+    module: examples.11-aider-mcp.main
+    line: 13
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 1
+  src.algitex.tools.autofix.fallback_backend.FallbackBackend._try_backend:
+    name: _try_backend
+    module: src.algitex.tools.autofix.fallback_backend
+    line: 124
+    cyclomatic_complexity: 4
     calls_out: 10
     calls_in: 0
-  src.algitex.todo.verifier.TodoVerifier.print_report:
-    name: print_report
-    module: src.algitex.todo.verifier
-    line: 159
-    cyclomatic_complexity: 4
+  examples.33-hybrid-autofix.main.demo_ollama_local:
+    name: demo_ollama_local
+    module: examples.33-hybrid-autofix.main
+    line: 107
+    cyclomatic_complexity: 1
+    calls_out: 6
+    calls_in: 1
+  src.algitex.cli.parallel._extract_and_partition:
+    name: _extract_and_partition
+    module: src.algitex.cli.parallel
+    line: 25
+    cyclomatic_complexity: 7
+    calls_out: 14
+    calls_in: 1
+  src.algitex.tools.autofix.batch_backend.BatchFixBackend._mark_missing_as_failed:
+    name: _mark_missing_as_failed
+    module: src.algitex.tools.autofix.batch_backend
+    line: 731
+    cyclomatic_complexity: 3
+    calls_out: 1
+    calls_in: 0
+  examples.36-dashboard.main.main:
+    name: main
+    module: examples.36-dashboard.main
+    line: 92
+    cyclomatic_complexity: 1
+    calls_out: 13
+    calls_in: 0
+  examples.43-code-health.main.demo_analysis_pipeline:
+    name: demo_analysis_pipeline
+    module: examples.43-code-health.main
+    line: 46
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 1
+  src.algitex.benchmark.TierBenchmark.bench_algorithmic_fix:
+    name: bench_algorithmic_fix
+    module: src.algitex.benchmark
+    line: 261
+    cyclomatic_complexity: 2
+    calls_out: 9
+    calls_in: 0
+  examples.40-three-tier-autofix.main.main:
+    name: main
+    module: examples.40-three-tier-autofix.main
+    line: 111
+    cyclomatic_complexity: 1
+    calls_out: 15
+    calls_in: 0
+  src.algitex.tools.autofix.batch_backend.backend.BatchFixBackend.fix_batch:
+    name: fix_batch
+    module: src.algitex.tools.autofix.batch_backend.backend
+    line: 41
+    cyclomatic_complexity: 10
+    calls_out: 35
+    calls_in: 0
+  src.algitex.tools.logging.format_value:
+    name: format_value
+    module: src.algitex.tools.logging
+    line: 115
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 2
+  examples.09-workspace.main._analyze_workspace_structure:
+    name: _analyze_workspace_structure
+    module: examples.09-workspace.main
+    line: 293
+    cyclomatic_complexity: 8
+    calls_out: 10
+    calls_in: 1
+  src.algitex.nlp._sort_imports:
+    name: _sort_imports
+    module: src.algitex.nlp
+    line: 262
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 1
+  src.algitex.tools.todo_parser.TodoParser.parse:
+    name: parse
+    module: src.algitex.tools.todo_parser
+    line: 69
+    cyclomatic_complexity: 11
+    calls_out: 13
+    calls_in: 2
+  src.algitex.config._merge_yaml:
+    name: _merge_yaml
+    module: src.algitex.config
+    line: 147
+    cyclomatic_complexity: 10
+    calls_out: 7
+    calls_in: 1
+  examples.38-new-modules.main.demo_verify_module:
+    name: demo_verify_module
+    module: examples.38-new-modules.main
+    line: 63
+    cyclomatic_complexity: 2
+    calls_out: 8
+    calls_in: 1
+  src.algitex.tools.benchmark.ModelBenchmark._print_summary:
+    name: _print_summary
+    module: src.algitex.tools.benchmark
+    line: 385
+    cyclomatic_complexity: 5
+    calls_out: 22
+    calls_in: 0
+  src.algitex.tools.parallel.partitioner.TaskPartitioner._compute_footprints:
+    name: _compute_footprints
+    module: src.algitex.tools.parallel.partitioner
+    line: 31
+    cyclomatic_complexity: 10
+    calls_out: 10
+    calls_in: 0
+  src.algitex.cli.core.tools:
+    name: tools
+    module: src.algitex.cli.core
+    line: 157
+    cyclomatic_complexity: 5
     calls_out: 11
     calls_in: 0
-  src.algitex.nlp._is_ignored:
-    name: _is_ignored
-    module: src.algitex.nlp
-    line: 313
+  examples.18-ollama-local.main.demo_cost_comparison:
+    name: demo_cost_comparison
+    module: examples.18-ollama-local.main
+    line: 167
+    cyclomatic_complexity: 2
+    calls_out: 7
+    calls_in: 1
+  examples.30-parallel-execution.parallel_refactoring.main:
+    name: main
+    module: examples.30-parallel-execution.parallel_refactoring
+    line: 20
+    cyclomatic_complexity: 10
+    calls_out: 27
+    calls_in: 0
+  src.algitex.tools.todo_parser.TodoParser._parse_github:
+    name: _parse_github
+    module: src.algitex.tools.todo_parser
+    line: 136
+    cyclomatic_complexity: 4
+    calls_out: 10
+    calls_in: 0
+  src.algitex.tools.ollama_cache.LLMCache.set:
+    name: set
+    module: src.algitex.tools.ollama_cache
+    line: 97
+    cyclomatic_complexity: 1
+    calls_out: 7
+    calls_in: 32
+  examples.44-plugin-system.main.demo_plugin_architecture:
+    name: demo_plugin_architecture
+    module: examples.44-plugin-system.main
+    line: 35
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 1
+  examples.39-microtask-pipeline.main.demo_microtask_classify:
+    name: demo_microtask_classify
+    module: examples.39-microtask-pipeline.main
+    line: 11
+    cyclomatic_complexity: 1
+    calls_out: 12
+    calls_in: 1
+  src.algitex.cli.benchmark.benchmark_quick:
+    name: benchmark_quick
+    module: src.algitex.cli.benchmark
+    line: 161
+    cyclomatic_complexity: 1
+    calls_out: 3
+    calls_in: 0
+  examples.41-god-module-splitting.main.demo_import_compatibility:
+    name: demo_import_compatibility
+    module: examples.41-god-module-splitting.main
+    line: 122
+    cyclomatic_complexity: 1
+    calls_out: 11
+    calls_in: 1
+  src.algitex.tools.logging.format_result:
+    name: format_result
+    module: src.algitex.tools.logging
+    line: 123
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 2
+  src.algitex.tools.autofix.batch_backend.BatchFixBackend._fix_individual:
+    name: _fix_individual
+    module: src.algitex.tools.autofix.batch_backend
+    line: 486
+    cyclomatic_complexity: 5
+    calls_out: 14
+    calls_in: 0
+  examples.41-god-module-splitting.main.main:
+    name: main
+    module: examples.41-god-module-splitting.main
+    line: 198
+    cyclomatic_complexity: 1
+    calls_out: 14
+    calls_in: 0
+  src.algitex.cli.nlp._print_docstring_changes:
+    name: _print_docstring_changes
+    module: src.algitex.cli.nlp
+    line: 68
+    cyclomatic_complexity: 2
+    calls_out: 8
+    calls_in: 1
+  src.algitex.benchmark.BenchmarkRunner.print_report:
+    name: print_report
+    module: src.algitex.benchmark
+    line: 155
+    cyclomatic_complexity: 5
+    calls_out: 10
+    calls_in: 0
+  examples.32-workspace-coordination.main._show_analysis_phase:
+    name: _show_analysis_phase
+    module: examples.32-workspace-coordination.main
+    line: 73
+    cyclomatic_complexity: 4
+    calls_out: 15
+    calls_in: 1
+  src.algitex.tools.autofix.batch_backend.BatchFixBackend._fix_batch_group:
+    name: _fix_batch_group
+    module: src.algitex.tools.autofix.batch_backend
+    line: 430
+    cyclomatic_complexity: 10
+    calls_out: 22
+    calls_in: 0
+  examples.15-github-mcp.main.create_sample_project:
+    name: create_sample_project
+    module: examples.15-github-mcp.main
+    line: 13
+    cyclomatic_complexity: 1
+    calls_out: 6
+    calls_in: 1
+  examples.34-batch-fix.main.demo_batch_execute:
+    name: demo_batch_execute
+    module: examples.34-batch-fix.main
+    line: 61
+    cyclomatic_complexity: 1
+    calls_out: 5
+    calls_in: 1
+  examples.44-plugin-system.main.demo_creating_backend_plugin:
+    name: demo_creating_backend_plugin
+    module: examples.44-plugin-system.main
+    line: 139
+    cyclomatic_complexity: 1
+    calls_out: 11
+    calls_in: 1
+  src.algitex.todo.repair.repair_magic_number:
+    name: repair_magic_number
+    module: src.algitex.todo.repair
+    line: 165
+    cyclomatic_complexity: 8
+    calls_out: 13
+    calls_in: 1
+  src.algitex.tools.batch.BatchProcessor._print_summary:
+    name: _print_summary
+    module: src.algitex.tools.batch
+    line: 296
+    cyclomatic_complexity: 1
+    calls_out: 5
+    calls_in: 0
+  examples.19-local-mcp-tools.main.check_services:
+    name: check_services
+    module: examples.19-local-mcp-tools.main
+    line: 15
+    cyclomatic_complexity: 4
+    calls_out: 3
+    calls_in: 1
+  examples.09-workspace.main._analyze_parallel_execution:
+    name: _analyze_parallel_execution
+    module: examples.09-workspace.main
+    line: 322
+    cyclomatic_complexity: 4
+    calls_out: 7
+    calls_in: 1
+  src.algitex.cli.todo.logic.validate_task:
+    name: validate_task
+    module: src.algitex.cli.todo.logic
+    line: 21
+    cyclomatic_complexity: 13
+    calls_out: 8
+    calls_in: 0
+  examples.09-workspace.main.workspace_execution_example:
+    name: workspace_execution_example
+    module: examples.09-workspace.main
+    line: 232
+    cyclomatic_complexity: 8
+    calls_out: 17
+    calls_in: 0
+  src.algitex.tools.ollama.OllamaService.ensure_model:
+    name: ensure_model
+    module: src.algitex.tools.ollama
+    line: 349
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 0
+  examples.23-continue-dev-ollama.main.main:
+    name: main
+    module: examples.23-continue-dev-ollama.main
+    line: 12
+    cyclomatic_complexity: 3
+    calls_out: 23
+    calls_in: 0
+  src.algitex.todo.micro_utils.extract_first_int:
+    name: extract_first_int
+    module: src.algitex.todo.micro_utils
+    line: 29
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 2
+  examples.42-duplicate-removal.main.main:
+    name: main
+    module: examples.42-duplicate-removal.main
+    line: 252
+    cyclomatic_complexity: 1
+    calls_out: 15
+    calls_in: 0
+  examples.20-self-hosted-pipeline.buggy_code.authenticate_user:
+    name: authenticate_user
+    module: examples.20-self-hosted-pipeline.buggy_code
+    line: 44
     cyclomatic_complexity: 2
     calls_out: 1
+    calls_in: 0
+  src.algitex.tools.ide_aider.AiderHelper.fix_file:
+    name: fix_file
+    module: src.algitex.tools.ide_aider
+    line: 19
+    cyclomatic_complexity: 5
+    calls_out: 9
+    calls_in: 0
+  src.algitex.todo.repair.repair_fstring:
+    name: repair_fstring
+    module: src.algitex.todo.repair
+    line: 119
+    cyclomatic_complexity: 12
+    calls_out: 12
     calls_in: 1
-  examples.17-docker-workflow.main.show_workflow:
-    name: show_workflow
-    module: examples.17-docker-workflow.main
-    line: 45
+  src.algitex.todo.tiering.summarise_tasks:
+    name: summarise_tasks
+    module: src.algitex.todo.tiering
+    line: 114
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 0
+  src.algitex.tools.ide.VSCodeHelper.install_extensions:
+    name: install_extensions
+    module: src.algitex.tools.ide
+    line: 97
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 0
+  examples.10-cicd.main.gitlab_ci_example:
+    name: gitlab_ci_example
+    module: examples.10-cicd.main
+    line: 59
     cyclomatic_complexity: 2
     calls_out: 13
     calls_in: 0
+  src.algitex.tools.services.ServiceChecker.print_status:
+    name: print_status
+    module: src.algitex.tools.services
+    line: 305
+    cyclomatic_complexity: 6
+    calls_out: 12
+    calls_in: 0
+  examples.42-duplicate-removal.main.demo_detection_with_redup:
+    name: demo_detection_with_redup
+    module: examples.42-duplicate-removal.main
+    line: 63
+    cyclomatic_complexity: 1
+    calls_out: 9
+    calls_in: 1
+  src.algitex.cli.nlp.nlp_duplicates:
+    name: nlp_duplicates
+    module: src.algitex.cli.nlp
+    line: 47
+    cyclomatic_complexity: 2
+    calls_out: 6
+    calls_in: 0
+  src.algitex.tools.ide_claude.ClaudeCodeHelper.batch_fix:
+    name: batch_fix
+    module: src.algitex.tools.ide_claude
+    line: 82
+    cyclomatic_complexity: 3
+    calls_out: 6
+    calls_in: 0
+  examples.18-ollama-local.main.list_models:
+    name: list_models
+    module: examples.18-ollama-local.main
+    line: 24
+    cyclomatic_complexity: 4
+    calls_out: 4
+    calls_in: 1
+  examples.08-feedback.main.cost_optimization_example:
+    name: cost_optimization_example
+    module: examples.08-feedback.main
+    line: 323
+    cyclomatic_complexity: 7
+    calls_out: 19
+    calls_in: 0
+  src.algitex.todo.micro_utils.sanitize_constant_name:
+    name: sanitize_constant_name
+    module: src.algitex.todo.micro_utils
+    line: 55
+    cyclomatic_complexity: 3
+    calls_out: 6
+    calls_in: 1
+  examples.19-local-mcp-tools.main.main:
+    name: main
+    module: examples.19-local-mcp-tools.main
+    line: 40
+    cyclomatic_complexity: 5
+    calls_out: 28
+    calls_in: 0
+  src.algitex.nlp.sort_imports_in_path:
+    name: sort_imports_in_path
+    module: src.algitex.nlp
+    line: 191
+    cyclomatic_complexity: 6
+    calls_out: 8
+    calls_in: 2
+  src.algitex.tools.logging.verbose_print:
+    name: verbose_print
+    module: src.algitex.tools.logging
+    line: 154
+    cyclomatic_complexity: 2
+    calls_out: 1
+    calls_in: 9
+  examples.40-three-tier-autofix.main.demo_tier_micro:
+    name: demo_tier_micro
+    module: examples.40-three-tier-autofix.main
+    line: 33
+    cyclomatic_complexity: 2
+    calls_out: 9
+    calls_in: 1
+  examples.12-filesystem-mcp.main.create_sample_files:
+    name: create_sample_files
+    module: examples.12-filesystem-mcp.main
+    line: 12
+    cyclomatic_complexity: 1
+    calls_out: 7
+    calls_in: 1
+  examples.35-sprint3-patterns.main.demo_orchestrator_pattern:
+    name: demo_orchestrator_pattern
+    module: examples.35-sprint3-patterns.main
+    line: 94
+    cyclomatic_complexity: 1
+    calls_out: 12
+    calls_in: 1
+  src.algitex.tools.ide_claude.ClaudeCodeHelper.chat:
+    name: chat
+    module: src.algitex.tools.ide_claude
+    line: 56
+    cyclomatic_complexity: 5
+    calls_out: 5
+    calls_in: 0
+  examples.42-duplicate-removal.main.demo_duplicate_problem:
+    name: demo_duplicate_problem
+    module: examples.42-duplicate-removal.main
+    line: 13
+    cyclomatic_complexity: 1
+    calls_out: 11
+    calls_in: 1
+  src.algitex.tools.docker.DockerToolManager.teardown_all:
+    name: teardown_all
+    module: src.algitex.tools.docker
+    line: 252
+    cyclomatic_complexity: 2
+    calls_out: 2
+    calls_in: 0
+  src.algitex.nlp._python_files:
+    name: _python_files
+    module: src.algitex.nlp
+    line: 305
+    cyclomatic_complexity: 6
+    calls_out: 4
+    calls_in: 4
+  src.algitex.tools.autofix.batch_backend.BatchFixBackend._preflight_syntax_check:
+    name: _preflight_syntax_check
+    module: src.algitex.tools.autofix.batch_backend
+    line: 228
+    cyclomatic_complexity: 10
+    calls_out: 23
+    calls_in: 0
+  src.algitex.tools.autofix.AutoFix.mark_task_done:
+    name: mark_task_done
+    module: src.algitex.tools.autofix
+    line: 130
+    cyclomatic_complexity: 8
+    calls_out: 9
+    calls_in: 0
+  examples.11-aider-mcp.main.demo_refactoring:
+    name: demo_refactoring
+    module: examples.11-aider-mcp.main
+    line: 47
+    cyclomatic_complexity: 3
+    calls_out: 22
+    calls_in: 0
+  examples.41-god-module-splitting.main.demo_split_strategy:
+    name: demo_split_strategy
+    module: examples.41-god-module-splitting.main
+    line: 62
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 1
+  examples.01-quickstart.main.main:
+    name: main
+    module: examples.01-quickstart.main
+    line: 15
+    cyclomatic_complexity: 2
+    calls_out: 21
+    calls_in: 0
+  src.algitex.tools.autofix.batch_logger.BatchLogger.print_summary:
+    name: print_summary
+    module: src.algitex.tools.autofix.batch_logger
+    line: 201
+    cyclomatic_complexity: 1
+    calls_out: 8
+    calls_in: 0
+  examples.27-unified-autofix.main.main:
+    name: main
+    module: examples.27-unified-autofix.main
+    line: 13
+    cyclomatic_complexity: 4
+    calls_out: 33
+    calls_in: 0
+  src.algitex.tools.autofix.fallback_backend.FallbackBackend.print_status:
+    name: print_status
+    module: src.algitex.tools.autofix.fallback_backend
+    line: 184
+    cyclomatic_complexity: 4
+    calls_out: 7
+    calls_in: 0
+  examples.26-litellm-proxy-ollama.main.main:
+    name: main
+    module: examples.26-litellm-proxy-ollama.main
+    line: 12
+    cyclomatic_complexity: 1
+    calls_out: 14
+    calls_in: 0
+  src.algitex.tools.ide_claude.ClaudeCodeHelper.fix_file:
+    name: fix_file
+    module: src.algitex.tools.ide_claude
+    line: 23
+    cyclomatic_complexity: 5
+    calls_out: 9
+    calls_in: 0
+  src.algitex.todo.classify._first_int:
+    name: _first_int
+    module: src.algitex.todo.classify
+    line: 110
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 1
+  examples.38-new-modules.main.demo_classify_module:
+    name: demo_classify_module
+    module: examples.38-new-modules.main
+    line: 12
+    cyclomatic_complexity: 2
+    calls_out: 13
+    calls_in: 1
+  src.algitex.todo.micro.MicroFixer.fix_task:
+    name: fix_task
+    module: src.algitex.todo.micro
+    line: 85
+    cyclomatic_complexity: 8
+    calls_out: 22
+    calls_in: 0
+  src.algitex.tools.logging.format_args:
+    name: format_args
+    module: src.algitex.tools.logging
+    line: 105
+    cyclomatic_complexity: 3
+    calls_out: 6
+    calls_in: 2
+  src.algitex.microtask.classifier._resolve_file:
+    name: _resolve_file
+    module: src.algitex.microtask.classifier
+    line: 183
+    cyclomatic_complexity: 3
+    calls_out: 4
+    calls_in: 1
+  examples.40-three-tier-autofix.main.demo_tier_algorithm:
+    name: demo_tier_algorithm
+    module: examples.40-three-tier-autofix.main
+    line: 9
+    cyclomatic_complexity: 2
+    calls_out: 9
+    calls_in: 1
   src.algitex.tools.ollama.OllamaService.auto_fix_file:
     name: auto_fix_file
     module: src.algitex.tools.ollama
@@ -2721,33 +2182,145 @@ nodes:
     cyclomatic_complexity: 6
     calls_out: 5
     calls_in: 0
-  src.algitex.tools.autofix.fallback_backend.FallbackBackend._get_backend:
-    name: _get_backend
-    module: src.algitex.tools.autofix.fallback_backend
-    line: 77
-    cyclomatic_complexity: 6
-    calls_out: 6
+  examples.15-github-mcp.main.demo_github_workflow:
+    name: demo_github_workflow
+    module: examples.15-github-mcp.main
+    line: 66
+    cyclomatic_complexity: 3
+    calls_out: 30
     calls_in: 0
-  examples.43-code-health.main.demo_historical_tracking:
-    name: demo_historical_tracking
-    module: examples.43-code-health.main
+  examples.16-test-workflow.main.demo_test_workflow:
+    name: demo_test_workflow
+    module: examples.16-test-workflow.main
     line: 121
-    cyclomatic_complexity: 2
-    calls_out: 18
-    calls_in: 1
-  src.algitex.tools.services.ServiceDependency.get_startup_order:
-    name: get_startup_order
-    module: src.algitex.tools.services
-    line: 379
-    cyclomatic_complexity: 2
-    calls_out: 6
+    cyclomatic_complexity: 5
+    calls_out: 37
     calls_in: 0
-  src.algitex.project.Project._check_tools_status:
-    name: _check_tools_status
-    module: src.algitex.project
-    line: 262
+  docker.vallm.vallm_mcp_server.create_rest_api:
+    name: create_rest_api
+    module: docker.vallm.vallm_mcp_server
+    line: 304
+    cyclomatic_complexity: 1
+    calls_out: 17
+    calls_in: 1
+  src.algitex.benchmark.BenchmarkSuite.print_table:
+    name: print_table
+    module: src.algitex.benchmark
+    line: 72
     cyclomatic_complexity: 2
-    calls_out: 3
+    calls_out: 9
+    calls_in: 0
+  examples.34-batch-fix.main.demo_batch_dry_run:
+    name: demo_batch_dry_run
+    module: examples.34-batch-fix.main
+    line: 15
+    cyclomatic_complexity: 1
+    calls_out: 5
+    calls_in: 1
+  src.algitex.tools.benchmark.ModelBenchmark.compare_models:
+    name: compare_models
+    module: src.algitex.tools.benchmark
+    line: 283
+    cyclomatic_complexity: 8
+    calls_out: 16
+    calls_in: 0
+  docker.vallm.vallm_mcp_server.validate_static:
+    name: validate_static
+    module: docker.vallm.vallm_mcp_server
+    line: 33
+    cyclomatic_complexity: 9
+    calls_out: 15
+    calls_in: 2
+  src.algitex.tools.benchmark.BenchmarkResults.get_summary:
+    name: get_summary
+    module: src.algitex.tools.benchmark
+    line: 125
+    cyclomatic_complexity: 14
+    calls_out: 17
+    calls_in: 0
+  examples.08-feedback.main.custom_policy_example:
+    name: custom_policy_example
+    module: examples.08-feedback.main
+    line: 86
+    cyclomatic_complexity: 1
+    calls_out: 12
+    calls_in: 0
+  src.algitex.tools.mcp.MCPOrchestrator.stop_all:
+    name: stop_all
+    module: src.algitex.tools.mcp
+    line: 240
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 0
+  src.algitex.cli.core.init:
+    name: init
+    module: src.algitex.cli.core
+    line: 18
+    cyclomatic_complexity: 1
+    calls_out: 8
+    calls_in: 0
+  src.algitex.todo.hybrid.HybridAutofix._fix_file_llm:
+    name: _fix_file_llm
+    module: src.algitex.todo.hybrid
+    line: 267
+    cyclomatic_complexity: 8
+    calls_out: 10
+    calls_in: 0
+  project.map.toon.parallel_fix:
+    name: parallel_fix
+    module: project.map.toon
+    line: 1008
+    cyclomatic_complexity: 0
+    calls_out: 0
+    calls_in: 1
+  src.algitex.tools.autofix.batch_backend.BatchFixBackend._verify_tasks_exist:
+    name: _verify_tasks_exist
+    module: src.algitex.tools.autofix.batch_backend
+    line: 278
+    cyclomatic_complexity: 10
+    calls_out: 14
+    calls_in: 0
+  examples.18-ollama-local.main.analyze_code:
+    name: analyze_code
+    module: examples.18-ollama-local.main
+    line: 65
+    cyclomatic_complexity: 5
+    calls_out: 5
+    calls_in: 1
+  examples.32-workspace-coordination.workspace_parallel.main:
+    name: main
+    module: examples.32-workspace-coordination.workspace_parallel
+    line: 15
+    cyclomatic_complexity: 5
+    calls_out: 24
+    calls_in: 0
+  examples.43-code-health.main.main:
+    name: main
+    module: examples.43-code-health.main
+    line: 279
+    cyclomatic_complexity: 1
+    calls_out: 15
+    calls_in: 0
+  src.algitex.shared_rules.RuleRegistry.check_file:
+    name: check_file
+    module: src.algitex.shared_rules
+    line: 237
+    cyclomatic_complexity: 6
+    calls_out: 9
+    calls_in: 0
+  examples.39-microtask-pipeline.main.main:
+    name: main
+    module: examples.39-microtask-pipeline.main
+    line: 83
+    cyclomatic_complexity: 1
+    calls_out: 13
+    calls_in: 0
+  examples.30-parallel-execution.main.main:
+    name: main
+    module: examples.30-parallel-execution.main
+    line: 16
+    cyclomatic_complexity: 13
+    calls_out: 55
     calls_in: 0
   examples.25-local-model-comparison.main.main:
     name: main
@@ -2756,13 +2329,6 @@ nodes:
     cyclomatic_complexity: 9
     calls_out: 26
     calls_in: 0
-  src.algitex.todo.hybrid.HybridAutofix.fix_mechanical:
-    name: fix_mechanical
-    module: src.algitex.todo.hybrid
-    line: 140
-    cyclomatic_complexity: 1
-    calls_out: 14
-    calls_in: 0
   examples.30-parallel-execution.parallel_real_world.setup_sample_project:
     name: setup_sample_project
     module: examples.30-parallel-execution.parallel_real_world
@@ -2770,18 +2336,452 @@ nodes:
     cyclomatic_complexity: 3
     calls_out: 3
     calls_in: 1
-  src.algitex.todo.verify.prune_outdated_tasks:
-    name: prune_outdated_tasks
-    module: src.algitex.todo.verify
-    line: 194
+  docker.vallm.vallm_mcp_server.validate_runtime:
+    name: validate_runtime
+    module: docker.vallm.vallm_mcp_server
+    line: 85
+    cyclomatic_complexity: 9
+    calls_out: 9
+    calls_in: 2
+  src.algitex.project.Project._check_tools_status:
+    name: _check_tools_status
+    module: src.algitex.project
+    line: 262
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 0
+  examples.33-hybrid-autofix.main.main:
+    name: main
+    module: examples.33-hybrid-autofix.main
+    line: 125
+    cyclomatic_complexity: 2
+    calls_out: 10
+    calls_in: 0
+  examples.09-workspace.main.workspace_management_example:
+    name: workspace_management_example
+    module: examples.09-workspace.main
+    line: 92
+    cyclomatic_complexity: 6
+    calls_out: 19
+    calls_in: 0
+  examples.42-duplicate-removal.main.demo_algitex_integration:
+    name: demo_algitex_integration
+    module: examples.42-duplicate-removal.main
+    line: 134
+    cyclomatic_complexity: 1
+    calls_out: 9
+    calls_in: 1
+  examples.43-code-health.main.demo_health_report:
+    name: demo_health_report
+    module: examples.43-code-health.main
+    line: 77
     cyclomatic_complexity: 4
+    calls_out: 10
+    calls_in: 1
+  examples.41-god-module-splitting.main.demo_how_to_split_your_module:
+    name: demo_how_to_split_your_module
+    module: examples.41-god-module-splitting.main
+    line: 175
+    cyclomatic_complexity: 2
+    calls_out: 6
+    calls_in: 1
+  src.algitex.cli.todo_verify.todo_verify_prefact:
+    name: todo_verify_prefact
+    module: src.algitex.cli.todo_verify
+    line: 8
+    cyclomatic_complexity: 12
+    calls_out: 28
+    calls_in: 0
+  src.algitex.todo.hybrid.HybridAutofix.fix_mechanical:
+    name: fix_mechanical
+    module: src.algitex.todo.hybrid
+    line: 140
+    cyclomatic_complexity: 1
+    calls_out: 14
+    calls_in: 0
+  src.algitex.tools.workspace.create_workspace_template:
+    name: create_workspace_template
+    module: src.algitex.tools.workspace
+    line: 298
+    cyclomatic_complexity: 1
+    calls_out: 1
+    calls_in: 1
+  examples.10-cicd.main.quality_gates_example:
+    name: quality_gates_example
+    module: examples.10-cicd.main
+    line: 83
+    cyclomatic_complexity: 2
+    calls_out: 16
+    calls_in: 0
+  src.algitex.todo.hybrid.HybridAutofix.print_summary:
+    name: print_summary
+    module: src.algitex.todo.hybrid
+    line: 438
+    cyclomatic_complexity: 4
+    calls_out: 29
+    calls_in: 0
+  examples.41-god-module-splitting.main.demo_real_metrics:
+    name: demo_real_metrics
+    module: examples.41-god-module-splitting.main
+    line: 148
+    cyclomatic_complexity: 2
+    calls_out: 10
+    calls_in: 1
+  src.algitex.tools.autofix.batch_backend.BatchFixBackend._write_file_fix:
+    name: _write_file_fix
+    module: src.algitex.tools.autofix.batch_backend
+    line: 705
+    cyclomatic_complexity: 4
+    calls_out: 11
+    calls_in: 0
+  src.algitex.tools.autofix.fallback_backend.FallbackBackend._mark_success:
+    name: _mark_success
+    module: src.algitex.tools.autofix.fallback_backend
+    line: 105
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  src.algitex.tools.benchmark.ModelBenchmark._print_table:
+    name: _print_table
+    module: src.algitex.tools.benchmark
+    line: 333
+    cyclomatic_complexity: 7
+    calls_out: 18
+    calls_in: 0
+  src.algitex.tools.mcp.MCPOrchestrator.print_status:
+    name: print_status
+    module: src.algitex.tools.mcp
+    line: 379
+    cyclomatic_complexity: 6
     calls_out: 8
     calls_in: 0
-  src.algitex.cli.microtask._print_plan_table:
-    name: _print_plan_table
-    module: src.algitex.cli.microtask
-    line: 142
+  src.algitex.tools.batch.BatchProcessor._save_results:
+    name: _save_results
+    module: src.algitex.tools.batch
+    line: 304
     cyclomatic_complexity: 3
+    calls_out: 9
+    calls_in: 0
+  examples.32-workspace-coordination.main._print_repo_overview:
+    name: _print_repo_overview
+    module: examples.32-workspace-coordination.main
+    line: 55
+    cyclomatic_complexity: 3
+    calls_out: 9
+    calls_in: 1
+  examples.33-hybrid-autofix.main._parse_args:
+    name: _parse_args
+    module: examples.33-hybrid-autofix.main
+    line: 145
+    cyclomatic_complexity: 1
+    calls_out: 10
+    calls_in: 1
+  examples.06-telemetry.main.budget_tracking_example:
+    name: budget_tracking_example
+    module: examples.06-telemetry.main
+    line: 151
+    cyclomatic_complexity: 3
+    calls_out: 10
+    calls_in: 0
+  src.algitex.tools.batch.BatchProcessor._prepare:
+    name: _prepare
+    module: src.algitex.tools.batch
+    line: 185
+    cyclomatic_complexity: 5
+    calls_out: 10
+    calls_in: 0
+  src.algitex.todo.micro.MicroFixer._apply_function_rewrite:
+    name: _apply_function_rewrite
+    module: src.algitex.todo.micro
+    line: 276
+    cyclomatic_complexity: 3
+    calls_out: 13
+    calls_in: 0
+  examples.10-cicd.main.precommit_hooks_example:
+    name: precommit_hooks_example
+    module: examples.10-cicd.main
+    line: 172
+    cyclomatic_complexity: 1
+    calls_out: 15
+    calls_in: 0
+  examples.44-plugin-system.main.main:
+    name: main
+    module: examples.44-plugin-system.main
+    line: 312
+    cyclomatic_complexity: 1
+    calls_out: 15
+    calls_in: 0
+  examples.35-sprint3-patterns.main.demo_strategy_pattern:
+    name: demo_strategy_pattern
+    module: examples.35-sprint3-patterns.main
+    line: 52
+    cyclomatic_complexity: 2
+    calls_out: 7
+    calls_in: 1
+  examples.10-cicd.main.dockerfile_example:
+    name: dockerfile_example
+    module: examples.10-cicd.main
+    line: 134
+    cyclomatic_complexity: 1
+    calls_out: 14
+    calls_in: 0
+  src.algitex.tools.logging.log_time:
+    name: log_time
+    module: src.algitex.tools.logging
+    line: 56
+    cyclomatic_complexity: 1
+    calls_out: 8
+    calls_in: 0
+  examples.44-plugin-system.main.demo_plugin_configuration:
+    name: demo_plugin_configuration
+    module: examples.44-plugin-system.main
+    line: 231
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 1
+  examples.37-benchmarks.main.demo_benchmark_tiers:
+    name: demo_benchmark_tiers
+    module: examples.37-benchmarks.main
+    line: 40
+    cyclomatic_complexity: 1
+    calls_out: 10
+    calls_in: 1
+  src.algitex.tools.docker.DockerToolManager.list_running:
+    name: list_running
+    module: src.algitex.tools.docker
+    line: 263
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  examples.36-dashboard.main.demo_dashboard_export:
+    name: demo_dashboard_export
+    module: examples.36-dashboard.main
+    line: 46
+    cyclomatic_complexity: 1
+    calls_out: 6
+    calls_in: 1
+  src.algitex.microtask.executor.MicroTaskExecutor._phase_algorithmic:
+    name: _phase_algorithmic
+    module: src.algitex.microtask.executor
+    line: 101
+    cyclomatic_complexity: 5
+    calls_out: 10
+    calls_in: 0
+  src.algitex.todo.micro_utils.coerce_task:
+    name: coerce_task
+    module: src.algitex.todo.micro_utils
+    line: 73
+    cyclomatic_complexity: 11
+    calls_out: 14
+    calls_in: 3
+  examples.32-workspace-coordination.main._show_planning_phase:
+    name: _show_planning_phase
+    module: examples.32-workspace-coordination.main
+    line: 122
+    cyclomatic_complexity: 6
+    calls_out: 16
+    calls_in: 1
+  src.algitex.cli.microtask._print_task_table:
+    name: _print_task_table
+    module: src.algitex.cli.microtask
+    line: 119
+    cyclomatic_complexity: 4
+    calls_out: 12
+    calls_in: 1
+  src.algitex.tools.ide.AiderHelper.fix_file:
+    name: fix_file
+    module: src.algitex.tools.ide
+    line: 31
+    cyclomatic_complexity: 4
+    calls_out: 7
+    calls_in: 0
+  src.algitex.tools.workspace.Workspace._topo_sort:
+    name: _topo_sort
+    module: src.algitex.tools.workspace
+    line: 70
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 0
+  src.algitex.microtask.classifier._classify_message:
+    name: _classify_message
+    module: src.algitex.microtask.classifier
+    line: 164
+    cyclomatic_complexity: 5
+    calls_out: 2
+    calls_in: 1
+  examples.36-dashboard.main.demo_dashboard_with_todo:
+    name: demo_dashboard_with_todo
+    module: examples.36-dashboard.main
+    line: 71
+    cyclomatic_complexity: 2
+    calls_out: 8
+    calls_in: 1
+  examples.31-abpr-workflow.abpr_pipeline.abpr_pipeline:
+    name: abpr_pipeline
+    module: examples.31-abpr-workflow.abpr_pipeline
+    line: 15
+    cyclomatic_complexity: 10
+    calls_out: 36
+    calls_in: 0
+  src.algitex.tools.telemetry.Telemetry.summary:
+    name: summary
+    module: src.algitex.tools.telemetry
+    line: 79
+    cyclomatic_complexity: 4
+    calls_out: 5
+    calls_in: 0
+  examples.22-claude-code-ollama.main.main:
+    name: main
+    module: examples.22-claude-code-ollama.main
+    line: 12
+    cyclomatic_complexity: 4
+    calls_out: 18
+    calls_in: 0
+  examples.31-abpr-workflow.main.main:
+    name: main
+    module: examples.31-abpr-workflow.main
+    line: 15
+    cyclomatic_complexity: 12
+    calls_out: 77
+    calls_in: 0
+  src.algitex.shared_rules.SortedImportsRule.check:
+    name: check
+    module: src.algitex.shared_rules
+    line: 126
+    cyclomatic_complexity: 12
+    calls_out: 8
+    calls_in: 0
+  examples.32-workspace-coordination.main._show_execution_phase:
+    name: _show_execution_phase
+    module: examples.32-workspace-coordination.main
+    line: 140
+    cyclomatic_complexity: 4
+    calls_out: 13
+    calls_in: 1
+  src.algitex.tools.config.ConfigManager.generate_docker_compose:
+    name: generate_docker_compose
+    module: src.algitex.tools.config
+    line: 262
+    cyclomatic_complexity: 7
+    calls_out: 5
+    calls_in: 0
+  src.algitex.tools.logging.VerboseContext.__exit__:
+    name: __exit__
+    module: src.algitex.tools.logging
+    line: 144
+    cyclomatic_complexity: 3
+    calls_out: 3
+    calls_in: 0
+  src.algitex.todo.benchmark.benchmark_fix:
+    name: benchmark_fix
+    module: src.algitex.todo.benchmark
+    line: 174
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 2
+  docker.vallm.vallm_mcp_server.analyze_complexity:
+    name: analyze_complexity
+    module: docker.vallm.vallm_mcp_server
+    line: 220
+    cyclomatic_complexity: 9
+    calls_out: 16
+    calls_in: 1
+  examples.06-telemetry.main.basic_telemetry_example:
+    name: basic_telemetry_example
+    module: examples.06-telemetry.main
+    line: 15
+    cyclomatic_complexity: 2
+    calls_out: 30
+    calls_in: 0
+  examples.10-cicd.main.multi_platform_ci_example:
+    name: multi_platform_ci_example
+    module: examples.10-cicd.main
+    line: 306
+    cyclomatic_complexity: 3
+    calls_out: 15
+    calls_in: 0
+  src.algitex.tools.autofix.AutoFix.fix_issue:
+    name: fix_issue
+    module: src.algitex.tools.autofix
+    line: 237
+    cyclomatic_complexity: 6
+    calls_out: 8
+    calls_in: 0
+  src.algitex.microtask.classifier._is_ignored_path:
+    name: _is_ignored_path
+    module: src.algitex.microtask.classifier
+    line: 190
+    cyclomatic_complexity: 2
+    calls_out: 3
+    calls_in: 1
+  examples.43-code-health.main.demo_health_metrics:
+    name: demo_health_metrics
+    module: examples.43-code-health.main
+    line: 14
+    cyclomatic_complexity: 3
+    calls_out: 5
+    calls_in: 1
+  examples.42-duplicate-removal.main.demo_real_world_example:
+    name: demo_real_world_example
+    module: examples.42-duplicate-removal.main
+    line: 166
+    cyclomatic_complexity: 2
+    calls_out: 11
+    calls_in: 1
+  examples.34-batch-fix.main.demo_comparison:
+    name: demo_comparison
+    module: examples.34-batch-fix.main
+    line: 152
+    cyclomatic_complexity: 1
+    calls_out: 4
+    calls_in: 1
+  examples.42-duplicate-removal.main.demo_extraction_strategy:
+    name: demo_extraction_strategy
+    module: examples.42-duplicate-removal.main
+    line: 87
+    cyclomatic_complexity: 2
+    calls_out: 9
+    calls_in: 1
+  examples.24-ollama-batch.main.main:
+    name: main
+    module: examples.24-ollama-batch.main
+    line: 12
+    cyclomatic_complexity: 2
+    calls_out: 16
+    calls_in: 0
+  examples.17-docker-workflow.main.show_workflow:
+    name: show_workflow
+    module: examples.17-docker-workflow.main
+    line: 45
+    cyclomatic_complexity: 2
+    calls_out: 13
+    calls_in: 0
+  src.algitex.benchmark.run_quick_benchmark:
+    name: run_quick_benchmark
+    module: src.algitex.benchmark
+    line: 363
+    cyclomatic_complexity: 3
+    calls_out: 19
+    calls_in: 2
+  src.algitex.tools.ide_base.IDEHelper.list_tools:
+    name: list_tools
+    module: src.algitex.tools.ide_base
+    line: 87
+    cyclomatic_complexity: 1
+    calls_out: 2
+    calls_in: 0
+  examples.07-context.main.prompt_engineering_example:
+    name: prompt_engineering_example
+    module: examples.07-context.main
+    line: 287
+    cyclomatic_complexity: 1
+    calls_out: 26
+    calls_in: 0
+  examples.44-plugin-system.main.demo_creating_tool_plugin:
+    name: demo_creating_tool_plugin
+    module: examples.44-plugin-system.main
+    line: 92
+    cyclomatic_complexity: 1
     calls_out: 12
     calls_in: 1
   src.algitex.tools.workspace.Workspace.execute_all:
@@ -2791,138 +2791,96 @@ nodes:
     cyclomatic_complexity: 3
     calls_out: 7
     calls_in: 0
-  examples.40-three-tier-autofix.main.demo_tier_algorithm:
-    name: demo_tier_algorithm
-    module: examples.40-three-tier-autofix.main
-    line: 9
-    cyclomatic_complexity: 2
-    calls_out: 9
-    calls_in: 1
-  examples.42-duplicate-removal.main.demo_algitex_integration:
-    name: demo_algitex_integration
+  src.algitex.tools.mcp_lifecycle.MCPLifecycleManager.start_service:
+    name: start_service
+    module: src.algitex.tools.mcp_lifecycle
+    line: 33
+    cyclomatic_complexity: 11
+    calls_out: 15
+    calls_in: 0
+  examples.42-duplicate-removal.main.demo_metrics_and_roi:
+    name: demo_metrics_and_roi
     module: examples.42-duplicate-removal.main
-    line: 134
-    cyclomatic_complexity: 1
-    calls_out: 9
-    calls_in: 1
-  examples.10-cicd.main.basic_github_actions_example:
-    name: basic_github_actions_example
-    module: examples.10-cicd.main
-    line: 17
+    line: 227
     cyclomatic_complexity: 2
-    calls_out: 16
-    calls_in: 0
-  examples.09-workspace.main.create_sample_workspace:
-    name: create_sample_workspace
-    module: examples.09-workspace.main
-    line: 17
-    cyclomatic_complexity: 1
-    calls_out: 17
-    calls_in: 5
-  examples.34-batch-fix.main.demo_batch_execute:
-    name: demo_batch_execute
-    module: examples.34-batch-fix.main
-    line: 61
-    cyclomatic_complexity: 1
-    calls_out: 5
+    calls_out: 10
     calls_in: 1
-  src.algitex.tools.workspace.Workspace._topo_sort:
-    name: _topo_sort
-    module: src.algitex.tools.workspace
-    line: 70
-    cyclomatic_complexity: 3
-    calls_out: 5
+  src.algitex.tools.autofix.batch_backend.BatchFixBackend._process_group:
+    name: _process_group
+    module: src.algitex.tools.autofix.batch_backend
+    line: 390
+    cyclomatic_complexity: 11
+    calls_out: 22
     calls_in: 0
-  src.algitex.tools.discover_tools:
-    name: discover_tools
-    module: src.algitex.tools
-    line: 80
-    cyclomatic_complexity: 3
-    calls_out: 5
-    calls_in: 5
-  src.algitex.tools.workspace.Workspace.clone_all:
-    name: clone_all
-    module: src.algitex.tools.workspace
-    line: 86
-    cyclomatic_complexity: 3
-    calls_out: 8
-    calls_in: 0
-  examples.20-self-hosted-pipeline.buggy_code.authenticate_user:
-    name: authenticate_user
-    module: examples.20-self-hosted-pipeline.buggy_code
-    line: 44
+  examples.32-workspace-coordination.main._group_repos_by_priority:
+    name: _group_repos_by_priority
+    module: examples.32-workspace-coordination.main
+    line: 65
     cyclomatic_complexity: 2
-    calls_out: 1
-    calls_in: 0
-  src.algitex.cli.core.init:
-    name: init
-    module: src.algitex.cli.core
-    line: 18
-    cyclomatic_complexity: 1
-    calls_out: 8
-    calls_in: 0
-  docker.code2llm.code2llm_mcp_server._calculate_complexity_metrics:
-    name: _calculate_complexity_metrics
-    module: docker.code2llm.code2llm_mcp_server
-    line: 80
-    cyclomatic_complexity: 6
-    calls_out: 4
-    calls_in: 1
-  src.algitex.todo.fix_todos:
-    name: fix_todos
-    module: src.algitex.todo
-    line: 106
-    cyclomatic_complexity: 1
-    calls_out: 1
+    calls_out: 3
     calls_in: 2
-  examples.24-ollama-batch.file3.BadClass.process:
-    name: process
-    module: examples.24-ollama-batch.file3
-    line: 9
-    cyclomatic_complexity: 5
-    calls_out: 1
-    calls_in: 0
-  src.algitex.todo.classify.classify_message:
-    name: classify_message
-    module: src.algitex.todo.classify
-    line: 121
-    cyclomatic_complexity: 9
-    calls_out: 7
-    calls_in: 7
-  src.algitex.tools.logging.format_result:
-    name: format_result
-    module: src.algitex.tools.logging
-    line: 123
-    cyclomatic_complexity: 2
-    calls_out: 2
-    calls_in: 2
-  src.algitex.tools.config.ConfigManager.setup_project_configs:
-    name: setup_project_configs
-    module: src.algitex.tools.config
-    line: 313
-    cyclomatic_complexity: 6
-    calls_out: 12
-    calls_in: 0
-  src.algitex.tools.ide_aider.AiderHelper.fix_file:
-    name: fix_file
-    module: src.algitex.tools.ide_aider
-    line: 19
-    cyclomatic_complexity: 5
-    calls_out: 9
-    calls_in: 0
-  src.algitex.nlp.DocstringShortener.fix_path:
-    name: fix_path
+  src.algitex.nlp._fallback_sort_imports:
+    name: _fallback_sort_imports
     module: src.algitex.nlp
-    line: 98
-    cyclomatic_complexity: 3
+    line: 275
+    cyclomatic_complexity: 6
+    calls_out: 16
+    calls_in: 2
+  src.algitex.todo.micro.MicroFixer.fix_file:
+    name: fix_file
+    module: src.algitex.todo.micro
+    line: 55
+    cyclomatic_complexity: 12
+    calls_out: 14
+    calls_in: 0
+  src.algitex.tools.autofix.batch_backend.BatchFixBackend.fix_batch:
+    name: fix_batch
+    module: src.algitex.tools.autofix.batch_backend
+    line: 80
+    cyclomatic_complexity: 11
+    calls_out: 35
+    calls_in: 0
+  src.algitex.tools.batch.BatchProcessor._setup_progress_bar:
+    name: _setup_progress_bar
+    module: src.algitex.tools.batch
+    line: 246
+    cyclomatic_complexity: 5
+    calls_out: 2
+    calls_in: 0
+  src.algitex.tools.mcp_lifecycle.MCPLifecycleManager.stop_service:
+    name: stop_service
+    module: src.algitex.tools.mcp_lifecycle
+    line: 79
+    cyclomatic_complexity: 6
+    calls_out: 11
+    calls_in: 0
+  examples.44-plugin-system.main.demo_plugin_marketplace:
+    name: demo_plugin_marketplace
+    module: examples.44-plugin-system.main
+    line: 277
+    cyclomatic_complexity: 2
+    calls_out: 17
+    calls_in: 1
+  src.algitex.tools.workspace.Workspace.plan_all:
+    name: plan_all
+    module: src.algitex.tools.workspace
+    line: 141
+    cyclomatic_complexity: 4
     calls_out: 6
     calls_in: 0
-  src.algitex.tools.batch.BatchProcessor._print_summary:
-    name: _print_summary
-    module: src.algitex.tools.batch
-    line: 296
-    cyclomatic_complexity: 1
+  src.algitex.microtask.executor.MicroTaskExecutor._handle_sort_imports:
+    name: _handle_sort_imports
+    module: src.algitex.microtask.executor
+    line: 239
+    cyclomatic_complexity: 4
     calls_out: 5
+    calls_in: 0
+  examples.07-context.main.semantic_search_example:
+    name: semantic_search_example
+    module: examples.07-context.main
+    line: 229
+    cyclomatic_complexity: 1
+    calls_out: 18
     calls_in: 0
 edges:
 - caller: examples.34-batch-fix.main.demo_batch_dry_run
@@ -3789,6 +3747,45 @@ edges:
 - caller: src.algitex.tools.config.ConfigManager.setup_project_configs
   callee: Taskfile.print
   call_type: resolved
+- caller: src.algitex.tools.mcp.MCPOrchestrator.start_service
+  callee: Taskfile.print
+  call_type: resolved
+- caller: src.algitex.tools.mcp.MCPOrchestrator.stop_service
+  callee: Taskfile.print
+  call_type: resolved
+- caller: src.algitex.tools.mcp.MCPOrchestrator.restart_service
+  callee: Taskfile.print
+  call_type: resolved
+- caller: src.algitex.tools.mcp.MCPOrchestrator.start_all
+  callee: src.algitex.tools.ollama_cache.LLMCache.set
+  call_type: resolved
+- caller: src.algitex.tools.mcp.MCPOrchestrator.start_all
+  callee: src.algitex.tools.tickets.Tickets.list
+  call_type: resolved
+- caller: src.algitex.tools.mcp.MCPOrchestrator.stop_all
+  callee: Taskfile.print
+  call_type: resolved
+- caller: src.algitex.tools.mcp.MCPOrchestrator.stop_all
+  callee: src.algitex.tools.tickets.Tickets.list
+  call_type: resolved
+- caller: src.algitex.tools.mcp.MCPOrchestrator.wait_for_ready
+  callee: Taskfile.print
+  call_type: resolved
+- caller: src.algitex.tools.mcp.MCPOrchestrator.wait_for_ready
+  callee: src.algitex.tools.ollama_cache.LLMCache.set
+  call_type: resolved
+- caller: src.algitex.tools.mcp.MCPOrchestrator.wait_for_ready
+  callee: src.algitex.tools.tickets.Tickets.list
+  call_type: resolved
+- caller: src.algitex.tools.mcp.MCPOrchestrator.list_services
+  callee: src.algitex.tools.tickets.Tickets.list
+  call_type: resolved
+- caller: src.algitex.tools.mcp.MCPOrchestrator.print_status
+  callee: Taskfile.print
+  call_type: resolved
+- caller: src.algitex.tools.mcp.MCPOrchestrator.generate_mcp_config
+  callee: Taskfile.print
+  call_type: resolved
 - caller: src.algitex.tools.cicd.init_ci_cd
   callee: Taskfile.print
   call_type: resolved
@@ -3860,6 +3857,12 @@ edges:
   call_type: resolved
 - caller: src.algitex.tools.require_tool
   callee: src.algitex.tools.discover_tools
+  call_type: resolved
+- caller: src.algitex.tools.ide.AiderHelper.fix_file
+  callee: Taskfile.print
+  call_type: resolved
+- caller: src.algitex.tools.ide.VSCodeHelper.install_extensions
+  callee: Taskfile.print
   call_type: resolved
 - caller: src.algitex.tools.telemetry.Telemetry.summary
   callee: src.algitex.tools.tickets.Tickets.list
@@ -4014,6 +4017,57 @@ edges:
 - caller: src.algitex.tools.autofix.fallback_backend.FallbackBackend.print_status
   callee: Taskfile.print
   call_type: resolved
+- caller: src.algitex.tools.autofix.batch_backend.BatchFixBackend.fix_batch
+  callee: Taskfile.print
+  call_type: resolved
+- caller: src.algitex.tools.autofix.batch_backend.BatchFixBackend._update_todo_mark_completed
+  callee: src.algitex.tools.ollama_cache.LLMCache.set
+  call_type: resolved
+- caller: src.algitex.tools.autofix.batch_backend.BatchFixBackend._update_todo_mark_completed
+  callee: Taskfile.print
+  call_type: resolved
+- caller: src.algitex.tools.autofix.batch_backend.BatchFixBackend._update_todo_mark_completed
+  callee: project.map.toon.mark_tasks_completed
+  call_type: resolved
+- caller: src.algitex.tools.autofix.batch_backend.BatchFixBackend._create_backup
+  callee: src.algitex.tools.tickets.Tickets.list
+  call_type: resolved
+- caller: src.algitex.tools.autofix.batch_backend.BatchFixBackend._preflight_syntax_check
+  callee: Taskfile.print
+  call_type: resolved
+- caller: src.algitex.tools.autofix.batch_backend.BatchFixBackend._preflight_syntax_check
+  callee: src.algitex.tools.ollama_cache.LLMCache.set
+  call_type: resolved
+- caller: src.algitex.tools.autofix.batch_backend.BatchFixBackend._verify_tasks_exist
+  callee: Taskfile.print
+  call_type: resolved
+- caller: src.algitex.tools.autofix.batch_backend.BatchFixBackend._process_group
+  callee: Taskfile.print
+  call_type: resolved
+- caller: src.algitex.tools.autofix.batch_backend.BatchFixBackend._fix_batch_group
+  callee: Taskfile.print
+  call_type: resolved
+- caller: src.algitex.tools.autofix.batch_backend.BatchFixBackend._fix_individual
+  callee: Taskfile.print
+  call_type: resolved
+- caller: src.algitex.tools.autofix.batch_backend.BatchFixBackend._build_batch_prompt
+  callee: Taskfile.print
+  call_type: resolved
+- caller: src.algitex.tools.autofix.batch_backend.BatchFixBackend._parse_batch_response
+  callee: Taskfile.print
+  call_type: resolved
+- caller: src.algitex.tools.autofix.batch_backend.BatchFixBackend._write_file_fix
+  callee: Taskfile.print
+  call_type: resolved
+- caller: src.algitex.tools.autofix.batch_backend.BatchFixBackend._mark_missing_as_failed
+  callee: Taskfile.print
+  call_type: resolved
+- caller: src.algitex.tools.autofix.batch_backend.BatchFixBackend._validate_and_rollback
+  callee: src.algitex.tools.tickets.Tickets.list
+  call_type: resolved
+- caller: src.algitex.tools.autofix.batch_backend.BatchFixBackend._validate_and_rollback
+  callee: Taskfile.print
+  call_type: resolved
 - caller: src.algitex.tools.autofix.ollama_backend.OllamaBackend.fix
   callee: Taskfile.print
   call_type: resolved
@@ -4060,7 +4114,7 @@ edges:
   callee: src.algitex.dashboard.show_quick_dashboard
   call_type: resolved
 - caller: src.algitex.cli.microtask.microtask_classify
-  callee: project.map.toon.classify_todo_file
+  callee: src.algitex.microtask.classifier.classify_todo_file
   call_type: resolved
 - caller: src.algitex.cli.microtask.microtask_classify
   callee: src.algitex.cli.microtask._print_summary
@@ -4069,7 +4123,7 @@ edges:
   callee: src.algitex.cli.microtask._print_task_table
   call_type: resolved
 - caller: src.algitex.cli.microtask.microtask_plan
-  callee: project.map.toon.classify_todo_file
+  callee: src.algitex.microtask.classifier.classify_todo_file
   call_type: resolved
 - caller: src.algitex.cli.microtask.microtask_plan
   callee: src.algitex.cli.microtask._print_summary
@@ -4081,7 +4135,7 @@ edges:
   callee: src.algitex.cli.microtask._print_file_batches
   call_type: resolved
 - caller: src.algitex.cli.microtask.microtask_run
-  callee: project.map.toon.classify_todo_file
+  callee: src.algitex.microtask.classifier.classify_todo_file
   call_type: resolved
 - caller: src.algitex.cli.microtask.microtask_run
   callee: src.algitex.cli.microtask._filter_tasks
@@ -4091,6 +4145,9 @@ edges:
   call_type: resolved
 - caller: src.algitex.cli.microtask._print_file_batches
   callee: src.algitex.cli.microtask._shorten_path
+  call_type: resolved
+- caller: src.algitex.cli.todo_verify.todo_verify_prefact
+  callee: src.algitex.cli.todo_verify._validate_tasks
   call_type: resolved
 - caller: src.algitex.cli.parallel.parallel
   callee: src.algitex.cli.parallel._load_tickets
@@ -4278,6 +4335,36 @@ edges:
 - caller: src.algitex.todo.audit.AuditLogger.print_summary
   callee: Taskfile.print
   call_type: resolved
+- caller: src.algitex.microtask.classifier.classify_prefact_line
+  callee: src.algitex.microtask.classifier._is_ignored_path
+  call_type: resolved
+- caller: src.algitex.microtask.classifier.classify_prefact_line
+  callee: src.algitex.microtask.classifier._classify_message
+  call_type: resolved
+- caller: src.algitex.microtask.classifier.classify_prefact_line
+  callee: src.algitex.microtask.classifier._first_int
+  call_type: resolved
+- caller: src.algitex.microtask.classifier.classify_prefact_line
+  callee: src.algitex.microtask.classifier._resolve_file
+  call_type: resolved
+- caller: src.algitex.microtask.classifier.classify_todo_file
+  callee: src.algitex.tools.ollama_cache.LLMCache.set
+  call_type: resolved
+- caller: src.algitex.microtask.classifier.classify_todo_file
+  callee: src.algitex.microtask.classifier.classify_prefact_line
+  call_type: resolved
+- caller: src.algitex.microtask.classifier._classify_message
+  callee: src.algitex.microtask.classifier._first_int
+  call_type: resolved
+- caller: src.algitex.microtask.executor.MicroTaskExecutor._phase_algorithmic
+  callee: src.algitex.microtask.group_tasks_by_file
+  call_type: resolved
+- caller: src.algitex.microtask.executor.MicroTaskExecutor._handle_sort_imports
+  callee: src.algitex.nlp.sort_imports_in_path
+  call_type: resolved
+- caller: src.algitex.microtask.executor.MicroTaskExecutor._phase_llm
+  callee: src.algitex.microtask.group_tasks_by_file
+  call_type: resolved
 - caller: docker.vallm.vallm_mcp_server.validate_all
   callee: docker.vallm.vallm_mcp_server.validate_static
   call_type: resolved
@@ -4296,182 +4383,13 @@ edges:
 - caller: docker.vallm.vallm_mcp_server.create_rest_api
   callee: docker.vallm.vallm_mcp_server.validate_all
   call_type: resolved
-- caller: docker.vallm.vallm_mcp_server.run_rest_server
-  callee: docker.vallm.vallm_mcp_server.create_rest_api
-  call_type: resolved
-- caller: docker.proxym.proxym_mcp_server.chat_completion
-  callee: docker.proxym.proxym_mcp_server.count_tokens
-  call_type: resolved
-- caller: docker.proxym.proxym_mcp_server.chat_completion
-  callee: docker.proxym.proxym_mcp_server._call_anthropic
-  call_type: resolved
-- caller: docker.proxym.proxym_mcp_server.chat_completion
-  callee: docker.proxym.proxym_mcp_server._call_openai
-  call_type: resolved
-- caller: docker.proxym.proxym_mcp_server.chat_completion
-  callee: docker.proxym.proxym_mcp_server._call_gemini
-  call_type: resolved
-- caller: docker.proxym.proxym_mcp_server._call_anthropic
-  callee: docker.proxym.proxym_mcp_server.count_tokens
-  call_type: resolved
-- caller: docker.proxym.proxym_mcp_server._call_gemini
-  callee: docker.proxym.proxym_mcp_server.count_tokens
-  call_type: resolved
-- caller: docker.proxym.proxym_mcp_server.simple_prompt
-  callee: docker.proxym.proxym_mcp_server.chat_completion
-  call_type: resolved
-- caller: docker.proxym.proxym_mcp_server.create_rest_api
-  callee: docker.proxym.proxym_mcp_server.list_models
-  call_type: resolved
-- caller: docker.proxym.proxym_mcp_server.run_rest_server
-  callee: docker.proxym.proxym_mcp_server.create_rest_api
-  call_type: resolved
-- caller: docker.planfile-mcp.planfile_mcp_server._save_tickets
-  callee: src.algitex.tools.tickets.Tickets.list
-  call_type: resolved
-- caller: docker.planfile-mcp.planfile_mcp_server.planfile_create_ticket
-  callee: docker.planfile-mcp.planfile_mcp_server._load_tickets
-  call_type: resolved
-- caller: docker.planfile-mcp.planfile_mcp_server.planfile_create_ticket
-  callee: docker.planfile-mcp.planfile_mcp_server._save_tickets
-  call_type: resolved
-- caller: docker.planfile-mcp.planfile_mcp_server.planfile_list_tickets
-  callee: docker.planfile-mcp.planfile_mcp_server._load_tickets
-  call_type: resolved
-- caller: docker.planfile-mcp.planfile_mcp_server.planfile_list_tickets
-  callee: src.algitex.tools.tickets.Tickets.list
-  call_type: resolved
-- caller: docker.planfile-mcp.planfile_mcp_server.planfile_update_ticket
-  callee: docker.planfile-mcp.planfile_mcp_server._load_tickets
-  call_type: resolved
-- caller: docker.planfile-mcp.planfile_mcp_server.planfile_update_ticket
-  callee: docker.planfile-mcp.planfile_mcp_server._save_tickets
-  call_type: resolved
-- caller: docker.planfile-mcp.planfile_mcp_server.planfile_create_tickets_bulk
-  callee: docker.planfile-mcp.planfile_mcp_server.planfile_create_ticket
-  call_type: resolved
-- caller: docker.planfile-mcp.planfile_mcp_server.planfile_sprint_status
-  callee: docker.planfile-mcp.planfile_mcp_server._load_tickets
-  call_type: resolved
-- caller: docker.planfile-mcp.planfile_mcp_server.planfile_sprint_status
-  callee: src.algitex.tools.tickets.Tickets.list
-  call_type: resolved
-- caller: docker.planfile-mcp.planfile_mcp_server.planfile_sync
-  callee: docker.planfile-mcp.planfile_mcp_server._save_tickets
-  call_type: resolved
-- caller: docker.planfile-mcp.planfile_mcp_server.create_rest_api
-  callee: docker.planfile-mcp.planfile_mcp_server.planfile_list_tickets
-  call_type: resolved
-- caller: docker.planfile-mcp.planfile_mcp_server.create_rest_api
-  callee: docker.planfile-mcp.planfile_mcp_server.planfile_create_ticket
-  call_type: resolved
-- caller: docker.planfile-mcp.planfile_mcp_server.create_rest_api
-  callee: docker.planfile-mcp.planfile_mcp_server.planfile_update_ticket
-  call_type: resolved
-- caller: docker.planfile-mcp.planfile_mcp_server.create_rest_api
-  callee: docker.planfile-mcp.planfile_mcp_server.planfile_sprint_status
-  call_type: resolved
-- caller: docker.planfile-mcp.planfile_mcp_server.run_rest_server
-  callee: docker.planfile-mcp.planfile_mcp_server.create_rest_api
-  call_type: resolved
-- caller: docker.code2llm.code2llm_server.Code2LLMServer._analyze_project
-  callee: src.algitex.tools.ollama_cache.LLMCache.set
-  call_type: resolved
-- caller: docker.code2llm.code2llm_mcp_server._collect_project_metrics
-  callee: docker.code2llm.code2llm_mcp_server._analyze_python_file
-  call_type: resolved
-- caller: docker.code2llm.code2llm_mcp_server.analyze_project
-  callee: docker.code2llm.code2llm_mcp_server._collect_project_metrics
-  call_type: resolved
-- caller: docker.code2llm.code2llm_mcp_server.analyze_project
-  callee: docker.code2llm.code2llm_mcp_server._calculate_complexity_metrics
-  call_type: resolved
-- caller: docker.code2llm.code2llm_mcp_server.analyze_project
-  callee: src.algitex.tools.ollama_cache.LLMCache.set
-  call_type: resolved
-- caller: docker.code2llm.code2llm_mcp_server.generate_toon
-  callee: docker.code2llm.code2llm_mcp_server.analyze_project
-  call_type: resolved
-- caller: docker.code2llm.code2llm_mcp_server.generate_readme
-  callee: docker.code2llm.code2llm_mcp_server.analyze_project
-  call_type: resolved
-- caller: docker.code2llm.code2llm_mcp_server.evolution_export
-  callee: docker.code2llm.code2llm_mcp_server.analyze_project
-  call_type: resolved
-- caller: docker.code2llm.code2llm_mcp_server.create_rest_api
-  callee: docker.code2llm.code2llm_mcp_server.analyze_project
-  call_type: resolved
-- caller: docker.code2llm.code2llm_mcp_server.run_rest_server
-  callee: docker.code2llm.code2llm_mcp_server.create_rest_api
-  call_type: resolved
-- caller: docker.aider-mcp.aider_mcp_server.create_rest_api
-  callee: docker.aider-mcp.aider_mcp_server.aider_ai_code
-  call_type: resolved
-- caller: docker.aider-mcp.aider_mcp_server.create_rest_api
-  callee: docker.aider-mcp.aider_mcp_server.aider_list_models
-  call_type: resolved
-- caller: docker.aider-mcp.aider_mcp_server.create_rest_api
-  callee: docker.aider-mcp.aider_mcp_server.aider_chat
-  call_type: resolved
-- caller: docker.aider-mcp.aider_mcp_server.run_rest_server
-  callee: docker.aider-mcp.aider_mcp_server.create_rest_api
-  call_type: resolved
-- caller: scripts.fix_readme.fix_readme
-  callee: Taskfile.print
-  call_type: resolved
-- caller: src.algitex.cli.todo_verify.todo_verify_prefact
-  callee: src.algitex.cli.todo_verify._validate_tasks
-  call_type: resolved
-- caller: src.algitex.microtask.classifier.classify_prefact_line
-  callee: src.algitex.microtask.classifier._is_ignored_path
-  call_type: resolved
 modules:
   Taskfile:
   - Taskfile.print
-  docker.aider-mcp.aider_mcp_server:
-  - docker.aider-mcp.aider_mcp_server.aider_ai_code
-  - docker.aider-mcp.aider_mcp_server.aider_chat
-  - docker.aider-mcp.aider_mcp_server.aider_list_models
-  - docker.aider-mcp.aider_mcp_server.create_rest_api
-  - docker.aider-mcp.aider_mcp_server.run_rest_server
-  docker.code2llm.code2llm_mcp_server:
-  - docker.code2llm.code2llm_mcp_server._analyze_python_file
-  - docker.code2llm.code2llm_mcp_server._calculate_complexity_metrics
-  - docker.code2llm.code2llm_mcp_server._collect_project_metrics
-  - docker.code2llm.code2llm_mcp_server.analyze_project
-  - docker.code2llm.code2llm_mcp_server.create_rest_api
-  - docker.code2llm.code2llm_mcp_server.evolution_export
-  - docker.code2llm.code2llm_mcp_server.generate_readme
-  - docker.code2llm.code2llm_mcp_server.generate_toon
-  - docker.code2llm.code2llm_mcp_server.run_rest_server
-  docker.code2llm.code2llm_server:
-  - docker.code2llm.code2llm_server.Code2LLMServer._analyze_project
-  docker.planfile-mcp.planfile_mcp_server:
-  - docker.planfile-mcp.planfile_mcp_server._load_tickets
-  - docker.planfile-mcp.planfile_mcp_server._save_tickets
-  - docker.planfile-mcp.planfile_mcp_server.create_rest_api
-  - docker.planfile-mcp.planfile_mcp_server.planfile_create_ticket
-  - docker.planfile-mcp.planfile_mcp_server.planfile_create_tickets_bulk
-  - docker.planfile-mcp.planfile_mcp_server.planfile_list_tickets
-  - docker.planfile-mcp.planfile_mcp_server.planfile_sprint_status
-  - docker.planfile-mcp.planfile_mcp_server.planfile_sync
-  - docker.planfile-mcp.planfile_mcp_server.planfile_update_ticket
-  - docker.planfile-mcp.planfile_mcp_server.run_rest_server
-  docker.proxym.proxym_mcp_server:
-  - docker.proxym.proxym_mcp_server._call_anthropic
-  - docker.proxym.proxym_mcp_server._call_gemini
-  - docker.proxym.proxym_mcp_server._call_openai
-  - docker.proxym.proxym_mcp_server.chat_completion
-  - docker.proxym.proxym_mcp_server.count_tokens
-  - docker.proxym.proxym_mcp_server.create_rest_api
-  - docker.proxym.proxym_mcp_server.list_models
-  - docker.proxym.proxym_mcp_server.run_rest_server
-  - docker.proxym.proxym_mcp_server.simple_prompt
   docker.vallm.vallm_mcp_server:
   - docker.vallm.vallm_mcp_server.analyze_complexity
   - docker.vallm.vallm_mcp_server.calculate_quality_score
   - docker.vallm.vallm_mcp_server.create_rest_api
-  - docker.vallm.vallm_mcp_server.run_rest_server
   - docker.vallm.vallm_mcp_server.validate_all
   - docker.vallm.vallm_mcp_server.validate_runtime
   - docker.vallm.vallm_mcp_server.validate_security
@@ -4704,12 +4622,9 @@ modules:
   - examples.44-plugin-system.main.demo_plugin_marketplace
   - examples.44-plugin-system.main.main
   project.map.toon:
-  - project.map.toon.classify_todo_file
   - project.map.toon.mark_tasks_completed
   - project.map.toon.parallel_fix
   - project.map.toon.parse_todo
-  scripts.fix_readme:
-  - scripts.fix_readme.fix_readme
   src.algitex.benchmark:
   - src.algitex.benchmark.BenchmarkRunner.print_report
   - src.algitex.benchmark.BenchmarkSuite.print_table
@@ -4762,8 +4677,16 @@ modules:
   src.algitex.microtask:
   - src.algitex.microtask.group_tasks_by_file
   src.algitex.microtask.classifier:
+  - src.algitex.microtask.classifier._classify_message
+  - src.algitex.microtask.classifier._first_int
   - src.algitex.microtask.classifier._is_ignored_path
+  - src.algitex.microtask.classifier._resolve_file
   - src.algitex.microtask.classifier.classify_prefact_line
+  - src.algitex.microtask.classifier.classify_todo_file
+  src.algitex.microtask.executor:
+  - src.algitex.microtask.executor.MicroTaskExecutor._handle_sort_imports
+  - src.algitex.microtask.executor.MicroTaskExecutor._phase_algorithmic
+  - src.algitex.microtask.executor.MicroTaskExecutor._phase_llm
   src.algitex.nlp:
   - src.algitex.nlp.DeadCodeDetector.scan
   - src.algitex.nlp.DocstringShortener.fix_path
@@ -4854,6 +4777,20 @@ modules:
   - src.algitex.tools.autofix.AutoFix.fix_issue
   - src.algitex.tools.autofix.AutoFix.mark_task_done
   - src.algitex.tools.autofix.AutoFix.print_summary
+  src.algitex.tools.autofix.batch_backend:
+  - src.algitex.tools.autofix.batch_backend.BatchFixBackend._build_batch_prompt
+  - src.algitex.tools.autofix.batch_backend.BatchFixBackend._create_backup
+  - src.algitex.tools.autofix.batch_backend.BatchFixBackend._fix_batch_group
+  - src.algitex.tools.autofix.batch_backend.BatchFixBackend._fix_individual
+  - src.algitex.tools.autofix.batch_backend.BatchFixBackend._mark_missing_as_failed
+  - src.algitex.tools.autofix.batch_backend.BatchFixBackend._parse_batch_response
+  - src.algitex.tools.autofix.batch_backend.BatchFixBackend._preflight_syntax_check
+  - src.algitex.tools.autofix.batch_backend.BatchFixBackend._process_group
+  - src.algitex.tools.autofix.batch_backend.BatchFixBackend._update_todo_mark_completed
+  - src.algitex.tools.autofix.batch_backend.BatchFixBackend._validate_and_rollback
+  - src.algitex.tools.autofix.batch_backend.BatchFixBackend._verify_tasks_exist
+  - src.algitex.tools.autofix.batch_backend.BatchFixBackend._write_file_fix
+  - src.algitex.tools.autofix.batch_backend.BatchFixBackend.fix_batch
   src.algitex.tools.autofix.batch_backend.backend:
   - src.algitex.tools.autofix.batch_backend.backend.BatchFixBackend.fix_batch
   src.algitex.tools.autofix.batch_backend.fs_utils:
@@ -4899,6 +4836,9 @@ modules:
   - src.algitex.tools.docker.DockerToolManager.list_running
   - src.algitex.tools.docker.DockerToolManager.list_tools
   - src.algitex.tools.docker.DockerToolManager.teardown_all
+  src.algitex.tools.ide:
+  - src.algitex.tools.ide.AiderHelper.fix_file
+  - src.algitex.tools.ide.VSCodeHelper.install_extensions
   src.algitex.tools.ide_aider:
   - src.algitex.tools.ide_aider.AiderHelper.fix_file
   src.algitex.tools.ide_base:
@@ -4918,6 +4858,16 @@ modules:
   - src.algitex.tools.logging.log_time
   - src.algitex.tools.logging.verbose
   - src.algitex.tools.logging.verbose_print
+  src.algitex.tools.mcp:
+  - src.algitex.tools.mcp.MCPOrchestrator.generate_mcp_config
+  - src.algitex.tools.mcp.MCPOrchestrator.list_services
+  - src.algitex.tools.mcp.MCPOrchestrator.print_status
+  - src.algitex.tools.mcp.MCPOrchestrator.restart_service
+  - src.algitex.tools.mcp.MCPOrchestrator.start_all
+  - src.algitex.tools.mcp.MCPOrchestrator.start_service
+  - src.algitex.tools.mcp.MCPOrchestrator.stop_all
+  - src.algitex.tools.mcp.MCPOrchestrator.stop_service
+  - src.algitex.tools.mcp.MCPOrchestrator.wait_for_ready
   src.algitex.tools.mcp_lifecycle:
   - src.algitex.tools.mcp_lifecycle.MCPLifecycleManager.restart_service
   - src.algitex.tools.mcp_lifecycle.MCPLifecycleManager.start_service
@@ -5189,6 +5139,7 @@ entry_points:
 - project.map.toon._first_int
 - project.map.toon._format_todo_help
 - project.map.toon._format_verify_report
+- project.map.toon._get_repair_param
 - project.map.toon._group_repos_by_priority
 - project.map.toon._group_tasks_by_file
 - project.map.toon._init_config
@@ -5198,6 +5149,10 @@ entry_points:
 - project.map.toon._load_tickets
 - project.map.toon._merge_yaml
 - project.map.toon._parse_args
+- project.map.toon._parse_class_node
+- project.map.toon._parse_export_node
+- project.map.toon._parse_function_node
+- project.map.toon._parse_import_node
 - project.map.toon._parse_todo_file
 - project.map.toon._print_dead_code
 - project.map.toon._print_docstring_changes
@@ -5215,6 +5170,7 @@ entry_points:
 - project.map.toon._process_fstring_batch
 - project.map.toon._process_magic_batch
 - project.map.toon._python_files
+- project.map.toon._record_fix_result
 - project.map.toon._render_todo_stats
 - project.map.toon._resolve_file
 - project.map.toon._run_batch_with_dashboard
@@ -5232,11 +5188,15 @@ entry_points:
 - project.map.toon._simple_fstring_rewrite
 - project.map.toon._sort_imports
 - project.map.toon._stable_line_hash
+- project.map.toon._tf_build_phases
 - project.map.toon._tf_classify_tasks
 - project.map.toon._tf_execute_phased
 - project.map.toon._tf_parse_and_filter
 - project.map.toon._tf_print_report
+- project.map.toon._tf_run_algorithm
+- project.map.toon._tf_run_big
 - project.map.toon._tf_run_legacy
+- project.map.toon._tf_run_micro
 - project.map.toon._tf_validate_results
 - project.map.toon._validate_env
 - project.map.toon._validate_file_with_vallm
@@ -5301,6 +5261,7 @@ entry_points:
 - project.map.toon.classify_message
 - project.map.toon.classify_prefact_line
 - project.map.toon.classify_task
+- project.map.toon.classify_todo_file
 - project.map.toon.claude_code_env
 - project.map.toon.clean_cwd
 - project.map.toon.cleanup_ci_projects
@@ -5753,7 +5714,6 @@ entry_points:
 - src.algitex.metrics.get_metrics
 - src.algitex.metrics.reset_metrics
 - src.algitex.microtask.MicroTaskBatch.stats
-- src.algitex.microtask.classifier.classify_todo_file
 - src.algitex.microtask.executor.MicroTaskExecutor.__init__
 - src.algitex.microtask.executor.MicroTaskExecutor._apply_fstring_fix
 - src.algitex.microtask.executor.MicroTaskExecutor._apply_line_fix

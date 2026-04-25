@@ -1,16 +1,13 @@
-# code2llm | 317f 66400L | python:192,shell:27,yaml:20,yml:4,txt:2,toml:1 | 2026-04-25
-# CC̄=2.5 | critical:4/1777 | dups:0 | cycles:0
+# code2llm | 318f 66320L | python:192,shell:27,yaml:20,yml:4,txt:2,toml:1 | 2026-04-25
+# CC̄=2.5 | critical:1/1799 | dups:0 | cycles:0
 
-HEALTH[4]:
-  🟡 CC    _run_with_dashboard CC=15 (limit:15)
-  🟡 CC    _tf_run_micro CC=15 (limit:15)
-  🟡 CC    todo_hybrid CC=15 (limit:15)
-  🟡 CC    fix_file CC=25 (limit:15)
+HEALTH[1]:
+  🟡 CC    _run_micro_dashboard CC=17 (limit:15)
 
 REFACTOR[1]:
-  1. split 4 high-CC methods  (CC>15)
+  1. split 1 high-CC methods  (CC>15)
 
-PIPELINES[952]:
+PIPELINES[951]:
   [1] Src [main]: main → print
       PURITY: 100% pure
   [2] Src [format_price]: format_price
@@ -27,10 +24,10 @@ LAYERS:
   │ generate_lib_docs          316L  0C   11m  CC=13     ←0
   │ fix_readme                  33L  0C    1m  CC=1      ←0
   │
-  src/                            CC̄=3.5    ←in:0  →out:0
-  │ !! todo                      1059L  0C   25m  CC=15     ←0
+  src/                            CC̄=3.4    ←in:0  →out:0
+  │ !! todo                      1075L  0C   33m  CC=17     ←0
   │ !! batch_backend              802L  2C   19m  CC=11     ←0
-  │ !! fixer                      530L  1C   17m  CC=25     ←0
+  │ !! fixer                      554L  1C   21m  CC=12     ←0
   │ !! executor                   517L  2C   32m  CC=12     ←0
   │ hybrid                     479L  4C   10m  CC=12     ←0
   │ benchmark                  464L  4C   19m  CC=14     ←0
@@ -69,10 +66,10 @@ LAYERS:
   │ __init__                   232L  0C   11m  CC=2      ←0
   │ verify                     228L  1C    7m  CC=10     ←1
   │ todo_parser                223L  2C    8m  CC=11     ←1
-  │ classifier                 219L  0C    8m  CC=12     ←0
+  │ classifier                 219L  0C    8m  CC=12     ←1
   │ context                    207L  3C   14m  CC=7      ←0
-  │ todo_actions               200L  0C    7m  CC=13     ←1
   │ ide                        200L  3C   10m  CC=8      ←0
+  │ todo_actions               200L  0C    7m  CC=13     ←1
   │ microtask                  198L  0C   10m  CC=7      ←0
   │ verifier                   197L  3C    8m  CC=12     ←0
   │ fallback_backend           196L  2C    7m  CC=10     ←0
@@ -141,6 +138,7 @@ LAYERS:
   │ file_ops                    11L  0C    2m  CC=2      ←0
   │ pipeline                     5L  0C    0m  CC=0.0    ←0
   │ loop                         4L  0C    0m  CC=0.0    ←0
+  │ __init__                     4L  0C    0m  CC=0.0    ←0
   │ __init__                     4L  0C    0m  CC=0.0    ←0
   │ workflow                     2L  0C    0m  CC=0.0    ←0
   │
@@ -338,15 +336,15 @@ LAYERS:
   │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
   │
   project/                        CC̄=0.0    ←in:0  →out:0
-  │ !! calls.yaml                6498L  0C    0m  CC=0.0    ←0
-  │ !! map.toon.yaml             1434L  0C  451m  CC=0.0    ←8
-  │ !! calls.toon.yaml            633L  0C    0m  CC=0.0    ←0
-  │ !! analysis.toon.yaml         507L  0C    0m  CC=0.0    ←0
-  │ duplication.toon.yaml      409L  0C    0m  CC=0.0    ←0
+  │ !! calls.yaml                6454L  0C    0m  CC=0.0    ←0
+  │ !! map.toon.yaml             1436L  0C  461m  CC=0.0    ←7
+  │ !! calls.toon.yaml            626L  0C    0m  CC=0.0    ←0
+  │ analysis.toon.yaml         499L  0C    0m  CC=0.0    ←0
+  │ duplication.toon.yaml      360L  0C    0m  CC=0.0    ←0
   │ validation.toon.yaml       126L  0C    0m  CC=0.0    ←0
   │ analysis_refactored.toon.yaml   121L  0C    0m  CC=0.0    ←0
-  │ evolution.toon.yaml         82L  0C    0m  CC=0.0    ←0
-  │ project.toon.yaml           56L  0C    0m  CC=0.0    ←0
+  │ evolution.toon.yaml         66L  0C    0m  CC=0.0    ←0
+  │ project.toon.yaml           54L  0C    0m  CC=0.0    ←0
   │ prompt.txt                  47L  0C    0m  CC=0.0    ←0
   │
   testql-scenarios/               CC̄=0.0    ←in:0  →out:0
@@ -445,53 +443,53 @@ COUPLING:
     examples.41-god-module-splitting                                  53                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ──  !! fan-out
   CYCLES: none
   HUB: Taskfile/ (fan-in=2092)
-  HUB: project.map/ (fan-in=21)
   HUB: src.algitex/ (fan-in=19)
-  SMELL: examples.26-litellm-proxy-ollama/ fan-out=11 → split needed
-  SMELL: examples.02-algo-loop/ fan-out=22 → split needed
-  SMELL: examples.32-workspace-coordination/ fan-out=68 → split needed
-  SMELL: examples.06-telemetry/ fan-out=31 → split needed
-  SMELL: examples.01-quickstart/ fan-out=15 → split needed
-  SMELL: examples.04-ide-integration/ fan-out=17 → split needed
-  SMELL: examples.36-dashboard/ fan-out=45 → split needed
-  SMELL: examples.21-aider-cli-ollama/ fan-out=17 → split needed
-  SMELL: examples.09-workspace/ fan-out=73 → split needed
-  SMELL: examples.30-parallel-execution/ fan-out=59 → split needed
-  SMELL: examples.40-three-tier-autofix/ fan-out=60 → split needed
-  SMELL: examples.22-claude-code-ollama/ fan-out=12 → split needed
-  SMELL: examples.10-cicd/ fan-out=66 → split needed
-  SMELL: examples.15-github-mcp/ fan-out=24 → split needed
-  SMELL: examples.39-microtask-pipeline/ fan-out=46 → split needed
-  SMELL: examples.19-local-mcp-tools/ fan-out=22 → split needed
-  SMELL: examples.43-code-health/ fan-out=51 → split needed
-  SMELL: examples.17-docker-workflow/ fan-out=28 → split needed
-  SMELL: examples.11-aider-mcp/ fan-out=17 → split needed
-  SMELL: examples.18-ollama-local/ fan-out=61 → split needed
-  SMELL: examples.35-sprint3-patterns/ fan-out=36 → split needed
-  SMELL: examples.38-new-modules/ fan-out=37 → split needed
-  SMELL: examples.33-hybrid-autofix/ fan-out=48 → split needed
-  SMELL: examples.05-cost-tracking/ fan-out=14 → split needed
-  SMELL: examples.37-benchmarks/ fan-out=60 → split needed
-  SMELL: examples.42-duplicate-removal/ fan-out=68 → split needed
-  SMELL: examples.14-docker-mcp/ fan-out=27 → split needed
-  SMELL: examples.24-ollama-batch/ fan-out=13 → split needed
-  SMELL: examples.28-mcp-orchestration/ fan-out=26 → split needed
-  SMELL: examples.08-feedback/ fan-out=57 → split needed
-  SMELL: examples.27-unified-autofix/ fan-out=21 → split needed
-  SMELL: examples.16-test-workflow/ fan-out=28 → split needed
-  SMELL: examples.12-filesystem-mcp/ fan-out=22 → split needed
-  SMELL: examples.44-plugin-system/ fan-out=64 → split needed
-  SMELL: examples.41-god-module-splitting/ fan-out=53 → split needed
-  SMELL: examples.34-batch-fix/ fan-out=30 → split needed
-  SMELL: examples.13-vallm/ fan-out=23 → split needed
-  SMELL: examples.03-pipeline/ fan-out=10 → split needed
-  SMELL: examples.20-self-hosted-pipeline/ fan-out=45 → split needed
-  SMELL: scripts/ fan-out=10 → split needed
+  HUB: project.map/ (fan-in=18)
   SMELL: examples.31-abpr-workflow/ fan-out=81 → split needed
-  SMELL: src.algitex/ fan-out=522 → split needed
-  SMELL: examples.07-context/ fan-out=53 → split needed
+  SMELL: examples.22-claude-code-ollama/ fan-out=12 → split needed
+  SMELL: examples.40-three-tier-autofix/ fan-out=60 → split needed
+  SMELL: examples.02-algo-loop/ fan-out=22 → split needed
+  SMELL: examples.35-sprint3-patterns/ fan-out=36 → split needed
+  SMELL: examples.03-pipeline/ fan-out=10 → split needed
+  SMELL: examples.13-vallm/ fan-out=23 → split needed
   SMELL: examples.25-local-model-comparison/ fan-out=16 → split needed
+  SMELL: examples.32-workspace-coordination/ fan-out=68 → split needed
+  SMELL: examples.14-docker-mcp/ fan-out=27 → split needed
+  SMELL: examples.10-cicd/ fan-out=66 → split needed
+  SMELL: examples.07-context/ fan-out=53 → split needed
+  SMELL: examples.24-ollama-batch/ fan-out=13 → split needed
+  SMELL: src.algitex/ fan-out=519 → split needed
+  SMELL: examples.43-code-health/ fan-out=51 → split needed
+  SMELL: examples.12-filesystem-mcp/ fan-out=22 → split needed
+  SMELL: examples.11-aider-mcp/ fan-out=17 → split needed
+  SMELL: examples.26-litellm-proxy-ollama/ fan-out=11 → split needed
   SMELL: examples.23-continue-dev-ollama/ fan-out=18 → split needed
+  SMELL: examples.20-self-hosted-pipeline/ fan-out=45 → split needed
+  SMELL: examples.30-parallel-execution/ fan-out=59 → split needed
+  SMELL: examples.17-docker-workflow/ fan-out=28 → split needed
+  SMELL: examples.04-ide-integration/ fan-out=17 → split needed
+  SMELL: examples.38-new-modules/ fan-out=37 → split needed
+  SMELL: examples.05-cost-tracking/ fan-out=14 → split needed
+  SMELL: examples.06-telemetry/ fan-out=31 → split needed
+  SMELL: examples.41-god-module-splitting/ fan-out=53 → split needed
+  SMELL: examples.37-benchmarks/ fan-out=60 → split needed
+  SMELL: examples.34-batch-fix/ fan-out=30 → split needed
+  SMELL: examples.39-microtask-pipeline/ fan-out=46 → split needed
+  SMELL: examples.16-test-workflow/ fan-out=28 → split needed
+  SMELL: scripts/ fan-out=10 → split needed
+  SMELL: examples.42-duplicate-removal/ fan-out=68 → split needed
+  SMELL: examples.27-unified-autofix/ fan-out=21 → split needed
+  SMELL: examples.36-dashboard/ fan-out=45 → split needed
+  SMELL: examples.18-ollama-local/ fan-out=61 → split needed
+  SMELL: examples.44-plugin-system/ fan-out=64 → split needed
+  SMELL: examples.21-aider-cli-ollama/ fan-out=17 → split needed
+  SMELL: examples.15-github-mcp/ fan-out=24 → split needed
+  SMELL: examples.09-workspace/ fan-out=73 → split needed
+  SMELL: examples.01-quickstart/ fan-out=15 → split needed
+  SMELL: examples.08-feedback/ fan-out=57 → split needed
+  SMELL: examples.28-mcp-orchestration/ fan-out=26 → split needed
+  SMELL: examples.19-local-mcp-tools/ fan-out=22 → split needed
+  SMELL: examples.33-hybrid-autofix/ fan-out=48 → split needed
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon

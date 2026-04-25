@@ -1,41 +1,33 @@
-# code2llm/evolution | 1501 func | 117f | 2026-04-25
+# code2llm/evolution | 1523 func | 117f | 2026-04-25
 
-NEXT[6] (ranked by impact):
+NEXT[4] (ranked by impact):
   [1] !! SPLIT           src/algitex/cli/todo.py
-      WHY: 1059L, 0 classes, max CC=15
-      EFFORT: ~4h  IMPACT: 15885
+      WHY: 1075L, 0 classes, max CC=17
+      EFFORT: ~4h  IMPACT: 18275
 
-  [2] !! SPLIT           src/algitex/todo/fixer.py
-      WHY: 530L, 1 classes, max CC=25
-      EFFORT: ~4h  IMPACT: 13250
-
-  [3] !! SPLIT           src/algitex/tools/autofix/batch_backend.py
+  [2] !! SPLIT           src/algitex/tools/autofix/batch_backend.py
       WHY: 802L, 2 classes, max CC=11
       EFFORT: ~4h  IMPACT: 8822
 
-  [4] !  SPLIT-FUNC      _run_with_dashboard  CC=15  fan=29
-      WHY: CC=15 exceeds 15
-      EFFORT: ~1h  IMPACT: 435
+  [3] !! SPLIT           src/algitex/todo/fixer.py
+      WHY: 554L, 1 classes, max CC=12
+      EFFORT: ~4h  IMPACT: 6648
 
-  [5] !! SPLIT-FUNC      fix_file  CC=25  fan=17
-      WHY: CC=25 exceeds 15
-      EFFORT: ~1h  IMPACT: 425
-
-  [6] !  SPLIT-FUNC      todo_hybrid  CC=15  fan=14
-      WHY: CC=15 exceeds 15
-      EFFORT: ~1h  IMPACT: 210
+  [4] !  SPLIT-FUNC      _run_micro_dashboard  CC=17  fan=13
+      WHY: CC=17 exceeds 15
+      EFFORT: ~1h  IMPACT: 221
 
 
 RISKS[3]:
-  ⚠ Splitting src/algitex/cli/todo.py may break 25 import paths
+  ⚠ Splitting src/algitex/cli/todo.py may break 33 import paths
   ⚠ Splitting src/algitex/tools/autofix/batch_backend.py may break 19 import paths
-  ⚠ Splitting src/algitex/todo/fixer.py may break 17 import paths
+  ⚠ Splitting src/algitex/todo/fixer.py may break 21 import paths
 
 METRICS-TARGET:
   CC̄:          2.4 → ≤1.7
-  max-CC:      25 → ≤12
+  max-CC:      17 → ≤8
   god-modules: 4 → 0
-  high-CC(≥15): 4 → ≤2
+  high-CC(≥15): 1 → ≤0
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -63,4 +55,4 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=2.5 → now CC̄=2.4
+  prev CC̄=2.4 → now CC̄=2.4

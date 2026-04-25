@@ -23,7 +23,7 @@ Progressive algorithmization toolchain — from LLM to deterministic code, from 
 ## Metadata
 
 - **name**: `algitex`
-- **version**: `0.1.61`
+- **version**: `0.1.63`
 - **python_requires**: `>=3.10`
 - **license**: Apache-2.0
 - **ai_model**: `openrouter/qwen/qwen3-coder-next`
@@ -43,7 +43,7 @@ SUMD (description) → DOQL/source (code) → taskfile (automation) → testql (
 
 app {
   name: algitex;
-  version: 0.1.61;
+  version: 0.1.63;
 }
 
 dependencies {
@@ -772,7 +772,7 @@ pipeline:
 ```yaml
 project:
   name: algitex
-  version: 0.1.61
+  version: 0.1.63
   env: local
 ```
 
@@ -882,10 +882,10 @@ pip install -e .[dev]
 ### `project/map.toon.yaml`
 
 ```toon markpact:analysis path=project/map.toon.yaml
-# algitex | 238f 38860L | python:210,shell:27,less:1 | 2026-04-25
-# stats: 529 func | 250 cls | 238 mod | CC̄=3.5 | critical:31 | cycles:0
-# alerts[5]: CC fix_file=25; CC _run_with_dashboard=15; CC _tf_run_micro=15; CC todo_hybrid=15; CC find_duplicate_blocks=14
-# hotspots[5]: _run_with_dashboard fan=27; main fan=18; main fan=18; dashboard_export fan=17; find_duplicate_blocks fan=17
+# algitex | 238f 38900L | python:210,shell:27,less:1 | 2026-04-25
+# stats: 541 func | 250 cls | 238 mod | CC̄=3.5 | critical:30 | cycles:0
+# alerts[5]: CC _run_micro_dashboard=17; CC find_duplicate_blocks=14; CC main=13; CC generate_module_doc=13; fan-out main=18
+# hotspots[5]: main fan=18; main fan=18; dashboard_export fan=17; find_duplicate_blocks fan=17; main fan=16
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
 M[238]:
@@ -1014,7 +1014,7 @@ M[238]:
   src/algitex/cli/todo/file_ops.py,11
   src/algitex/cli/todo/logic.py,46
   src/algitex/cli/todo/render.py,30
-  src/algitex/cli/todo.py,1060
+  src/algitex/cli/todo.py,1076
   src/algitex/cli/todo_verify.py,92
   src/algitex/cli/workflow.py,43
   src/algitex/cli.py,41
@@ -1036,7 +1036,7 @@ M[238]:
   src/algitex/todo/audit.py,287
   src/algitex/todo/benchmark.py,245
   src/algitex/todo/classify.py,157
-  src/algitex/todo/fixer.py,531
+  src/algitex/todo/fixer.py,555
   src/algitex/todo/hybrid.py,480
   src/algitex/todo/micro.py,407
   src/algitex/todo/micro_extractor.py,66
@@ -1723,8 +1723,12 @@ D:
     e: render_todo_stats
     render_todo_stats(file;tasks)
   src/algitex/cli/todo.py:
-    e: _render_todo_stats,_run_with_dashboard,_run_hybrid_with_dashboard,_run_batch_with_dashboard,todo_stats,todo_verify,todo_fix_parallel,todo_list,todo_run,_format_todo_help,todo_fix,_tf_parse_and_filter,_tf_classify_tasks,_tf_execute_phased,_tf_build_phases,_tf_run_algorithm,_tf_run_micro,_tf_run_big,_tf_validate_results,_tf_print_report,_tf_run_legacy,todo_benchmark,todo_hybrid,todo_batch,todo_verify_prefact
+    e: _render_todo_stats,_init_todo_dashboard,_run_algo_dashboard,_run_micro_dashboard,_run_big_dashboard,_run_with_dashboard,_run_hybrid_with_dashboard,_run_batch_with_dashboard,todo_stats,todo_verify,todo_fix_parallel,todo_list,todo_run,_format_todo_help,todo_fix,_tf_parse_and_filter,_tf_classify_tasks,_tf_execute_phased,_tf_build_phases,_tf_run_algorithm,_aggregate_micro_results,_mark_micro_completed,_tf_run_micro,_tf_run_big,_tf_validate_results,_tf_print_report,_tf_run_legacy,todo_benchmark,_print_hybrid_banner,_update_todo_hybrid,todo_hybrid,todo_batch,todo_verify_prefact
     _render_todo_stats(file;tasks)
+    _init_todo_dashboard(algo_tasks;micro_tasks;big_tasks;algo;micro;all_phases)
+    _run_algo_dashboard(dashboard;file;algo_tasks;algo;workers;dry_run;results)
+    _run_micro_dashboard(dashboard;file;micro_tasks;micro;micro_workers;model;dry_run;cache;results)
+    _run_big_dashboard(dashboard;file;big_tasks;all_phases;workers;backend;rate_limit;proxy_url;dry_run;results)
     _run_with_dashboard(file;tasks;algo;micro;all_phases;workers;micro_workers;model;backend;rate_limit;proxy_url;dry_run)
     _run_hybrid_with_dashboard(file;fixer;hybrid;dry_run)
     _run_batch_with_dashboard(backend_fixer;tasks;parallel;dry_run)
@@ -1740,12 +1744,16 @@ D:
     _tf_execute_phased(file;classified;algo;micro;all_phases;workers;micro_workers;model;backend;rate_limit;proxy_url;dry_run)
     _tf_build_phases(classified;algo;micro;all_phases)
     _tf_run_algorithm(file;tasks;workers)
+    _aggregate_micro_results(micro_results)
+    _mark_micro_completed(file;dry_run;micro_results;tasks)
     _tf_run_micro(file;tasks;_workers;micro_workers;model)
     _tf_run_big(file;tasks;workers;_micro_workers;_model;backend;proxy_url;rate_limit;dry_run)
     _tf_validate_results(results)
     _tf_print_report(report)
     _tf_run_legacy(file;tasks;tool;dry_run)
     todo_benchmark(limit;file;workers;compare)
+    _print_hybrid_banner(hybrid;backend;tool;workers;rate_limit;proxy_url;fallback;verbose;dry_run)
+    _update_todo_hybrid(file;dry_run;result)
     todo_hybrid(file;backend;tool;workers;rate_limit;proxy_url;hybrid;dashboard;fallback;verbose;dry_run)
     todo_batch(file;backend;model;batch_size;parallel;dry_run;verbose;prune;limit;no_log;dashboard)
     todo_verify_prefact(file;prune)
@@ -1871,7 +1879,7 @@ D:
     classify_message(message)
     classify_task(task)
   src/algitex/todo/fixer.py:
-    e: parse_todo,_categorize,_group_tasks_by_file,_compute_category_stats,_compute_tier_stats,_print_pre_execution_summary,_print_execution_summary,_validate_file_with_vallm,fix_file,_extract_return_type,_process_magic_batch,_process_fstring_batch,_process_exec_batch,_execute_parallel_fixes,parallel_fix,mark_tasks_completed,parallel_fix_and_update,FixResult
+    e: parse_todo,_categorize,_group_tasks_by_file,_compute_category_stats,_compute_tier_stats,_print_pre_execution_summary,_print_execution_summary,_validate_file_with_vallm,_group_tasks_by_category,_process_line_tasks,fix_file,_extract_return_type,_get_repair_param,_record_fix_result,_process_magic_batch,_process_fstring_batch,_process_exec_batch,_execute_parallel_fixes,parallel_fix,mark_tasks_completed,parallel_fix_and_update,FixResult
     FixResult:  # Result of fixing a file.
     parse_todo(todo_path)
     _categorize(message)
@@ -1881,8 +1889,12 @@ D:
     _print_pre_execution_summary(tasks;by_file;workers;dry_run)
     _print_execution_summary(total_fixed;total_skipped;total_errors;dry_run)
     _validate_file_with_vallm(path;original_content)
+    _group_tasks_by_category(tasks)
+    _process_line_tasks(path;tasks;result;dry_run;original_content)
     fix_file(file_path;tasks;dry_run)
     _extract_return_type(message)
+    _get_repair_param(task)
+    _record_fix_result(task;path;original_content;ok;result)
     _process_magic_batch(path;tasks;result;dry_run;original_content)
     _process_fstring_batch(path;tasks;result;dry_run;original_content)
     _process_exec_batch(path;tasks;result;dry_run;original_content)
@@ -2320,7 +2332,7 @@ D:
 
 ## Call Graph
 
-*417 nodes · 500 edges · 122 modules · CC̄=2.5*
+*411 nodes · 500 edges · 120 modules · CC̄=2.5*
 
 ### Hubs (by degree)
 
@@ -2331,13 +2343,13 @@ D:
 | `main` *(in examples.30-parallel-execution.main)* | 13 ⚠ | 0 | 55 | **55** |
 | `main` *(in examples.20-self-hosted-pipeline.main)* | 2 | 0 | 49 | **49** |
 | `main` *(in examples.30-parallel-execution.parallel_real_world)* | 13 ⚠ | 0 | 43 | **43** |
-| `main` *(in examples.05-cost-tracking.main)* | 8 | 0 | 40 | **40** |
 | `demo_docker_operations` *(in examples.14-docker-mcp.main)* | 7 | 0 | 40 | **40** |
+| `main` *(in examples.05-cost-tracking.main)* | 8 | 0 | 40 | **40** |
 | `main` *(in examples.18-ollama-local.main)* | 7 | 0 | 39 | **39** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/semcod/algitex
-# nodes: 417 | edges: 500 | modules: 122
+# nodes: 411 | edges: 500 | modules: 120
 # CC̄=2.5
 
 HUBS[20]:
@@ -2351,10 +2363,10 @@ HUBS[20]:
     CC=2  in:0  out:49  total:49
   examples.30-parallel-execution.parallel_real_world.main
     CC=13  in:0  out:43  total:43
-  examples.05-cost-tracking.main.main
-    CC=8  in:0  out:40  total:40
   examples.14-docker-mcp.main.demo_docker_operations
     CC=7  in:0  out:40  total:40
+  examples.05-cost-tracking.main.main
+    CC=8  in:0  out:40  total:40
   examples.18-ollama-local.main.main
     CC=7  in:0  out:39  total:39
   src.algitex.tools.ollama_cache.LLMCache.set
@@ -2363,72 +2375,32 @@ HUBS[20]:
     CC=5  in:0  out:37  total:37
   examples.31-abpr-workflow.abpr_pipeline.abpr_pipeline
     CC=10  in:0  out:36  total:36
-  src.algitex.tools.autofix.batch_backend.backend.BatchFixBackend.fix_batch
-    CC=10  in:0  out:35  total:35
   examples.13-vallm.main.demo_validation
     CC=5  in:0  out:35  total:35
+  src.algitex.tools.autofix.batch_backend.backend.BatchFixBackend.fix_batch
+    CC=10  in:0  out:35  total:35
+  src.algitex.tools.autofix.batch_backend.BatchFixBackend.fix_batch
+    CC=11  in:0  out:35  total:35
   examples.07-context.main.basic_context_example
     CC=2  in:0  out:34  total:34
   src.algitex.tools.tickets.Tickets.list
     CC=4  in:33  out:1  total:34
-  examples.27-unified-autofix.main.main
-    CC=4  in:0  out:33  total:33
   examples.02-algo-loop.main.main
     CC=11  in:0  out:33  total:33
+  examples.27-unified-autofix.main.main
+    CC=4  in:0  out:33  total:33
   src.algitex.todo.hybrid.HybridAutofix.fix_all
     CC=3  in:0  out:31  total:31
-  examples.06-telemetry.main.basic_telemetry_example
-    CC=2  in:0  out:30  total:30
   examples.12-filesystem-mcp.main.demo_file_operations
     CC=3  in:0  out:30  total:30
 
 MODULES:
   Taskfile  [1 funcs]
     print  CC=0  out:0
-  docker.aider-mcp.aider_mcp_server  [5 funcs]
-    aider_ai_code  CC=2  out:5
-    aider_chat  CC=1  out:2
-    aider_list_models  CC=1  out:1
-    create_rest_api  CC=1  out:13
-    run_rest_server  CC=1  out:7
-  docker.code2llm.code2llm_mcp_server  [9 funcs]
-    _analyze_python_file  CC=10  out:15
-    _calculate_complexity_metrics  CC=6  out:4
-    _collect_project_metrics  CC=4  out:8
-    analyze_project  CC=1  out:11
-    create_rest_api  CC=1  out:14
-    evolution_export  CC=1  out:7
-    generate_readme  CC=4  out:15
-    generate_toon  CC=4  out:15
-    run_rest_server  CC=1  out:7
-  docker.code2llm.code2llm_server  [1 funcs]
-    _analyze_project  CC=1  out:8
-  docker.planfile-mcp.planfile_mcp_server  [10 funcs]
-    _load_tickets  CC=6  out:7
-    _save_tickets  CC=2  out:8
-    create_rest_api  CC=1  out:16
-    planfile_create_ticket  CC=2  out:10
-    planfile_create_tickets_bulk  CC=3  out:8
-    planfile_list_tickets  CC=7  out:7
-    planfile_sprint_status  CC=3  out:9
-    planfile_sync  CC=1  out:3
-    planfile_update_ticket  CC=4  out:6
-    run_rest_server  CC=1  out:7
-  docker.proxym.proxym_mcp_server  [9 funcs]
-    _call_anthropic  CC=6  out:22
-    _call_gemini  CC=5  out:14
-    _call_openai  CC=3  out:13
-    chat_completion  CC=9  out:11
-    count_tokens  CC=2  out:4
-    create_rest_api  CC=1  out:16
-    list_models  CC=4  out:7
-    run_rest_server  CC=1  out:7
-    simple_prompt  CC=1  out:2
-  docker.vallm.vallm_mcp_server  [8 funcs]
+  docker.vallm.vallm_mcp_server  [7 funcs]
     analyze_complexity  CC=9  out:16
     calculate_quality_score  CC=1  out:12
     create_rest_api  CC=1  out:17
-    run_rest_server  CC=1  out:7
     validate_all  CC=1  out:16
     validate_runtime  CC=9  out:9
     validate_security  CC=7  out:12
@@ -2659,13 +2631,10 @@ MODULES:
     demo_plugin_configuration  CC=1  out:2
     demo_plugin_marketplace  CC=2  out:17
     main  CC=1  out:15
-  project.map.toon  [4 funcs]
-    classify_todo_file  CC=0  out:0
+  project.map.toon  [3 funcs]
     mark_tasks_completed  CC=0  out:0
     parallel_fix  CC=0  out:0
     parse_todo  CC=0  out:0
-  scripts.fix_readme  [1 funcs]
-    fix_readme  CC=1  out:9
   src.algitex.benchmark  [4 funcs]
     print_report  CC=5  out:10
     print_table  CC=2  out:9
@@ -2717,9 +2686,17 @@ MODULES:
     show_quick_dashboard  CC=3  out:17
   src.algitex.microtask  [1 funcs]
     group_tasks_by_file  CC=3  out:4
-  src.algitex.microtask.classifier  [2 funcs]
+  src.algitex.microtask.classifier  [6 funcs]
+    _classify_message  CC=5  out:2
+    _first_int  CC=3  out:3
     _is_ignored_path  CC=2  out:3
+    _resolve_file  CC=3  out:4
     classify_prefact_line  CC=12  out:21
+    classify_todo_file  CC=5  out:9
+  src.algitex.microtask.executor  [3 funcs]
+    _handle_sort_imports  CC=4  out:5
+    _phase_algorithmic  CC=5  out:10
+    _phase_llm  CC=5  out:11
   src.algitex.nlp  [10 funcs]
     scan  CC=6  out:10
     fix_path  CC=3  out:6
@@ -2810,6 +2787,17 @@ MODULES:
     fix_issue  CC=6  out:8
     mark_task_done  CC=8  out:9
     print_summary  CC=12  out:16
+  src.algitex.tools.autofix.batch_backend  [13 funcs]
+    _build_batch_prompt  CC=4  out:9
+    _create_backup  CC=5  out:12
+    _fix_batch_group  CC=10  out:22
+    _fix_individual  CC=5  out:14
+    _mark_missing_as_failed  CC=3  out:1
+    _parse_batch_response  CC=8  out:22
+    _preflight_syntax_check  CC=10  out:23
+    _process_group  CC=11  out:22
+    _update_todo_mark_completed  CC=9  out:17
+    _validate_and_rollback  CC=11  out:22
   src.algitex.tools.autofix.batch_backend.backend  [1 funcs]
     fix_batch  CC=10  out:35
   src.algitex.tools.autofix.batch_backend.fs_utils  [2 funcs]
@@ -2855,6 +2843,9 @@ MODULES:
     list_running  CC=1  out:2
     list_tools  CC=1  out:2
     teardown_all  CC=2  out:2
+  src.algitex.tools.ide  [2 funcs]
+    fix_file  CC=4  out:7
+    install_extensions  CC=3  out:4
   src.algitex.tools.ide_aider  [1 funcs]
     fix_file  CC=5  out:9
   src.algitex.tools.ide_base  [2 funcs]
@@ -2874,6 +2865,16 @@ MODULES:
     log_time  CC=1  out:8
     verbose  CC=1  out:12
     verbose_print  CC=2  out:1
+  src.algitex.tools.mcp  [9 funcs]
+    generate_mcp_config  CC=4  out:6
+    list_services  CC=1  out:2
+    print_status  CC=6  out:8
+    restart_service  CC=1  out:4
+    start_all  CC=10  out:9
+    start_service  CC=11  out:15
+    stop_all  CC=3  out:5
+    stop_service  CC=6  out:11
+    wait_for_ready  CC=10  out:20
   src.algitex.tools.mcp_lifecycle  [3 funcs]
     restart_service  CC=1  out:4
     start_service  CC=11  out:15

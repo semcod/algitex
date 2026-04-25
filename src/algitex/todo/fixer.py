@@ -194,34 +194,33 @@ def _validate_file_with_vallm(path: Path, original_content: str) -> tuple[bool, 
         return True, "syntax OK"
 
 
-def fix_file(file_path: str, tasks: list[TodoTask], dry_run: bool = True) -> FixResult:
-    """Fix all tasks in a single file using strategy dispatch.
-    
-    CC: 6 (dispatcher + loop + 4 category handlers)
-    Validates with vallm after each fix, restores if invalid.
+def _group_tasks_by_category(
+    tasks: list[TodoTask],
+) -> tuple[list[TodoTask], list[TodoTask], list[TodoTask], list[TodoTask], list[TodoTask]]:
+    """Group tasks by repair category.
+
+    Returns (line_tasks, magic_tasks, fstring_tasks, exec_tasks, other_tasks).
     """
-    path = Path(file_path)
-    result = FixResult(file=file_path)
+    line_tasks = [t for t in tasks if t.category in {"unused_import", "return_type"}]
+    magic_tasks = [t for t in tasks if t.category in {"magic", "magic_known"}]
+    fstring_tasks = [t for t in tasks if t.category == "fstring"]
+    exec_tasks = [t for t in tasks if t.category in {"exec_block", "module_block"}]
+    other_tasks = [t for t in tasks if t.category not in REPAIRERS]
+    return line_tasks, magic_tasks, fstring_tasks, exec_tasks, other_tasks
 
-    if not path.exists():
-        result.errors.append("file not found")
-        return result
 
-    # Save original content for potential restore
-    original_content = path.read_text()
+def _process_line_tasks(
+    path: Path,
+    tasks: list[TodoTask],
+    result: FixResult,
+    dry_run: bool,
+    original_content: str,
+) -> str:
+    """Process line-based fixes with validation after each.
 
-    # Sort tasks by line number DESCENDING — fix bottom-up to preserve line numbers
-    sorted_tasks = sorted(tasks, key=lambda t: t.line, reverse=True)
-
-    # Group by category
-    line_tasks = [t for t in sorted_tasks if t.category in {"unused_import", "return_type"}]
-    magic_tasks = [t for t in sorted_tasks if t.category in {"magic", "magic_known"}]
-    fstring_tasks = [t for t in sorted_tasks if t.category == "fstring"]
-    exec_tasks = [t for t in sorted_tasks if t.category in {"exec_block", "module_block"}]
-    other_tasks = [t for t in sorted_tasks if t.category not in REPAIRERS]
-
-    # Process line-based fixes with validation after each
-    for task in line_tasks:
+    Returns the (possibly updated) original content.
+    """
+    for task in tasks:
         repairer = REPAIRERS.get(task.category)
         if not repairer:
             result.skipped += 1
@@ -241,19 +240,35 @@ def fix_file(file_path: str, tasks: list[TodoTask], dry_run: bool = True) -> Fix
         except Exception as e:
             result.errors.append(f"L{task.line}: {e}")
             result.skipped += 1
+    return original_content
 
-    # Count other tasks as skipped
+
+def fix_file(file_path: str, tasks: list[TodoTask], dry_run: bool = True) -> FixResult:
+    """Fix all tasks in a single file using strategy dispatch.
+
+    CC: ~8 (dispatcher + 4 category batch handlers)
+    Validates with vallm after each fix, restores if invalid.
+    """
+    path = Path(file_path)
+    result = FixResult(file=file_path)
+
+    if not path.exists():
+        result.errors.append("file not found")
+        return result
+
+    original_content = path.read_text()
+    sorted_tasks = sorted(tasks, key=lambda t: t.line, reverse=True)
+    line_tasks, magic_tasks, fstring_tasks, exec_tasks, other_tasks = _group_tasks_by_category(
+        sorted_tasks
+    )
+
+    original_content = _process_line_tasks(path, line_tasks, result, dry_run, original_content)
     result.skipped += len(other_tasks)
 
-    # Process magic number fixes with validation
     if magic_tasks:
         _process_magic_batch(path, magic_tasks, result, dry_run, original_content)
-
-    # Process fstring fixes with validation
     if fstring_tasks:
         _process_fstring_batch(path, fstring_tasks, result, dry_run, original_content)
-
-    # Process exec block fixes with validation
     if exec_tasks:
         _process_exec_batch(path, exec_tasks, result, dry_run, original_content)
 
