@@ -1,56 +1,54 @@
-# algitex | 1760 func | 188f | 93021L | python | 2026-04-25
+# algitex | 1777 func | 187f | 92778L | python | 2026-04-25
 
 HEALTH:
-  CC̄=2.6  critical=78 (limit:10)  dup=17  cycles=0
+  CC̄=2.5  critical=71 (limit:10)  dup=12  cycles=0
 
 ALERTS[20]:
-  !!! cc_exceeded      _classify_message = 48 (limit:15)
-  !!! cc_exceeded      todo_verify_prefact = 29 (limit:15)
   !!! high_fan_out     _run_with_dashboard = 29 (limit:10)
-  !!! cc_exceeded      _tf_execute_phased = 25 (limit:15)
   !!! cc_exceeded      fix_file = 25 (limit:15)
-  !!! high_fan_out     todo_verify_prefact = 22 (limit:10)
   !!! high_fan_out     DocstringShortener.fix_file = 21 (limit:10)
   !!! high_fan_out     BatchFixBackend.fix_batch = 20 (limit:10)
   !!! high_fan_out     BatchFixBackend.fix_batch = 20 (limit:10)
-  !!  cc_exceeded      parse_file = 24 (limit:15)
+  !!  high_fan_out     find_duplicate_blocks = 19 (limit:10)
+  !!  high_fan_out     main = 18 (limit:10)
+  !!  high_fan_out     main = 18 (limit:10)
+  !!  high_fan_out     dashboard_export = 18 (limit:10)
+  !!  high_fan_out     scan_package = 18 (limit:10)
 
-MODULES[319] (top by size):
+MODULES[317] (top by size):
   M[planfile.yaml] 20325L C:0 F:0 CC↑0 D:0 (yaml)
-  M[project/calls.yaml] 6492L C:0 F:0 CC↑0 D:0 (yaml)
-  M[project/map.toon.yaml] 1389L C:0 F:424 CC↑0 D:0 (yaml)
-  M[src/algitex/cli/todo.py] 1159L C:0 F:21 CC↑29 D:0 (python)
-  M[src/algitex/tools/autofix/batch_backend.py] 826L C:2 F:16 CC↑16 D:0 (python)
+  M[project/calls.yaml] 6498L C:0 F:0 CC↑0 D:0 (yaml)
+  M[project/map.toon.yaml] 1434L C:0 F:451 CC↑0 D:8 (yaml)
+  M[src/algitex/cli/todo.py] 1059L C:0 F:25 CC↑15 D:0 (python)
+  M[src/algitex/tools/autofix/batch_backend.py] 802L C:2 F:19 CC↑11 D:0 (python)
   M[project/calls.toon.yaml] 633L C:0 F:0 CC↑0 D:0 (yaml)
-  M[src/algitex/todo/fixer.py] 550L C:1 F:17 CC↑25 D:7 (python)
+  M[src/algitex/todo/fixer.py] 530L C:1 F:17 CC↑25 D:0 (python)
+  M[src/algitex/microtask/executor.py] 517L C:2 F:32 CC↑12 D:0 (python)
   M[goal.yaml] 513L C:0 F:0 CC↑0 D:0 (yaml)
-  M[src/algitex/microtask/executor.py] 497L C:2 F:29 CC↑16 D:0 (python)
-  M[project/analysis.toon.yaml] 491L C:0 F:0 CC↑0 D:0 (yaml)
+  M[project/analysis.toon.yaml] 507L C:0 F:0 CC↑0 D:0 (yaml)
   M[docker-tools.yaml] 489L C:0 F:0 CC↑0 D:0 (yaml)
   M[src/algitex/todo/hybrid.py] 479L C:4 F:10 CC↑12 D:0 (python)
   M[src/algitex/tools/benchmark.py] 464L C:4 F:19 CC↑14 D:0 (python)
-  M[src/algitex/tools/mcp.py] 448L C:2 F:18 CC↑11 D:0 (python)
   M[src/algitex/project/__init__.py] 439L C:1 F:22 CC↑6 D:0 (python)
-  LANGS: python:195/other:70/shell:27/yaml:20/yml:4/txt:2/toml:1
+  M[examples/08-feedback/main.py] 438L C:0 F:6 CC↑8 D:0 (python)
+  LANGS: python:193/other:70/shell:27/yaml:20/yml:4/txt:2/toml:1
 
 HOTSPOTS[10]:
   ★ _run_with_dashboard fan=29  // Run todo fix with live dashboard.
-  ★ todo_verify_prefact fan=22  // Verify TODO.md against actual code using prefact.
-
-Uses prefact to scan for issu
   ★ DocstringShortener.fix_file fan=21  // Shorten docstrings in a single Python file.
+  ★ BatchFixBackend.fix_batch fan=20  // Orchestrates 20 calls
   ★ BatchFixBackend.fix_batch fan=20  // Wykonaj wszystkie zadania w batch z równoległym przetwarzaniem.
 
 Args:
     tasks
-  ★ BatchFixBackend.fix_batch fan=20  // Orchestrates 20 calls
+  ★ find_duplicate_blocks fan=19  // Find repeated code blocks with a rolling hash over line windows.
 
 REFACTOR[15]:
-  [1] H/L Split _tf_execute_phased (CC=25)
-  [2] H/L Split todo_verify_prefact (CC=29)
-  [3] H/L Split fix_file (CC=25)
-  [4] H/L Split _classify_message (CC=48)
-  [5] H/H Split god module src/algitex/cli/todo.py (1159L, 0 classes)
+  [1] H/L Split fix_file (CC=25)
+  [2] H/H Split god module src/algitex/todo/fixer.py (530L, 1 classes)
+  [3] H/H Split god module src/algitex/cli/todo.py (1059L, 0 classes)
+  [4] H/H Split god module src/algitex/microtask/executor.py (517L, 2 classes)
+  [5] H/H Split god module src/algitex/tools/autofix/batch_backend.py (802L, 2 classes)
 
 EVOLUTION:
-  2026-04-25 CC̄=2.6 crit=78 93021L // Automated analysis
+  2026-04-25 CC̄=2.5 crit=71 92778L // Automated analysis

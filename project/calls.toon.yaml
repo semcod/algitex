@@ -1,10 +1,10 @@
 # code2llm call graph | /home/tom/github/semcod/algitex
-# nodes: 421 | edges: 500 | modules: 121
-# CC̄=2.6
+# nodes: 417 | edges: 500 | modules: 122
+# CC̄=2.5
 
 HUBS[20]:
   Taskfile.print
-    CC=0  in:2106  out:0  total:2106
+    CC=0  in:2092  out:0  total:2092
   examples.31-abpr-workflow.main.main
     CC=12  in:0  out:77  total:77
   examples.30-parallel-execution.main.main
@@ -13,44 +13,69 @@ HUBS[20]:
     CC=2  in:0  out:49  total:49
   examples.30-parallel-execution.parallel_real_world.main
     CC=13  in:0  out:43  total:43
-  examples.14-docker-mcp.main.demo_docker_operations
-    CC=7  in:0  out:40  total:40
-  src.algitex.tools.autofix.batch_backend.BatchFixBackend._parse_batch_response
-    CC=16  in:0  out:40  total:40
-  src.algitex.tools.ollama_cache.LLMCache.set
-    CC=1  in:33  out:7  total:40
   examples.05-cost-tracking.main.main
     CC=8  in:0  out:40  total:40
+  examples.14-docker-mcp.main.demo_docker_operations
+    CC=7  in:0  out:40  total:40
   examples.18-ollama-local.main.main
     CC=7  in:0  out:39  total:39
+  src.algitex.tools.ollama_cache.LLMCache.set
+    CC=1  in:32  out:7  total:39
   examples.16-test-workflow.main.demo_test_workflow
     CC=5  in:0  out:37  total:37
-  src.algitex.tools.tickets.Tickets.list
-    CC=4  in:36  out:1  total:37
   examples.31-abpr-workflow.abpr_pipeline.abpr_pipeline
     CC=10  in:0  out:36  total:36
-  examples.13-vallm.main.demo_validation
-    CC=5  in:0  out:35  total:35
   src.algitex.tools.autofix.batch_backend.backend.BatchFixBackend.fix_batch
     CC=10  in:0  out:35  total:35
-  src.algitex.tools.autofix.batch_backend.BatchFixBackend.fix_batch
-    CC=11  in:0  out:35  total:35
+  examples.13-vallm.main.demo_validation
+    CC=5  in:0  out:35  total:35
   examples.07-context.main.basic_context_example
     CC=2  in:0  out:34  total:34
-  examples.02-algo-loop.main.main
-    CC=11  in:0  out:33  total:33
+  src.algitex.tools.tickets.Tickets.list
+    CC=4  in:33  out:1  total:34
   examples.27-unified-autofix.main.main
     CC=4  in:0  out:33  total:33
+  examples.02-algo-loop.main.main
+    CC=11  in:0  out:33  total:33
   src.algitex.todo.hybrid.HybridAutofix.fix_all
     CC=3  in:0  out:31  total:31
+  examples.06-telemetry.main.basic_telemetry_example
+    CC=2  in:0  out:30  total:30
+  examples.12-filesystem-mcp.main.demo_file_operations
+    CC=3  in:0  out:30  total:30
 
 MODULES:
   Taskfile  [1 funcs]
     print  CC=0  out:0
-  docker.planfile-mcp.planfile_mcp_server  [3 funcs]
+  docker.aider-mcp.aider_mcp_server  [5 funcs]
+    aider_ai_code  CC=2  out:5
+    aider_chat  CC=1  out:2
+    aider_list_models  CC=1  out:1
+    create_rest_api  CC=1  out:13
+    run_rest_server  CC=1  out:7
+  docker.code2llm.code2llm_mcp_server  [9 funcs]
+    _analyze_python_file  CC=10  out:15
+    _calculate_complexity_metrics  CC=6  out:4
+    _collect_project_metrics  CC=4  out:8
+    analyze_project  CC=1  out:11
+    create_rest_api  CC=1  out:14
+    evolution_export  CC=1  out:7
+    generate_readme  CC=4  out:15
+    generate_toon  CC=4  out:15
+    run_rest_server  CC=1  out:7
+  docker.code2llm.code2llm_server  [1 funcs]
+    _analyze_project  CC=1  out:8
+  docker.planfile-mcp.planfile_mcp_server  [10 funcs]
     _load_tickets  CC=6  out:7
     _save_tickets  CC=2  out:8
+    create_rest_api  CC=1  out:16
     planfile_create_ticket  CC=2  out:10
+    planfile_create_tickets_bulk  CC=3  out:8
+    planfile_list_tickets  CC=7  out:7
+    planfile_sprint_status  CC=3  out:9
+    planfile_sync  CC=1  out:3
+    planfile_update_ticket  CC=4  out:6
+    run_rest_server  CC=1  out:7
   docker.proxym.proxym_mcp_server  [9 funcs]
     _call_anthropic  CC=6  out:22
     _call_gemini  CC=5  out:14
@@ -261,6 +286,48 @@ MODULES:
     demo_tier_big  CC=2  out:9
     demo_tier_micro  CC=2  out:9
     main  CC=1  out:15
+  examples.41-god-module-splitting.main  [7 funcs]
+    demo_before_and_after  CC=6  out:15
+    demo_god_module_problem  CC=1  out:9
+    demo_how_to_split_your_module  CC=2  out:6
+    demo_import_compatibility  CC=1  out:11
+    demo_real_metrics  CC=2  out:10
+    demo_split_strategy  CC=1  out:2
+    main  CC=1  out:14
+  examples.42-duplicate-removal.main  [8 funcs]
+    demo_algitex_integration  CC=1  out:9
+    demo_detection_with_redup  CC=1  out:9
+    demo_duplicate_problem  CC=1  out:11
+    demo_extraction_strategy  CC=2  out:9
+    demo_metrics_and_roi  CC=2  out:10
+    demo_prevention_strategies  CC=1  out:4
+    demo_real_world_example  CC=2  out:11
+    main  CC=1  out:15
+  examples.43-code-health.main  [8 funcs]
+    demo_analysis_pipeline  CC=1  out:2
+    demo_ci_integration  CC=1  out:5
+    demo_health_improvement_workflow  CC=1  out:2
+    demo_health_metrics  CC=3  out:5
+    demo_health_report  CC=4  out:10
+    demo_historical_tracking  CC=2  out:18
+    demo_regression_prevention  CC=2  out:5
+    main  CC=1  out:15
+  examples.44-plugin-system.main  [8 funcs]
+    demo_builtin_plugins  CC=2  out:7
+    demo_creating_backend_plugin  CC=1  out:11
+    demo_creating_tool_plugin  CC=1  out:12
+    demo_hook_system  CC=2  out:5
+    demo_plugin_architecture  CC=1  out:2
+    demo_plugin_configuration  CC=1  out:2
+    demo_plugin_marketplace  CC=2  out:17
+    main  CC=1  out:15
+  project.map.toon  [4 funcs]
+    classify_todo_file  CC=0  out:0
+    mark_tasks_completed  CC=0  out:0
+    parallel_fix  CC=0  out:0
+    parse_todo  CC=0  out:0
+  scripts.fix_readme  [1 funcs]
+    fix_readme  CC=1  out:9
   src.algitex.benchmark  [4 funcs]
     print_report  CC=5  out:10
     print_table  CC=2  out:9
@@ -299,18 +366,10 @@ MODULES:
     _extract_and_partition  CC=7  out:14
     _load_tickets  CC=2  out:4
     parallel  CC=7  out:23
-  src.algitex.cli.todo  [7 funcs]
-    _render_todo_stats  CC=3  out:18
-    _tf_classify_tasks  CC=7  out:3
-    _tf_execute_phased  CC=25  out:23
-    _tf_parse_and_filter  CC=6  out:2
-    todo_benchmark  CC=2  out:9
-    todo_fix_parallel  CC=1  out:7
-    todo_stats  CC=3  out:6
   src.algitex.cli.todo.logic  [1 funcs]
     validate_task  CC=13  out:8
   src.algitex.cli.todo_verify  [2 funcs]
-    _validate_tasks  CC=15  out:12
+    _validate_tasks  CC=9  out:12
     todo_verify_prefact  CC=12  out:28
   src.algitex.config  [3 funcs]
     load  CC=2  out:8
@@ -320,17 +379,9 @@ MODULES:
     show_quick_dashboard  CC=3  out:17
   src.algitex.microtask  [1 funcs]
     group_tasks_by_file  CC=3  out:4
-  src.algitex.microtask.classifier  [6 funcs]
-    _classify_message  CC=48  out:2
-    _first_int  CC=3  out:3
+  src.algitex.microtask.classifier  [2 funcs]
     _is_ignored_path  CC=2  out:3
-    _resolve_file  CC=3  out:4
     classify_prefact_line  CC=12  out:21
-    classify_todo_file  CC=5  out:9
-  src.algitex.microtask.executor  [3 funcs]
-    _handle_sort_imports  CC=4  out:5
-    _phase_algorithmic  CC=5  out:10
-    _phase_llm  CC=5  out:11
   src.algitex.nlp  [10 funcs]
     scan  CC=6  out:10
     fix_path  CC=3  out:6
@@ -365,17 +416,6 @@ MODULES:
     _first_int  CC=3  out:3
     classify_message  CC=9  out:7
     classify_task  CC=3  out:4
-  src.algitex.todo.fixer  [16 funcs]
-    _categorize  CC=1  out:1
-    _compute_category_stats  CC=2  out:1
-    _compute_tier_stats  CC=2  out:2
-    _execute_parallel_fixes  CC=8  out:9
-    _group_tasks_by_file  CC=2  out:2
-    _print_execution_summary  CC=3  out:6
-    _print_pre_execution_summary  CC=10  out:22
-    _process_exec_batch  CC=6  out:16
-    _process_fstring_batch  CC=6  out:16
-    _process_magic_batch  CC=11  out:17
   src.algitex.todo.hybrid  [6 funcs]
     _call_llm_backend  CC=7  out:6
     _fix_file_llm  CC=8  out:10
@@ -401,12 +441,11 @@ MODULES:
     normalise_model_name  CC=2  out:2
     sanitize_constant_name  CC=3  out:6
     validate_python  CC=2  out:1
-  src.algitex.todo.repair  [5 funcs]
+  src.algitex.todo.repair  [4 funcs]
     _find_import_insert_point  CC=3  out:3
     _simple_fstring_rewrite  CC=1  out:13
     repair_fstring  CC=12  out:12
     repair_magic_number  CC=8  out:13
-    repair_module_block  CC=5  out:4
   src.algitex.todo.tiering  [3 funcs]
     filter_tasks  CC=6  out:2
     partition_tasks  CC=2  out:3
@@ -433,17 +472,6 @@ MODULES:
     fix_issue  CC=6  out:8
     mark_task_done  CC=8  out:9
     print_summary  CC=12  out:16
-  src.algitex.tools.autofix.batch_backend  [11 funcs]
-    _build_batch_prompt  CC=4  out:9
-    _create_backup  CC=5  out:12
-    _fix_batch_group  CC=10  out:22
-    _fix_individual  CC=5  out:14
-    _parse_batch_response  CC=16  out:40
-    _preflight_syntax_check  CC=10  out:23
-    _process_group  CC=11  out:22
-    _update_todo_mark_completed  CC=9  out:17
-    _validate_and_rollback  CC=11  out:22
-    _verify_tasks_exist  CC=10  out:14
   src.algitex.tools.autofix.batch_backend.backend  [1 funcs]
     fix_batch  CC=10  out:35
   src.algitex.tools.autofix.batch_backend.fs_utils  [2 funcs]
@@ -489,14 +517,6 @@ MODULES:
     list_running  CC=1  out:2
     list_tools  CC=1  out:2
     teardown_all  CC=2  out:2
-  src.algitex.tools.ide  [7 funcs]
-    fix_file  CC=4  out:7
-    batch_fix  CC=3  out:6
-    chat  CC=5  out:5
-    fix_file  CC=5  out:9
-    list_tools  CC=1  out:2
-    setup_tool  CC=5  out:8
-    install_extensions  CC=3  out:4
   src.algitex.tools.ide_aider  [1 funcs]
     fix_file  CC=5  out:9
   src.algitex.tools.ide_base  [2 funcs]
@@ -516,26 +536,10 @@ MODULES:
     log_time  CC=1  out:8
     verbose  CC=1  out:12
     verbose_print  CC=2  out:1
-  src.algitex.tools.mcp  [9 funcs]
-    generate_mcp_config  CC=4  out:6
-    list_services  CC=1  out:2
-    print_status  CC=6  out:8
-    restart_service  CC=1  out:4
-    start_all  CC=10  out:9
-    start_service  CC=11  out:15
-    stop_all  CC=3  out:5
-    stop_service  CC=6  out:11
-    wait_for_ready  CC=10  out:20
-  src.algitex.tools.mcp_defaults  [1 funcs]
-    build_default_services  CC=1  out:5
   src.algitex.tools.mcp_lifecycle  [3 funcs]
     restart_service  CC=1  out:4
     start_service  CC=11  out:15
     stop_service  CC=6  out:11
-  src.algitex.tools.mcp_orchestrator  [3 funcs]
-    _register_default_services  CC=1  out:2
-    start_all  CC=11  out:11
-    stop_all  CC=4  out:4
   src.algitex.tools.ollama  [2 funcs]
     auto_fix_file  CC=6  out:5
     ensure_model  CC=3  out:4

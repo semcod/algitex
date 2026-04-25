@@ -882,13 +882,13 @@ pip install -e .[dev]
 ### `project/map.toon.yaml`
 
 ```toon markpact:analysis path=project/map.toon.yaml
-# algitex | 239f 39303L | python:211,shell:27,less:1 | 2026-04-25
-# stats: 521 func | 255 cls | 239 mod | CC̄=3.6 | critical:35 | cycles:0
-# alerts[5]: CC _classify_message=48; CC todo_verify_prefact=29; CC _tf_execute_phased=25; CC fix_file=25; CC parse_file=24
-# hotspots[5]: _run_with_dashboard fan=27; main fan=18; main fan=18; dashboard_export fan=17; todo_verify_prefact fan=17
+# algitex | 238f 38860L | python:210,shell:27,less:1 | 2026-04-25
+# stats: 529 func | 250 cls | 238 mod | CC̄=3.5 | critical:31 | cycles:0
+# alerts[5]: CC fix_file=25; CC _run_with_dashboard=15; CC _tf_run_micro=15; CC todo_hybrid=15; CC find_duplicate_blocks=14
+# hotspots[5]: _run_with_dashboard fan=27; main fan=18; main fan=18; dashboard_export fan=17; find_duplicate_blocks fan=17
 # evolution: baseline
 # Keys: M=modules, D=details, i=imports, e=exports, c=classes, f=functions, m=methods
-M[239]:
+M[238]:
   app.doql.less,334
   docker/aider-mcp/aider_mcp_server.py,157
   docker/code2llm/code2llm_mcp_server.py,324
@@ -995,7 +995,7 @@ M[239]:
   examples/44-plugin-system/main.py,335
   project.sh,47
   scripts/fix_readme.py,34
-  scripts/generate_lib_docs.py,277
+  scripts/generate_lib_docs.py,317
   src/algitex/__init__.py,37
   src/algitex/algo/__init__.py,368
   src/algitex/algo/loop.py,5
@@ -1014,16 +1014,16 @@ M[239]:
   src/algitex/cli/todo/file_ops.py,11
   src/algitex/cli/todo/logic.py,46
   src/algitex/cli/todo/render.py,30
-  src/algitex/cli/todo.py,1160
-  src/algitex/cli/todo_verify.py,76
+  src/algitex/cli/todo.py,1060
+  src/algitex/cli/todo_verify.py,92
   src/algitex/cli/workflow.py,43
   src/algitex/cli.py,41
   src/algitex/config.py,171
   src/algitex/dashboard.py,415
   src/algitex/metrics.py,338
   src/algitex/microtask/__init__.py,197
-  src/algitex/microtask/classifier.py,246
-  src/algitex/microtask/executor.py,498
+  src/algitex/microtask/classifier.py,220
+  src/algitex/microtask/executor.py,518
   src/algitex/microtask/prompts.py,127
   src/algitex/microtask/slicer.py,122
   src/algitex/nlp/__init__.py,332
@@ -1036,7 +1036,7 @@ M[239]:
   src/algitex/todo/audit.py,287
   src/algitex/todo/benchmark.py,245
   src/algitex/todo/classify.py,157
-  src/algitex/todo/fixer.py,551
+  src/algitex/todo/fixer.py,531
   src/algitex/todo/hybrid.py,480
   src/algitex/todo/micro.py,407
   src/algitex/todo/micro_extractor.py,66
@@ -1057,7 +1057,7 @@ M[239]:
   src/algitex/tools/autofix/batch_backend/fs_utils.py,58
   src/algitex/tools/autofix/batch_backend/models.py,14
   src/algitex/tools/autofix/batch_backend/todo_utils.py,32
-  src/algitex/tools/autofix/batch_backend.py,827
+  src/algitex/tools/autofix/batch_backend.py,803
   src/algitex/tools/autofix/batch_logger.py,236
   src/algitex/tools/autofix/fallback_backend.py,197
   src/algitex/tools/autofix/ollama_backend.py,127
@@ -1072,17 +1072,16 @@ M[239]:
   src/algitex/tools/docker.py,299
   src/algitex/tools/docker_transport.py,295
   src/algitex/tools/feedback.py,253
-  src/algitex/tools/ide.py,431
+  src/algitex/tools/ide.py,201
   src/algitex/tools/ide_aider.py,64
   src/algitex/tools/ide_base.py,104
   src/algitex/tools/ide_claude.py,103
   src/algitex/tools/ide_models.py,21
   src/algitex/tools/logging.py,158
-  src/algitex/tools/mcp.py,449
+  src/algitex/tools/mcp.py,431
   src/algitex/tools/mcp_defaults.py,53
   src/algitex/tools/mcp_lifecycle.py,115
   src/algitex/tools/mcp_models.py,27
-  src/algitex/tools/mcp_orchestrator.py,101
   src/algitex/tools/ollama.py,401
   src/algitex/tools/ollama_cache.py,239
   src/algitex/tools/parallel/__init__.py,39
@@ -1591,9 +1590,13 @@ D:
     e: fix_readme
     fix_readme(path)
   scripts/generate_lib_docs.py:
-    e: extract_docstring,get_function_signature,parse_file,generate_module_doc,scan_package,generate_index,main
+    e: extract_docstring,get_function_signature,_parse_function_node,_parse_class_node,_parse_import_node,_parse_export_node,parse_file,generate_module_doc,scan_package,generate_index,main
     extract_docstring(node)
     get_function_signature(node)
+    _parse_function_node(node)
+    _parse_class_node(node)
+    _parse_import_node(node)
+    _parse_export_node(node)
     parse_file(filepath)
     generate_module_doc(module_name;module_path;parsed)
     scan_package(src_dir;output_dir)
@@ -1720,7 +1723,7 @@ D:
     e: render_todo_stats
     render_todo_stats(file;tasks)
   src/algitex/cli/todo.py:
-    e: _render_todo_stats,_run_with_dashboard,_run_hybrid_with_dashboard,_run_batch_with_dashboard,todo_stats,todo_verify,todo_fix_parallel,todo_list,todo_run,_format_todo_help,todo_fix,_tf_parse_and_filter,_tf_classify_tasks,_tf_execute_phased,_tf_validate_results,_tf_print_report,_tf_run_legacy,todo_benchmark,todo_hybrid,todo_batch,todo_verify_prefact
+    e: _render_todo_stats,_run_with_dashboard,_run_hybrid_with_dashboard,_run_batch_with_dashboard,todo_stats,todo_verify,todo_fix_parallel,todo_list,todo_run,_format_todo_help,todo_fix,_tf_parse_and_filter,_tf_classify_tasks,_tf_execute_phased,_tf_build_phases,_tf_run_algorithm,_tf_run_micro,_tf_run_big,_tf_validate_results,_tf_print_report,_tf_run_legacy,todo_benchmark,todo_hybrid,todo_batch,todo_verify_prefact
     _render_todo_stats(file;tasks)
     _run_with_dashboard(file;tasks;algo;micro;all_phases;workers;micro_workers;model;backend;rate_limit;proxy_url;dry_run)
     _run_hybrid_with_dashboard(file;fixer;hybrid;dry_run)
@@ -1735,6 +1738,10 @@ D:
     _tf_parse_and_filter(file;task_id;limit)
     _tf_classify_tasks(tasks)
     _tf_execute_phased(file;classified;algo;micro;all_phases;workers;micro_workers;model;backend;rate_limit;proxy_url;dry_run)
+    _tf_build_phases(classified;algo;micro;all_phases)
+    _tf_run_algorithm(file;tasks;workers)
+    _tf_run_micro(file;tasks;_workers;micro_workers;model)
+    _tf_run_big(file;tasks;workers;_micro_workers;_model;backend;proxy_url;rate_limit;dry_run)
     _tf_validate_results(results)
     _tf_print_report(report)
     _tf_run_legacy(file;tasks;tool;dry_run)
@@ -1793,7 +1800,7 @@ D:
   src/algitex/microtask/executor.py:
     e: PhaseResult,MicroTaskExecutor
     PhaseResult: throughput(0),as_dict(0)  # Summary for a single execution phase.
-    MicroTaskExecutor: __init__(5),execute(2),group_by_file(1),_phase_algorithmic(2),_process_algorithmic_batch(2),_handle_unused_import(2),_handle_return_type(2),_handle_known_magic(2),_handle_fstring(2),_handle_sort_imports(2),_handle_trailing_whitespace(2),_phase_llm(4),_process_llm_batch(2),_supports_algorithmic(1),_apply_line_fix(2),_apply_fstring_fix(2),_apply_llm_response(2),_apply_magic_name(3),_apply_rewrite(3),_strip_trailing_whitespace(1),_todo_category(1),_resolve_path(1),_find_import_insert_point(1),_first_int(1),_sanitize_constant_name(2),_strip_code_fences(1),_validate_python(1),close(0)  # Execute micro tasks in three tiers: algorithmic, small LLM, 
+    MicroTaskExecutor: __init__(5),execute(2),group_by_file(1),_phase_algorithmic(2),_process_algorithmic_batch(2),_handle_unused_import(2),_handle_return_type(2),_handle_known_magic(2),_handle_fstring(2),_handle_sort_imports(2),_handle_trailing_whitespace(2),_phase_llm(4),_process_llm_batch(2),_supports_algorithmic(1),_apply_line_fix(2),_apply_fstring_fix(2),_apply_llm_response(2),_apply_magic_name(3),_replace_magic_number(4),_insert_constant(3),_write_if_valid(3),_apply_rewrite(3),_strip_trailing_whitespace(1),_todo_category(1),_resolve_path(1),_find_import_insert_point(1),_first_int(1),_sanitize_constant_name(2),_strip_code_fences(1),_validate_python(1),close(0)  # Execute micro tasks in three tiers: algorithmic, small LLM, 
   src/algitex/microtask/prompts.py:
     e: _SafeDict,PromptBuilder
     _SafeDict: __missing__(1)
@@ -1983,7 +1990,7 @@ D:
   src/algitex/tools/autofix/batch_backend.py:
     e: TaskGroup,BatchFixBackend
     TaskGroup:  # Grupa podobnych zadań do batch fix.
-    BatchFixBackend: __init__(5),fix_batch(2),_update_todo_mark_completed(3),_create_backup(0),_preflight_syntax_check(1),_verify_tasks_exist(1),_group_tasks(1),_process_group(3),_fix_batch_group(1),_fix_individual(1),_fix_single(1),_build_batch_prompt(1),_call_llm(3),_parse_batch_response(2),_validate_and_rollback(2),_ensure_model(0)  # Backend do optymalizacji fixów przez grupowanie.
+    BatchFixBackend: __init__(5),fix_batch(2),_update_todo_mark_completed(3),_create_backup(0),_preflight_syntax_check(1),_verify_tasks_exist(1),_group_tasks(1),_process_group(3),_fix_batch_group(1),_fix_individual(1),_fix_single(1),_build_batch_prompt(1),_call_llm(3),_parse_batch_response(2),_extract_fixed_sections(1),_write_file_fix(3),_mark_missing_as_failed(2),_validate_and_rollback(2),_ensure_model(0)  # Backend do optymalizacji fixów przez grupowanie.
   src/algitex/tools/autofix/batch_logger.py:
     e: get_logger,start_session,end_session,BatchLogEntry,BatchSessionLog,BatchLogger
     BatchLogEntry:  # Single entry in batch log.
@@ -2054,10 +2061,7 @@ D:
     FeedbackController: __init__(1),on_validation_failure(3),on_success(2),needs_approval(1),_extract_feedback(1)  # Orchestrate retry/replan/escalate decisions.
     FeedbackLoop: __init__(3),execute_with_feedback(2),_execute_single(2),_validate_result(1),_mark_ticket_done(3),_mark_ticket_skipped(2)  # Integrates feedback controller into the pipeline execution.
   src/algitex/tools/ide.py:
-    e: IDETool,IDEHelper,ClaudeCodeHelper,AiderHelper,VSCodeHelper,EditorIntegration
-    IDETool: __post_init__(0)  # IDE tool configuration.
-    IDEHelper: __init__(0),_register_default_tools(0),check_tool(1),setup_tool(1),list_tools(0),get_tool_status(0)  # Base class for IDE integrations.
-    ClaudeCodeHelper: __init__(0),setup_environment(0),fix_file(4),chat(3),batch_fix(3)  # Helper for Claude Code (anthropic-curl) integration.
+    e: AiderHelper,VSCodeHelper,EditorIntegration
     AiderHelper: __init__(0),fix_file(4)  # Helper for Aider integration.
     VSCodeHelper: __init__(0),open_file(2),install_extensions(1),recommended_extensions(0)  # Helper for VS Code integration.
     EditorIntegration: __init__(0),detect_editor(0),setup_best_integration(0),get_quick_fix_command(3)  # High-level editor integration manager.
@@ -2085,8 +2089,7 @@ D:
     format_result(result)
     verbose_print(msg;level)
   src/algitex/tools/mcp.py:
-    e: MCPService,MCPOrchestrator
-    MCPService: __post_init__(0)  # Definition of an MCP service.
+    e: MCPOrchestrator
     MCPOrchestrator: __init__(0),_setup_signal_handlers(0),_register_default_services(0),add_service(1),add_custom_service(3),start_service(1),stop_service(2),restart_service(1),start_all(1),stop_all(1),wait_for_ready(2),check_health(0),get_logs(2),list_services(0),get_service_info(1),print_status(0),generate_mcp_config(1)  # Orchestrates multiple MCP services.
   src/algitex/tools/mcp_defaults.py:
     e: build_default_services
@@ -2097,9 +2100,6 @@ D:
   src/algitex/tools/mcp_models.py:
     e: MCPService
     MCPService: __post_init__(0)  # Definition of an MCP service.
-  src/algitex/tools/mcp_orchestrator.py:
-    e: MCPOrchestrator
-    MCPOrchestrator: __init__(0),_setup_signal_handlers(0),_register_default_services(0),add_service(1),add_custom_service(3),start_service(1),stop_service(2),restart_service(1),start_all(1),stop_all(1),wait_for_ready(1)  # Orchestrates multiple MCP services.
   src/algitex/tools/ollama.py:
     e: OllamaModel,OllamaResponse,OllamaClient,OllamaService
     OllamaModel: display_name(0)  # Information about an Ollama model.
@@ -2320,29 +2320,29 @@ D:
 
 ## Call Graph
 
-*421 nodes · 500 edges · 121 modules · CC̄=2.6*
+*417 nodes · 500 edges · 122 modules · CC̄=2.5*
 
 ### Hubs (by degree)
 
 | Function | CC | in | out | total |
 |----------|----|----|-----|-------|
-| `print` *(in Taskfile)* | 0 | 2106 | 0 | **2106** |
+| `print` *(in Taskfile)* | 0 | 2092 | 0 | **2092** |
 | `main` *(in examples.31-abpr-workflow.main)* | 12 ⚠ | 0 | 77 | **77** |
 | `main` *(in examples.30-parallel-execution.main)* | 13 ⚠ | 0 | 55 | **55** |
 | `main` *(in examples.20-self-hosted-pipeline.main)* | 2 | 0 | 49 | **49** |
 | `main` *(in examples.30-parallel-execution.parallel_real_world)* | 13 ⚠ | 0 | 43 | **43** |
+| `main` *(in examples.05-cost-tracking.main)* | 8 | 0 | 40 | **40** |
 | `demo_docker_operations` *(in examples.14-docker-mcp.main)* | 7 | 0 | 40 | **40** |
-| `_parse_batch_response` *(in src.algitex.tools.autofix.batch_backend.BatchFixBackend)* | 16 ⚠ | 0 | 40 | **40** |
-| `set` *(in src.algitex.tools.ollama_cache.LLMCache)* | 1 | 33 | 7 | **40** |
+| `main` *(in examples.18-ollama-local.main)* | 7 | 0 | 39 | **39** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/semcod/algitex
-# nodes: 421 | edges: 500 | modules: 121
-# CC̄=2.6
+# nodes: 417 | edges: 500 | modules: 122
+# CC̄=2.5
 
 HUBS[20]:
   Taskfile.print
-    CC=0  in:2106  out:0  total:2106
+    CC=0  in:2092  out:0  total:2092
   examples.31-abpr-workflow.main.main
     CC=12  in:0  out:77  total:77
   examples.30-parallel-execution.main.main
@@ -2351,44 +2351,69 @@ HUBS[20]:
     CC=2  in:0  out:49  total:49
   examples.30-parallel-execution.parallel_real_world.main
     CC=13  in:0  out:43  total:43
-  examples.14-docker-mcp.main.demo_docker_operations
-    CC=7  in:0  out:40  total:40
-  src.algitex.tools.autofix.batch_backend.BatchFixBackend._parse_batch_response
-    CC=16  in:0  out:40  total:40
-  src.algitex.tools.ollama_cache.LLMCache.set
-    CC=1  in:33  out:7  total:40
   examples.05-cost-tracking.main.main
     CC=8  in:0  out:40  total:40
+  examples.14-docker-mcp.main.demo_docker_operations
+    CC=7  in:0  out:40  total:40
   examples.18-ollama-local.main.main
     CC=7  in:0  out:39  total:39
+  src.algitex.tools.ollama_cache.LLMCache.set
+    CC=1  in:32  out:7  total:39
   examples.16-test-workflow.main.demo_test_workflow
     CC=5  in:0  out:37  total:37
-  src.algitex.tools.tickets.Tickets.list
-    CC=4  in:36  out:1  total:37
   examples.31-abpr-workflow.abpr_pipeline.abpr_pipeline
     CC=10  in:0  out:36  total:36
-  examples.13-vallm.main.demo_validation
-    CC=5  in:0  out:35  total:35
   src.algitex.tools.autofix.batch_backend.backend.BatchFixBackend.fix_batch
     CC=10  in:0  out:35  total:35
-  src.algitex.tools.autofix.batch_backend.BatchFixBackend.fix_batch
-    CC=11  in:0  out:35  total:35
+  examples.13-vallm.main.demo_validation
+    CC=5  in:0  out:35  total:35
   examples.07-context.main.basic_context_example
     CC=2  in:0  out:34  total:34
-  examples.02-algo-loop.main.main
-    CC=11  in:0  out:33  total:33
+  src.algitex.tools.tickets.Tickets.list
+    CC=4  in:33  out:1  total:34
   examples.27-unified-autofix.main.main
     CC=4  in:0  out:33  total:33
+  examples.02-algo-loop.main.main
+    CC=11  in:0  out:33  total:33
   src.algitex.todo.hybrid.HybridAutofix.fix_all
     CC=3  in:0  out:31  total:31
+  examples.06-telemetry.main.basic_telemetry_example
+    CC=2  in:0  out:30  total:30
+  examples.12-filesystem-mcp.main.demo_file_operations
+    CC=3  in:0  out:30  total:30
 
 MODULES:
   Taskfile  [1 funcs]
     print  CC=0  out:0
-  docker.planfile-mcp.planfile_mcp_server  [3 funcs]
+  docker.aider-mcp.aider_mcp_server  [5 funcs]
+    aider_ai_code  CC=2  out:5
+    aider_chat  CC=1  out:2
+    aider_list_models  CC=1  out:1
+    create_rest_api  CC=1  out:13
+    run_rest_server  CC=1  out:7
+  docker.code2llm.code2llm_mcp_server  [9 funcs]
+    _analyze_python_file  CC=10  out:15
+    _calculate_complexity_metrics  CC=6  out:4
+    _collect_project_metrics  CC=4  out:8
+    analyze_project  CC=1  out:11
+    create_rest_api  CC=1  out:14
+    evolution_export  CC=1  out:7
+    generate_readme  CC=4  out:15
+    generate_toon  CC=4  out:15
+    run_rest_server  CC=1  out:7
+  docker.code2llm.code2llm_server  [1 funcs]
+    _analyze_project  CC=1  out:8
+  docker.planfile-mcp.planfile_mcp_server  [10 funcs]
     _load_tickets  CC=6  out:7
     _save_tickets  CC=2  out:8
+    create_rest_api  CC=1  out:16
     planfile_create_ticket  CC=2  out:10
+    planfile_create_tickets_bulk  CC=3  out:8
+    planfile_list_tickets  CC=7  out:7
+    planfile_sprint_status  CC=3  out:9
+    planfile_sync  CC=1  out:3
+    planfile_update_ticket  CC=4  out:6
+    run_rest_server  CC=1  out:7
   docker.proxym.proxym_mcp_server  [9 funcs]
     _call_anthropic  CC=6  out:22
     _call_gemini  CC=5  out:14
@@ -2599,6 +2624,48 @@ MODULES:
     demo_tier_big  CC=2  out:9
     demo_tier_micro  CC=2  out:9
     main  CC=1  out:15
+  examples.41-god-module-splitting.main  [7 funcs]
+    demo_before_and_after  CC=6  out:15
+    demo_god_module_problem  CC=1  out:9
+    demo_how_to_split_your_module  CC=2  out:6
+    demo_import_compatibility  CC=1  out:11
+    demo_real_metrics  CC=2  out:10
+    demo_split_strategy  CC=1  out:2
+    main  CC=1  out:14
+  examples.42-duplicate-removal.main  [8 funcs]
+    demo_algitex_integration  CC=1  out:9
+    demo_detection_with_redup  CC=1  out:9
+    demo_duplicate_problem  CC=1  out:11
+    demo_extraction_strategy  CC=2  out:9
+    demo_metrics_and_roi  CC=2  out:10
+    demo_prevention_strategies  CC=1  out:4
+    demo_real_world_example  CC=2  out:11
+    main  CC=1  out:15
+  examples.43-code-health.main  [8 funcs]
+    demo_analysis_pipeline  CC=1  out:2
+    demo_ci_integration  CC=1  out:5
+    demo_health_improvement_workflow  CC=1  out:2
+    demo_health_metrics  CC=3  out:5
+    demo_health_report  CC=4  out:10
+    demo_historical_tracking  CC=2  out:18
+    demo_regression_prevention  CC=2  out:5
+    main  CC=1  out:15
+  examples.44-plugin-system.main  [8 funcs]
+    demo_builtin_plugins  CC=2  out:7
+    demo_creating_backend_plugin  CC=1  out:11
+    demo_creating_tool_plugin  CC=1  out:12
+    demo_hook_system  CC=2  out:5
+    demo_plugin_architecture  CC=1  out:2
+    demo_plugin_configuration  CC=1  out:2
+    demo_plugin_marketplace  CC=2  out:17
+    main  CC=1  out:15
+  project.map.toon  [4 funcs]
+    classify_todo_file  CC=0  out:0
+    mark_tasks_completed  CC=0  out:0
+    parallel_fix  CC=0  out:0
+    parse_todo  CC=0  out:0
+  scripts.fix_readme  [1 funcs]
+    fix_readme  CC=1  out:9
   src.algitex.benchmark  [4 funcs]
     print_report  CC=5  out:10
     print_table  CC=2  out:9
@@ -2637,18 +2704,10 @@ MODULES:
     _extract_and_partition  CC=7  out:14
     _load_tickets  CC=2  out:4
     parallel  CC=7  out:23
-  src.algitex.cli.todo  [7 funcs]
-    _render_todo_stats  CC=3  out:18
-    _tf_classify_tasks  CC=7  out:3
-    _tf_execute_phased  CC=25  out:23
-    _tf_parse_and_filter  CC=6  out:2
-    todo_benchmark  CC=2  out:9
-    todo_fix_parallel  CC=1  out:7
-    todo_stats  CC=3  out:6
   src.algitex.cli.todo.logic  [1 funcs]
     validate_task  CC=13  out:8
   src.algitex.cli.todo_verify  [2 funcs]
-    _validate_tasks  CC=15  out:12
+    _validate_tasks  CC=9  out:12
     todo_verify_prefact  CC=12  out:28
   src.algitex.config  [3 funcs]
     load  CC=2  out:8
@@ -2658,17 +2717,9 @@ MODULES:
     show_quick_dashboard  CC=3  out:17
   src.algitex.microtask  [1 funcs]
     group_tasks_by_file  CC=3  out:4
-  src.algitex.microtask.classifier  [6 funcs]
-    _classify_message  CC=48  out:2
-    _first_int  CC=3  out:3
+  src.algitex.microtask.classifier  [2 funcs]
     _is_ignored_path  CC=2  out:3
-    _resolve_file  CC=3  out:4
     classify_prefact_line  CC=12  out:21
-    classify_todo_file  CC=5  out:9
-  src.algitex.microtask.executor  [3 funcs]
-    _handle_sort_imports  CC=4  out:5
-    _phase_algorithmic  CC=5  out:10
-    _phase_llm  CC=5  out:11
   src.algitex.nlp  [10 funcs]
     scan  CC=6  out:10
     fix_path  CC=3  out:6
@@ -2703,17 +2754,6 @@ MODULES:
     _first_int  CC=3  out:3
     classify_message  CC=9  out:7
     classify_task  CC=3  out:4
-  src.algitex.todo.fixer  [16 funcs]
-    _categorize  CC=1  out:1
-    _compute_category_stats  CC=2  out:1
-    _compute_tier_stats  CC=2  out:2
-    _execute_parallel_fixes  CC=8  out:9
-    _group_tasks_by_file  CC=2  out:2
-    _print_execution_summary  CC=3  out:6
-    _print_pre_execution_summary  CC=10  out:22
-    _process_exec_batch  CC=6  out:16
-    _process_fstring_batch  CC=6  out:16
-    _process_magic_batch  CC=11  out:17
   src.algitex.todo.hybrid  [6 funcs]
     _call_llm_backend  CC=7  out:6
     _fix_file_llm  CC=8  out:10
@@ -2739,12 +2779,11 @@ MODULES:
     normalise_model_name  CC=2  out:2
     sanitize_constant_name  CC=3  out:6
     validate_python  CC=2  out:1
-  src.algitex.todo.repair  [5 funcs]
+  src.algitex.todo.repair  [4 funcs]
     _find_import_insert_point  CC=3  out:3
     _simple_fstring_rewrite  CC=1  out:13
     repair_fstring  CC=12  out:12
     repair_magic_number  CC=8  out:13
-    repair_module_block  CC=5  out:4
   src.algitex.todo.tiering  [3 funcs]
     filter_tasks  CC=6  out:2
     partition_tasks  CC=2  out:3
@@ -2771,17 +2810,6 @@ MODULES:
     fix_issue  CC=6  out:8
     mark_task_done  CC=8  out:9
     print_summary  CC=12  out:16
-  src.algitex.tools.autofix.batch_backend  [11 funcs]
-    _build_batch_prompt  CC=4  out:9
-    _create_backup  CC=5  out:12
-    _fix_batch_group  CC=10  out:22
-    _fix_individual  CC=5  out:14
-    _parse_batch_response  CC=16  out:40
-    _preflight_syntax_check  CC=10  out:23
-    _process_group  CC=11  out:22
-    _update_todo_mark_completed  CC=9  out:17
-    _validate_and_rollback  CC=11  out:22
-    _verify_tasks_exist  CC=10  out:14
   src.algitex.tools.autofix.batch_backend.backend  [1 funcs]
     fix_batch  CC=10  out:35
   src.algitex.tools.autofix.batch_backend.fs_utils  [2 funcs]
@@ -2827,14 +2855,6 @@ MODULES:
     list_running  CC=1  out:2
     list_tools  CC=1  out:2
     teardown_all  CC=2  out:2
-  src.algitex.tools.ide  [7 funcs]
-    fix_file  CC=4  out:7
-    batch_fix  CC=3  out:6
-    chat  CC=5  out:5
-    fix_file  CC=5  out:9
-    list_tools  CC=1  out:2
-    setup_tool  CC=5  out:8
-    install_extensions  CC=3  out:4
   src.algitex.tools.ide_aider  [1 funcs]
     fix_file  CC=5  out:9
   src.algitex.tools.ide_base  [2 funcs]
@@ -2854,26 +2874,10 @@ MODULES:
     log_time  CC=1  out:8
     verbose  CC=1  out:12
     verbose_print  CC=2  out:1
-  src.algitex.tools.mcp  [9 funcs]
-    generate_mcp_config  CC=4  out:6
-    list_services  CC=1  out:2
-    print_status  CC=6  out:8
-    restart_service  CC=1  out:4
-    start_all  CC=10  out:9
-    start_service  CC=11  out:15
-    stop_all  CC=3  out:5
-    stop_service  CC=6  out:11
-    wait_for_ready  CC=10  out:20
-  src.algitex.tools.mcp_defaults  [1 funcs]
-    build_default_services  CC=1  out:5
   src.algitex.tools.mcp_lifecycle  [3 funcs]
     restart_service  CC=1  out:4
     start_service  CC=11  out:15
     stop_service  CC=6  out:11
-  src.algitex.tools.mcp_orchestrator  [3 funcs]
-    _register_default_services  CC=1  out:2
-    start_all  CC=11  out:11
-    stop_all  CC=4  out:4
   src.algitex.tools.ollama  [2 funcs]
     auto_fix_file  CC=6  out:5
     ensure_model  CC=3  out:4

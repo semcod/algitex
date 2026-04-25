@@ -695,29 +695,29 @@ mypy
 
 ## Call Graph
 
-*421 nodes · 500 edges · 121 modules · CC̄=2.6*
+*417 nodes · 500 edges · 122 modules · CC̄=2.5*
 
 ### Hubs (by degree)
 
 | Function | CC | in | out | total |
 |----------|----|----|-----|-------|
-| `print` *(in Taskfile)* | 0 | 2106 | 0 | **2106** |
+| `print` *(in Taskfile)* | 0 | 2092 | 0 | **2092** |
 | `main` *(in examples.31-abpr-workflow.main)* | 12 ⚠ | 0 | 77 | **77** |
 | `main` *(in examples.30-parallel-execution.main)* | 13 ⚠ | 0 | 55 | **55** |
 | `main` *(in examples.20-self-hosted-pipeline.main)* | 2 | 0 | 49 | **49** |
 | `main` *(in examples.30-parallel-execution.parallel_real_world)* | 13 ⚠ | 0 | 43 | **43** |
+| `main` *(in examples.05-cost-tracking.main)* | 8 | 0 | 40 | **40** |
 | `demo_docker_operations` *(in examples.14-docker-mcp.main)* | 7 | 0 | 40 | **40** |
-| `_parse_batch_response` *(in src.algitex.tools.autofix.batch_backend.BatchFixBackend)* | 16 ⚠ | 0 | 40 | **40** |
-| `set` *(in src.algitex.tools.ollama_cache.LLMCache)* | 1 | 33 | 7 | **40** |
+| `main` *(in examples.18-ollama-local.main)* | 7 | 0 | 39 | **39** |
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/semcod/algitex
-# nodes: 421 | edges: 500 | modules: 121
-# CC̄=2.6
+# nodes: 417 | edges: 500 | modules: 122
+# CC̄=2.5
 
 HUBS[20]:
   Taskfile.print
-    CC=0  in:2106  out:0  total:2106
+    CC=0  in:2092  out:0  total:2092
   examples.31-abpr-workflow.main.main
     CC=12  in:0  out:77  total:77
   examples.30-parallel-execution.main.main
@@ -726,44 +726,69 @@ HUBS[20]:
     CC=2  in:0  out:49  total:49
   examples.30-parallel-execution.parallel_real_world.main
     CC=13  in:0  out:43  total:43
-  examples.14-docker-mcp.main.demo_docker_operations
-    CC=7  in:0  out:40  total:40
-  src.algitex.tools.autofix.batch_backend.BatchFixBackend._parse_batch_response
-    CC=16  in:0  out:40  total:40
-  src.algitex.tools.ollama_cache.LLMCache.set
-    CC=1  in:33  out:7  total:40
   examples.05-cost-tracking.main.main
     CC=8  in:0  out:40  total:40
+  examples.14-docker-mcp.main.demo_docker_operations
+    CC=7  in:0  out:40  total:40
   examples.18-ollama-local.main.main
     CC=7  in:0  out:39  total:39
+  src.algitex.tools.ollama_cache.LLMCache.set
+    CC=1  in:32  out:7  total:39
   examples.16-test-workflow.main.demo_test_workflow
     CC=5  in:0  out:37  total:37
-  src.algitex.tools.tickets.Tickets.list
-    CC=4  in:36  out:1  total:37
   examples.31-abpr-workflow.abpr_pipeline.abpr_pipeline
     CC=10  in:0  out:36  total:36
-  examples.13-vallm.main.demo_validation
-    CC=5  in:0  out:35  total:35
   src.algitex.tools.autofix.batch_backend.backend.BatchFixBackend.fix_batch
     CC=10  in:0  out:35  total:35
-  src.algitex.tools.autofix.batch_backend.BatchFixBackend.fix_batch
-    CC=11  in:0  out:35  total:35
+  examples.13-vallm.main.demo_validation
+    CC=5  in:0  out:35  total:35
   examples.07-context.main.basic_context_example
     CC=2  in:0  out:34  total:34
-  examples.02-algo-loop.main.main
-    CC=11  in:0  out:33  total:33
+  src.algitex.tools.tickets.Tickets.list
+    CC=4  in:33  out:1  total:34
   examples.27-unified-autofix.main.main
     CC=4  in:0  out:33  total:33
+  examples.02-algo-loop.main.main
+    CC=11  in:0  out:33  total:33
   src.algitex.todo.hybrid.HybridAutofix.fix_all
     CC=3  in:0  out:31  total:31
+  examples.06-telemetry.main.basic_telemetry_example
+    CC=2  in:0  out:30  total:30
+  examples.12-filesystem-mcp.main.demo_file_operations
+    CC=3  in:0  out:30  total:30
 
 MODULES:
   Taskfile  [1 funcs]
     print  CC=0  out:0
-  docker.planfile-mcp.planfile_mcp_server  [3 funcs]
+  docker.aider-mcp.aider_mcp_server  [5 funcs]
+    aider_ai_code  CC=2  out:5
+    aider_chat  CC=1  out:2
+    aider_list_models  CC=1  out:1
+    create_rest_api  CC=1  out:13
+    run_rest_server  CC=1  out:7
+  docker.code2llm.code2llm_mcp_server  [9 funcs]
+    _analyze_python_file  CC=10  out:15
+    _calculate_complexity_metrics  CC=6  out:4
+    _collect_project_metrics  CC=4  out:8
+    analyze_project  CC=1  out:11
+    create_rest_api  CC=1  out:14
+    evolution_export  CC=1  out:7
+    generate_readme  CC=4  out:15
+    generate_toon  CC=4  out:15
+    run_rest_server  CC=1  out:7
+  docker.code2llm.code2llm_server  [1 funcs]
+    _analyze_project  CC=1  out:8
+  docker.planfile-mcp.planfile_mcp_server  [10 funcs]
     _load_tickets  CC=6  out:7
     _save_tickets  CC=2  out:8
+    create_rest_api  CC=1  out:16
     planfile_create_ticket  CC=2  out:10
+    planfile_create_tickets_bulk  CC=3  out:8
+    planfile_list_tickets  CC=7  out:7
+    planfile_sprint_status  CC=3  out:9
+    planfile_sync  CC=1  out:3
+    planfile_update_ticket  CC=4  out:6
+    run_rest_server  CC=1  out:7
   docker.proxym.proxym_mcp_server  [9 funcs]
     _call_anthropic  CC=6  out:22
     _call_gemini  CC=5  out:14
@@ -974,6 +999,48 @@ MODULES:
     demo_tier_big  CC=2  out:9
     demo_tier_micro  CC=2  out:9
     main  CC=1  out:15
+  examples.41-god-module-splitting.main  [7 funcs]
+    demo_before_and_after  CC=6  out:15
+    demo_god_module_problem  CC=1  out:9
+    demo_how_to_split_your_module  CC=2  out:6
+    demo_import_compatibility  CC=1  out:11
+    demo_real_metrics  CC=2  out:10
+    demo_split_strategy  CC=1  out:2
+    main  CC=1  out:14
+  examples.42-duplicate-removal.main  [8 funcs]
+    demo_algitex_integration  CC=1  out:9
+    demo_detection_with_redup  CC=1  out:9
+    demo_duplicate_problem  CC=1  out:11
+    demo_extraction_strategy  CC=2  out:9
+    demo_metrics_and_roi  CC=2  out:10
+    demo_prevention_strategies  CC=1  out:4
+    demo_real_world_example  CC=2  out:11
+    main  CC=1  out:15
+  examples.43-code-health.main  [8 funcs]
+    demo_analysis_pipeline  CC=1  out:2
+    demo_ci_integration  CC=1  out:5
+    demo_health_improvement_workflow  CC=1  out:2
+    demo_health_metrics  CC=3  out:5
+    demo_health_report  CC=4  out:10
+    demo_historical_tracking  CC=2  out:18
+    demo_regression_prevention  CC=2  out:5
+    main  CC=1  out:15
+  examples.44-plugin-system.main  [8 funcs]
+    demo_builtin_plugins  CC=2  out:7
+    demo_creating_backend_plugin  CC=1  out:11
+    demo_creating_tool_plugin  CC=1  out:12
+    demo_hook_system  CC=2  out:5
+    demo_plugin_architecture  CC=1  out:2
+    demo_plugin_configuration  CC=1  out:2
+    demo_plugin_marketplace  CC=2  out:17
+    main  CC=1  out:15
+  project.map.toon  [4 funcs]
+    classify_todo_file  CC=0  out:0
+    mark_tasks_completed  CC=0  out:0
+    parallel_fix  CC=0  out:0
+    parse_todo  CC=0  out:0
+  scripts.fix_readme  [1 funcs]
+    fix_readme  CC=1  out:9
   src.algitex.benchmark  [4 funcs]
     print_report  CC=5  out:10
     print_table  CC=2  out:9
@@ -1012,18 +1079,10 @@ MODULES:
     _extract_and_partition  CC=7  out:14
     _load_tickets  CC=2  out:4
     parallel  CC=7  out:23
-  src.algitex.cli.todo  [7 funcs]
-    _render_todo_stats  CC=3  out:18
-    _tf_classify_tasks  CC=7  out:3
-    _tf_execute_phased  CC=25  out:23
-    _tf_parse_and_filter  CC=6  out:2
-    todo_benchmark  CC=2  out:9
-    todo_fix_parallel  CC=1  out:7
-    todo_stats  CC=3  out:6
   src.algitex.cli.todo.logic  [1 funcs]
     validate_task  CC=13  out:8
   src.algitex.cli.todo_verify  [2 funcs]
-    _validate_tasks  CC=15  out:12
+    _validate_tasks  CC=9  out:12
     todo_verify_prefact  CC=12  out:28
   src.algitex.config  [3 funcs]
     load  CC=2  out:8
@@ -1033,17 +1092,9 @@ MODULES:
     show_quick_dashboard  CC=3  out:17
   src.algitex.microtask  [1 funcs]
     group_tasks_by_file  CC=3  out:4
-  src.algitex.microtask.classifier  [6 funcs]
-    _classify_message  CC=48  out:2
-    _first_int  CC=3  out:3
+  src.algitex.microtask.classifier  [2 funcs]
     _is_ignored_path  CC=2  out:3
-    _resolve_file  CC=3  out:4
     classify_prefact_line  CC=12  out:21
-    classify_todo_file  CC=5  out:9
-  src.algitex.microtask.executor  [3 funcs]
-    _handle_sort_imports  CC=4  out:5
-    _phase_algorithmic  CC=5  out:10
-    _phase_llm  CC=5  out:11
   src.algitex.nlp  [10 funcs]
     scan  CC=6  out:10
     fix_path  CC=3  out:6
@@ -1078,17 +1129,6 @@ MODULES:
     _first_int  CC=3  out:3
     classify_message  CC=9  out:7
     classify_task  CC=3  out:4
-  src.algitex.todo.fixer  [16 funcs]
-    _categorize  CC=1  out:1
-    _compute_category_stats  CC=2  out:1
-    _compute_tier_stats  CC=2  out:2
-    _execute_parallel_fixes  CC=8  out:9
-    _group_tasks_by_file  CC=2  out:2
-    _print_execution_summary  CC=3  out:6
-    _print_pre_execution_summary  CC=10  out:22
-    _process_exec_batch  CC=6  out:16
-    _process_fstring_batch  CC=6  out:16
-    _process_magic_batch  CC=11  out:17
   src.algitex.todo.hybrid  [6 funcs]
     _call_llm_backend  CC=7  out:6
     _fix_file_llm  CC=8  out:10
@@ -1114,12 +1154,11 @@ MODULES:
     normalise_model_name  CC=2  out:2
     sanitize_constant_name  CC=3  out:6
     validate_python  CC=2  out:1
-  src.algitex.todo.repair  [5 funcs]
+  src.algitex.todo.repair  [4 funcs]
     _find_import_insert_point  CC=3  out:3
     _simple_fstring_rewrite  CC=1  out:13
     repair_fstring  CC=12  out:12
     repair_magic_number  CC=8  out:13
-    repair_module_block  CC=5  out:4
   src.algitex.todo.tiering  [3 funcs]
     filter_tasks  CC=6  out:2
     partition_tasks  CC=2  out:3
@@ -1146,17 +1185,6 @@ MODULES:
     fix_issue  CC=6  out:8
     mark_task_done  CC=8  out:9
     print_summary  CC=12  out:16
-  src.algitex.tools.autofix.batch_backend  [11 funcs]
-    _build_batch_prompt  CC=4  out:9
-    _create_backup  CC=5  out:12
-    _fix_batch_group  CC=10  out:22
-    _fix_individual  CC=5  out:14
-    _parse_batch_response  CC=16  out:40
-    _preflight_syntax_check  CC=10  out:23
-    _process_group  CC=11  out:22
-    _update_todo_mark_completed  CC=9  out:17
-    _validate_and_rollback  CC=11  out:22
-    _verify_tasks_exist  CC=10  out:14
   src.algitex.tools.autofix.batch_backend.backend  [1 funcs]
     fix_batch  CC=10  out:35
   src.algitex.tools.autofix.batch_backend.fs_utils  [2 funcs]
@@ -1202,14 +1230,6 @@ MODULES:
     list_running  CC=1  out:2
     list_tools  CC=1  out:2
     teardown_all  CC=2  out:2
-  src.algitex.tools.ide  [7 funcs]
-    fix_file  CC=4  out:7
-    batch_fix  CC=3  out:6
-    chat  CC=5  out:5
-    fix_file  CC=5  out:9
-    list_tools  CC=1  out:2
-    setup_tool  CC=5  out:8
-    install_extensions  CC=3  out:4
   src.algitex.tools.ide_aider  [1 funcs]
     fix_file  CC=5  out:9
   src.algitex.tools.ide_base  [2 funcs]
@@ -1229,26 +1249,10 @@ MODULES:
     log_time  CC=1  out:8
     verbose  CC=1  out:12
     verbose_print  CC=2  out:1
-  src.algitex.tools.mcp  [9 funcs]
-    generate_mcp_config  CC=4  out:6
-    list_services  CC=1  out:2
-    print_status  CC=6  out:8
-    restart_service  CC=1  out:4
-    start_all  CC=10  out:9
-    start_service  CC=11  out:15
-    stop_all  CC=3  out:5
-    stop_service  CC=6  out:11
-    wait_for_ready  CC=10  out:20
-  src.algitex.tools.mcp_defaults  [1 funcs]
-    build_default_services  CC=1  out:5
   src.algitex.tools.mcp_lifecycle  [3 funcs]
     restart_service  CC=1  out:4
     start_service  CC=11  out:15
     stop_service  CC=6  out:11
-  src.algitex.tools.mcp_orchestrator  [3 funcs]
-    _register_default_services  CC=1  out:2
-    start_all  CC=11  out:11
-    stop_all  CC=4  out:4
   src.algitex.tools.ollama  [2 funcs]
     auto_fix_file  CC=6  out:5
     ensure_model  CC=3  out:4
@@ -1374,12 +1378,12 @@ EDGES:
 
 ```toon markpact:analysis path=project/calls.toon.yaml
 # code2llm call graph | /home/tom/github/semcod/algitex
-# nodes: 421 | edges: 500 | modules: 121
-# CC̄=2.6
+# nodes: 417 | edges: 500 | modules: 122
+# CC̄=2.5
 
 HUBS[20]:
   Taskfile.print
-    CC=0  in:2106  out:0  total:2106
+    CC=0  in:2092  out:0  total:2092
   examples.31-abpr-workflow.main.main
     CC=12  in:0  out:77  total:77
   examples.30-parallel-execution.main.main
@@ -1388,44 +1392,69 @@ HUBS[20]:
     CC=2  in:0  out:49  total:49
   examples.30-parallel-execution.parallel_real_world.main
     CC=13  in:0  out:43  total:43
-  examples.14-docker-mcp.main.demo_docker_operations
-    CC=7  in:0  out:40  total:40
-  src.algitex.tools.autofix.batch_backend.BatchFixBackend._parse_batch_response
-    CC=16  in:0  out:40  total:40
-  src.algitex.tools.ollama_cache.LLMCache.set
-    CC=1  in:33  out:7  total:40
   examples.05-cost-tracking.main.main
     CC=8  in:0  out:40  total:40
+  examples.14-docker-mcp.main.demo_docker_operations
+    CC=7  in:0  out:40  total:40
   examples.18-ollama-local.main.main
     CC=7  in:0  out:39  total:39
+  src.algitex.tools.ollama_cache.LLMCache.set
+    CC=1  in:32  out:7  total:39
   examples.16-test-workflow.main.demo_test_workflow
     CC=5  in:0  out:37  total:37
-  src.algitex.tools.tickets.Tickets.list
-    CC=4  in:36  out:1  total:37
   examples.31-abpr-workflow.abpr_pipeline.abpr_pipeline
     CC=10  in:0  out:36  total:36
-  examples.13-vallm.main.demo_validation
-    CC=5  in:0  out:35  total:35
   src.algitex.tools.autofix.batch_backend.backend.BatchFixBackend.fix_batch
     CC=10  in:0  out:35  total:35
-  src.algitex.tools.autofix.batch_backend.BatchFixBackend.fix_batch
-    CC=11  in:0  out:35  total:35
+  examples.13-vallm.main.demo_validation
+    CC=5  in:0  out:35  total:35
   examples.07-context.main.basic_context_example
     CC=2  in:0  out:34  total:34
-  examples.02-algo-loop.main.main
-    CC=11  in:0  out:33  total:33
+  src.algitex.tools.tickets.Tickets.list
+    CC=4  in:33  out:1  total:34
   examples.27-unified-autofix.main.main
     CC=4  in:0  out:33  total:33
+  examples.02-algo-loop.main.main
+    CC=11  in:0  out:33  total:33
   src.algitex.todo.hybrid.HybridAutofix.fix_all
     CC=3  in:0  out:31  total:31
+  examples.06-telemetry.main.basic_telemetry_example
+    CC=2  in:0  out:30  total:30
+  examples.12-filesystem-mcp.main.demo_file_operations
+    CC=3  in:0  out:30  total:30
 
 MODULES:
   Taskfile  [1 funcs]
     print  CC=0  out:0
-  docker.planfile-mcp.planfile_mcp_server  [3 funcs]
+  docker.aider-mcp.aider_mcp_server  [5 funcs]
+    aider_ai_code  CC=2  out:5
+    aider_chat  CC=1  out:2
+    aider_list_models  CC=1  out:1
+    create_rest_api  CC=1  out:13
+    run_rest_server  CC=1  out:7
+  docker.code2llm.code2llm_mcp_server  [9 funcs]
+    _analyze_python_file  CC=10  out:15
+    _calculate_complexity_metrics  CC=6  out:4
+    _collect_project_metrics  CC=4  out:8
+    analyze_project  CC=1  out:11
+    create_rest_api  CC=1  out:14
+    evolution_export  CC=1  out:7
+    generate_readme  CC=4  out:15
+    generate_toon  CC=4  out:15
+    run_rest_server  CC=1  out:7
+  docker.code2llm.code2llm_server  [1 funcs]
+    _analyze_project  CC=1  out:8
+  docker.planfile-mcp.planfile_mcp_server  [10 funcs]
     _load_tickets  CC=6  out:7
     _save_tickets  CC=2  out:8
+    create_rest_api  CC=1  out:16
     planfile_create_ticket  CC=2  out:10
+    planfile_create_tickets_bulk  CC=3  out:8
+    planfile_list_tickets  CC=7  out:7
+    planfile_sprint_status  CC=3  out:9
+    planfile_sync  CC=1  out:3
+    planfile_update_ticket  CC=4  out:6
+    run_rest_server  CC=1  out:7
   docker.proxym.proxym_mcp_server  [9 funcs]
     _call_anthropic  CC=6  out:22
     _call_gemini  CC=5  out:14
@@ -1636,6 +1665,48 @@ MODULES:
     demo_tier_big  CC=2  out:9
     demo_tier_micro  CC=2  out:9
     main  CC=1  out:15
+  examples.41-god-module-splitting.main  [7 funcs]
+    demo_before_and_after  CC=6  out:15
+    demo_god_module_problem  CC=1  out:9
+    demo_how_to_split_your_module  CC=2  out:6
+    demo_import_compatibility  CC=1  out:11
+    demo_real_metrics  CC=2  out:10
+    demo_split_strategy  CC=1  out:2
+    main  CC=1  out:14
+  examples.42-duplicate-removal.main  [8 funcs]
+    demo_algitex_integration  CC=1  out:9
+    demo_detection_with_redup  CC=1  out:9
+    demo_duplicate_problem  CC=1  out:11
+    demo_extraction_strategy  CC=2  out:9
+    demo_metrics_and_roi  CC=2  out:10
+    demo_prevention_strategies  CC=1  out:4
+    demo_real_world_example  CC=2  out:11
+    main  CC=1  out:15
+  examples.43-code-health.main  [8 funcs]
+    demo_analysis_pipeline  CC=1  out:2
+    demo_ci_integration  CC=1  out:5
+    demo_health_improvement_workflow  CC=1  out:2
+    demo_health_metrics  CC=3  out:5
+    demo_health_report  CC=4  out:10
+    demo_historical_tracking  CC=2  out:18
+    demo_regression_prevention  CC=2  out:5
+    main  CC=1  out:15
+  examples.44-plugin-system.main  [8 funcs]
+    demo_builtin_plugins  CC=2  out:7
+    demo_creating_backend_plugin  CC=1  out:11
+    demo_creating_tool_plugin  CC=1  out:12
+    demo_hook_system  CC=2  out:5
+    demo_plugin_architecture  CC=1  out:2
+    demo_plugin_configuration  CC=1  out:2
+    demo_plugin_marketplace  CC=2  out:17
+    main  CC=1  out:15
+  project.map.toon  [4 funcs]
+    classify_todo_file  CC=0  out:0
+    mark_tasks_completed  CC=0  out:0
+    parallel_fix  CC=0  out:0
+    parse_todo  CC=0  out:0
+  scripts.fix_readme  [1 funcs]
+    fix_readme  CC=1  out:9
   src.algitex.benchmark  [4 funcs]
     print_report  CC=5  out:10
     print_table  CC=2  out:9
@@ -1674,18 +1745,10 @@ MODULES:
     _extract_and_partition  CC=7  out:14
     _load_tickets  CC=2  out:4
     parallel  CC=7  out:23
-  src.algitex.cli.todo  [7 funcs]
-    _render_todo_stats  CC=3  out:18
-    _tf_classify_tasks  CC=7  out:3
-    _tf_execute_phased  CC=25  out:23
-    _tf_parse_and_filter  CC=6  out:2
-    todo_benchmark  CC=2  out:9
-    todo_fix_parallel  CC=1  out:7
-    todo_stats  CC=3  out:6
   src.algitex.cli.todo.logic  [1 funcs]
     validate_task  CC=13  out:8
   src.algitex.cli.todo_verify  [2 funcs]
-    _validate_tasks  CC=15  out:12
+    _validate_tasks  CC=9  out:12
     todo_verify_prefact  CC=12  out:28
   src.algitex.config  [3 funcs]
     load  CC=2  out:8
@@ -1695,17 +1758,9 @@ MODULES:
     show_quick_dashboard  CC=3  out:17
   src.algitex.microtask  [1 funcs]
     group_tasks_by_file  CC=3  out:4
-  src.algitex.microtask.classifier  [6 funcs]
-    _classify_message  CC=48  out:2
-    _first_int  CC=3  out:3
+  src.algitex.microtask.classifier  [2 funcs]
     _is_ignored_path  CC=2  out:3
-    _resolve_file  CC=3  out:4
     classify_prefact_line  CC=12  out:21
-    classify_todo_file  CC=5  out:9
-  src.algitex.microtask.executor  [3 funcs]
-    _handle_sort_imports  CC=4  out:5
-    _phase_algorithmic  CC=5  out:10
-    _phase_llm  CC=5  out:11
   src.algitex.nlp  [10 funcs]
     scan  CC=6  out:10
     fix_path  CC=3  out:6
@@ -1740,17 +1795,6 @@ MODULES:
     _first_int  CC=3  out:3
     classify_message  CC=9  out:7
     classify_task  CC=3  out:4
-  src.algitex.todo.fixer  [16 funcs]
-    _categorize  CC=1  out:1
-    _compute_category_stats  CC=2  out:1
-    _compute_tier_stats  CC=2  out:2
-    _execute_parallel_fixes  CC=8  out:9
-    _group_tasks_by_file  CC=2  out:2
-    _print_execution_summary  CC=3  out:6
-    _print_pre_execution_summary  CC=10  out:22
-    _process_exec_batch  CC=6  out:16
-    _process_fstring_batch  CC=6  out:16
-    _process_magic_batch  CC=11  out:17
   src.algitex.todo.hybrid  [6 funcs]
     _call_llm_backend  CC=7  out:6
     _fix_file_llm  CC=8  out:10
@@ -1776,12 +1820,11 @@ MODULES:
     normalise_model_name  CC=2  out:2
     sanitize_constant_name  CC=3  out:6
     validate_python  CC=2  out:1
-  src.algitex.todo.repair  [5 funcs]
+  src.algitex.todo.repair  [4 funcs]
     _find_import_insert_point  CC=3  out:3
     _simple_fstring_rewrite  CC=1  out:13
     repair_fstring  CC=12  out:12
     repair_magic_number  CC=8  out:13
-    repair_module_block  CC=5  out:4
   src.algitex.todo.tiering  [3 funcs]
     filter_tasks  CC=6  out:2
     partition_tasks  CC=2  out:3
@@ -1808,17 +1851,6 @@ MODULES:
     fix_issue  CC=6  out:8
     mark_task_done  CC=8  out:9
     print_summary  CC=12  out:16
-  src.algitex.tools.autofix.batch_backend  [11 funcs]
-    _build_batch_prompt  CC=4  out:9
-    _create_backup  CC=5  out:12
-    _fix_batch_group  CC=10  out:22
-    _fix_individual  CC=5  out:14
-    _parse_batch_response  CC=16  out:40
-    _preflight_syntax_check  CC=10  out:23
-    _process_group  CC=11  out:22
-    _update_todo_mark_completed  CC=9  out:17
-    _validate_and_rollback  CC=11  out:22
-    _verify_tasks_exist  CC=10  out:14
   src.algitex.tools.autofix.batch_backend.backend  [1 funcs]
     fix_batch  CC=10  out:35
   src.algitex.tools.autofix.batch_backend.fs_utils  [2 funcs]
@@ -1864,14 +1896,6 @@ MODULES:
     list_running  CC=1  out:2
     list_tools  CC=1  out:2
     teardown_all  CC=2  out:2
-  src.algitex.tools.ide  [7 funcs]
-    fix_file  CC=4  out:7
-    batch_fix  CC=3  out:6
-    chat  CC=5  out:5
-    fix_file  CC=5  out:9
-    list_tools  CC=1  out:2
-    setup_tool  CC=5  out:8
-    install_extensions  CC=3  out:4
   src.algitex.tools.ide_aider  [1 funcs]
     fix_file  CC=5  out:9
   src.algitex.tools.ide_base  [2 funcs]
@@ -1891,26 +1915,10 @@ MODULES:
     log_time  CC=1  out:8
     verbose  CC=1  out:12
     verbose_print  CC=2  out:1
-  src.algitex.tools.mcp  [9 funcs]
-    generate_mcp_config  CC=4  out:6
-    list_services  CC=1  out:2
-    print_status  CC=6  out:8
-    restart_service  CC=1  out:4
-    start_all  CC=10  out:9
-    start_service  CC=11  out:15
-    stop_all  CC=3  out:5
-    stop_service  CC=6  out:11
-    wait_for_ready  CC=10  out:20
-  src.algitex.tools.mcp_defaults  [1 funcs]
-    build_default_services  CC=1  out:5
   src.algitex.tools.mcp_lifecycle  [3 funcs]
     restart_service  CC=1  out:4
     start_service  CC=11  out:15
     stop_service  CC=6  out:11
-  src.algitex.tools.mcp_orchestrator  [3 funcs]
-    _register_default_services  CC=1  out:2
-    start_all  CC=11  out:11
-    stop_all  CC=4  out:4
   src.algitex.tools.ollama  [2 funcs]
     auto_fix_file  CC=6  out:5
     ensure_model  CC=3  out:4
@@ -2011,27 +2019,19 @@ EDGES:
 ### Code Analysis (`project/analysis.toon.yaml`)
 
 ```toon markpact:analysis path=project/analysis.toon.yaml
-# code2llm | 319f 66757L | python:193,shell:27,yaml:20,yml:4,txt:2,toml:1 | 2026-04-25
-# CC̄=2.6 | critical:10/1760 | dups:3 | cycles:0
+# code2llm | 317f 66400L | python:192,shell:27,yaml:20,yml:4,txt:2,toml:1 | 2026-04-25
+# CC̄=2.5 | critical:4/1777 | dups:0 | cycles:0
 
-HEALTH[11]:
-  🔴 DUP   3 classes duplicated
-  🟡 CC    _parse_batch_response CC=16 (limit:15)
-  🟡 CC    _validate_tasks CC=15 (limit:15)
+HEALTH[4]:
   🟡 CC    _run_with_dashboard CC=15 (limit:15)
-  🟡 CC    _tf_execute_phased CC=25 (limit:15)
+  🟡 CC    _tf_run_micro CC=15 (limit:15)
   🟡 CC    todo_hybrid CC=15 (limit:15)
-  🟡 CC    todo_verify_prefact CC=29 (limit:15)
   🟡 CC    fix_file CC=25 (limit:15)
-  🟡 CC    _classify_message CC=48 (limit:15)
-  🟡 CC    _apply_magic_name CC=16 (limit:15)
-  🟡 CC    parse_file CC=24 (limit:15)
 
-REFACTOR[2]:
-  1. rm duplicates  (-3 dup classes)
-  2. split 10 high-CC methods  (CC>15)
+REFACTOR[1]:
+  1. split 4 high-CC methods  (CC>15)
 
-PIPELINES[956]:
+PIPELINES[952]:
   [1] Src [main]: main → print
       PURITY: 100% pure
   [2] Src [format_price]: format_price
@@ -2044,20 +2044,19 @@ PIPELINES[956]:
       PURITY: 100% pure
 
 LAYERS:
-  scripts/                        CC̄=8.2    ←in:0  →out:10  !! split
-  │ !! generate_lib_docs          276L  0C    7m  CC=24     ←0
+  scripts/                        CC̄=6.0    ←in:0  →out:10  !! split
+  │ generate_lib_docs          316L  0C   11m  CC=13     ←0
   │ fix_readme                  33L  0C    1m  CC=1      ←0
   │
-  src/                            CC̄=3.5    ←in:0  →out:0  ×DUP
-  │ !! todo                      1159L  0C   21m  CC=29     ←0
-  │ !! batch_backend              826L  2C   16m  CC=16     ←0
-  │ !! fixer                      550L  1C   17m  CC=25     ←7
-  │ !! executor                   497L  2C   29m  CC=16     ←0
+  src/                            CC̄=3.5    ←in:0  →out:0
+  │ !! todo                      1059L  0C   25m  CC=15     ←0
+  │ !! batch_backend              802L  2C   19m  CC=11     ←0
+  │ !! fixer                      530L  1C   17m  CC=25     ←0
+  │ !! executor                   517L  2C   32m  CC=12     ←0
   │ hybrid                     479L  4C   10m  CC=12     ←0
   │ benchmark                  464L  4C   19m  CC=14     ←0
-  │ mcp                        448L  2C   18m  CC=11     ←0  ×DUP
   │ __init__                   439L  1C   22m  CC=6      ←0
-  │ ide                        430L  6C   22m  CC=8      ←0  ×DUP
+  │ mcp                        430L  1C   17m  CC=11     ←0
   │ batch                      421L  4C   20m  CC=7      ←0
   │ __init__                   419L  3C   18m  CC=10     ←0
   │ dashboard                  414L  4C   24m  CC=8      ←1
@@ -2079,21 +2078,22 @@ LAYERS:
   │ audit                      286L  3C   13m  CC=10     ←0
   │ todo_local                 283L  2C   11m  CC=11     ←0
   │ prefact_integration        276L  3C   18m  CC=8      ←0
-  │ shared_rules               275L  7C   18m  CC=12     ←1
+  │ shared_rules               275L  7C   18m  CC=12     ←2
   │ repair                     269L  0C    7m  CC=12     ←1
   │ executor                   260L  1C   11m  CC=6      ←0
   │ feedback                   252L  4C   12m  CC=8      ←0
-  │ tickets                    247L  2C   11m  CC=5      ←19
-  │ !! classifier                 245L  0C    8m  CC=48     ←1
+  │ tickets                    247L  2C   11m  CC=5      ←17
   │ benchmark                  244L  1C    6m  CC=6      ←2
   │ todo_executor              240L  2C   12m  CC=13     ←0
-  │ ollama_cache               238L  3C   14m  CC=12     ←21
+  │ ollama_cache               238L  3C   14m  CC=12     ←20
   │ batch_logger               235L  3C   17m  CC=10     ←0
   │ __init__                   232L  0C   11m  CC=2      ←0
   │ verify                     228L  1C    7m  CC=10     ←1
   │ todo_parser                223L  2C    8m  CC=11     ←1
+  │ classifier                 219L  0C    8m  CC=12     ←0
   │ context                    207L  3C   14m  CC=7      ←0
   │ todo_actions               200L  0C    7m  CC=13     ←1
+  │ ide                        200L  3C   10m  CC=8      ←0
   │ microtask                  198L  0C   10m  CC=7      ←0
   │ verifier                   197L  3C    8m  CC=12     ←0
   │ fallback_backend           196L  2C    7m  CC=10     ←0
@@ -2123,13 +2123,12 @@ LAYERS:
   │ __init__                   115L  1C    4m  CC=4      ←3
   │ mcp_lifecycle              114L  1C    6m  CC=11     ←0
   │ docker                     104L  0C    5m  CC=3      ←0
-  │ ide_base                   103L  1C    6m  CC=5      ←0  ×DUP
+  │ ide_base                   103L  1C    6m  CC=5      ←0
   │ backend                    103L  1C    5m  CC=10     ←0
-  │ ide_claude                 102L  1C    5m  CC=5      ←0  ×DUP
-  │ mcp_orchestrator           100L  1C   11m  CC=11     ←0  ×DUP
+  │ ide_claude                 102L  1C    5m  CC=5      ←0
   │ nlp                         97L  0C    7m  CC=4      ←0
+  │ todo_verify                 92L  0C    2m  CC=12     ←0
   │ micro_utils                 90L  0C    7m  CC=11     ←2
-  │ !! todo_verify                 76L  0C    2m  CC=15     ←0
   │ micro_prompts               69L  1C    2m  CC=9      ←0
   │ algo                        68L  0C    4m  CC=3      ←0
   │ micro_extractor             65L  1C    1m  CC=11     ←0
@@ -2139,7 +2138,7 @@ LAYERS:
   │ benchmark                   58L  1C    4m  CC=2      ←0
   │ fs_utils                    57L  0C    2m  CC=10     ←1
   │ models                      57L  4C    1m  CC=1      ←0
-  │ mcp_defaults                52L  0C    1m  CC=1      ←1
+  │ mcp_defaults                52L  0C    1m  CC=1      ←0
   │ autofix                     52L  1C    5m  CC=8      ←1
   │ ticket                      50L  0C    3m  CC=4      ←0
   │ ide                         47L  1C    6m  CC=1      ←1
@@ -2163,7 +2162,6 @@ LAYERS:
   │ file_ops                    11L  0C    2m  CC=2      ←0
   │ pipeline                     5L  0C    0m  CC=0.0    ←0
   │ loop                         4L  0C    0m  CC=0.0    ←0
-  │ __init__                     4L  0C    0m  CC=0.0    ←0
   │ __init__                     4L  0C    0m  CC=0.0    ←0
   │ workflow                     2L  0C    0m  CC=0.0    ←0
   │
@@ -2315,8 +2313,8 @@ LAYERS:
   │ Makefile                     0L  0C    0m  CC=0.0    ←0
   │ Makefile                     0L  0C    0m  CC=0.0    ←0
   │ Makefile                     0L  0C    0m  CC=0.0    ←0
-  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
   │ Makefile                     0L  0C    0m  CC=0.0    ←0
+  │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
   │ Makefile                     0L  0C    0m  CC=0.0    ←0
   │ Makefile                     0L  0C    0m  CC=0.0    ←0
   │ Makefile                     0L  0C    0m  CC=0.0    ←0
@@ -2361,11 +2359,11 @@ LAYERS:
   │ Dockerfile                   0L  0C    0m  CC=0.0    ←0
   │
   project/                        CC̄=0.0    ←in:0  →out:0
-  │ !! calls.yaml                6492L  0C    0m  CC=0.0    ←0
-  │ !! map.toon.yaml             1389L  0C  424m  CC=0.0    ←0
+  │ !! calls.yaml                6498L  0C    0m  CC=0.0    ←0
+  │ !! map.toon.yaml             1434L  0C  451m  CC=0.0    ←8
   │ !! calls.toon.yaml            633L  0C    0m  CC=0.0    ←0
-  │ analysis.toon.yaml         491L  0C    0m  CC=0.0    ←0
-  │ duplication.toon.yaml      387L  0C    0m  CC=0.0    ←0
+  │ !! analysis.toon.yaml         507L  0C    0m  CC=0.0    ←0
+  │ duplication.toon.yaml      409L  0C    0m  CC=0.0    ←0
   │ validation.toon.yaml       126L  0C    0m  CC=0.0    ←0
   │ analysis_refactored.toon.yaml   121L  0C    0m  CC=0.0    ←0
   │ evolution.toon.yaml         82L  0C    0m  CC=0.0    ←0
@@ -2451,8 +2449,8 @@ LAYERS:
 
 COUPLING:
                                                                 Taskfile                         src.algitex           examples.31-abpr-workflow               examples.09-workspace  examples.32-workspace-coordination       examples.42-duplicate-removal                    examples.10-cicd           examples.44-plugin-system            examples.18-ollama-local              examples.37-benchmarks      examples.40-three-tier-autofix      examples.30-parallel-execution                examples.08-feedback                 examples.07-context    examples.41-god-module-splitting
-                            Taskfile                                  ──                                ←516                                 ←81                                 ←71                                 ←68                                 ←68                                 ←65                                 ←64                                 ←61                                 ←60                                 ←60                                 ←56                                 ←57                                 ←53                                 ←53  hub
-                         src.algitex                                 516                                  ──                                                                      ←2                                                                                                          ←1                                                                                                                                                                                  ←3                                                                                                              hub
+                            Taskfile                                  ──                                ←502                                 ←81                                 ←71                                 ←68                                 ←68                                 ←65                                 ←64                                 ←61                                 ←60                                 ←60                                 ←56                                 ←57                                 ←53                                 ←53  hub
+                         src.algitex                                 502                                  ──                                                                      ←2                                                                                                          ←1                                                                                                                                                                                  ←3                                                                                                              hub
            examples.31-abpr-workflow                                  81                                                                      ──                                                                                                                                                                                                                                                                                                                                                                                                                                                  !! fan-out
                examples.09-workspace                                  71                                   2                                                                      ──                                                                                                                                                                                                                                                                                                                                                                                                              !! fan-out
   examples.32-workspace-coordination                                  68                                                                                                                                              ──                                                                                                                                                                                                                                                                                                                                                                          !! fan-out
@@ -2467,53 +2465,54 @@ COUPLING:
                  examples.07-context                                  53                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ──                                      !! fan-out
     examples.41-god-module-splitting                                  53                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ──  !! fan-out
   CYCLES: none
-  HUB: Taskfile/ (fan-in=2106)
-  HUB: src.algitex/ (fan-in=20)
+  HUB: Taskfile/ (fan-in=2092)
+  HUB: project.map/ (fan-in=21)
+  HUB: src.algitex/ (fan-in=19)
+  SMELL: examples.26-litellm-proxy-ollama/ fan-out=11 → split needed
+  SMELL: examples.02-algo-loop/ fan-out=22 → split needed
+  SMELL: examples.32-workspace-coordination/ fan-out=68 → split needed
+  SMELL: examples.06-telemetry/ fan-out=31 → split needed
   SMELL: examples.01-quickstart/ fan-out=15 → split needed
   SMELL: examples.04-ide-integration/ fan-out=17 → split needed
-  SMELL: examples.35-sprint3-patterns/ fan-out=36 → split needed
-  SMELL: examples.06-telemetry/ fan-out=31 → split needed
-  SMELL: examples.22-claude-code-ollama/ fan-out=12 → split needed
-  SMELL: examples.08-feedback/ fan-out=57 → split needed
-  SMELL: examples.12-filesystem-mcp/ fan-out=22 → split needed
-  SMELL: examples.42-duplicate-removal/ fan-out=68 → split needed
-  SMELL: examples.21-aider-cli-ollama/ fan-out=17 → split needed
-  SMELL: examples.27-unified-autofix/ fan-out=21 → split needed
-  SMELL: examples.43-code-health/ fan-out=51 → split needed
-  SMELL: examples.16-test-workflow/ fan-out=28 → split needed
-  SMELL: examples.30-parallel-execution/ fan-out=59 → split needed
-  SMELL: examples.11-aider-mcp/ fan-out=17 → split needed
-  SMELL: examples.19-local-mcp-tools/ fan-out=22 → split needed
-  SMELL: examples.25-local-model-comparison/ fan-out=16 → split needed
-  SMELL: examples.37-benchmarks/ fan-out=60 → split needed
-  SMELL: examples.02-algo-loop/ fan-out=22 → split needed
-  SMELL: examples.33-hybrid-autofix/ fan-out=48 → split needed
-  SMELL: examples.40-three-tier-autofix/ fan-out=60 → split needed
-  SMELL: examples.41-god-module-splitting/ fan-out=53 → split needed
-  SMELL: examples.31-abpr-workflow/ fan-out=81 → split needed
-  SMELL: examples.44-plugin-system/ fan-out=64 → split needed
-  SMELL: examples.13-vallm/ fan-out=23 → split needed
-  SMELL: examples.05-cost-tracking/ fan-out=14 → split needed
-  SMELL: examples.14-docker-mcp/ fan-out=27 → split needed
   SMELL: examples.36-dashboard/ fan-out=45 → split needed
-  SMELL: examples.23-continue-dev-ollama/ fan-out=18 → split needed
-  SMELL: examples.38-new-modules/ fan-out=37 → split needed
-  SMELL: examples.39-microtask-pipeline/ fan-out=46 → split needed
-  SMELL: examples.18-ollama-local/ fan-out=61 → split needed
-  SMELL: examples.03-pipeline/ fan-out=10 → split needed
-  SMELL: examples.17-docker-workflow/ fan-out=28 → split needed
-  SMELL: scripts/ fan-out=10 → split needed
-  SMELL: examples.07-context/ fan-out=53 → split needed
-  SMELL: examples.34-batch-fix/ fan-out=30 → split needed
-  SMELL: examples.10-cicd/ fan-out=66 → split needed
+  SMELL: examples.21-aider-cli-ollama/ fan-out=17 → split needed
   SMELL: examples.09-workspace/ fan-out=73 → split needed
-  SMELL: examples.20-self-hosted-pipeline/ fan-out=45 → split needed
-  SMELL: src.algitex/ fan-out=516 → split needed
-  SMELL: examples.26-litellm-proxy-ollama/ fan-out=11 → split needed
-  SMELL: examples.32-workspace-coordination/ fan-out=68 → split needed
-  SMELL: examples.24-ollama-batch/ fan-out=13 → split needed
+  SMELL: examples.30-parallel-execution/ fan-out=59 → split needed
+  SMELL: examples.40-three-tier-autofix/ fan-out=60 → split needed
+  SMELL: examples.22-claude-code-ollama/ fan-out=12 → split needed
+  SMELL: examples.10-cicd/ fan-out=66 → split needed
   SMELL: examples.15-github-mcp/ fan-out=24 → split needed
+  SMELL: examples.39-microtask-pipeline/ fan-out=46 → split needed
+  SMELL: examples.19-local-mcp-tools/ fan-out=22 → split needed
+  SMELL: examples.43-code-health/ fan-out=51 → split needed
+  SMELL: examples.17-docker-workflow/ fan-out=28 → split needed
+  SMELL: examples.11-aider-mcp/ fan-out=17 → split needed
+  SMELL: examples.18-ollama-local/ fan-out=61 → split needed
+  SMELL: examples.35-sprint3-patterns/ fan-out=36 → split needed
+  SMELL: examples.38-new-modules/ fan-out=37 → split needed
+  SMELL: examples.33-hybrid-autofix/ fan-out=48 → split needed
+  SMELL: examples.05-cost-tracking/ fan-out=14 → split needed
+  SMELL: examples.37-benchmarks/ fan-out=60 → split needed
+  SMELL: examples.42-duplicate-removal/ fan-out=68 → split needed
+  SMELL: examples.14-docker-mcp/ fan-out=27 → split needed
+  SMELL: examples.24-ollama-batch/ fan-out=13 → split needed
   SMELL: examples.28-mcp-orchestration/ fan-out=26 → split needed
+  SMELL: examples.08-feedback/ fan-out=57 → split needed
+  SMELL: examples.27-unified-autofix/ fan-out=21 → split needed
+  SMELL: examples.16-test-workflow/ fan-out=28 → split needed
+  SMELL: examples.12-filesystem-mcp/ fan-out=22 → split needed
+  SMELL: examples.44-plugin-system/ fan-out=64 → split needed
+  SMELL: examples.41-god-module-splitting/ fan-out=53 → split needed
+  SMELL: examples.34-batch-fix/ fan-out=30 → split needed
+  SMELL: examples.13-vallm/ fan-out=23 → split needed
+  SMELL: examples.03-pipeline/ fan-out=10 → split needed
+  SMELL: examples.20-self-hosted-pipeline/ fan-out=45 → split needed
+  SMELL: scripts/ fan-out=10 → split needed
+  SMELL: examples.31-abpr-workflow/ fan-out=81 → split needed
+  SMELL: src.algitex/ fan-out=522 → split needed
+  SMELL: examples.07-context/ fan-out=53 → split needed
+  SMELL: examples.25-local-model-comparison/ fan-out=16 → split needed
+  SMELL: examples.23-continue-dev-ollama/ fan-out=18 → split needed
 
 EXTERNAL:
   validation: run `vallm batch .` → validation.toon
@@ -2523,15 +2522,15 @@ EXTERNAL:
 ### Duplication (`project/duplication.toon.yaml`)
 
 ```toon markpact:analysis path=project/duplication.toon.yaml
-# redup/duplication | 53 groups | 197f 33774L | 2026-04-25
+# redup/duplication | 45 groups | 196f 33332L | 2026-04-25
 
 SUMMARY:
-  files_scanned: 197
-  total_lines:   33774
-  dup_groups:    53
-  dup_fragments: 136
-  saved_lines:   963
-  scan_ms:       4969
+  files_scanned: 196
+  total_lines:   33332
+  dup_groups:    45
+  dup_fragments: 119
+  saved_lines:   881
+  scan_ms:       4870
 
 HOTSPOTS[7] (files with most duplication):
   examples/34-batch-fix/main.py  dup=131L  groups=1  frags=3  (0.4%)
@@ -2539,10 +2538,10 @@ HOTSPOTS[7] (files with most duplication):
   src/algitex/tools/autofix/openrouter_backend.py  dup=87L  groups=9  frags=9  (0.3%)
   src/algitex/tools/autofix/proxy_backend.py  dup=87L  groups=9  frags=9  (0.3%)
   examples/43-code-health/main.py  dup=80L  groups=2  frags=3  (0.2%)
-  src/algitex/tools/ide.py  dup=77L  groups=7  frags=9  (0.2%)
   examples/42-duplicate-removal/main.py  dup=71L  groups=2  frags=3  (0.2%)
+  examples/40-three-tier-autofix/main.py  dup=70L  groups=3  frags=4  (0.2%)
 
-DUPLICATES[53] (ranked by impact):
+DUPLICATES[45] (ranked by impact):
   [ca1e6dbe10b6ef80] !! STRU  demo_split_strategy  L=27 N=5 saved=108 sim=1.00
       examples/41-god-module-splitting/main.py:62-88  (demo_split_strategy)
       examples/43-code-health/main.py:46-74  (demo_analysis_pipeline)
@@ -2570,11 +2569,8 @@ DUPLICATES[53] (ranked by impact):
       examples/43-code-health/main.py:279-297  (main)
       examples/44-plugin-system/main.py:312-330  (main)
   [709c400dfaedb8df] ! EXAC  stop_service  L=36 N=2 saved=36 sim=1.00
-      src/algitex/tools/mcp.py:179-214  (stop_service)
+      src/algitex/tools/mcp.py:161-196  (stop_service)
       src/algitex/tools/mcp_lifecycle.py:79-108  (stop_service)
-  [58296bc54788ae2d] ! EXAC  _register_default_tools  L=34 N=2 saved=34 sim=1.00
-      src/algitex/tools/ide.py:42-75  (_register_default_tools)
-      src/algitex/tools/ide_base.py:19-52  (_register_default_tools)
   [c259276e9eedc2a3] ! STRU  main  L=17 N=3 saved=34 sim=1.00
       examples/36-dashboard/main.py:92-108  (main)
       examples/38-new-modules/main.py:120-136  (main)
@@ -2600,11 +2596,8 @@ DUPLICATES[53] (ranked by impact):
       src/algitex/cli/__init__.py:120-122  (benchmark)
       src/algitex/cli/__init__.py:126-128  (dashboard)
   [2f3dff302f70b194]   STRU  _process_fstring_batch  L=26 N=2 saved=26 sim=1.00
-      src/algitex/todo/fixer.py:361-386  (_process_fstring_batch)
-      src/algitex/todo/fixer.py:389-414  (_process_exec_batch)
-  [6d2cf7e32322cdcc]   EXAC  setup_tool  L=22 N=2 saved=22 sim=1.00
-      src/algitex/tools/ide.py:93-114  (setup_tool)
-      src/algitex/tools/ide_base.py:66-85  (setup_tool)
+      src/algitex/todo/fixer.py:341-366  (_process_fstring_batch)
+      src/algitex/todo/fixer.py:369-394  (_process_exec_batch)
   [5107e45da0c04760]   STRU  demo_detection_with_redup  L=22 N=2 saved=22 sim=1.00
       examples/42-duplicate-removal/main.py:63-84  (demo_detection_with_redup)
       examples/42-duplicate-removal/main.py:134-163  (demo_algitex_integration)
@@ -2642,30 +2635,26 @@ DUPLICATES[53] (ranked by impact):
   [acbc59834cf5586d]   EXAC  fix  L=12 N=2 saved=12 sim=1.00
       src/algitex/tools/autofix/openrouter_backend.py:31-42  (fix)
       src/algitex/tools/autofix/proxy_backend.py:31-42  (fix)
-  [bd0cd68e3dfa5861]   STRU  __init__  L=3 N=5 saved=12 sim=1.00
-      src/algitex/tools/ide.py:138-140  (__init__)
-      src/algitex/tools/ide.py:257-259  (__init__)
-      src/algitex/tools/ide.py:310-312  (__init__)
-      src/algitex/tools/ide_aider.py:15-17  (__init__)
-      src/algitex/tools/ide_claude.py:15-17  (__init__)
   [9436f369f5266c7f]   EXAC  load_env  L=11 N=2 saved=11 sim=1.00
       examples/04-ide-integration/main.py:21-31  (load_env)
       examples/17-docker-workflow/main.py:18-28  (load_env)
   [94d80d6507ff413f]   EXAC  _ensure_model  L=10 N=2 saved=10 sim=1.00
-      src/algitex/tools/autofix/batch_backend.py:817-826  (_ensure_model)
+      src/algitex/tools/autofix/batch_backend.py:793-802  (_ensure_model)
       src/algitex/tools/autofix/ollama_backend.py:85-94  (_ensure_model)
   [7bcbd20526a649ee]   STRU  _success_result  L=10 N=2 saved=10 sim=1.00
       src/algitex/tools/autofix/openrouter_backend.py:135-144  (_success_result)
       src/algitex/tools/autofix/proxy_backend.py:130-139  (_success_result)
+  [bd0cd68e3dfa5861]   STRU  __init__  L=3 N=4 saved=9 sim=1.00
+      src/algitex/tools/ide.py:27-29  (__init__)
+      src/algitex/tools/ide.py:80-82  (__init__)
+      src/algitex/tools/ide_aider.py:15-17  (__init__)
+      src/algitex/tools/ide_claude.py:15-17  (__init__)
   [966057c00b7a6275]   EXAC  process_items  L=8 N=2 saved=8 sim=1.00
       examples/23-continue-dev-ollama/buggy_code.py:21-28  (process_items)
       examples/26-litellm-proxy-ollama/buggy_code.py:21-28  (process_items)
   [bff6f36aacdabe6a]   EXAC  _resolve_path  L=8 N=2 saved=8 sim=1.00
-      src/algitex/microtask/executor.py:444-451  (_resolve_path)
+      src/algitex/microtask/executor.py:464-471  (_resolve_path)
       src/algitex/microtask/slicer.py:46-53  (_resolve_path)
-  [c2153e9cc4c6eb5f]   EXAC  _setup_signal_handlers  L=8 N=2 saved=8 sim=1.00
-      src/algitex/tools/mcp.py:53-60  (_setup_signal_handlers)
-      src/algitex/tools/mcp_orchestrator.py:24-32  (_setup_signal_handlers)
   [95f62e1f9fe66e00]   STRU  show_cli_usage  L=8 N=2 saved=8 sim=1.00
       examples/17-docker-workflow/main.py:101-108  (show_cli_usage)
       examples/36-dashboard/main.py:46-68  (demo_dashboard_export)
@@ -2679,7 +2668,7 @@ DUPLICATES[53] (ranked by impact):
       src/algitex/tools/autofix/openrouter_backend.py:124-129  (_extract_code)
       src/algitex/tools/autofix/proxy_backend.py:119-124  (_extract_code)
   [4e747b302409b9e2]   EXAC  restart_service  L=6 N=2 saved=6 sim=1.00
-      src/algitex/tools/mcp.py:216-221  (restart_service)
+      src/algitex/tools/mcp.py:198-203  (restart_service)
       src/algitex/tools/mcp_lifecycle.py:110-114  (restart_service)
   [41447c1cd48e222b]   STRU  format_value  L=6 N=2 saved=6 sim=1.00
       src/algitex/tools/logging.py:115-120  (format_value)
@@ -2711,21 +2700,6 @@ DUPLICATES[53] (ranked by impact):
   [d13c1673351a0d46]   EXAC  _write_file  L=3 N=2 saved=3 sim=1.00
       src/algitex/tools/autofix/openrouter_backend.py:131-133  (_write_file)
       src/algitex/tools/autofix/proxy_backend.py:126-128  (_write_file)
-  [d4eb332cab42c22e]   EXAC  __post_init__  L=3 N=2 saved=3 sim=1.00
-      src/algitex/tools/ide.py:30-32  (__post_init__)
-      src/algitex/tools/ide_models.py:18-20  (__post_init__)
-  [ceb71006739f56b2]   EXAC  __init__  L=3 N=2 saved=3 sim=1.00
-      src/algitex/tools/ide.py:38-40  (__init__)
-      src/algitex/tools/ide_base.py:15-17  (__init__)
-  [79e5a86747b02bec]   EXAC  list_tools  L=3 N=2 saved=3 sim=1.00
-      src/algitex/tools/ide.py:116-118  (list_tools)
-      src/algitex/tools/ide_base.py:87-89  (list_tools)
-  [a71363a8d280ed16]   EXAC  setup_environment  L=3 N=2 saved=3 sim=1.00
-      src/algitex/tools/ide.py:142-144  (setup_environment)
-      src/algitex/tools/ide_claude.py:19-21  (setup_environment)
-  [10d7a0e802d64c8a]   EXAC  handler  L=3 N=2 saved=3 sim=1.00
-      src/algitex/tools/mcp.py:55-57  (handler)
-      src/algitex/tools/mcp_orchestrator.py:27-29  (handler)
   [7ec49a990d4c1e94]   EXAC  close  L=3 N=2 saved=3 sim=1.00
       src/algitex/tools/ollama.py:332-334  (close)
       src/algitex/tools/services.py:355-357  (close)
@@ -2733,7 +2707,7 @@ DUPLICATES[53] (ranked by impact):
       src/algitex/tools/services/models.py:19-21  (status_icon)
       src/algitex/tools/services.py:34-36  (status_icon)
 
-REFACTOR[53] (ranked by priority):
+REFACTOR[45] (ranked by priority):
   [1] ○ extract_function   → examples/utils/demo_split_strategy.py
       WHY: 5 occurrences of 27-line block across 3 files — saves 108 lines
       FILES: examples/41-god-module-splitting/main.py, examples/43-code-health/main.py, examples/44-plugin-system/main.py
@@ -2752,149 +2726,125 @@ REFACTOR[53] (ranked by priority):
   [6] ◐ extract_function   → src/algitex/tools/utils/stop_service.py
       WHY: 2 occurrences of 36-line block across 2 files — saves 36 lines
       FILES: src/algitex/tools/mcp.py, src/algitex/tools/mcp_lifecycle.py
-  [7] ◐ extract_class      → src/algitex/tools/utils/_register_default_tools.py
-      WHY: 2 occurrences of 34-line block across 2 files — saves 34 lines
-      FILES: src/algitex/tools/ide.py, src/algitex/tools/ide_base.py
-  [8] ○ extract_function   → examples/utils/main.py
+  [7] ○ extract_function   → examples/utils/main.py
       WHY: 3 occurrences of 17-line block across 3 files — saves 34 lines
       FILES: examples/36-dashboard/main.py, examples/38-new-modules/main.py, examples/39-microtask-pipeline/main.py
-  [9] ○ extract_function   → docker/utils/run_rest_server.py
+  [8] ○ extract_function   → docker/utils/run_rest_server.py
       WHY: 5 occurrences of 8-line block across 5 files — saves 32 lines
       FILES: docker/aider-mcp/aider_mcp_server.py, docker/code2llm/code2llm_mcp_server.py, docker/planfile-mcp/planfile_mcp_server.py, docker/proxym/proxym_mcp_server.py, docker/vallm/vallm_mcp_server.py
-  [10] ◐ extract_function   → examples/utils/create_sample_project.py
+  [9] ◐ extract_function   → examples/utils/create_sample_project.py
       WHY: 2 occurrences of 32-line block across 2 files — saves 32 lines
       FILES: examples/11-aider-mcp/main.py, examples/13-vallm/main.py
-  [11] ○ extract_function   → src/algitex/cli/utils/ticket.py
+  [10] ○ extract_function   → src/algitex/cli/utils/ticket.py
       WHY: 10 occurrences of 3-line block across 1 files — saves 27 lines
       FILES: src/algitex/cli/__init__.py
-  [12] ○ extract_function   → src/algitex/todo/utils/_process_fstring_batch.py
+  [11] ○ extract_function   → src/algitex/todo/utils/_process_fstring_batch.py
       WHY: 2 occurrences of 26-line block across 1 files — saves 26 lines
       FILES: src/algitex/todo/fixer.py
-  [13] ○ extract_class      → src/algitex/tools/utils/setup_tool.py
-      WHY: 2 occurrences of 22-line block across 2 files — saves 22 lines
-      FILES: src/algitex/tools/ide.py, src/algitex/tools/ide_base.py
-  [14] ○ extract_function   → examples/42-duplicate-removal/utils/demo_detection_with_redup.py
+  [12] ○ extract_function   → examples/42-duplicate-removal/utils/demo_detection_with_redup.py
       WHY: 2 occurrences of 22-line block across 1 files — saves 22 lines
       FILES: examples/42-duplicate-removal/main.py
-  [15] ○ extract_function   → src/algitex/tools/autofix/utils/_dry_run_result.py
+  [13] ○ extract_function   → src/algitex/tools/autofix/utils/_dry_run_result.py
       WHY: 3 occurrences of 11-line block across 3 files — saves 22 lines
       FILES: src/algitex/tools/autofix/aider_backend.py, src/algitex/tools/autofix/openrouter_backend.py, src/algitex/tools/autofix/proxy_backend.py
-  [16] ○ extract_function   → src/algitex/tools/autofix/utils/_error_result.py
+  [14] ○ extract_function   → src/algitex/tools/autofix/utils/_error_result.py
       WHY: 3 occurrences of 11-line block across 3 files — saves 22 lines
       FILES: src/algitex/tools/autofix/aider_backend.py, src/algitex/tools/autofix/openrouter_backend.py, src/algitex/tools/autofix/proxy_backend.py
-  [17] ○ extract_function   → examples/40-three-tier-autofix/utils/demo_tier_micro.py
+  [15] ○ extract_function   → examples/40-three-tier-autofix/utils/demo_tier_micro.py
       WHY: 2 occurrences of 20-line block across 1 files — saves 20 lines
       FILES: examples/40-three-tier-autofix/main.py
-  [18] ○ extract_function   → src/algitex/todo/utils/_first_int.py
+  [16] ○ extract_function   → src/algitex/todo/utils/_first_int.py
       WHY: 3 occurrences of 9-line block across 3 files — saves 18 lines
       FILES: src/algitex/todo/classify.py, src/algitex/todo/micro_utils.py, src/algitex/todo/tiering.py
-  [19] ○ extract_function   → src/algitex/tools/autofix/utils/_execute_fix.py
+  [17] ○ extract_function   → src/algitex/tools/autofix/utils/_execute_fix.py
       WHY: 2 occurrences of 17-line block across 2 files — saves 17 lines
       FILES: src/algitex/tools/autofix/openrouter_backend.py, src/algitex/tools/autofix/proxy_backend.py
-  [20] ○ extract_function   → examples/utils/demo_microtask_plan.py
+  [18] ○ extract_function   → examples/utils/demo_microtask_plan.py
       WHY: 2 occurrences of 16-line block across 2 files — saves 16 lines
       FILES: examples/39-microtask-pipeline/main.py, examples/40-three-tier-autofix/main.py
-  [21] ○ extract_function   → src/algitex/tools/autofix/utils/_build_prompt.py
+  [19] ○ extract_function   → src/algitex/tools/autofix/utils/_build_prompt.py
       WHY: 2 occurrences of 14-line block across 2 files — saves 14 lines
       FILES: src/algitex/tools/autofix/openrouter_backend.py, src/algitex/tools/autofix/proxy_backend.py
-  [22] ○ extract_function   → docker/utils/run.py
+  [20] ○ extract_function   → docker/utils/run.py
       WHY: 3 occurrences of 7-line block across 3 files — saves 14 lines
       FILES: docker/code2llm/code2llm_server.py, docker/proxym/proxym_server.py, docker/vallm/vallm_server.py
-  [23] ○ extract_function   → examples/utils/calculate.py
+  [21] ○ extract_function   → examples/utils/calculate.py
       WHY: 2 occurrences of 13-line block across 2 files — saves 13 lines
       FILES: examples/23-continue-dev-ollama/buggy_code.py, examples/26-litellm-proxy-ollama/buggy_code.py
-  [24] ○ extract_function   → src/algitex/tools/autofix/utils/fix.py
+  [22] ○ extract_function   → src/algitex/tools/autofix/utils/fix.py
       WHY: 2 occurrences of 12-line block across 2 files — saves 12 lines
       FILES: src/algitex/tools/autofix/openrouter_backend.py, src/algitex/tools/autofix/proxy_backend.py
-  [25] ○ extract_function   → src/algitex/tools/utils/__init__.py
-      WHY: 5 occurrences of 3-line block across 3 files — saves 12 lines
-      FILES: src/algitex/tools/ide.py, src/algitex/tools/ide_aider.py, src/algitex/tools/ide_claude.py
-  [26] ○ extract_function   → examples/utils/load_env.py
+  [23] ○ extract_function   → examples/utils/load_env.py
       WHY: 2 occurrences of 11-line block across 2 files — saves 11 lines
       FILES: examples/04-ide-integration/main.py, examples/17-docker-workflow/main.py
-  [27] ○ extract_function   → src/algitex/tools/autofix/utils/_ensure_model.py
+  [24] ○ extract_function   → src/algitex/tools/autofix/utils/_ensure_model.py
       WHY: 2 occurrences of 10-line block across 2 files — saves 10 lines
       FILES: src/algitex/tools/autofix/batch_backend.py, src/algitex/tools/autofix/ollama_backend.py
-  [28] ○ extract_function   → src/algitex/tools/autofix/utils/_success_result.py
+  [25] ○ extract_function   → src/algitex/tools/autofix/utils/_success_result.py
       WHY: 2 occurrences of 10-line block across 2 files — saves 10 lines
       FILES: src/algitex/tools/autofix/openrouter_backend.py, src/algitex/tools/autofix/proxy_backend.py
-  [29] ○ extract_function   → examples/utils/process_items.py
+  [26] ○ extract_function   → src/algitex/tools/utils/__init__.py
+      WHY: 4 occurrences of 3-line block across 3 files — saves 9 lines
+      FILES: src/algitex/tools/ide.py, src/algitex/tools/ide_aider.py, src/algitex/tools/ide_claude.py
+  [27] ○ extract_function   → examples/utils/process_items.py
       WHY: 2 occurrences of 8-line block across 2 files — saves 8 lines
       FILES: examples/23-continue-dev-ollama/buggy_code.py, examples/26-litellm-proxy-ollama/buggy_code.py
-  [30] ○ extract_function   → src/algitex/microtask/utils/_resolve_path.py
+  [28] ○ extract_function   → src/algitex/microtask/utils/_resolve_path.py
       WHY: 2 occurrences of 8-line block across 2 files — saves 8 lines
       FILES: src/algitex/microtask/executor.py, src/algitex/microtask/slicer.py
-  [31] ○ extract_class      → src/algitex/tools/utils/_setup_signal_handlers.py
-      WHY: 2 occurrences of 8-line block across 2 files — saves 8 lines
-      FILES: src/algitex/tools/mcp.py, src/algitex/tools/mcp_orchestrator.py
-  [32] ○ extract_function   → examples/utils/show_cli_usage.py
+  [29] ○ extract_function   → examples/utils/show_cli_usage.py
       WHY: 2 occurrences of 8-line block across 2 files — saves 8 lines
       FILES: examples/17-docker-workflow/main.py, examples/36-dashboard/main.py
-  [33] ○ extract_function   → src/algitex/todo/utils/find_import_insert_point.py
+  [30] ○ extract_function   → src/algitex/todo/utils/find_import_insert_point.py
       WHY: 2 occurrences of 8-line block across 2 files — saves 8 lines
       FILES: src/algitex/todo/micro_utils.py, src/algitex/todo/repair.py
-  [34] ○ extract_function   → examples/utils/bad_error_handling.py
+  [31] ○ extract_function   → examples/utils/bad_error_handling.py
       WHY: 2 occurrences of 6-line block across 2 files — saves 6 lines
       FILES: examples/18-ollama-local/buggy_code.py, examples/21-aider-cli-ollama/buggy_code.py
-  [35] ○ extract_function   → src/algitex/tools/autofix/utils/_extract_code.py
+  [32] ○ extract_function   → src/algitex/tools/autofix/utils/_extract_code.py
       WHY: 2 occurrences of 6-line block across 2 files — saves 6 lines
       FILES: src/algitex/tools/autofix/openrouter_backend.py, src/algitex/tools/autofix/proxy_backend.py
-  [36] ○ extract_function   → src/algitex/tools/utils/restart_service.py
+  [33] ○ extract_function   → src/algitex/tools/utils/restart_service.py
       WHY: 2 occurrences of 6-line block across 2 files — saves 6 lines
       FILES: src/algitex/tools/mcp.py, src/algitex/tools/mcp_lifecycle.py
-  [37] ○ extract_function   → src/algitex/tools/utils/format_value.py
+  [34] ○ extract_function   → src/algitex/tools/utils/format_value.py
       WHY: 2 occurrences of 6-line block across 1 files — saves 6 lines
       FILES: src/algitex/tools/logging.py
-  [38] ○ extract_function   → examples/utils/divide.py
+  [35] ○ extract_function   → examples/utils/divide.py
       WHY: 2 occurrences of 4-line block across 2 files — saves 4 lines
       FILES: examples/21-aider-cli-ollama/buggy_code.py, examples/22-claude-code-ollama/buggy_code.py
-  [39] ○ extract_function   → src/algitex/tools/utils/check_mcp_service.py
+  [36] ○ extract_function   → src/algitex/tools/utils/check_mcp_service.py
       WHY: 2 occurrences of 4-line block across 2 files — saves 4 lines
       FILES: src/algitex/tools/services.py, src/algitex/tools/services/http_checks.py
-  [40] ○ extract_function   → docker/utils/__init__.py
+  [37] ○ extract_function   → docker/utils/__init__.py
       WHY: 2 occurrences of 4-line block across 2 files — saves 4 lines
       FILES: docker/code2llm/code2llm_server.py, docker/vallm/vallm_server.py
-  [41] ○ extract_function   → examples/utils/load.py
+  [38] ○ extract_function   → examples/utils/load.py
       WHY: 2 occurrences of 4-line block across 2 files — saves 4 lines
       FILES: examples/22-claude-code-ollama/buggy_code.py, examples/26-litellm-proxy-ollama/buggy_code.py
-  [42] ○ extract_function   → examples/34-batch-fix/sample_code/utils/connect.py
+  [39] ○ extract_function   → examples/34-batch-fix/sample_code/utils/connect.py
       WHY: 2 occurrences of 4-line block across 1 files — saves 4 lines
       FILES: examples/34-batch-fix/sample_code/file2.py
-  [43] ○ extract_function   → examples/utils/divide_numbers.py
+  [40] ○ extract_function   → examples/utils/divide_numbers.py
       WHY: 2 occurrences of 3-line block across 2 files — saves 3 lines
       FILES: examples/18-ollama-local/buggy_code.py, examples/26-litellm-proxy-ollama/buggy_code.py
-  [44] ○ extract_function   → src/algitex/utils/__enter__.py
+  [41] ○ extract_function   → src/algitex/utils/__enter__.py
       WHY: 2 occurrences of 3-line block across 1 files — saves 3 lines
       FILES: src/algitex/dashboard.py
-  [45] ○ extract_function   → src/algitex/tools/autofix/utils/_read_file.py
+  [42] ○ extract_function   → src/algitex/tools/autofix/utils/_read_file.py
       WHY: 2 occurrences of 3-line block across 2 files — saves 3 lines
       FILES: src/algitex/tools/autofix/openrouter_backend.py, src/algitex/tools/autofix/proxy_backend.py
-  [46] ○ extract_function   → src/algitex/tools/autofix/utils/_write_file.py
+  [43] ○ extract_function   → src/algitex/tools/autofix/utils/_write_file.py
       WHY: 2 occurrences of 3-line block across 2 files — saves 3 lines
       FILES: src/algitex/tools/autofix/openrouter_backend.py, src/algitex/tools/autofix/proxy_backend.py
-  [47] ○ extract_class      → src/algitex/tools/utils/__post_init__.py
-      WHY: 2 occurrences of 3-line block across 2 files — saves 3 lines
-      FILES: src/algitex/tools/ide.py, src/algitex/tools/ide_models.py
-  [48] ○ extract_class      → src/algitex/tools/utils/__init__.py
-      WHY: 2 occurrences of 3-line block across 2 files — saves 3 lines
-      FILES: src/algitex/tools/ide.py, src/algitex/tools/ide_base.py
-  [49] ○ extract_class      → src/algitex/tools/utils/list_tools.py
-      WHY: 2 occurrences of 3-line block across 2 files — saves 3 lines
-      FILES: src/algitex/tools/ide.py, src/algitex/tools/ide_base.py
-  [50] ○ extract_class      → src/algitex/tools/utils/setup_environment.py
-      WHY: 2 occurrences of 3-line block across 2 files — saves 3 lines
-      FILES: src/algitex/tools/ide.py, src/algitex/tools/ide_claude.py
-  [51] ○ extract_function   → src/algitex/tools/utils/handler.py
-      WHY: 2 occurrences of 3-line block across 2 files — saves 3 lines
-      FILES: src/algitex/tools/mcp.py, src/algitex/tools/mcp_orchestrator.py
-  [52] ○ extract_function   → src/algitex/tools/utils/close.py
+  [44] ○ extract_function   → src/algitex/tools/utils/close.py
       WHY: 2 occurrences of 3-line block across 2 files — saves 3 lines
       FILES: src/algitex/tools/ollama.py, src/algitex/tools/services.py
-  [53] ○ extract_class      → src/algitex/tools/utils/status_icon.py
+  [45] ○ extract_class      → src/algitex/tools/utils/status_icon.py
       WHY: 2 occurrences of 3-line block across 2 files — saves 3 lines
       FILES: src/algitex/tools/services.py, src/algitex/tools/services/models.py
 
-QUICK_WINS[34] (low risk, high savings — do first):
+QUICK_WINS[32] (low risk, high savings — do first):
   [1] extract_function   saved=108L  → examples/utils/demo_split_strategy.py
       FILES: main.py, main.py, main.py
   [2] extract_function   saved=88L  → examples/34-batch-fix/utils/demo_batch_dry_run.py
@@ -2905,92 +2855,76 @@ QUICK_WINS[34] (low risk, high savings — do first):
       FILES: main.py, main.py, main.py +1
   [5] extract_function   saved=38L  → examples/utils/main.py
       FILES: main.py, main.py, main.py
-  [8] extract_function   saved=34L  → examples/utils/main.py
+  [7] extract_function   saved=34L  → examples/utils/main.py
       FILES: main.py, main.py, main.py
-  [9] extract_function   saved=32L  → docker/utils/run_rest_server.py
+  [8] extract_function   saved=32L  → docker/utils/run_rest_server.py
       FILES: aider_mcp_server.py, code2llm_mcp_server.py, planfile_mcp_server.py +2
-  [11] extract_function   saved=27L  → src/algitex/cli/utils/ticket.py
+  [10] extract_function   saved=27L  → src/algitex/cli/utils/ticket.py
       FILES: __init__.py
-  [12] extract_function   saved=26L  → src/algitex/todo/utils/_process_fstring_batch.py
+  [11] extract_function   saved=26L  → src/algitex/todo/utils/_process_fstring_batch.py
       FILES: fixer.py
-  [13] extract_class      saved=22L  → src/algitex/tools/utils/setup_tool.py
-      FILES: ide.py, ide_base.py
+  [12] extract_function   saved=22L  → examples/42-duplicate-removal/utils/demo_detection_with_redup.py
+      FILES: main.py
 
-EFFORT_ESTIMATE (total ≈ 35.3h):
+EFFORT_ESTIMATE (total ≈ 32.0h):
   hard   demo_split_strategy                 saved=108L  ~216min
   hard   demo_batch_dry_run                  saved=88L  ~264min
   hard   demo_orchestrator_pattern           saved=84L  ~168min
   hard   demo_dashboard_monitor              saved=52L  ~104min
   medium main                                saved=38L  ~76min
   hard   stop_service                        saved=36L  ~108min
-  hard   _register_default_tools             saved=34L  ~102min
   medium main                                saved=34L  ~68min
   medium run_rest_server                     saved=32L  ~64min
   hard   create_sample_project               saved=32L  ~96min
-  ... +43 more (~850min)
+  medium ticket                              saved=27L  ~54min
+  ... +35 more (~700min)
 
 METRICS-TARGET:
-  dup_groups:  53 → 0
-  saved_lines: 963 lines recoverable
+  dup_groups:  45 → 0
+  saved_lines: 881 lines recoverable
 ```
 
 ### Evolution / Churn (`project/evolution.toon.yaml`)
 
 ```toon markpact:analysis path=project/evolution.toon.yaml
-# code2llm/evolution | 1488 func | 118f | 2026-04-25
+# code2llm/evolution | 1501 func | 117f | 2026-04-25
 
-NEXT[10] (ranked by impact):
+NEXT[6] (ranked by impact):
   [1] !! SPLIT           src/algitex/cli/todo.py
-      WHY: 1159L, 0 classes, max CC=29
-      EFFORT: ~4h  IMPACT: 33611
+      WHY: 1059L, 0 classes, max CC=15
+      EFFORT: ~4h  IMPACT: 15885
 
   [2] !! SPLIT           src/algitex/todo/fixer.py
-      WHY: 550L, 1 classes, max CC=25
-      EFFORT: ~4h  IMPACT: 13750
+      WHY: 530L, 1 classes, max CC=25
+      EFFORT: ~4h  IMPACT: 13250
 
   [3] !! SPLIT           src/algitex/tools/autofix/batch_backend.py
-      WHY: 826L, 2 classes, max CC=16
-      EFFORT: ~4h  IMPACT: 13216
+      WHY: 802L, 2 classes, max CC=11
+      EFFORT: ~4h  IMPACT: 8822
 
-  [4] !! SPLIT-FUNC      todo_verify_prefact  CC=29  fan=22
-      WHY: CC=29 exceeds 15
-      EFFORT: ~1h  IMPACT: 638
-
-  [5] !  SPLIT-FUNC      _run_with_dashboard  CC=15  fan=29
+  [4] !  SPLIT-FUNC      _run_with_dashboard  CC=15  fan=29
       WHY: CC=15 exceeds 15
       EFFORT: ~1h  IMPACT: 435
 
-  [6] !! SPLIT-FUNC      fix_file  CC=25  fan=17
+  [5] !! SPLIT-FUNC      fix_file  CC=25  fan=17
       WHY: CC=25 exceeds 15
       EFFORT: ~1h  IMPACT: 425
 
-  [7] !! SPLIT-FUNC      _tf_execute_phased  CC=25  fan=12
-      WHY: CC=25 exceeds 15
-      EFFORT: ~1h  IMPACT: 300
-
-  [8] !  SPLIT-FUNC      BatchFixBackend._parse_batch_response  CC=16  fan=18
-      WHY: CC=16 exceeds 15
-      EFFORT: ~1h  IMPACT: 288
-
-  [9] !  SPLIT-FUNC      MicroTaskExecutor._apply_magic_name  CC=16  fan=16
-      WHY: CC=16 exceeds 15
-      EFFORT: ~1h  IMPACT: 256
-
-  [10] !  SPLIT-FUNC      todo_hybrid  CC=15  fan=14
+  [6] !  SPLIT-FUNC      todo_hybrid  CC=15  fan=14
       WHY: CC=15 exceeds 15
       EFFORT: ~1h  IMPACT: 210
 
 
 RISKS[3]:
-  ⚠ Splitting src/algitex/cli/todo.py may break 21 import paths
-  ⚠ Splitting src/algitex/tools/autofix/batch_backend.py may break 16 import paths
+  ⚠ Splitting src/algitex/cli/todo.py may break 25 import paths
+  ⚠ Splitting src/algitex/tools/autofix/batch_backend.py may break 19 import paths
   ⚠ Splitting src/algitex/todo/fixer.py may break 17 import paths
 
 METRICS-TARGET:
-  CC̄:          2.5 → ≤1.8
-  max-CC:      48 → ≤20
-  god-modules: 3 → 0
-  high-CC(≥15): 9 → ≤4
+  CC̄:          2.4 → ≤1.7
+  max-CC:      25 → ≤12
+  god-modules: 4 → 0
+  high-CC(≥15): 4 → ≤2
   hub-types:   0 → ≤0
 
 PATTERNS (language parser shared logic):
@@ -3018,7 +2952,7 @@ PATTERNS (language parser shared logic):
     - Standardized FunctionInfo/ClassInfo models
 
 HISTORY:
-  prev CC̄=2.5 → now CC̄=2.5
+  prev CC̄=2.5 → now CC̄=2.4
 ```
 
 ### Validation (`project/validation.toon.yaml`)

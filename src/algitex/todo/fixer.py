@@ -232,34 +232,12 @@ def fix_file(file_path: str, tasks: list[TodoTask], dry_run: bool = True) -> Fix
             result.fixed += 1
             continue
 
+        param = _get_repair_param(task)
         try:
-            # Extract additional params from message
-            if task.category == "unused_import":
-                match = re.search(r"Unused (\w+)", task.message)
-                name = match.group(1) if match else ""
-                ok = repairer(path, name, task.line - 1)
-            elif task.category == "return_type":
-                suggested = _extract_return_type(task.message)
-                ok = repairer(path, suggested or "-> None", task.line - 1)
-            else:
-                ok = repairer(path, "", task.line - 1)
-            
+            ok = repairer(path, param, task.line - 1)
+            _record_fix_result(task, path, original_content, ok, result)
             if ok:
-                # Validate with vallm after fix
-                is_valid, msg = _validate_file_with_vallm(path, original_content)
-                if is_valid:
-                    result.fixed += 1
-                    print(f"    ✓ validated: {msg}")
-                else:
-                    result.errors.append(f"L{task.line}: fix invalid - {msg}")
-                    result.skipped += 1
-                    print(f"    ✗ L{task.line}: fix broke file - {msg}")
-                    print(f"      ↺ ROLLBACK: file restored to original state")
-                    print(f"      ⊘ SKIPPED: task abandoned")
-                    # Update original_content to the restored state
-                    original_content = path.read_text()
-            else:
-                result.skipped += 1
+                original_content = path.read_text()
         except Exception as e:
             result.errors.append(f"L{task.line}: {e}")
             result.skipped += 1
@@ -291,6 +269,37 @@ def _extract_return_type(message: str) -> str | None:
     if explicit:
         return explicit.group(1).strip()
     return None
+
+
+def _get_repair_param(task: TodoTask) -> str:
+    """Extract the parameter for the repairer based on task category."""
+    if task.category == "unused_import":
+        match = re.search(r"Unused (\w+)", task.message)
+        return match.group(1) if match else ""
+    if task.category == "return_type":
+        return _extract_return_type(task.message) or "-> None"
+    return ""
+
+
+def _record_fix_result(
+    task: TodoTask, path: Path, original_content: str, ok: bool, result: FixResult
+) -> None:
+    """Validate a fix, rollback if invalid, and update result counters."""
+    if not ok:
+        result.skipped += 1
+        return
+
+    is_valid, msg = _validate_file_with_vallm(path, original_content)
+    if is_valid:
+        result.fixed += 1
+        print(f"    ✓ validated: {msg}")
+        return
+
+    result.errors.append(f"L{task.line}: fix invalid - {msg}")
+    result.skipped += 1
+    print(f"    ✗ L{task.line}: fix broke file - {msg}")
+    print(f"      ↺ ROLLBACK: file restored to original state")
+    print(f"      ⊘ SKIPPED: task abandoned")
 
 
 def _process_magic_batch(path: Path, tasks: list[TodoTask], result: FixResult, dry_run: bool, original_content: str) -> None:

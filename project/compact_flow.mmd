@@ -45,10 +45,11 @@ flowchart TD
     examples__42_duplicate_removal["examples.42-duplicate-removal<br/>8 funcs"]
     examples__43_code_health["examples.43-code-health<br/>8 funcs"]
     examples__44_plugin_system["examples.44-plugin-system<br/>10 funcs"]
+    project__map["project.map<br/>451 funcs"]
     scripts__fix_readme["scripts.fix_readme<br/>1 funcs"]
-    scripts__generate_lib_docs["scripts.generate_lib_docs<br/>7 funcs"]
-    src__algitex["src.algitex<br/>996 funcs"]
-    src__algitex ==>|516| Taskfile
+    scripts__generate_lib_docs["scripts.generate_lib_docs<br/>11 funcs"]
+    src__algitex["src.algitex<br/>982 funcs"]
+    src__algitex ==>|502| Taskfile
     examples__31_abpr_workflow ==>|81| Taskfile
     examples__09_workspace ==>|71| Taskfile
     examples__32_workspace_coordination ==>|68| Taskfile
@@ -60,8 +61,8 @@ flowchart TD
     examples__40_three_tier_autofix ==>|60| Taskfile
     examples__08_feedback ==>|57| Taskfile
     examples__30_parallel_execution ==>|56| Taskfile
-    examples__07_context ==>|53| Taskfile
     examples__41_god_module_splitting ==>|53| Taskfile
+    examples__07_context ==>|53| Taskfile
     examples__43_code_health ==>|51| Taskfile
     examples__39_microtask_pipeline ==>|46| Taskfile
     examples__36_dashboard ==>|45| Taskfile
@@ -81,6 +82,7 @@ flowchart TD
     examples__12_filesystem_mcp ==>|22| Taskfile
     examples__19_local_mcp_tools ==>|22| Taskfile
     examples__27_unified_autofix ==>|21| Taskfile
+    src__algitex ==>|20| project__map
     examples__23_continue_dev_ollama ==>|18| Taskfile
     examples__11_aider_mcp ==>|17| Taskfile
     examples__04_ide_integration ==>|17| Taskfile
@@ -94,13 +96,14 @@ flowchart TD
     examples__03_pipeline ==>|10| Taskfile
     scripts__generate_lib_docs ==>|8| Taskfile
     examples__30_parallel_execution -->|3| src__algitex
-    examples__33_hybrid_autofix -->|3| src__algitex
     docker__planfile_mcp -->|3| src__algitex
     examples__38_new_modules -->|2| src__algitex
+    examples__33_hybrid_autofix -->|2| src__algitex
     examples__09_workspace -->|2| src__algitex
     docker__code2llm -->|2| src__algitex
     examples__01_quickstart -->|1| src__algitex
     examples__10_cicd -->|1| src__algitex
+    examples__33_hybrid_autofix -->|1| project__map
     examples__35_sprint3_patterns -->|1| src__algitex
     scripts__fix_readme -->|1| Taskfile
     scripts__generate_lib_docs -->|1| src__algitex
