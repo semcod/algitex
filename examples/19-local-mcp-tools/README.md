@@ -28,9 +28,6 @@ make down     # Zatrzymaj services
 | vallm-mcp | 8080 | Walidacja |
 | planfile-mcp | 8201 | Zarządzanie ticketami |
 
-## Użycie z przykładowym kodem
-
-```bash
 # Analiza kodu z błędami
 curl -X POST http://localhost:8081/analyze \
   -d '{"path": "/workspace", "files": ["buggy_code.py"]}'
@@ -53,9 +50,6 @@ curl -X POST http://localhost:8201/tickets \
 - Race conditions
 - Infinite recursion
 
-## Użycie ogólne
-
-```bash
 # Analiza kodu
 curl -X POST http://localhost:8081/analyze \
   -d '{"path": "/workspace"}'

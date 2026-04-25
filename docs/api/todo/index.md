@@ -35,8 +35,6 @@ CLI via algitex:
 __all__ = ['TodoVerifier', 'verify_todos', 'VerificationResult', 'parallel_fix', 'fix_todos', 'parse_todo', 'TodoTask', 'REPAIRERS', 'FIXERS', 'mark_tasks_completed', 'parallel_fix_and_update', 'ALGO_CATEGORIES', 'MICRO_CATEGORIES', 'BIG_CATEGORIES', 'KNOWN_MAGIC_CONSTANTS', 'TaskTriage', 'TierSummary', 'classify_message', 'classify_task', 'filter_tasks', 'load_todo_tasks', 'partition_tasks', 'summarise_tasks', 'summarize_tasks', 'FunctionExtractor', 'FunctionSnippet', 'MicroFixResult', 'MicroFixer', 'benchmark_fix', 'benchmark_sequential', 'benchmark_parallel', 'compare_modes', 'BenchmarkResult', 'HybridAutofix', 'HybridResult', 'RateLimiter']
 ```
 
-## Functions
-
 ### `fix_todos`
 
 ```python

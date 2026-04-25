@@ -6,9 +6,6 @@ Pipeline for breaking down and executing atomic micro-tasks optimized for small 
 
 MicroTask decomposes complex refactoring tasks into small, atomic units that can be processed efficiently by local LLMs like `qwen2.5-coder:7b` or `codellama:7b`.
 
-## CLI Commands
-
-```bash
 # Classify tasks by complexity
 algitex microtask classify
 

@@ -6,9 +6,6 @@ Deterministic NLP-based refactoring without LLM calls. Pure code transformations
 
 NLP module provides fast, deterministic code refactoring operations that don't require LLM calls. These are **Tier 0** operations in the three-tier system.
 
-## CLI Commands
-
-```bash
 # Fix verbose docstrings
 algitex nlp docstrings --dry-run
 algitex nlp docstrings --execute
@@ -22,8 +19,6 @@ algitex nlp dead-code --execute
 # Find and refactor duplicate code blocks
 algitex nlp duplicates --execute
 ```
-
-## Operations
 
 ### Docstring Shortener
 
@@ -84,9 +79,6 @@ Identifies repeated code blocks and suggests extraction:
 if user.is_admin:
     log.info("Admin action")
     perform_action()
-
-# Suggestion: Extract to function
-```
 
 ## Integration with Three-Tier System
 

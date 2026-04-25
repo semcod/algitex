@@ -43,9 +43,6 @@ Integration with the broader wronai ecosystem is underway — Proxym will consum
 ```bash
 pip install proxym
 proxym serve
-# Point your IDE at http://localhost:4000
-```
-
 ## Links
 
 - **Repository**: [github.com/wronai/proxym](https://github.com/wronai/proxym)

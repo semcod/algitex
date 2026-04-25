@@ -21,8 +21,6 @@ Usage:
 __all__ = ['TodoRunner', 'TaskResult']
 ```
 
-## Classes
-
 ### `TaskResult`
 
 Result of executing a single task.

@@ -17,9 +17,6 @@ Combines two execution strategies:
 - Cost tracking per LLM call
 - Parallel execution with conflict-free per-file isolation
 
-## Usage
-
-```bash
 # Preview (dry run)
 python main.py --demo dry-run
 

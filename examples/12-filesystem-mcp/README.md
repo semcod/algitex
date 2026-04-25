@@ -21,9 +21,6 @@ Demonstruje użycie filesystem-mcp przez algitex Docker tool orchestration do op
 make run
 ```
 
-## CLI Commands
-
-```bash
 # Spawn filesystem-mcp
 algitex docker spawn filesystem-mcp
 

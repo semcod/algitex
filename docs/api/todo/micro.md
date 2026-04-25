@@ -8,8 +8,6 @@ source code. It is intentionally conservative: only tasks that map to a single
 function or a simple constant-name rewrite are handled here.
 
 
-## Classes
-
 ### `FunctionSnippet`
 
 Minimal source slice around a function or method.

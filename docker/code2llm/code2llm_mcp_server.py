@@ -6,7 +6,6 @@ Supports: MCP stdio, MCP SSE, and REST API via FastMCP
 
 import os
 import sys
-import json
 import ast
 import logging
 from pathlib import Path
@@ -16,10 +15,11 @@ from datetime import datetime
 from mcp.server.fastmcp import FastMCP
 from fastapi import FastAPI
 import uvicorn
-import radon
 from radon.complexity import cc_visit
 
-logging.basicConfig(
+
+if __name__ == "__main__":
+    logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     stream=sys.stderr

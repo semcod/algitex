@@ -8,8 +8,6 @@ CLI commands for the MicroTask pipeline.
 __all__ = ['microtask_app', 'microtask_classify', 'microtask_plan', 'microtask_run']
 ```
 
-## Functions
-
 ### `microtask_classify`
 
 ```python

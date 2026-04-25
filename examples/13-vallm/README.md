@@ -21,9 +21,6 @@ Demonstruje użycie vallm przez algitex Docker tool orchestration do walidacji k
 make run
 ```
 
-## CLI Commands
-
-```bash
 # Spawn vallm
 algitex docker spawn vallm
 

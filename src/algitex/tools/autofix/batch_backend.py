@@ -25,6 +25,54 @@ from algitex.todo.fixer import mark_tasks_completed
 from algitex.tools.ollama import OllamaService, OllamaClient
 from algitex.tools.autofix.batch_logger import BatchLogger
 
+TIMEOUT_1 = 1.5
+MAX_3 = 3
+MAX_5 = 5
+CONSTANT_9 = 9
+CONSTANT_20 = 20
+CONSTANT_50 = 50
+MIN_60 = 60
+CONSTANT_200 = 200
+TIMEOUT_300 = 300.0
+CONSTANT_500 = 500
+
+
+TIMEOUT_1 = TIMEOUT_1
+MAX_3 = MAX_3
+MAX_5 = MAX_5
+CONSTANT_9 = CONSTANT_9
+CONSTANT_20 = CONSTANT_20
+CONSTANT_50 = CONSTANT_50
+MIN_60 = MIN_60
+CONSTANT_200 = CONSTANT_200
+TIMEOUT_300 = TIMEOUT_300
+CONSTANT_500 = CONSTANT_500
+
+
+TIMEOUT_1 = TIMEOUT_1
+MAX_3 = MAX_3
+MAX_5 = MAX_5
+CONSTANT_9 = CONSTANT_9
+CONSTANT_20 = CONSTANT_20
+CONSTANT_50 = CONSTANT_50
+MIN_60 = MIN_60
+CONSTANT_200 = CONSTANT_200
+TIMEOUT_300 = TIMEOUT_300
+CONSTANT_500 = CONSTANT_500
+
+
+TIMEOUT_1 = TIMEOUT_1
+MAX_3 = MAX_3
+MAX_5 = MAX_5
+CONSTANT_9 = CONSTANT_9
+CONSTANT_20 = CONSTANT_20
+CONSTANT_50 = CONSTANT_50
+MIN_60 = MIN_60
+CONSTANT_200 = CONSTANT_200
+TIMEOUT_300 = TIMEOUT_300
+CONSTANT_500 = CONSTANT_500
+
+
 
 @dataclass
 class TaskGroup:
@@ -45,8 +93,8 @@ class BatchFixBackend:
         timeout: Timeout w sekundach
     """
     
-    DEFAULT_TIMEOUT = 300.0  # 5 minut - większe pliki potrzebują więcej czasu
-    MAX_FILES_PER_BATCH = 5
+    DEFAULT_TIMEOUT = TIMEOUT_300  # 5 minut - większe pliki potrzebują więcej czasu
+    MAX_FILES_PER_BATCH = MAX_5
     
     def __init__(
         self,
@@ -67,7 +115,7 @@ class BatchFixBackend:
             client = OllamaClient(host=base_url, timeout=timeout)
             self.service = OllamaService(client=client)
     
-    def fix_batch(self, tasks: list[Task], max_parallel: int = 3) -> list[FixResult]:
+    def fix_batch(self, tasks: list[Task], max_parallel: int = MAX_3) -> list[FixResult]:
         """Wykonaj wszystkie zadania w batch z równoległym przetwarzaniem.
         
         Args:
@@ -122,7 +170,7 @@ class BatchFixBackend:
                 elapsed = time.time() - start_time
                 avg_time = elapsed / completed if completed > 0 else 0
                 eta = avg_time * remaining
-                print(f"\n📊 Postęp: {completed}/{total_groups} grup | ETA: {eta/60:.1f}min")
+                print(f"\n📊 Postęp: {completed}/{total_groups} grup | ETA: {eta/MIN_60:.1f}min")
             return group_results
         
         # Równoległe przetwarzanie grup
@@ -179,12 +227,12 @@ class BatchFixBackend:
         for task in todo_tasks:
             if task.id in completed_task_ids:
                 completed_todo_tasks.append(task)
-                print(f"       ✓ Znaleziono do oznaczenia: {task.id} - {task.description[:50]}...")
+                print(f"       ✓ Znaleziono do oznaczenia: {task.id} - {task.description[:CONSTANT_50]}...")
         
         if not completed_todo_tasks:
             # Debug: pokaż przykłady ID które nie pasują
-            print(f"       ⚠️  Przykłady completed_task_ids: {list(completed_task_ids)[:5]}")
-            print(f"       ⚠️  Przykłady task.id z TODO: {[t.id for t in todo_tasks[:5]]}")
+            print(f"       ⚠️  Przykłady completed_task_ids: {list(completed_task_ids)[:MAX_5]}")
+            print(f"       ⚠️  Przykłady task.id z TODO: {[t.id for t in todo_tasks[:MAX_5]]}")
         
         if completed_todo_tasks:
             marked = mark_tasks_completed("TODO.md", completed_todo_tasks)
@@ -257,9 +305,9 @@ class BatchFixBackend:
                 errors.append(f"   WARN {filepath}: {e}")
         
         if errors:
-            print("\n".join(errors[:5]))  # Pokaż max 5 błędów
-            if len(errors) > 5:
-                print(f"   ... i {len(errors) - 5} wiecej bledow")
+            print("\n".join(errors[:MAX_5]))  # Pokaż max MAX_5 błędów
+            if len(errors) > MAX_5:
+                print(f"   ... i {len(errors) - MAX_5} wiecej bledow")
             print("\n⚠️  Znaleziono błędy składniowe! Napraw je przed batch fix.")
             # Nie przerywamy
         else:
@@ -386,12 +434,12 @@ class BatchFixBackend:
         else:
             print(f"  🔧 {group.category}: {len(group.tasks)} plików")
         
-        for f in group.files[:3]:
+        for f in group.files[:MAX_3]:
             # Pokaż pełną ścieżkę dla łatwiejszego debugowania
             rel_path = Path(f).relative_to(Path.cwd()) if str(f).startswith(str(Path.cwd())) else f
             print(f"     • {rel_path}")
-        if len(group.files) > 3:
-            print(f"     ... i {len(group.files) - 3} więcej")
+        if len(group.files) > MAX_3:
+            print(f"     ... i {len(group.files) - MAX_3} więcej")
         
         if self.dry_run:
             # Log dry run
@@ -563,7 +611,7 @@ IMPORTANT:
 - Fix ALL files mentioned above"""
         # Logowanie promptu (pierwsze 500 znaków)
         print(f"     📝 Prompt length: {len(prompt)} chars")
-        print(f"     📝 Prompt preview:\n{prompt[:500]}...\n")
+        print(f"     📝 Prompt preview:\n{prompt[:CONSTANT_500]}...\n")
         
         return prompt
     
@@ -615,8 +663,8 @@ IMPORTANT:
             
             # Jeśli timeout i mamy retry, spróbuj ponownie z większym timeout
             if not response_container[0] and attempt < max_retries:
-                print(f"\n      ⏱️  Timeout - retry {attempt + 1}/{max_retries} z timeout={self.timeout * 1.5:.0f}s")
-                self.timeout *= 1.5  # Zwiększ timeout dla retry
+                print(f"\n      ⏱️  Timeout - retry {attempt + 1}/{max_retries} z timeout={self.timeout * TIMEOUT_1:.0f}s")
+                self.timeout *= TIMEOUT_1  # Zwiększ timeout dla retry
                 continue
             
             if error_container[0]:
@@ -627,7 +675,7 @@ IMPORTANT:
                 raise error_container[0]
             
             elapsed = time.time() - start
-            sys.stdout.write(f"\r      ✓ LLM: {elapsed:.1f}s{' ' * 20}\n")
+            sys.stdout.write(f"\r      ✓ LLM: {elapsed:.1f}s{' ' * CONSTANT_20}\n")
             sys.stdout.flush()
             
             # Logowanie odpowiedzi (pierwsze 1000 znaków)
@@ -659,15 +707,15 @@ IMPORTANT:
             # Strip markdown code blocks if present
             fixed_content = fixed_content.strip()
             if fixed_content.startswith('```python'):
-                fixed_content = fixed_content[9:].strip()
+                fixed_content = fixed_content[CONSTANT_9:].strip()
             elif fixed_content.startswith('```'):
-                fixed_content = fixed_content[3:].strip()
+                fixed_content = fixed_content[MAX_3:].strip()
             if fixed_content.endswith('```'):
-                fixed_content = fixed_content[:-3].strip()
+                fixed_content = fixed_content[:-MAX_3].strip()
             
             print(f"     [{idx+1}] Parsowanie: {filepath}")
             print(f"         Content length: {len(fixed_content)} chars")
-            print(f"         Content preview: {fixed_content[:200]}...")
+            print(f"         Content preview: {fixed_content[:CONSTANT_200]}...")
             
             try:
                 path = Path(filepath)
@@ -737,7 +785,7 @@ IMPORTANT:
                 
                 if not validation.is_valid:
                     print(f"     ⚠️  Walidacja nie przeszła dla {filepath}:")
-                    for error in validation.errors[:3]:  # Pokaż max 3 błędy
+                    for error in validation.errors[:MAX_3]:  # Pokaż max MAX_3 błędy
                         print(f"        - {error}")
                     
                     # Rollback - przywróć oryginalną zawartość

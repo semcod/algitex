@@ -20,9 +20,6 @@ Skopiuj i edytuj plik .env:
 
 ```bash
 cp .env.example .env
-# Edytuj .env z Twoimi wartościami
-```
-
 ## Uruchomienie
 
 ```bash
@@ -46,9 +43,6 @@ Dla każdego IDE pokazuje:
 | free       | Gemini 2.5        | planning, analysis         |
 | local      | Qwen 3B           | offline, autocomplete      |
 
-## Start proxym
-
-```bash
 # Opcja A: Docker
 docker compose up -d
 

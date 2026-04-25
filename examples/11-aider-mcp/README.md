@@ -29,9 +29,6 @@ export ANTHROPIC_API_KEY=your_key
 make run
 ```
 
-## CLI Commands
-
-```bash
 # Spawn aider-mcp
 algitex docker spawn aider-mcp
 

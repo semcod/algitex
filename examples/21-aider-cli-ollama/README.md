@@ -30,8 +30,6 @@ algitex todo run              # Wykonaj wszystkie zadania z TODO.md
 make setup    # Sprawdź zależności
 ```
 
-## Użycie
-
 ### Krok 1: Analiza kodu i stworzenie TODO.md
 
 ```bash
@@ -42,25 +40,13 @@ python -c "from algitex import Project; p = Project('.'); p.generate_todo()"
 
 To stworzy `TODO.md` z listą problemów (unused imports, complex functions, etc.).
 
-### Krok 2: Wykonaj zadania z TODO.md
-
-```bash
-# Wykonaj wszystkie zadania
-algitex todo run
-
 # Wykonaj tylko pierwsze 3 zadań
 algitex todo run --limit 3
-
-# Tylko zadania "fix" (filtruje po słowach kluczowych: fix, repair, missing, itp.)
-algitex todo fix
 
 # Użyj Python API
 python -c "from algitex import Project; p = Project('.'); p.fix_issues()"
 ```
 
-### Ręczne użycie aider z ollama
-
-```bash
 # Bezpośrednie użycie aider CLI
 aider --model ollama/qwen3-coder:latest \
       --message "Add type hints to this function" \

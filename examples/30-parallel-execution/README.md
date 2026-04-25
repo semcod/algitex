@@ -21,19 +21,6 @@ This example demonstrates algitex's parallel execution capabilities using AST-le
 - `parallel_real_world.py` - Real-world scenario
 - `Makefile` - Build and run commands
 
-## Quick Start
-
-```bash
-# Install algitex
-pip install -e .
-
-# Run the example
-make run
-
-# Or manually
-python main.py
-```
-
 ## What It Does
 
 1. Analyzes codebase to extract AST regions

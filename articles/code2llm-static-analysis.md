@@ -47,9 +47,6 @@ Current focus: article view generator for publishable health reports, HTML dashb
 ```bash
 pip install code2llm
 code2llm ./ -f all -o ./analysis
-# analysis.toon, evolution.toon, map.toon, flow.toon, context.md
-```
-
 ## Links
 
 - **Repository**: [github.com/wronai/code2llm](https://github.com/wronai/code2llm)

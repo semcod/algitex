@@ -10,8 +10,6 @@ featured_image: algitex-ecosystem.png
 status: publish
 ---
 
-# algitex — Progressive Algorithmization for LLM-Assisted Development
-
 ## The Problem Nobody Else Is Solving
 
 LLM frameworks help you build things. None of them help you stop paying for the same LLM call over and over.

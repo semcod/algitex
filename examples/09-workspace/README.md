@@ -14,16 +14,6 @@ This example demonstrates how to use the workspace module to orchestrate multipl
 - Execute tickets across the entire ecosystem
 - Advanced workspace features and queries
 
-## Running the Example
-
-```bash
-# Install dependencies
-pip install algitex
-
-# Run the workspace example
-python main.py
-```
-
 ## What You'll See
 
 1. **Workspace Creation** - Setting up a microservices ecosystem

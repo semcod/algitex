@@ -17,14 +17,13 @@ Usage:
 from __future__ import annotations
 
 import gc
-import sys
 import time
 import tempfile
 import tracemalloc
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, List, Optional, Callable, Any
-from statistics import mean, stdev
+from typing import Dict, List, Callable, Any
+from statistics import mean
 
 
 @dataclass

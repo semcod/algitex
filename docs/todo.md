@@ -1,17 +1,4 @@
-# algitex todo - wykonywanie zadań przez Docker MCP
-
-## Szybki start
-
 ```bash
-# Wyświetl zadania z TODO.md
-algitex todo list
-
-# Wykonaj wszystkie zadania przez nap MCP
-algitex todo run
-
-# Wykonaj tylko zadania naprawy kodu
-algitex todo fix
-
 # Podgląd bez wykonywania
 algitex todo run --dry-run
 
@@ -40,8 +27,6 @@ Tier 2: Duże LLM (1%)        → Claude/GPT-4o, tylko złożone
 | **0** | Algorytm | `unused_import`, `return_type`, `fstring`, `magic_known`, `module_block` | Deterministyczny | ~1500/s |
 | **1** | Małe LLM | `magic`, `docstring`, `rename`, `guard_clause`, `dispatch` | Ollama 7B | ~50-100/s |
 | **2** | Duże LLM | `split_function`, `dependency_cycle`, `architecture`, `other` | Claude/GPT-4o | ~5-10/s |
-
-### CLI - Komendy trój-tierowe
 
 ```bash
 # Statystyki tierów i kategorii
@@ -73,8 +58,6 @@ System inteligentnie kieruje naprawy magic numbers na podstawie znanych stałych
 
 - **Znane stałe** (200 → `HTTP_OK`, 404 → `HTTP_NOT_FOUND`): Tier 0, natychmiastowa zamiana
 - **Nieznane stałe** (42, 7, 86400): Tier 1, małe LLM sugeruje nazwę
-
-## BatchFix - grupowanie i optymalizacja
 
 ```bash
 # Weryfikacja - sprawdź które zadania są nadal aktualne
@@ -139,13 +122,9 @@ BatchFix automatycznie generuje logi w formacie markdown w katalogu `.algitex/lo
 ```bash
 # Log zapisywany automatycznie
 algitex todo batch --execute
-# Log zapisany: .algitex/logs/batch_YYYYMMDD_HHMMSS.md
-
 # Wyłączenie logowania
 algitex todo batch --execute --no-log
 ```
-
-### Struktura logu
 
 ```markdown
 # BatchFix Session Log
@@ -169,7 +148,6 @@ algitex todo batch --execute --no-log
 | Dry Run | 1 |
 | Total Duration | 45.2s |
 
-## Details
 ### [1/3] unused_import
 **Status:** ✅ `success`
 **Duration:** 15.3s
@@ -227,8 +205,6 @@ tools:
       - apply_patch
       - validate_fix
 ```
-
-## Przykład workflow
 
 ```bash
 # 1. Generowanie TODO przez prefact

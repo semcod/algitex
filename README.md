@@ -1,5 +1,20 @@
 # algitex
 
+
+## AI Cost Tracking
+
+![PyPI](https://img.shields.io/badge/pypi-costs-blue) ![Version](https://img.shields.io/badge/version-0.1.60-blue) ![Python](https://img.shields.io/badge/python-3.9+-blue) ![License](https://img.shields.io/badge/license-Apache--2.0-green)
+![AI Cost](https://img.shields.io/badge/AI%20Cost-$11.69-orange) ![Human Time](https://img.shields.io/badge/Human%20Time-13.4h-blue) ![Model](https://img.shields.io/badge/Model-openrouter%2Fqwen%2Fqwen3--coder--next-lightgrey)
+
+- 🤖 **LLM usage:** $11.6877 (67 commits)
+- 👤 **Human dev:** ~$1345 (13.4h @ $100/h, 30min dedup)
+
+Generated on 2026-04-20 using [openrouter/qwen/qwen3-coder-next](https://openrouter.ai/qwen/qwen3-coder-next)
+
+---
+
+
+
 **Progressive algorithmization toolchain — from LLM to deterministic code, from proxy to tickets.**
 
 > The only framework that automates the path from "LLM handles everything"
@@ -49,8 +64,6 @@ Stage 5: Optimization → Minimize LLM dependency, reduce costs
 | loopcode | Loop + code | Reverse reads awkward |
 | prodev | Progressive + dev | Too generic, SEO nightmare |
 
-## Three layers, one command
-
 ### Layer 1: Code Quality Loop
 ```python
 from algitex import Project
@@ -83,9 +96,6 @@ wf = Workflow("./refactor-v1.md")
 wf.execute()   # runs propact:shell, propact:rest, propact:llm blocks
 ```
 
-## CLI
-
-```bash
 # Core loop
 algitex init ./my-app         # initialize project
 algitex analyze               # health check
@@ -216,9 +226,6 @@ algitex dashboard export --format json --output metrics.json --duration 60
 algitex dashboard export --format prometheus --output metrics.prom
 ```
 
-### Dashboard Integration with TODO Commands
-
-```bash
 # Live dashboard during 3-tier fix
 algitex todo fix --all --dashboard
 
@@ -248,9 +255,6 @@ result.print_report()
 
 # Compare modes
 comparison = compare_modes("TODO.md", limit=50, workers=8)
-# Shows: sequential vs parallel speedup, throughput, efficiency
-```
-
 ### Auto-fix Categories
 
 | Category | Auto-fixable | Description |
@@ -387,9 +391,6 @@ Stage 5: Optimization  → most traffic deterministic, LLM for edge cases only
 
 No existing framework automates this path. DSPy goes LLM→smaller LLM. algitex goes LLM→algorithm.
 
-## Propact: Markdown as Workflow
-
-```markdown
 # Fix Authentication Module
 
 Analyze current state:
@@ -436,9 +437,6 @@ pip install algitex[tickets]       # + planfile
 pip install algitex[routing]       # + llx
 ```
 
-## Examples
-
-```bash
 # Quickstart — three main objects (Project, Loop, Workflow)
 cd examples/01-quickstart
 make run
@@ -662,6 +660,17 @@ src/algitex/
 ## License
 
 Licensed under Apache-2.0.
-## Author
+## Status
 
-Tom Sapletta
+_Last updated by [taskill](https://github.com/oqlos/taskill) at 2026-04-25 09:28 UTC_
+
+| Metric | Value |
+|---|---|
+| HEAD | `6e56e90` |
+| Coverage | — |
+| Failing tests | — |
+| Commits in last cycle | 50 |
+
+> The project focused on extensive refactoring of documentation and examples, along with fixes and features enhancing the CLI interface and deep code analysis engine.
+
+<!-- taskill:status:end -->

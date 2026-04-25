@@ -20,15 +20,6 @@ Continue.dev to darmowe rozszerzenie VS Code/IntelliJ które:
 - Rozszerzenie Continue.dev
 - Ollama uruchomiony lokalnie
 
-## Konfiguracja
-
-### 1. Zainstaluj Continue.dev
-
-```bash
-# W VS Code
-# Extensions → Search "Continue" → Install
-```
-
 ### 2. Skonfiguruj Ollama w Continue
 
 Stwórz lub edytuj `~/.continue/config.json`:
@@ -75,30 +66,11 @@ Stwórz lub edytuj `~/.continue/config.json`:
 }
 ```
 
-### 3. Użycie w VS Code
-
-```bash
 # Skróty klawiszowe (default):
 Ctrl+L          # Otwórz Continue panel
 Ctrl+Shift+L    # Nowa sesja czatu
 Ctrl+I          # Inline edit (zaznacz kod, potem Ctrl+I)
 Tab             # Autocomplete (jeśli włączone)
-```
-
-## Workflow z algitex
-
-```bash
-# 1. Analiza kodu
-algitex analyze
-
-# 2. Otwórz VS Code z Continue
-# Ctrl+L → wybierz model "Qwen Coder 7B"
-
-# 3. Zaznacz kod z błędem w buggy_code.py
-# Ctrl+I → napisz "Fix this issue"
-
-# 4. Lub użyj custom command:
-# Zaznacz kod → /refactor
 ```
 
 ## Generowanie config.json
@@ -118,18 +90,8 @@ make setup    # Generuje ~/.continue/config.json
 | Offline | ✅ | ✅ | ✅ |
 | Best for | Daily coding | Complex refactor | Quick fixes |
 
-## CLI Commands (Continue.dev ma też CLI)
-
-```bash
 # Install CLI
 pip install continuedev
-
-# Usage
-continue --help
-
-# W tym przykładzie używamy tylko konfiguracji
-# Samo Continue.dev działa w VS Code
-```
 
 ## Troubleshooting
 

@@ -40,26 +40,11 @@ Kompletny pipeline CI/CD działający w 100% lokalnie bez zewnętrznych API keys
 └────────────────────────────────────────────────────────────┘
 ```
 
-## Szybki Start
-
-```bash
-# 1. Zbuduj wszystkie lokalne obrazy
-make build
-
-# 2. Uruchom cały stack
-make up
-
-# 3. Sprawdź status
-make status
-
 # 4. Uruchom przykład
 cd examples/20-self-hosted-pipeline
 make run
 ```
 
-## Pełny Pipeline z przykładowym kodem
-
-```bash
 # 1. Analiza kodu z błędami
 curl -X POST http://localhost:8081/analyze \
   -H "Content-Type: application/json" \
@@ -86,9 +71,6 @@ algitex fix buggy_code.py --model ollama/qwen3-coder:latest
 - Path traversal w `cleanup_old_files`
 - Deserialization vulnerability w `generate_report`
 
-## Pełny Pipeline Lokalny
-
-```bash
 # Analiza kodu lokalnie
 curl -X POST http://localhost:8081/analyze \
   -H "Content-Type: application/json" \

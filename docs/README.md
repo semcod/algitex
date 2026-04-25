@@ -9,8 +9,6 @@
 **License:** Apache-2.0[(LICENSE)](./LICENSE)  
 **Repository:** [https://github.com/semcod/algitex](https://github.com/semcod/algitex)
 
-## Installation
-
 ### From PyPI
 
 ```bash
@@ -36,11 +34,6 @@ pip install algitex[routing]    # routing features
 pip install algitex[dev]    # development tools
 ```
 
-## Quick Start
-
-### CLI Usage
-
-```bash
 # Generate full documentation for your project
 algitex ./my-project
 
@@ -151,9 +144,18 @@ Content outside the markers is preserved when regenerating. Enable this with `sy
 
 ```
 algitex/
-        ├── vallm_server    ├── fix_readme        ├── vallm_mcp_server        ├── proxym_server    ├── generate_lib_docs        ├── planfile_mcp_server        ├── proxym_mcp_server        ├── aider_mcp_server        ├── code2llm_server        ├── cli/        ├── project/    ├── algitex/        ├── code2llm_mcp_server        ├── config        ├── dashboard        ├── metrics        ├── prefact_integration            ├── loop        ├── shared_rules        ├── benchmark            ├── ollama_cache        ├── algo/        ├── nlp/            ├── config            ├── proxy            ├── autofix/            ├── todo_parser            ├── cicd            ├── mcp            ├── docker_transport            ├── ollama            ├── parallel/            ├── workspace            ├── docker        ├── tools/            ├── telemetry            ├── context            ├── ide            ├── tickets            ├── services            ├── todo_executor            ├── logging            ├── todo_runner            ├── todo_actions            ├── todo_local            ├── feedback            ├── batch            ├── dashboard            ├── docker            ├── benchmark            ├── ticket            ├── microtask            ├── parallel            ├── metrics            ├── algo            ├── benchmark            ├── workflow            ├── core            ├── nlp            ├── workflow            ├── config            ├── mcp            ├── autofix            ├── ollama        ├── propact/            ├── ide            ├── services            ├── benchmark            ├── batch            ├── todo            ├── pipeline        ├── workflows/        ├── todo/            ├── micro            ├── classify            ├── fixer            ├── analysis            ├── tiering            ├── benchmark            ├── verify            ├── repair            ├── verifier            ├── prompts            ├── audit            ├── classifier            ├── slicer            ├── hybrid                ├── base                ├── openrouter_backend                ├── fallback_backend            ├── executor                ├── aider_backend                ├── proxy_backend                ├── ollama_backend        ├── microtask/                ├── partitioner                ├── batch_logger                ├── extractor                ├── executor                ├── models        ├── main        ├── buggy_code        ├── buggy_code        ├── main        ├── main        ├── main                ├── batch_backend        ├── workspace_parallel        ├── main        ├── parallel_multi_tool        ├── parallel_refactoring        ├── parallel_real_world        ├── main        ├── main        ├── main        ├── main        ├── main        ├── main        ├── file3        ├── main        ├── main        ├── file2        ├── main        ├── file1        ├── main        ├── main        ├── main        ├── buggy_code        ├── main        ├── main        ├── main        ├── main        ├── main        ├── main        ├── buggy_code        ├── buggy_code        ├── main        ├── main        ├── main        ├── main        ├── buggy_code        ├── main        ├── main        ├── main        ├── mcp_orchestrator        ├── main        ├── main        ├── main        ├── main        ├── abpr_pipeline        ├── main        ├── buggy_code                ├── main        ├── main            ├── main        ├── main            ├── complex_module            ├── file3            ├── calculator            ├── file2├── project            ├── file1        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── main        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run        ├── run            ├── app```
-
-## API Overview
+├── cli/                    # CLI commands
+├── algo/                   # Progressive algorithmization
+├── propact/                # Markdown workflow engine
+├── todo/                   # TODO fixing system
+├── microtask/              # Atomic tasks for small LLMs
+├── nlp/                    # Deterministic NLP refactors
+├── tools/                  # Tool integrations
+│   ├── proxy.py            # proxym wrapper
+│   ├── analysis.py         # code2llm + vallm + redup
+│   └── tickets.py          # planfile wrapper
+└── workflows/              # Pipeline orchestration
+```
 
 ### Classes
 
@@ -702,198 +704,6 @@ algitex/
 - `cleanup_sample_workspace()` — Clean up the sample workspace.
 
 
-## Project Structure
-
-📄 `docker.aider-mcp.aider_mcp_server` (5 functions)
-📄 `docker.code2llm.code2llm_mcp_server` (9 functions)
-📄 `docker.code2llm.code2llm_server` (9 functions, 1 classes)
-📄 `docker.planfile-mcp.planfile_mcp_server` (10 functions)
-📄 `docker.proxym.proxym_mcp_server` (10 functions)
-📄 `docker.proxym.proxym_server` (7 functions, 1 classes)
-📄 `docker.vallm.vallm_mcp_server` (8 functions)
-📄 `docker.vallm.vallm_server` (9 functions, 1 classes)
-📄 `examples.01-quickstart.main` (1 functions)
-📄 `examples.01-quickstart.run`
-📄 `examples.02-algo-loop.main` (1 functions)
-📄 `examples.02-algo-loop.run`
-📄 `examples.03-pipeline.main` (1 functions)
-📄 `examples.03-pipeline.run`
-📄 `examples.04-ide-integration.main` (8 functions)
-📄 `examples.04-ide-integration.run`
-📄 `examples.05-cost-tracking.main` (1 functions)
-📄 `examples.05-cost-tracking.run`
-📄 `examples.06-telemetry.main` (4 functions)
-📄 `examples.06-telemetry.run`
-📄 `examples.07-context.main` (5 functions)
-📄 `examples.07-context.run`
-📄 `examples.08-feedback.main` (6 functions)
-📄 `examples.08-feedback.run`
-📄 `examples.09-workspace.main` (11 functions)
-📄 `examples.09-workspace.run`
-📄 `examples.10-cicd.main` (8 functions)
-📄 `examples.10-cicd.run`
-📄 `examples.11-aider-mcp.main` (2 functions)
-📄 `examples.11-aider-mcp.run`
-📄 `examples.11-aider-mcp.sample_project.calculator` (1 functions)
-📄 `examples.12-filesystem-mcp.main` (2 functions)
-📄 `examples.12-filesystem-mcp.run`
-📄 `examples.12-filesystem-mcp.sample_files.src.main` (1 functions)
-📄 `examples.13-vallm.main` (3 functions)
-📄 `examples.13-vallm.run`
-📄 `examples.13-vallm.sample_code.complex_module` (2 functions)
-📄 `examples.14-docker-mcp.main` (3 functions)
-📄 `examples.14-docker-mcp.run`
-📄 `examples.14-docker-mcp.sample_docker_project.app` (1 functions, 1 classes)
-📄 `examples.15-github-mcp.main` (2 functions)
-📄 `examples.15-github-mcp.run`
-📄 `examples.15-github-mcp.sample_github_project.main` (1 functions)
-📄 `examples.17-docker-workflow.main` (5 functions)
-📄 `examples.17-docker-workflow.run`
-📄 `examples.18-ollama-local.buggy_code` (7 functions)
-📄 `examples.18-ollama-local.main` (8 functions)
-📄 `examples.18-ollama-local.run`
-📄 `examples.19-local-mcp-tools.buggy_code` (8 functions, 1 classes)
-📄 `examples.19-local-mcp-tools.main` (2 functions)
-📄 `examples.19-local-mcp-tools.run`
-📄 `examples.20-self-hosted-pipeline.buggy_code` (12 functions, 1 classes)
-📄 `examples.20-self-hosted-pipeline.main` (1 functions)
-📄 `examples.20-self-hosted-pipeline.run`
-📄 `examples.21-aider-cli-ollama.buggy_code` (10 functions, 1 classes)
-📄 `examples.21-aider-cli-ollama.main` (1 functions)
-📄 `examples.21-aider-cli-ollama.run`
-📄 `examples.22-claude-code-ollama.buggy_code` (6 functions, 1 classes)
-📄 `examples.22-claude-code-ollama.main` (1 functions)
-📄 `examples.22-claude-code-ollama.run`
-📄 `examples.23-continue-dev-ollama.buggy_code` (6 functions, 1 classes)
-📄 `examples.23-continue-dev-ollama.main` (1 functions)
-📄 `examples.23-continue-dev-ollama.run`
-📄 `examples.24-ollama-batch.file1` (3 functions)
-📄 `examples.24-ollama-batch.file2` (3 functions)
-📄 `examples.24-ollama-batch.file3` (3 functions, 1 classes)
-📄 `examples.24-ollama-batch.main` (1 functions)
-📄 `examples.24-ollama-batch.run`
-📄 `examples.25-local-model-comparison.main` (1 functions)
-📄 `examples.25-local-model-comparison.run`
-📄 `examples.26-litellm-proxy-ollama.buggy_code` (6 functions, 1 classes)
-📄 `examples.26-litellm-proxy-ollama.main` (1 functions)
-📄 `examples.26-litellm-proxy-ollama.run`
-📄 `examples.27-unified-autofix.main` (1 functions)
-📄 `examples.28-mcp-orchestration.main` (1 functions)
-📄 `examples.28-mcp-orchestration.mcp_orchestrator` (1 functions)
-📄 `examples.30-parallel-execution.main` (1 functions)
-📄 `examples.30-parallel-execution.parallel_multi_tool` (1 functions)
-📄 `examples.30-parallel-execution.parallel_real_world` (2 functions)
-📄 `examples.30-parallel-execution.parallel_refactoring` (1 functions)
-📄 `examples.31-abpr-workflow.abpr_pipeline` (1 functions)
-📄 `examples.31-abpr-workflow.main` (1 functions)
-📄 `examples.32-workspace-coordination.main` (9 functions)
-📄 `examples.32-workspace-coordination.workspace_parallel` (1 functions)
-📄 `examples.33-hybrid-autofix.main` (10 functions)
-📄 `examples.34-batch-fix.main` (5 functions)
-📄 `examples.34-batch-fix.sample_code.file1` (3 functions)
-📄 `examples.34-batch-fix.sample_code.file2` (3 functions)
-📄 `examples.34-batch-fix.sample_code.file3` (1 functions)
-📄 `examples.35-sprint3-patterns.main` (5 functions)
-📄 `examples.36-dashboard.main` (5 functions)
-📄 `examples.37-benchmarks.main` (6 functions)
-📄 `examples.38-new-modules.main` (5 functions)
-📄 `examples.39-microtask-pipeline.main` (5 functions)
-📄 `examples.40-three-tier-autofix.main` (6 functions)
-📄 `project`
-📄 `scripts.fix_readme` (1 functions)
-📄 `scripts.generate_lib_docs` (7 functions)
-📦 `src.algitex`
-📦 `src.algitex.algo` (12 functions, 5 classes)
-📄 `src.algitex.algo.loop`
-📄 `src.algitex.benchmark` (17 functions, 6 classes)
-📦 `src.algitex.cli` (11 functions)
-📄 `src.algitex.cli.algo` (4 functions)
-📄 `src.algitex.cli.benchmark` (5 functions)
-📄 `src.algitex.cli.core` (11 functions)
-📄 `src.algitex.cli.dashboard` (3 functions)
-📄 `src.algitex.cli.docker` (5 functions)
-📄 `src.algitex.cli.metrics` (4 functions)
-📄 `src.algitex.cli.microtask` (10 functions)
-📄 `src.algitex.cli.nlp` (7 functions)
-📄 `src.algitex.cli.parallel` (6 functions)
-📄 `src.algitex.cli.ticket` (3 functions)
-📄 `src.algitex.cli.todo` (21 functions)
-📄 `src.algitex.cli.workflow` (2 functions)
-📄 `src.algitex.config` (7 functions, 4 classes)
-📄 `src.algitex.dashboard` (24 functions, 4 classes)
-📄 `src.algitex.metrics` (15 functions, 4 classes)
-📦 `src.algitex.microtask` (2 functions, 3 classes)
-📄 `src.algitex.microtask.classifier` (8 functions)
-📄 `src.algitex.microtask.executor` (29 functions, 2 classes)
-📄 `src.algitex.microtask.prompts` (6 functions, 2 classes)
-📄 `src.algitex.microtask.slicer` (7 functions, 1 classes)
-📦 `src.algitex.nlp` (19 functions, 5 classes)
-📄 `src.algitex.prefact_integration` (18 functions, 3 classes)
-📦 `src.algitex.project` (22 functions, 1 classes)
-📄 `src.algitex.project.autofix` (5 functions, 1 classes)
-📄 `src.algitex.project.batch` (3 functions, 1 classes)
-📄 `src.algitex.project.benchmark` (4 functions, 1 classes)
-📄 `src.algitex.project.config` (5 functions, 1 classes)
-📄 `src.algitex.project.ide` (6 functions, 1 classes)
-📄 `src.algitex.project.mcp` (8 functions, 1 classes)
-📄 `src.algitex.project.ollama` (5 functions, 1 classes)
-📄 `src.algitex.project.services` (4 functions, 1 classes)
-📦 `src.algitex.propact` (18 functions, 3 classes)
-📄 `src.algitex.propact.workflow`
-📄 `src.algitex.shared_rules` (18 functions, 7 classes)
-📦 `src.algitex.todo` (1 functions)
-📄 `src.algitex.todo.audit` (13 functions, 3 classes)
-📄 `src.algitex.todo.benchmark` (6 functions, 1 classes)
-📄 `src.algitex.todo.classify` (3 functions, 1 classes)
-📄 `src.algitex.todo.fixer` (17 functions, 2 classes)
-📄 `src.algitex.todo.hybrid` (10 functions, 4 classes)
-📄 `src.algitex.todo.micro` (19 functions, 5 classes)
-📄 `src.algitex.todo.repair` (7 functions)
-📄 `src.algitex.todo.tiering` (8 functions, 1 classes)
-📄 `src.algitex.todo.verifier` (8 functions, 3 classes)
-📄 `src.algitex.todo.verify` (7 functions, 2 classes)
-📦 `src.algitex.tools` (4 functions, 1 classes)
-📄 `src.algitex.tools.analysis` (8 functions, 3 classes)
-📦 `src.algitex.tools.autofix` (14 functions, 1 classes)
-📄 `src.algitex.tools.autofix.aider_backend` (11 functions, 1 classes)
-📄 `src.algitex.tools.autofix.base` (2 functions, 3 classes)
-📄 `src.algitex.tools.autofix.batch_backend` (16 functions, 2 classes)
-📄 `src.algitex.tools.autofix.batch_logger` (17 functions, 3 classes)
-📄 `src.algitex.tools.autofix.fallback_backend` (7 functions, 2 classes)
-📄 `src.algitex.tools.autofix.ollama_backend` (7 functions, 1 classes)
-📄 `src.algitex.tools.autofix.openrouter_backend` (12 functions, 1 classes)
-📄 `src.algitex.tools.autofix.proxy_backend` (12 functions, 1 classes)
-📄 `src.algitex.tools.batch` (20 functions, 4 classes)
-📄 `src.algitex.tools.benchmark` (19 functions, 4 classes)
-📄 `src.algitex.tools.cicd` (11 functions, 1 classes)
-📄 `src.algitex.tools.config` (16 functions, 1 classes)
-📄 `src.algitex.tools.context` (14 functions, 3 classes)
-📄 `src.algitex.tools.docker` (20 functions, 3 classes)
-📄 `src.algitex.tools.docker_transport` (17 functions, 1 classes)
-📄 `src.algitex.tools.feedback` (12 functions, 4 classes)
-📄 `src.algitex.tools.ide` (22 functions, 6 classes)
-📄 `src.algitex.tools.logging` (11 functions, 1 classes)
-📄 `src.algitex.tools.mcp` (18 functions, 2 classes)
-📄 `src.algitex.tools.ollama` (16 functions, 4 classes)
-📄 `src.algitex.tools.ollama_cache` (14 functions, 3 classes)
-📦 `src.algitex.tools.parallel`
-📄 `src.algitex.tools.parallel.executor` (11 functions, 1 classes)
-📄 `src.algitex.tools.parallel.extractor` (7 functions, 1 classes)
-📄 `src.algitex.tools.parallel.models` (1 functions, 4 classes)
-📄 `src.algitex.tools.parallel.partitioner` (7 functions, 1 classes)
-📄 `src.algitex.tools.proxy` (9 functions, 2 classes)
-📄 `src.algitex.tools.services` (20 functions, 3 classes)
-📄 `src.algitex.tools.telemetry` (9 functions, 2 classes)
-📄 `src.algitex.tools.tickets` (11 functions, 2 classes)
-📄 `src.algitex.tools.todo_actions` (7 functions)
-📄 `src.algitex.tools.todo_executor` (12 functions, 2 classes)
-📄 `src.algitex.tools.todo_local` (11 functions, 2 classes)
-📄 `src.algitex.tools.todo_parser` (8 functions, 2 classes)
-📄 `src.algitex.tools.todo_runner` (12 functions, 2 classes)
-📄 `src.algitex.tools.workspace` (20 functions, 2 classes)
-📦 `src.algitex.workflows` (19 functions, 3 classes)
-📄 `src.algitex.workflows.pipeline`
-
 ## Requirements
 
 - Python >= >=3.10
@@ -905,21 +715,14 @@ algitex/
 - Tom Softreck <tom@sapletta.com>
 - Tom Sapletta <tom-sapletta-com@users.noreply.github.com>
 
-We welcome contributions! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
+We welcome contributions! Please see [CONTRIBUTING.md](https://github.com/wronai/algitex/blob/main/CONTRIBUTING.md) for guidelines.
 
-### Development Setup
-
-```bash
 # Clone the repository
 git clone https://github.com/semcod/algitex
 cd algitex
 
 # Install in development mode
 pip install -e ".[dev]"
-
-# Run tests
-pytest
-```
 
 ## Documentation
 
@@ -934,15 +737,15 @@ pytest
 | Output | Description | Link |
 |--------|-------------|------|
 | `README.md` | Project overview (this file) | — |
-| `docs/api.md` | Consolidated API reference | [View](./docs/api.md) |
-| `docs/modules.md` | Module reference with metrics | [View](./docs/modules.md) |
-| `docs/architecture.md` | Architecture with diagrams | [View](./docs/architecture.md) |
-| `docs/dependency-graph.md` | Dependency graphs | [View](./docs/dependency-graph.md) |
-| `docs/coverage.md` | Docstring coverage report | [View](./docs/coverage.md) |
-| `docs/getting-started.md` | Getting started guide | [View](./docs/getting-started.md) |
-| `docs/configuration.md` | Configuration reference | [View](./docs/configuration.md) |
-| `docs/api-changelog.md` | API change tracking | [View](./docs/api-changelog.md) |
-| `CONTRIBUTING.md` | Contribution guidelines | [View](./CONTRIBUTING.md) |
+| `docs/api.md` | Consolidated API reference | [View](https://github.com/wronai/algitex/blob/main/docs/api.md) |
+| `docs/modules.md` | Module reference with metrics | [View](https://github.com/wronai/algitex/blob/main/docs/modules.md) |
+| `docs/architecture.md` | Architecture with diagrams | [View](https://github.com/wronai/algitex/blob/main/docs/architecture.md) |
+| `docs/dependency-graph.md` | Dependency graphs | [View](https://github.com/wronai/algitex/blob/main/docs/dependency-graph.md) |
+| `docs/coverage.md` | Docstring coverage report | [View](https://github.com/wronai/algitex/blob/main/docs/coverage.md) |
+| `docs/getting-started.md` | Getting started guide | [View](https://github.com/wronai/algitex/blob/main/docs/getting-started.md) |
+| `docs/configuration.md` | Configuration reference | [View](https://github.com/wronai/algitex/blob/main/docs/configuration.md) |
+| `docs/api-changelog.md` | API change tracking | [View](https://github.com/wronai/algitex/blob/main/docs/api-changelog.md) |
+| `CONTRIBUTING.md` | Contribution guidelines | [View](https://github.com/wronai/algitex/blob/main/CONTRIBUTING.md) |
 | `examples/` | Usage examples | [Browse](./examples) |
 | `mkdocs.yml` | MkDocs configuration | — |
 

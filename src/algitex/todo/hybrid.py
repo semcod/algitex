@@ -23,12 +23,10 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field
 from pathlib import Path
-from collections import deque
 import threading
 from typing import Optional
 
-from algitex.todo.fixer import parse_todo, FIXERS, TodoTask, fix_file, FixResult
-from algitex.todo.verifier import TodoVerifier
+from algitex.todo.fixer import parse_todo, FIXERS, TodoTask
 from algitex.todo.audit import AuditLogger
 
 

@@ -22,9 +22,6 @@ Ten przykład pokazuje batch processing z:
 - **Progress tracking** (widać co się dzieje)
 - **Resume** (można przerwać i wznowić)
 
-## Użycie
-
-```bash
 # 1. Analiza wielu plików równolegle
 python batch_analyze.py --dir ./src --pattern "*.py"
 
@@ -35,9 +32,6 @@ python batch_refactor.py --todo TODO.md --parallel 4
 python batch_document.py --dir ./src --output ./docs
 ```
 
-## Konfiguracja
-
-```bash
 # Ustawienia w .env
 OLLAMA_URL=http://localhost:11434
 OLLAMA_MODEL=qwen3-coder:latest
@@ -92,12 +86,6 @@ Hotspots:
 
 Output saved to: .batch_results/analysis_20260328.json
 ```
-
-## Resume przerwanej pracy
-
-```bash
-# Przerwano po 50 plikach
-Ctrl+C
 
 # Wznów od miejsca przerwania
 python batch_analyze.py --resume

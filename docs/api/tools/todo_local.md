@@ -9,8 +9,6 @@ Handles common prefact-style fixes:
 - Add module execution blocks
 
 
-## Classes
-
 ### `LocalTaskResult`
 
 Result of executing a single task locally.

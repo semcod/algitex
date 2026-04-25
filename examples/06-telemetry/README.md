@@ -14,16 +14,6 @@ This example demonstrates how to use the telemetry module to track costs and per
 - Budget tracking and alerts
 - Langfuse integration (optional)
 
-## Running the Example
-
-```bash
-# Install dependencies
-pip install algitex
-
-# Run the telemetry example
-python main.py
-```
-
 ## What You'll See
 
 1. **Basic Telemetry** - Creating spans and tracking operations

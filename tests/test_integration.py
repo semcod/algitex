@@ -1,15 +1,12 @@
 """Integration tests — end-to-end workflows without external services."""
 
-import json
 import pytest
-from pathlib import Path
-from unittest.mock import patch, MagicMock
 
 from algitex import Project, Pipeline
 from algitex.algo import Loop
 from algitex.propact import Workflow
 from algitex.tools.tickets import Tickets
-from algitex.tools.analysis import HealthReport, Analyzer
+from algitex.tools.analysis import HealthReport
 from algitex.tools.proxy import Proxy, LLMResponse
 from algitex.config import Config
 

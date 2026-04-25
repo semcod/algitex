@@ -16,8 +16,6 @@ Every team using LLMs in production hits the same wall: costs grow linearly with
 
 The concept is simple: start with LLM for everything, then systematically replace predictable patterns with deterministic code. "Progressive algorithmization" describes this five-stage journey.
 
-## The Five Stages
-
 ### Stage 1 — Discovery
 
 LLM handles 100% of requests. This is intentional. You're not optimizing yet — you're collecting data. Full trace monitoring (Langfuse, Helicone) captures every request, response, and decision path. The goal is to understand what the LLM is actually doing with your traffic.

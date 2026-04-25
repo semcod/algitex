@@ -43,7 +43,7 @@ Auto-generated documentation from source code.
 | [project.mcp](./project/mcp.md) | 0 | 1 |
 | [project.ollama](./project/ollama.md) | 0 | 1 |
 | [project.services](./project/services.md) | 0 | 1 |
-| [project](./project.md) | 0 | 0 |
+| [project](./project/index.md) | 0 | 0 |
 | [propact](./propact/index.md) | 0 | 3 |
 | [shared_rules](./shared_rules.md) | 2 | 7 |
 | [todo](./todo/index.md) | 1 | 0 |
@@ -67,7 +67,7 @@ Auto-generated documentation from source code.
 | [tools.autofix.fallback_backend](./tools/autofix/fallback_backend.md) | 0 | 2 |
 | [tools.autofix.ollama_backend](./tools/autofix/ollama_backend.md) | 0 | 1 |
 | [tools.autofix.proxy_backend](./tools/autofix/proxy_backend.md) | 0 | 1 |
-| [tools.autofix](./tools/autofix.md) | 0 | 0 |
+| [tools.autofix](./tools/autofix/index.md) | 0 | 0 |
 | [tools.batch](./tools/batch.md) | 0 | 4 |
 | [tools.benchmark](./tools/benchmark.md) | 0 | 4 |
 | [tools.cicd](./tools/cicd.md) | 2 | 1 |
@@ -86,7 +86,7 @@ Auto-generated documentation from source code.
 | [tools.parallel.extractor](./tools/parallel/extractor.md) | 0 | 1 |
 | [tools.parallel.models](./tools/parallel/models.md) | 0 | 4 |
 | [tools.parallel.partitioner](./tools/parallel/partitioner.md) | 0 | 1 |
-| [tools.parallel](./tools/parallel.md) | 0 | 0 |
+| [tools.parallel](./tools/parallel/index.md) | 0 | 0 |
 | [tools.proxy](./tools/proxy.md) | 0 | 2 |
 | [tools.services](./tools/services.md) | 0 | 3 |
 | [tools.telemetry](./tools/telemetry.md) | 0 | 2 |
@@ -98,4 +98,4 @@ Auto-generated documentation from source code.
 | [tools.todo_runner](./tools/todo_runner.md) | 0 | 2 |
 | [tools.workspace](./tools/workspace.md) | 2 | 2 |
 | [workflows](./workflows/index.md) | 0 | 3 |
-| [workflows.pipeline](./workflows/pipeline.md) | 0 | 0 |
+| [workflows.pipeline](./workflows/index.md) | 0 | 0 |

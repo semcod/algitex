@@ -16,8 +16,6 @@ Usage:
 __all__ = ['TodoTask', 'FixResult', 'parse_todo', 'fix_file', 'parallel_fix', 'parallel_fix_and_update', 'mark_tasks_completed', 'FIXERS']
 ```
 
-## Functions
-
 ### `parse_todo`
 
 ```python
@@ -52,20 +50,6 @@ def mark_tasks_completed(todo_path: str | Path, completed_tasks: list[TodoTask])
 ```
 
 Mark completed tasks in TODO.md by changing - [ ] to - [x].
-
-### `parallel_fix_and_update`
-
-```python
-def parallel_fix_and_update(todo_path: str | Path, workers: int=8, dry_run: bool=True, category_filter: str | None=None, categories: set[str] | None=None, tasks: list[TodoTask] | None=None) -> dict[str, int]
-```
-
-Fix tasks and update TODO.md to mark completed tasks.
-
-## Classes
-
-### `TodoTask`
-
-Single TODO task.
 
 ### `FixResult`
 

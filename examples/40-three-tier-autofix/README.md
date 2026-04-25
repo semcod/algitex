@@ -14,11 +14,8 @@ Demonstrates the complete 3-tier autofix workflow.
 ```bash
 cd examples/40-three-tier-autofix
 python main.py
-```
 
-## CLI Commands
 
-```bash
 # Algorithm tier only
 algitex todo fix --algo
 

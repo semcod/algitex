@@ -13,16 +13,6 @@ This example demonstrates how to use the context module to build rich prompts fo
 - Semantic search for related code
 - Prompt engineering improvements
 
-## Running the Example
-
-```bash
-# Install dependencies
-pip install algitex
-
-# Run the context example
-python main.py
-```
-
 ## What You'll See
 
 1. **Basic Context** - Building context from .toon files and project structure

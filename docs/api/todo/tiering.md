@@ -2,8 +2,6 @@
 
 Task tiering and summary helpers for algitex TODO fixes.
 
-## Functions
-
 ### `summarise_tasks`
 
 ```python
@@ -35,8 +33,6 @@ def partition_tasks(tasks: Iterable[Any]) -> dict[str, list[Any]]
 ```
 
 Partition tasks by tier.
-
-## Classes
 
 ### `TierSummary`
 

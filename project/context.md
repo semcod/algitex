@@ -1,5 +1,3 @@
-# System Architecture Analysis
-
 ## Overview
 
 - **Project**: /home/tom/github/semcod/algitex
@@ -10,8 +8,6 @@
 - **Total Classes**: 176
 - **Modules**: 189
 - **Entry Points**: 1011
-
-## Architecture by Module
 
 ### src.algitex.microtask.executor
 - **Functions**: 29
@@ -304,8 +300,6 @@ demo_validation [examples.13-vallm.main]
 dashboard_monitor [src.algitex.cli.dashboard]
 ```
 
-## Key Classes
-
 ### src.algitex.microtask.executor.MicroTaskExecutor
 > Execute micro tasks in three tiers: algorithmic, small LLM, big LLM.
 - **Methods**: 28
@@ -534,8 +528,6 @@ Args:
 ### src.algitex.tools.todo_executor.TodoExecutor._parse_read_action
 > Parse a read/view task.
 - **Output to**: str, str
-
-## Behavioral Patterns
 
 ### recursion_list
 - **Type**: recursion

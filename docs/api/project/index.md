@@ -29,8 +29,6 @@ Usage:
 __all__ = ['Project']
 ```
 
-## Classes
-
 ### `Project(ServiceMixin, AutoFixMixin, OllamaMixin, BatchMixin, BenchmarkMixin, IDEMixin, ConfigMixin, MCPMixin)`
 
 One project, all tools, zero boilerplate.

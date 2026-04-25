@@ -21,8 +21,6 @@ cp .env.example .env
 ./run.sh
 ```
 
-## Trzy wzorce użycia
-
 ### Wzorzec A: Pełny pipeline
 
 ```python

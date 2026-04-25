@@ -20,15 +20,6 @@ This example demonstrates the ABPR philosophy: pipeline-first, prompt-second. In
 - `workflows/` - Example pipeline definitions
 - `Makefile` - Build and run commands
 
-## Quick Start
-
-```bash
-# Install algitex
-pip install -e .
-
-# Run the ABPR demo
-make run
-
 # Run with a specific workflow
 make run-workflow WORKFLOW=fix-auth
 ```

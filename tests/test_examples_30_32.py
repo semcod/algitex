@@ -1,20 +1,21 @@
 """Test examples 30-32: Parallel Execution, ABPR Workflow, and Workspace Coordination."""
 import os
 import sys
-import tempfile
 import yaml
 from pathlib import Path
-from unittest.mock import Mock, patch, MagicMock
+from unittest.mock import Mock, patch
 import pytest
 
 # Add examples to path
 examples_dir = Path(__file__).parent.parent / "examples"
-sys.path.insert(0, str(examples_dir))
+
+if __name__ == "__main__":
+    sys.path.insert(0, str(examples_dir))
 
 # Import example modules
-sys.path.insert(0, str(examples_dir / "30-parallel-execution"))
-sys.path.insert(0, str(examples_dir / "31-abpr-workflow"))
-sys.path.insert(0, str(examples_dir / "32-workspace-coordination"))
+    sys.path.insert(0, str(examples_dir / "30-parallel-execution"))
+    sys.path.insert(0, str(examples_dir / "31-abpr-workflow"))
+    sys.path.insert(0, str(examples_dir / "32-workspace-coordination"))
 
 
 class Test30ParallelExecution:

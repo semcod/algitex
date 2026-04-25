@@ -6,8 +6,6 @@ This module contains action handlers for different MCP tools, keeping the
 TodoRunner class focused on orchestration rather than action details.
 
 
-## Functions
-
 ### `nap_action`
 
 ```python

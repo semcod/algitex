@@ -1,10 +1,6 @@
-# Sprint 7: Real-time Dashboard TUI
-
 ## Overview
 
 Sprint 7 dodaje interaktywny dashboard TUI (Text User Interface) dla monitorowania operacji algitex w czasie rzeczywistym.
-
-## Nowe moduły
 
 ### 1. `algitex.dashboard`
 
@@ -46,8 +42,6 @@ with SimpleProgressTracker() as tracker:
 │ Processed: 125 | Success: 120 | Failed: 5 | Press Ctrl+C        │
 └─────────────────────────────────────────────────────────────────┘
 ```
-
-### 2. CLI Commands
 
 ```bash
 # Live dashboard (runs until Ctrl+C)
@@ -93,8 +87,6 @@ algitex dashboard export --format prometheus --output metrics.prom
 └─────────────────────────────────────────────────────────────┘
 ```
 
-## Komponenty
-
 ### TierState
 
 ```python
@@ -129,8 +121,6 @@ class CacheState:
     @property
     def size_mb(self) -> float
 ```
-
-## Integracja z operacjami
 
 ### Podczas `todo fix --all`
 
@@ -227,19 +217,6 @@ dashboard.stop()
 ## Wyłączone z Sprint 7
 
 WebSocket support został oznaczony jako `pending` — wymaga dodatkowych zależności (websockets, asyncio server) i będzie zaimplementowany w przyszłym sprincie jeśli potrzebny.
-
-## Summary Sprintów 2-7
-
-| Sprint | Cel | Rezultat |
-|--------|-----|----------|
-| 2 | MicroTask + NLP | 6 modułów, CLI `microtask`, `nlp` |
-| 3 | TODO 3-tier integration | `fix --algo`, `--micro`, `--all` |
-| 4 | Cache + Metryki + Prefact | `ollama_cache`, `metrics`, integracja |
-| 5 | Dokumentacja + Testy | 82 nowe testy, docs/ |
-| 6 | Benchmarks | `benchmark` CLI, 18 testów |
-| 7 | Dashboard TUI | `dashboard live`, 28 testów |
-
-**Łącznie: 317 testów, 2 skipped, ~40 nowych modułów**
 
 ## Next Steps
 

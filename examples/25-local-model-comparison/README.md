@@ -25,22 +25,6 @@ Ten przykład uruchamia to samo zadanie na wielu modelach i porównuje:
 - **Koszt** - zużycie RAM/CPU (dla lokalnych = prąd)
 - **Tokeny** - ile tokenów wygenerował
 
-## Użycie
-
-```bash
-# 1. Upewnij się że masz zainstalowane modele
-make setup
-
-# 2. Uruchom benchmark
-make benchmark
-
-# 3. Zobacz wyniki
-make results
-```
-
-## Modele do testowania
-
-```bash
 # Pobierz modele (zajmie ~20GB)
 ollama pull qwen3-coder:latest
 ollama pull llama3:8b
@@ -91,11 +75,6 @@ Recommendation:
 | llama3:8b | General purpose | Code-specific tasks |
 | gemma2:9b | Documentation | Speed-critical tasks |
 
-## Użycie w praktyce
-
-```python
-# W algitex CLI możesz wybrać model per-task
-
 # Szybki autocomplete
 export DEFAULT_MODEL=ollama/qwen3-coder:latest
 
@@ -106,9 +85,6 @@ export DEFAULT_MODEL=ollama/codellama:7b
 export DEFAULT_MODEL=ollama/qwen3-coder:latest
 ```
 
-## Generowanie własnych benchmarków
-
-```bash
 # Dodaj własne zadanie
 python benchmark.py --custom-task ./my_task.py
 

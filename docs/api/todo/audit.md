@@ -5,8 +5,6 @@ Audit and transparency logging for hybrid autofix.
 Provides comprehensive logging of all operations with rollback capability.
 
 
-## Classes
-
 ### `AuditEntry`
 
 Single audit entry for an operation.

@@ -22,14 +22,8 @@ examples/34-batch-fix/
 └── README.md           # Ten plik
 ```
 
-## Użycie
-
-```bash
 # Wejdź do katalogu
 cd examples/34-batch-fix
-
-# 1. Wygeneruj TODO.md z błędami
-prefact generate
 
 # 2. Zobacz co zostanie zbatchowane
 algitex todo batch --dry-run

@@ -14,16 +14,6 @@ This example demonstrates how to use the feedback module for intelligent retry a
 - Complete feedback loop simulation
 - Cost optimization strategies
 
-## Running the Example
-
-```bash
-# Install dependencies
-pip install algitex
-
-# Run the feedback example
-python main.py
-```
-
 ## What You'll See
 
 1. **Basic Feedback** - Default retry policy with model escalation

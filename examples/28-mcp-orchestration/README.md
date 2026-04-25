@@ -20,9 +20,6 @@ The `MCPOrchestrator` class provides:
 ```python
 from algitex import Project
 
-# Initialize project
-p = Project(".")
-
 # List available services
 services = p.mcp.list_services()
 
@@ -46,12 +43,6 @@ p.stop_mcp_services()
 - `filesystem` - Filesystem access MCP
 - `github` - GitHub integration MCP
 - `docker` - Docker control MCP
-
-## Running the Example
-
-```bash
-# Run the main demo
-python main.py
 
 # Start all MCP services
 python -c "from algitex import Project; p = Project('.'); p.start_mcp_services()"

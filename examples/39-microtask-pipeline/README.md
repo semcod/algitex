@@ -16,8 +16,6 @@ cd examples/39-microtask-pipeline
 python main.py
 ```
 
-## CLI Commands
-
 ```bash
 # Classify tasks
 algitex microtask classify TODO.md

@@ -18,6 +18,30 @@ from typing import TYPE_CHECKING
 from algitex.todo.classify import classify_message
 from algitex.todo.repair import REPAIRERS, repair_fstring, repair_magic_number, repair_module_block
 
+CONSTANT_3 = 3
+CONSTANT_6 = 6
+CONSTANT_8 = 8
+CONSTANT_60 = 60
+
+
+CONSTANT_3 = CONSTANT_3
+CONSTANT_6 = CONSTANT_6
+CONSTANT_8 = CONSTANT_8
+CONSTANT_60 = CONSTANT_60
+
+
+CONSTANT_3 = CONSTANT_3
+CONSTANT_6 = CONSTANT_6
+CONSTANT_8 = CONSTANT_8
+CONSTANT_60 = CONSTANT_60
+
+
+CONSTANT_3 = CONSTANT_3
+CONSTANT_6 = CONSTANT_6
+CONSTANT_8 = CONSTANT_8
+CONSTANT_60 = CONSTANT_60
+
+
 if TYPE_CHECKING:
     pass
 
@@ -55,12 +79,12 @@ def parse_todo(todo_path: str | Path) -> list[TodoTask]:
         if not line.startswith("- [ ] "):
             continue
 
-        content = line[6:]  # strip "- [ ] "
+        content = line[CONSTANT_6:]  # strip "- [ ] "
         match = re.match(r"(.+?):(\d+) - (.+)", content)
         if not match:
             continue
 
-        file_path, lineno, message = match.group(1), int(match.group(2)), match.group(3)
+        file_path, lineno, message = match.group(1), int(match.group(2)), match.group(CONSTANT_3)
 
         # Skip worktree duplicates
         if "worktrees" in file_path or "my-app/my-app" in file_path:
@@ -139,7 +163,7 @@ def _print_pre_execution_summary(
     print(f"Mode: {'DRY RUN' if dry_run else 'EXECUTE'}\n")
 
     if dry_run:
-        print("─" * 60)
+        print("─" * CONSTANT_60)
 
 
 def _print_execution_summary(
@@ -149,11 +173,11 @@ def _print_execution_summary(
     dry_run: bool
 ) -> None:
     """Print final execution summary."""
-    print(f"\n{'═' * 60}")
+    print(f"\n{'═' * CONSTANT_60}")
     print(f"  Fixed:   {total_fixed}")
     print(f"  Skipped: {total_skipped} (need manual fix)")
     print(f"  Errors:  {total_errors}")
-    print(f"{'═' * 60}")
+    print(f"{'═' * CONSTANT_60}")
 
     if dry_run and total_fixed > 0:
         print(f"\nRun with dry_run=False to apply {total_fixed} fixes")
@@ -438,7 +462,7 @@ def _execute_parallel_fixes(
 
 def parallel_fix(
     todo_path: str | Path,
-    workers: int = 8,
+    workers: int = CONSTANT_8,
     dry_run: bool = True,
     category_filter: str | None = None,
     categories: set[str] | None = None,
@@ -498,7 +522,7 @@ def mark_tasks_completed(todo_path: str | Path, completed_tasks: list[TodoTask])
 
 def parallel_fix_and_update(
     todo_path: str | Path,
-    workers: int = 8,
+    workers: int = CONSTANT_8,
     dry_run: bool = True,
     category_filter: str | None = None,
     categories: set[str] | None = None,

@@ -18,8 +18,6 @@ Usage:
 __all__ = ['AutoFix', 'FixResult', 'Task']
 ```
 
-## Classes
-
 ### `AutoFix`
 
 Automated code fixing using various backends.

@@ -1,7 +1,3 @@
-# Changelog
-
-## [0.1.10] - 2026-03-28
-
 ### Fixed
 - Fix smart-return-type issues (ticket-e99c3ade)
 - Fix string-concat issues (ticket-2df599af)
@@ -11,8 +7,6 @@
 - Fix string-concat issues (ticket-a2a8be52)
 - Fix magic-numbers issues (ticket-3596d555)
 - Fix ai-boilerplate issues (ticket-40be12b0)
-
-## [0.1.10] - 2026-03-28
 
 ### Fixed
 - Fix smart-return-type issues (ticket-6ebb860f)

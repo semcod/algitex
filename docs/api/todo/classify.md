@@ -11,8 +11,6 @@ Replaces complex if/elif chains with a dispatch table for O(1) lookup.
 __all__ = ['TaskTriage', 'classify_message', 'classify_task', 'KNOWN_MAGIC_CONSTANTS']
 ```
 
-## Functions
-
 ### `classify_message`
 
 ```python
@@ -32,8 +30,6 @@ def classify_task(task: Any) -> TaskTriage
 ```
 
 Classify a task-like object.
-
-## Classes
 
 ### `TaskTriage`
 

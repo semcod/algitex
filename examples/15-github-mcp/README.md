@@ -29,9 +29,6 @@ export GITHUB_PAT=your_github_token
 make run
 ```
 
-## CLI Commands
-
-```bash
 # Spawn github-mcp
 algitex docker spawn github-mcp
 

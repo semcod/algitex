@@ -2,8 +2,6 @@
 
 AutoFix integration mixins for Project class.
 
-## Classes
-
 ### `AutoFixMixin`
 
 AutoFix integration functionality for Project.

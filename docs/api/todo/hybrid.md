@@ -22,8 +22,6 @@ Usage:
     llm_results = fixer.fix_complex("TODO.md")
 
 
-## Classes
-
 ### `HybridResult`
 
 Result of hybrid fix operation.

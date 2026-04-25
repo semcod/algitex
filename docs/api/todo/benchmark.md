@@ -9,8 +9,6 @@ Usage:
     print(f"Throughput: {result.throughput_tps:.2f} tickets/sec")
 
 
-## Functions
-
 ### `benchmark_sequential`
 
 ```python
@@ -57,8 +55,6 @@ Compare parallel vs sequential execution.
     Returns:
         Dict with both results and speedup analysis
     
-
-## Classes
 
 ### `BenchmarkResult`
 

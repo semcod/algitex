@@ -37,24 +37,13 @@ cd examples/26-litellm-proxy-ollama
 └─────────────────────────────────────────────────────────────┘
 ```
 
-## Szybki Start
-
-```bash
 # 1. Instalacja (WAŻNE: użyj [proxy] dla pełnej funkcjonalności)
 pip install 'litellm[proxy]'
-
-# 2. Konfiguracja proxy
-make setup
-
-# 3. Uruchom proxy
-make proxy
 
 # 4. W drugim terminalu - analiza i naprawa
 algitex analyze
 python auto_fix.py --limit 5
 ```
-
-## Konfiguracja
 
 ### litellm_config.yaml
 
@@ -80,8 +69,6 @@ general_settings:
   
 routing_strategy: simple-shuffle
 ```
-
-## Użycie
 
 ### 1. Uruchom proxy
 
@@ -111,12 +98,6 @@ response = client.chat.completions.create(
 )
 ```
 
-### 4. Auto-fix workflow
-
-```bash
-# Analiza
-algitex analyze
-
 # Naprawa przez proxy
 python auto_fix.py
 ```
@@ -131,11 +112,6 @@ python auto_fix.py
 | Kod naprawy | Aider TUI | Custom API client |
 | Konfiguracja | CLI args | YAML file |
 
-## Workflow naprawy kodu
-
-### Metoda 1: Direct API
-
-```python
 # auto_fix.py używa proxy
 def fix_code(file_path, issue_description):
     response = requests.post(

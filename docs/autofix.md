@@ -43,8 +43,6 @@ Each backend is implemented as a separate method with helper functions for bette
   - `_extract_code_from_response()` - Extracts code from response
   - `_write_fixed_file()` - Writes the fixed file
 
-## Usage Examples
-
 ### Basic Usage
 
 ```python
@@ -74,19 +72,11 @@ tasks = p.list_todo_tasks()
 result = p.fix_issues(limit=5, backend="auto")
 ```
 
-### Backend Selection
-
-```python
-# Auto-select best backend
-autofix.fix_all()
-
 # Use specific backend
 autofix.fix_all(backend="ollama")
 autofix.fix_all(backend="aider")
 autofix.fix_all(backend="litellm-proxy")
 ```
-
-## Configuration
 
 ### Environment Variables
 
@@ -108,8 +98,6 @@ autofix = AutoFix(
 
 AutoFix supports multiple TODO formats:
 
-### GitHub-style Checkboxes
-```markdown
 ## Current Issues
 
 - [ ] src/main.py:42 - Fix undefined variable
@@ -120,8 +108,6 @@ AutoFix supports multiple TODO formats:
 ```markdown
 file.py:line - description
 ```
-
-## Backend Details
 
 ### Ollama Backend
 - Direct communication with local Ollama instance
@@ -181,8 +167,6 @@ AutoFix integrates seamlessly with:
 - **Ollama Service** - Provides model management
 - **Todo Parser** - Parses various TODO formats
 - **IDE Integration** - Can be triggered from IDE commands
-
-## Troubleshooting
 
 ### Common Issues
 

@@ -1,10 +1,6 @@
-# Sprint 6: Performance Benchmarks
-
 ## Overview
 
 Sprint 6 dodaje framework do benchmarkowania wydajności algitex — cache, tierów (algorithm/micro/big) oraz użycia pamięci.
-
-## Nowe moduły
 
 ### 1. `algitex.benchmark`
 
@@ -30,9 +26,6 @@ for name, result in results.items():
     print(f"{name}: {result.throughput:.1f} ops/sec")
 ```
 
-### 2. CLI Commands
-
-```bash
 # Quick benchmark (30 seconds)
 algitex benchmark quick
 
@@ -48,8 +41,6 @@ algitex benchmark memory --lines 1000
 # Full benchmark suite with export
 algitex benchmark full --export results.json
 ```
-
-## Benchmark Types
 
 ### CacheBenchmark
 
@@ -157,8 +148,6 @@ print(f"Throughput: {result.throughput:.1f} ops/sec")
 └─────────────────────────────────────────────────────────────┘
 ```
 
-## Wyniki benchmarków
-
 ### Przykładowe wyniki (dev machine)
 
 ```
@@ -190,9 +179,6 @@ Memory Benchmark:
 |--------|-------|----------|
 | `test_benchmark.py` | 18 | BenchmarkRunner, CacheBenchmark, TierBenchmark, MemoryBenchmark |
 
-## Integracja z CI/CD
-
-```yaml
 # .github/workflows/benchmark.yml
 name: Performance Benchmarks
 

@@ -6,19 +6,19 @@ Routes requests to multiple LLM providers with budget tracking
 
 import os
 import sys
-import json
 import logging
 from typing import Any, Dict, List
 from datetime import datetime
 
 from mcp.server.fastmcp import FastMCP
 from fastapi import FastAPI
-from fastapi.responses import StreamingResponse
 import uvicorn
 import httpx
 import tiktoken
 
-logging.basicConfig(
+
+if __name__ == "__main__":
+    logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     stream=sys.stderr
@@ -68,7 +68,7 @@ def list_models() -> Dict[str, Any]:
     if OPENAI_API_KEY:
         models.extend([
             {"id": "gpt-4o", "provider": "openai", "context": 128000},
-            {"id": "gpt-4o-mini", "provider": "openai", "context": 128000},
+            {"id": "gpt-5.4-mini", "provider": "openai", "context": 128000},
         ])
     
     if GEMINI_API_KEY:

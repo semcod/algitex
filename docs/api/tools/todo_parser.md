@@ -14,8 +14,6 @@ Usage:
     tasks = parser.parse()  # List of pending Task objects
 
 
-## Classes
-
 ### `Task`
 
 Single todo task extracted from file.

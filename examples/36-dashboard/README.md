@@ -16,9 +16,6 @@ cd examples/36-dashboard
 python main.py
 ```
 
-## CLI Commands
-
-```bash
 # Live dashboard
 algitex dashboard live
 

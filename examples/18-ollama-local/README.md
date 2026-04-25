@@ -19,9 +19,6 @@ make setup    # Sprawdź Ollama i utwórz .env
 make run      # Uruchom przykład
 ```
 
-## Instalacja Ollama
-
-```bash
 # Linux/Mac
 curl -fsSL https://ollama.com/install.sh | sh
 
@@ -29,9 +26,6 @@ curl -fsSL https://ollama.com/install.sh | sh
 ollama pull qwen3-coder:latest
 ```
 
-## Użycie z przykładowym kodem
-
-```bash
 # 1. Napraw przykładowy kod z błędami
 algitex fix buggy_code.py --model ollama/qwen3-coder:latest
 
@@ -51,9 +45,6 @@ algitex test buggy_code.py --model ollama/qwen3-coder:latest
 - Mutable default arguments
 - Path traversal vulnerability
 
-## Użycie ogólne
-
-```python
 # Użyj lokalnego modelu z Algitex
 export DEFAULT_MODEL=ollama/qwen3-coder:latest
 

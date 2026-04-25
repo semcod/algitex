@@ -1,7 +1,7 @@
 """Unit tests for algitex feedback module."""
 
 import pytest
-from unittest.mock import MagicMock, patch, call
+from unittest.mock import MagicMock, patch
 from algitex.tools.feedback import (
     FailureStrategy, FeedbackPolicy, FeedbackController, 
     FeedbackLoop

@@ -22,8 +22,6 @@ Every Dockerfile includes:
 - **Non-root user** for security
 - **Environment variables**: `TRANSPORT`, `MCP_TRANSPORT`, `PORT`
 
-## Available Tools
-
 ### Algitex Custom MCP Tools
 
 | Tool | Port | Description | MCP Tools |
@@ -52,11 +50,6 @@ Every Dockerfile includes:
 | `mcp-playwright` | E2E testing | `navigate`, `screenshot`, `click`, `fill`, `evaluate` |
 | `mcp-slack` | Slack integration | `send_message`, `notify`, `channel_info` |
 
-## Quick Start
-
-### Start All MCP Tools
-
-```bash
 # Using docker compose
 cd docker
 docker-compose up -d
@@ -66,9 +59,6 @@ docker-compose up -d aider-mcp planfile-mcp proxym
 docker-compose up -d mcp-github mcp-wikipedia mcp-fetch
 ```
 
-### Build and Run Individual Tools
-
-```bash
 # Build a specific tool
 docker build -t algitex/vallm-mcp:latest ./docker/vallm
 
@@ -79,9 +69,6 @@ docker run -it --rm algitex/vallm-mcp:latest
 docker run -p 8080:8080 -e TRANSPORT=rest algitex/vallm-mcp:latest
 ```
 
-### Run Full Ecosystem
-
-```bash
 # Start all MCP tools
 docker compose --profile tools up -d
 
@@ -108,10 +95,6 @@ Configure in your MCP settings:
 }
 ```
 
-## Transport Modes
-
-### MCP stdio (Default)
-```bash
 # Default mode - communicates via stdin/stdout
 docker run -i --rm algitex/vallm-mcp:latest
 ```
@@ -171,5 +154,3 @@ All containers expose a `/health` endpoint when running in REST mode:
 
 ```bash
 curl http://localhost:<port>/health
-# {"status": "healthy", "server": "<tool-name>-mcp"}
-```

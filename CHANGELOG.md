@@ -1,11 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
-## [Unreleased] - 2026-03-28
 
 ### Added
 - **Sprint 3: Cyclomatic Complexity Reduction**
@@ -56,13 +56,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **New Modules:** 40+ (cache, metrics, dashboard, benchmark, shared_rules, etc.)
 - **CLI Commands:** 15 subcommand groups (ticket, algo, workflow, docker, todo, microtask, nlp, metrics, benchmark, dashboard)
 
-### Fixed
-- Fix Task dataclass missing `priority` and `type` fields in `autofix/base.py`
-- Fix OllamaMixin not initialized in Project.__init__ causing AttributeError
-- Fix generate_with_ollama() missing default model selection
-- Fix examples/25-local-model-comparison KeyError for results['total']
-- Fix duplicate license and author sections in README.md
-
 ### Docs
 - Update README.md with Three-Tier system, microtask, nlp documentation
 - Update docs/todo.md with three-tier CLI commands and API examples
@@ -74,8 +67,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - All 34 examples in `examples/` directory tested and verified working
 - Examples 01-34 (except 29) all execute without errors
 - BatchFix, Hybrid AutoFix, and Parallel Execution examples fully functional
-
-## [0.1.59] - 2026-03-29
 
 ### Docs
 - Update docs/README.md
@@ -95,8 +86,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update project/flow.png
 - ... and 5 more files
 
-## [0.1.58] - 2026-03-29
-
 ### Test
 - Update test_algo.py
 - Update test_cli.py
@@ -104,12 +93,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update tests/test_cli.py
 - Update tests/test_cli_metrics.py
 
-## [0.1.57] - 2026-03-28
-
 ### Other
 - Update litellm_config.yaml
-
-## [0.1.56] - 2026-03-28
 
 ### Test
 - Update test_algo.py
@@ -120,16 +105,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update .gitignore
 - Update .pfix/audit.jsonl
 
-## [0.1.55] - 2026-03-28
-
-### Docs
-- Update TODO.md
-
 ### Test
 - Update tests/test_cli.py
 - Update tests/test_cli_metrics.py
-
-## [0.1.54] - 2026-03-28
 
 ### Docs
 - Update docs/README.md
@@ -156,6 +134,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update project/calls.png
 - Update project/compact_flow.mmd
 - ... and 10 more files
+
+## [0.1.60] - 2026-04-25
+
+### Docs
+- Update CHANGELOG.md
+- Update README.md
+- Update TODO.md
+- Update articles/README.md
+- Update articles/code2llm-static-analysis.md
+- Update articles/devloop-ecosystem-overview.md
+- Update articles/devloop-unified-toolchain.md
+- Update articles/planfile-sdlc-automation.md
+- Update articles/progressive-algorithmization.md
+- Update articles/proxym-llm-gateway.md
+- ... and 155 more files
+
+### Test
+- Update tests/test_e2e_integration.py
+- Update tests/test_examples_30_32.py
+- Update tests/test_feedback.py
+- Update tests/test_integration.py
+- Update tests/test_parallel.py
+
+### Other
+- Update .gitignore
+- Update Taskfile.yml
+- Update docker/code2llm/code2llm_mcp_server.py
+- Update docker/proxym/proxym_mcp_server.py
+- Update docker/vallm/vallm_mcp_server.py
+- Update pyqual.yaml
+- Update scripts/generate_lib_docs.py
 
 ## [0.1.53] - 2026-03-28
 
@@ -229,15 +238,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update docker/proxym/proxym_server.py
 - Update docker/vallm/vallm_mcp_server.py
 
-## [0.1.49] - 2026-03-28
-
 ### Test
 - Update tests/test_benchmark.py
 
 ### Other
 - Update .code2llmignore
-
-## [0.1.48] - 2026-03-28
 
 ### Docs
 - Update README.md
@@ -253,21 +258,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update tests/test_prefact_integration.py
 - Update tests/test_shared_rules.py
 
-### Other
-- Update project/analysis.toon.yaml
-- Update project/calls.mmd
-- Update project/calls.png
-- Update project/compact_flow.mmd
-- Update project/compact_flow.png
-- Update project/duplication.toon.yaml
-- Update project/evolution.toon.yaml
-- Update project/flow.mmd
-- Update project/flow.png
-- Update project/index.html
-- ... and 4 more files
-
-## [0.1.47] - 2026-03-28
-
 ### Docs
 - Update CHANGELOG.md
 - Update README.md
@@ -276,14 +266,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update docs/NLP.md
 - Update docs/todo.md
 
-## [0.1.46] - 2026-03-28
-
 ### Docs
 - Update README.md
 - Update docs/NEW_FEATURES.md
 - Update docs/todo.md
-
-## [0.1.45] - 2026-03-28
 
 ### Docs
 - Update README.md
@@ -305,8 +291,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update project/flow.png
 - ... and 5 more files
 
-## [0.1.44] - 2026-03-28
-
 ### Docs
 - Update README.md
 - Update docs/BATCHFIX.md
@@ -327,8 +311,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update project/evolution.toon.yaml
 - Update project/flow.mmd
 - ... and 6 more files
-
-## [0.1.43] - 2026-03-28
 
 ### Docs
 - Update CHANGELOG.md
@@ -352,8 +334,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update project/flow.mmd
 - ... and 6 more files
 
-## [0.1.10] - 2026-03-28
-
 ### Fixed
 - Fix smart-return-type issues (ticket-622dccb1)
 - Fix unused-imports issues (ticket-6cb4d8e9)
@@ -373,21 +353,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix magic-numbers issues (ticket-423988cd)
 - Fix llm-generated-code issues (ticket-3887e630)
 
-## [0.1.10] - 2026-03-28
-
 ### Fixed
 - Fix string-concat issues (ticket-afbf6239)
 - Fix magic-numbers issues (ticket-338c15bd)
-
-## [0.1.10] - 2026-03-28
 
 ### Fixed
 - Fix smart-return-type issues (ticket-688514cd)
 - Fix string-concat issues (ticket-bd876a70)
 - Fix unused-imports issues (ticket-c8e1e684)
 - Fix magic-numbers issues (ticket-6ab3c964)
-
-## [0.1.10] - 2026-03-28
 
 ### Fixed
 - Fix llm-hallucinations issues (ticket-afb2e768)
@@ -396,12 +370,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix unused-imports issues (ticket-170debf3)
 - Fix magic-numbers issues (ticket-40ff670c)
 
-## [0.1.10] - 2026-03-28
-
 ### Fixed
 - Fix wildcard-imports issues (ticket-40aa2274)
-
-## [0.1.10] - 2026-03-28
 
 ### Fixed
 - Fix wildcard-imports issues (ticket-abf7bb0e)
@@ -426,8 +396,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix wildcard-imports issues (ticket-fb553724)
 - Fix wildcard-imports issues (ticket-65e799b0)
 
-## [0.1.10] - 2026-03-28
-
 ### Fixed
 - Fix smart-return-type issues (ticket-f02b2ed3)
 - Fix string-concat issues (ticket-6bdcd284)
@@ -451,8 +419,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix wildcard-imports issues (ticket-aa3e5ab7)
 - Fix wildcard-imports issues (ticket-43e71a97)
 
-## [0.1.10] - 2026-03-28
-
 ### Fixed
 - Fix smart-return-type issues (ticket-61632c6f)
 - Fix string-concat issues (ticket-bf8de75f)
@@ -470,8 +436,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix unused-imports issues (ticket-e5d79947)
 - Fix magic-numbers issues (ticket-f1a673ac)
 - Fix llm-generated-code issues (ticket-4838d83f)
-
-## [0.1.10] - 2026-03-28
 
 ### Fixed
 - Fix smart-return-type issues (ticket-9efdc3c5)
@@ -1539,16 +1503,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix string-concat issues (ticket-7f2d52f2)
 - Fix unused-imports issues (ticket-e33c9e8a)
 
-## [0.1.10] - 2026-03-28
-
 ### Fixed
 - Fix string-concat issues (ticket-fe5cfeb1)
 - Fix unused-imports issues (ticket-61ba1ad5)
 - Fix duplicate-imports issues (ticket-73a60d75)
 - Fix magic-numbers issues (ticket-4a16f56c)
 - Fix llm-generated-code issues (ticket-33043082)
-
-## [0.1.10] - 2026-03-28
 
 ### Fixed
 - Fix smart-return-type issues (ticket-c01fdadf)
@@ -1557,8 +1517,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix string-concat issues (ticket-828ee8ac)
 - Fix unused-imports issues (ticket-c1f22143)
 - Fix magic-numbers issues (ticket-95c263d1)
-
-## [0.1.10] - 2026-03-28
 
 ### Fixed
 - Fix smart-return-type issues (ticket-eef315cb)
@@ -1612,21 +1570,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix unused-imports issues (ticket-62e135a0)
 - Fix magic-numbers issues (ticket-bdd36919)
 
-## [0.1.10] - 2026-03-28
-
 ### Fixed
 - Fix unused-imports issues (ticket-85d535bc)
 - Fix magic-numbers issues (ticket-79ce8321)
 - Fix unused-imports issues (ticket-db7b0350)
 - Fix unused-imports issues (ticket-1e033069)
 
-## [0.1.10] - 2026-03-28
-
 ### Fixed
 - Fix smart-return-type issues (ticket-13d50dd2)
 - Fix ai-boilerplate issues (ticket-c08d4a5a)
-
-## [0.1.10] - 2026-03-28
 
 ### Fixed
 - Fix smart-return-type issues (ticket-f6f27861)
@@ -1661,8 +1613,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix smart-return-type issues (ticket-1544ecab)
 - Fix unused-imports issues (ticket-c465d85a)
 - Fix magic-numbers issues (ticket-4e385a0b)
-
-## [0.1.10] - 2026-03-28
 
 ### Fixed
 - Fix magic-numbers issues (ticket-9771726e)
@@ -1800,8 +1750,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix unused-imports issues (ticket-c7c4b5cc)
 - Fix magic-numbers issues (ticket-5006a487)
 
-## [0.1.10] - 2026-03-28
-
 ### Fixed
 - Fix smart-return-type issues (ticket-400b9000)
 - Fix string-concat issues (ticket-650aa48d)
@@ -1810,8 +1758,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix magic-numbers issues (ticket-b9cea5da)
 - Fix ai-boilerplate issues (ticket-597787d6)
 - Fix unused-imports issues (ticket-f662de00)
-
-## [0.1.10] - 2026-03-28
 
 ### Fixed
 - Fix string-concat issues (ticket-bc134358)
@@ -1871,8 +1817,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix ai-boilerplate issues (ticket-911acdb5)
 - Fix string-concat issues (ticket-dddfc162)
 
-## [0.1.10] - 2026-03-28
-
 ### Fixed
 - Fix smart-return-type issues (ticket-b2f85770)
 - Fix llm-generated-code issues (ticket-222f0321)
@@ -1902,8 +1846,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix magic-numbers issues (ticket-e5f4404e)
 - Fix unused-imports issues (ticket-05998dfb)
 - Fix magic-numbers issues (ticket-e71467ad)
-
-## [0.1.10] - 2026-03-28
 
 ### Fixed
 - Fix smart-return-type issues (ticket-b13ac26d)
@@ -1936,8 +1878,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix smart-return-type issues (ticket-13a728e8)
 - Fix unused-imports issues (ticket-ffeeac6c)
 
-## [0.1.10] - 2026-03-28
-
 ### Fixed
 - Fix smart-return-type issues (ticket-73222882)
 - Fix string-concat issues (ticket-5759fc4e)
@@ -1950,15 +1890,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix unused-imports issues (ticket-4689abb1)
 - Fix llm-generated-code issues (ticket-de4d3451)
 
-## [0.1.10] - 2026-03-28
-
 ### Fixed
 - Fix smart-return-type issues (ticket-33da0533)
 - Fix string-concat issues (ticket-e74b5ead)
 - Fix unused-imports issues (ticket-e13c4396)
 - Fix magic-numbers issues (ticket-cccdcd7f)
-
-## [0.1.10] - 2026-03-28
 
 ### Fixed
 - Fix smart-return-type issues (ticket-f6ffd00c)
@@ -2006,31 +1942,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix magic-numbers issues (ticket-1fde141f)
 - Fix llm-generated-code issues (ticket-06d0712f)
 
-## [Unreleased]
-
-## [0.1.42] - 2026-03-28
-
 ### Docs
 - Update docs/README.md
 - Update project/README.md
 - Update project/context.md
-
-### Other
-- Update project/analysis.toon.yaml
-- Update project/calls.mmd
-- Update project/calls.png
-- Update project/compact_flow.mmd
-- Update project/compact_flow.png
-- Update project/duplication.toon.yaml
-- Update project/evolution.toon.yaml
-- Update project/flow.mmd
-- Update project/flow.png
-- Update project/index.html
-- ... and 3 more files
-
-## [0.1.41] - 2026-03-28
-
-## [0.1.40] - 2026-03-28
 
 ### Docs
 - Update docs/README.md
@@ -2050,13 +1965,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update project/duplication.toon.yaml
 - ... and 8 more files
 
-## [0.1.39] - 2026-03-28
-
-### Other
-- Update project.sh
-
-## [0.1.38] - 2026-03-28
-
 ### Docs
 - Update CHANGELOG.md
 - Update TODO.md
@@ -2073,8 +1981,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update examples/02-algo-loop/main.py
 - Update examples/03-pipeline/main.py
 - ... and 1 more files
-
-## [0.1.37] - 2026-03-28
 
 ### Docs
 - Update docs/BATCHFIX.md
@@ -2096,8 +2002,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update project/compact_flow.mmd
 - ... and 10 more files
 
-## [0.1.36] - 2026-03-28
-
 ### Docs
 - Update TODO.md
 - Update docs/README.md
@@ -2117,28 +2021,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update project/calls.png
 - ... and 10 more files
 
-## [0.1.35] - 2026-03-28
-
 ### Docs
 - Update TODO.md
 - Update docs/README.md
 - Update project/README.md
 - Update project/context.md
-
-### Other
-- Update project/analysis.toon.yaml
-- Update project/calls.mmd
-- Update project/calls.png
-- Update project/compact_flow.mmd
-- Update project/compact_flow.png
-- Update project/duplication.toon.yaml
-- Update project/evolution.toon.yaml
-- Update project/flow.mmd
-- Update project/flow.png
-- Update project/index.html
-- ... and 3 more files
-
-## [0.1.34] - 2026-03-28
 
 ### Docs
 - Update CHANGELOG.md
@@ -2160,8 +2047,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update project/compact_flow.png
 - ... and 7 more files
 
-## [0.1.33] - 2026-03-28
-
 ### Docs
 - Update CHANGELOG.md
 - Update TODO.md
@@ -2169,42 +2054,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update project/README.md
 - Update project/context.md
 
-### Other
-- Update planfile.yaml
-- Update project/analysis.toon.yaml
-- Update project/calls.mmd
-- Update project/calls.png
-- Update project/compact_flow.mmd
-- Update project/compact_flow.png
-- Update project/duplication.toon.yaml
-- Update project/evolution.toon.yaml
-- Update project/flow.mmd
-- Update project/flow.png
-- ... and 5 more files
-
-## [0.1.32] - 2026-03-28
-
 ### Docs
 - Update CHANGELOG.md
 - Update TODO.md
 - Update docs/README.md
 - Update project/README.md
 - Update project/context.md
-
-### Other
-- Update planfile.yaml
-- Update project/analysis.toon.yaml
-- Update project/calls.mmd
-- Update project/calls.png
-- Update project/compact_flow.mmd
-- Update project/compact_flow.png
-- Update project/duplication.toon.yaml
-- Update project/evolution.toon.yaml
-- Update project/flow.mmd
-- Update project/flow.png
-- ... and 5 more files
-
-## [0.1.31] - 2026-03-28
 
 ### Docs
 - Update CHANGELOG.md
@@ -2229,8 +2084,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update examples/12-filesystem-mcp/main.py
 - ... and 39 more files
 
-## [0.1.30] - 2026-03-28
-
 ### Docs
 - Update CHANGELOG.md
 - Update TODO.md
@@ -2248,20 +2101,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update examples/07-context/main.py
 - ... and 48 more files
 
-## [0.1.29] - 2026-03-28
-
 ### Other
 - Update examples/33-hybrid-autofix/main.py
 
-## [0.1.28] - 2026-03-28
-
-### Docs
-- Update TODO.md
-
 ### Other
 - Update examples/33-hybrid-autofix/main.py
-
-## [0.1.27] - 2026-03-28
 
 ### Docs
 - Update CHANGELOG.md
@@ -2287,8 +2131,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update project/duplication.toon.yaml
 - ... and 8 more files
 
-## [0.1.26] - 2026-03-28
-
 ### Docs
 - Update CHANGELOG.md
 - Update TODO.md
@@ -2305,8 +2147,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update project/duplication.toon.yaml
 - Update project/validation.toon.yaml
 
-## [0.1.25] - 2026-03-28
-
 ### Docs
 - Update docs/README.md
 - Update project/README.md
@@ -2315,21 +2155,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Test
 - Update tests/test_examples_30_32.py
 
-### Other
-- Update .code2llm_ignore
-- Update project/analysis.toon.yaml
-- Update project/calls.mmd
-- Update project/calls.png
-- Update project/compact_flow.mmd
-- Update project/compact_flow.png
-- Update project/duplication.toon.yaml
-- Update project/evolution.toon.yaml
-- Update project/flow.mmd
-- Update project/flow.png
-- ... and 5 more files
-
-## [0.1.24] - 2026-03-28
-
 ### Docs
 - Update docs/NEW_FEATURES.md
 - Update docs/algitex-parallel-coordination.md
@@ -2355,8 +2180,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update examples/31-abpr-workflow/main.py
 - Update examples/32-workspace-coordination/Makefile
 - ... and 6 more files
-
-## [0.1.24] - 2026-03-28
 
 ### Docs
 - Update docs/NEW_FEATURES.md
@@ -2371,21 +2194,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Test
 - Update tests/test_examples_30_32.py
 - Update tests/test_parallel.py
-
-### Other
-- Update TODO/parallel.py
-- Update examples/30-parallel-execution/Makefile
-- Update examples/30-parallel-execution/main.py
-- Update examples/30-parallel-execution/parallel_multi_tool.py
-- Update examples/30-parallel-execution/parallel_real_world.py
-- Update examples/30-parallel-execution/parallel_refactoring.py
-- Update examples/31-abpr-workflow/Makefile
-- Update examples/31-abpr-workflow/abpr_pipeline.py
-- Update examples/31-abpr-workflow/main.py
-- Update examples/32-workspace-coordination/Makefile
-- ... and 6 more files
-
-## [0.1.23] - 2026-03-28
 
 ### Docs
 - Update CHANGELOG.md
@@ -2395,27 +2203,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Other
 - Update planfile.yaml
 
-## [0.1.22] - 2026-03-28
-
 ### Docs
 - Update docs/README.md
 - Update project/README.md
 - Update project/context.md
-
-### Other
-- Update examples/16-test-workflow/sample_test_project/tests/test_calculator.py
-- Update project/analysis.toon.yaml
-- Update project/calls.mmd
-- Update project/calls.png
-- Update project/compact_flow.mmd
-- Update project/compact_flow.png
-- Update project/duplication.toon.yaml
-- Update project/evolution.toon.yaml
-- Update project/flow.mmd
-- Update project/flow.png
-- ... and 5 more files
-
-## [0.1.21] - 2026-03-28
 
 ### Docs
 - Update CHANGELOG.md
@@ -2438,8 +2229,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update project/calls.mmd
 - ... and 12 more files
 
-## [0.1.20] - 2026-03-28
-
 ### Docs
 - Update CHANGELOG.md
 - Update TODO.md
@@ -2457,8 +2246,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update examples/26-litellm-proxy-ollama/main.py
 - ... and 2 more files
 
-## [0.1.19] - 2026-03-28
-
 ### Docs
 - Update docs/README.md
 - Update project/README.md
@@ -2475,8 +2262,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update examples/25-local-model-comparison/main_simplified.py
 - Update examples/26-litellm-proxy-ollama/auto_fix.py
 - ... and 12 more files
-
-## [0.1.18] - 2026-03-28
 
 ### Docs
 - Update CHANGELOG.md
@@ -2501,8 +2286,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update examples/28-mcp-orchestration/main.py
 - ... and 13 more files
 
-## [0.1.17] - 2026-03-28
-
 ### Docs
 - Update CHANGELOG.md
 - Update TODO.md
@@ -2526,8 +2309,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update examples/25-local-model-comparison/main_simplified.py
 - ... and 17 more files
 
-## [0.1.16] - 2026-03-28
-
 ### Docs
 - Update docs/README.md
 - Update examples/26-litellm-proxy-ollama/README.md
@@ -2548,8 +2329,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update project/compact_flow.mmd
 - ... and 10 more files
 
-## [0.1.15] - 2026-03-28
-
 ### Docs
 - Update .aider.chat.history.md
 - Update examples/21-aider-cli-ollama/README.md
@@ -2564,8 +2343,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update examples/26-litellm-proxy-ollama/litellm_config.yaml
 - Update examples/26-litellm-proxy-ollama/main.py
 - Update examples/26-litellm-proxy-ollama/run.sh
-
-## [0.1.14] - 2026-03-28
 
 ### Docs
 - Update .aider.chat.history.md
@@ -2593,8 +2370,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update examples/16-test-workflow/sample_test_project/requirements.txt
 - ... and 30 more files
 
-## [0.1.13] - 2026-03-28
-
 ### Docs
 - Update README.md
 - Update examples/11-aider-mcp/sample_project/TODO.md
@@ -2610,8 +2385,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update examples/12-filesystem-mcp/sample_files/src/main.py
 - Update examples/13-vallm/main.py
 - Update examples/13-vallm/sample_code/complex_module.py
-
-## [0.1.12] - 2026-03-28
 
 ### Docs
 - Update CHANGELOG.md
@@ -2636,8 +2409,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update project/compact_flow.png
 - ... and 8 more files
 
-## [0.1.11] - 2026-03-28
-
 ### Docs
 - Update README.md
 - Update examples/18-ollama-local/README.md
@@ -2654,8 +2425,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update examples/20-self-hosted-pipeline/auto_fix_todos.py
 - Update examples/20-self-hosted-pipeline/main.py
 - Update examples/20-self-hosted-pipeline/run.sh
-
-## [0.1.10] - 2026-03-28
 
 ### Docs
 - Update CHANGELOG.md
@@ -2680,8 +2449,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update examples/18-ollama-local/Makefile
 - Update examples/18-ollama-local/main.py
 - ... and 22 more files
-
-## [0.1.9] - 2026-03-28
 
 ### Docs
 - Update CHANGELOG.md
@@ -2715,8 +2482,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update docker/mcp/brave-search/Dockerfile
 - ... and 73 more files
 
-## [0.1.8] - 2026-03-28
-
 ### Docs
 - Update examples/06-telemetry/README.md
 - Update examples/07-context/README.md
@@ -2741,8 +2506,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update examples/08-feedback/run.sh
 - Update examples/09-workspace/Makefile
 - ... and 5 more files
-
-## [0.1.7] - 2026-03-28
 
 ### Docs
 - Update CHANGELOG.md
@@ -2772,8 +2535,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update project/compact_flow.png
 - ... and 9 more files
 
-## [0.1.6] - 2026-03-28
-
 ### Docs
 - Update TODO.md
 - Update docs/README.md
@@ -2790,8 +2551,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update project/prompt.txt
 - Update project/validation.toon.yaml
 
-## [0.1.5] - 2026-03-28
-
 ### Docs
 - Update CHANGELOG.md
 - Update README.md
@@ -2799,21 +2558,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update docs/README.md
 - Update project/README.md
 - Update project/context.md
-
-### Other
-- Update planfile.yaml
-- Update prefact.yaml
-- Update project.sh
-- Update project/analysis.toon.yaml
-- Update project/calls.mmd
-- Update project/calls.png
-- Update project/compact_flow.mmd
-- Update project/compact_flow.png
-- Update project/duplication.toon.yaml
-- Update project/evolution.toon.yaml
-- ... and 7 more files
-
-## [0.1.4] - 2026-03-28
 
 ### Docs
 - Update examples/01-quickstart/README.md
@@ -2829,8 +2573,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update examples/04-ide-integration/Makefile
 - Update examples/04-ide-integration/main.py
 - Update examples/05-cost-tracking/Makefile
-
-## [0.1.3] - 2026-03-28
 
 ### Docs
 - Update examples/01-quickstart/README.md
@@ -2850,8 +2592,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update examples/04-ide-integration/run.sh
 - Update examples/05-cost-tracking/main.py
 - Update examples/05-cost-tracking/run.sh
-
-## [0.1.2] - 2026-03-28
 
 ### Docs
 - Update README.md
@@ -2876,8 +2616,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update examples/03_pipeline.py
 - Update examples/04_ide_integration.py
 - Update examples/05_cost_tracking.py
-
-## [0.1.1] - 2026-03-28
 
 ### Docs
 - Update README.md
@@ -2910,4 +2648,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update .idea/vcs.xml
 - Update LICENSE
 - ... and 6 more files
+
+- feat(docs): deep code analysis engine with supporting modules
+- feat(examples): deep code analysis engine with supporting modules
+- fix(tests): CLI interface improvements
+- fix(config): CLI interface
+- fix(goal): CLI interface improvements
+- refactor(docs): code analysis engine
+- refactor(examples): code analysis engine
+- refactor(examples): configuration management system
+- fix(docs): configuration management system
+- docs(examples): add cd commands to example READMEs
+- feat(docs): configuration management
+- fix: circular import and test mocks for examples
 

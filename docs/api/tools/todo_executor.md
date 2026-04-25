@@ -13,8 +13,6 @@ Usage:
     results = executor.run(tasks, tool_name="filesystem-mcp")
 
 
-## Classes
-
 ### `TaskResult`
 
 Result of executing a single task.

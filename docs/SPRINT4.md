@@ -1,5 +1,3 @@
-# Sprint 4: Cache LLM + Metryki + Prefact Integration
-
 ## Overview
 
 Sprint 4 dodaje trzy główne komponenty do algitex:
@@ -7,8 +5,6 @@ Sprint 4 dodaje trzy główne komponenty do algitex:
 1. **LLM Cache** — deduplikacja identycznych promptów dla Ollama
 2. **Metryki** — tracking tokenów, kosztów, success rate per tier
 3. **Prefact Integration** — współdzielenie reguł między algitex a prefact
-
-## Nowe moduły
 
 ### 1. `algitex.tools.ollama_cache`
 
@@ -135,8 +131,6 @@ engine = SharedRuleEngine()
 
 # Analyze with both prefact and native algitex rules
 results = engine.analyze("src/myfile.py")
-# Returns: {"prefact": [...], "algitex": [...]}
-
 # Get all issues combined
 all_issues = engine.get_all_issues("src/myfile.py")
 ```
@@ -157,9 +151,6 @@ for rule in registry.list_rules():
 
 # Check file
 results = registry.check_file("src/myfile.py")
-# Returns: {"sorted_imports": [violations], "relative_imports": [violations]}
-```
-
 #### Creating custom shared rules
 
 ```python
@@ -187,11 +178,6 @@ from algitex.shared_rules import get_registry
 get_registry().register(MyCustomRule())
 ```
 
-## CLI Commands
-
-### `algitex metrics`
-
-```bash
 # Show dashboard
 algitex metrics show
 
@@ -223,8 +209,6 @@ Sprint 4 dodaje 82 nowe testy:
 | `test_cli_metrics.py` | 13 | CLI integration |
 
 **Total: 102 tests, 2 skipped** (wymagają Ollama server)
-
-## Integration z istniejącym kodem
 
 ### MicroTask executor z cache
 

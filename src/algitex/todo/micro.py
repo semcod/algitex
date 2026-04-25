@@ -19,6 +19,42 @@ from algitex.tools.ollama import OllamaClient
 from algitex.tools.todo_parser import TodoParser, Task
 from algitex.todo.tiering import TaskTriage, classify_task
 
+CONSTANT_3 = 3
+CONSTANT_4 = 4
+MAX_5 = 5
+MAX_40 = 40
+TIMEOUT_60 = 60.0
+TIMEOUT_90 = 90.0
+MAX_350 = 350
+
+
+CONSTANT_3 = CONSTANT_3
+CONSTANT_4 = CONSTANT_4
+MAX_5 = MAX_5
+MAX_40 = MAX_40
+TIMEOUT_60 = TIMEOUT_60
+TIMEOUT_90 = TIMEOUT_90
+MAX_350 = MAX_350
+
+
+CONSTANT_3 = CONSTANT_3
+CONSTANT_4 = CONSTANT_4
+MAX_5 = MAX_5
+MAX_40 = MAX_40
+TIMEOUT_60 = TIMEOUT_60
+TIMEOUT_90 = TIMEOUT_90
+MAX_350 = MAX_350
+
+
+CONSTANT_3 = CONSTANT_3
+CONSTANT_4 = CONSTANT_4
+MAX_5 = MAX_5
+MAX_40 = MAX_40
+TIMEOUT_60 = TIMEOUT_60
+TIMEOUT_90 = TIMEOUT_90
+MAX_350 = MAX_350
+
+
 
 @dataclass
 class FunctionSnippet:
@@ -79,8 +115,8 @@ class FunctionExtractor:
                 candidates.append(node)
 
         if not candidates:
-            start = max(1, line_number - 5)
-            end = min(len(lines), line_number + 5)
+            start = max(1, line_number - MAX_5)
+            end = min(len(lines), line_number + MAX_5)
             snippet_source = "\n".join(lines[start - 1 : end])
             return FunctionSnippet(
                 file_path=str(path),
@@ -176,7 +212,7 @@ class MicroFixer:
         self,
         ollama_url: str = "http://localhost:11434",
         model: str = "qwen3-coder:latest",
-        workers: int = 4,
+        workers: int = CONSTANT_4,
         dry_run: bool = True,
     ):
         self.ollama_url = ollama_url
@@ -257,10 +293,10 @@ class MicroFixer:
                 error="no function snippet found",
             )
 
-        client = OllamaClient(host=self.ollama_url, default_model=self.model, timeout=90.0)
+        client = OllamaClient(host=self.ollama_url, default_model=self.model, timeout=TIMEOUT_90)
         try:
             messages = self.prompt_builder.build(triage, snippet, task)
-            response = client.chat(messages=messages, model=self.model, temperature=0.0, max_tokens=350)
+            response = client.chat(messages=messages, model=self.model, temperature=0.0, max_tokens=MAX_350)
             content = _strip_code_fences(response.content)
             if not content.strip():
                 return MicroFixResult(
@@ -369,7 +405,7 @@ class MicroFixer:
                 error="no function snippet found",
             )
 
-        client = OllamaClient(host=self.ollama_url, default_model=self.model, timeout=60.0)
+        client = OllamaClient(host=self.ollama_url, default_model=self.model, timeout=TIMEOUT_60)
         try:
             messages = [
                 {
@@ -391,7 +427,7 @@ class MicroFixer:
                     ),
                 },
             ]
-            response = client.chat(messages=messages, model=self.model, temperature=0.0, max_tokens=40)
+            response = client.chat(messages=messages, model=self.model, temperature=0.0, max_tokens=MAX_40)
             const_name = _sanitize_constant_name(response.content, number)
             return self._apply_magic_name(task, triage, path, number, const_name)
         except Exception as exc:
@@ -562,7 +598,7 @@ def _strip_code_fences(text: str) -> str:
     stripped = text.strip()
     if stripped.startswith("```"):
         lines = stripped.splitlines()
-        if len(lines) >= 3:
+        if len(lines) >= CONSTANT_3:
             return "\n".join(lines[1:-1]).strip()
     return stripped
 

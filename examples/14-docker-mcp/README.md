@@ -28,9 +28,6 @@ Demonstruje użycie docker-mcp przez algitex Docker tool orchestration do zarzą
 make run
 ```
 
-## CLI Commands
-
-```bash
 # Spawn docker-mcp
 algitex docker spawn docker-mcp
 

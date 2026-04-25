@@ -17,8 +17,6 @@ The following new modules have been added to simplify usage:
 9. **MicroTask** (`algitex.cli.microtask`) - Atomic micro-tasks pipeline for small LLMs
 10. **NLP** (`algitex.cli.nlp`) - Deterministic NLP refactor helpers
 
-## New Features in Project Class
-
 ### Service Management
 
 ```python
@@ -33,8 +31,6 @@ status = p.check_services()  # Get detailed status
 # Wait for service to be ready
 p.ensure_service("ollama", timeout_seconds=60)
 ```
-
-### Ollama Integration
 
 ```python
 # Check Ollama status
@@ -54,8 +50,6 @@ code = p.generate_with_ollama(
 )
 ```
 
-### AutoFix
-
 ```python
 # Fix all issues
 result = p.fix_issues(limit=5, backend="auto")
@@ -70,8 +64,6 @@ tasks = p.list_todo_tasks()
 result = p.generate_todo()  # Creates TODO.md with issues from analysis
 print(f"Created {result['filename']} with {result['count']} issues")
 ```
-
-### Batch Processing
 
 ```python
 # Batch analyze files
@@ -95,8 +87,6 @@ processor = p.create_batch_processor(
 results = processor.process(items)
 ```
 
-### Model Benchmarking
-
 ```python
 # Benchmark models
 results = p.benchmark_models(
@@ -116,8 +106,6 @@ p.add_benchmark_task(
 )
 ```
 
-### IDE Integration
-
 ```python
 # Setup IDE tool
 p.setup_ide("claude-code")  # or "aider", "vscode"
@@ -135,8 +123,6 @@ editor = p.detect_editor()
 status = p.get_ide_status()
 ```
 
-### Configuration Management
-
 ```python
 # Setup all project configurations
 p.setup_configs(tools=["vscode", "env", "docker"])
@@ -153,8 +139,6 @@ p.generate_env_file({
     "litellm": "http://localhost:4000"
 })
 ```
-
-### MCP Service Orchestration
 
 ```python
 # Start all MCP services
@@ -175,8 +159,6 @@ p.generate_mcp_config()
 # Stop all services
 p.stop_mcp_services()
 ```
-
-## Simplified Examples
 
 ### Example 21 - Aider CLI + Ollama
 
@@ -321,10 +303,6 @@ Auto backend selection:
 - **Quick fix commands** generation
 - **Batch processing** integration
 
-## Usage Examples
-
-### Quick Start
-
 ```bash
 # 1. Generate TODO from analysis
 python -c "from algitex import Project; p = Project('.'); p.generate_todo()"
@@ -356,11 +334,6 @@ results = processor.process(file_list)
 # Benchmark custom models
 p.add_benchmark_task("my_task", "My Task", prompt, keywords)
 results = p.benchmark_models(["model1", "model2"], ["my_task"])
-
-# IDE integration
-if p.detect_editor() == "claude-code":
-    p.fix_with_claude("file.py", "Fix bug")
-```
 
 ## Configuration Management Features
 

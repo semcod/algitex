@@ -1,7 +1,6 @@
 """Tests for parallel task coordination."""
 import pytest
 import tempfile
-import shutil
 from pathlib import Path
 from unittest.mock import Mock, patch
 

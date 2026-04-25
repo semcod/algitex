@@ -21,20 +21,18 @@ Usage:
 
 from __future__ import annotations
 
-import asyncio
 import threading
 import time
-from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Callable
+from dataclasses import dataclass
+from typing import Dict, Optional, Callable
 from collections import deque
 
-from rich.console import Console, Group
+from rich.console import Console
 from rich.live import Live
 from rich.panel import Panel
 from rich.progress import Progress, BarColumn, TextColumn, TimeElapsedColumn
 from rich.table import Table
 from rich.layout import Layout
-from rich.text import Text
 
 
 @dataclass

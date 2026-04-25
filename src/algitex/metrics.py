@@ -21,7 +21,7 @@ from __future__ import annotations
 
 import json
 import time
-from dataclasses import dataclass, field, asdict
+from dataclasses import dataclass, asdict
 from pathlib import Path
 from typing import Dict, List, Optional, Any
 from collections import defaultdict
@@ -71,7 +71,7 @@ class MetricsCollector:
         "claude-3-5-sonnet": 3.0,  # $3/M input, $15/M output
         "claude-3-haiku": 0.25,
         "gpt-4o": 2.5,
-        "gpt-4o-mini": 0.15,
+        "gpt-5.4-mini": 0.15,
     }
     
     def __init__(self, storage_path: Optional[str] = None):

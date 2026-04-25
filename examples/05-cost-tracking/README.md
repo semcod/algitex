@@ -21,8 +21,6 @@ cp .env.example .env
 ./run.sh
 ```
 
-## Co pokazuje
-
 ### 1. Cost ledger per ticket
 
 Każdy ticket ma metadane:

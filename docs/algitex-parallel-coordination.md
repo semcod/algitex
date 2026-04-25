@@ -8,8 +8,6 @@
 
 ---
 
-## 1. Aktualny stan — diagnostyka
-
 ### Co przybyło (nowe moduły vs ostatnia sesja)
 
 | Moduł | LOC | Rola | Status |
@@ -54,11 +52,6 @@ evolution: NEXT[0] = no refactoring needed
 
 ---
 
-## 2. Refaktoryzacja — 5 zadań dla LLM
-
-### Task 1: Split `Project.status` (fan=18 → fan≤6)
-
-```python
 # PRZED: Project.status() robi 18 rzeczy
 def status(self):
     health = self.analyze()
@@ -94,9 +87,6 @@ def _status_algo(self):
 
 ---
 
-### Task 2: Split `BatchProcessor.process` (fan=17 → fan≤6)
-
-```python
 # PRZED: process() ma 17 stages inline
 def process(self, items):
     # validate, filter, rate-limit, group, execute, retry, collect,
@@ -112,11 +102,6 @@ def process(self, items):
 **Effort:** 2h | **Impact:** fan 17→6
 
 ---
-
-### Task 3: Extract `call_stdio` transport logic
-
-```python
-# PRZED: call_stdio robi send + read + parse + error handling + retry (fan=17)
 
 # PO: StdioTransport class
 class StdioTransport:
@@ -136,9 +121,6 @@ class StdioTransport:
 
 ---
 
-### Task 4: Lazy init `Project.__init__` (fan=16 → fan≤4)
-
-```python
 # PRZED: __init__ inicjalizuje 16 komponentów od razu
 def __init__(self, path, config):
     self.analyzer = Analyzer(path)
@@ -187,8 +169,6 @@ todo_local.py      282L — lokalna implementacja
 **Effort:** 3h | **Impact:** -490L, czysta odpowiedzialność
 
 ---
-
-## 3. GŁÓWNY TEMAT: Koordynacja równoległa zadań LLM
 
 ### Problem
 
@@ -631,9 +611,6 @@ class ParallelExecutor:
 
 ---
 
-## 4. CLI integration
-
-```python
 # src/algitex/cli/parallel.py
 
 @click.command("parallel")
@@ -679,8 +656,6 @@ def parallel(path, agents, tool, dry_run):
 ```
 
 ---
-
-## 5. Przykłady użycia
 
 ### `examples/parallel_refactoring.py`
 
@@ -897,11 +872,6 @@ def main():
 if __name__ == "__main__":
     main()
 ```
-
-### `examples/todo_pipeline.md`
-
-```markdown
-# Example: Fix job queue deadlocks (pipeline-first)
 
 ## 1. Analyze current state
 ```propact:shell

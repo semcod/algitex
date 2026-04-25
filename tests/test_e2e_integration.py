@@ -16,9 +16,6 @@ from pathlib import Path
 from unittest.mock import MagicMock, patch
 
 from algitex import Pipeline
-from algitex.tools.telemetry import Telemetry
-from algitex.tools.context import ContextBuilder
-from algitex.tools.feedback import FeedbackController, FeedbackPolicy
 
 
 class TestEndToEndIntegration:

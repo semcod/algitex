@@ -17,9 +17,6 @@ cd examples/37-benchmarks
 python main.py
 ```
 
-## CLI Commands
-
-```bash
 # Quick benchmark
 algitex benchmark quick
 

@@ -12,22 +12,10 @@ Użycie **Claude Code** z **lokalnym Ollama** - refactoring kodu bez API keys.
 - **Ollama** uruchomiony: `ollama serve`
 - **Model**: `qwen3-coder:latest` lub inny
 
-## Konfiguracja
-
-```bash
 # Ustaw Ollama jako backend dla Claude Code
 export ANTHROPIC_BASE_URL=http://localhost:11434/v1
 export ANTHROPIC_API_KEY=ollama  # dowolny string, Ollama nie weryfikuje
 ```
-
-## Użycie
-
-```bash
-# 1. Sprawdź konfigurację
-make setup
-
-# 2. Analiza kodu przez Claude Code z Ollama
-make run
 
 # 3. Ręczne użycie
 anthropic-curl --model ollama/qwen3-coder:latest \
@@ -44,9 +32,6 @@ anthropic-curl --model ollama/qwen3-coder:latest \
 | Multi-file | ✅ | ✅ |
 | Best for | Complex refactoring | Quick fixes |
 
-## CLI Commands
-
-```bash
 # Spawn interactive session
 anthropic-curl --model ollama/qwen3-coder:latest
 

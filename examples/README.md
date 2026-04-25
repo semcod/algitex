@@ -9,8 +9,6 @@ This directory contains example scripts and workflows demonstrating various algi
 > ✅ **Testing Status (2026-03-28)**: All 33 examples tested and verified working.  
 > Examples 01-34 (except 29) execute without errors.
 
-## Quick Navigation
-
 ### 🚀 Parallel Execution (30-32)
 - **[30-parallel-execution](30-parallel-execution/)** - Region-based parallel execution without conflicts
 - **[31-abpr-workflow](31-abpr-workflow/)** - Pipeline-first, prompt-second ABPR approach
@@ -35,8 +33,6 @@ This directory contains example scripts and workflows demonstrating various algi
 - **[33-hybrid-autofix](33-hybrid-autofix/)** - Fast parallel + LLM with rate limiting
 - And more...
 
-## Recent Additions
-
 ### Hybrid AutoFix (33)
 
 Combines fast parallel mechanical fixes with rate-limited LLM fixes:
@@ -53,8 +49,6 @@ Features:
 - **Phase 2**: Rate-limited LLM fixes (10 req/sec with retry)
 - Backends: `litellm-proxy`, `ollama`, `aider`
 - Cost tracking per LLM call
-
-### Parallel Execution Suite (30-32)
 
 #### 30-parallel-execution
 Demonstrates algitex's parallel execution capabilities using AST-level region locking:
@@ -152,17 +146,8 @@ make run
 Most examples can be run directly:
 
 ```bash
-# Install algitex
-pip install -e .
-
 # Navigate to any example directory
 cd examples/XX-example-name
-
-# Run the example
-make run
-# or
-python main.py
-```
 
 ## Example Structure
 

@@ -2,8 +2,6 @@
 
 BatchFix to funkcjonalność która grupuje podobne zadania z TODO.md i wykonuje je za jednym razem, znacznie przyspieszając proces naprawy kodu.
 
-## Jak to działa?
-
 ### Problem
 Tradycyjne podejście:
 ```
@@ -14,8 +12,6 @@ Tradycyjne podejście:
 ```
 10 zadań "String concatenation" → 1 × 60s = 60s (5× szybciej!)
 ```
-
-## Komenda
 
 ```bash
 # Symulacja (dry-run)
@@ -56,12 +52,7 @@ BatchFix automatycznie grupuje zadania według typu:
 | `docstring` | "llm-style docstring" | Konwersja na standardowe docstrings |
 | `module_block` | "module execution block" | `if __name__ == "__main__":` |
 
-## Przykład Użycia
-
 ```bash
-# 1. Wygeneruj TODO.md
-prefact generate
-
 # 2. Weryfikacja - sprawdź które zadania są nadal aktualne
 algitex todo verify-prefact
 
@@ -88,13 +79,9 @@ BatchFix automatycznie generuje logi w formacie markdown:
 ```bash
 # Logi zapisywane domyślnie w .algitex/logs/
 algitex todo batch --dry-run
-# Log zapisany: .algitex/logs/batch_YYYYMMDD_HHMMSS.md
-
 # Wyłączenie logowania
 algitex todo batch --execute --no-log
 ```
-
-### Format logu
 
 ```markdown
 # BatchFix Session Log
@@ -117,7 +104,7 @@ algitex todo batch --execute --no-log
 | Dry Run | 3 |
 ```
 
-```
+```text
 📦 BatchFix: 50 zadań → 12 grup
   🔧 string_concat: 15 plików
      • file1.py

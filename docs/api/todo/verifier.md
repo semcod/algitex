@@ -9,8 +9,6 @@ Usage:
     print(f"Open: {result.still_open}, Fixed: {result.already_fixed}")
 
 
-## Functions
-
 ### `verify_todos`
 
 ```python
@@ -25,8 +23,6 @@ Quick verification function.
     Returns:
         VerificationResult with counts
     
-
-## Classes
 
 ### `TodoTask`
 

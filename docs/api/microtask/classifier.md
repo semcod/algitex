@@ -8,8 +8,6 @@ Classification helpers for prefact TODO lines.
 __all__ = ['KNOWN_MAGIC_NUMBERS', 'classify_prefact_line', 'classify_todo_file']
 ```
 
-## Functions
-
 ### `classify_prefact_line`
 
 ```python

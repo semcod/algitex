@@ -20,19 +20,6 @@ This example demonstrates algitex's ability to orchestrate analysis and fixes ac
 - `workspace.yaml` - Workspace configuration
 - `Makefile` - Build and run commands
 
-## Quick Start
-
-```bash
-# Install algitex
-pip install -e .
-
-# Run the workspace demo
-make run
-
-# Analyze only (no changes)
-make analyze
-```
-
 ## Workspace Configuration
 
 The `workspace.yaml` defines:

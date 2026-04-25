@@ -2,8 +2,6 @@
 
 Todo subcommands for algitex CLI.
 
-## Functions
-
 ### `todo_stats`
 
 ```python

@@ -16,7 +16,9 @@ from mcp.server.fastmcp import FastMCP
 from fastapi import FastAPI
 import uvicorn
 
-logging.basicConfig(
+
+if __name__ == "__main__":
+    logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     stream=sys.stderr

@@ -15,16 +15,6 @@ This example demonstrates how to use the cicd module to generate automated quali
 - Multi-platform CI/CD setup
 - Quality gate configuration
 
-## Running the Example
-
-```bash
-# Install dependencies
-pip install algitex
-
-# Run the CI/CD example
-python main.py
-```
-
 ## What You'll See
 
 1. **GitHub Actions** - Workflow with quality gates and complexity checks
@@ -64,19 +54,6 @@ ci_cd:
 - `Dockerfile` - Container configuration
 - `.pre-commit-config.yaml` - Pre-commit hooks
 - `Makefile` - Common development tasks
-
-## Quick Start
-
-```bash
-# Initialize CI/CD for your project
-algitex init-cicd .
-
-# Activate pre-commit hooks
-pre-commit install
-
-# Run all checks locally
-make ci
-```
 
 ## Use Cases
 

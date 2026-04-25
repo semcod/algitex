@@ -1,11 +1,3 @@
-# Pipeline: Fix Auth Module (ABPR-style)
-#
-# This is a PIPELINE, not a PROMPT.
-# User designs the sequence of steps.
-# LLM is just one step inside.
-#
-# Run: algitex workflow run examples/fix-auth.md --ticket SEC-2026-01
-
 ## 1. Analyze codebase → structural trace
 
 ```propact:shell
@@ -56,9 +48,6 @@ input:
     - tests/auth/test_token.py
 ```
 
-## 5. Validate fix (constraint-filter, not prompt)
-
-```propact:shell
 # Static validation
 vallm file ./src/auth/middleware.py --level 3
 vallm file ./src/auth/token.py --level 3

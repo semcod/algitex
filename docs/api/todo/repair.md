@@ -11,8 +11,6 @@ Implements Strategy pattern: REPAIRERS dict maps category → repair function.
 __all__ = ['REPAIRERS', 'repair_unused_import', 'repair_return_type', 'repair_fstring', 'repair_magic_number', 'repair_module_block']
 ```
 
-## Functions
-
 ### `repair_unused_import`
 
 ```python
