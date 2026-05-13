@@ -3,6 +3,7 @@
 This module re-exports from algitex.tools.parallel for backward compatibility.
 New code should import directly from algitex.tools.parallel.
 """
+
 # Re-export all classes from the new package location for backward compatibility
 from algitex.tools.parallel.models import (
     RegionType,
@@ -19,7 +20,7 @@ from algitex.tools.parallel.executor import ParallelExecutor
 
 __all__ = [
     "RegionType",
-    "CodeRegion", 
+    "CodeRegion",
     "TaskAssignment",
     "MergeResult",
     "RegionExtractor",

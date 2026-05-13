@@ -28,13 +28,17 @@ class ContextSlicer:
         end_line = task.line_end
 
         if task.function_name:
-            extracted = self._extract_function(source, task.function_name, task.class_name)
+            extracted = self._extract_function(
+                source, task.function_name, task.class_name
+            )
             if extracted is not None:
                 snippet, start_line, end_line = extracted
                 task.context_start = start_line
                 task.context_end = end_line
         if not snippet:
-            start_line, end_line = self._expand_window(source, task.line_start, task.line_end)
+            start_line, end_line = self._expand_window(
+                source, task.line_start, task.line_end
+            )
             snippet = self._extract_lines(source, start_line, end_line)
             task.context_start = start_line
             task.context_end = end_line
@@ -77,24 +81,34 @@ class ContextSlicer:
             for node in ast.walk(tree):
                 if isinstance(node, ast.ClassDef) and node.name == class_name:
                     for child in node.body:
-                        if isinstance(child, (ast.FunctionDef, ast.AsyncFunctionDef)) and child.name == function_name:
+                        if (
+                            isinstance(child, (ast.FunctionDef, ast.AsyncFunctionDef))
+                            and child.name == function_name
+                        ):
                             start, end = node_bounds(child)
                             return ("\n".join(lines[start - 1 : end]), start, end)
                     break
 
         matches: list[tuple[int, int, str]] = []
         for node in ast.walk(tree):
-            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) and node.name == function_name:
+            if (
+                isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+                and node.name == function_name
+            ):
                 start, end = node_bounds(node)
                 matches.append((start, end, "\n".join(lines[start - 1 : end])))
 
         if not matches:
             return None
 
-        start, end, snippet = min(matches, key=lambda item: (item[1] - item[0], item[0]))
+        start, end, snippet = min(
+            matches, key=lambda item: (item[1] - item[0], item[0])
+        )
         return snippet, start, end
 
-    def _expand_window(self, source: str, line_start: int, line_end: int) -> tuple[int, int]:
+    def _expand_window(
+        self, source: str, line_start: int, line_end: int
+    ) -> tuple[int, int]:
         lines = source.splitlines()
         if not lines:
             return line_start, line_end

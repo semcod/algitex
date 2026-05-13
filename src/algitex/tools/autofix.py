@@ -14,4 +14,11 @@ from algitex.tools.autofix import (
     ProxyBackend,
 )
 
-__all__ = ["AutoFix", "FixResult", "Task", "OllamaBackend", "AiderBackend", "ProxyBackend"]
+__all__ = [
+    "AutoFix",
+    "FixResult",
+    "Task",
+    "OllamaBackend",
+    "AiderBackend",
+    "ProxyBackend",
+]

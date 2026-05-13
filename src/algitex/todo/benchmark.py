@@ -6,6 +6,7 @@ Usage:
     result = benchmark_fix("TODO.md", limit=100, workers=8)
     print(f"Throughput: {result.throughput_tps:.2f} tickets/sec")
 """
+
 import time
 import statistics
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -18,6 +19,7 @@ from algitex.todo.fixer import parse_todo, FIXERS, TodoTask
 @dataclass
 class BenchmarkResult:
     """Benchmark results for fix operations."""
+
     mode: str  # "parallel" or "sequential"
     workers: int
     total_tasks: int
@@ -44,36 +46,50 @@ class BenchmarkResult:
 
     @property
     def stdev_time_ms(self) -> float:
-        return statistics.stdev(self.per_ticket_times) if len(self.per_ticket_times) > 1 else 0
+        return (
+            statistics.stdev(self.per_ticket_times)
+            if len(self.per_ticket_times) > 1
+            else 0
+        )
 
     @property
     def throughput_tps(self) -> float:
         """Tickets per second."""
-        return self.total_tasks / (self.total_time_ms / 1000) if self.total_time_ms > 0 else 0
+        return (
+            self.total_tasks / (self.total_time_ms / 1000)
+            if self.total_time_ms > 0
+            else 0
+        )
 
     def print_report(self, detailed: bool = False) -> None:
         """Print formatted benchmark report."""
         print(f"\n{'═' * 70}")
-        print(f"  BENCHMARK: {self.mode.upper()} | Workers: {self.workers} | Tasks: {self.total_tasks}")
+        print(
+            f"  BENCHMARK: {self.mode.upper()} | Workers: {self.workers} | Tasks: {self.total_tasks}"
+        )
         print(f"{'═' * 70}")
 
-        print(f"\n  📊 TIMING:")
-        print(f"     Total time:     {self.total_time_ms:>10.2f} ms  ({self.total_time_ms/1000:.3f}s)")
+        print("\n  📊 TIMING:")
+        print(
+            f"     Total time:     {self.total_time_ms:>10.2f} ms  ({self.total_time_ms / 1000:.3f}s)"
+        )
         print(f"     Per ticket avg: {self.avg_time_ms:>10.2f} ms")
         print(f"     Per ticket med: {self.median_time_ms:>10.2f} ms")
         print(f"     Std dev:        {self.stdev_time_ms:>10.2f} ms")
-        print(f"     Min/Max:        {self.min_time_ms:>10.2f} / {self.max_time_ms:.2f} ms")
+        print(
+            f"     Min/Max:        {self.min_time_ms:>10.2f} / {self.max_time_ms:.2f} ms"
+        )
         print(f"     Throughput:     {self.throughput_tps:>10.2f} tickets/sec")
 
-        print(f"\n  ✅ RESULTS:")
+        print("\n  ✅ RESULTS:")
         print(f"     Success: {self.success_count}/{self.total_tasks}")
         print(f"     Errors:  {self.error_count}")
 
         if detailed and self.per_ticket_times:
-            print(f"\n  📋 PER-TICKET DETAILS (top 5 slowest):")
+            print("\n  📋 PER-TICKET DETAILS (top 5 slowest):")
             sorted_times = sorted(self.per_ticket_times, reverse=True)
             for i, t in enumerate(sorted_times[:5]):
-                print(f"     #{i+1}: {t:>8.2f} ms")
+                print(f"     #{i + 1}: {t:>8.2f} ms")
 
 
 def _benchmark_single(task: TodoTask, dry_run: bool = True) -> tuple[bool, float, str]:
@@ -106,8 +122,7 @@ def _benchmark_single(task: TodoTask, dry_run: bool = True) -> tuple[bool, float
 
 
 def benchmark_sequential(
-    tasks: list[TodoTask],
-    dry_run: bool = True
+    tasks: list[TodoTask], dry_run: bool = True
 ) -> BenchmarkResult:
     """Run sequential benchmark."""
     start = time.perf_counter()
@@ -132,14 +147,12 @@ def benchmark_sequential(
         total_time_ms=total_time,
         per_ticket_times=times,
         success_count=success,
-        error_count=errors
+        error_count=errors,
     )
 
 
 def benchmark_parallel(
-    tasks: list[TodoTask],
-    workers: int = 8,
-    dry_run: bool = True
+    tasks: list[TodoTask], workers: int = 8, dry_run: bool = True
 ) -> BenchmarkResult:
     """Run parallel benchmark."""
     start = time.perf_counter()
@@ -148,7 +161,9 @@ def benchmark_parallel(
     errors = 0
 
     with ThreadPoolExecutor(max_workers=workers) as pool:
-        futures = {pool.submit(_benchmark_single, task, dry_run): task for task in tasks}
+        futures = {
+            pool.submit(_benchmark_single, task, dry_run): task for task in tasks
+        }
 
         for future in as_completed(futures):
             ok, duration, error = future.result()
@@ -167,7 +182,7 @@ def benchmark_parallel(
         total_time_ms=total_time,
         per_ticket_times=times,
         success_count=success,
-        error_count=errors
+        error_count=errors,
     )
 
 
@@ -176,7 +191,7 @@ def benchmark_fix(
     limit: int = 10,
     workers: int = 8,
     dry_run: bool = True,
-    mode: str = "parallel"
+    mode: str = "parallel",
 ) -> BenchmarkResult:
     """Run benchmark on TODO tasks.
 
@@ -202,7 +217,7 @@ def compare_modes(
     todo_path: str | Path = "TODO.md",
     limit: int = 10,
     workers: int = 8,
-    dry_run: bool = True
+    dry_run: bool = True,
 ) -> dict:
     """Compare parallel vs sequential execution.
 
@@ -223,11 +238,15 @@ def compare_modes(
     par_result.print_report(detailed=False)
 
     # Analysis
-    speedup = seq_result.total_time_ms / par_result.total_time_ms if par_result.total_time_ms > 0 else 1
+    speedup = (
+        seq_result.total_time_ms / par_result.total_time_ms
+        if par_result.total_time_ms > 0
+        else 1
+    )
     efficiency = (speedup / workers) * 100
 
     print(f"\n{'═' * 70}")
-    print(f"  ⚡ SPEEDUP ANALYSIS")
+    print("  ⚡ SPEEDUP ANALYSIS")
     print(f"{'═' * 70}")
     print(f"     Sequential time:  {seq_result.total_time_ms:>10.2f} ms")
     print(f"     Parallel time:    {par_result.total_time_ms:>10.2f} ms")
@@ -240,5 +259,5 @@ def compare_modes(
         "parallel": par_result,
         "speedup": speedup,
         "efficiency": efficiency,
-        "winner": "parallel" if speedup > 1 else "sequential"
+        "winner": "parallel" if speedup > 1 else "sequential",
     }

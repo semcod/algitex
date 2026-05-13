@@ -2,14 +2,17 @@
 
 from __future__ import annotations
 
-from pathlib import Path
 
-import clickmd
 from clickmd import command, option, argument
 from rich.console import Console
 from rich.table import Table
 
-from algitex.nlp import DeadCodeDetector, DocstringShortener, find_duplicate_blocks, sort_imports_in_path
+from algitex.nlp import (
+    DeadCodeDetector,
+    DocstringShortener,
+    find_duplicate_blocks,
+    sort_imports_in_path,
+)
 
 
 console = Console()

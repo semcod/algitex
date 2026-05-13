@@ -42,8 +42,16 @@ from algitex.project.config import ConfigMixin
 from algitex.project.mcp import MCPMixin
 
 
-class Project(ServiceMixin, AutoFixMixin, OllamaMixin, BatchMixin, BenchmarkMixin,
-              IDEMixin, ConfigMixin, MCPMixin):
+class Project(
+    ServiceMixin,
+    AutoFixMixin,
+    OllamaMixin,
+    BatchMixin,
+    BenchmarkMixin,
+    IDEMixin,
+    ConfigMixin,
+    MCPMixin,
+):
     """One project, all tools, zero boilerplate."""
 
     def __init__(self, path: str = ".", config: Optional[Config] = None):
@@ -57,11 +65,11 @@ class Project(ServiceMixin, AutoFixMixin, OllamaMixin, BatchMixin, BenchmarkMixi
 
         # Initialize only essential components
         self.algo = Loop(str(self.path))
-        
+
         # Initialize mixins that don't require heavy setup
         ServiceMixin.__init__(self)
         AutoFixMixin.__init__(self, str(self.path / "TODO.md"))
-        
+
         # Defer heavy initialization to properties
         IDEMixin.__init__(self)
         ConfigMixin.__init__(self)
@@ -75,14 +83,14 @@ class Project(ServiceMixin, AutoFixMixin, OllamaMixin, BatchMixin, BenchmarkMixi
         if "analyzer" not in self._components:
             self._components["analyzer"] = Analyzer(str(self.path))
         return self._components["analyzer"]
-    
+
     @property
     def _tickets(self) -> Tickets:
         """Lazy initialize Tickets."""
         if "tickets" not in self._components:
             self._components["tickets"] = Tickets(str(self.path), self.config.tickets)
         return self._components["tickets"]
-    
+
     @property
     def _ollama_service(self) -> OllamaService:
         """Lazy initialize OllamaService."""
@@ -90,7 +98,9 @@ class Project(ServiceMixin, AutoFixMixin, OllamaMixin, BatchMixin, BenchmarkMixi
             self._components["ollama_service"] = OllamaService()
             # Initialize dependent mixins when service is created
             OllamaMixin.__init__(self)
-            BatchMixin.__init__(self, str(self.path), self._components["ollama_service"].client)
+            BatchMixin.__init__(
+                self, str(self.path), self._components["ollama_service"].client
+            )
             BenchmarkMixin.__init__(self, self._components["ollama_service"].client)
         return self._components["ollama_service"]
 
@@ -175,18 +185,22 @@ class Project(ServiceMixin, AutoFixMixin, OllamaMixin, BatchMixin, BenchmarkMixi
                     **cost_meta,
                 )
 
-                results.append({
-                    "ticket": ticket.id,
-                    "status": "review",
-                    **cost_meta,
-                })
+                results.append(
+                    {
+                        "ticket": ticket.id,
+                        "status": "review",
+                        **cost_meta,
+                    }
+                )
             else:
                 self._tickets.update(ticket.id, status="blocked")
-                results.append({
-                    "ticket": ticket.id,
-                    "status": "blocked",
-                    "error": response.content,
-                })
+                results.append(
+                    {
+                        "ticket": ticket.id,
+                        "status": "blocked",
+                        "error": response.content,
+                    }
+                )
 
         proxy.close()
         return {"executed": len(results), "results": results}
@@ -244,6 +258,7 @@ class Project(ServiceMixin, AutoFixMixin, OllamaMixin, BatchMixin, BenchmarkMixi
     def _check_proxy_status(self) -> dict:
         """Check proxy health and budget."""
         from algitex.tools.proxy import Proxy
+
         proxy = Proxy(self.config.proxy)
         healthy = proxy.health()
         budget = proxy.budget()
@@ -254,14 +269,19 @@ class Project(ServiceMixin, AutoFixMixin, OllamaMixin, BatchMixin, BenchmarkMixi
         """Check Docker tool availability."""
         try:
             from algitex.tools.docker import DockerToolManager
+
             docker_mgr = DockerToolManager(self.config)
-            return {"available": docker_mgr.list_tools(), "running": docker_mgr.list_running()}
+            return {
+                "available": docker_mgr.list_tools(),
+                "running": docker_mgr.list_running(),
+            }
         except Exception:
             return {"available": [], "running": []}
 
     def _check_tools_status(self) -> dict:
         """Check installed tool status."""
         from algitex.tools import discover_tools
+
         tools = discover_tools()
         return {name: str(s) for name, s in tools.items()}
 
@@ -328,66 +348,84 @@ class Project(ServiceMixin, AutoFixMixin, OllamaMixin, BatchMixin, BenchmarkMixi
 
     def generate_todo(self, filename: str = "TODO.md") -> dict:
         """Generate TODO.md from analysis results.
-        
+
         Creates a TODO.md file with code issues found during analysis.
         Uses the last analysis report if available, otherwise runs a new analysis.
-        
+
         Args:
             filename: Name of the TODO file to create (default: TODO.md)
-            
+
         Returns:
             dict with count of issues created and the filename
         """
         from pathlib import Path
-        
+
         if not self._last_report:
             self.analyze()
-        
+
         report = self._last_report
         issues = self._collect_hotspot_issues(report)
-        
+
         # Add generic code quality issues
         generic_issues = [
-            {"description": "Add type hints to all public functions", "file": "main.py", "line": 1, "priority": "normal"},
-            {"description": "Add docstrings to all public functions", "file": "main.py", "line": 1, "priority": "normal"},
+            {
+                "description": "Add type hints to all public functions",
+                "file": "main.py",
+                "line": 1,
+                "priority": "normal",
+            },
+            {
+                "description": "Add docstrings to all public functions",
+                "file": "main.py",
+                "line": 1,
+                "priority": "normal",
+            },
         ]
-        
+
         for issue in generic_issues:
-            if not any(i["file"] == issue["file"] and i["line"] == issue["line"] for i in issues):
+            if not any(
+                i["file"] == issue["file"] and i["line"] == issue["line"]
+                for i in issues
+            ):
                 issues.append(issue)
-        
+
         todo_path = self.path / filename
         self._write_todo_file(todo_path, report.grade, issues)
-        
-        return {
-            "filename": str(todo_path),
-            "count": len(issues),
-            "grade": report.grade
-        }
-    
+
+        return {"filename": str(todo_path), "count": len(issues), "grade": report.grade}
 
     def _collect_hotspot_issues(self, report) -> list:
         issues = []
-        hotspots = getattr(report, 'complexity_hotspots', None) or getattr(report, 'god_functions', [])
+        hotspots = getattr(report, "complexity_hotspots", None) or getattr(
+            report, "god_functions", []
+        )
         for hotspot in hotspots[:5]:
             if isinstance(hotspot, dict):
-                issues.append({
-                    "description": f"Refactor high complexity function {hotspot.get('function', 'unknown')} (CC={hotspot.get('complexity', 0)})",
-                    "file": hotspot.get("file", ""),
-                    "line": hotspot.get("line", 1),
-                    "priority": "high" if hotspot.get("complexity", 0) > 10 else "normal"
-                })
+                issues.append(
+                    {
+                        "description": f"Refactor high complexity function {hotspot.get('function', 'unknown')} (CC={hotspot.get('complexity', 0)})",
+                        "file": hotspot.get("file", ""),
+                        "line": hotspot.get("line", 1),
+                        "priority": "high"
+                        if hotspot.get("complexity", 0) > 10
+                        else "normal",
+                    }
+                )
             else:
-                issues.append({
-                    "description": f"Refactor complex function: {hotspot}",
-                    "file": str(hotspot).split(":")[0] if ":" in str(hotspot) else "",
-                    "line": 1,
-                    "priority": "normal"
-                })
+                issues.append(
+                    {
+                        "description": f"Refactor complex function: {hotspot}",
+                        "file": str(hotspot).split(":")[0]
+                        if ":" in str(hotspot)
+                        else "",
+                        "line": 1,
+                        "priority": "normal",
+                    }
+                )
         return issues
 
     def _write_todo_file(self, path, grade: str, issues: list):
-        with open(path, 'w') as f:
+        with open(path, "w") as f:
             f.write("# TODO - Code Issues\n\n")
             f.write(f"Generated from analysis (Grade: {grade})\n\n")
             f.write("## Current Issues\n\n")
@@ -397,6 +435,7 @@ class Project(ServiceMixin, AutoFixMixin, OllamaMixin, BatchMixin, BenchmarkMixi
                 line = issue.get("line", "")
                 desc = issue["description"]
                 f.write(f"- [ ] {file_path}:{line} - {desc} [priority:{priority}]\n")
+
     # ── Private helpers ───────────────────────────────────
 
     def _build_prompt(self, ticket: Ticket) -> str:
@@ -419,14 +458,28 @@ class Project(ServiceMixin, AutoFixMixin, OllamaMixin, BatchMixin, BenchmarkMixi
         return mapping.get(ticket.priority, "standard")
 
     def _generate_strategy(self, sprints: int, focus: str) -> Optional[dict]:
-        import shutil, subprocess, json
+        import shutil
+        import subprocess
+        import json
+
         if not shutil.which("planfile"):
             return None
         try:
             result = subprocess.run(
-                ["planfile", "strategy", "generate", str(self.path),
-                 "--sprints", str(sprints), "--focus", focus, "--json"],
-                capture_output=True, text=True, timeout=120,
+                [
+                    "planfile",
+                    "strategy",
+                    "generate",
+                    str(self.path),
+                    "--sprints",
+                    str(sprints),
+                    "--focus",
+                    focus,
+                    "--json",
+                ],
+                capture_output=True,
+                text=True,
+                timeout=120,
             )
             if result.returncode == 0:
                 return json.loads(result.stdout)

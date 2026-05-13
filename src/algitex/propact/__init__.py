@@ -151,8 +151,13 @@ class Workflow:
                 lines = step.content.strip().split("\n", 1)
                 if not lines or not lines[0].strip():
                     errors.append(f"Step {step.index}: empty REST block")
-                elif not any(lines[0].startswith(m) for m in ("GET", "POST", "PUT", "DELETE", "PATCH")):
-                    errors.append(f"Step {step.index}: REST block must start with HTTP method")
+                elif not any(
+                    lines[0].startswith(m)
+                    for m in ("GET", "POST", "PUT", "DELETE", "PATCH")
+                ):
+                    errors.append(
+                        f"Step {step.index}: REST block must start with HTTP method"
+                    )
 
             elif step.type == "shell":
                 if not step.content.strip():
@@ -160,7 +165,9 @@ class Workflow:
 
         return errors
 
-    def _execute_step(self, step: WorkflowStep, proxy_url: str, docker_mgr) -> tuple[WorkflowStep, Any]:
+    def _execute_step(
+        self, step: WorkflowStep, proxy_url: str, docker_mgr
+    ) -> tuple[WorkflowStep, Any]:
         """Execute a single step and return the step and potentially updated docker_mgr."""
         if step.type == "shell":
             step = self._exec_shell(step)
@@ -176,10 +183,13 @@ class Workflow:
                 # Store the manager after first docker step
                 from algitex.tools.docker import DockerToolManager
                 from algitex.config import Config
+
                 docker_mgr = DockerToolManager(Config.load())
         return step, docker_mgr
 
-    def _update_result(self, result: WorkflowResult, step: WorkflowStep, start_time: float):
+    def _update_result(
+        self, result: WorkflowResult, step: WorkflowStep, start_time: float
+    ):
         """Update result with step metrics."""
         step.elapsed_ms = (time.time() - start_time) * 1000
         result.total_elapsed_ms += step.elapsed_ms
@@ -233,7 +243,7 @@ class Workflow:
                     step.result = str(e)
 
                 self._update_result(result, step, start)
-                
+
                 if step.status == "failed":
                     self._handle_step_failure(step, stop_on_error)
                     if stop_on_error:
@@ -325,6 +335,7 @@ class Workflow:
             args = data.get("args", {})
 
             import httpx
+
             with httpx.Client(timeout=60) as client:
                 resp = client.post(
                     f"{proxy_url}/mcp/self/tools/{tool}",
@@ -337,7 +348,9 @@ class Workflow:
             step.result = str(e)
         return step
 
-    def _exec_docker(self, step: WorkflowStep, docker_mgr: Optional[DockerToolManager] = None) -> WorkflowStep:
+    def _exec_docker(
+        self, step: WorkflowStep, docker_mgr: Optional[DockerToolManager] = None
+    ) -> WorkflowStep:
         """Execute a step using a Docker tool from docker-tools.yaml.
 
         Propact syntax:
@@ -358,6 +371,7 @@ class Workflow:
         # Parse YAML content from step
         try:
             import yaml
+
             params = yaml.safe_load(step.content)
         except ImportError:
             # Fallback to simple JSON parsing if yaml not available
@@ -381,11 +395,23 @@ class Workflow:
         config = Config.load()
         if docker_mgr is None:
             with DockerToolManager(config) as mgr:
-                return self._execute_with_manager(tool_name, action, input_data, resolved_env, step, mgr)
+                return self._execute_with_manager(
+                    tool_name, action, input_data, resolved_env, step, mgr
+                )
         else:
-            return self._execute_with_manager(tool_name, action, input_data, resolved_env, step, docker_mgr)
-    
-    def _execute_with_manager(self, tool_name: str, action: str, input_data: dict, env: dict, step: WorkflowStep, mgr: DockerToolManager) -> WorkflowStep:
+            return self._execute_with_manager(
+                tool_name, action, input_data, resolved_env, step, docker_mgr
+            )
+
+    def _execute_with_manager(
+        self,
+        tool_name: str,
+        action: str,
+        input_data: dict,
+        env: dict,
+        step: WorkflowStep,
+        mgr: DockerToolManager,
+    ) -> WorkflowStep:
         """Execute Docker step with given manager and parameters."""
         # Spawn if not running
         if tool_name not in mgr.list_running():
@@ -396,7 +422,7 @@ class Workflow:
 
         step.result = json.dumps(result, indent=2)[:2000]
         step.status = "done" if result.get("rc", 0) == 0 else "error"
-        
+
         # Extract cost if available
         if "cost_usd" in result:
             step.cost_usd = result["cost_usd"]

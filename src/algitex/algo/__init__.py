@@ -27,6 +27,7 @@ import yaml
 @dataclass
 class TraceEntry:
     """Single LLM interaction trace."""
+
     timestamp: float
     prompt_hash: str
     prompt_preview: str
@@ -56,6 +57,7 @@ class TraceEntry:
 @dataclass
 class Pattern:
     """Extracted repeating pattern from traces."""
+
     id: str
     description: str
     frequency: int = 0
@@ -70,6 +72,7 @@ class Pattern:
 @dataclass
 class Rule:
     """Deterministic replacement for an LLM pattern."""
+
     pattern_id: str
     name: str
     type: str = "regex"  # regex | lookup | decision_tree | function
@@ -82,6 +85,7 @@ class Rule:
 @dataclass
 class LoopState:
     """Current state of the progressive algorithmization loop."""
+
     stage: int = 0  # 0=init, 1=discover, 2=extract, 3=rules, 4=route, 5=optimize
     traces: list[TraceEntry] = field(default_factory=list)
     patterns: list[Pattern] = field(default_factory=list)
@@ -133,6 +137,7 @@ class Loop:
         # Try to register trace hook with proxym
         try:
             import httpx
+
             resp = httpx.post(
                 f"{proxy_url}/v1/hooks/register",
                 json={
@@ -151,6 +156,7 @@ class Loop:
     def add_trace(self, prompt: str, response: str, **meta) -> TraceEntry:
         """Manually add a trace entry (or called by proxym hook)."""
         import hashlib
+
         entry = TraceEntry(
             timestamp=time.time(),
             prompt_hash=hashlib.sha256(prompt.encode()).hexdigest()[:16],
@@ -271,6 +277,7 @@ class Loop:
 
         # Check against active rules
         import hashlib
+
         prompt_hash = hashlib.sha256(prompt.encode()).hexdigest()[:16]
 
         for rule in self._state.rules:
@@ -283,8 +290,9 @@ class Loop:
                 continue
 
             # Simple exact-match routing (extend with fuzzy later)
-            if prompt_hash in [t.prompt_hash for t in self._state.traces
-                               if t.pattern_id == pattern.id]:
+            if prompt_hash in [
+                t.prompt_hash for t in self._state.traces if t.pattern_id == pattern.id
+            ]:
                 self._state.deterministic_requests += 1
                 self._state.total_requests += 1
                 self._state.saved_cost_usd += pattern.avg_cost_usd
@@ -344,7 +352,9 @@ class Loop:
                 data = yaml.safe_load(state_file.read_text()) or {}
                 self._state.stage = data.get("stage", 0)
                 self._state.total_requests = data.get("total_requests", 0)
-                self._state.deterministic_requests = data.get("deterministic_requests", 0)
+                self._state.deterministic_requests = data.get(
+                    "deterministic_requests", 0
+                )
                 self._state.llm_requests = data.get("llm_requests", 0)
                 self._state.total_cost_usd = data.get("total_cost_usd", 0.0)
                 self._state.saved_cost_usd = data.get("saved_cost_usd", 0.0)

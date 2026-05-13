@@ -32,8 +32,7 @@ class MCPMixin:
     def get_mcp_status(self) -> dict:
         """Get MCP services status."""
         return {
-            name: status.to_dict()
-            for name, status in self.mcp.check_health().items()
+            name: status.to_dict() for name, status in self.mcp.check_health().items()
         }
 
     def print_mcp_status(self) -> None:
@@ -43,4 +42,5 @@ class MCPMixin:
     def generate_mcp_config(self) -> bool:
         """Generate MCP client configuration."""
         from pathlib import Path
+
         return self.mcp.generate_mcp_config(Path(".") / "mcp_config.json")

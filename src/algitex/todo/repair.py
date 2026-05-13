@@ -2,6 +2,7 @@
 
 Implements Strategy pattern: REPAIRERS dict maps category → repair function.
 """
+
 from __future__ import annotations
 
 import re
@@ -32,12 +33,12 @@ def _find_import_insert_point(lines: list[str]) -> int:
 
 def repair_unused_import(path: Path, name: str, line_idx: int) -> bool:
     """Remove unused import from file.
-    
+
     Args:
         path: File to modify
         name: Import name to remove
         line_idx: 0-based line index
-    
+
     Returns:
         True if fixed, False otherwise
     """
@@ -73,12 +74,12 @@ def repair_unused_import(path: Path, name: str, line_idx: int) -> bool:
 
 def repair_return_type(path: Path, suggested: str, line_idx: int) -> bool:
     """Add return type annotation to function.
-    
+
     Args:
         path: File to modify
         suggested: Return type annotation (e.g., "-> None")
         line_idx: 0-based line index
-    
+
     Returns:
         True if fixed, False otherwise
     """
@@ -103,14 +104,26 @@ def _simple_fstring_rewrite(line: str) -> str:
     """Rewrite simple string concatenation to f-string."""
     pattern = re.compile(
         r'(?P<left>["\'])(?P<prefix>[^"\']*)\1\s*\+\s*'
-        r'(?P<expr>[A-Za-z_][A-Za-z0-9_\.]*)\s*\+\s*'
+        r"(?P<expr>[A-Za-z_][A-Za-z0-9_\.]*)\s*\+\s*"
         r'(?P<right>["\'])(?P<tail>[^"\']*)\4'
     )
 
     def _replace(match: re.Match[str]) -> str:
-        prefix = match.group("prefix").replace("\\", "\\\\").replace('"', '\\"').replace("{", "{{").replace("}", "}}")
+        prefix = (
+            match.group("prefix")
+            .replace("\\", "\\\\")
+            .replace('"', '\\"')
+            .replace("{", "{{")
+            .replace("}", "}}")
+        )
         expr = match.group("expr")
-        tail = match.group("tail").replace("\\", "\\\\").replace('"', '\\"').replace("{", "{{").replace("}", "}}")
+        tail = (
+            match.group("tail")
+            .replace("\\", "\\\\")
+            .replace('"', '\\"')
+            .replace("{", "{{")
+            .replace("}", "}}")
+        )
         return f'f"{prefix}{{{expr}}}{tail}"'
 
     return pattern.sub(_replace, line, count=1)
@@ -118,12 +131,12 @@ def _simple_fstring_rewrite(line: str) -> str:
 
 def repair_fstring(path: Path, _unused: str = "", _unused2: int = 0) -> bool:
     """Convert string concatenations to f-strings using flynt or simple rewrite.
-    
+
     Args:
         path: File to modify
         _unused: Unused parameter for API consistency
         _unused2: Unused parameter for API consistency
-    
+
     Returns:
         True if any changes were made
     """
@@ -163,19 +176,16 @@ def repair_fstring(path: Path, _unused: str = "", _unused2: int = 0) -> bool:
 
 
 def repair_magic_number(
-    path: Path, 
-    number: int, 
-    line_idx: int,
-    const_name: str | None = None
+    path: Path, number: int, line_idx: int, const_name: str | None = None
 ) -> bool:
     """Replace magic number with named constant.
-    
+
     Args:
         path: File to modify
         number: Magic number to replace
         line_idx: 0-based line index
         const_name: Constant name (auto-detected if None)
-    
+
     Returns:
         True if fixed, False otherwise
     """
@@ -195,7 +205,7 @@ def repair_magic_number(
         line,
         count=1,
     )
-    
+
     if new_line == line:
         return False
 
@@ -219,12 +229,12 @@ def repair_magic_number(
 
 def repair_module_block(path: Path, _unused: str = "", _unused2: int = 0) -> bool:
     """Add standard module execution block.
-    
+
     Args:
         path: File to modify
         _unused: Unused parameter for API consistency
         _unused2: Unused parameter for API consistency
-    
+
     Returns:
         True if block was added
     """

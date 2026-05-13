@@ -16,7 +16,9 @@ class MicroPromptBuilder:
         "Make the smallest possible change. Return ONLY the requested content."
     )
 
-    def build(self, triage: TaskTriage, snippet: FunctionSnippet, task: Task) -> list[dict[str, str]]:
+    def build(
+        self, triage: TaskTriage, snippet: FunctionSnippet, task: Task
+    ) -> list[dict[str, str]]:
         """Build Ollama chat messages for the given task."""
         prompt = self._build_user_prompt(triage, snippet, task)
         return [
@@ -24,7 +26,9 @@ class MicroPromptBuilder:
             {"role": "user", "content": prompt},
         ]
 
-    def _build_user_prompt(self, triage: TaskTriage, snippet: FunctionSnippet, task: Task) -> str:
+    def _build_user_prompt(
+        self, triage: TaskTriage, snippet: FunctionSnippet, task: Task
+    ) -> str:
         """Create the user-facing prompt text."""
         header = [
             f"Task category: {triage.category}",
@@ -55,7 +59,11 @@ class MicroPromptBuilder:
                 "Keep the behavior identical. Return ONLY the updated function source."
             )
         elif triage.category == "magic":
-            number = triage.number if triage.number is not None else extract_first_int(task.description)
+            number = (
+                triage.number
+                if triage.number is not None
+                else extract_first_int(task.description)
+            )
             instruction = (
                 f"Suggest a descriptive UPPER_SNAKE_CASE constant name for the magic number {number}. "
                 "Return ONLY the name, nothing else."

@@ -71,9 +71,17 @@ def classify_prefact_line(
 
     task_type = _classify_message(message)
     number = _first_int(message)
-    if task_type == TaskType.KNOWN_MAGIC and number is not None and number not in KNOWN_MAGIC_NUMBERS:
+    if (
+        task_type == TaskType.KNOWN_MAGIC
+        and number is not None
+        and number not in KNOWN_MAGIC_NUMBERS
+    ):
         task_type = TaskType.UNKNOWN_MAGIC
-    if task_type == TaskType.UNKNOWN_MAGIC and number is not None and number in KNOWN_MAGIC_NUMBERS:
+    if (
+        task_type == TaskType.UNKNOWN_MAGIC
+        and number is not None
+        and number in KNOWN_MAGIC_NUMBERS
+    ):
         task_type = TaskType.KNOWN_MAGIC
 
     resolved_file = _resolve_file(raw_file, base_dir)
@@ -103,7 +111,9 @@ def classify_todo_file(path: str | Path) -> list[MicroTask]:
     tasks: list[MicroTask] = []
     seen: set[tuple[str, int, str]] = set()
 
-    for index, line in enumerate(todo_path.read_text(encoding="utf-8").splitlines(), start=1):
+    for index, line in enumerate(
+        todo_path.read_text(encoding="utf-8").splitlines(), start=1
+    ):
         task = classify_prefact_line(line, index, base_dir=base_dir)
         if task is None:
             continue
@@ -189,7 +199,9 @@ def _resolve_file(file_path: str, base_dir: str | Path | None) -> Path:
 
 def _is_ignored_path(file_path: str) -> bool:
     normalised = file_path.replace("\\", "/")
-    return normalised.startswith(".algitex/worktrees/") or normalised.startswith("my-app/")
+    return normalised.startswith(".algitex/worktrees/") or normalised.startswith(
+        "my-app/"
+    )
 
 
 def _first_int(text: str) -> int | None:

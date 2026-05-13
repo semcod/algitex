@@ -26,7 +26,9 @@ def fix_readme(path: str = "README.md") -> None:
 
     target.write_text(text, encoding="utf-8")
     after_len = len(text)
-    print(f"README: {before_len} -> {after_len} chars ({before_len - after_len} removed)")
+    print(
+        f"README: {before_len} -> {after_len} chars ({before_len - after_len} removed)"
+    )
 
 
 if __name__ == "__main__":

@@ -13,6 +13,7 @@ from typing import Optional, Dict, Any, List
 @dataclass
 class TraceSpan:
     """Single operation span."""
+
     name: str
     tool: str
     started: float = field(default_factory=time.time)
@@ -33,10 +34,10 @@ class TraceSpan:
         self.status = status
         for k, v in kwargs.items():
             setattr(self, k, v)
-    
+
     def __enter__(self):
         return self
-    
+
     def __exit__(self, exc_type, exc_val, exc_tb):
         if exc_type:
             self.finish(status="error", error=str(exc_val))
@@ -95,6 +96,7 @@ class Telemetry:
         """Push traces to Langfuse for visualization."""
         try:
             from langfuse import Langfuse
+
             lf = Langfuse()
             trace = lf.trace(name=f"algitex-{self.run_id}")
             for s in self.spans:
@@ -115,7 +117,7 @@ class Telemetry:
         """Save telemetry data to local file."""
         path = Path(output_dir) / "telemetry" / f"{self.run_id}.json"
         path.parent.mkdir(parents=True, exist_ok=True)
-        
+
         # Save detailed spans
         detailed_data = {
             "summary": self.summary(),
@@ -134,9 +136,9 @@ class Telemetry:
                     "error": s.error,
                 }
                 for s in self.spans
-            ]
+            ],
         }
-        
+
         path.write_text(json.dumps(detailed_data, indent=2))
 
     def report(self) -> str:

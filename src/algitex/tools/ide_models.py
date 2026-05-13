@@ -9,6 +9,7 @@ from typing import Dict
 @dataclass
 class IDETool:
     """IDE tool configuration."""
+
     name: str
     command: str
     install_command: str

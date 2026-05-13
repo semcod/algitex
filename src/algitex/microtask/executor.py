@@ -77,7 +77,9 @@ class MicroTaskExecutor:
         self.slicer = ContextSlicer(self.project_path)
         self.client = OllamaClient(host=ollama_url, timeout=180.0)
 
-    def execute(self, tasks: list[MicroTask], dry_run: bool = True) -> list[PhaseResult]:
+    def execute(
+        self, tasks: list[MicroTask], dry_run: bool = True
+    ) -> list[PhaseResult]:
         """Run all micro tasks in the three execution phases."""
         phase_0 = [task for task in tasks if task.tier == 0]
         phase_1 = [task for task in tasks if task.tier == 1]
@@ -86,7 +88,12 @@ class MicroTaskExecutor:
 
         results = [
             self._phase_algorithmic(phase_0, dry_run=dry_run),
-            self._phase_llm(phase_1 + phase_2, dry_run=dry_run, name="Small LLM", workers=self.llm_workers),
+            self._phase_llm(
+                phase_1 + phase_2,
+                dry_run=dry_run,
+                name="Small LLM",
+                workers=self.llm_workers,
+            ),
             self._phase_llm(phase_3, dry_run=dry_run, name="Big LLM", workers=1),
         ]
         return results
@@ -95,7 +102,9 @@ class MicroTaskExecutor:
         """Return file-grouped batches for planning or execution."""
         batches: dict[str, MicroTaskBatch] = {}
         for task in tasks:
-            batches.setdefault(task.file, MicroTaskBatch(file=task.file)).tasks.append(task)
+            batches.setdefault(task.file, MicroTaskBatch(file=task.file)).tasks.append(
+                task
+            )
         return batches
 
     def _phase_algorithmic(self, tasks: list[MicroTask], dry_run: bool) -> PhaseResult:
@@ -107,7 +116,10 @@ class MicroTaskExecutor:
         batches = group_tasks_by_file(tasks)
 
         with ThreadPoolExecutor(max_workers=self.algo_workers) as pool:
-            futures = {pool.submit(self._process_algorithmic_batch, batch, dry_run): batch for batch in batches}
+            futures = {
+                pool.submit(self._process_algorithmic_batch, batch, dry_run): batch
+                for batch in batches
+            }
             for future in as_completed(futures):
                 fixed, skipped, errors, note = future.result()
                 result.fixed += fixed
@@ -130,9 +142,11 @@ class MicroTaskExecutor:
         TaskType.TRAILING_WHITESPACE: "_handle_trailing_whitespace",
     }
 
-    def _process_algorithmic_batch(self, batch: MicroTaskBatch, dry_run: bool) -> tuple[int, int, int, str]:
+    def _process_algorithmic_batch(
+        self, batch: MicroTaskBatch, dry_run: bool
+    ) -> tuple[int, int, int, str]:
         """Process all tier-0 tasks in one file using dispatch table.
-        
+
         CC: 5 (dispatcher + per-type handlers)
         Was: CC 27 (multiple nested if/else blocks)
         """
@@ -180,7 +194,9 @@ class MicroTaskExecutor:
 
         return fixed, skipped, errors, note
 
-    def _handle_unused_import(self, path: Path, tasks: list[MicroTask]) -> tuple[int, int]:
+    def _handle_unused_import(
+        self, path: Path, tasks: list[MicroTask]
+    ) -> tuple[int, int]:
         """Handle UNUSED_IMPORT tasks."""
         fixed = 0
         for task in sorted(tasks, key=lambda t: t.line_start, reverse=True):
@@ -194,7 +210,9 @@ class MicroTaskExecutor:
                 fixed += 1
         return fixed, len(tasks) - fixed
 
-    def _handle_return_type(self, path: Path, tasks: list[MicroTask]) -> tuple[int, int]:
+    def _handle_return_type(
+        self, path: Path, tasks: list[MicroTask]
+    ) -> tuple[int, int]:
         """Handle RETURN_TYPE tasks."""
         fixed = 0
         for task in sorted(tasks, key=lambda t: t.line_start, reverse=True):
@@ -208,7 +226,9 @@ class MicroTaskExecutor:
                 fixed += 1
         return fixed, len(tasks) - fixed
 
-    def _handle_known_magic(self, path: Path, tasks: list[MicroTask]) -> tuple[int, int]:
+    def _handle_known_magic(
+        self, path: Path, tasks: list[MicroTask]
+    ) -> tuple[int, int]:
         """Handle KNOWN_MAGIC tasks."""
         fixed = 0
         for task in sorted(tasks, key=lambda t: t.line_start, reverse=True):
@@ -236,7 +256,9 @@ class MicroTaskExecutor:
             return len(tasks), 0
         return 0, len(tasks)
 
-    def _handle_sort_imports(self, path: Path, tasks: list[MicroTask]) -> tuple[int, int]:
+    def _handle_sort_imports(
+        self, path: Path, tasks: list[MicroTask]
+    ) -> tuple[int, int]:
         """Handle SORT_IMPORTS tasks."""
         if not tasks:
             return 0, 0
@@ -248,7 +270,9 @@ class MicroTaskExecutor:
         except Exception:
             return 0, len(tasks)
 
-    def _handle_trailing_whitespace(self, path: Path, tasks: list[MicroTask]) -> tuple[int, int]:
+    def _handle_trailing_whitespace(
+        self, path: Path, tasks: list[MicroTask]
+    ) -> tuple[int, int]:
         """Handle TRAILING_WHITESPACE tasks."""
         if not tasks:
             return 0, 0
@@ -256,7 +280,9 @@ class MicroTaskExecutor:
             return len(tasks), 0
         return 0, len(tasks)
 
-    def _phase_llm(self, tasks: list[MicroTask], dry_run: bool, name: str, workers: int) -> PhaseResult:
+    def _phase_llm(
+        self, tasks: list[MicroTask], dry_run: bool, name: str, workers: int
+    ) -> PhaseResult:
         result = PhaseResult(name=name, total=len(tasks))
         if not tasks:
             return result
@@ -265,7 +291,10 @@ class MicroTaskExecutor:
         batches = group_tasks_by_file(tasks)
 
         with ThreadPoolExecutor(max_workers=max(1, workers)) as pool:
-            futures = {pool.submit(self._process_llm_batch, batch, dry_run): batch for batch in batches}
+            futures = {
+                pool.submit(self._process_llm_batch, batch, dry_run): batch
+                for batch in batches
+            }
             for future in as_completed(futures):
                 fixed, skipped, errors, note = future.result()
                 result.fixed += fixed
@@ -277,7 +306,9 @@ class MicroTaskExecutor:
         result.duration_ms = (time.perf_counter() - started) * 1000
         return result
 
-    def _process_llm_batch(self, batch: MicroTaskBatch, dry_run: bool) -> tuple[int, int, int, str]:
+    def _process_llm_batch(
+        self, batch: MicroTaskBatch, dry_run: bool
+    ) -> tuple[int, int, int, str]:
         path = self._resolve_path(batch.file)
         if not path.exists():
             return 0, len(batch.tasks), 1, f"missing file: {batch.file}"
@@ -287,7 +318,11 @@ class MicroTaskExecutor:
         errors = 0
         note = ""
 
-        for task in sorted(batch.llm_tasks, key=lambda item: (item.line_start, item.line_end), reverse=True):
+        for task in sorted(
+            batch.llm_tasks,
+            key=lambda item: (item.line_start, item.line_end),
+            reverse=True,
+        ):
             try:
                 self.slicer.slice(task)
                 prompt = self.prompt_builder.build(task)
@@ -356,9 +391,29 @@ class MicroTaskExecutor:
         return fixer(path, todo_task)
 
     def _apply_fstring_fix(self, path: Path, tasks: list[MicroTask]) -> bool:
-        if any("module execution block" in task.prefact_message.lower() or "if __name__" in task.prefact_message.lower() for task in tasks):
-            return fix_module_block(path, TodoTask(file=str(path), line=tasks[0].line_start, message=tasks[0].prefact_message, category="module_block"))
-        return fix_fstring(path, TodoTask(file=str(path), line=tasks[0].line_start, message=tasks[0].prefact_message, category="fstring"))
+        if any(
+            "module execution block" in task.prefact_message.lower()
+            or "if __name__" in task.prefact_message.lower()
+            for task in tasks
+        ):
+            return fix_module_block(
+                path,
+                TodoTask(
+                    file=str(path),
+                    line=tasks[0].line_start,
+                    message=tasks[0].prefact_message,
+                    category="module_block",
+                ),
+            )
+        return fix_fstring(
+            path,
+            TodoTask(
+                file=str(path),
+                line=tasks[0].line_start,
+                message=tasks[0].prefact_message,
+                category="fstring",
+            ),
+        )
 
     def _apply_llm_response(self, task: MicroTask, content: str) -> bool:
         path = self._resolve_path(task.file)
@@ -371,7 +426,11 @@ class MicroTaskExecutor:
     def _apply_magic_name(self, path: Path, task: MicroTask, content: str) -> bool:
         source = path.read_text(encoding="utf-8")
         lines = source.splitlines()
-        number = self._first_int(task.prefact_message) or self._first_int(task.context) or self._first_int(content)
+        number = (
+            self._first_int(task.prefact_message)
+            or self._first_int(task.context)
+            or self._first_int(content)
+        )
         if number is None:
             return False
         const_name = self._sanitize_constant_name(content, number)
@@ -433,7 +492,13 @@ class MicroTaskExecutor:
 
         start = task.context_start or task.line_start
         end = task.context_end or task.line_end
-        if start <= 0 or end <= 0 or start > len(lines) or end > len(lines) or start > end:
+        if (
+            start <= 0
+            or end <= 0
+            or start > len(lines)
+            or end > len(lines)
+            or start > end
+        ):
             return False
 
         lines[start - 1 : end] = replacement.splitlines()

@@ -20,7 +20,7 @@ class OllamaBackend:
         model: Optional[str] = None,
         base_url: str = "http://localhost:11434",
         dry_run: bool = True,
-        timeout: float = DEFAULT_TIMEOUT
+        timeout: float = DEFAULT_TIMEOUT,
     ):
         if service:
             self.service = service
@@ -43,18 +43,22 @@ class OllamaBackend:
         print(f"   🔍 Checking Ollama at {self.base_url}...")
         if not self._is_healthy():
             print(f"   ✗ Ollama not responding at {self.base_url}")
-            return self._error_result(task, start_time, "Ollama not available at " + self.base_url)
-        print(f"   ✓ Ollama is reachable")
+            return self._error_result(
+                task, start_time, "Ollama not available at " + self.base_url
+            )
+        print("   ✓ Ollama is reachable")
 
         try:
-            print(f"   🔍 Getting available models...")
+            print("   🔍 Getting available models...")
             model = self._ensure_model()
             if not model:
                 return self._error_result(task, start_time, "No suitable model found")
             print(f"   ✓ Using model: {model}")
 
             if self.dry_run:
-                return self._success_result(task, start_time, True, method="ollama-dry-run")
+                return self._success_result(
+                    task, start_time, True, method="ollama-dry-run"
+                )
 
             print(f"   🔧 Applying fix to {task.file_path}...")
             success = self._apply_fix(task, model)
@@ -68,12 +72,21 @@ class OllamaBackend:
         """Quick health check to avoid hanging."""
         try:
             import socket
-            host = self.base_url.replace("http://", "").replace("https://", "").split(":")[0]
+
+            host = (
+                self.base_url.replace("http://", "")
+                .replace("https://", "")
+                .split(":")[0]
+            )
             port = 11434
             if ":" in self.base_url.replace("http://", "").replace("https://", ""):
-                port_str = self.base_url.replace("http://", "").replace("https://", "").split(":")[1]
+                port_str = (
+                    self.base_url.replace("http://", "")
+                    .replace("https://", "")
+                    .split(":")[1]
+                )
                 port = int(port_str.split("/")[0])
-            
+
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.settimeout(2.0)
             result = sock.connect_ex((host, port))
@@ -96,13 +109,12 @@ class OllamaBackend:
     def _apply_fix(self, task: Task, model: str) -> bool:
         """Apply the fix to the file."""
         return self.service.auto_fix_file(
-            task.file_path,
-            task.description,
-            task.line_number,
-            model
+            task.file_path, task.description, task.line_number, model
         )
 
-    def _success_result(self, task: Task, start_time: float, success: bool, method: str = "ollama") -> FixResult:
+    def _success_result(
+        self, task: Task, start_time: float, success: bool, method: str = "ollama"
+    ) -> FixResult:
         """Create a success result."""
         return FixResult(
             task_id=task.id,
@@ -110,7 +122,7 @@ class OllamaBackend:
             success=success,
             method=method,
             time_ms=(time.time() - start_time) * 1000,
-            file_path=task.file_path
+            file_path=task.file_path,
         )
 
     def _error_result(self, task: Task, start_time: float, error: str) -> FixResult:
@@ -122,5 +134,5 @@ class OllamaBackend:
             method="ollama",
             time_ms=(time.time() - start_time) * 1000,
             error=error,
-            file_path=task.file_path
+            file_path=task.file_path,
         )

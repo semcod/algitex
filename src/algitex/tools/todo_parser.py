@@ -21,6 +21,7 @@ import re
 @dataclass
 class Task:
     """Single todo task extracted from file."""
+
     id: str
     description: str
     file_path: Optional[str] = None
@@ -46,20 +47,18 @@ class TodoParser:
 
     # GitHub-style checkbox: `- [ ] task` or `* [ ] task` or `1. [ ] task`
     GITHUB_PATTERN = re.compile(
-        r'^(?:\s*[-*]|\s*\d+\.)\s*\[([ xX])\]\s*(.+)$',
-        re.MULTILINE
+        r"^(?:\s*[-*]|\s*\d+\.)\s*\[([ xX])\]\s*(.+)$", re.MULTILINE
     )
 
     # Prefact-style: `file.py:10 - description` or `file.py:10: description`
     PREFACT_PATTERN = re.compile(
-        r'^-?\s*\[?([ xX])?\]?\s*(\S+\.\w+):(\d+)\s*[-:]\s*(.+)$',
-        re.MULTILINE
+        r"^-?\s*\[?([ xX])?\]?\s*(\S+\.\w+):(\d+)\s*[-:]\s*(.+)$", re.MULTILINE
     )
 
     # Generic list item with optional priority: `- [P0] task` or `* task`
     GENERIC_PATTERN = re.compile(
-        r'^(?:\s*[-*]|\s*\d+\.)\s*(?:\[([Pp]\d|[Hh]igh|[Ll]ow|[Mm]edium|[Cc]ritical)\]\s*)?(.+)$',
-        re.MULTILINE
+        r"^(?:\s*[-*]|\s*\d+\.)\s*(?:\[([Pp]\d|[Hh]igh|[Ll]ow|[Mm]edium|[Cc]ritical)\]\s*)?(.+)$",
+        re.MULTILINE,
     )
 
     def __init__(self, file_path: str):
@@ -71,7 +70,7 @@ class TodoParser:
         if not self.file_path.exists():
             return []
 
-        content = self.file_path.read_text(encoding='utf-8')
+        content = self.file_path.read_text(encoding="utf-8")
         tasks = []
         seen_locations = set()  # Track (file_path, line_number) to avoid duplicates
 
@@ -111,7 +110,7 @@ class TodoParser:
         seen = set()
 
         for match in self.PREFACT_PATTERN.finditer(content):
-            checkbox = match.group(1) or ' '
+            checkbox = match.group(1) or " "
             file_path = match.group(2)
             line_no = int(match.group(3))
             desc = match.group(4).strip()
@@ -127,7 +126,7 @@ class TodoParser:
                 description=desc,
                 file_path=file_path,
                 line_number=line_no,
-                status="completed" if checkbox.lower() == 'x' else "pending",
+                status="completed" if checkbox.lower() == "x" else "pending",
             )
             tasks.append(task)
 
@@ -155,7 +154,7 @@ class TodoParser:
                 description=desc,
                 file_path=file_path,
                 line_number=line_no,
-                status="completed" if checkbox == 'x' else "pending",
+                status="completed" if checkbox == "x" else "pending",
             )
             tasks.append(task)
 
@@ -171,7 +170,7 @@ class TodoParser:
             desc = match.group(2).strip()
 
             # Skip if already parsed or looks like a header
-            if desc in seen or desc.startswith('#') or desc.startswith('---'):
+            if desc in seen or desc.startswith("#") or desc.startswith("---"):
                 continue
             seen.add(desc)
 
@@ -198,8 +197,8 @@ class TodoParser:
         # - file.py:123: description
         # - in src/file.py at line 123
         patterns = [
-            r'^(\S+\.\w+):(\d+)\s*[-:]\s*',
-            r'in\s+(\S+\.\w+)(?:\s+at\s+line\s+|\s*:?\s*l?)(\d+)',
+            r"^(\S+\.\w+):(\d+)\s*[-:]\s*",
+            r"in\s+(\S+\.\w+)(?:\s+at\s+line\s+|\s*:?\s*l?)(\d+)",
         ]
 
         for pattern in patterns:

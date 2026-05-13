@@ -7,6 +7,7 @@ Usage:
     from algitex.todo.fixer import parallel_fix
     parallel_fix("TODO.md", workers=8, dry_run=True)
 """
+
 from __future__ import annotations
 
 import re
@@ -16,7 +17,12 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 from algitex.todo.classify import classify_message
-from algitex.todo.repair import REPAIRERS, repair_fstring, repair_magic_number, repair_module_block
+from algitex.todo.repair import (
+    REPAIRERS,
+    repair_fstring,
+    repair_magic_number,
+    repair_module_block,
+)
 from algitex.todo.verifier import TodoTask
 
 CONSTANT_3 = 3
@@ -33,6 +39,7 @@ FIXERS = REPAIRERS
 @dataclass
 class FixResult:
     """Result of fixing a file."""
+
     file: str
     fixed: int = 0
     skipped: int = 0
@@ -40,6 +47,7 @@ class FixResult:
 
 
 # ─── Parser ─────────────────────────────────────────
+
 
 def parse_todo(todo_path: str | Path) -> list[TodoTask]:
     """Parse TODO.md → list of tasks, filtering worktree duplicates."""
@@ -56,7 +64,11 @@ def parse_todo(todo_path: str | Path) -> list[TodoTask]:
         if not match:
             continue
 
-        file_path, lineno, message = match.group(1), int(match.group(2)), match.group(CONSTANT_3)
+        file_path, lineno, message = (
+            match.group(1),
+            int(match.group(2)),
+            match.group(CONSTANT_3),
+        )
 
         # Skip worktree duplicates
         if "worktrees" in file_path or "my-app/my-app" in file_path:
@@ -76,6 +88,7 @@ def _categorize(message: str) -> str:
 
 
 # ─── Statistics ─────────────────────────────────────
+
 
 def _group_tasks_by_file(tasks: list[TodoTask]) -> dict[str, list[TodoTask]]:
     """Group tasks by file path for parallel processing."""
@@ -104,11 +117,12 @@ def _compute_tier_stats(tasks: list[TodoTask]) -> dict[str, int]:
 
 # ─── Reporting ──────────────────────────────────────
 
+
 def _print_pre_execution_summary(
     tasks: list[TodoTask],
     by_file: dict[str, list[TodoTask]],
     workers: int,
-    dry_run: bool
+    dry_run: bool,
 ) -> None:
     """Print pre-execution summary with category stats."""
     cats = _compute_category_stats(tasks)
@@ -123,10 +137,14 @@ def _print_pre_execution_summary(
     for tier, count in sorted(tiers.items(), key=lambda x: (-x[1], x[0])):
         if count == 0:
             continue
-        label = {"algorithm": "Algorithm", "micro": "Small LLM", "big": "Big LLM"}.get(tier, tier.title())
+        label = {"algorithm": "Algorithm", "micro": "Small LLM", "big": "Big LLM"}.get(
+            tier, tier.title()
+        )
         print(f"  {count:>4} {label:<20}")
 
-    auto_fixable = sum(1 for t in tasks if classify_message(t.message).tier == "algorithm")
+    auto_fixable = sum(
+        1 for t in tasks if classify_message(t.message).tier == "algorithm"
+    )
     if tasks:
         pct = auto_fixable * 100 // len(tasks)
         print(f"\nAuto-fixable: {auto_fixable}/{len(tasks)} ({pct}%)")
@@ -139,10 +157,7 @@ def _print_pre_execution_summary(
 
 
 def _print_execution_summary(
-    total_fixed: int,
-    total_skipped: int,
-    total_errors: int,
-    dry_run: bool
+    total_fixed: int, total_skipped: int, total_errors: int, dry_run: bool
 ) -> None:
     """Print final execution summary."""
     print(f"\n{'═' * CONSTANT_60}")
@@ -157,15 +172,17 @@ def _print_execution_summary(
 
 # ─── Core fixer ─────────────────────────────────────
 
+
 def _validate_file_with_vallm(path: Path, original_content: str) -> tuple[bool, str]:
     """Validate file with syntax check first, then vallm. Restore original if invalid.
-    
+
     Returns:
         (is_valid, message)
     """
     # ALWAYS check syntax first - this is the most reliable check
     try:
         import ast
+
         ast.parse(path.read_text())
     except SyntaxError as se:
         # Restore original content immediately
@@ -174,13 +191,14 @@ def _validate_file_with_vallm(path: Path, original_content: str) -> tuple[bool, 
     except Exception as e:
         path.write_text(original_content)
         return False, f"parse error: {e}"
-    
+
     # If syntax is OK, try vallm for deeper validation
     try:
         from algitex.tools.analysis import Analyzer
+
         analyzer = Analyzer(str(path.parent))
         report = analyzer.health()
-        
+
         # vallm_pass_rate should be > 0 for valid code
         if report.vallm_pass_rate > 0:
             return True, "valid"
@@ -188,7 +206,7 @@ def _validate_file_with_vallm(path: Path, original_content: str) -> tuple[bool, 
             # Restore original content
             path.write_text(original_content)
             return False, f"vallm failed (pass_rate: {report.vallm_pass_rate:.2f})"
-            
+
     except Exception:
         # If vallm unavailable, syntax check is sufficient
         return True, "syntax OK"
@@ -196,7 +214,9 @@ def _validate_file_with_vallm(path: Path, original_content: str) -> tuple[bool, 
 
 def _group_tasks_by_category(
     tasks: list[TodoTask],
-) -> tuple[list[TodoTask], list[TodoTask], list[TodoTask], list[TodoTask], list[TodoTask]]:
+) -> tuple[
+    list[TodoTask], list[TodoTask], list[TodoTask], list[TodoTask], list[TodoTask]
+]:
     """Group tasks by repair category.
 
     Returns (line_tasks, magic_tasks, fstring_tasks, exec_tasks, other_tasks).
@@ -258,11 +278,13 @@ def fix_file(file_path: str, tasks: list[TodoTask], dry_run: bool = True) -> Fix
 
     original_content = path.read_text()
     sorted_tasks = sorted(tasks, key=lambda t: t.line, reverse=True)
-    line_tasks, magic_tasks, fstring_tasks, exec_tasks, other_tasks = _group_tasks_by_category(
-        sorted_tasks
+    line_tasks, magic_tasks, fstring_tasks, exec_tasks, other_tasks = (
+        _group_tasks_by_category(sorted_tasks)
     )
 
-    original_content = _process_line_tasks(path, line_tasks, result, dry_run, original_content)
+    original_content = _process_line_tasks(
+        path, line_tasks, result, dry_run, original_content
+    )
     result.skipped += len(other_tasks)
 
     if magic_tasks:
@@ -313,14 +335,20 @@ def _record_fix_result(
     result.errors.append(f"L{task.line}: fix invalid - {msg}")
     result.skipped += 1
     print(f"    ✗ L{task.line}: fix broke file - {msg}")
-    print(f"      ↺ ROLLBACK: file restored to original state")
-    print(f"      ⊘ SKIPPED: task abandoned")
+    print("      ↺ ROLLBACK: file restored to original state")
+    print("      ⊘ SKIPPED: task abandoned")
 
 
-def _process_magic_batch(path: Path, tasks: list[TodoTask], result: FixResult, dry_run: bool, original_content: str) -> None:
+def _process_magic_batch(
+    path: Path,
+    tasks: list[TodoTask],
+    result: FixResult,
+    dry_run: bool,
+    original_content: str,
+) -> None:
     """Process magic number fixes as a batch with validation."""
     from algitex.todo.classify import KNOWN_MAGIC_CONSTANTS
-    
+
     if dry_run:
         for task in tasks:
             match = re.search(r"\b(\d+)\b", task.message)
@@ -338,10 +366,10 @@ def _process_magic_batch(path: Path, tasks: list[TodoTask], result: FixResult, d
         if not match:
             result.skipped += 1
             continue
-        
+
         number = int(match.group(1))
         const_name = KNOWN_MAGIC_CONSTANTS.get(number)
-        
+
         try:
             if repair_magic_number(path, number, task.line - 1, const_name):
                 is_valid, msg = _validate_file_with_vallm(path, original_content)
@@ -352,8 +380,8 @@ def _process_magic_batch(path: Path, tasks: list[TodoTask], result: FixResult, d
                     result.errors.append(f"magic L{task.line}: invalid - {msg}")
                     result.skipped += 1
                     print(f"    ✗ magic L{task.line}: fix broke file - {msg}")
-                    print(f"      ↺ ROLLBACK: file restored to original state")
-                    print(f"      ⊘ SKIPPED: task abandoned")
+                    print("      ↺ ROLLBACK: file restored to original state")
+                    print("      ⊘ SKIPPED: task abandoned")
                     original_content = path.read_text()
             else:
                 result.skipped += 1
@@ -362,7 +390,13 @@ def _process_magic_batch(path: Path, tasks: list[TodoTask], result: FixResult, d
             result.skipped += 1
 
 
-def _process_fstring_batch(path: Path, tasks: list[TodoTask], result: FixResult, dry_run: bool, original_content: str) -> None:
+def _process_fstring_batch(
+    path: Path,
+    tasks: list[TodoTask],
+    result: FixResult,
+    dry_run: bool,
+    original_content: str,
+) -> None:
     """Process fstring fixes as a batch with validation."""
     if dry_run:
         for task in tasks:
@@ -380,7 +414,7 @@ def _process_fstring_batch(path: Path, tasks: list[TodoTask], result: FixResult,
                 result.errors.append(f"fstring: invalid - {msg}")
                 result.skipped += len(tasks)
                 print(f"    ✗ fstring: fix broke file - {msg}")
-                print(f"      ↺ ROLLBACK: file restored to original state")
+                print("      ↺ ROLLBACK: file restored to original state")
                 print(f"      ⊘ SKIPPED: {len(tasks)} task(s) abandoned")
                 path.write_text(original_content)
         else:
@@ -390,7 +424,13 @@ def _process_fstring_batch(path: Path, tasks: list[TodoTask], result: FixResult,
         result.skipped += len(tasks)
 
 
-def _process_exec_batch(path: Path, tasks: list[TodoTask], result: FixResult, dry_run: bool, original_content: str) -> None:
+def _process_exec_batch(
+    path: Path,
+    tasks: list[TodoTask],
+    result: FixResult,
+    dry_run: bool,
+    original_content: str,
+) -> None:
     """Process exec block fixes as a batch with validation."""
     if dry_run:
         for task in tasks:
@@ -408,7 +448,7 @@ def _process_exec_batch(path: Path, tasks: list[TodoTask], result: FixResult, dr
                 result.errors.append(f"exec_block: invalid - {msg}")
                 result.skipped += len(tasks)
                 print(f"    ✗ exec_block: fix broke file - {msg}")
-                print(f"      ↺ ROLLBACK: file restored to original state")
+                print("      ↺ ROLLBACK: file restored to original state")
                 print(f"      ⊘ SKIPPED: {len(tasks)} task(s) abandoned")
                 path.write_text(original_content)
         else:
@@ -420,10 +460,9 @@ def _process_exec_batch(path: Path, tasks: list[TodoTask], result: FixResult, dr
 
 # ─── Parallel executor ────────────────────────────────
 
+
 def _execute_parallel_fixes(
-    by_file: dict[str, list[TodoTask]],
-    workers: int,
-    dry_run: bool
+    by_file: dict[str, list[TodoTask]], workers: int, dry_run: bool
 ) -> tuple[int, int, int]:
     """Execute fixes in parallel using ThreadPoolExecutor."""
     total_fixed = 0
@@ -476,7 +515,9 @@ def parallel_fix(
 
     if categories:
         tasks = [t for t in tasks if t.category in categories]
-        print(f"Filtered to {len(tasks)} tasks in categories: {', '.join(sorted(categories))}\n")
+        print(
+            f"Filtered to {len(tasks)} tasks in categories: {', '.join(sorted(categories))}\n"
+        )
 
     # Group by file
     by_file = _group_tasks_by_file(tasks)
@@ -485,7 +526,9 @@ def parallel_fix(
     _print_pre_execution_summary(tasks, by_file, workers, dry_run)
 
     # Execute in parallel
-    total_fixed, total_skipped, total_errors = _execute_parallel_fixes(by_file, workers, dry_run)
+    total_fixed, total_skipped, total_errors = _execute_parallel_fixes(
+        by_file, workers, dry_run
+    )
 
     # Print final summary
     _print_execution_summary(total_fixed, total_skipped, total_errors, dry_run)
@@ -503,8 +546,15 @@ def mark_tasks_completed(todo_path: str | Path, completed_tasks: list[TodoTask])
     marked = 0
 
     for task in completed_tasks:
-        pattern = rf"^- \[ \] {re.escape(task.file)}:{task.line} - {re.escape(task.message)}$"
-        new_text, count = re.subn(pattern, f"- [x] {task.file}:{task.line} - {task.message}", text, flags=re.MULTILINE)
+        pattern = (
+            rf"^- \[ \] {re.escape(task.file)}:{task.line} - {re.escape(task.message)}$"
+        )
+        new_text, count = re.subn(
+            pattern,
+            f"- [x] {task.file}:{task.line} - {task.message}",
+            text,
+            flags=re.MULTILINE,
+        )
         if count > 0:
             text = new_text
             marked += 1
@@ -525,7 +575,9 @@ def parallel_fix_and_update(
     tasks: list[TodoTask] | None = None,
 ) -> dict[str, int]:
     """Fix tasks and update TODO.md to mark completed tasks."""
-    result = parallel_fix(todo_path, workers, dry_run, category_filter, categories, tasks)
+    result = parallel_fix(
+        todo_path, workers, dry_run, category_filter, categories, tasks
+    )
 
     if not dry_run and result["fixed"] > 0:
         if tasks is None:
@@ -536,8 +588,10 @@ def parallel_fix_and_update(
             tasks = [t for t in tasks if t.category in categories]
 
         # Filter to only deterministic tasks (algorithm tier)
-        fixable_tasks = [t for t in tasks if classify_message(t.message).tier == "algorithm"]
-        mark_tasks_completed(todo_path, fixable_tasks[:result["fixed"]])
+        fixable_tasks = [
+            t for t in tasks if classify_message(t.message).tier == "algorithm"
+        ]
+        mark_tasks_completed(todo_path, fixable_tasks[: result["fixed"]])
 
     return result
 

@@ -24,31 +24,29 @@ class IDEHelper:
             install_command="pip install anthropic-curl",
             env_vars={
                 "ANTHROPIC_API_KEY": "ollama",
-                "ANTHROPIC_BASE_URL": "http://localhost:11434/v1"
+                "ANTHROPIC_BASE_URL": "http://localhost:11434/v1",
             },
-            model_prefix="ollama/"
+            model_prefix="ollama/",
         )
 
         self.tools["aider"] = IDETool(
             name="Aider",
             command="aider",
             install_command="pip install aider-chat",
-            model_prefix="ollama/"
+            model_prefix="ollama/",
         )
 
         self.tools["cursor"] = IDETool(
             name="Cursor",
             command="cursor",
             install_command="# Download from cursor.sh",
-            env_vars={
-                "CURSOR_API_BASE": "http://localhost:11434/v1"
-            }
+            env_vars={"CURSOR_API_BASE": "http://localhost:11434/v1"},
         )
 
         self.tools["vscode"] = IDETool(
             name="VS Code",
             command="code",
-            install_command="# Download from code.visualstudio.com"
+            install_command="# Download from code.visualstudio.com",
         )
 
     def check_tool(self, tool_name: str) -> bool:
@@ -58,7 +56,9 @@ class IDEHelper:
 
         tool = self.tools[tool_name]
         try:
-            result = subprocess.run(["which", tool.command], capture_output=True, text=True)
+            result = subprocess.run(
+                ["which", tool.command], capture_output=True, text=True
+            )
             return result.returncode == 0
         except Exception:
             return False

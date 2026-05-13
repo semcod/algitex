@@ -12,9 +12,9 @@ class BatchMixin:
 
     def __init__(self, path: str, ollama_client) -> None:
         from pathlib import Path
+
         self.batch = FileBatchProcessor(
-            ollama_client=ollama_client,
-            output_dir=str(Path(path) / ".batch_results")
+            ollama_client=ollama_client, output_dir=str(Path(path) / ".batch_results")
         )
 
     def batch_analyze(
@@ -22,7 +22,7 @@ class BatchMixin:
         directory: str = ".",
         pattern: str = "*.py",
         parallelism: Optional[int] = None,
-        rate_limit: Optional[float] = None
+        rate_limit: Optional[float] = None,
     ) -> dict:
         """Batch analyze files in directory."""
         # Update processor config if provided
@@ -39,7 +39,7 @@ class BatchMixin:
             "total": len(results),
             "successful": len([r for r in results if r.success]),
             "failed": len([r for r in results if not r.success]),
-            "results": [r.to_dict() for r in results]
+            "results": [r.to_dict() for r in results],
         }
 
     def create_batch_processor(
@@ -47,14 +47,15 @@ class BatchMixin:
         worker_func: Callable,
         parallelism: int = 4,
         rate_limit: float = 2.0,
-        **kwargs
+        **kwargs,
     ) -> BatchProcessor:
         """Create a custom batch processor."""
         from pathlib import Path
+
         return BatchProcessor(
             worker_func=worker_func,
             parallelism=parallelism,
             rate_limit=rate_limit,
             output_dir=str(Path(".") / ".batch_results"),
-            **kwargs
+            **kwargs,
         )

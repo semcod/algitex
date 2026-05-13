@@ -23,9 +23,16 @@ class OpenRouterBackend:
     DEFAULT_MAX_TOKENS = 2000
     API_BASE = "https://openrouter.ai/api/v1"
 
-    def __init__(self, api_key: Optional[str] = None, model: Optional[str] = None, dry_run: bool = False):
+    def __init__(
+        self,
+        api_key: Optional[str] = None,
+        model: Optional[str] = None,
+        dry_run: bool = False,
+    ):
         self.api_key = api_key or os.environ.get("OPENROUTER_API_KEY", "")
-        self.model = model or os.environ.get("OPENROUTER_MODEL", "openrouter/qwen/qwen3-coder-next")
+        self.model = model or os.environ.get(
+            "OPENROUTER_MODEL", "openrouter/qwen/qwen3-coder-next"
+        )
         self.dry_run = dry_run
 
     def fix(self, task: Task) -> FixResult:
@@ -47,7 +54,9 @@ class OpenRouterBackend:
             return self._error_result(task, start_time, "No file path specified")
 
         if requests is None:
-            return self._error_result(task, start_time, "requests library not available")
+            return self._error_result(
+                task, start_time, "requests library not available"
+            )
 
         if not self.api_key:
             return self._error_result(task, start_time, "OPENROUTER_API_KEY not set")
@@ -81,7 +90,7 @@ class OpenRouterBackend:
         return f"""Fix this specific issue in the code.
 
 File: {task.file_path}
-Line: {task.line_number or 'unknown'}
+Line: {task.line_number or "unknown"}
 Issue: {task.description}
 
 Current code:
@@ -102,18 +111,21 @@ Provide ONLY the fixed code for this specific issue. Do not explain changes. Ret
                 "Authorization": f"Bearer {self.api_key}",
                 "Content-Type": "application/json",
                 "HTTP-Referer": "https://algitex.local",
-                "X-Title": "Algitex AutoFix"
+                "X-Title": "Algitex AutoFix",
             },
             json={
                 "model": self.model,
                 "messages": [
-                    {"role": "system", "content": "You are an expert Python code reviewer. Fix issues precisely."},
-                    {"role": "user", "content": prompt}
+                    {
+                        "role": "system",
+                        "content": "You are an expert Python code reviewer. Fix issues precisely.",
+                    },
+                    {"role": "user", "content": prompt},
                 ],
                 "temperature": 0.3,
-                "max_tokens": self.DEFAULT_MAX_TOKENS
+                "max_tokens": self.DEFAULT_MAX_TOKENS,
             },
-            timeout=self.DEFAULT_TIMEOUT
+            timeout=self.DEFAULT_TIMEOUT,
         )
 
         if response.status_code == 200:
@@ -123,7 +135,7 @@ Provide ONLY the fixed code for this specific issue. Do not explain changes. Ret
 
     def _extract_code(self, response: str) -> str:
         """Extract code from markdown response."""
-        match = re.search(r'```python\n(.*?)\n```', response, re.DOTALL)
+        match = re.search(r"```python\n(.*?)\n```", response, re.DOTALL)
         if match:
             return match.group(1)
         return response
@@ -140,7 +152,7 @@ Provide ONLY the fixed code for this specific issue. Do not explain changes. Ret
             success=True,
             method="openrouter",
             time_ms=(time.time() - start_time) * 1000,
-            file_path=task.file_path
+            file_path=task.file_path,
         )
 
     def _dry_run_result(self, task: Task, start_time: float) -> FixResult:
@@ -152,7 +164,7 @@ Provide ONLY the fixed code for this specific issue. Do not explain changes. Ret
             method="openrouter",
             time_ms=(time.time() - start_time) * 1000,
             file_path=task.file_path,
-            error="[DRY RUN]"
+            error="[DRY RUN]",
         )
 
     def _error_result(self, task: Task, start_time: float, error: str) -> FixResult:
@@ -164,5 +176,5 @@ Provide ONLY the fixed code for this specific issue. Do not explain changes. Ret
             method="openrouter",
             time_ms=(time.time() - start_time) * 1000,
             file_path=task.file_path,
-            error=error
+            error=error,
         )

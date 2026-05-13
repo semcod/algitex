@@ -13,7 +13,6 @@ Usage:
     results = runner.run_from_file("TODO.md", tool="ollama-mcp")
 """
 
-from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
 import json
@@ -89,7 +88,7 @@ class TodoRunner:
         if tool not in self.docker.list_running():
             try:
                 self.docker.spawn(tool)
-            except Exception as e:
+            except Exception:
                 # Fall back to local execution for all tasks
                 for task in tasks:
                     result = self._execute_local(task, dry_run)
@@ -195,12 +194,12 @@ class TodoRunner:
     def _build_ollama_prompt(self, task: Task, file_path: Path) -> str:
         """Build a fix prompt with file context for Ollama."""
         content = file_path.read_text()
-        lines = content.split('\n')
+        lines = content.split("\n")
 
         if task.line_number and task.line_number <= len(lines):
             start = max(0, task.line_number - 5)
             end = min(len(lines), task.line_number + 5)
-            context = '\n'.join(lines[start:end])
+            context = "\n".join(lines[start:end])
         else:
             context = content[:1000]
 
@@ -228,7 +227,7 @@ Provide ONLY the fixed code, no explanations."""
                 "options": {
                     "temperature": 0.1,
                     "num_predict": 500,
-                }
+                },
             },
             timeout=120.0,
         )

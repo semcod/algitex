@@ -64,7 +64,9 @@ class HealthReport:
         if self.god_modules:
             lines.append(f"God modules: {', '.join(self.god_modules[:5])}")
         if self.dup_groups:
-            lines.append(f"Duplications: {self.dup_groups} groups ({self.dup_lines:,} lines)")
+            lines.append(
+                f"Duplications: {self.dup_groups} groups ({self.dup_lines:,} lines)"
+            )
         if self.errors:
             lines.append(f"Errors: {len(self.errors)}")
         return "\n".join(lines)

@@ -1,4 +1,5 @@
 """Task partitioning — partition tickets into non-conflicting groups."""
+
 from typing import Dict, List, Set
 
 from algitex.tools.parallel.models import CodeRegion
@@ -13,7 +14,9 @@ class TaskPartitioner:
         for r in regions:
             self._region_by_file.setdefault(r.file, []).append(r)
 
-    def partition(self, tickets: List[Dict], max_agents: int = 4) -> Dict[int, List[str]]:
+    def partition(
+        self, tickets: List[Dict], max_agents: int = 4
+    ) -> Dict[int, List[str]]:
         """Assign tickets to agents ensuring no region overlap."""
         # Step 1: compute footprints
         footprints = self._compute_footprints(tickets)

@@ -14,33 +14,45 @@ def nap_action(task: Task) -> tuple[str, dict]:
 
     # Determine fix type based on description
     if any(kw in desc for kw in ["import", "unused import"]):
-        return ("fix_imports", {
-            "file_path": task.file_path,
-            "line": task.line_number,
-            "description": task.description,
-        })
+        return (
+            "fix_imports",
+            {
+                "file_path": task.file_path,
+                "line": task.line_number,
+                "description": task.description,
+            },
+        )
 
     if any(kw in desc for kw in ["return type", "missing return", "->"]):
-        return ("fix_types", {
-            "file_path": task.file_path,
-            "line": task.line_number,
-            "description": task.description,
-        })
+        return (
+            "fix_types",
+            {
+                "file_path": task.file_path,
+                "line": task.line_number,
+                "description": task.description,
+            },
+        )
 
     if any(kw in desc for kw in ["style", "format", "whitespace", "f-string"]):
-        return ("fix_style", {
+        return (
+            "fix_style",
+            {
+                "file_path": task.file_path,
+                "line": task.line_number,
+                "description": task.description,
+            },
+        )
+
+    # Generic fix_issue for everything else
+    return (
+        "fix_issue",
+        {
             "file_path": task.file_path,
             "line": task.line_number,
             "description": task.description,
-        })
-
-    # Generic fix_issue for everything else
-    return ("fix_issue", {
-        "file_path": task.file_path,
-        "line": task.line_number,
-        "description": task.description,
-        "issue_type": "auto",
-    })
+            "issue_type": "auto",
+        },
+    )
 
 
 def aider_action(task: Task) -> tuple[str, dict]:
@@ -59,10 +71,13 @@ def aider_action(task: Task) -> tuple[str, dict]:
             prompt += f" at line {line_hint}"
         prompt += f": {desc}"
 
-    return ("aider_ai_code", {
-        "prompt": prompt,
-        "file_path": file_path or ".",
-    })
+    return (
+        "aider_ai_code",
+        {
+            "prompt": prompt,
+            "file_path": file_path or ".",
+        },
+    )
 
 
 def ollama_action(task: Task) -> tuple[str, dict]:
@@ -73,38 +88,50 @@ def ollama_action(task: Task) -> tuple[str, dict]:
 
     # Determine fix type based on description
     if any(kw in desc for kw in ["import", "unused import"]):
-        return ("remove_unused_imports", {
-            "file_path": file_path,
-            "line": line_hint,
-            "description": task.description,
-            "model": "codellama",
-        })
+        return (
+            "remove_unused_imports",
+            {
+                "file_path": file_path,
+                "line": line_hint,
+                "description": task.description,
+                "model": "codellama",
+            },
+        )
 
     if any(kw in desc for kw in ["return type", "missing return", "->"]):
-        return ("add_types", {
-            "file_path": file_path,
-            "line": line_hint,
-            "description": task.description,
-            "model": "codellama",
-        })
+        return (
+            "add_types",
+            {
+                "file_path": file_path,
+                "line": line_hint,
+                "description": task.description,
+                "model": "codellama",
+            },
+        )
 
     if any(kw in desc for kw in ["style", "format", "whitespace", "f-string"]):
-        return ("refactor_code", {
+        return (
+            "refactor_code",
+            {
+                "file_path": file_path,
+                "line": line_hint,
+                "description": task.description,
+                "refactor_type": "style_fix",
+                "model": "codellama",
+            },
+        )
+
+    # Generic fix_code for everything else
+    return (
+        "fix_code",
+        {
             "file_path": file_path,
             "line": line_hint,
             "description": task.description,
-            "refactor_type": "style_fix",
+            "issue_type": "auto",
             "model": "codellama",
-        })
-
-    # Generic fix_code for everything else
-    return ("fix_code", {
-        "file_path": file_path,
-        "line": line_hint,
-        "description": task.description,
-        "issue_type": "auto",
-        "model": "codellama",
-    })
+        },
+    )
 
 
 def filesystem_action(task: Task) -> tuple[str, dict]:
@@ -113,28 +140,16 @@ def filesystem_action(task: Task) -> tuple[str, dict]:
 
     # Determine operation type
     if any(kw in desc for kw in ["read", "show", "view", "get"]):
-        return ("read_file", {
-            "path": task.file_path or "."
-        })
+        return ("read_file", {"path": task.file_path or "."})
     elif any(kw in desc for kw in ["write", "create", "add", "save"]):
-        return ("write_file", {
-            "path": task.file_path or "output.txt",
-            "content": ""
-        })
+        return ("write_file", {"path": task.file_path or "output.txt", "content": ""})
     elif any(kw in desc for kw in ["list", "ls", "dir"]):
-        return ("list_directory", {
-            "path": task.file_path or "."
-        })
+        return ("list_directory", {"path": task.file_path or "."})
     elif any(kw in desc for kw in ["search", "find", "grep"]):
-        return ("search_files", {
-            "path": ".",
-            "pattern": task.description
-        })
+        return ("search_files", {"path": ".", "pattern": task.description})
     else:
         # Default to read
-        return ("read_file", {
-            "path": task.file_path or "."
-        })
+        return ("read_file", {"path": task.file_path or "."})
 
 
 def github_action(task: Task) -> tuple[str, dict]:
@@ -142,31 +157,38 @@ def github_action(task: Task) -> tuple[str, dict]:
     desc = task.description.lower()
 
     if any(kw in desc for kw in ["issue", "bug", "ticket"]):
-        return ("create_issue", {
-            "title": task.description[:100],
-            "body": task.description,
-        })
+        return (
+            "create_issue",
+            {
+                "title": task.description[:100],
+                "body": task.description,
+            },
+        )
     elif any(kw in desc for kw in ["pr", "pull request", "merge"]):
-        return ("create_pull_request", {
-            "title": task.description[:100],
-            "body": task.description,
-        })
+        return (
+            "create_pull_request",
+            {
+                "title": task.description[:100],
+                "body": task.description,
+            },
+        )
     elif any(kw in desc for kw in ["commit", "push", "code"]):
-        return ("search_code", {
-            "query": task.description,
-        })
+        return (
+            "search_code",
+            {
+                "query": task.description,
+            },
+        )
     else:
-        return ("get_file_contents", {
-            "path": task.file_path or "README.md"
-        })
+        return ("get_file_contents", {"path": task.file_path or "README.md"})
 
 
 def get_action_handler(tool: str) -> Optional[callable]:
     """Get the appropriate action handler for a tool.
-    
+
     Args:
         tool: The tool name (e.g., 'nap', 'aider-mcp', 'ollama-mcp', etc.)
-        
+
     Returns:
         The action handler function or None if not found.
     """
@@ -182,19 +204,19 @@ def get_action_handler(tool: str) -> Optional[callable]:
 
 def determine_action(task: Task, tool: str) -> tuple[str, dict]:
     """Determine MCP action and arguments for the task.
-    
+
     This is the main entry point for action resolution.
-    
+
     Args:
         task: The task to determine action for
         tool: The tool name to use
-        
+
     Returns:
         Tuple of (action_name, arguments_dict)
     """
     handler = get_action_handler(tool)
     if handler:
         return handler(task)
-    
+
     # Generic action for unknown tools
     return ("process", {"task": task.description})

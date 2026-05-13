@@ -9,7 +9,7 @@ from clickmd import command, option, argument
 from rich.console import Console
 from rich.table import Table
 
-from algitex.microtask import MicroTask, TaskType, group_tasks_by_file
+from algitex.microtask import MicroTask, group_tasks_by_file
 from algitex.microtask.classifier import classify_todo_file
 from algitex.microtask.executor import MicroTaskExecutor
 from algitex.microtask.slicer import ContextSlicer
@@ -57,7 +57,9 @@ def microtask_plan(
 @argument("todo_path", default="TODO.md")
 @option("--algo-only", default=False, help="Run only deterministic tasks.")
 @option("--tier", default=None, help="Run only tasks from a single tier.")
-@option("--dry-run/--execute", default=True, help="Preview changes without writing files.")
+@option(
+    "--dry-run/--execute", default=True, help="Preview changes without writing files."
+)
 @option("--workers", default=8, help="Parallel workers for deterministic tasks.")
 @option("--llm-workers", default=4, help="Parallel workers for small LLM tasks.")
 @option("--rate-limit", default=10.0, help="LLM requests per second.")
@@ -93,7 +95,9 @@ def microtask_run(
     _print_phase_results(results, dry_run=dry_run)
 
 
-def _filter_tasks(tasks: list[MicroTask], *, algo_only: bool, tier: int | None) -> list[MicroTask]:
+def _filter_tasks(
+    tasks: list[MicroTask], *, algo_only: bool, tier: int | None
+) -> list[MicroTask]:
     if algo_only:
         return [task for task in tasks if task.tier == 0]
     if tier is not None:
@@ -146,8 +150,12 @@ def _print_plan_table(tasks: list[MicroTask]) -> None:
     table.add_column("Model")
     table.add_column("Count", justify="right")
     counts = Counter(task.type for task in tasks)
-    for task_type, count in sorted(counts.items(), key=lambda item: (item[0].tier, item[0].value)):
-        table.add_row(task_type.value, str(task_type.tier), task_type.model_hint, str(count))
+    for task_type, count in sorted(
+        counts.items(), key=lambda item: (item[0].tier, item[0].value)
+    ):
+        table.add_row(
+            task_type.value, str(task_type.tier), task_type.model_hint, str(count)
+        )
     console.print(table)
 
 
@@ -192,7 +200,7 @@ def _print_phase_results(results: list, *, dry_run: bool) -> None:
 def _shorten_path(path: str, max_len: int = 72) -> str:
     if len(path) <= max_len:
         return path
-    return f"…{path[-(max_len - 1):]}"
+    return f"…{path[-(max_len - 1) :]}"
 
 
 __all__ = ["microtask_classify", "microtask_plan", "microtask_run"]

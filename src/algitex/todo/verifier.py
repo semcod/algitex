@@ -6,6 +6,7 @@ Usage:
     result = verifier.verify()
     print(f"Open: {result.still_open}, Fixed: {result.already_fixed}")
 """
+
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -14,6 +15,7 @@ from pathlib import Path
 @dataclass
 class TodoTask:
     """Single TODO task from prefact output."""
+
     file: str
     line: int
     message: str
@@ -25,6 +27,7 @@ class TodoTask:
 @dataclass
 class VerificationResult:
     """Result of TODO verification."""
+
     still_open: int = 0
     already_fixed: int = 0
     invalid: int = 0
@@ -63,12 +66,11 @@ class TodoVerifier:
             if "worktrees" in file_path or "my-app/my-app" in file_path:
                 continue
 
-            tasks.append(TodoTask(
-                file=file_path,
-                line=lineno,
-                message=message,
-                original_line=line
-            ))
+            tasks.append(
+                TodoTask(
+                    file=file_path, line=lineno, message=message, original_line=line
+                )
+            )
 
         return tasks
 
@@ -89,12 +91,14 @@ class TodoVerifier:
         # Check if file exists
         if not file_path.exists():
             self.result.already_fixed += 1
-            self.result.details.append({
-                "status": "GONE",
-                "file": task.file,
-                "line": task.line,
-                "message": task.message
-            })
+            self.result.details.append(
+                {
+                    "status": "GONE",
+                    "file": task.file,
+                    "line": task.line,
+                    "message": task.message,
+                }
+            )
             return
 
         # Check by issue type
@@ -127,15 +131,17 @@ class TodoVerifier:
 
             # Magic number
             if "Magic number" in msg:
-                match = re.search(r'(\d+)', msg)
+                match = re.search(r"(\d+)", msg)
                 if match:
                     magic = match.group(1)
-                    return "open" if re.search(rf'\b{magic}\b', line_content) else "fixed"
+                    return (
+                        "open" if re.search(rf"\b{magic}\b", line_content) else "fixed"
+                    )
                 return "open"
 
             # Missing return type
             if "missing return type" in msg:
-                return "fixed" if ' -> ' in line_content else "open"
+                return "fixed" if " -> " in line_content else "open"
 
             # Default: assume open
             return "open"
@@ -145,14 +151,14 @@ class TodoVerifier:
 
     def _check_unused_import(self, task: TodoTask, line_content: str) -> str:
         """Check if unused import is still present."""
-        match = re.search(r'Unused (\w+)', task.message)
+        match = re.search(r"Unused (\w+)", task.message)
         if not match:
             return "open"
 
         name = match.group(1)
 
         # Check if import is still on the line
-        if re.search(rf'import.*{name}', line_content):
+        if re.search(rf"import.*{name}", line_content):
             return "open"
         return "fixed"
 

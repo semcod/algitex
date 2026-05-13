@@ -25,6 +25,7 @@ from algitex.tools.docker import DockerToolManager
 @dataclass
 class TaskResult:
     """Result of executing a single task."""
+
     task: Task
     success: bool
     action: str  # What MCP action was taken
@@ -153,8 +154,8 @@ class TodoExecutor:
         # Try to extract what needs to be fixed
         # Pattern: "Fix X in file.py" or "Function X missing Y"
         fix_patterns = [
-            r'(?:fix|repair|correct|add|update)\s+(.+?)(?:\s+in\s+|\s+at\s+|\s*[:\-]\s*)',
-            r'(?:missing|needs?|requires?)\s+(.+?)(?:\s+in\s+|\s+for\s+)',
+            r"(?:fix|repair|correct|add|update)\s+(.+?)(?:\s+in\s+|\s+at\s+|\s*[:\-]\s*)",
+            r"(?:missing|needs?|requires?)\s+(.+?)(?:\s+in\s+|\s+for\s+)",
         ]
 
         what_to_fix = None
@@ -169,24 +170,34 @@ class TodoExecutor:
         else:
             target_file = str(self.project_path)
 
-        return ("edit", {
-            "path": target_file,
-            "line": task.line_number,
-            "description": what_to_fix or desc,
-            "original": None,
-            "replacement": None,
-        })
+        return (
+            "edit",
+            {
+                "path": target_file,
+                "line": task.line_number,
+                "description": what_to_fix or desc,
+                "original": None,
+                "replacement": None,
+            },
+        )
 
     def _parse_create_action(self, task: Task) -> tuple[str, dict]:
         """Parse a create/add task."""
         # Extract file path if mentioned
-        file_match = re.search(r'(?:file|path)\s+["\']?(\S+)["\']?', task.description, re.IGNORECASE)
-        target_file = file_match.group(1) if file_match else (task.file_path or "new_file.txt")
+        file_match = re.search(
+            r'(?:file|path)\s+["\']?(\S+)["\']?', task.description, re.IGNORECASE
+        )
+        target_file = (
+            file_match.group(1) if file_match else (task.file_path or "new_file.txt")
+        )
 
-        return ("create", {
-            "path": str(self.project_path / target_file),
-            "content": "",
-        })
+        return (
+            "create",
+            {
+                "path": str(self.project_path / target_file),
+                "content": "",
+            },
+        )
 
     def _parse_delete_action(self, task: Task) -> tuple[str, dict]:
         """Parse a remove/delete task."""

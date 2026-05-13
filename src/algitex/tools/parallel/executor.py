@@ -1,4 +1,5 @@
 """Parallel execution — execute tickets using git worktrees with region locking."""
+
 import re
 import shutil
 import subprocess
@@ -20,7 +21,9 @@ class ParallelExecutor:
         self.worktrees_dir = self.root / ".algitex" / "worktrees"
         self.worktrees_dir.mkdir(parents=True, exist_ok=True)
 
-    def execute(self, tickets: List[Dict], tool: str = "aider-mcp") -> List[MergeResult]:
+    def execute(
+        self, tickets: List[Dict], tool: str = "aider-mcp"
+    ) -> List[MergeResult]:
         """Full parallel execution pipeline."""
         # 1. Extract regions
         extractor = RegionExtractor(str(self.root))
@@ -41,7 +44,9 @@ class ParallelExecutor:
 
         return merge_results
 
-    def _dispatch_agents(self, groups: Dict, tickets: List[Dict], tool: str) -> List[Dict]:
+    def _dispatch_agents(
+        self, groups: Dict, tickets: List[Dict], tool: str
+    ) -> List[Dict]:
         """Create worktrees and run agents in parallel."""
         results = []
         with ThreadPoolExecutor(max_workers=len(groups)) as pool:
@@ -60,11 +65,13 @@ class ParallelExecutor:
                     result = future.result()
                     results.append(result)
                 except Exception as e:
-                    results.append({
-                        "agent": agent_idx,
-                        "status": "error",
-                        "error": str(e),
-                    })
+                    results.append(
+                        {
+                            "agent": agent_idx,
+                            "status": "error",
+                            "error": str(e),
+                        }
+                    )
         return results
 
     def _create_worktree(self, agent_idx: int) -> str:
@@ -75,18 +82,24 @@ class ParallelExecutor:
         # Create branch from current HEAD
         subprocess.run(
             ["git", "branch", "-f", branch, "HEAD"],
-            cwd=self.root, capture_output=True, check=True
+            cwd=self.root,
+            capture_output=True,
+            check=True,
         )
 
         # Create worktree
         subprocess.run(
             ["git", "worktree", "add", wt_path, branch],
-            cwd=self.root, capture_output=True, check=True
+            cwd=self.root,
+            capture_output=True,
+            check=True,
         )
 
         return wt_path
 
-    def _run_agent(self, agent_idx: int, worktree: str, tickets: List[Dict], tool: str) -> Dict:
+    def _run_agent(
+        self, agent_idx: int, worktree: str, tickets: List[Dict], tool: str
+    ) -> Dict:
         """Run an agent sequentially on its assigned tickets."""
         from algitex.workflows import Pipeline
 
@@ -95,16 +108,20 @@ class ParallelExecutor:
             try:
                 pipeline = Pipeline(worktree, config=None)
                 result = pipeline.execute(ticket=ticket, tool=tool)
-                results.append({
-                    "ticket_id": ticket["id"],
-                    "status": result.get("status", "unknown"),
-                })
+                results.append(
+                    {
+                        "ticket_id": ticket["id"],
+                        "status": result.get("status", "unknown"),
+                    }
+                )
             except Exception as e:
-                results.append({
-                    "ticket_id": ticket["id"],
-                    "status": "error",
-                    "error": str(e),
-                })
+                results.append(
+                    {
+                        "ticket_id": ticket["id"],
+                        "status": "error",
+                        "error": str(e),
+                    }
+                )
 
         return {
             "agent": agent_idx,
@@ -118,12 +135,14 @@ class ParallelExecutor:
 
         for result in agent_results:
             if result.get("status") == "error":
-                merge_results.append(MergeResult(
-                    agent_id=str(result["agent"]),
-                    ticket_id="",
-                    status="error",
-                    conflicts=[result.get("error", "")],
-                ))
+                merge_results.append(
+                    MergeResult(
+                        agent_id=str(result["agent"]),
+                        ticket_id="",
+                        status="error",
+                        conflicts=[result.get("error", "")],
+                    )
+                )
                 continue
 
             worktree = result["worktree"]
@@ -134,22 +153,33 @@ class ParallelExecutor:
                 # Rebase to detect drift
                 subprocess.run(
                     ["git", "rebase", "HEAD", agent_branch],
-                    cwd=self.root, capture_output=True
+                    cwd=self.root,
+                    capture_output=True,
                 )
 
             # Try merge
             merge = subprocess.run(
-                ["git", "merge", "--no-ff", agent_branch, "-m",
-                 f"algitex: merge agent-{result['agent']} results"],
-                cwd=self.root, capture_output=True, text=True
+                [
+                    "git",
+                    "merge",
+                    "--no-ff",
+                    agent_branch,
+                    "-m",
+                    f"algitex: merge agent-{result['agent']} results",
+                ],
+                cwd=self.root,
+                capture_output=True,
+                text=True,
             )
 
             if merge.returncode == 0:
-                merge_results.append(MergeResult(
-                    agent_id=str(result["agent"]),
-                    ticket_id=",".join(r["ticket_id"] for r in result["results"]),
-                    status="clean",
-                ))
+                merge_results.append(
+                    MergeResult(
+                        agent_id=str(result["agent"]),
+                        ticket_id=",".join(r["ticket_id"] for r in result["results"]),
+                        status="clean",
+                    )
+                )
             else:
                 # Conflict - try semantic resolution
                 resolution = self._resolve_conflict(agent_branch)
@@ -175,9 +205,11 @@ class ParallelExecutor:
         # 2. Get conflicting files
         diff = subprocess.run(
             ["git", "diff", "--name-only", "HEAD", branch],
-            cwd=self.root, capture_output=True, text=True
+            cwd=self.root,
+            capture_output=True,
+            text=True,
         )
-        conflicting_files = [f for f in diff.stdout.strip().split('\n') if f]
+        conflicting_files = [f for f in diff.stdout.strip().split("\n") if f]
 
         # 3. Check if changes are in different regions
         resolvable = True
@@ -190,7 +222,8 @@ class ParallelExecutor:
             # Cherry-pick changes
             subprocess.run(
                 ["git", "merge", "-X", "theirs", branch],
-                cwd=self.root, capture_output=True
+                cwd=self.root,
+                capture_output=True,
             )
             return MergeResult(
                 agent_id=branch,
@@ -211,11 +244,15 @@ class ParallelExecutor:
         # Get line ranges changed in both branches
         diff_main = subprocess.run(
             ["git", "diff", "-U0", f"{branch}...HEAD", "--", file],
-            cwd=self.root, capture_output=True, text=True
+            cwd=self.root,
+            capture_output=True,
+            text=True,
         )
         diff_branch = subprocess.run(
             ["git", "diff", "-U0", f"HEAD...{branch}", "--", file],
-            cwd=self.root, capture_output=True, text=True
+            cwd=self.root,
+            capture_output=True,
+            text=True,
         )
 
         main_ranges = self._parse_diff_ranges(diff_main.stdout)
@@ -231,7 +268,9 @@ class ParallelExecutor:
     def _parse_diff_ranges(self, diff_output: str) -> List[Tuple[int, int]]:
         """Extract line ranges from unified diff."""
         ranges = []
-        for match in re.finditer(r'@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@', diff_output):
+        for match in re.finditer(
+            r"@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@", diff_output
+        ):
             start = int(match.group(3))
             count = int(match.group(4) or 1)
             ranges.append((start, start + count - 1))
@@ -241,8 +280,7 @@ class ParallelExecutor:
         """Remove all agent worktrees and branches."""
         try:
             subprocess.run(
-                ["git", "worktree", "prune"],
-                cwd=self.root, capture_output=True
+                ["git", "worktree", "prune"], cwd=self.root, capture_output=True
             )
 
             # Remove worktree directories
@@ -253,8 +291,7 @@ class ParallelExecutor:
             for i in range(self.max_agents):
                 branch = f"algitex-agent-{i}"
                 subprocess.run(
-                    ["git", "branch", "-D", branch],
-                    cwd=self.root, capture_output=True
+                    ["git", "branch", "-D", branch], cwd=self.root, capture_output=True
                 )
         except Exception:
             pass  # Best effort cleanup

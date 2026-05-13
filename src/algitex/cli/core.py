@@ -5,7 +5,6 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Optional
 
-import clickmd
 from clickmd import command, option, argument, Path as ClickPath
 from rich.console import Console
 from rich.table import Table
@@ -19,10 +18,10 @@ def init(path: str) -> None:
     """Initialize algitex for a project."""
     project_path = _init_project_dir(path)
     cfg_path = _init_config(project_path)
-    
+
     console.print(f"\n[bold green]\u2705 algitex initialized[/] in {project_path}")
     console.print(f"   Config: {cfg_path}")
-    
+
     _print_tools_status()
 
 
@@ -35,22 +34,26 @@ def _init_project_dir(path: str) -> Path:
 
 def _init_config(project_path: Path) -> str:
     from algitex.config import Config
+
     cfg = Config.load()
     return cfg.save(str(project_path / "algitex.yaml"))
 
 
 def _print_tools_status():
     from algitex.tools import discover_tools, TOOL_REGISTRY
+
     tools = discover_tools()
     table = Table(title="Available Tools")
     table.add_column("Tool", style="bold")
     table.add_column("Status")
     table.add_column("Role")
-    
+
     for name, status in tools.items():
-        table.add_row(name, str(status), TOOL_REGISTRY.get(name, {}).get("role", "unknown"))
+        table.add_row(
+            name, str(status), TOOL_REGISTRY.get(name, {}).get("role", "unknown")
+        )
     console.print(table)
-    
+
     missing = [n for n, s in tools.items() if not s.installed]
     if missing:
         console.print(f"\n[yellow]Install missing:[/] pip install {' '.join(missing)}")
@@ -62,15 +65,18 @@ def _print_tools_status():
 def analyze(path: str, quick: bool):
     """Analyze project health."""
     from algitex.project import Project
+
     with console.status("Analyzing..."):
         p = Project(path)
         report = p.analyze(full=not quick)
-    console.print(f"\n[bold]Health Report[/]")
+    console.print("\n[bold]Health Report[/]")
     console.print(report.summary())
     if report.grade in ("A", "B"):
         console.print(f"[bold green]Grade {report.grade}[/] — looking good!")
     else:
-        console.print(f"[bold yellow]Grade {report.grade}[/] — run [bold]algitex plan[/] for improvements.")
+        console.print(
+            f"[bold yellow]Grade {report.grade}[/] — run [bold]algitex plan[/] for improvements."
+        )
 
 
 @command()
@@ -80,16 +86,19 @@ def analyze(path: str, quick: bool):
 def plan(path: str, sprints: int, focus: str):
     """Generate sprint plan with auto-tickets."""
     from algitex.project import Project
+
     with console.status("Planning..."):
         p = Project(path)
         result = p.plan(sprints=sprints, focus=focus)
-    console.print(f"\n[bold]Sprint Plan[/]")
+    console.print("\n[bold]Sprint Plan[/]")
     console.print(result["summary"])
     console.print(f"\nTickets created: [bold]{result['tickets_created']}[/]")
     if result["tickets"]:
         table = Table(title="New Tickets")
-        table.add_column("ID"); table.add_column("Priority")
-        table.add_column("Type"); table.add_column("Title")
+        table.add_column("ID")
+        table.add_column("Priority")
+        table.add_column("Type")
+        table.add_column("Title")
         for t in result["tickets"][:15]:
             table.add_row(t["id"], t["priority"], t["type"], t["title"])
         console.print(table)
@@ -101,6 +110,7 @@ def plan(path: str, sprints: int, focus: str):
 def go(path: str, dry_run: bool):
     """Full pipeline: analyze -> plan -> execute -> validate."""
     from algitex.workflows import Pipeline
+
     console.print("[bold]Starting full pipeline...[/]\n")
     pipeline = Pipeline(path)
     with console.status("[1/4] Analyzing..."):
@@ -126,6 +136,7 @@ def go(path: str, dry_run: bool):
 def status(path: str):
     """Show project status dashboard."""
     from algitex.project import Project
+
     with console.status("Checking status..."):
         p = Project(path)
         s = p.status()
@@ -148,20 +159,21 @@ def status(path: str):
         f"{a['rules_active']} rules active | "
         f"saved ${a['saved_cost_usd']:.2f}"
     )
-    console.print(
-        f"[bold]Cost:[/] ${s['cost_ledger']['total_spent_usd']:.2f} total"
-    )
+    console.print(f"[bold]Cost:[/] ${s['cost_ledger']['total_spent_usd']:.2f} total")
 
 
 @command()
 def tools():
     """Show available tools and their status."""
     from algitex.tools import discover_tools, TOOL_REGISTRY
+
     all_tools = discover_tools()
     table = Table(title="algitex Toolchain")
     table.add_column("Tool", style="bold")
-    table.add_column("Installed"); table.add_column("Version")
-    table.add_column("CLI"); table.add_column("Role")
+    table.add_column("Installed")
+    table.add_column("Version")
+    table.add_column("CLI")
+    table.add_column("Role")
     for name, status in all_tools.items():
         table.add_row(
             name,
@@ -179,6 +191,7 @@ def tools():
 def ask(prompt: str, tier: Optional[str]):
     """Quick LLM query via proxym."""
     from algitex.tools.proxy import Proxy
+
     with console.status("Thinking..."):
         with Proxy() as proxy:
             resp = proxy.ask(prompt, tier=tier)
@@ -191,5 +204,6 @@ def ask(prompt: str, tier: Optional[str]):
 def sync():
     """Sync tickets to external backend."""
     from algitex.tools.tickets import Tickets
+
     t = Tickets()
     console.print(f"Sync: {t.sync()}")

@@ -19,6 +19,7 @@ Usage:
     # Phase 2: Parallel LLM fixes with rate limiting
     llm_results = fixer.fix_complex("TODO.md")
 """
+
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field
@@ -33,6 +34,7 @@ from algitex.todo.audit import AuditLogger
 @dataclass
 class HybridResult:
     """Result of hybrid fix operation."""
+
     mechanical: dict = field(default_factory=dict)
     llm: dict = field(default_factory=dict)
     total_time_sec: float = 0.0
@@ -76,6 +78,7 @@ class RateLimiter:
 @dataclass
 class LLMTask:
     """Task for LLM-based fixing."""
+
     task: TodoTask
     file_content: str = ""
     context_lines: int = 5
@@ -112,7 +115,7 @@ class HybridAutofix:
         retry_attempts: int = 3,
         timeout: float = 30.0,
         dry_run: bool = True,
-        audit_dir: str = ".algitex/audit"
+        audit_dir: str = ".algitex/audit",
     ):
         self.backend = backend
         self.tool = tool
@@ -131,7 +134,7 @@ class HybridAutofix:
         self.llm_calls = 0
         self.llm_errors = 0
         self.total_cost = 0.0
-        
+
         # Progress tracking
         self._total_llm_tasks = 0
         self._completed_llm_tasks = 0
@@ -146,7 +149,7 @@ class HybridAutofix:
             operation="fix_mechanical",
             file_path=str(todo_path),
             command=f"fix_todos({todo_path}, workers={self.workers}, dry_run={self.dry_run})",
-            metadata={"workers": self.workers, "dry_run": self.dry_run}
+            metadata={"workers": self.workers, "dry_run": self.dry_run},
         )
 
         print(f"🔧 Phase 1: Mechanical fixes (workers={self.workers})")
@@ -154,23 +157,23 @@ class HybridAutofix:
         print(f"   📝 Operation ID: {self._current_op_id}")
         start = time.perf_counter()
 
-        result = fix_todos(
-            str(todo_path),
-            workers=self.workers,
-            dry_run=self.dry_run
-        )
+        result = fix_todos(str(todo_path), workers=self.workers, dry_run=self.dry_run)
 
         elapsed = time.perf_counter() - start
 
         # Log completion
         self.audit.complete_operation(
             self._current_op_id,
-            success=result['errors'] == 0,
-            duration_ms=elapsed * 1000
+            success=result["errors"] == 0,
+            duration_ms=elapsed * 1000,
         )
 
-        print(f"   ✓ Fixed: {result['fixed']}, Skipped: {result['skipped']}, Errors: {result['errors']}")
-        print(f"   ⏱️  Time: {elapsed:.3f}s ({result['fixed'] / elapsed:.0f} tickets/sec)")
+        print(
+            f"   ✓ Fixed: {result['fixed']}, Skipped: {result['skipped']}, Errors: {result['errors']}"
+        )
+        print(
+            f"   ⏱️  Time: {elapsed:.3f}s ({result['fixed'] / elapsed:.0f} tickets/sec)"
+        )
         print(f"   📄 Audit: {self.audit.audit_dir}")
 
         return result
@@ -190,7 +193,9 @@ class HybridAutofix:
         Returns:
             Dict with fixed, skipped, errors counts
         """
-        print(f"\n🤖 Phase 2: LLM fixes (backend={self.backend}, tool={self.tool}, rate={self.rate_limiter.rate}/sec)")
+        print(
+            f"\n🤖 Phase 2: LLM fixes (backend={self.backend}, tool={self.tool}, rate={self.rate_limiter.rate}/sec)"
+        )
         start = time.perf_counter()
 
         # Parse and categorize tasks
@@ -210,7 +215,7 @@ class HybridAutofix:
             return {"fixed": 0, "skipped": 0, "errors": 0}
 
         print(f"   📋 {len(llm_tasks)} tasks for LLM processing")
-        
+
         # Initialize progress tracking
         self._total_llm_tasks = len(llm_tasks)
         self._completed_llm_tasks = 0
@@ -224,8 +229,12 @@ class HybridAutofix:
         results = self._process_llm_parallel(by_file)
 
         elapsed = time.perf_counter() - start
-        print(f"   ✓ Fixed: {results['fixed']}, Skipped: {results['skipped']}, Errors: {results['errors']}")
-        print(f"   ⏱️  Time: {elapsed:.3f}s ({results['fixed'] / elapsed:.1f} tickets/sec)")
+        print(
+            f"   ✓ Fixed: {results['fixed']}, Skipped: {results['skipped']}, Errors: {results['errors']}"
+        )
+        print(
+            f"   ⏱️  Time: {elapsed:.3f}s ({results['fixed'] / elapsed:.1f} tickets/sec)"
+        )
         print(f"   💰 Est. cost: ${self.total_cost:.4f}")
 
         return results
@@ -258,11 +267,7 @@ class HybridAutofix:
                     print(f"   ✗ Error: {e}")
                     total_errors += 1
 
-        return {
-            "fixed": total_fixed,
-            "skipped": total_skipped,
-            "errors": total_errors
-        }
+        return {"fixed": total_fixed, "skipped": total_skipped, "errors": total_errors}
 
     def _fix_file_llm(self, file_path: str, tasks: list[TodoTask]) -> dict:
         """Fix single file via LLM backend with retries."""
@@ -280,10 +285,10 @@ class HybridAutofix:
                 self._completed_llm_tasks += 1
                 current = self._completed_llm_tasks
                 total = self._total_llm_tasks
-            
+
             print(f"\n   📌 [{current}/{total}] {task.file}:{task.line}")
             print(f"      Issue: {task.message[:80]}...")
-            
+
             for attempt in range(self.retry_attempts):
                 try:
                     if self.dry_run:
@@ -302,14 +307,16 @@ class HybridAutofix:
                             skipped += 1
                     break  # Success, exit retry loop
 
-                except Exception as e:
+                except Exception:
                     if attempt == self.retry_attempts - 1:
-                        print(f"   ✗ Failed after {self.retry_attempts} attempts: {task.file}:{task.line}")
+                        print(
+                            f"   ✗ Failed after {self.retry_attempts} attempts: {task.file}:{task.line}"
+                        )
                         errors += 1
                         self.llm_errors += 1
                     else:
                         # Exponential backoff: 1s, 2s, 4s
-                        time.sleep(2 ** attempt)
+                        time.sleep(2**attempt)
 
         return {"fixed": fixed, "skipped": skipped, "errors": errors}
 
@@ -331,7 +338,7 @@ class HybridAutofix:
                 description=task.message,
                 file_path=str(path),
                 line_number=task.line,
-                status="pending"
+                status="pending",
             )
 
             # Determine fallbacks based on primary backend
@@ -351,7 +358,7 @@ class HybridAutofix:
                 fallbacks=fallbacks,
                 proxy_url=self.proxy_url,
                 dry_run=self.dry_run,
-                retry_attempts=self.retry_attempts
+                retry_attempts=self.retry_attempts,
             )
             result = backend.fix(backend_task)
             return result.success
@@ -379,19 +386,19 @@ class HybridAutofix:
                 "tool": self.tool,
                 "workers": self.workers,
                 "rate_limit": self.rate_limiter.rate,
-                "dry_run": self.dry_run
-            }
+                "dry_run": self.dry_run,
+            },
         )
 
-        print(f"\n{'='*70}")
+        print(f"\n{'=' * 70}")
         print("Hybrid Autofix - Transparent Mode")
-        print(f"{'='*70}")
+        print(f"{'=' * 70}")
         print(f"👤 User: {self.audit._get_user()}")
         print(f"🆔 Operation ID: {op_id}")
         print(f"🔧 Backend: {self.backend} | Tool: {self.tool}")
         print(f"📊 Workers: {self.workers} | Rate: {self.rate_limiter.rate}/sec")
         print(f"📁 Audit Log: {self.audit.audit_dir}")
-        print(f"{'='*70}\n")
+        print(f"{'=' * 70}\n")
 
         total_start = time.perf_counter()
 
@@ -411,28 +418,34 @@ class HybridAutofix:
         # Complete master operation
         self.audit.complete_operation(
             op_id,
-            success=mechanical['errors'] == 0 and llm['errors'] == 0,
-            duration_ms=total_elapsed * 1000
+            success=mechanical["errors"] == 0 and llm["errors"] == 0,
+            duration_ms=total_elapsed * 1000,
         )
 
         # Print summary with rollback info
-        print(f"\n{'='*70}")
+        print(f"\n{'=' * 70}")
         print("Summary & Audit Trail")
-        print(f"{'='*70}")
-        print(f"✅ Mechanical: {mechanical['fixed']} fixed, {mechanical['errors']} errors")
+        print(f"{'=' * 70}")
+        print(
+            f"✅ Mechanical: {mechanical['fixed']} fixed, {mechanical['errors']} errors"
+        )
         print(f"🤖 LLM: {llm['fixed']} fixed, {llm['errors']} errors")
         print(f"⏱️  Total: {total_elapsed:.2f}s | 💰 Est. cost: ${self.total_cost:.4f}")
-        print(f"\n📜 Audit Commands:")
-        print(f"   View history: python -c \"from algitex.todo.audit import AuditLogger; AuditLogger().print_summary()\"")
-        print(f"   Rollback:     python -c \"from algitex.todo.audit import AuditLogger; AuditLogger().rollback_last()\"")
-        print(f"{'='*70}\n")
+        print("\n📜 Audit Commands:")
+        print(
+            '   View history: python -c "from algitex.todo.audit import AuditLogger; AuditLogger().print_summary()"'
+        )
+        print(
+            '   Rollback:     python -c "from algitex.todo.audit import AuditLogger; AuditLogger().rollback_last()"'
+        )
+        print(f"{'=' * 70}\n")
 
         return HybridResult(
             mechanical=mechanical,
             llm=llm,
             total_time_sec=total_elapsed,
             cost_estimate=self.total_cost,
-            audit_log=str(self.audit.audit_dir)
+            audit_log=str(self.audit.audit_dir),
         )
 
     def print_summary(self, result: HybridResult | dict) -> None:
@@ -455,12 +468,12 @@ class HybridAutofix:
             total_time = result.total_time_sec
             cost = result.cost_estimate
 
-        print(f"\n  🔧 Mechanical Fixes:")
+        print("\n  🔧 Mechanical Fixes:")
         print(f"     Fixed:   {m.get('fixed', 0)}")
         print(f"     Skipped: {m.get('skipped', 0)}")
         print(f"     Errors:  {m.get('errors', 0)}")
 
-        print(f"\n  🤖 LLM Fixes:")
+        print("\n  🤖 LLM Fixes:")
         print(f"     Fixed:   {l.get('fixed', 0)}")
         print(f"     Skipped: {l.get('skipped', 0)}")
         print(f"     Errors:  {l.get('errors', 0)}")
@@ -470,8 +483,12 @@ class HybridAutofix:
         print(f"\n  ⏱️  Total Time: {total_time:.3f}s")
         print(f"  💰 Est. Cost:  ${cost:.4f}")
 
-        total_tasks = (m.get('fixed', 0) + m.get('skipped', 0) +
-                      l.get('fixed', 0) + l.get('skipped', 0))
+        total_tasks = (
+            m.get("fixed", 0)
+            + m.get("skipped", 0)
+            + l.get("fixed", 0)
+            + l.get("skipped", 0)
+        )
         if total_tasks > 0 and total_time > 0:
             throughput = total_tasks / total_time
             print(f"  ⚡ Throughput: {throughput:.1f} tickets/sec")

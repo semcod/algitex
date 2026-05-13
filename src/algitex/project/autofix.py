@@ -17,10 +17,12 @@ class AutoFixMixin:
         self,
         limit: Optional[int] = None,
         backend: str = "auto",
-        filter_file: Optional[str] = None
+        filter_file: Optional[str] = None,
     ) -> dict:
         """Fix issues from TODO.md."""
-        results = self.autofix.fix_all(limit=limit, backend=backend, filter_file=filter_file)
+        results = self.autofix.fix_all(
+            limit=limit, backend=backend, filter_file=filter_file
+        )
 
         # Sync with tickets system if any fixes were made
         if any(r.success for r in results):
@@ -30,7 +32,7 @@ class AutoFixMixin:
             "total": len(results),
             "fixed": sum(1 for r in results if r.success),
             "failed": sum(1 for r in results if not r.success),
-            "results": [r.to_dict() for r in results]
+            "results": [r.to_dict() for r in results],
         }
 
     def fix_issue(self, task_id: str, backend: str = "auto") -> Optional[dict]:
@@ -49,4 +51,5 @@ class AutoFixMixin:
     def sync(self) -> dict:
         """Sync tickets to external backend."""
         from algitex.tools.tickets import Tickets
+
         return Tickets().sync()

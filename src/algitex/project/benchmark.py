@@ -14,27 +14,21 @@ class BenchmarkMixin:
         self.benchmark = ModelBenchmark(ollama_client)
 
     def benchmark_models(
-        self,
-        models: List[str],
-        tasks: Optional[List[str]] = None
+        self, models: List[str], tasks: Optional[List[str]] = None
     ) -> dict:
         """Benchmark models on tasks."""
         results = self.benchmark.compare_models(models, tasks)
         return results.to_dict()
 
     def add_benchmark_task(
-        self,
-        task_id: str,
-        name: str,
-        prompt: str,
-        expected_keywords: List[str]
+        self, task_id: str, name: str, prompt: str, expected_keywords: List[str]
     ):
         """Add a custom benchmark task."""
         self.benchmark.add_custom_task(
             task_id=task_id,
             name=name,
             prompt=prompt,
-            expected_keywords=expected_keywords
+            expected_keywords=expected_keywords,
         )
 
     def print_benchmark_results(self, results: dict, format: str = "table") -> None:
@@ -51,7 +45,7 @@ class BenchmarkMixin:
                 tokens_estimated=r["tokens_estimated"],
                 quality_score=r["quality_score"],
                 response=r.get("response_preview", ""),
-                error=r.get("error")
+                error=r.get("error"),
             )
             benchmark_results.results.append(result)
 

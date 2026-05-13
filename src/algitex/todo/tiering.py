@@ -9,12 +9,9 @@ from typing import Any, Iterable
 
 from algitex.tools.todo_parser import Task, TodoParser
 from algitex.todo.classify import (
-    KNOWN_MAGIC_CONSTANTS,
     TaskTriage,
-    classify_message,
     classify_task,
 )
-
 
 
 ALGO_CATEGORIES = frozenset(
@@ -68,7 +65,9 @@ class TierSummary:
         """Add a classification entry."""
         self.total += 1
         self.tier_counts[triage.tier] = self.tier_counts.get(triage.tier, 0) + 1
-        self.category_counts[triage.category] = self.category_counts.get(triage.category, 0) + 1
+        self.category_counts[triage.category] = (
+            self.category_counts.get(triage.category, 0) + 1
+        )
         self.items.append(triage)
 
     @property
@@ -121,7 +120,6 @@ def summarise_tasks(tasks: Iterable[Any]) -> TierSummary:
 
 # Backwards-compatible alias with American spelling.
 summarize_tasks = summarise_tasks
-
 
 
 def load_todo_tasks(todo_path: str | Path = "TODO.md") -> list[Task]:

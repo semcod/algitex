@@ -12,8 +12,14 @@ from dataclasses import dataclass
 from typing import Optional
 
 # Export new modules
-from algitex.tools import  batch, benchmark, ide, config, mcp, proxy
-from algitex.tools.logging import log_calls, log_time, verbose, set_verbose, VerboseContext
+from algitex.tools import batch, benchmark, ide, config, mcp, proxy
+from algitex.tools.logging import (
+    log_calls,
+    log_time,
+    verbose,
+    set_verbose,
+    VerboseContext,
+)
 from algitex.tools.parallel import (
     CodeRegion,
     MergeResult,
@@ -99,7 +105,7 @@ def require_tool(name: str) -> None:
     if name not in tools or not tools[name].installed:
         install_cmd = f"pip install {name}"
         if name in ("code2llm", "vallm", "redup"):
-            install_cmd = f"pip install algitex[analysis]"
+            install_cmd = "pip install algitex[analysis]"
         raise ImportError(
             f"{name} is not installed.\n"
             f"Install it with: {install_cmd}\n"

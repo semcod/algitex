@@ -31,7 +31,15 @@ class ClaudeCodeHelper(IDEHelper):
         tool = self.tools[self.tool_name]
         model = tool.model_prefix + model
 
-        cmd = [tool.command, "--model", model, "--message", instruction, "--file", str(file_path)]
+        cmd = [
+            tool.command,
+            "--model",
+            model,
+            "--message",
+            instruction,
+            "--file",
+            str(file_path),
+        ]
 
         print(f"Running: {' '.join(cmd)}")
 
@@ -96,7 +104,9 @@ class ClaudeCodeHelper(IDEHelper):
                 continue
 
             print(f"[{i}/{len(issues)}] Fixing {file_path}")
-            success = self.fix_file(file_path, description, model=model, dry_run=dry_run)
+            success = self.fix_file(
+                file_path, description, model=model, dry_run=dry_run
+            )
             results[file_path] = success
 
         return results

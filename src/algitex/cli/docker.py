@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from typing import Optional
 
-import clickmd
 from clickmd import command, option, argument
 from rich.console import Console
 from rich.table import Table

@@ -26,6 +26,7 @@ CLI via algitex:
     algitex todo fix --execute       # apply fixes
     algitex todo fix --category unused_import
 """
+
 from algitex.todo.verifier import TodoVerifier, verify_todos, VerificationResult
 from algitex.todo.classify import (
     KNOWN_MAGIC_CONSTANTS,
@@ -53,7 +54,12 @@ from algitex.todo.tiering import (
     summarise_tasks,
     summarize_tasks,
 )
-from algitex.todo.micro import FunctionExtractor, FunctionSnippet, MicroFixResult, MicroFixer
+from algitex.todo.micro import (
+    FunctionExtractor,
+    FunctionSnippet,
+    MicroFixResult,
+    MicroFixer,
+)
 from algitex.todo.benchmark import (
     benchmark_fix,
     benchmark_sequential,

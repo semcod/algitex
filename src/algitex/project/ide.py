@@ -4,7 +4,12 @@ from __future__ import annotations
 
 from typing import Optional
 
-from algitex.tools.ide import IDEHelper, ClaudeCodeHelper, AiderHelper, EditorIntegration
+from algitex.tools.ide import (
+    IDEHelper,
+    ClaudeCodeHelper,
+    AiderHelper,
+    EditorIntegration,
+)
 
 
 class IDEMixin:
@@ -21,19 +26,13 @@ class IDEMixin:
         return self.ide.setup_tool(tool_name)
 
     def fix_with_claude(
-        self,
-        file_path: str,
-        instruction: str,
-        model: str = "qwen3-coder:latest"
+        self, file_path: str, instruction: str, model: str = "qwen3-coder:latest"
     ) -> bool:
         """Fix file using Claude Code."""
         return self.claude.fix_file(file_path, instruction, model)
 
     def fix_with_aider(
-        self,
-        file_path: str,
-        instruction: str,
-        model: str = "qwen3-coder:latest"
+        self, file_path: str, instruction: str, model: str = "qwen3-coder:latest"
     ) -> bool:
         """Fix file using Aider."""
         return self.aider.fix_file(file_path, instruction, model)

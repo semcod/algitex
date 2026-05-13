@@ -15,6 +15,7 @@ Example:
     executor = ParallelExecutor("/path/to/project", max_agents=4)
     results = executor.execute(tickets, tool="aider-mcp")
 """
+
 from algitex.tools.parallel.models import (
     CodeRegion,
     MergeResult,

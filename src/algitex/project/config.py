@@ -28,9 +28,10 @@ class ConfigMixin:
     def generate_env_file(self, services: Optional[dict] = None) -> bool:
         """Generate .env file."""
         from pathlib import Path
+
         if services is None:
             services = {
                 "ollama": "http://localhost:11434",
-                "litellm": "http://localhost:4000"
+                "litellm": "http://localhost:4000",
             }
         return self.config_manager.generate_env_file(services, Path(".") / ".env")

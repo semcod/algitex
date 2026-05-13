@@ -31,7 +31,9 @@ class LocalSystemChecks:
                     details={"path": path},
                 )
 
-            return ServiceStatus(name=name, healthy=False, url="", error="Command not found")
+            return ServiceStatus(
+                name=name, healthy=False, url="", error="Command not found"
+            )
         except subprocess.TimeoutExpired:
             return ServiceStatus(
                 name=name,

@@ -230,3 +230,8 @@ See `examples/41-god-module-splitting/` for splitting strategy demonstration.
 ---
 
 *To execute all tasks, run: `prefact -a --execute-todos`*
+
+## Discovered
+
+- Review and verify the refactored code analysis engine docs (articles/code2llm-static-analysis.md, docs/REFACTORING_SUMMARY.md) for accuracy
+- Regenerate or re-run prefact analysis to reconcile TODO counts after documentation refactor

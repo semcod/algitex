@@ -15,16 +15,16 @@ import time
 from typing import TYPE_CHECKING
 
 
-import httpx
-
 if TYPE_CHECKING:
     from algitex.tools.docker import DockerTool, RunningTool
 
 
-def spawn_stdio(tool: DockerTool, env: dict, running: dict, save_state: callable) -> "RunningTool":
+def spawn_stdio(
+    tool: DockerTool, env: dict, running: dict, save_state: callable
+) -> "RunningTool":
     """docker run -i → persistent subprocess with stdin/stdout MCP."""
     from algitex.tools.docker import RunningTool
-    
+
     cmd = ["docker", "run", "-i"]
     if tool.auto_remove:
         cmd.append("--rm")
@@ -32,7 +32,7 @@ def spawn_stdio(tool: DockerTool, env: dict, running: dict, save_state: callable
         cmd.extend(["-e", f"{k}={v}"])
     for vol in tool.volumes:
         cmd.extend(["-v", vol])
-    
+
     # Special handling for filesystem-mcp which needs directory argument
     if tool.name == "filesystem-mcp":
         cmd.extend([tool.image, "/workspace"])
@@ -46,10 +46,10 @@ def spawn_stdio(tool: DockerTool, env: dict, running: dict, save_state: callable
         stderr=subprocess.PIPE,
         text=True,
     )
-    
+
     # Give the server a moment to start up
     time.sleep(1.0)
-    
+
     # Check if process crashed immediately
     if proc.poll() is not None:
         stderr_output = proc.stderr.read() if proc.stderr else ""
@@ -60,7 +60,7 @@ def spawn_stdio(tool: DockerTool, env: dict, running: dict, save_state: callable
             f"Stderr: {stderr_output[:1000]}. "
             f"Stdout: {stdout_output[:500]}"
         )
-    
+
     rt = RunningTool(
         tool=tool,
         container_id=f"stdio-{tool.name}-{proc.pid}",
@@ -72,11 +72,16 @@ def spawn_stdio(tool: DockerTool, env: dict, running: dict, save_state: callable
     return rt
 
 
-def spawn_sse(tool: DockerTool, env: dict, running: dict, save_state: callable, 
-              wait_healthy: callable) -> "RunningTool":
+def spawn_sse(
+    tool: DockerTool,
+    env: dict,
+    running: dict,
+    save_state: callable,
+    wait_healthy: callable,
+) -> "RunningTool":
     """docker run -d -p PORT → SSE/HTTP MCP endpoint."""
     from algitex.tools.docker import RunningTool
-    
+
     port = tool.port or 8080
     cmd = ["docker", "run", "-d", "-p", f"{port}:{port}"]
     for k, v in env.items():
@@ -103,10 +108,12 @@ def spawn_sse(tool: DockerTool, env: dict, running: dict, save_state: callable,
     return rt
 
 
-def spawn_rest(tool: DockerTool, env: dict, running: dict, save_state: callable) -> "RunningTool":
+def spawn_rest(
+    tool: DockerTool, env: dict, running: dict, save_state: callable
+) -> "RunningTool":
     """docker run -d -p PORT → REST/OpenAI-compatible endpoint."""
     from algitex.tools.docker import RunningTool
-    
+
     port = tool.port or 4000
     cmd = ["docker", "run", "-d", "-p", f"{port}:{port}"]
     for k, v in env.items():
@@ -128,10 +135,12 @@ def spawn_rest(tool: DockerTool, env: dict, running: dict, save_state: callable)
     return rt
 
 
-def spawn_cli(tool: DockerTool, env: dict, running: dict, save_state: callable) -> "RunningTool":
+def spawn_cli(
+    tool: DockerTool, env: dict, running: dict, save_state: callable
+) -> "RunningTool":
     """CLI tool — run on demand via docker exec, no persistent container."""
     from algitex.tools.docker import RunningTool
-    
+
     cmd = ["docker", "run", "-d"]
     for k, v in env.items():
         cmd.extend(["-e", f"{k}={v}"])
@@ -150,29 +159,29 @@ def spawn_cli(tool: DockerTool, env: dict, running: dict, save_state: callable) 
 
 class StdioTransport:
     """Transport layer for JSON-RPC over stdin/stdout communication."""
-    
+
     def __init__(self, timeout: int = 30):
         self.timeout = timeout
-    
+
     def send(self, process: subprocess.Popen, request: dict) -> dict:
         """Send JSON-RPC request and return parsed response."""
         # Serialize request
         message = self._serialize(request)
-        
+
         # Send to process
         self._write(process.stdin, message)
-        
+
         # Read response
         response_data = self._read_with_timeout(process.stdout)
-        
+
         # Parse and return
         return self._parse(response_data)
-    
+
     def _serialize(self, request: dict) -> str:
         """Serialize JSON-RPC request with MCP protocol headers."""
         content = json.dumps(request)
         return f"Content-Length: {len(content)}\r\n\r\n{content}"
-    
+
     def _write(self, stdin, message: str):
         """Write message to stdin with error handling."""
         try:
@@ -180,30 +189,31 @@ class StdioTransport:
             stdin.flush()
         except BrokenPipeError:
             raise RuntimeError("MCP server process crashed or closed connection")
-    
+
     def _read_with_timeout(self, stdout) -> str:
         """Read response from stdout with timeout using select."""
         start_time = time.time()
-        
+
         while time.time() - start_time < self.timeout:
             if not self._wait_for_ready(stdout, 1.0):
                 continue
-            
+
             line = stdout.readline()
             if not line:
                 self._check_process_alive(stdout)
                 break
-            
+
             if line.startswith("Content-Length:"):
                 length = self._extract_length(line)
                 stdout.readline()  # Empty line
                 return stdout.read(length)
-        
+
         raise RuntimeError(f"MCP server timeout after {self.timeout}s")
 
     def _wait_for_ready(self, stdout, timeout: float) -> bool:
         """Wait for stdout to become ready for reading."""
         import select
+
         ready, _, _ = select.select([stdout], [], [], timeout)
         if not ready:
             self._check_process_alive(stdout)
@@ -212,13 +222,13 @@ class StdioTransport:
 
     def _check_process_alive(self, stdout):
         """Raise RuntimeError if the process associated with stdout has exited."""
-        if hasattr(stdout, '_proc') and stdout._proc.poll() is not None:
+        if hasattr(stdout, "_proc") and stdout._proc.poll() is not None:
             raise RuntimeError(f"MCP server exited with code {stdout._proc.poll()}")
 
     def _extract_length(self, line: str) -> int:
         """Extract Content-Length value from header line."""
         return int(line.split(":")[1].strip())
-    
+
     def _parse(self, raw_response: str) -> dict:
         """Parse JSON response with error handling."""
         try:
@@ -231,13 +241,13 @@ def call_stdio(rt: "RunningTool", tool: str, args: dict, get_client: callable) -
     """Send JSON-RPC over stdin, read from stdout with timeout."""
     if not rt.process or not rt.process.stdin:
         return {"error": "stdio process not available"}
-    
+
     # Create transport
     transport = StdioTransport(timeout=30)
-    
+
     # Attach process reference for timeout handling
     rt.process.stdout._proc = rt.process
-    
+
     # Build request
     request = {
         "jsonrpc": "2.0",
@@ -245,7 +255,7 @@ def call_stdio(rt: "RunningTool", tool: str, args: dict, get_client: callable) -
         "method": "tools/call",
         "params": {"name": tool, "arguments": args},
     }
-    
+
     # Send and receive
     try:
         response = transport.send(rt.process, request)

@@ -19,9 +19,11 @@ from algitex.tools import docker_transport
 
 # ─── Models ───────────────────────────────────────────────
 
+
 @dataclass
 class DockerTool:
     """Single Docker-based tool declaration from docker-tools.yaml."""
+
     name: str
     image: str
     transport: str  # "mcp-stdio" | "mcp-sse" | "rest" | "cli"
@@ -44,14 +46,16 @@ class DockerTool:
 @dataclass
 class RunningTool:
     """A spawned Docker container with connection info."""
+
     tool: DockerTool
     container_id: str
     process: Optional[subprocess.Popen] = None  # for stdio
-    endpoint: Optional[str] = None               # for SSE/REST
-    pid: Optional[int] = None                    # for tracking
+    endpoint: Optional[str] = None  # for SSE/REST
+    pid: Optional[int] = None  # for tracking
 
 
 # ─── DockerToolManager ───────────────────────────────────
+
 
 class DockerToolManager:
     """Spawn Docker containers, connect via MCP/REST, call tools, teardown."""
@@ -78,7 +82,7 @@ class DockerToolManager:
         path = Path(self.config.project_path) / "docker-tools.yaml"
         if not path.exists():
             return
-        
+
         data = self._read_yaml_with_expansion(path)
         for name, spec in data.get("tools", {}).items():
             self._expand_tool_spec(spec)
@@ -93,7 +97,7 @@ class DockerToolManager:
         """Expand environment variables in tool environment and volumes."""
         if "env" in spec:
             self._expand_env_vars(spec["env"])
-        
+
         if "volumes" in spec:
             spec["volumes"] = self._expand_volumes(spec["volumes"])
 
@@ -117,13 +121,19 @@ class DockerToolManager:
         """Load running container state from file."""
         if not self._state_file.exists():
             return
-        
+
         try:
             state = json.loads(self._state_file.read_text())
             for name, data in state.get("running", {}).items():
                 # Check if container is still running
                 result = subprocess.run(
-                    ["docker", "inspect", "-f", "{{.State.Running}}", data["container_id"]],
+                    [
+                        "docker",
+                        "inspect",
+                        "-f",
+                        "{{.State.Running}}",
+                        data["container_id"],
+                    ],
                     capture_output=True,
                     text=True,
                 )
@@ -161,7 +171,7 @@ class DockerToolManager:
         """Start a Docker container for the given tool."""
         if tool_name not in self._tools:
             raise ValueError(f"Unknown tool: {tool_name}")
-        
+
         if tool_name in self._running:
             return self._running[tool_name]
 
@@ -169,13 +179,21 @@ class DockerToolManager:
         env = {**tool.env, **overrides.get("env", {})}
 
         if tool.transport == "mcp-stdio":
-            return docker_transport.spawn_stdio(tool, env, self._running, self._save_state)
+            return docker_transport.spawn_stdio(
+                tool, env, self._running, self._save_state
+            )
         elif tool.transport == "mcp-sse":
-            return docker_transport.spawn_sse(tool, env, self._running, self._save_state, self._wait_healthy)
+            return docker_transport.spawn_sse(
+                tool, env, self._running, self._save_state, self._wait_healthy
+            )
         elif tool.transport == "rest":
-            return docker_transport.spawn_rest(tool, env, self._running, self._save_state)
+            return docker_transport.spawn_rest(
+                tool, env, self._running, self._save_state
+            )
         elif tool.transport == "cli":
-            return docker_transport.spawn_cli(tool, env, self._running, self._save_state)
+            return docker_transport.spawn_cli(
+                tool, env, self._running, self._save_state
+            )
         else:
             raise ValueError(f"Unknown transport: {tool.transport}")
 
@@ -208,13 +226,21 @@ class DockerToolManager:
             rt = self.spawn(tool_name)
 
         if rt.tool.transport == "mcp-stdio":
-            return docker_transport.call_stdio(rt, mcp_tool, arguments, self._get_http_client)
+            return docker_transport.call_stdio(
+                rt, mcp_tool, arguments, self._get_http_client
+            )
         elif rt.tool.transport == "mcp-sse":
-            return docker_transport.call_sse(rt, mcp_tool, arguments, self._get_http_client)
+            return docker_transport.call_sse(
+                rt, mcp_tool, arguments, self._get_http_client
+            )
         elif rt.tool.transport == "rest":
-            return docker_transport.call_rest(rt, mcp_tool, arguments, self._get_http_client)
+            return docker_transport.call_rest(
+                rt, mcp_tool, arguments, self._get_http_client
+            )
         elif rt.tool.transport == "cli":
-            return docker_transport.call_cli(rt, mcp_tool, arguments, self._get_http_client)
+            return docker_transport.call_cli(
+                rt, mcp_tool, arguments, self._get_http_client
+            )
         else:
             raise ValueError(f"Cannot call tool on transport: {rt.tool.transport}")
 
@@ -278,12 +304,14 @@ class DockerToolManager:
         """Query MCP tool list via stdio JSON-RPC."""
         if not rt.process or not rt.process.stdin:
             return []
-            
+
         from algitex.tools.docker_transport import StdioTransport
-        
+
         request = {
-            "jsonrpc": "2.0", "id": 0,
-            "method": "tools/list", "params": {},
+            "jsonrpc": "2.0",
+            "id": 0,
+            "method": "tools/list",
+            "params": {},
         }
         try:
             rt.process.stdout._proc = rt.process

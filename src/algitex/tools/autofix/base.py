@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional
 
 from algitex.tools.todo_parser import Task
 
@@ -11,6 +11,7 @@ from algitex.tools.todo_parser import Task
 @dataclass
 class FixResult:
     """Result of fixing an issue."""
+
     task_id: str
     task_description: str = ""
     success: bool = False
@@ -29,16 +30,17 @@ class FixResult:
             "method": self.method,
             "time_ms": self.time_ms,
             "error": self.error,
-            "file_path": self.file_path
+            "file_path": self.file_path,
         }
 
 
 class AutoFixBackend:
     """Base class for autofix backends."""
-    
+
     def fix(self, task: Task) -> FixResult:
         """Fix a task. Override in subclass."""
         raise NotImplementedError("Subclasses must implement fix()")
+
     status: str = "pending"
     priority: str = "normal"
     type: str = "task"

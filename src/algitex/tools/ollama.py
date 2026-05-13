@@ -2,7 +2,7 @@
 
 Usage:
     from algitex.tools.ollama import OllamaClient
-    
+
     client = OllamaClient()
     models = client.list_models()
     response = client.generate("Explain this code", model="qwen3-coder:latest")
@@ -21,11 +21,12 @@ import httpx
 @dataclass
 class OllamaModel:
     """Information about an Ollama model."""
+
     name: str
     size: int
     digest: str
     modified_at: str
-    
+
     @property
     def display_name(self) -> str:
         """Get display name without tag."""
@@ -35,6 +36,7 @@ class OllamaModel:
 @dataclass
 class OllamaResponse:
     """Response from Ollama API."""
+
     content: str
     model: str
     created_at: Optional[str] = None
@@ -42,25 +44,25 @@ class OllamaResponse:
     total_duration: Optional[int] = None
     prompt_eval_count: Optional[int] = None
     eval_count: Optional[int] = None
-    
+
     def __str__(self) -> str:
         return self.content
 
 
 class OllamaClient:
     """Client for interacting with Ollama API."""
-    
+
     def __init__(
         self,
         host: str = "http://localhost:11434",
         timeout: float = 120.0,
-        default_model: Optional[str] = None
+        default_model: Optional[str] = None,
     ):
         self.host = host.rstrip("/")
         self.timeout = timeout
         self.default_model = default_model
         self._client = httpx.Client(base_url=self.host, timeout=timeout)
-    
+
     def health(self) -> bool:
         """Check if Ollama is running."""
         try:
@@ -68,27 +70,29 @@ class OllamaClient:
             return response.status_code == 200
         except httpx.RequestError:
             return False
-    
+
     def list_models(self) -> List[OllamaModel]:
         """List available models."""
         try:
             response = self._client.get("/api/tags")
             response.raise_for_status()
             data = response.json()
-            
+
             models = []
             for model in data.get("models", []):
-                models.append(OllamaModel(
-                    name=model["name"],
-                    size=model.get("size", 0),
-                    digest=model.get("digest", ""),
-                    modified_at=model.get("modified_at", "")
-                ))
-            
+                models.append(
+                    OllamaModel(
+                        name=model["name"],
+                        size=model.get("size", 0),
+                        digest=model.get("digest", ""),
+                        modified_at=model.get("modified_at", ""),
+                    )
+                )
+
             return models
         except (httpx.RequestError, json.JSONDecodeError):
             return []
-    
+
     def pull_model(self, model: str) -> bool:
         """Pull a model from Ollama registry."""
         try:
@@ -103,7 +107,7 @@ class OllamaClient:
             return True
         except (httpx.RequestError, json.JSONDecodeError):
             return False
-    
+
     def generate(
         self,
         prompt: str,
@@ -112,39 +116,42 @@ class OllamaClient:
         temperature: float = 0.7,
         max_tokens: Optional[int] = None,
         stream: bool = False,
-        format: Optional[str] = None  # "json" for structured output
+        format: Optional[str] = None,  # "json" for structured output
     ) -> Union[OllamaResponse, Iterable[OllamaResponse]]:
         """Generate text using Ollama.
-        
+
         If stream=True, returns a generator that yields OllamaResponse chunks.
         """
         model = model or self.default_model
-        
+
         if not model:
             raise ValueError("No model specified and no default model set")
-        
+
         payload = {
             "model": model,
             "prompt": prompt,
             "stream": stream,
             "options": {
                 "temperature": temperature,
-            }
+            },
         }
-        
+
         if system:
             payload["system"] = system
-        
+
         if max_tokens:
             payload["options"]["num_predict"] = max_tokens
-        
+
         if format:
             payload["format"] = format
-        
+
         try:
             if stream:
+
                 def response_generator():
-                    with self._client.stream("POST", "/api/generate", json=payload) as response:
+                    with self._client.stream(
+                        "POST", "/api/generate", json=payload
+                    ) as response:
                         response.raise_for_status()
                         for line in response.iter_lines():
                             if line:
@@ -152,8 +159,9 @@ class OllamaClient:
                                 yield OllamaResponse(
                                     content=data.get("response", ""),
                                     model=data.get("model", model),
-                                    done=data.get("done", False)
+                                    done=data.get("done", False),
                                 )
+
                 return response_generator()
             else:
                 response = self._client.post("/api/generate", json=payload)
@@ -166,16 +174,18 @@ class OllamaClient:
                     done=data.get("done", True),
                     total_duration=data.get("total_duration"),
                     prompt_eval_count=data.get("prompt_eval_count"),
-                    eval_count=data.get("eval_count")
+                    eval_count=data.get("eval_count"),
                 )
         except (httpx.RequestError, json.JSONDecodeError) as e:
             err_resp = OllamaResponse(content=f"[Ollama error: {e}]", model=model or "")
             if stream:
+
                 def error_generator():
                     yield err_resp
+
                 return error_generator()
             return err_resp
-    
+
     def chat(
         self,
         messages: List[Dict[str, str]],
@@ -183,36 +193,39 @@ class OllamaClient:
         temperature: float = 0.7,
         max_tokens: Optional[int] = None,
         stream: bool = False,
-        format: Optional[str] = None
+        format: Optional[str] = None,
     ) -> Union[OllamaResponse, Iterable[OllamaResponse]]:
         """Chat with Ollama using message format.
-        
+
         If stream=True, returns a generator that yields OllamaResponse chunks.
         """
         model = model or self.default_model
-        
+
         if not model:
             raise ValueError("No model specified and no default model set")
-        
+
         payload = {
             "model": model,
             "messages": messages,
             "stream": stream,
             "options": {
                 "temperature": temperature,
-            }
+            },
         }
-        
+
         if max_tokens:
             payload["options"]["num_predict"] = max_tokens
-        
+
         if format:
             payload["format"] = format
-        
+
         try:
             if stream:
+
                 def response_generator():
-                    with self._client.stream("POST", "/api/chat", json=payload) as response:
+                    with self._client.stream(
+                        "POST", "/api/chat", json=payload
+                    ) as response:
                         response.raise_for_status()
                         for line in response.iter_lines():
                             if line:
@@ -221,8 +234,9 @@ class OllamaClient:
                                 yield OllamaResponse(
                                     content=msg.get("content", ""),
                                     model=data.get("model", model),
-                                    done=data.get("done", False)
+                                    done=data.get("done", False),
                                 )
+
                 return response_generator()
             else:
                 response = self._client.post("/api/chat", json=payload)
@@ -236,37 +250,39 @@ class OllamaClient:
                     done=data.get("done", True),
                     total_duration=data.get("total_duration"),
                     prompt_eval_count=data.get("prompt_eval_count"),
-                    eval_count=data.get("eval_count")
+                    eval_count=data.get("eval_count"),
                 )
         except (httpx.RequestError, json.JSONDecodeError) as e:
             err_resp = OllamaResponse(content=f"[Ollama error: {e}]", model=model or "")
             if stream:
+
                 def error_generator():
                     yield err_resp
+
                 return error_generator()
             return err_resp
-    
+
     def fix_code(
         self,
         file_path: str,
         issue: str,
         line_number: Optional[int] = None,
-        model: Optional[str] = None
+        model: Optional[str] = None,
     ) -> Optional[str]:
         """Fix code issue using Ollama."""
         try:
-            with open(file_path, 'r') as f:
+            with open(file_path, "r") as f:
                 code = f.read()
         except Exception:
             return None
-        
+
         system_prompt = "You are an expert Python developer. Fix the specific issue described. Make minimal changes to fix only this issue. Return only the complete fixed code without explanations."
-        
+
         user_prompt = f"""Fix this issue in {file_path}"""
-        
+
         if line_number:
             user_prompt += f" at line {line_number}"
-        
+
         user_prompt += f""":
         
 Issue: {issue}
@@ -277,31 +293,25 @@ Current code:
 ```
 
 Provide the complete fixed code."""
-        
+
         response = self.generate(
-            prompt=user_prompt,
-            system=system_prompt,
-            model=model,
-            temperature=0.3
+            prompt=user_prompt, system=system_prompt, model=model, temperature=0.3
         )
-        
+
         # Extract code from response if wrapped in markdown
         content = response.content
-        code_match = re.search(r'```python\n(.*?)\n```', content, re.DOTALL)
+        code_match = re.search(r"```python\n(.*?)\n```", content, re.DOTALL)
         if code_match:
             return code_match.group(1)
-        
+
         return content
-    
+
     def analyze_code(
-        self,
-        code: str,
-        model: Optional[str] = None,
-        format: str = "json"
+        self, code: str, model: Optional[str] = None, format: str = "json"
     ) -> Dict[str, Any]:
         """Analyze code and return structured feedback."""
         system_prompt = "You are a code analysis expert. Analyze the provided code and return JSON with complexity, issues, and suggestions."
-        
+
         prompt = f"""Analyze this Python code and provide feedback:
 
 ```python
@@ -315,85 +325,85 @@ Return JSON with:
     "suggestions": ["suggestion1", "suggestion2"],
     "score": 0.0-10.0
 }}"""
-        
+
         response = self.generate(
             prompt=prompt,
             system=system_prompt,
             model=model,
             temperature=0.3,
-            format=format
+            format=format,
         )
-        
+
         try:
             return json.loads(response.content)
         except json.JSONDecodeError:
             return {"raw_response": response.content}
-    
+
     def close(self) -> None:
         """Close the HTTP client."""
         self._client.close()
-    
+
     def __enter__(self):
         return self
-    
+
     def __exit__(self, *args):
         self.close()
 
 
 class OllamaService:
     """High-level service for Ollama operations."""
-    
+
     def __init__(self, client: Optional[OllamaClient] = None):
         self.client = client or OllamaClient()
-    
+
     def ensure_model(self, model: str) -> bool:
         """Ensure model is available, pull if necessary."""
         models = self.client.list_models()
         if any(m.name == model for m in models):
             return True
-        
+
         print(f"Pulling model {model}...")
         return self.client.pull_model(model)
-    
+
     def get_recommended_models(self) -> List[str]:
         """Get list of recommended coding models."""
         models = self.client.list_models()
         model_names = [m.name for m in models]
-        
+
         recommended = [
             "qwen3-coder:latest",
             "qwen2.5-coder:3b",
             "codellama:7b",
             "deepseek-coder:6.7b",
-            "llama3:8b"
+            "llama3:8b",
         ]
-        
+
         available = [m for m in recommended if m in model_names]
         return available
-    
+
     def auto_fix_file(
         self,
         file_path: str,
         issue: str,
         line_number: Optional[int] = None,
-        model: Optional[str] = None
+        model: Optional[str] = None,
     ) -> bool:
         """Fix issue in file and write back the result."""
         if not model:
             # Try to find a good coding model
             coding_models = self.get_recommended_models()
             model = coding_models[0] if coding_models else None
-        
+
         if not model:
             print("No suitable model found for code fixing")
             return False
-        
+
         fixed_code = self.client.fix_code(file_path, issue, line_number, model)
         if not fixed_code:
             return False
-        
+
         try:
-            with open(file_path, 'w') as f:
+            with open(file_path, "w") as f:
                 f.write(fixed_code)
             return True
         except Exception:

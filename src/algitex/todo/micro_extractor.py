@@ -27,7 +27,9 @@ class FunctionExtractor:
         lines = source.splitlines()
         candidates: list[ast.AST] = []
         for node in ast.walk(tree):
-            if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+            if not isinstance(
+                node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)
+            ):
                 continue
             end_line = getattr(node, "end_lineno", None)
             if end_line is None:
@@ -50,7 +52,10 @@ class FunctionExtractor:
 
         node = min(
             candidates,
-            key=lambda item: (getattr(item, "end_lineno", item.lineno) - item.lineno, item.lineno),
+            key=lambda item: (
+                getattr(item, "end_lineno", item.lineno) - item.lineno,
+                item.lineno,
+            ),
         )
         end_line = getattr(node, "end_lineno", node.lineno)
         snippet_source = "\n".join(lines[node.lineno - 1 : end_line])

@@ -10,9 +10,7 @@ from __future__ import annotations
 
 import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Optional
 
 from algitex.tools.ollama import OllamaClient
 from algitex.tools.todo_parser import TodoParser, Task
@@ -72,13 +70,21 @@ class MicroFixer:
         results: list[MicroFixResult] = []
 
         coerced_tasks = [coerce_task(item) for item in tasks]
-        rewrite_tasks = [task for task in coerced_tasks if classify_task(task).category != "magic"]
-        magic_tasks = [task for task in coerced_tasks if classify_task(task).category == "magic"]
+        rewrite_tasks = [
+            task for task in coerced_tasks if classify_task(task).category != "magic"
+        ]
+        magic_tasks = [
+            task for task in coerced_tasks if classify_task(task).category == "magic"
+        ]
 
-        for task in sorted(rewrite_tasks, key=lambda item: item.line_number or 0, reverse=True):
+        for task in sorted(
+            rewrite_tasks, key=lambda item: item.line_number or 0, reverse=True
+        ):
             results.append(self.fix_task(task))
 
-        for task in sorted(magic_tasks, key=lambda item: item.line_number or 0, reverse=True):
+        for task in sorted(
+            magic_tasks, key=lambda item: item.line_number or 0, reverse=True
+        ):
             results.append(self.fix_task(task))
         return results
 
@@ -123,10 +129,17 @@ class MicroFixer:
                 error="no function snippet found",
             )
 
-        client = OllamaClient(host=self.ollama_url, default_model=self.model, timeout=TIMEOUT_LONG)
+        client = OllamaClient(
+            host=self.ollama_url, default_model=self.model, timeout=TIMEOUT_LONG
+        )
         try:
             messages = self.prompt_builder.build(triage, snippet, task)
-            response = client.chat(messages=messages, model=self.model, temperature=0.0, max_tokens=MAX_REWRITE_TOKENS)
+            response = client.chat(
+                messages=messages,
+                model=self.model,
+                temperature=0.0,
+                max_tokens=MAX_REWRITE_TOKENS,
+            )
             content = strip_code_fences(response.content)
             if not content.strip():
                 return MicroFixResult(
@@ -166,11 +179,19 @@ class MicroFixer:
 
         return self.fix_tasks(tasks, categories=categories)
 
-    def fix_tasks_detailed(self, tasks: list[Task], categories: set[str] | None = None) -> list[MicroFixResult]:
+    def fix_tasks_detailed(
+        self, tasks: list[Task], categories: set[str] | None = None
+    ) -> list[MicroFixResult]:
         """Run micro fixes on an already-parsed task list and return per-task results."""
-        micro_tasks = [coerce_task(task) for task in tasks if classify_task(task).tier == "micro"]
+        micro_tasks = [
+            coerce_task(task) for task in tasks if classify_task(task).tier == "micro"
+        ]
         if categories:
-            micro_tasks = [task for task in micro_tasks if classify_task(task).category in categories]
+            micro_tasks = [
+                task
+                for task in micro_tasks
+                if classify_task(task).category in categories
+            ]
 
         if not micro_tasks:
             return []
@@ -195,7 +216,9 @@ class MicroFixer:
 
         return results
 
-    def fix_tasks(self, tasks: list[Task], categories: set[str] | None = None) -> dict[str, int]:
+    def fix_tasks(
+        self, tasks: list[Task], categories: set[str] | None = None
+    ) -> dict[str, int]:
         """Run micro fixes on an already-parsed task list."""
         micro_results = self.fix_tasks_detailed(tasks, categories=categories)
         if not micro_results:
@@ -203,15 +226,23 @@ class MicroFixer:
             return {"fixed": 0, "skipped": 0, "errors": 0}
 
         fixed = sum(1 for item in micro_results if item.success)
-        skipped = sum(1 for item in micro_results if not item.success and not item.error)
+        skipped = sum(
+            1 for item in micro_results if not item.success and not item.error
+        )
         errors = sum(1 for item in micro_results if item.error)
 
         print(f"Micro LLM: fixed={fixed}, skipped={skipped}, errors={errors}")
         return {"fixed": fixed, "skipped": skipped, "errors": errors}
 
-    def _fix_magic_name(self, task: Task, triage: TaskTriage, path: Path) -> MicroFixResult:
+    def _fix_magic_name(
+        self, task: Task, triage: TaskTriage, path: Path
+    ) -> MicroFixResult:
         """Ask the model for a constant name and apply it."""
-        number = triage.number if triage.number is not None else extract_first_int(task.description)
+        number = (
+            triage.number
+            if triage.number is not None
+            else extract_first_int(task.description)
+        )
         if number is None:
             return MicroFixResult(
                 task_id=task.id,
@@ -235,7 +266,9 @@ class MicroFixer:
                 error="no function snippet found",
             )
 
-        client = OllamaClient(host=self.ollama_url, default_model=self.model, timeout=TIMEOUT_SHORT)
+        client = OllamaClient(
+            host=self.ollama_url, default_model=self.model, timeout=TIMEOUT_SHORT
+        )
         try:
             messages = [
                 {
@@ -257,7 +290,12 @@ class MicroFixer:
                     ),
                 },
             ]
-            response = client.chat(messages=messages, model=self.model, temperature=0.0, max_tokens=MAX_MAGIC_TOKENS)
+            response = client.chat(
+                messages=messages,
+                model=self.model,
+                temperature=0.0,
+                max_tokens=MAX_MAGIC_TOKENS,
+            )
             const_name = sanitize_constant_name(response.content, number)
             return self._apply_magic_name(task, triage, path, number, const_name)
         except Exception as exc:
@@ -368,9 +406,17 @@ class MicroFixer:
             )
 
         lines[task.line_number - 1] = new_line
-        if not any(re.match(rf"^{re.escape(const_name)}\s*=\s*\d+\s*$", existing.strip()) for existing in lines):
+        if not any(
+            re.match(rf"^{re.escape(const_name)}\s*=\s*\d+\s*$", existing.strip())
+            for existing in lines
+        ):
             insert_at = find_import_insert_point(lines)
-            lines[insert_at:insert_at] = ["", "# Constants", f"{const_name} = {number}", ""]
+            lines[insert_at:insert_at] = [
+                "",
+                "# Constants",
+                f"{const_name} = {number}",
+                "",
+            ]
 
         candidate = "\n".join(lines) + "\n"
         if not validate_python(candidate):

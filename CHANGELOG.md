@@ -143,6 +143,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update project/compact_flow.mmd
 - ... and 10 more files
 
+- refactor(docs): refactor code analysis engine documentation and reorganize API docs and articles
+- docs: update README, CHANGELOG, SUMD, SUMR and TODO metadata following docs refactor
+
 ## [0.1.64] - 2026-04-25
 
 ### Docs

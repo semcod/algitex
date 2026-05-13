@@ -48,11 +48,11 @@ class AiderBackend:
         subprocess.run(["git", "init"], capture_output=True, check=False)
         subprocess.run(
             ["git", "config", "user.email", "autofix@local"],
-            capture_output=True, check=False
+            capture_output=True,
+            check=False,
         )
         subprocess.run(
-            ["git", "config", "user.name", "AutoFix"],
-            capture_output=True, check=False
+            ["git", "config", "user.name", "AutoFix"], capture_output=True, check=False
         )
 
     def _build_command(self, task: Task) -> List[str]:
@@ -61,13 +61,15 @@ class AiderBackend:
 
         return [
             "aider",
-            "--model", self.DEFAULT_MODEL,
+            "--model",
+            self.DEFAULT_MODEL,
             "--no-git",
             "--no-commit",
             "--yes",
             "--no-check-version",
-            "--message", prompt,
-            task.file_path
+            "--message",
+            prompt,
+            task.file_path,
         ]
 
     def _build_prompt(self, task: Task) -> str:
@@ -85,10 +87,7 @@ class AiderBackend:
 
         try:
             result = subprocess.run(
-                cmd,
-                capture_output=True,
-                text=True,
-                timeout=self.DEFAULT_TIMEOUT
+                cmd, capture_output=True, text=True, timeout=self.DEFAULT_TIMEOUT
             )
             return self._process_result(task, start_time, result)
 
@@ -98,10 +97,7 @@ class AiderBackend:
             return self._error_result(task, start_time, str(e))
 
     def _process_result(
-        self,
-        task: Task,
-        start_time: float,
-        result: subprocess.CompletedProcess
+        self, task: Task, start_time: float, result: subprocess.CompletedProcess
     ) -> FixResult:
         """Process subprocess result into FixResult."""
         elapsed = (time.time() - start_time) * 1000
@@ -113,7 +109,7 @@ class AiderBackend:
                 success=True,
                 method="aider",
                 time_ms=elapsed,
-                file_path=task.file_path
+                file_path=task.file_path,
             )
 
         error_msg = result.stderr[:200] if result.stderr else "Aider failed"
@@ -124,7 +120,7 @@ class AiderBackend:
             method="aider",
             time_ms=elapsed,
             file_path=task.file_path,
-            error=error_msg
+            error=error_msg,
         )
 
     def _dry_run_result(self, task: Task, start_time: float) -> FixResult:
@@ -136,7 +132,7 @@ class AiderBackend:
             method="aider",
             time_ms=(time.time() - start_time) * 1000,
             file_path=task.file_path,
-            error="[DRY RUN]"
+            error="[DRY RUN]",
         )
 
     def _timeout_result(self, task: Task, start_time: float) -> FixResult:
@@ -148,7 +144,7 @@ class AiderBackend:
             method="aider",
             time_ms=(time.time() - start_time) * 1000,
             file_path=task.file_path,
-            error=f"Timeout ({self.DEFAULT_TIMEOUT // 60}min)"
+            error=f"Timeout ({self.DEFAULT_TIMEOUT // 60}min)",
         )
 
     def _error_result(self, task: Task, start_time: float, error: str) -> FixResult:
@@ -160,5 +156,5 @@ class AiderBackend:
             method="aider",
             time_ms=(time.time() - start_time) * 1000,
             file_path=task.file_path,
-            error=error
+            error=error,
         )

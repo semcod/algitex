@@ -33,7 +33,7 @@ class AutoFix:
         backend: str = "auto",  # "auto", "ollama", "aider", "litellm-proxy"
         ollama_model: Optional[str] = None,
         proxy_url: str = "http://localhost:4000",
-        dry_run: bool = False
+        dry_run: bool = False,
     ):
         self.todo_file = Path(todo_file)
         self.backend = backend
@@ -124,19 +124,23 @@ class AutoFix:
             line_number=task.line_number,
             status=task.status,
             priority=task.priority,
-            type=task.type
+            type=task.type,
         )
 
     def mark_task_done(self, task: Any) -> bool:
         """Mark a task as done in TODO.md."""
         try:
-            content = self.todo_file.read_text(encoding='utf-8')
+            content = self.todo_file.read_text(encoding="utf-8")
 
             # Find and replace the task line
             if task.file_path and task.line_number:
                 # Prefact format: file.py:line - description
-                search_line = f"- [ ] {task.file_path}:{task.line_number} - {task.description}"
-                replace_line = f"- [x] {task.file_path}:{task.line_number} - {task.description}"
+                search_line = (
+                    f"- [ ] {task.file_path}:{task.line_number} - {task.description}"
+                )
+                replace_line = (
+                    f"- [x] {task.file_path}:{task.line_number} - {task.description}"
+                )
             else:
                 # Generic format
                 search_line = f"- [ ] {task.description}"
@@ -144,15 +148,15 @@ class AutoFix:
 
             if search_line in content:
                 content = content.replace(search_line, replace_line, 1)
-                self.todo_file.write_text(content, encoding='utf-8')
+                self.todo_file.write_text(content, encoding="utf-8")
                 return True
 
             # Try more flexible matching
-            lines = content.split('\n')
+            lines = content.split("\n")
             for i, line in enumerate(lines):
                 if task.description in line and "- [ ]" in line:
                     lines[i] = line.replace("- [ ]", "- [x]", 1)
-                    self.todo_file.write_text('\n'.join(lines), encoding='utf-8')
+                    self.todo_file.write_text("\n".join(lines), encoding="utf-8")
                     return True
 
             return False
@@ -192,7 +196,7 @@ class AutoFix:
         self,
         limit: Optional[int] = None,
         backend: Optional[str] = None,
-        filter_file: Optional[str] = None
+        filter_file: Optional[str] = None,
     ) -> List[FixResult]:
         """Fix all pending tasks."""
         # Parse tasks
@@ -225,7 +229,7 @@ class AutoFix:
                 print(f"   ✅ Fixed with {result.method} ({result.time_ms:.0f}ms)")
                 if not self.dry_run:
                     if self.mark_task_done(task):
-                        print(f"   ✅ Marked as done in TODO.md")
+                        print("   ✅ Marked as done in TODO.md")
             else:
                 print(f"   ❌ Failed: {result.error}")
 
@@ -234,7 +238,9 @@ class AutoFix:
 
         return results
 
-    def fix_issue(self, task_id: str, backend: Optional[str] = None) -> Optional[FixResult]:
+    def fix_issue(
+        self, task_id: str, backend: Optional[str] = None
+    ) -> Optional[FixResult]:
         """Fix a specific task by ID."""
         tasks = self.parser.parse()
         task = next((t for t in tasks if t.id == task_id), None)
@@ -289,7 +295,7 @@ class AutoFix:
                 print(f"  - {method}: {count}")
 
         if not self.dry_run and fixed > 0:
-            print(f"\n📝 Review changes with: git diff")
+            print("\n📝 Review changes with: git diff")
             print(f"🚀 Commit with: git commit -m 'Fix {fixed} issues via AutoFix'")
 
     def list_tasks(self) -> List[Any]:

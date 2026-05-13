@@ -8,8 +8,16 @@ from __future__ import annotations
 
 import clickmd
 from clickmd import (
-    blockquote, render_md as markdown, group, command, option, argument,
-    Path, Choice, INT, BOOL
+    blockquote,
+    render_md as markdown,
+    group,
+    command,
+    option,
+    argument,
+    Path,
+    Choice,
+    INT,
+    BOOL,
 )
 from clickmd.help import success, warning, error, info, echo_md
 from rich.console import Console
@@ -18,13 +26,41 @@ from algitex.cli.core import init, analyze, plan, go, status, tools, ask, sync
 from algitex.cli.ticket import ticket_add, ticket_list, ticket_board
 from algitex.cli.algo import algo_discover, algo_extract, algo_rules, algo_report
 from algitex.cli.workflow import workflow_run, workflow_validate
-from algitex.cli.docker import docker_list, docker_spawn, docker_call, docker_teardown, docker_caps
-from algitex.cli.todo import todo_list, todo_run, todo_stats, todo_fix, todo_verify, todo_fix_parallel, todo_benchmark, todo_hybrid, todo_batch, todo_verify_prefact
+from algitex.cli.docker import (
+    docker_list,
+    docker_spawn,
+    docker_call,
+    docker_teardown,
+    docker_caps,
+)
+from algitex.cli.todo import (
+    todo_list,
+    todo_run,
+    todo_stats,
+    todo_fix,
+    todo_verify,
+    todo_fix_parallel,
+    todo_benchmark,
+    todo_hybrid,
+    todo_batch,
+    todo_verify_prefact,
+)
 from algitex.cli.microtask import microtask_classify, microtask_plan, microtask_run
 from algitex.cli.nlp import nlp_dead_code, nlp_docstrings, nlp_duplicates, nlp_imports
 from algitex.cli.parallel import parallel
-from algitex.cli.metrics import metrics_show, metrics_clear, metrics_cache, metrics_compare
-from algitex.cli.benchmark import benchmark_cache, benchmark_tiers, benchmark_memory, benchmark_full, benchmark_quick
+from algitex.cli.metrics import (
+    metrics_show,
+    metrics_clear,
+    metrics_cache,
+    metrics_compare,
+)
+from algitex.cli.benchmark import (
+    benchmark_cache,
+    benchmark_tiers,
+    benchmark_memory,
+    benchmark_full,
+    benchmark_quick,
+)
 from algitex.cli.dashboard import dashboard_live, dashboard_monitor, dashboard_export
 
 console = Console()
@@ -216,17 +252,65 @@ dashboard.add_command(dashboard_export, name="export")
 
 # Backward compatibility
 __all__ = [
-    "app", "console",
-    "ticket", "algo", "workflow", "docker", "todo", "microtask", "nlp", "metrics", "benchmark", "dashboard",
-    "init", "analyze", "plan", "go", "status", "tools", "ask", "sync",
-    "ticket_add", "ticket_list", "ticket_board",
-    "algo_discover", "algo_extract", "algo_rules", "algo_report",
-    "workflow_run", "workflow_validate",
-    "docker_list", "docker_spawn", "docker_call", "docker_teardown", "docker_caps",
-    "todo_list", "todo_run", "todo_stats", "todo_fix", "todo_verify", "todo_fix_parallel", "todo_benchmark", "todo_hybrid",
-    "microtask_classify", "microtask_plan", "microtask_run",
-    "nlp_docstrings", "nlp_imports", "nlp_dead_code", "nlp_duplicates",
-    "metrics_show", "metrics_clear", "metrics_cache", "metrics_compare",
-    "benchmark_cache", "benchmark_tiers", "benchmark_memory", "benchmark_full", "benchmark_quick",
-    "dashboard_live", "dashboard_monitor", "dashboard_export",
+    "app",
+    "console",
+    "ticket",
+    "algo",
+    "workflow",
+    "docker",
+    "todo",
+    "microtask",
+    "nlp",
+    "metrics",
+    "benchmark",
+    "dashboard",
+    "init",
+    "analyze",
+    "plan",
+    "go",
+    "status",
+    "tools",
+    "ask",
+    "sync",
+    "ticket_add",
+    "ticket_list",
+    "ticket_board",
+    "algo_discover",
+    "algo_extract",
+    "algo_rules",
+    "algo_report",
+    "workflow_run",
+    "workflow_validate",
+    "docker_list",
+    "docker_spawn",
+    "docker_call",
+    "docker_teardown",
+    "docker_caps",
+    "todo_list",
+    "todo_run",
+    "todo_stats",
+    "todo_fix",
+    "todo_verify",
+    "todo_fix_parallel",
+    "todo_benchmark",
+    "todo_hybrid",
+    "microtask_classify",
+    "microtask_plan",
+    "microtask_run",
+    "nlp_docstrings",
+    "nlp_imports",
+    "nlp_dead_code",
+    "nlp_duplicates",
+    "metrics_show",
+    "metrics_clear",
+    "metrics_cache",
+    "metrics_compare",
+    "benchmark_cache",
+    "benchmark_tiers",
+    "benchmark_memory",
+    "benchmark_full",
+    "benchmark_quick",
+    "dashboard_live",
+    "dashboard_monitor",
+    "dashboard_export",
 ]

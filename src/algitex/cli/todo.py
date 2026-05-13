@@ -22,7 +22,11 @@ def _render_todo_stats(file: str, tasks) -> None:
     tier_table.add_column("Tier", style="bold")
     tier_table.add_column("Count", justify="right")
     tier_table.add_column("Share", justify="right")
-    for tier, label in (("algorithm", "Algorithm"), ("micro", "Small LLM"), ("big", "Big LLM")):
+    for tier, label in (
+        ("algorithm", "Algorithm"),
+        ("micro", "Small LLM"),
+        ("big", "Big LLM"),
+    ):
         count = summary.tier_counts.get(tier, 0)
         share = f"{summary.tier_percent(tier)}%"
         tier_table.add_row(label, str(count), share)
@@ -76,7 +80,9 @@ def _run_algo_dashboard(dashboard, file, algo_tasks, algo, workers, dry_run, res
     batch_size = max(1, len(algo_tasks) // 10)
     for i in range(0, len(algo_tasks), batch_size):
         batch = algo_tasks[i : i + batch_size]
-        result = parallel_fix_and_update(file, workers=workers, dry_run=dry_run, tasks=batch)
+        result = parallel_fix_and_update(
+            file, workers=workers, dry_run=dry_run, tasks=batch
+        )
         dashboard.update_tier_progress(
             "algorithm",
             current=min(i + batch_size, len(algo_tasks)),
@@ -86,7 +92,9 @@ def _run_algo_dashboard(dashboard, file, algo_tasks, algo, workers, dry_run, res
     dashboard.update_tier_progress("algorithm", active=False)
 
 
-def _run_micro_dashboard(dashboard, file, micro_tasks, micro, micro_workers, model, dry_run, cache, results):
+def _run_micro_dashboard(
+    dashboard, file, micro_tasks, micro, micro_workers, model, dry_run, cache, results
+):
     """Run micro-LLM phase with live dashboard updates."""
     if not (micro and micro_tasks):
         return
@@ -119,7 +127,9 @@ def _run_micro_dashboard(dashboard, file, micro_tasks, micro, micro_workers, mod
     micro_results = micro_fixer.fix_tasks_detailed(micro_tasks)
     result = {
         "fixed": sum(1 for item in micro_results if item.success),
-        "skipped": sum(1 for item in micro_results if not item.success and not item.error),
+        "skipped": sum(
+            1 for item in micro_results if not item.success and not item.error
+        ),
         "errors": sum(1 for item in micro_results if item.error),
     }
     results.append(("Small LLM", result))
@@ -141,7 +151,18 @@ def _run_micro_dashboard(dashboard, file, micro_tasks, micro, micro_workers, mod
             mark_tasks_completed(file, completed_tasks)
 
 
-def _run_big_dashboard(dashboard, file, big_tasks, all_phases, workers, backend, rate_limit, proxy_url, dry_run, results):
+def _run_big_dashboard(
+    dashboard,
+    file,
+    big_tasks,
+    all_phases,
+    workers,
+    backend,
+    rate_limit,
+    proxy_url,
+    dry_run,
+    results,
+):
     """Run big-LLM phase with live dashboard updates."""
     if not (all_phases and big_tasks):
         return
@@ -157,7 +178,9 @@ def _run_big_dashboard(dashboard, file, big_tasks, all_phases, workers, backend,
         dry_run=dry_run,
     )
     dashboard.update_tier_progress("big", current=len(big_tasks) // 2)
-    result = fixer.fix_complex(file, include_categories=set(BIG_CATEGORIES), tasks=big_tasks)
+    result = fixer.fix_complex(
+        file, include_categories=set(BIG_CATEGORIES), tasks=big_tasks
+    )
     results.append(("Big LLM", result))
 
     dashboard.update_tier_progress(
@@ -194,16 +217,43 @@ def _run_with_dashboard(
 
     algo_tasks = [t for t in tasks if classify_task(t).tier == "algorithm"]
     micro_tasks = [t for t in tasks if classify_task(t).tier == "micro"]
-    big_tasks = [t for t in tasks if classify_task(t).tier == "big"] if all_phases else []
+    big_tasks = (
+        [t for t in tasks if classify_task(t).tier == "big"] if all_phases else []
+    )
 
-    dashboard, cache = _init_todo_dashboard(algo_tasks, micro_tasks, big_tasks, algo, micro, all_phases)
+    dashboard, cache = _init_todo_dashboard(
+        algo_tasks, micro_tasks, big_tasks, algo, micro, all_phases
+    )
     results: list = []
 
     try:
         dashboard.start()
-        _run_algo_dashboard(dashboard, file, algo_tasks, algo, workers, dry_run, results)
-        _run_micro_dashboard(dashboard, file, micro_tasks, micro, micro_workers, model, dry_run, cache, results)
-        _run_big_dashboard(dashboard, file, big_tasks, all_phases, workers, backend, rate_limit, proxy_url, dry_run, results)
+        _run_algo_dashboard(
+            dashboard, file, algo_tasks, algo, workers, dry_run, results
+        )
+        _run_micro_dashboard(
+            dashboard,
+            file,
+            micro_tasks,
+            micro,
+            micro_workers,
+            model,
+            dry_run,
+            cache,
+            results,
+        )
+        _run_big_dashboard(
+            dashboard,
+            file,
+            big_tasks,
+            all_phases,
+            workers,
+            backend,
+            rate_limit,
+            proxy_url,
+            dry_run,
+            results,
+        )
 
         console.print("\n[bold]Tiered Summary[/]")
         for phase, result in results:
@@ -225,17 +275,16 @@ def _run_hybrid_with_dashboard(
     dry_run: bool,
 ) -> None:
     """Run hybrid autofix with live dashboard.
-    
+
     CC: 4 (dashboard init + phase tracking + result handling)
     """
     from algitex.dashboard import LiveDashboard
     from algitex.tools.ollama_cache import LLMCache
-    import threading
     import time
 
     # Initialize dashboard
     dashboard = LiveDashboard(refresh_rate=1.0)
-    
+
     # Initialize cache stats
     cache = LLMCache(".algitex/cache")
     cache_stats = cache.stats()
@@ -251,38 +300,38 @@ def _run_hybrid_with_dashboard(
         if hybrid:
             dashboard.update_tier_progress("algorithm", total=100, active=True)
             dashboard.update_tier_progress("big", total=100, active=True)
-            
+
             # Simulate progress for hybrid fix
             for i in range(0, 100, 10):
                 dashboard.update_tier_progress("algorithm", current=i)
                 time.sleep(0.1)
-            
+
             result = fixer.fix_all(file)
-            
+
             dashboard.update_tier_progress("algorithm", current=100, active=False)
             dashboard.update_tier_progress("big", current=100, active=False)
         else:
             dashboard.update_tier_progress("big", total=100, active=True)
-            
+
             for i in range(0, 100, 20):
                 dashboard.update_tier_progress("big", current=i)
                 time.sleep(0.1)
-            
+
             result = fixer.fix_complex(file)
-            
+
             dashboard.update_tier_progress("big", current=100, active=False)
-        
+
         return result
 
     # Run with dashboard
     try:
         dashboard.start()
         result = run_fix()
-        
+
         # Show final summary
         console.print("\n[bold]Fix Summary[/]")
         fixer.print_summary(result)
-        
+
         time.sleep(1)  # Let user see final state
     except KeyboardInterrupt:
         console.print("\n[yellow]Operation interrupted by user[/]")
@@ -297,17 +346,16 @@ def _run_batch_with_dashboard(
     dry_run: bool,
 ) -> None:
     """Run batch fix with live dashboard.
-    
+
     CC: 4 (dashboard init + progress tracking + result display)
     """
     from algitex.dashboard import LiveDashboard
     from algitex.tools.ollama_cache import LLMCache
-    import threading
     import time
 
     # Initialize dashboard
     dashboard = LiveDashboard(refresh_rate=1.0)
-    
+
     # Initialize cache stats
     cache = LLMCache(".algitex/cache")
     cache_stats = cache.stats()
@@ -321,9 +369,9 @@ def _run_batch_with_dashboard(
     def run_batch():
         """Run batch fix with dashboard updates."""
         dashboard.update_tier_progress("batch", total=len(tasks), active=True)
-        
+
         results = backend_fixer.fix_batch(tasks, max_parallel=parallel)
-        
+
         dashboard.update_tier_progress("batch", current=len(tasks), active=False)
         return results
 
@@ -331,22 +379,22 @@ def _run_batch_with_dashboard(
     try:
         dashboard.start()
         results = run_batch()
-        
+
         # Show summary
         success = sum(1 for r in results if r.success)
         failed = len(results) - success
-        
+
         console.print(f"\n[bold]{'═' * 60}[/]")
-        console.print(f"  BATCH FIX SUMMARY")
+        console.print("  BATCH FIX SUMMARY")
         console.print(f"[bold]{'═' * 60}[/]")
         console.print(f"\n  ✅ Success: {success}")
         console.print(f"  ❌ Failed:  {failed}")
         console.print(f"  📊 Total:   {len(results)}")
         console.print(f"[bold]{'═' * 60}[/]")
-        
+
         if not dry_run and success > 0:
             console.print(f"\n[green]✓ Zaktualizowano {success} plików[/]")
-        
+
         time.sleep(1)  # Let user see final state
     except KeyboardInterrupt:
         console.print("\n[yellow]Operation interrupted by user[/]")
@@ -403,7 +451,9 @@ def todo_fix_parallel(
     from algitex.todo import fix_todos
 
     result = fix_todos(file, workers=workers, dry_run=dry_run, category=category)
-    console.print(f"\n[bold]Results:[/] Fixed: {result['fixed']}, Skipped: {result['skipped']}, Errors: {result['errors']}")
+    console.print(
+        f"\n[bold]Results:[/] Fixed: {result['fixed']}, Skipped: {result['skipped']}, Errors: {result['errors']}"
+    )
 
 
 @command()
@@ -477,8 +527,10 @@ def todo_run(
 
     # Summary
     summary = runner.get_summary()
-    console.print(f"\n[bold]Summary:[/] {summary['success']}/{summary['total']} tasks completed")
-    if summary['failed'] > 0:
+    console.print(
+        f"\n[bold]Summary:[/] {summary['success']}/{summary['total']} tasks completed"
+    )
+    if summary["failed"] > 0:
         console.print(f"[red]{summary['failed']} tasks failed[/]")
 
 
@@ -540,7 +592,7 @@ def todo_fix(
     verbose: bool,
 ):
     """Execute fix tasks (prefact-style) via Docker MCP.
-    
+
     5-step pipeline: parse → classify → execute → validate → report.
     CC: 8 (5 functions + 3 branches)
     Was: CC ~50 (nested phase logic)
@@ -548,9 +600,10 @@ def todo_fix(
     # Enable verbose logging if requested
     if verbose:
         from algitex.tools.logging import set_verbose
+
         set_verbose(True)
         console.print("[dim][VERBOSE] Debug logging enabled[/]")
-    
+
     # Step 1: Parse and filter tasks
     tasks = _tf_parse_and_filter(file, task_id, limit)
     if not tasks:
@@ -563,7 +616,20 @@ def todo_fix(
     # Check if using phased execution
     if algo or micro or all_phases:
         if dashboard:
-            _run_with_dashboard(file, tasks, algo, micro, all_phases, workers, micro_workers, model, backend, rate_limit, proxy_url, dry_run)
+            _run_with_dashboard(
+                file,
+                tasks,
+                algo,
+                micro,
+                all_phases,
+                workers,
+                micro_workers,
+                model,
+                backend,
+                rate_limit,
+                proxy_url,
+                dry_run,
+            )
             return
 
         # Step 2: Classify tasks by tier
@@ -571,8 +637,18 @@ def todo_fix(
 
         # Step 3: Execute fixes per tier
         results = _tf_execute_phased(
-            file, classified, algo, micro, all_phases,
-            workers, micro_workers, model, backend, rate_limit, proxy_url, dry_run
+            file,
+            classified,
+            algo,
+            micro,
+            all_phases,
+            workers,
+            micro_workers,
+            model,
+            backend,
+            rate_limit,
+            proxy_url,
+            dry_run,
         )
 
         # Step 4: Validate results
@@ -588,7 +664,7 @@ def todo_fix(
 
 def _tf_parse_and_filter(file: str, task_id: str | None, limit: int) -> list:
     """Step 1: Parse TODO.md and filter by task_id and limit.
-    
+
     CC: 3 (parse + filter + limit)
     """
     from algitex.todo import parse_todo
@@ -610,7 +686,7 @@ def _tf_parse_and_filter(file: str, task_id: str | None, limit: int) -> list:
 
 def _tf_classify_tasks(tasks: list) -> dict[str, list]:
     """Step 2: Group tasks by execution tier.
-    
+
     CC: 3 (dict lookup + 2 list comps)
     """
     from algitex.todo import classify_task
@@ -645,7 +721,17 @@ def _tf_execute_phased(
 
     phases = _tf_build_phases(classified, algo, micro, all_phases)
     for name, tasks, runner in phases:
-        result = runner(file, tasks, workers, micro_workers, model, backend, proxy_url, rate_limit, dry_run)
+        result = runner(
+            file,
+            tasks,
+            workers,
+            micro_workers,
+            model,
+            backend,
+            proxy_url,
+            rate_limit,
+            dry_run,
+        )
         results.append((name, result))
 
     return results
@@ -658,7 +744,6 @@ def _tf_build_phases(
     all_phases: bool,
 ) -> list[tuple[str, list, callable]]:
     """Build the list of (name, tasks, runner) tuples."""
-    from algitex.todo import parallel_fix_and_update, MicroFixer, HybridAutofix, BIG_CATEGORIES
 
     phases = []
     if all_phases:
@@ -678,15 +763,20 @@ def _tf_build_phases(
 def _tf_run_algorithm(file: str, tasks: list, workers: int, *_args) -> dict:
     """Run algorithmic fixes."""
     from algitex.todo import parallel_fix_and_update
+
     console.print(f"\n[green]Phase 1: Algorithm[/] — {len(tasks)} tasks")
-    return parallel_fix_and_update(file, workers=workers, dry_run=_args[-1], tasks=tasks)
+    return parallel_fix_and_update(
+        file, workers=workers, dry_run=_args[-1], tasks=tasks
+    )
 
 
 def _aggregate_micro_results(micro_results):
     """Aggregate micro-LLM fix results into a summary dict."""
     return {
         "fixed": sum(1 for item in micro_results if item.success),
-        "skipped": sum(1 for item in micro_results if not item.success and not item.error),
+        "skipped": sum(
+            1 for item in micro_results if not item.success and not item.error
+        ),
         "errors": sum(1 for item in micro_results if item.error),
     }
 
@@ -696,18 +786,22 @@ def _mark_micro_completed(file, dry_run, micro_results, tasks):
     if dry_run:
         return
     from algitex.todo import mark_tasks_completed
+
     completed_ids = {item.task_id for item in micro_results if item.success}
     completed_tasks = [t for t in tasks if f"{t.file}:{t.line}" in completed_ids]
     if completed_tasks:
         mark_tasks_completed(file, completed_tasks)
 
 
-def _tf_run_micro(file: str, tasks: list, _workers: int, micro_workers: int, model: str, *_args) -> dict:
+def _tf_run_micro(
+    file: str, tasks: list, _workers: int, micro_workers: int, model: str, *_args
+) -> dict:
     """Run micro-LLM fixes.
 
     CC: ~4 (init + run + aggregate + mark)
     """
     from algitex.todo import MicroFixer
+
     dry_run = _args[-1]
     console.print(f"\n[cyan]Phase 2: Small LLM[/] — {len(tasks)} tasks")
     micro_fixer = MicroFixer(
@@ -722,10 +816,20 @@ def _tf_run_micro(file: str, tasks: list, _workers: int, micro_workers: int, mod
     return result
 
 
-def _tf_run_big(file: str, tasks: list, workers: int, _micro_workers: int, _model: str,
-                backend: str, proxy_url: str, rate_limit: int, dry_run: bool) -> dict:
+def _tf_run_big(
+    file: str,
+    tasks: list,
+    workers: int,
+    _micro_workers: int,
+    _model: str,
+    backend: str,
+    proxy_url: str,
+    rate_limit: int,
+    dry_run: bool,
+) -> dict:
     """Run big-LLM fixes."""
     from algitex.todo import HybridAutofix, BIG_CATEGORIES, mark_tasks_completed
+
     console.print(f"\n[magenta]Phase 3: Big LLM[/] — {len(tasks)} tasks")
     fixer = HybridAutofix(
         backend=backend,
@@ -735,7 +839,9 @@ def _tf_run_big(file: str, tasks: list, workers: int, _micro_workers: int, _mode
         rate_limit=rate_limit,
         dry_run=dry_run,
     )
-    result = fixer.fix_complex(file, include_categories=set(BIG_CATEGORIES), tasks=tasks)
+    result = fixer.fix_complex(
+        file, include_categories=set(BIG_CATEGORIES), tasks=tasks
+    )
     if not dry_run and result.get("fixed", 0) == len(tasks) and tasks:
         mark_tasks_completed(file, tasks)
     return result
@@ -743,7 +849,7 @@ def _tf_run_big(file: str, tasks: list, workers: int, _micro_workers: int, _mode
 
 def _tf_validate_results(results: list[tuple[str, dict]]) -> dict:
     """Step 4: Aggregate fix results into report.
-    
+
     CC: 2 (sum aggregation)
     """
     return {
@@ -757,10 +863,10 @@ def _tf_validate_results(results: list[tuple[str, dict]]) -> dict:
 
 def _tf_print_report(report: dict) -> None:
     """Step 5: Print human-readable report.
-    
+
     CC: 2 (header + details)
     """
-    console.print(f"\n[bold]Tiered Summary[/]")
+    console.print("\n[bold]Tiered Summary[/]")
     for phase, result in report.get("details", []):
         console.print(
             f"  • {phase}: fixed={result.get('fixed', 0)}, "
@@ -770,7 +876,7 @@ def _tf_print_report(report: dict) -> None:
 
 def _tf_run_legacy(file: str, tasks: list, tool: str, dry_run: bool) -> None:
     """Legacy non-tiered execution path.
-    
+
     Kept for backward compatibility.
     """
     from algitex.tools.todo_runner import TodoRunner
@@ -781,8 +887,18 @@ def _tf_run_legacy(file: str, tasks: list, tool: str, dry_run: bool) -> None:
         return
 
     # Filter to fix-related tasks
-    fix_keywords = ["fix", "repair", "correct", "missing", "unused", "magic number", "return type"]
-    fix_tasks = [t for t in tasks if any(kw in t.message.lower() for kw in fix_keywords)]
+    fix_keywords = [
+        "fix",
+        "repair",
+        "correct",
+        "missing",
+        "unused",
+        "magic number",
+        "return type",
+    ]
+    fix_tasks = [
+        t for t in tasks if any(kw in t.message.lower() for kw in fix_keywords)
+    ]
 
     if not fix_tasks:
         console.print("[yellow]No fix tasks found[/]")
@@ -795,7 +911,7 @@ def _tf_run_legacy(file: str, tasks: list, tool: str, dry_run: bool) -> None:
             description=t.message,
             file_path=str(t.file),
             line_number=t.line,
-            status="pending"
+            status="pending",
         )
         for t in fix_tasks
     ]
@@ -832,7 +948,9 @@ def todo_benchmark(
     else:
         result = benchmark_fix(file, limit=limit, workers=workers, mode="parallel")
         result.print_report(detailed=True)
-        console.print(f"\n[dim]Tip: Use --compare to see parallel vs sequential comparison[/]")
+        console.print(
+            "\n[dim]Tip: Use --compare to see parallel vs sequential comparison[/]"
+        )
 
 
 @command()
@@ -847,28 +965,38 @@ def todo_benchmark(
 @option("--fallback/--no-fallback", default=True)
 @option("--verbose", "-v", default=False)
 @option("--dry-run/--execute", default=True)
-def _print_hybrid_banner(hybrid, backend, tool, workers, rate_limit, proxy_url, fallback, verbose, dry_run):
+def _print_hybrid_banner(
+    hybrid, backend, tool, workers, rate_limit, proxy_url, fallback, verbose, dry_run
+):
     """Print hybrid autofix configuration banner."""
     if hybrid:
-        console.print(f"[green]Mode: HYBRID[/] — Phase 1 (mechanical) + Phase 2 (LLM)")
+        console.print("[green]Mode: HYBRID[/] — Phase 1 (mechanical) + Phase 2 (LLM)")
         console.print(f"   • Phase 1: Parallel mechanical fixes (workers={workers})")
-        console.print(f"   • Phase 2: LLM-based fixes via {backend} (rate={rate_limit}/sec)")
+        console.print(
+            f"   • Phase 2: LLM-based fixes via {backend} (rate={rate_limit}/sec)"
+        )
     else:
-        console.print(f"[yellow]Mode: LLM ONLY[/] — Skipping mechanical fixes")
+        console.print("[yellow]Mode: LLM ONLY[/] — Skipping mechanical fixes")
         console.print(f"   • LLM fixes via {backend} (rate={rate_limit}/sec)")
 
     if fallback:
-        console.print(f"   • Fallback: ENABLED (auto-switch to ollama/aider if {backend} fails)")
+        console.print(
+            f"   • Fallback: ENABLED (auto-switch to ollama/aider if {backend} fails)"
+        )
     else:
-        console.print(f"   • Fallback: DISABLED")
+        console.print("   • Fallback: DISABLED")
 
     if verbose:
-        console.print(f"   • Verbose: ENABLED (detailed function call logging)")
+        console.print("   • Verbose: ENABLED (detailed function call logging)")
 
     if dry_run:
-        console.print(f"\n[dim]⚠️  DRY RUN — No changes will be made. Use --execute to apply fixes.[/]")
+        console.print(
+            "\n[dim]⚠️  DRY RUN — No changes will be made. Use --execute to apply fixes.[/]"
+        )
     else:
-        console.print(f"\n[bold red]⚡ EXECUTE — Fixes will be applied to source files and TODO.md will be updated.[/]")
+        console.print(
+            "\n[bold red]⚡ EXECUTE — Fixes will be applied to source files and TODO.md will be updated.[/]"
+        )
 
     console.print(f"\nBackend: {backend}, Tool: {tool}, Proxy: {proxy_url}")
     console.print(f"Workers: {workers}, Rate: {rate_limit}/sec\n")
@@ -876,16 +1004,19 @@ def _print_hybrid_banner(hybrid, backend, tool, workers, rate_limit, proxy_url, 
 
 def _update_todo_hybrid(file, dry_run, result):
     """Update TODO.md after hybrid autofix, marking completed LLM tasks."""
-    if dry_run or result.get('fixed', 0) <= 0:
+    if dry_run or result.get("fixed", 0) <= 0:
         return
     from algitex.todo.fixer import parse_todo, mark_tasks_completed, FIXERS
+
     try:
         tasks = parse_todo(file)
         llm_tasks = [t for t in tasks if t.category not in FIXERS]
         task_ids = [f"{t.file}:{t.line}" for t in llm_tasks]
         if task_ids:
             mark_tasks_completed(file, task_ids)
-            console.print(f"\n[green]✓ Updated TODO.md — marked {len(task_ids)} tasks as completed[/]")
+            console.print(
+                f"\n[green]✓ Updated TODO.md — marked {len(task_ids)} tasks as completed[/]"
+            )
     except Exception as e:
         console.print(f"\n[yellow]⚠️  Could not update TODO.md: {e}[/]")
 
@@ -912,7 +1043,7 @@ def todo_hybrid(
 
     if verbose:
         set_verbose(True)
-        console.print(f"[dim][VERBOSE] Debug logging enabled[/]")
+        console.print("[dim][VERBOSE] Debug logging enabled[/]")
 
     fixer = HybridAutofix(
         backend=backend,
@@ -924,7 +1055,17 @@ def todo_hybrid(
     )
 
     console.print(f"[bold]AutoFix[/]: {file}")
-    _print_hybrid_banner(hybrid, backend, tool, workers, rate_limit, proxy_url, fallback, verbose, dry_run)
+    _print_hybrid_banner(
+        hybrid,
+        backend,
+        tool,
+        workers,
+        rate_limit,
+        proxy_url,
+        fallback,
+        verbose,
+        dry_run,
+    )
 
     if dashboard:
         _run_hybrid_with_dashboard(file, fixer, hybrid, dry_run)
@@ -961,10 +1102,10 @@ def todo_batch(
     dashboard: bool,
 ):
     """BatchFix: grupowanie i optymalizacja podobnych zadań.
-    
+
     Zamiast wykonywać każde zadanie osobno, BatchFix grupuje podobne problemy
     (np. "f-string", "magic number") i wykonuje je za jednym razem.
-    
+
     Przykłady:
         algitex todo batch --dry-run              # Symulacja
         algitex todo batch --execute             # Wykonaj fixy
@@ -975,35 +1116,36 @@ def todo_batch(
     from algitex.todo import parse_todo
     from algitex.tools.autofix.batch_backend import BatchFixBackend, Task
     from algitex.tools.logging import set_verbose
-    
+
     if verbose:
         set_verbose(True)
         console.print("[dim][VERBOSE] Debug logging enabled[/]")
-    
+
     console.print(f"[bold]BatchFix[/]: {file}")
     console.print(f"Backend: {backend}, Batch size: {batch_size}, Parallel: {parallel}")
-    
+
     if dry_run:
-        console.print(f"\n[dim]⚠️  DRY RUN — Symulacja bez zmian[/]")
+        console.print("\n[dim]⚠️  DRY RUN — Symulacja bez zmian[/]")
     else:
-        console.print(f"\n[bold red]⚡ EXECUTE — Fixy zostaną zastosowane[/]")
-    
+        console.print("\n[bold red]⚡ EXECUTE — Fixy zostaną zastosowane[/]")
+
     # Prune outdated tasks if requested
     if prune:
         console.print(f"\n[bold]🧹 Prune: Czyszczę nieaktualne zadania z {file}...[/]")
         # Call the verify-prefact logic with prune
         from algitex.cli.todo_verify import todo_verify_prefact as _verify_prefact
+
         _verify_prefact(file=str(file), prune=True)
-        console.print(f"[dim]Prune zakończony. Kontynuuję batch...[/]\n")
-    
+        console.print("[dim]Prune zakończony. Kontynuuję batch...[/]\n")
+
     # Parse TODO
     todo_tasks = parse_todo(file)
-    
+
     # Apply limit if specified
     if limit > 0:
         todo_tasks = todo_tasks[:limit]
         console.print(f"[dim]Limit: Przetwarzam tylko pierwsze {limit} zadań[/]")
-    
+
     # Convert to Task objects
     tasks = [
         Task(
@@ -1011,49 +1153,49 @@ def todo_batch(
             description=t.message,
             file_path=str(t.file),
             line_number=t.line,
-            status="pending"
+            status="pending",
         )
         for t in todo_tasks
     ]
-    
+
     console.print(f"\n📋 Znaleziono {len(tasks)} zadań")
-    
+
     if not tasks:
         console.print("[yellow]Brak zadań do wykonania[/]")
         return
-    
+
     # Initialize backend
     backend_fixer = BatchFixBackend(
         base_url="http://localhost:11434",
         model=model,
         dry_run=dry_run,
-        enable_logging=not no_log
+        enable_logging=not no_log,
     )
     backend_fixer.MAX_FILES_PER_BATCH = batch_size
-    
+
     # Execute with dashboard if requested
     if dashboard:
         _run_batch_with_dashboard(backend_fixer, tasks, parallel, dry_run)
         return
-    
+
     # Execute batch fix with parallel groups
     results = backend_fixer.fix_batch(tasks, max_parallel=parallel)
-    
+
     # Summary
     success = sum(1 for r in results if r.success)
     failed = len(results) - success
-    
+
     console.print(f"\n[bold]{'═' * 60}[/]")
-    console.print(f"  BATCH FIX SUMMARY")
+    console.print("  BATCH FIX SUMMARY")
     console.print(f"[bold]{'═' * 60}[/]")
     console.print(f"\n  ✅ Success: {success}")
     console.print(f"  ❌ Failed:  {failed}")
     console.print(f"  📊 Total:   {len(results)}")
-    
+
     if not dry_run and success > 0:
         console.print(f"\n[green]✓ Zaktualizowano {success} plików[/]")
         # TODO: Mark tasks as completed in TODO.md
-    
+
     console.print(f"[bold]{'═' * 60}[/]")
 
 
@@ -1065,11 +1207,12 @@ def todo_verify_prefact(
     prune: bool,
 ):
     """Verify TODO.md against actual code using prefact.
-    
+
     Uses prefact to scan for issues and compares with TODO.md.
     Shows which tasks are still valid and which are outdated.
-    
+
     With --prune: removes outdated tasks from TODO.md
     """
     from algitex.cli.todo_verify import todo_verify_prefact as _verify_prefact
+
     _verify_prefact(file, prune)

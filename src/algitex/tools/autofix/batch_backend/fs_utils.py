@@ -9,11 +9,11 @@ from algitex.tools.autofix.base import Task
 
 def create_backup() -> str:
     """Utwórz backup wszystkich plików Python przed batch."""
-    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-    backup_dir = Path('.algitex/backups/batch_' + timestamp)
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    backup_dir = Path(".algitex/backups/batch_" + timestamp)
     backup_dir.mkdir(parents=True, exist_ok=True)
-    py_files = list(Path('.').rglob('*.py'))
-    py_files = [f for f in py_files if not str(f).startswith('.')]
+    py_files = list(Path(".").rglob("*.py"))
+    py_files = [f for f in py_files if not str(f).startswith(".")]
     for py_file in py_files:
         try:
             dest = backup_dir / py_file
@@ -26,10 +26,10 @@ def create_backup() -> str:
 
 def preflight_syntax_check(tasks: list[Task]) -> None:
     """Sprawdź składnię wszystkich plików Python przed batch."""
-    print('🔍 Pre-flight: Sprawdzanie składni plików...')
-    py_files = {task.file_path for task in tasks if task.file_path.endswith('.py')}
+    print("🔍 Pre-flight: Sprawdzanie składni plików...")
+    py_files = {task.file_path for task in tasks if task.file_path.endswith(".py")}
     if not py_files:
-        print('   ℹ️  Brak plików Python do sprawdzenia')
+        print("   ℹ️  Brak plików Python do sprawdzenia")
         return
 
     errors: list[str] = []
@@ -41,7 +41,7 @@ def preflight_syntax_check(tasks: list[Task]) -> None:
             import py_compile
             import tempfile
 
-            with tempfile.NamedTemporaryFile(suffix='.py', delete=False) as tmp:
+            with tempfile.NamedTemporaryFile(suffix=".py", delete=False) as tmp:
                 tmp_path = Path(tmp.name)
             try:
                 py_compile.compile(str(path), doraise=True)
@@ -49,9 +49,9 @@ def preflight_syntax_check(tasks: list[Task]) -> None:
                 if tmp_path.exists():
                     tmp_path.unlink(missing_ok=True)
         except Exception as e:
-            errors.append(f'{filepath}: {e}')
+            errors.append(f"{filepath}: {e}")
 
     if errors:
-        print('   ⚠️  Wykryto błędy składni:')
+        print("   ⚠️  Wykryto błędy składni:")
         for err in errors:
-            print(f'      - {err}')
+            print(f"      - {err}")

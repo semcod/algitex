@@ -1,4 +1,5 @@
 """Region extraction — AST-based extraction of lockable code regions."""
+
 import ast
 from pathlib import Path
 from typing import Dict, List
@@ -36,30 +37,42 @@ class RegionExtractor:
     def _should_skip_file(self, path: Path) -> bool:
         """Skip generated, test, or vendor files."""
         parts = path.parts
-        skip_dirs = {'.git', '__pycache__', 'venv', '.venv', 'node_modules',
-                    'build', 'dist', '.tox', '.pytest_cache'}
-        return any(d in skip_dirs for d in parts) or path.name.startswith('test_')
+        skip_dirs = {
+            ".git",
+            "__pycache__",
+            "venv",
+            ".venv",
+            "node_modules",
+            "build",
+            "dist",
+            ".tox",
+            ".pytest_cache",
+        }
+        return any(d in skip_dirs for d in parts) or path.name.startswith("test_")
 
     def _extract_from_toon(self, toon_path: Path) -> List[CodeRegion]:
         """Extract regions from existing map.toon file."""
         regions = []
         try:
             import yaml
+
             with open(toon_path) as f:
                 data = yaml.safe_load(f)
 
             # Extract from D: section (definitions)
-            for item in data.get('D', []):
-                if item.get('type') in ['function', 'class']:
-                    regions.append(CodeRegion(
-                        file=item['file'],
-                        name=item['name'],
-                        type=RegionType(item['type']),
-                        start_line=item.get('start', 0),
-                        end_line=item.get('end', 0),
-                        signature_hash=item.get('hash', ''),
-                        dependencies=item.get('deps', [])
-            ))
+            for item in data.get("D", []):
+                if item.get("type") in ["function", "class"]:
+                    regions.append(
+                        CodeRegion(
+                            file=item["file"],
+                            name=item["name"],
+                            type=RegionType(item["type"]),
+                            start_line=item.get("start", 0),
+                            end_line=item.get("end", 0),
+                            signature_hash=item.get("hash", ""),
+                            dependencies=item.get("deps", []),
+                        )
+                    )
         except Exception:
             pass  # Fallback to AST extraction
 
@@ -85,7 +98,7 @@ class RegionExtractor:
                     start_line=node.lineno,
                     end_line=node.end_lineno or node.lineno,
                     signature_hash="",
-                    dependencies=self._find_calls(node)
+                    dependencies=self._find_calls(node),
                 )
                 region.signature_hash = region.compute_signature_hash(source)
                 regions.append(region)
@@ -98,7 +111,7 @@ class RegionExtractor:
                     start_line=node.lineno,
                     end_line=node.end_lineno or node.lineno,
                     signature_hash="",
-                    dependencies=self._find_calls(node)
+                    dependencies=self._find_calls(node),
                 )
                 region.signature_hash = region.compute_signature_hash(source)
                 regions.append(region)

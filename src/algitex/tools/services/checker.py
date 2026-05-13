@@ -18,7 +18,9 @@ class ServiceChecker(HTTPServiceChecks, LocalSystemChecks):
         HTTPServiceChecks.__init__(self, self._client)
         LocalSystemChecks.__init__(self, timeout)
 
-    def check_all(self, services: Optional[Dict[str, Any]] = None) -> List[ServiceStatus]:
+    def check_all(
+        self, services: Optional[Dict[str, Any]] = None
+    ) -> List[ServiceStatus]:
         """Check all known services."""
         if services is None:
             services = {
@@ -30,9 +32,13 @@ class ServiceChecker(HTTPServiceChecks, LocalSystemChecks):
         statuses: List[ServiceStatus] = []
         for name, config in services.items():
             if name == "ollama":
-                statuses.append(self.check_ollama(config.get("host", "http://localhost:11434")))
+                statuses.append(
+                    self.check_ollama(config.get("host", "http://localhost:11434"))
+                )
             elif name == "litellm-proxy":
-                statuses.append(self.check_litellm_proxy(config.get("url", "http://localhost:4000")))
+                statuses.append(
+                    self.check_litellm_proxy(config.get("url", "http://localhost:4000"))
+                )
             else:
                 url = config.get("url")
                 if url:

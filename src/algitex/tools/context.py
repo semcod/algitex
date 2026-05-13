@@ -7,19 +7,18 @@ from dataclasses import dataclass
 from typing import Optional, Dict, Any, List
 import subprocess
 
-import yaml
-
 
 @dataclass
 class CodeContext:
     """Assembled context for an LLM coding task."""
-    project_summary: str     # Z analysis.toon — CC̄, alerts, hotspots
-    architecture: str        # Z map.toon — moduły, zależności
+
+    project_summary: str  # Z analysis.toon — CC̄, alerts, hotspots
+    architecture: str  # Z map.toon — moduły, zależności
     target_files: List[str]  # Pliki do modyfikacji
-    related_files: List[str] # Pliki powiązane (imports, tests)
-    conventions: str         # Z .editorconfig, pyproject.toml, CLAUDE.md
-    recent_changes: str      # Z git log --oneline -10
-    ticket_context: str      # Z planfile ticket
+    related_files: List[str]  # Pliki powiązane (imports, tests)
+    conventions: str  # Z .editorconfig, pyproject.toml, CLAUDE.md
+    recent_changes: str  # Z git log --oneline -10
+    ticket_context: str  # Z planfile ticket
     total_tokens: int = 0
 
     def to_prompt(self, task: str) -> str:
@@ -43,10 +42,10 @@ class CodeContext:
 {self.ticket_context}
 
 ## Files to modify
-{chr(10).join(f'- {f}' for f in self.target_files)}
+{chr(10).join(f"- {f}" for f in self.target_files)}
 
 ## Related files (read-only context)
-{chr(10).join(f'- {f}' for f in self.related_files)}
+{chr(10).join(f"- {f}" for f in self.related_files)}
 """
 
 
@@ -56,7 +55,9 @@ class ContextBuilder:
     def __init__(self, project_path: str):
         self.root = Path(project_path).resolve()
 
-    def build(self, ticket: Optional[Dict[str, Any]] = None, max_tokens: int = 8000) -> CodeContext:
+    def build(
+        self, ticket: Optional[Dict[str, Any]] = None, max_tokens: int = 8000
+    ) -> CodeContext:
         """Assemble context from all available sources."""
         return CodeContext(
             project_summary=self._load_toon_summary(),
@@ -74,7 +75,7 @@ class ContextBuilder:
             path = self.root / name
             if path.exists():
                 try:
-                    with open(path, 'r') as f:
+                    with open(path, "r") as f:
                         lines = f.readlines()[:15]
                     return "\n".join(lines)
                 except Exception:
@@ -91,8 +92,12 @@ class ContextBuilder:
                     # Extract M[...] section
                     if "M[" in text:
                         start = text.index("M[")
-                        end = text.index("\nD:", start) if "\nD:" in text[start:] else len(text)
-                        return text[start:start+500]
+                        end = (
+                            text.index("\nD:", start)
+                            if "\nD:" in text[start:]
+                            else len(text)
+                        )
+                        return text[start : start + 500]
                 except Exception:
                     continue
         return ""
@@ -107,7 +112,7 @@ class ContextBuilder:
         """Find related files via imports + test files."""
         targets = self._resolve_targets(ticket)
         related = set()
-        
+
         for target in targets:
             path = self.root / target
             if path.exists():
@@ -117,14 +122,14 @@ class ContextBuilder:
                     for line in content.splitlines():
                         if line.startswith(("from ", "import ")):
                             related.add(line)
-                    
+
                     # Find test file
                     test = self.root / "tests" / f"test_{path.name}"
                     if test.exists():
                         related.add(str(test.relative_to(self.root)))
                 except Exception:
                     continue
-                    
+
         return list(related)[:10]
 
     def _load_conventions(self) -> str:
@@ -145,7 +150,10 @@ class ContextBuilder:
         try:
             result = subprocess.run(
                 ["git", "log", "--oneline", "-10"],
-                cwd=self.root, capture_output=True, text=True, timeout=5,
+                cwd=self.root,
+                capture_output=True,
+                text=True,
+                timeout=5,
             )
             return result.stdout.strip() or "No git history."
         except Exception:
@@ -165,41 +173,46 @@ class ContextBuilder:
 
 class SemanticCache:
     """Optional semantic caching using Qdrant for context retrieval."""
-    
+
     def __init__(self, project_path: str, qdrant_url: str = "http://localhost:6333"):
         self.root = Path(project_path).resolve()
         self.qdrant_url = qdrant_url
         self._client = None
-        
+
     def _get_client(self):
         """Lazy initialize Qdrant client."""
         if self._client is None:
             try:
                 from qdrant_client import QdrantClient
+
                 self._client = QdrantClient(url=self.qdrant_url)
             except ImportError:
                 return None
         return self._client
-    
-    def search_similar_context(self, query: str, limit: int = 5) -> List[Dict[str, Any]]:
+
+    def search_similar_context(
+        self, query: str, limit: int = 5
+    ) -> List[Dict[str, Any]]:
         """Search for similar previous contexts."""
         client = self._get_client()
         if not client:
             return []
-            
+
         try:
             # This would require embedding generation - placeholder for now
             # In a real implementation, you'd use an embedding model
             return []
         except Exception:
             return []
-    
-    def store_context(self, context: CodeContext, task: str, result: Dict[str, Any]) -> None:
+
+    def store_context(
+        self, context: CodeContext, task: str, result: Dict[str, Any]
+    ) -> None:
         """Store context with its result for future retrieval."""
         client = self._get_client()
         if not client:
             return
-            
+
         try:
             # Store in Qdrant with embeddings - placeholder
             pass

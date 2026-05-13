@@ -41,7 +41,9 @@ class DocstringShortener:
         if not text:
             return None
 
-        summary = re.split(r"(?<=[.!?])\s+(?=[A-Z0-9`\"'])", text, maxsplit=1)[0].strip()
+        summary = re.split(r"(?<=[.!?])\s+(?=[A-Z0-9`\"'])", text, maxsplit=1)[
+            0
+        ].strip()
         if len(summary) > 120:
             summary = summary[:117].rstrip() + "..."
 
@@ -71,8 +73,10 @@ class DocstringShortener:
                 continue
             start = expr.lineno - 1
             end = getattr(expr, "end_lineno", expr.lineno) - 1
-            indent = re.match(r"\s*", lines[start]).group(0) if start < len(lines) else ""
-            rendered = f'{indent}"""{shorter.replace("\"\"\"", "\\\"\\\"\\\"")}"""'
+            indent = (
+                re.match(r"\s*", lines[start]).group(0) if start < len(lines) else ""
+            )
+            rendered = f'{indent}"""{shorter.replace('"""', '\\"\\"\\"')}"""'
             before = "\n".join(lines[start : end + 1])
             change = {
                 "file": str(file_path),
@@ -86,7 +90,9 @@ class DocstringShortener:
 
         if apply and replacements:
             working = lines[:]
-            for start, end, replacement, _ in sorted(replacements, key=lambda item: item[0], reverse=True):
+            for start, end, replacement, _ in sorted(
+                replacements, key=lambda item: item[0], reverse=True
+            ):
                 working[start : end + 1] = replacement
             new_source = "\n".join(working)
             if source.endswith("\n"):
@@ -209,7 +215,9 @@ def sort_imports_in_path(path: str | Path, apply: bool = True) -> dict[str, int]
     return {"files": len(files), "changed": changed, "errors": errors}
 
 
-def find_duplicate_blocks(project_path: str | Path, min_lines: int = 3) -> list[dict[str, object]]:
+def find_duplicate_blocks(
+    project_path: str | Path, min_lines: int = 3
+) -> list[dict[str, object]]:
     """Find repeated code blocks with a rolling hash over line windows."""
     if min_lines < 2:
         min_lines = 2
@@ -217,7 +225,10 @@ def find_duplicate_blocks(project_path: str | Path, min_lines: int = 3) -> list[
     groups: dict[int, list[_DuplicateWindow]] = defaultdict(list)
     for file_path in _python_files(Path(project_path)):
         try:
-            lines = [line.rstrip() for line in file_path.read_text(encoding="utf-8").splitlines()]
+            lines = [
+                line.rstrip()
+                for line in file_path.read_text(encoding="utf-8").splitlines()
+            ]
         except OSError:
             continue
         if len(lines) < min_lines:
@@ -232,11 +243,15 @@ def find_duplicate_blocks(project_path: str | Path, min_lines: int = 3) -> list[
         for index, line_hash in enumerate(line_hashes):
             window_hash = (window_hash * base + line_hash) % mod
             if index >= min_lines:
-                window_hash = (window_hash - line_hashes[index - min_lines] * power) % mod
+                window_hash = (
+                    window_hash - line_hashes[index - min_lines] * power
+                ) % mod
             if index + 1 >= min_lines:
                 start = index - min_lines + 1
                 block = tuple(lines[start : start + min_lines])
-                groups[window_hash].append(_DuplicateWindow(file=str(file_path), line=start + 1, text=block))
+                groups[window_hash].append(
+                    _DuplicateWindow(file=str(file_path), line=start + 1, text=block)
+                )
 
     results: list[dict[str, object]] = []
     for fingerprint, windows in groups.items():
@@ -255,7 +270,13 @@ def find_duplicate_blocks(project_path: str | Path, min_lines: int = 3) -> list[
                 }
             )
 
-    results.sort(key=lambda item: (-len(item["occurrences"]), item["occurrences"][0]["file"], item["occurrences"][0]["line"]))
+    results.sort(
+        key=lambda item: (
+            -len(item["occurrences"]),
+            item["occurrences"][0]["file"],
+            item["occurrences"][0]["line"],
+        )
+    )
     return results
 
 
@@ -319,7 +340,9 @@ def _ensure_trailing_newline(text: str) -> str:
 
 
 def _stable_line_hash(line: str) -> int:
-    return int.from_bytes(hashlib.blake2b(line.encode("utf-8"), digest_size=8).digest(), "big")
+    return int.from_bytes(
+        hashlib.blake2b(line.encode("utf-8"), digest_size=8).digest(), "big"
+    )
 
 
 __all__ = [

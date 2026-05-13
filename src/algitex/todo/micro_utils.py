@@ -77,7 +77,9 @@ def coerce_task(task: Any) -> Task:
 
     file_path = getattr(task, "file_path", None) or getattr(task, "file", None)
     line_number = getattr(task, "line_number", None) or getattr(task, "line", None)
-    description = getattr(task, "description", None) or getattr(task, "message", None) or ""
+    description = (
+        getattr(task, "description", None) or getattr(task, "message", None) or ""
+    )
     task_id = getattr(task, "id", None) or f"{file_path}:{line_number or 0}"
     status = getattr(task, "status", None) or "pending"
 
