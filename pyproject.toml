@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "algitex"
-version = "0.1.64"
+version = "0.1.65"
 description = "Progressive algorithmization toolchain — from LLM to deterministic code, from proxy to tickets"
 readme = "README.md"
 license = "Apache-2.0"
@@ -28,6 +28,9 @@ dependencies = [
     "clickmd>=1.0",
     "pydantic>=2.0",
     "tabulate>=0.9",
+    "goal>=2.1.0",
+    "costs>=0.1.20",
+    "pfix>=0.1.60",
 ]
 
 [project.optional-dependencies]
@@ -36,7 +39,11 @@ proxy = ["proxym"]
 tickets = ["planfile"]
 analysis = ["code2llm", "vallm", "redup"]
 routing = ["llx"]
-dev = ["pytest", "ruff", "mypy"]
+dev = ["pytest", "ruff", "mypy",
+    "goal>=2.1.0",
+    "costs>=0.1.20",
+    "pfix>=0.1.60",
+]
 
 [project.scripts]
 algitex = "algitex.cli:app"

@@ -146,6 +146,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - refactor(docs): refactor code analysis engine documentation and reorganize API docs and articles
 - docs: update README, CHANGELOG, SUMD, SUMR and TODO metadata following docs refactor
 
+## [0.1.65] - 2026-06-29
+
+### Docs
+- Update README.md
+
 ## [0.1.64] - 2026-04-25
 
 ### Docs
