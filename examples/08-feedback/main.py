@@ -113,7 +113,7 @@ def custom_policy_example() -> Any:
     critical_ticket = {"priority": "critical", "title": "Security vulnerability"}
     normal_ticket = {"priority": "normal", "title": "UI improvement"}
     
-    print(f"\n2. Approval requirements:")
+    print("\n2. Approval requirements:")
     print(f"   Critical ticket needs approval: {controller.needs_approval(critical_ticket)}")
     print(f"   Normal ticket needs approval: {controller.needs_approval(normal_ticket)}")
     
@@ -230,12 +230,12 @@ def feedback_loop_simulation():
     # Execute with feedback
     result = loop.execute_with_feedback(ticket, "aider-mcp")
     
-    print(f"\n2. Execution result:")
+    print("\n2. Execution result:")
     print(f"   Status: {result['status']}")
     print(f"   Total attempts: {docker_mgr.call_count}")
     print(f"   Final model: {docker_mgr.last_model}")
     
-    print(f"\n3. Tickets created:")
+    print("\n3. Tickets created:")
     for t in tickets.tickets:
         print(f"   - {t['title']} ({t.get('priority', 'normal')})")
     
@@ -297,7 +297,7 @@ def escalation_scenarios():
         
         # Check if approval needed
         if controller.needs_approval(scenario['ticket']):
-            print(f"   → Requires human approval before execution")
+            print("   → Requires human approval before execution")
         
         # Simulate failures
         for i in range(scenario['policy'].max_retries + 2):
@@ -316,7 +316,7 @@ def escalation_scenarios():
                 print(f"   → Escalate to human after {params['attempts']} attempts")
                 break
             elif strategy == FailureStrategy.SKIP:
-                print(f"   → Skipping ticket")
+                print("   → Skipping ticket")
                 break
 
 

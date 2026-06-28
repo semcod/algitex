@@ -142,8 +142,8 @@ def multi_model_comparison() -> Any:
         print(f"{model:20} | Cost: ${cost:6.4f} | Tokens: {tokens_in + tokens_out:5d}")
     
     print("-" * 60)
-    print(f"\nBest value: qwen3-coder:latest at $0.0005 per task")
-    print(f"Best quality: gpt-4-turbo at $0.03 per task")
+    print("\nBest value: qwen3-coder:latest at $0.0005 per task")
+    print("Best quality: gpt-4-turbo at $0.03 per task")
     
     return tel
 

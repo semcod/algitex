@@ -6,8 +6,6 @@ Shows how to use dashboard in different modes.
 Run: python examples/36-dashboard/main.py
 """
 
-import subprocess
-import sys
 
 
 def demo_dashboard_live():

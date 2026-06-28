@@ -8,7 +8,6 @@ Użycie:
     python main.py --execute    # Wykonaj fixy
 """
 
-from pathlib import Path
 import argparse
 
 

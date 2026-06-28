@@ -111,7 +111,7 @@ def main() -> None:
     
     # Step 4: Dry run execution
     print("\n4. Performing dry run (no actual changes)...")
-    executor = ParallelExecutor(project_path, max_agents=3)
+    ParallelExecutor(project_path, max_agents=3)
     print("   (Skipping actual execution - dry run mode)")
     print("   Execution plan validated successfully!")
     
@@ -121,7 +121,7 @@ def main() -> None:
     print(f"  • Total tickets: {len(tickets)}")
     print(f"  • Parallel agents: {len(groups)}")
     print(f"  • AST regions: {len(regions)}")
-    print(f"  • Conflict-free: ✓")
+    print("  • Conflict-free: ✓")
     print("\nTo execute for real, run:")
     print("  python main.py --execute")
     print("=" * 60)

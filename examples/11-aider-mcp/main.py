@@ -61,7 +61,7 @@ def demo_refactoring() -> None:
     
     # Show TODO
     todo_file = project_dir / "TODO.md"
-    print(f"\n3. TODO list:")
+    print("\n3. TODO list:")
     print(todo_file.read_text())
     
     # Check if can run real aider
@@ -93,10 +93,10 @@ def demo_refactoring() -> None:
    - Add input validation
         """)
     
-    print(f"\n5. Files created:")
+    print("\n5. Files created:")
     print(f"   - {project_dir}/calculator.py (code to refactor)")
     print(f"   - {project_dir}/TODO.md (tasks)")
-    print(f"\n   Project kept for manual experimentation.")
+    print("\n   Project kept for manual experimentation.")
     print(f"   To clean up: rm -rf {project_dir}")
 
 

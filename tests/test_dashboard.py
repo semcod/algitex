@@ -1,9 +1,7 @@
 """Tests for dashboard module."""
 
 import time
-from collections import deque
 
-import pytest
 
 from algitex.dashboard import (
     TierState,
@@ -193,7 +191,6 @@ class TestSimpleProgressTracker:
 class TestShowQuickDashboard:
     def test_quick_dashboard_runs(self, capsys):
         # Mock to avoid actual live display
-        import threading
         
         def mock_dashboard(duration):
             print("Mock dashboard ran")
@@ -201,7 +198,7 @@ class TestShowQuickDashboard:
         # Test that function doesn't crash
         try:
             show_quick_dashboard(duration=0.1)
-        except Exception as e:
+        except Exception:
             # Expected to fail in test environment without display
             pass
 

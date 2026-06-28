@@ -138,7 +138,7 @@ class Loop:
         try:
             import httpx
 
-            resp = httpx.post(
+            httpx.post(
                 f"{proxy_url}/v1/hooks/register",
                 json={
                     "name": "algitex-trace",

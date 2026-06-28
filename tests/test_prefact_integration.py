@@ -1,6 +1,5 @@
 """Tests for prefact_integration module."""
 
-import pytest
 from unittest.mock import Mock, patch, MagicMock
 
 from algitex.prefact_integration import (

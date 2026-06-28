@@ -203,7 +203,7 @@ class BatchProcessor:
     ) -> List[BatchResult]:
         """Stage 2: Execute processing with rate limiting, retries, and progress tracking."""
         self.results = []
-        start_time = time.time()
+        time.time()
 
         # Setup progress bar
         pbar = self._setup_progress_bar(len(items))

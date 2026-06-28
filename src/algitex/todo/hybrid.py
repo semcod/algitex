@@ -458,13 +458,13 @@ class HybridAutofix:
         if isinstance(result, dict):
             # LLM-only mode returns dict
             m = {"fixed": 0, "skipped": 0, "errors": 0}
-            l = result
-            total_time = l.get("time", 0.0)
+            llm_result = result
+            total_time = llm_result.get("time", 0.0)
             cost = 0.0
         else:
             # Full hybrid mode returns HybridResult
             m = result.mechanical
-            l = result.llm
+            llm_result = result.llm
             total_time = result.total_time_sec
             cost = result.cost_estimate
 
@@ -474,9 +474,9 @@ class HybridAutofix:
         print(f"     Errors:  {m.get('errors', 0)}")
 
         print("\n  🤖 LLM Fixes:")
-        print(f"     Fixed:   {l.get('fixed', 0)}")
-        print(f"     Skipped: {l.get('skipped', 0)}")
-        print(f"     Errors:  {l.get('errors', 0)}")
+        print(f"     Fixed:   {llm_result.get('fixed', 0)}")
+        print(f"     Skipped: {llm_result.get('skipped', 0)}")
+        print(f"     Errors:  {llm_result.get('errors', 0)}")
         print(f"     Calls:   {self.llm_calls}")
         print(f"     Failed:  {self.llm_errors}")
 
@@ -486,8 +486,8 @@ class HybridAutofix:
         total_tasks = (
             m.get("fixed", 0)
             + m.get("skipped", 0)
-            + l.get("fixed", 0)
-            + l.get("skipped", 0)
+            + llm_result.get("fixed", 0)
+            + llm_result.get("skipped", 0)
         )
         if total_tasks > 0 and total_time > 0:
             throughput = total_tasks / total_time

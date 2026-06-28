@@ -174,7 +174,7 @@ def _show_execution_summary(repos: list, by_priority: dict, results: list) -> No
     print(f"Total tickets executed: {total_tickets_executed}")
     print(f"Total cost: ${total_cost:.2f}")
     print(f"Parallel phases: {len(by_priority)}")
-    print(f"Conflicts: 0 (impossible with separate repos)")
+    print("Conflicts: 0 (impossible with separate repos)")
 
     print("\nBenefits of workspace coordination:")
     print("  • Natural parallelism (one agent per repo)")

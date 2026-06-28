@@ -23,7 +23,7 @@ def main() -> None:
     
     project_path = str(Path(__file__).parent.parent.parent)
     p = Project(project_path)
-    loop = Loop(project_path)
+    Loop(project_path)
     
     # Stage 1: Execute — collect traces from LLM interactions
     print("\n" + "=" * 40)
@@ -50,7 +50,7 @@ def main() -> None:
     print("=" * 40)
     
     health = p.analyze()
-    print(f"Codebase metrics:")
+    print("Codebase metrics:")
     print(f"  - CC̄: {health.cc_avg:.1f}")
     print(f"  - Critical issues: {health.criticals}")
     print(f"  - Total files: {health.files}")
@@ -99,7 +99,7 @@ def main() -> None:
     rule_coverage = len(rules) / len(high_impact_patterns) * 100
     passed_rules = sum(1 for r in rules if r['confidence'] >= 80)
     
-    print(f"Validation results:")
+    print("Validation results:")
     print(f"  - Test cases: {test_cases}")
     print(f"  - Rules generated: {len(rules)}")
     print(f"  - Rule coverage: {rule_coverage:.0f}%")

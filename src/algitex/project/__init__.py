@@ -358,7 +358,6 @@ class Project(
         Returns:
             dict with count of issues created and the filename
         """
-        from pathlib import Path
 
         if not self._last_report:
             self.analyze()

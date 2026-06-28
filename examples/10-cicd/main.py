@@ -334,7 +334,7 @@ def multi_platform_ci_example():
             print(f"  ✅ {feature}")
     
     # Generate for different platforms
-    generator = CICDGenerator(str(project_dir))
+    CICDGenerator(str(project_dir))
     
     # GitHub with matrix strategy
     github_workflow = {

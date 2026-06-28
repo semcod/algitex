@@ -28,7 +28,7 @@ def benchmark_cache(entries: int, lookups: int):
             TextColumn("[progress.description]{task.description}"),
             console=console,
         ) as progress:
-            task = progress.add_task("Running cache benchmark...", total=None)
+            progress.add_task("Running cache benchmark...", total=None)
 
             result = CacheBenchmark.bench_cache_hit_rate(
                 cache_dir=tmpdir,

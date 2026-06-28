@@ -10,8 +10,6 @@ This mirrors the real-world refactoring of algitex's own modules:
 Run: python examples/41-god-module-splitting/main.py
 """
 
-from pathlib import Path
-import tempfile
 
 
 def demo_god_module_problem():
@@ -19,44 +17,15 @@ def demo_god_module_problem():
     print("\n=== The God Module Problem ===")
     
     # Simulated god module: everything in one file
-    god_module = """
-    # old_todo.py - 1159 lines, CC=29
     
-    def parse_todo_file(path):
-        # 80 lines of parsing logic
-        pass
-    
-    def classify_message(msg):
-        # 120 lines of classification (CC=50)
-        pass
-    
-    def apply_fix(task):
-        # 200 lines of repair logic (CC=30)
-        pass
-    
-    def verify_results():
-        # 150 lines of verification (CC=29)
-        pass
-    
-    def run_batch():
-        # 300 lines of orchestration
-        pass
-    
-    def export_report():
-        # 80 lines of reporting
-        pass
-    
-    # ... 229 more lines
-    """
-    
-    print(f"God module size: ~1159 lines")
-    print(f"Max cyclomatic complexity: CC=50 (classify_message)")
-    print(f"Total functions doing different things: 21")
-    print(f"\nProblems:")
-    print(f"  - Hard to test (tight coupling)")
-    print(f"  - Hard to navigate (mixed concerns)")
-    print(f"  - Merge conflicts (everyone touches one file)")
-    print(f"  - Can't reuse parts independently")
+    print("God module size: ~1159 lines")
+    print("Max cyclomatic complexity: CC=50 (classify_message)")
+    print("Total functions doing different things: 21")
+    print("\nProblems:")
+    print("  - Hard to test (tight coupling)")
+    print("  - Hard to navigate (mixed concerns)")
+    print("  - Merge conflicts (everyone touches one file)")
+    print("  - Can't reuse parts independently")
 
 
 def demo_split_strategy():
@@ -115,8 +84,8 @@ def demo_before_and_after():
     total_after = sum(s["lines"] for s in after.values() if isinstance(s["lines"], int))
     
     print(f"\nTotal lines: {total_before} -> {total_after} (+{total_after-total_before} for __init__)")
-    print(f"Max CC: 50 -> 12 (76% reduction)")
-    print(f"Average CC: ~29 -> ~6.5")
+    print("Max CC: 50 -> 12 (76% reduction)")
+    print("Average CC: ~29 -> ~6.5")
 
 
 def demo_import_compatibility():

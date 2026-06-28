@@ -6,7 +6,6 @@ custom tools, backends, and workflow steps.
 Run: python examples/44-plugin-system/main.py
 """
 
-from pathlib import Path
 from typing import Protocol, runtime_checkable
 
 

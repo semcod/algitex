@@ -192,18 +192,18 @@ def cross_repo_planning_example():
         
         if "service" in repo.tags:
             tickets = [
-                {"id": f"{repo_name}-001", "title": f"Add health check endpoint", "priority": "high"},
-                {"id": f"{repo_name}-002", "title": f"Implement request logging", "priority": "medium"}
+                {"id": f"{repo_name}-001", "title": "Add health check endpoint", "priority": "high"},
+                {"id": f"{repo_name}-002", "title": "Implement request logging", "priority": "medium"}
             ]
         elif "frontend" in repo.tags:
             tickets = [
-                {"id": f"{repo_name}-001", "title": f"Add error boundary components", "priority": "high"},
-                {"id": f"{repo_name}-002", "title": f"Optimize bundle size", "priority": "medium"}
+                {"id": f"{repo_name}-001", "title": "Add error boundary components", "priority": "high"},
+                {"id": f"{repo_name}-002", "title": "Optimize bundle size", "priority": "medium"}
             ]
         else:  # library/core
             tickets = [
-                {"id": f"{repo_name}-001", "title": f"Add type hints to public API", "priority": "medium"},
-                {"id": f"{repo_name}-002", "title": f"Improve test coverage", "priority": "low"}
+                {"id": f"{repo_name}-001", "title": "Add type hints to public API", "priority": "medium"},
+                {"id": f"{repo_name}-002", "title": "Improve test coverage", "priority": "low"}
             ]
         
         all_tickets[repo_name] = tickets

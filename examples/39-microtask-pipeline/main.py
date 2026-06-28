@@ -5,7 +5,6 @@ Demonstrates the microtask classification, planning, and execution pipeline.
 Run: python examples/39-microtask-pipeline/main.py
 """
 
-from pathlib import Path
 
 
 def demo_microtask_classify():

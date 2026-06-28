@@ -1,13 +1,11 @@
 """Tests for algitex — including algo loop and propact."""
 
-import pytest
-from pathlib import Path
 
 from algitex.config import Config, ProxyConfig
 from algitex.tools import discover_tools, TOOL_REGISTRY
 from algitex.tools.tickets import Tickets
 from algitex.tools.analysis import HealthReport
-from algitex.algo import Loop, TraceEntry, Pattern
+from algitex.algo import Loop
 from algitex.propact import Workflow
 
 
@@ -62,7 +60,8 @@ class TestTickets:
 
     def test_board(self, tmp_path):
         t = Tickets(str(tmp_path))
-        t.add("Open"); t.add("Done")
+        t.add("Open")
+        t.add("Done")
         t.update("DLP-0002", status="done")
         board = t.board()
         assert len(board["open"]) == 1

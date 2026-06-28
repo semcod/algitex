@@ -409,7 +409,7 @@ class BatchFixBackend:
         self, group: TaskGroup, group_idx: int = 0, total_groups: int = 0
     ) -> list[FixResult]:
         """Przetwórz grupę zadań."""
-        start = time.time()
+        time.time()
 
         if total_groups > 0:
             print(

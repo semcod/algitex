@@ -6,46 +6,12 @@ using the redup tool and automated refactoring strategies.
 Run: python examples/42-duplicate-removal/main.py
 """
 
-from pathlib import Path
-import tempfile
 
 
 def demo_duplicate_problem():
     """Show common duplicate code patterns."""
     print("\n=== The Duplicate Code Problem ===")
     
-    code_example = '''
-    # auth_service.py
-    def validate_token(token):
-        parts = token.split('.')
-        if len(parts) != 3:
-            raise ValueError("Invalid token")
-        header = base64decode(parts[0])
-        payload = base64decode(parts[1])
-        signature = base64decode(parts[2])
-        return payload
-    
-    # api_gateway.py  
-    def check_auth(header):
-        token = header.replace("Bearer ", "")
-        segments = token.split('.')
-        if len(segments) != 3:
-            raise ValueError("Invalid token")
-        hdr = base64decode(segments[0])
-        body = base64decode(segments[1])
-        sig = base64decode(segments[2])
-        return body
-    
-    # middleware.py
-    def extract_user(jwt_string):
-        pieces = jwt_string.split('.')
-        if len(pieces) != 3:
-            raise ValueError("Invalid token")
-        h = base64decode(pieces[0])
-        p = base64decode(pieces[1])
-        s = base64decode(pieces[2])
-        return p
-    '''
     
     print("\nSame logic, three locations:")
     print("  1. auth_service.validate_token()")
@@ -102,13 +68,6 @@ def demo_extraction_strategy():
     
     print("\n\nExample: Extracting the JWT parsing logic")
     print("\nBEFORE (45 lines in 3 files):")
-    before = """
-    # In auth_service.py, api_gateway.py, middleware.py
-    def XXX(...):  # 3 different names
-        parts = token.split('.')
-        if len(parts) != 3: raise ValueError("Invalid token")
-        return base64decode(parts[1])
-    """
     
     print("\nAFTER (15 lines shared + 3 one-liners):")
     after = """

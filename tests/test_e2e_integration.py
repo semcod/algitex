@@ -233,7 +233,7 @@ feedback_policy:
             pipeline.create_tickets()
             
             print("3. Executing tickets with feedback loop...")
-            result = pipeline.execute(max_tickets=1)
+            pipeline.execute(max_tickets=1)
             
             print("4. Running multi-level validation...")
             pipeline.validate()
@@ -271,7 +271,7 @@ feedback_policy:
             report = pipeline.report()
             assert "telemetry" in report
             assert report["telemetry"]["spans"] > 0
-            print(f"✓ Final report includes telemetry data")
+            print("✓ Final report includes telemetry data")
             
             # Print summary
             print("\n=== Pipeline Summary ===")

@@ -4,7 +4,7 @@ Przykładowy kod z celowymi błędami do naprawy przez Algitex.
 Ten plik demonstruje typowe problemy które mogą być wykryte i naprawione.
 """
 
-from typing import  List, Any, Optional  # Błąd: nieużywane importy
+from typing import  Any  # Błąd: nieużywane importy
 
 def calculate_statistics(data) -> Any:
     """Calculate basic statistics for a dataset."""

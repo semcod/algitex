@@ -110,7 +110,7 @@ def func2():
             
             # Both functions should have shadow conflicts with shared symbols
             func1 = next(r for r in regions if r.name == "func1")
-            func2 = next(r for r in regions if r.name == "func2")
+            next(r for r in regions if r.name == "func2")
             
             # func1 uses os.path.join (join is detected as dependency)
             assert "join" in func1.dependencies
@@ -218,10 +218,10 @@ class TestParallelExecutor:
 """
             
             main_ranges = executor._parse_diff_ranges(diff_main)
-            branch_ranges = executor._parse_diff_ranges(diff_branch)
+            executor._parse_diff_ranges(diff_branch)
             
             # Ranges should not overlap
-            assert executor._changes_are_disjoint("test.py", "main") == True
+            assert executor._changes_are_disjoint("test.py", "main")
             
             # Overlapping ranges
             overlapping_diff = """@@ -10,5 +10,5 @@

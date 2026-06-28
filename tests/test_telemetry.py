@@ -1,10 +1,7 @@
 """Unit tests for algitex telemetry module."""
 
-import pytest
 import json
 import time
-from pathlib import Path
-from unittest.mock import patch, MagicMock
 
 from algitex.tools.telemetry import Telemetry, TraceSpan
 

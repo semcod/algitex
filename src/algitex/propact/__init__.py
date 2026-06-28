@@ -43,6 +43,7 @@ import time
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Optional
+from algitex.tools.docker import DockerToolManager
 
 
 @dataclass
@@ -330,7 +331,7 @@ class Workflow:
         """Execute an MCP tool call."""
         try:
             data = json.loads(step.content)
-            server = data.get("server", "")
+            data.get("server", "")
             tool = data.get("tool", "")
             args = data.get("args", {})
 

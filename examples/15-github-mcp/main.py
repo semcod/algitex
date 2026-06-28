@@ -72,7 +72,7 @@ def demo_github_workflow() -> None:
     print(f"1. Created sample project: {project_dir}")
     
     # Show files
-    print(f"\n2. Project files:")
+    print("\n2. Project files:")
     for f in project_dir.iterdir():
         print(f"   - {f.name}")
     
@@ -85,12 +85,12 @@ def demo_github_workflow() -> None:
     
     # Show README
     readme = project_dir / "README.md"
-    print(f"\n4. README:")
+    print("\n4. README:")
     print(readme.read_text())
     
     # Show TODO
     todo_file = project_dir / "TODO.md"
-    print(f"\n5. TODO list:")
+    print("\n5. TODO list:")
     print(todo_file.read_text())
     
     # Check GitHub token
@@ -126,12 +126,12 @@ def demo_github_workflow() -> None:
    algitex docker teardown github-mcp
         """)
     
-    print(f"\n7. Files created:")
+    print("\n7. Files created:")
     print(f"   - {project_dir}/main.py")
     print(f"   - {project_dir}/README.md")
     print(f"   - {project_dir}/TODO.md")
     print(f"   - {project_dir}/.gitignore")
-    print(f"\n   Project ready for GitHub workflow.")
+    print("\n   Project ready for GitHub workflow.")
     print(f"   Initialize with: cd {project_dir} && git init")
     print(f"   Clean up: rm -rf {project_dir}")
 

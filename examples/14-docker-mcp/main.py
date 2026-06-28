@@ -84,20 +84,20 @@ def demo_docker_operations() -> None:
     print(f"1. Created sample project: {project_dir}")
     
     # Show files
-    print(f"\n2. Project files:")
+    print("\n2. Project files:")
     for f in project_dir.iterdir():
         print(f"   - {f.name} ({f.stat().st_size} bytes)")
     
     # Show Dockerfile
     dockerfile = project_dir / "Dockerfile"
-    print(f"\n3. Dockerfile content:")
+    print("\n3. Dockerfile content:")
     print("-" * 40)
     print(dockerfile.read_text())
     print("-" * 40)
     
     # Show TODO
     todo_file = project_dir / "TODO.md"
-    print(f"\n4. TODO list:")
+    print("\n4. TODO list:")
     print(todo_file.read_text())
     
     # Try real Docker commands
@@ -110,21 +110,21 @@ def demo_docker_operations() -> None:
         
         # List images
         images = run_docker_command("docker images --format '{{.Repository}}:{{.Tag}}' | head -5")
-        print(f"\n   Local images:")
+        print("\n   Local images:")
         if images["output"]:
             for img in images["output"].strip().split("\n")[:5]:
                 print(f"      - {img}")
         else:
-            print(f"      (no images or docker not running)")
+            print("      (no images or docker not running)")
         
         # List containers
         containers = run_docker_command("docker ps --format '{{.Names}}' | head -5")
-        print(f"\n   Running containers:")
+        print("\n   Running containers:")
         if containers["output"]:
             for c in containers["output"].strip().split("\n")[:5]:
                 print(f"      - {c}")
         else:
-            print(f"      (no running containers)")
+            print("      (no running containers)")
     else:
         print(f"   ⚠️  Docker not available: {docker_check['output']}")
     
@@ -146,11 +146,11 @@ def demo_docker_operations() -> None:
      -i '{{"image": "sample-app:latest", "name": "sample-container", "ports": ["8080:8000"]}}'
         """)
     
-    print(f"\n7. Files created:")
+    print("\n7. Files created:")
     print(f"   - {project_dir}/app.py")
     print(f"   - {project_dir}/Dockerfile")
     print(f"   - {project_dir}/TODO.md")
-    print(f"\n   Keep for manual Docker experimentation.")
+    print("\n   Keep for manual Docker experimentation.")
     print(f"   Clean up: rm -rf {project_dir}")
 
 

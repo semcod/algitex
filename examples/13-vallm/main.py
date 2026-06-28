@@ -109,7 +109,7 @@ def demo_validation() -> None:
     
     # Show TODO
     todo_file = code_dir / "TODO.md"
-    print(f"\n3. Validation TODO:")
+    print("\n3. Validation TODO:")
     print(todo_file.read_text())
     
     # Run local validation
@@ -151,12 +151,12 @@ def demo_validation() -> None:
     complexity = code.count('if ') + code.count('elif ') + code.count('else:')
     print(f"   - Branch points: {complexity}")
     if complexity > 5:
-        print(f"   ⚠️  High complexity detected (CC > 10 likely)")
+        print("   ⚠️  High complexity detected (CC > 10 likely)")
     
-    print(f"\n7. Files created:")
+    print("\n7. Files created:")
     print(f"   - {code_dir}/complex_module.py")
     print(f"   - {code_dir}/TODO.md")
-    print(f"\n   Keep for manual validation.")
+    print("\n   Keep for manual validation.")
     print(f"   Clean up: rm -rf {code_dir}")
 
 

@@ -220,7 +220,7 @@ class SharedRuleEngine:
         """Native algitex check for unused imports (fallback when prefact unavailable)."""
         from algitex.nlp import DeadCodeDetector
 
-        detector = DeadCodeDetector()
+        DeadCodeDetector()
         # This is a simplified check
         return []
 
@@ -259,7 +259,7 @@ def run_prefact_check(file_path: str) -> bool:
         return False
 
     try:
-        issues = adapter.scan_file(file_path)
+        adapter.scan_file(file_path)
         return True  # Successfully scanned
     except Exception:
         return False

@@ -3,7 +3,6 @@
 import tempfile
 from pathlib import Path
 
-import pytest
 
 from algitex.benchmark import (
     BenchmarkResult,
@@ -111,7 +110,7 @@ class TestBenchmarkRunner:
         def test_func(): pass
         
         # Create suite and run benchmark
-        suite = runner.run_suite("test_suite", {
+        runner.run_suite("test_suite", {
             "test": (test_func, 10, [], {})
         })
         

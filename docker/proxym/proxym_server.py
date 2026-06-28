@@ -6,13 +6,11 @@ REST API compatible with OpenAI format
 
 import os
 import sys
-import json
 import logging
 from typing import Any, Dict, List
 from datetime import datetime
 
-from fastapi import FastAPI, HTTPException, Header
-from fastapi.responses import StreamingResponse
+from fastapi import FastAPI, HTTPException
 import uvicorn
 import httpx
 

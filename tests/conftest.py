@@ -1,8 +1,6 @@
 """Shared test fixtures."""
 
-import os
 import pytest
-from pathlib import Path
 
 
 @pytest.fixture(autouse=True)

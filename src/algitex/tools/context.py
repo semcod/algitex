@@ -92,7 +92,7 @@ class ContextBuilder:
                     # Extract M[...] section
                     if "M[" in text:
                         start = text.index("M[")
-                        end = (
+                        (
                             text.index("\nD:", start)
                             if "\nD:" in text[start:]
                             else len(text)

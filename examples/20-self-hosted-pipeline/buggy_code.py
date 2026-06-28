@@ -4,7 +4,6 @@ Przykładowy kod z celowymi błędami do naprawy przez self-hosted pipeline.
 Ten plik służy do demonstracji pełnego workflowu: analiza → walidacja → naprawa.
 """
 
-from collections import  Counter  # Błąd: nieużywane
 
 def fetch_user_data(user_id, db_connection) -> Any:
     """Fetch user data from database."""

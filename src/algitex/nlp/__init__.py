@@ -76,7 +76,8 @@ class DocstringShortener:
             indent = (
                 re.match(r"\s*", lines[start]).group(0) if start < len(lines) else ""
             )
-            rendered = f'{indent}"""{shorter.replace('"""', '\\"\\"\\"')}"""'
+            shorter_escaped = shorter.replace('"""', '\\"\\"\\"')
+            rendered = f'{indent}"""{shorter_escaped}"""'
             before = "\n".join(lines[start : end + 1])
             change = {
                 "file": str(file_path),

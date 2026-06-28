@@ -8,7 +8,6 @@ Demonstrates the cyclomatic complexity reduction patterns introduced in Sprint 3
 Run: python examples/35-sprint3-patterns/main.py
 """
 
-from pathlib import Path
 
 
 def demo_dict_dispatch():
@@ -32,7 +31,7 @@ def demo_dict_dispatch():
         return "other"
     
     # After: CC 4 - dict dispatch
-    from algitex.todo.classify import classify_message, KNOWN_MAGIC_CONSTANTS
+    from algitex.todo.classify import classify_message
     
     test_messages = [
         "Unused import: os",
@@ -75,7 +74,6 @@ def demo_pipeline_pattern():
     """
     print("\n=== Pipeline Pattern (verify.py) ===")
     
-    from algitex.todo.verify import VerifyResult, verify_todos
     
     print("\nVerification pipeline steps:")
     steps = [

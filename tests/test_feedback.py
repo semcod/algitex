@@ -415,7 +415,7 @@ class TestFeedbackLoop:
         mock_loop.docker_mgr._running.get.return_value = mock_rt
         mock_loop.docker_mgr.call_tool.return_value = {"status": "success"}
         
-        result = mock_loop._execute_single(ticket, "aider-mcp")
+        mock_loop._execute_single(ticket, "aider-mcp")
         
         # Check that feedback was included in prompt
         mock_loop.docker_mgr.call_tool.assert_called_once()

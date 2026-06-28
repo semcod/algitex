@@ -2,7 +2,7 @@
 
 import pytest
 from pathlib import Path
-from unittest.mock import patch, mock_open, MagicMock
+from unittest.mock import patch
 
 from algitex.tools.context import ContextBuilder, CodeContext, SemanticCache
 

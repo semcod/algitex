@@ -127,7 +127,7 @@ def demo_test_workflow() -> None:
     print(f"1. Created sample project: {project_dir}")
     
     # Show structure
-    print(f"\n2. Project structure:")
+    print("\n2. Project structure:")
     for f in project_dir.rglob("*"):
         rel = f.relative_to(project_dir)
         if f.is_file():
@@ -149,7 +149,7 @@ def demo_test_workflow() -> None:
     
     # Show TODO
     todo_file = project_dir / "TODO.md"
-    print(f"\n5. TODO list:")
+    print("\n5. TODO list:")
     print(todo_file.read_text())
     
     # Try to run tests
@@ -179,12 +179,12 @@ def demo_test_workflow() -> None:
    algitex docker call vallm validate -i '{{"path": "{project_dir}"}}'
         """)
     
-    print(f"\n8. Files created:")
+    print("\n8. Files created:")
     print(f"   - {project_dir}/src/calculator.py")
     print(f"   - {project_dir}/tests/test_calculator.py")
     print(f"   - {project_dir}/requirements.txt")
     print(f"   - {project_dir}/TODO.md")
-    print(f"\n   Project ready for testing.")
+    print("\n   Project ready for testing.")
     print(f"   Clean up: rm -rf {project_dir}")
 
 

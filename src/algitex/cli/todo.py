@@ -432,7 +432,7 @@ def todo_verify(
     from algitex.todo import TodoVerifier
 
     verifier = TodoVerifier(file)
-    result = verifier.verify()
+    verifier.verify()
     verifier.print_report()
 
 

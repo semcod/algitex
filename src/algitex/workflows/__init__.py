@@ -20,6 +20,7 @@ from typing import Optional
 
 from algitex.project import Project
 from algitex.config import Config
+from algitex.tools.tickets import Ticket
 from algitex.tools.docker import DockerToolManager
 from algitex.tools.telemetry import Telemetry
 from algitex.tools.context import ContextBuilder

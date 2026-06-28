@@ -169,9 +169,9 @@ def _validate_env(args) -> bool:
     """Validate that the environment and TODO file are ready for the demo."""
     if not args.todo_file.exists():
         print(f"\n❌ Error: TODO file not found: {args.todo_file}")
-        print(f"\n💡 Suggestions:")
-        print(f"   1. Run from project root: cd /home/tom/github/semcod/algitex")
-        print(f"   2. Use absolute path: -f /home/tom/github/semcod/algitex/TODO.md")
+        print("\n💡 Suggestions:")
+        print("   1. Run from project root: cd /home/tom/github/semcod/algitex")
+        print("   2. Use absolute path: -f /home/tom/github/semcod/algitex/TODO.md")
         return False
 
     from algitex.todo import parse_todo
@@ -188,9 +188,9 @@ def _validate_env(args) -> bool:
     
     if len(missing_files) >= 5:
         print(f"\n⚠️  Warning: {len(missing_files)}+ files not found from first 10 checked")
-        print(f"\n💡 This usually means:")
-        print(f"   - TODO.md paths are relative to project root")
-        print(f"   - You're running from a subdirectory")
+        print("\n💡 This usually means:")
+        print("   - TODO.md paths are relative to project root")
+        print("   - You're running from a subdirectory")
         print(f"\n   Current TODO.md: {args.todo_file}")
         print(f"   Current directory: {os.getcwd()}")
         

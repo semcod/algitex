@@ -66,7 +66,6 @@ class MetricsCollector:
     COST_RATES = {
         "qwen3-coder:latest": 0.0,  # Local = free
         "qwen2.5-coder:3b": 0.0,
-        "qwen3-coder:latest": 0.0,
         "codellama:7b": 0.0,
         "deepseek-coder:6.7b": 0.0,
         "llama3:8b": 0.0,

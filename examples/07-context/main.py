@@ -207,7 +207,7 @@ def test_engine():
     }
     
     context = builder.build(feature_ticket)
-    print(f"   Target module: services/processor.py")
+    print("   Target module: services/processor.py")
     print(f"   Related core module: {[f for f in context.related_files if 'core' in f]}")
     
     # Example 3: Refactoring context
@@ -221,7 +221,7 @@ def test_engine():
     
     context = builder.build(refactor_ticket)
     print(f"   Multiple targets: {context.target_files}")
-    print(f"   Cross-module dependencies identified")
+    print("   Cross-module dependencies identified")
     
     return project_dir
 
@@ -270,7 +270,7 @@ def check_permissions(user_id, resource):
     context = builder.build(ticket)
     
     print("1. Finding semantically related code:")
-    print(f"   Target: auth.py")
+    print("   Target: auth.py")
     print(f"   Related files found: {context.related_files}")
     print(f"   Security module detected: {'security.py' in str(context.related_files)}")
     
@@ -340,7 +340,7 @@ def setup_logger(name):
     print("   - LLM might use print() instead of logging")
     
     print("\n2. With rich context:")
-    rich_prompt = context.to_prompt("Add metrics collection to logger module")
+    context.to_prompt("Add metrics collection to logger module")
     print("\n   Advantages:")
     print("   - ✅ LLM knows about DEBUG config")
     print("   - ✅ LLM follows coding standards from CLAUDE.md")

@@ -1,6 +1,5 @@
 """Tests for metrics module."""
 
-import json
 import tempfile
 from pathlib import Path
 

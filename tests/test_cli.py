@@ -1,7 +1,5 @@
 """Tests for algitex CLI commands."""
 
-import json
-import pytest
 from click.testing import CliRunner
 
 from algitex.cli import app

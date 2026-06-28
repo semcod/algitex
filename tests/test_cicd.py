@@ -70,7 +70,7 @@ ci_cd:
         
         # Check for quality gate steps
         steps = workflow["jobs"]["quality"]["steps"]
-        step_names = [s.get("name", "") for s in steps]
+        [s.get("name", "") for s in steps]
         
         assert any("algitex analyze" in str(s.get("run", "")) for s in steps)
         assert any("complexity" in str(s.get("run", "")) for s in steps)

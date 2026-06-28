@@ -90,7 +90,7 @@ class VSCodeHelper(IDEHelper):
         try:
             subprocess.run(cmd, check=True)
             return True
-        except:
+        except Exception:
             return False
 
     def install_extensions(self, extensions: List[str]) -> None:
@@ -102,7 +102,7 @@ class VSCodeHelper(IDEHelper):
             try:
                 subprocess.run([tool.command, "--install-extension", ext], check=True)
                 print(f"✅ {ext}")
-            except:
+            except Exception:
                 print(f"❌ Failed to install {ext}")
 
     def recommended_extensions(self) -> List[str]:
@@ -148,7 +148,7 @@ class EditorIntegration:
                 return "cursor"
             elif "Code" in result.stdout:
                 return "vscode"
-        except:
+        except Exception:
             pass
 
         return None

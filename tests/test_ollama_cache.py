@@ -1,6 +1,5 @@
 """Tests for ollama_cache module."""
 
-import json
 import tempfile
 from pathlib import Path
 

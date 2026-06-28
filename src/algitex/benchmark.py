@@ -123,7 +123,7 @@ class BenchmarkRunner:
 
         # Actual benchmark
         gc.collect()
-        start_mem = tracemalloc.start()
+        tracemalloc.start()
 
         start_time = time.perf_counter()
         for _ in range(iterations):
@@ -225,7 +225,7 @@ class CacheBenchmark:
                 misses += 1
         duration = time.perf_counter() - start
 
-        stats = cache.stats()
+        cache.stats()
 
         return {
             "entries": entries,
@@ -355,8 +355,8 @@ class MemoryBenchmark:
         start_mem = tracemalloc.get_traced_memory()[0]
 
         # Parse and analyze
-        ctx = RuleContext(file_path="test.py", source_code=source)
-        detector = DeadCodeDetector()
+        RuleContext(file_path="test.py", source_code=source)
+        DeadCodeDetector()
 
         # Detect would need source, simulate
         current_mem = tracemalloc.get_traced_memory()[0]
@@ -374,7 +374,7 @@ class MemoryBenchmark:
 
 def run_quick_benchmark() -> None:
     """Run quick benchmark suite."""
-    runner = BenchmarkRunner(warmup_iterations=1)
+    BenchmarkRunner(warmup_iterations=1)
 
     with tempfile.TemporaryDirectory() as tmpdir:
         cache_dir = Path(tmpdir) / "cache"

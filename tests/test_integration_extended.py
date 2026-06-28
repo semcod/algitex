@@ -1,8 +1,6 @@
 """Integration tests for algitex pipeline with extensions."""
 
 import pytest
-from unittest.mock import MagicMock, patch
-from pathlib import Path
 
 from algitex import Pipeline
 from algitex.tools.feedback import FeedbackController, FeedbackPolicy
@@ -123,7 +121,6 @@ testpaths = ["tests"]
         assert controller.policy.require_approval_for == ["critical"]
         
         # Test with custom policy
-        from algitex.tools.feedback import FeedbackPolicy
         custom_policy = FeedbackPolicy(
             max_retries=5,
             require_approval_for=["critical", "breaking"]

@@ -15,7 +15,6 @@ def demo_classify_module():
     
     from algitex.todo.classify import (
         KNOWN_MAGIC_CONSTANTS,
-        TaskTriage,
         classify_message,
     )
     
@@ -39,9 +38,6 @@ def demo_repair_module():
     
     from algitex.todo.repair import (
         REPAIRERS,
-        repair_fstring,
-        repair_magic_number,
-        repair_unused_import,
     )
     
     print("\n1. Available repairers:")
@@ -64,7 +60,6 @@ def demo_verify_module():
     """Demo: Using algitex.todo.verify directly."""
     print("\n=== verify.py Module ===")
     
-    from algitex.todo.verify import VerifyResult, verify_todos
     
     print("\n1. Verification pipeline:")
     steps = [

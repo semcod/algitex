@@ -1,5 +1,5 @@
 # code2llm | 318f 66320L | python:192,shell:27,yaml:20,yml:4,txt:2,toml:1 | 2026-04-25
-# CC̄=2.5 | critical:1/1799 | dups:0 | cycles:0
+# CC̄=2.5 | critical:0/1799 | dups:0 | cycles:0
 
 HEALTH[1]:
   🟡 CC    _run_micro_dashboard CC=17 (limit:15)

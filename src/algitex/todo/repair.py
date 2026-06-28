@@ -213,8 +213,8 @@ def repair_magic_number(
 
     # Check if constant needs to be defined
     existing_constants = set()
-    for l in lines:
-        match = re.match(r"^([A-Z][A-Z0-9_]+)\s*=\s*\d+\s*$", l.strip())
+    for line in lines:
+        match = re.match(r"^([A-Z][A-Z0-9_]+)\s*=\s*\d+\s*$", line.strip())
         if match:
             existing_constants.add(match.group(1))
 

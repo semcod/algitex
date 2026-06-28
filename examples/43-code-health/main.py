@@ -6,9 +6,6 @@ using algitex analysis pipeline with historical tracking.
 Run: python examples/43-code-health/main.py
 """
 
-import json
-from datetime import datetime
-from pathlib import Path
 
 
 def demo_health_metrics():
@@ -105,15 +102,15 @@ def demo_health_report():
     }
     
     print(f"\nGenerated: {report['generated']}")
-    print(f"\nSummary:")
+    print("\nSummary:")
     for key, value in report['summary'].items():
         print(f"  {key}: {value}")
     
-    print(f"\nGrades:")
+    print("\nGrades:")
     for metric, grade in report['grades'].items():
         print(f"  {metric}: {grade}")
     
-    print(f"\nAlerts:")
+    print("\nAlerts:")
     for alert in report['alerts']:
         print(f"  {alert}")
 

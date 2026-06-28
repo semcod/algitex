@@ -8,7 +8,6 @@ import pytest
 from algitex.shared_rules import (
     RuleContext,
     RuleViolation,
-    SharedRule,
     SortedImportsRule,
     RelativeImportRule,
     RuleRegistry,

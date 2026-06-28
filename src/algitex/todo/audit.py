@@ -80,7 +80,7 @@ class AuditLogger:
         """Get current user info."""
         try:
             return getpass.getuser()
-        except:
+        except Exception:
             return os.environ.get("USER", "unknown")
 
     def _hash_content(self, content: str) -> str:

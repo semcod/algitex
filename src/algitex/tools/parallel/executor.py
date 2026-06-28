@@ -145,7 +145,7 @@ class ParallelExecutor:
                 )
                 continue
 
-            worktree = result["worktree"]
+            result["worktree"]
             agent_branch = f"algitex-agent-{result['agent']}"
 
             # Check for line drift before merge
@@ -191,7 +191,7 @@ class ParallelExecutor:
         """Detect if line ranges have shifted due to other changes."""
         # Compare current signatures with stored ones
         extractor = RegionExtractor(str(self.root))
-        current_regions = extractor.extract_all()
+        extractor.extract_all()
 
         # This is simplified - in practice, we'd store original signatures
         # and compare them to detect drift

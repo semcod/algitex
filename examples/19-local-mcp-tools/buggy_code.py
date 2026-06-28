@@ -3,7 +3,6 @@
 Przykładowy kod z celowymi błędami do naprawy przez lokalne MCP tools.
 """
 
-from datetime import  timedelta  # Błąd: nieużywane
 
 def process_items(items) -> Any:
     """Process a list of items."""
@@ -21,7 +20,7 @@ def process_items(items) -> Any:
 def load_data(source) -> Any:
     """Load data from source."""
     # Błąd: SQL injection vulnerability
-    query = "SELECT * FROM users WHERE id = " + source
+    "SELECT * FROM users WHERE id = " + source
     
     # Błąd: eval z user input
     config = eval(source)  # Błąd: code injection

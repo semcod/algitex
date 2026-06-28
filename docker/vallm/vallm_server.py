@@ -11,7 +11,7 @@ import logging
 import subprocess
 from typing import Any, Dict
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 import uvicorn
 
 logging.basicConfig(

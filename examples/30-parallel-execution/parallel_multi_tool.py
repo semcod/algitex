@@ -8,7 +8,7 @@ from algitex import Project
 from algitex.tools.parallel import ParallelExecutor
 
 def main() -> None:
-    p = Project("./my-app")
+    Project("./my-app")
 
     tickets = [
         {

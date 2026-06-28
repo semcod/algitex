@@ -5,8 +5,6 @@ Demonstrates the benchmark framework for measuring cache, tiers, and memory.
 Run: python examples/37-benchmarks/main.py
 """
 
-import subprocess
-import sys
 
 
 def demo_benchmark_quick():
