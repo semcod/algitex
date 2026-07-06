@@ -1,0 +1,19 @@
+# local.dev.txt — locally developed dependencies of this project (generated 2026-07-04)
+# by ~/github/local.dev.sh — DO NOT EDIT; see ~/github/local.dev.md
+# project: algitex 0.1.65 (python) at /home/tom/github/semcod/algitex
+# deps declared: 18 | with local source: 11
+
+## LOCAL DEPS  (dep | required | local source (version) | installed | status)
+clickmd | >=1.0 | /home/tom/github/semcod/clickmd (1.1.15) | 1.1.9 non-editable | STALE-INSTALL (local 1.1.15) -> fix: pip install -e /home/tom/github/semcod/clickmd  [pyproject.toml]
+code2llm | * | /home/tom/github/semcod/code2llm (0.5.169) | 0.5.99 non-editable | STALE-INSTALL (local 0.5.169) -> fix: pip install -e /home/tom/github/semcod/code2llm  [pyproject.toml[all]]
+code2llm | * | /home/tom/github/wronai/teLLMe/code2llm-src (0.5.23) | 0.5.99 non-editable | STALE-INSTALL (local 0.5.23) -> fix: pip install -e /home/tom/github/wronai/teLLMe/code2llm-src  [pyproject.toml[all]]
+costs | >=0.1.20 | /home/tom/github/semcod/costs (0.1.53) | 0.1.39 non-editable | STALE-INSTALL (local 0.1.53) -> fix: pip install -e /home/tom/github/semcod/costs  [pyproject.toml]
+goal | >=2.1.0 | /home/tom/github/semcod/goal (2.1.266) | 2.1.139 non-editable | STALE-INSTALL (local 2.1.266) -> fix: pip install -e /home/tom/github/semcod/goal  [pyproject.toml]
+llx | * | /home/tom/github/semcod/llx (0.1.85) | - | NOT-INSTALLED  [pyproject.toml[all]]
+pfix | >=0.1.60 | /home/tom/github/semcod/pfix (0.1.76) | 0.1.73 editable | OK-EDITABLE  [pyproject.toml]
+planfile | * | /home/tom/github/semcod/planfile (0.1.106) | 0.1.103 editable | OK-EDITABLE  [pyproject.toml[all]]
+proxym | * | /home/tom/github/semcod/proxym (0.1.125) | - | NOT-INSTALLED  [pyproject.toml[all]]
+redup | * | /home/tom/github/semcod/redup (0.4.32) | 0.4.15 non-editable | STALE-INSTALL (local 0.4.32) -> fix: pip install -e /home/tom/github/semcod/redup  [pyproject.toml[all]]
+vallm | * | /home/tom/github/semcod/vallm (0.1.93) | 0.1.67 non-editable | STALE-INSTALL (local 0.1.93) -> fix: pip install -e /home/tom/github/semcod/vallm  [pyproject.toml[all]]
+
+## EXTERNAL DEPS (no local source, 8): httpx, mypy, pydantic, pytest, pyyaml, rich, ruff, tabulate
