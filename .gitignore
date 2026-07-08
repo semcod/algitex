@@ -262,3 +262,6 @@ examples/*/full-analysis.yaml
 examples/quick-start/quick-start.yaml
 .redsl/
 *.bak
+.benchmarks/
+.github/
+.pfix/
