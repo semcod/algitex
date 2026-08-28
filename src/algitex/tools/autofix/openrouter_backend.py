@@ -9,9 +9,9 @@ from pathlib import Path
 from typing import Optional
 
 try:
-    import requests
+    from subllm import complete as subllm_complete
 except ImportError:
-    requests = None
+    subllm_complete = None
 
 from algitex.tools.autofix.base import FixResult, Task
 
@@ -53,13 +53,10 @@ class OpenRouterBackend:
         if not task.file_path:
             return self._error_result(task, start_time, "No file path specified")
 
-        if requests is None:
+        if subllm_complete is None:
             return self._error_result(
-                task, start_time, "requests library not available"
+                task, start_time, "subactor-subllm is not available"
             )
-
-        if not self.api_key:
-            return self._error_result(task, start_time, "OPENROUTER_API_KEY not set")
 
         return None
 
@@ -101,37 +98,24 @@ Current code:
 Provide ONLY the fixed code for this specific issue. Do not explain changes. Return the complete fixed file content."""
 
     def _call_api(self, prompt: str) -> Optional[str]:
-        """Call OpenRouter API directly."""
-        if requests is None:
+        """Call the central SubLLM autofix route."""
+        if subllm_complete is None:
             return None
-
-        response = requests.post(
-            f"{self.API_BASE}/chat/completions",
-            headers={
-                "Authorization": f"Bearer {self.api_key}",
-                "Content-Type": "application/json",
-                "HTTP-Referer": "https://algitex.local",
-                "X-Title": "Algitex AutoFix",
-            },
-            json={
-                "model": self.model,
-                "messages": [
-                    {
-                        "role": "system",
-                        "content": "You are an expert Python code reviewer. Fix issues precisely.",
-                    },
-                    {"role": "user", "content": prompt},
-                ],
-                "temperature": 0.3,
-                "max_tokens": self.DEFAULT_MAX_TOKENS,
-            },
-            timeout=self.DEFAULT_TIMEOUT,
+        credentials = {"OPENROUTER_API_KEY": self.api_key} if self.api_key else None
+        response = subllm_complete(
+            "semcod-algitex",
+            "autofix",
+            [
+                {
+                    "role": "system",
+                    "content": "You are an expert Python code reviewer. Fix issues precisely.",
+                },
+                {"role": "user", "content": prompt},
+            ],
+            timeout_seconds=self.DEFAULT_TIMEOUT,
+            credentials=credentials,
         )
-
-        if response.status_code == 200:
-            data = response.json()
-            return data["choices"][0]["message"]["content"]
-        return None
+        return response.content
 
     def _extract_code(self, response: str) -> str:
         """Extract code from markdown response."""
