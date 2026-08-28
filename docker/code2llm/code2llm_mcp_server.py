@@ -18,6 +18,9 @@ from fastapi import FastAPI
 from mcp.server.fastmcp import FastMCP
 import uvicorn
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from mcp_security import resolve_project_path  # noqa: E402
+
 try:
     from radon.complexity import cc_visit
 except ImportError:  # pragma: no cover - optional dependency
@@ -63,13 +66,7 @@ SOURCE_SUFFIXES = {
 
 
 def _resolve_root(path: str | None) -> Path:
-    raw = (path or ".").strip() or "."
-    root = Path(raw).expanduser().resolve()
-    if not root.exists():
-        raise FileNotFoundError(f"Project path does not exist: {root}")
-    if not root.is_dir():
-        raise NotADirectoryError(f"Project path is not a directory: {root}")
-    return root
+    return resolve_project_path(path)
 
 
 def _iter_source_files(root: Path) -> list[Path]:

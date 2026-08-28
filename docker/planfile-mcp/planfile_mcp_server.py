@@ -16,6 +16,9 @@ from mcp.server.fastmcp import FastMCP
 from fastapi import FastAPI
 import uvicorn
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from mcp_security import require_capability  # noqa: E402
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -80,6 +83,7 @@ def planfile_create_ticket(
     Returns:
         Dictionary with created ticket info
     """
+    require_capability("ALGITEX_MCP_ALLOW_MUTATION", "Planfile ticket creation")
     _load_tickets()
     ticket_id = str(len(_tickets) + 1)
     ticket = {
@@ -141,6 +145,7 @@ def planfile_update_ticket(
     Returns:
         Dictionary with updated ticket info
     """
+    require_capability("ALGITEX_MCP_ALLOW_MUTATION", "Planfile ticket updates")
     _load_tickets()
     if ticket_id not in _tickets:
         return {"error": f"Ticket {ticket_id} not found"}
@@ -169,6 +174,7 @@ def planfile_create_tickets_bulk(tickets: List[Dict]) -> Dict[str, Any]:
     Returns:
         Dictionary with created ticket IDs
     """
+    require_capability("ALGITEX_MCP_ALLOW_MUTATION", "Bulk Planfile ticket creation")
     created = []
     for ticket_data in tickets:
         result = planfile_create_ticket(
@@ -212,6 +218,7 @@ def planfile_sync() -> Dict[str, Any]:
     Returns:
         Dictionary with sync status
     """
+    require_capability("ALGITEX_MCP_ALLOW_MUTATION", "Planfile storage synchronization")
     _save_tickets()
     return {"synced": len(_tickets), "status": "success"}
 

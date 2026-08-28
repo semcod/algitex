@@ -19,6 +19,9 @@ from fastapi import FastAPI
 from mcp.server.fastmcp import FastMCP
 import uvicorn
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from mcp_security import require_capability, resolve_project_path  # noqa: E402
+
 
 logging.basicConfig(
     level=logging.INFO,
@@ -47,13 +50,11 @@ SKIP_DIR_NAMES = {
 
 
 def _resolve_root(path: str | None) -> Path:
-    raw = (path or ".").strip() or "."
-    root = Path(raw).expanduser().resolve()
-    if not root.exists():
-        raise FileNotFoundError(f"Project path does not exist: {root}")
-    if not root.is_dir():
-        raise NotADirectoryError(f"Project path is not a directory: {root}")
-    return root
+    return resolve_project_path(path)
+
+
+def _require_execution(action: str) -> None:
+    require_capability("ALGITEX_MCP_ALLOW_EXECUTE", action)
 
 
 def _count_python_files(root: Path) -> int:
@@ -95,6 +96,7 @@ def _path_error(exc: Exception) -> Dict[str, Any]:
 @mcp.tool()
 def validate_static(path: str = ".") -> Dict[str, Any]:
     """Run static analysis with ruff/mypy when available."""
+    _require_execution("Static validation")
     try:
         root = _resolve_root(path)
     except (FileNotFoundError, NotADirectoryError) as exc:
@@ -164,6 +166,7 @@ def validate_static(path: str = ".") -> Dict[str, Any]:
 @mcp.tool()
 def validate_runtime(path: str = ".") -> Dict[str, Any]:
     """Run runtime tests with pytest."""
+    _require_execution("Runtime validation")
     try:
         root = _resolve_root(path)
     except (FileNotFoundError, NotADirectoryError) as exc:
@@ -225,6 +228,7 @@ def validate_runtime(path: str = ".") -> Dict[str, Any]:
 @mcp.tool()
 def validate_security(path: str = ".") -> Dict[str, Any]:
     """Run security scan with bandit."""
+    _require_execution("Security validation")
     try:
         root = _resolve_root(path)
     except (FileNotFoundError, NotADirectoryError) as exc:
@@ -290,6 +294,7 @@ def validate_security(path: str = ".") -> Dict[str, Any]:
 @mcp.tool()
 def validate_all(path: str = ".") -> Dict[str, Any]:
     """Run static, runtime, and security validation without inventing coverage."""
+    _require_execution("Combined validation")
     try:
         root = _resolve_root(path)
     except (FileNotFoundError, NotADirectoryError) as exc:
@@ -344,6 +349,7 @@ def validate_all(path: str = ".") -> Dict[str, Any]:
 @mcp.tool()
 def analyze_complexity(path: str = ".") -> Dict[str, Any]:
     """Analyze code complexity with radon; fail closed when nothing is analyzed."""
+    _require_execution("Complexity analysis")
     try:
         root = _resolve_root(path)
     except (FileNotFoundError, NotADirectoryError) as exc:
@@ -420,6 +426,7 @@ def analyze_complexity(path: str = ".") -> Dict[str, Any]:
 @mcp.tool()
 def calculate_quality_score(path: str = ".") -> Dict[str, Any]:
     """Calculate overall quality score without inventing coverage."""
+    _require_execution("Quality scoring")
     validation = validate_all(path)
     complexity = analyze_complexity(path)
 

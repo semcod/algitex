@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
 
 # Install Python dependencies with MCP SDK
 RUN pip install --no-cache-dir \
-    "mcp[fastmcp]>=1.0.0" \
+    "mcp[fastmcp]>=1.0.0,<2" \
     fastapi>=0.100.0 \
     uvicorn>=0.23.0 \
     pydantic>=2.0.0 \
@@ -23,14 +23,16 @@ RUN pip install --no-cache-dir \
     ast-decompiler>=0.7.0
 
 # Copy MCP server implementation
-COPY code2llm_mcp_server.py /app/
-COPY code2llm_server.py /app/
+COPY docker/mcp_security.py /app/
+COPY docker/code2llm/code2llm_mcp_server.py /app/
+COPY docker/code2llm/code2llm_server.py /app/
 
 # Environment configuration
 ENV TRANSPORT=stdio
 ENV PORT=8081
 ENV PYTHONUNBUFFERED=1
 ENV MCP_TRANSPORT=stdio
+ENV ALGITEX_MCP_PROJECT_ROOT=/project
 
 # Expose port for REST/SSE mode
 EXPOSE 8081

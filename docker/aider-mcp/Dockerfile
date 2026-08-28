@@ -15,20 +15,23 @@ RUN apt-get update && apt-get install -y \
 # Install aider and MCP SDK with FastMCP
 RUN pip install --no-cache-dir \
     aider-chat>=0.60.0 \
-    "mcp[fastmcp]>=1.0.0" \
+    "mcp[fastmcp]>=1.0.0,<2" \
     fastapi>=0.100.0 \
     uvicorn>=0.23.0 \
     pydantic>=2.0.0 \
     httpx>=0.27.0
 
 # Copy MCP server implementation
-COPY aider_mcp_server.py /app/
+COPY docker/mcp_security.py /app/
+COPY docker/aider-mcp/aider_mcp_server.py /app/
 
 # Environment configuration
 ENV TRANSPORT=stdio
 ENV PORT=3000
 ENV PYTHONUNBUFFERED=1
 ENV MCP_TRANSPORT=stdio
+ENV ALGITEX_MCP_ALLOW_MUTATION=false
+ENV ALGITEX_MCP_PROJECT_ROOT=/project
 
 # Expose port for REST/SSE mode
 EXPOSE 3000

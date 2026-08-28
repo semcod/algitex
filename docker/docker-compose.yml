@@ -6,14 +6,16 @@ version: '3.8'
 services:
   aider-mcp:
     build:
-      context: ./aider-mcp
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: docker/aider-mcp/Dockerfile
     image: algitex/aider-mcp:latest
     container_name: algitex-aider-mcp
     environment:
       - TRANSPORT=stdio
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ALGITEX_MCP_ALLOW_MUTATION=${ALGITEX_MCP_ALLOW_MUTATION:-false}
+      - ALGITEX_MCP_PROJECT_ROOT=/workspace
     volumes:
       - ${PROJECT_DIR:-.}:/workspace
     stdin_open: true
@@ -23,14 +25,15 @@ services:
 
   planfile-mcp:
     build:
-      context: ./planfile-mcp
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: docker/planfile-mcp/Dockerfile
     image: algitex/planfile-mcp:latest
     container_name: algitex-planfile-mcp
     environment:
       - TRANSPORT=rest
       - PORT=8201
       - DATA_DIR=/data
+      - ALGITEX_MCP_ALLOW_MUTATION=${ALGITEX_MCP_ALLOW_MUTATION:-false}
     ports:
       - "9001:8201"
     volumes:
@@ -40,8 +43,8 @@ services:
 
   proxym:
     build:
-      context: ./proxym
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: docker/proxym/Dockerfile
     image: algitex/proxym:latest
     container_name: algitex-proxym
     environment:
@@ -50,6 +53,9 @@ services:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - GEMINI_API_KEY=${GEMINI_API_KEY}
       - DAILY_BUDGET=10.0
+      - ALGITEX_MCP_ALLOW_NETWORK=${ALGITEX_MCP_ALLOW_NETWORK:-false}
+      - ALGITEX_MCP_MAX_PROMPT_BYTES=${ALGITEX_MCP_MAX_PROMPT_BYTES:-1048576}
+      - ALGITEX_MCP_MAX_OUTPUT_TOKENS=${ALGITEX_MCP_MAX_OUTPUT_TOKENS:-16384}
     ports:
       - "9002:4001"
     networks:
@@ -57,13 +63,15 @@ services:
 
   vallm-mcp:
     build:
-      context: ./vallm
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: docker/vallm/Dockerfile
     image: algitex/vallm-mcp:latest
     container_name: algitex-vallm-mcp
     environment:
       - TRANSPORT=http
       - PORT=8080
+      - ALGITEX_MCP_ALLOW_EXECUTE=${ALGITEX_MCP_ALLOW_EXECUTE:-false}
+      - ALGITEX_MCP_PROJECT_ROOT=/project
     ports:
       - "8080:8080"
     volumes:
@@ -76,13 +84,14 @@ services:
 
   code2llm-mcp:
     build:
-      context: ./code2llm
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: docker/code2llm/Dockerfile
     image: algitex/code2llm-mcp:latest
     container_name: algitex-code2llm-mcp
     environment:
       - TRANSPORT=http
       - PORT=8081
+      - ALGITEX_MCP_PROJECT_ROOT=/project
     ports:
       - "8081:8081"
     volumes:

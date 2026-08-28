@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Install Python dependencies with MCP SDK
 RUN pip install --no-cache-dir \
-    "mcp[fastmcp]>=1.0.0" \
+    "mcp[fastmcp]>=1.0.0,<2" \
     fastapi>=0.100.0 \
     uvicorn>=0.23.0 \
     pydantic>=2.0.0 \
@@ -23,8 +23,9 @@ RUN pip install --no-cache-dir \
     tiktoken>=0.7.0
 
 # Copy MCP server implementation
-COPY proxym_mcp_server.py /app/
-COPY proxym_server.py /app/
+COPY docker/mcp_security.py /app/
+COPY docker/proxym/proxym_mcp_server.py /app/
+COPY docker/proxym/proxym_server.py /app/
 
 # Environment configuration
 ENV TRANSPORT=stdio
@@ -33,11 +34,11 @@ ENV LOG_LEVEL=info
 ENV PYTHONUNBUFFERED=1
 ENV MCP_TRANSPORT=stdio
 
-# API keys (override at runtime)
-ENV ANTHROPIC_API_KEY=""
-ENV OPENAI_API_KEY=""
-ENV GEMINI_API_KEY=""
+# API keys must be injected at runtime (prefer Docker secrets in production).
 ENV DEFAULT_MODEL="claude-sonnet-4"
+ENV ALGITEX_MCP_ALLOW_NETWORK=false
+ENV ALGITEX_MCP_MAX_PROMPT_BYTES=1048576
+ENV ALGITEX_MCP_MAX_OUTPUT_TOKENS=16384
 
 # Expose port for REST/SSE mode
 EXPOSE 4000

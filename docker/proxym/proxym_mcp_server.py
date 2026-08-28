@@ -7,6 +7,7 @@ Routes requests to multiple LLM providers with budget tracking
 import os
 import sys
 import logging
+from pathlib import Path
 from typing import Any, Dict, List
 from datetime import datetime
 
@@ -15,6 +16,9 @@ from fastapi import FastAPI
 import uvicorn
 import httpx
 import tiktoken
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from mcp_security import require_capability  # noqa: E402
 
 
 if __name__ == "__main__":
@@ -37,7 +41,7 @@ DEFAULT_MODEL = os.getenv("DEFAULT_MODEL", "claude-sonnet-4")
 # Simple token counter
 try:
     encoding = tiktoken.get_encoding("cl100k_base")
-except:
+except Exception:
     encoding = None
 
 
@@ -103,7 +107,22 @@ def chat_completion(
     Returns:
         Dictionary with response content and metadata
     """
+    require_capability("ALGITEX_MCP_ALLOW_NETWORK", "Outbound LLM requests")
     model = model or DEFAULT_MODEL
+
+    prompt_bytes = sum(
+        len(str(message.get("content", "")).encode("utf-8")) for message in messages
+    )
+    max_prompt_bytes = int(os.getenv("ALGITEX_MCP_MAX_PROMPT_BYTES", "1048576"))
+    max_output_tokens = int(os.getenv("ALGITEX_MCP_MAX_OUTPUT_TOKENS", "16384"))
+    if prompt_bytes > max_prompt_bytes:
+        raise ValueError(f"Prompt exceeds ALGITEX_MCP_MAX_PROMPT_BYTES={max_prompt_bytes}")
+    if not 1 <= max_tokens <= max_output_tokens:
+        raise ValueError(
+            f"max_tokens must be between 1 and {max_output_tokens}"
+        )
+    if not 0 <= temperature <= 2:
+        raise ValueError("temperature must be between 0 and 2")
     
     # Count input tokens
     input_text = "\n".join([m.get("content", "") for m in messages])

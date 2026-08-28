@@ -7,12 +7,16 @@ Multi-protocol: MCP stdio, MCP SSE, REST API
 import os
 import sys
 import logging
+from pathlib import Path
 from typing import Any, Dict, List
 
 from mcp.server.fastmcp import FastMCP
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 import uvicorn
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from mcp_security import require_capability, resolve_workspace_path  # noqa: E402
 
 logging.basicConfig(
     level=logging.INFO,
@@ -42,7 +46,10 @@ def aider_ai_code(
     Returns:
         Dictionary with edit results and metadata
     """
+    require_capability("ALGITEX_MCP_ALLOW_MUTATION", "Aider code editing")
     files = relative_editable_files or []
+    for file_path in files:
+        resolve_workspace_path(file_path, must_exist=False)
     
     logger.info(f"Processing prompt: {prompt[:100]}...")
     logger.info(f"Files: {files}, Model: {model}")

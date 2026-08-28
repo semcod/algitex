@@ -17,7 +17,7 @@ docker/<tool>/
 Every Dockerfile includes:
 
 - **Python 3.11-slim** base image
-- **FastMCP SDK** (`mcp[fastmcp]>=1.0.0`)
+- **FastMCP SDK** (`mcp[fastmcp]>=1.0.0,<2`; FastMCP was removed from MCP 2.x)
 - **Multi-protocol support**: MCP stdio, MCP SSE, REST API
 - **Non-root user** for security
 - **Environment variables**: `TRANSPORT`, `MCP_TRANSPORT`, `PORT`
@@ -60,7 +60,7 @@ docker-compose up -d mcp-github mcp-wikipedia mcp-fetch
 ```
 
 # Build a specific tool
-docker build -t algitex/vallm-mcp:latest ./docker/vallm
+docker build -f docker/vallm/Dockerfile -t algitex/vallm-mcp:latest .
 
 # Run in MCP stdio mode (default)
 docker run -it --rm algitex/vallm-mcp:latest
@@ -147,6 +147,19 @@ if __name__ == "__main__":
 | `MCP_TRANSPORT` | `stdio` | MCP-specific transport setting |
 | `PORT` | varies | REST API port (tool-specific) |
 | `PYTHONUNBUFFERED` | `1` | Ensure Python output is not buffered |
+| `ALGITEX_MCP_PROJECT_ROOT` | `/project` in project containers | Restrict project paths to the mounted workspace |
+| `ALGITEX_MCP_ALLOW_MUTATION` | `false` | Allow Aider/Planfile writes for trusted clients |
+| `ALGITEX_MCP_ALLOW_EXECUTE` | `false` | Allow Vallm to launch validation subprocesses |
+| `ALGITEX_MCP_ALLOW_NETWORK` | `false` | Allow Proxym to make paid outbound LLM calls |
+| `ALGITEX_MCP_MAX_PROMPT_BYTES` | `1048576` | Maximum aggregate prompt size for Proxym |
+| `ALGITEX_MCP_MAX_OUTPUT_TOKENS` | `16384` | Maximum requested output tokens for Proxym |
+
+Mutation, process execution, and outbound LLM access are disabled by default. Enable
+only the capability needed by a trusted client, for example:
+
+```bash
+ALGITEX_MCP_ALLOW_EXECUTE=true docker compose --profile tools up vallm-mcp
+```
 
 ## Health Checks
 

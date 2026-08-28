@@ -12,24 +12,22 @@ Usage:
 from __future__ import annotations
 
 import json
-import os
 import signal
-import subprocess
 import time
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
 
-from algitex.tools.mcp_models import MCPService
+from algitex.tools.mcp_defaults import build_default_services
+from algitex.tools.mcp_lifecycle import MCPLifecycleManager
 from algitex.tools.services import ServiceChecker, ServiceStatus
 
 
-class MCPOrchestrator:
+class MCPOrchestrator(MCPLifecycleManager):
     """Orchestrates multiple MCP services."""
 
     def __init__(self):
-        self.services: Dict[str, MCPService] = {}
+        super().__init__(build_default_services())
         self.service_checker = ServiceChecker()
-        self._register_default_services()
         self._setup_signal_handlers()
 
     def _setup_signal_handlers(self):
@@ -41,158 +39,6 @@ class MCPOrchestrator:
 
         signal.signal(signal.SIGINT, handler)
         signal.signal(signal.SIGTERM, handler)
-
-    def _register_default_services(self):
-        """Register default MCP services."""
-        # Aider MCP
-        self.services["aider"] = MCPService(
-            name="aider",
-            command=["python", "-m", "algitex.docker.aider_mcp_server"],
-            port=8001,
-            health_endpoint="http://localhost:8001/health",
-            dependencies=[],
-        )
-
-        # Code2LLM MCP
-        self.services["code2llm"] = MCPService(
-            name="code2llm",
-            command=["python", "-m", "algitex.docker.code2llm_mcp_server"],
-            port=8002,
-            health_endpoint="http://localhost:8002/health",
-            dependencies=[],
-        )
-
-        # Filesystem MCP
-        self.services["filesystem"] = MCPService(
-            name="filesystem",
-            command=["npx", "@modelcontextprotocol/server-filesystem", "/tmp"],
-            port=8003,
-            dependencies=[],
-        )
-
-        # GitHub MCP
-        self.services["github"] = MCPService(
-            name="github",
-            command=["npx", "@modelcontextprotocol/server-github"],
-            env={"GITHUB_PERSONAL_ACCESS_TOKEN": ""},
-            port=8004,
-            dependencies=[],
-        )
-
-        # Docker MCP
-        self.services["docker"] = MCPService(
-            name="docker",
-            command=["npx", "@modelcontextprotocol/server-docker"],
-            port=8005,
-            dependencies=[],
-        )
-
-    def add_service(self, service: MCPService) -> None:
-        """Add a custom service."""
-        self.services[service.name] = service
-
-    def add_custom_service(
-        self, name: str, command: List[str], port: Optional[int] = None, **kwargs
-    ):
-        """Add a custom service by parameters."""
-        service = MCPService(name=name, command=command, port=port, **kwargs)
-        self.add_service(service)
-
-    def start_service(self, name: str) -> bool:
-        """Start a single service."""
-        if name not in self.services:
-            print(f"Unknown service: {name}")
-            return False
-
-        service = self.services[name]
-
-        if service.process and service.process.poll() is None:
-            print(f"Service {name} is already running")
-            return True
-
-        # Check dependencies
-        for dep in service.dependencies:
-            if dep not in self.services or not self.services[dep].ready:
-                print(f"Dependency {dep} not ready for {name}")
-                return False
-
-        print(f"Starting {name}...")
-
-        try:
-            # Prepare environment
-            env = os.environ.copy()
-            env.update(service.env)
-
-            # Start process
-            service.process = subprocess.Popen(
-                service.command,
-                env=env,
-                cwd=service.working_dir,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                text=True,
-            )
-
-            # Give it a moment to start
-            time.sleep(1)
-
-            if service.process.poll() is None:
-                print(f"✅ {name} started (PID: {service.process.pid})")
-                return True
-            else:
-                print(f"❌ {name} failed to start")
-                stderr = service.process.stderr.read() if service.process.stderr else ""
-                if stderr:
-                    print(f"   Error: {stderr[:200]}")
-                return False
-
-        except Exception as e:
-            print(f"❌ Failed to start {name}: {e}")
-            return False
-
-    def stop_service(self, name: str, timeout: int = 10) -> bool:
-        """Stop a single service."""
-        if name not in self.services:
-            print(f"Unknown service: {name}")
-            return False
-
-        service = self.services[name]
-
-        if not service.process or service.process.poll() is not None:
-            print(f"Service {name} is not running")
-            return True
-
-        print(f"Stopping {name}...")
-
-        try:
-            # Try graceful shutdown
-            service.process.terminate()
-
-            # Wait for graceful shutdown
-            try:
-                service.process.wait(timeout=timeout)
-                print(f"✅ {name} stopped")
-                return True
-            except subprocess.TimeoutExpired:
-                # Force kill
-                service.process.kill()
-                service.process.wait()
-                print(f"✅ {name} killed")
-                return True
-
-        except Exception as e:
-            print(f"❌ Failed to stop {name}: {e}")
-            return False
-        finally:
-            service.process = None
-            service.ready = False
-
-    def restart_service(self, name: str) -> bool:
-        """Restart a service."""
-        print(f"Restarting {name}...")
-        self.stop_service(name)
-        time.sleep(1)
-        return self.start_service(name)
 
     def start_all(self, services: Optional[List[str]] = None) -> bool:
         """Start all or specified services."""

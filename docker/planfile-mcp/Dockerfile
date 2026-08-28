@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Install dependencies with MCP SDK
 RUN pip install --no-cache-dir \
-    "mcp[fastmcp]>=1.0.0" \
+    "mcp[fastmcp]>=1.0.0,<2" \
     fastapi>=0.100.0 \
     uvicorn>=0.23.0 \
     pydantic>=2.0.0 \
@@ -21,7 +21,8 @@ RUN pip install --no-cache-dir \
     httpx>=0.27.0
 
 # Copy server implementation
-COPY planfile_mcp_server.py /app/
+COPY docker/mcp_security.py /app/
+COPY docker/planfile-mcp/planfile_mcp_server.py /app/
 
 # Environment configuration
 ENV TRANSPORT=stdio
@@ -29,6 +30,7 @@ ENV PORT=8201
 ENV DATA_DIR=/data
 ENV PYTHONUNBUFFERED=1
 ENV MCP_TRANSPORT=stdio
+ENV ALGITEX_MCP_ALLOW_MUTATION=false
 
 # Create data directory
 RUN mkdir -p /data && chmod 777 /data
