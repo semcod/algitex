@@ -49,6 +49,7 @@ def test_project_paths_are_confined(monkeypatch, tmp_path):
 
 def test_mutating_servers_require_opt_in(monkeypatch, tmp_path):
     pytest.importorskip("mcp.server.fastmcp")
+    pytest.importorskip("fastapi")
     monkeypatch.setenv("ALGITEX_MCP_PROJECT_ROOT", str(tmp_path))
     monkeypatch.delenv("ALGITEX_MCP_ALLOW_MUTATION", raising=False)
     aider = _load_server("algitex_test_aider", "docker/aider-mcp/aider_mcp_server.py")
@@ -65,6 +66,7 @@ def test_mutating_servers_require_opt_in(monkeypatch, tmp_path):
 
 def test_aider_rejects_paths_outside_workspace(monkeypatch, tmp_path):
     pytest.importorskip("mcp.server.fastmcp")
+    pytest.importorskip("fastapi")
     workspace = tmp_path / "workspace"
     workspace.mkdir()
     monkeypatch.setenv("ALGITEX_MCP_PROJECT_ROOT", str(workspace))
