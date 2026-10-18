@@ -7,7 +7,7 @@ name = "algitex"
 version = "0.1.66"
 description = "Progressive algorithmization toolchain — from LLM to deterministic code, from proxy to tickets"
 readme = "README.md"
-license = "Apache-2.0"
+license = {text = "Apache-2.0"}
 requires-python = ">=3.10"
 authors = [{name = "Tom Sapletta", email = "tom@sapletta.com"}]
 keywords = [
@@ -30,7 +30,7 @@ dependencies = [
     "tabulate>=0.9",
     "goal>=2.1.0",
     "costs>=0.1.20",
-    "subactor-subllm @ git+https://github.com/subactor/subllm.git@505d89f505e90c7b40d98cafdc9104cc61072460",
+    "subactor-subllm",
 ]
 
 [project.optional-dependencies]
