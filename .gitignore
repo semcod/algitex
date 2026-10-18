@@ -274,3 +274,5 @@ examples/quick-start/quick-start.yaml
 /.subactor/receipts/
 /.subactor/cache/
 /.subactor/snapshots/
+.koru/
+.planfile/
